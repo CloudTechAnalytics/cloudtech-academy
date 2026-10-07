@@ -93432,42 +93432,1275 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Professional Office Administration
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('professional-office-administration', 'full', null, 'professional-office-administration', 'POA', 'Professional Office Administration', 'Run an office well: organise, schedule, communicate, file, manage documents and support a team with professional tools.', 'A practical beginner course for office assistants, administrators and secretaries. You learn professional communication, time management, documents and records, Microsoft and Google office tools, meetings and travel, and how to support managers and teams.', 'professional-skills', 'beginner', 2, 'Beginner', null, false, 'coming_soon', true, array['Professional communication', 'Time and diary management', 'Records and filing', 'Office software', 'Meetings and travel', 'Supporting a team']::text[], array['No experience needed', 'Basic computer use']::text[], 'An office administration toolkit', true, true, true, true, false, 60, 60)
+values ('professional-office-administration', 'short', 'Office Administrator', 'professional-office-administration', 'POA', 'Professional Office Administration', 'Run an office well: organise, schedule, communicate, file, manage documents and support a team with professional tools.', 'A practical beginner course for office assistants, administrators and secretaries. You learn professional communication, time management, documents and records, Microsoft and Google office tools, meetings and travel, and how to support managers and teams.', 'professional-skills', 'beginner', 2, 'Beginner', 4, false, 'available', true, array['Professional communication', 'Time and diary management', 'Records and filing', 'Office software', 'Meetings and travel', 'Supporting a team']::text[], array['No experience needed', 'Basic computer use']::text[], 'An office administration toolkit', true, true, true, true, false, 60, 60)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 50000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'An organised office is the backbone of any business. This course teaches the day-to-day skills of a professional administrator: managing the diary and the inbox, writing well, keeping records, using office tools and supporting meetings, with a practical office admin project to finish.', audience = array['Aspiring and new office administrators', 'Receptionists and secretaries', 'Executive and personal assistants', 'Graduates preparing for office jobs']::text[], included = '{}'::text[], project_previews = '[{"title":"An office administration toolkit","summary":"Templates, a filing system, a meeting pack and a weekly routine for a real or realistic office."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Communicate professionally in writing and in person', 'Manage a diary, inbox and tasks', 'Organise files and records, on paper and digital', 'Use word processing, spreadsheet and email tools well', 'Plan meetings, events and travel', 'Support managers and teams with confidence']::text[], difficulty_max = null, duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No. The course starts from the beginning and assumes no experience."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'professional-office-administration' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 50000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'An organised office is the backbone of any business. This course teaches the day-to-day skills of a professional administrator: managing the diary and the inbox, writing well, keeping records, using office tools and supporting meetings, with a practical office admin project to finish.', audience = array['Aspiring and new office administrators', 'Receptionists and secretaries', 'Executive and personal assistants', 'Graduates preparing for office jobs']::text[], included = '{}'::text[], project_previews = '[{"title":"An office administration toolkit","summary":"Templates, a filing system, a meeting pack and a weekly routine for a real or realistic office."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Communicate professionally in writing and in person', 'Manage a diary, inbox and tasks', 'Organise files and records, on paper and digital', 'Use word processing, spreadsheet and email tools well', 'Plan meetings, events and travel', 'Support managers and teams with confidence']::text[], difficulty_max = null, duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No. The course starts from the beginning and assumes no experience."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'professional-office-administration' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m01', 'professional-office-administration', 'The professional administrator', 1, null, null, '{}'::text[], array['The role of office administration', 'Professional conduct and confidentiality', 'Dress, behaviour and teamwork', 'Ethics at work']::text[])
+values ('poa-m01', 'professional-office-administration', 'The professional administrator', 1, 'Administrator', 'ADMINPRO', array['Explain the administrator''s role', 'Behave professionally', 'Protect confidentiality', 'Act ethically']::text[], array['The role of office administration', 'Professional conduct and confidentiality', 'Dress, behaviour and teamwork', 'Ethics at work']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m02', 'professional-office-administration', 'Communication at work', 2, null, null, '{}'::text[], array['Writing emails and letters', 'Telephone and front desk', 'Minutes, memos and reports', 'Giving and receiving instructions']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:the-professional-administrator', 'professional-office-administration', 'poa-m01', 'the-professional-administrator', 'The Professional Administrator', 'Understand the role of office administration, professional conduct and confidentiality, dress, behaviour and teamwork and ethics at work.', 25, $md$
+## The role of office administration
+
+An **office administrator** (also called an administrative assistant, secretary, office manager or executive assistant) keeps an organisation running smoothly behind the scenes. When the administration works, nobody notices. When it fails, everything slows down: letters go missing, meetings clash, supplies run out, and visitors are left waiting.
+
+Typical responsibilities:
+
+- **Communication:** answering calls and messages, writing emails and letters, welcoming visitors, passing information to the right people.
+- **Organisation:** managing diaries, scheduling meetings, booking travel, planning events.
+- **Records:** filing, document control, data entry, keeping information accurate and secure.
+- **Office management:** ordering supplies, dealing with vendors, handling petty cash and expenses, looking after equipment.
+- **Support:** preparing documents, presentations and reports; supporting managers and teams.
+- **Coordination:** following up on tasks and deadlines so that nothing falls through the cracks.
+
+Good administrators are **reliable, organised, discreet, helpful and quick to learn.** They are often the person who knows where everything is, who everyone is and how things get done. In many organisations they are trusted with sensitive information and act as the **first impression** of the business.
+
+The role is changing: technology handles routine typing and filing, so the value lies in **judgement, communication, problem solving and digital skills.** Administrators who learn software well, think ahead and take initiative become indispensable, and move into office management, executive support, operations or project coordination.
+
+## Professional conduct and confidentiality
+
+**Professional conduct** is how you behave at work so that colleagues and visitors trust and respect you.
+
+- **Reliability:** arrive on time, meet deadlines, do what you say you will do, and say early if you cannot.
+- **Accuracy:** check names, dates, figures and spelling. Small errors in an administrator's work cause big problems.
+- **Responsiveness:** reply promptly, even if only to acknowledge.
+- **Respect:** treat everyone politely, whatever their position.
+- **Initiative:** anticipate needs and solve small problems before they grow.
+- **Discretion:** do not gossip.
+
+**Confidentiality** is especially important. Administrators often see salary details, contracts, complaints, medical information, financial results and strategy. Rules:
+
+- **Share information only with people who need it** for their work.
+- **Do not discuss business matters** in public places, on social media or with friends and family.
+- **Secure documents and screens:** lock your computer when you step away, keep papers out of sight, use a shredder for sensitive paper, and do not leave printouts on the printer.
+- **Use strong passwords** and never share them.
+- **Check before you send:** the right recipient, the right attachment.
+- **Follow the data protection law** and your organisation's policy: in Nigeria, the Nigeria Data Protection Act 2023 governs personal data. Collect only what you need, keep it safe and use it only for its purpose.
+- **If you are unsure whether something is confidential, treat it as confidential** and ask.
+
+A breach of confidentiality can end a career and harm the organisation. A reputation for discretion is one of an administrator's greatest assets.
+
+## Dress, behaviour and teamwork
+
+**Dress and appearance** show respect and professionalism. Follow your workplace's dress code: neat, clean, appropriate clothing, tidy grooming and a tidy workspace. When in doubt, dress slightly more formally, especially when you meet visitors and clients.
+
+**Behaviour:**
+
+- **Greet people** warmly: colleagues, visitors and callers.
+- **Use polite language** and appropriate titles (Sir, Ma, Mr, Mrs, Dr, Chief).
+- **Be calm under pressure.** Avoid raising your voice, complaining in front of visitors or showing frustration.
+- **Manage personal matters:** limit personal calls and social media use during work.
+- **Keep your area tidy:** a cluttered desk suggests a cluttered mind and makes things hard to find.
+- **Take care of shared spaces:** kitchen, meeting rooms, printer, supplies.
+
+**Teamwork:**
+
+- **Help colleagues** when you can, and ask for help when you need it.
+- **Share information** that others need, promptly.
+- **Be clear about who does what,** and avoid duplicating or dropping tasks.
+- **Give and accept feedback** politely.
+- **Do not blame** others in front of visitors or the team.
+- **Respect different working styles** and backgrounds.
+- **Credit others** for their work.
+
+Remember that administrators work with people at all levels, so adapt your communication to each without losing your own professionalism.
+
+## Ethics at work
+
+**Ethics** means doing the right thing, even when no one is watching. Common situations for administrators:
+
+- **Honesty with money and records:** accurate expense claims, no "borrowing" petty cash, no falsifying figures.
+- **Conflicts of interest:** do not favour a vendor because they are a relative or friend. Declare any personal interest.
+- **Gifts and bribes:** do not accept or offer bribes. Follow the policy on gifts; when in doubt, decline and tell your manager.
+- **Use of company property:** do not use stationery, equipment or time for personal business.
+- **Truthfulness:** do not lie on behalf of your manager (for example "he is not here" when he is) in a way that damages trust. Use honest, polite phrases: "She is unavailable at the moment. May I take a message?"
+- **Reporting wrongdoing:** know your organisation's channel (a manager, HR or a reporting line) and use it if you see fraud, harassment or safety dangers.
+- **Respect and fairness:** do not discriminate or tolerate harassment.
+- **Pressure to cut corners:** you can say politely, "I would like to check that with you first."
+
+A simple test: *Would I be comfortable if this were published tomorrow? Is it fair to everyone affected? Is it within our rules?*
+
+## Try it
+
+```task
+{
+  "id": "poa-m01-t1",
+  "prompt": "A **friend asks you** what your manager's salary is and why a colleague was dismissed. In 40 to 90 words, say how you respond and why.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I would politely decline ...",
+  "rules": [
+    { "label": "Declines to share", "pattern": "decline|cannot share|can't share|will not|won't|not able to|unable to" },
+    { "label": "Explains confidentiality or trust", "pattern": "confidential|trust|private|discretion|sensitive|data protection" },
+    { "label": "Stays polite", "pattern": "polite|respect|kindly|sorry|understand" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "I would politely decline to share anything. Salaries and the reasons for a dismissal are confidential, and my job depends on discretion. Sharing them would break the trust of my colleagues and my employer and could breach data protection rules. I would tell my friend kindly that I do not discuss work matters outside the office, and change the subject.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m01-t2",
+  "prompt": "Write a **personal professional conduct checklist** with at least eight items, one per line, covering punctuality, accuracy, confidentiality, appearance, communication, teamwork, ethics and organisation.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Arrive 10 minutes early ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Punctuality", "pattern": "arrive|on time|early|punctual|deadline" },
+    { "label": "Accuracy checks", "pattern": "check|accura|proofread|spelling" },
+    { "label": "Confidentiality", "pattern": "confidential|lock|password|shred|private" },
+    { "label": "Appearance or behaviour", "pattern": "dress|appearance|neat|polite|greet|tidy" },
+    { "label": "Teamwork or communication", "pattern": "team|help|reply|respond|communicat" },
+    { "label": "Ethics", "pattern": "honest|gift|bribe|conflict|ethic|report" }
+  ],
+  "sample": "Arrive at least 10 minutes early and meet every deadline I agree to.\nCheck names, dates, figures and spelling before I send anything.\nLock my computer and clear sensitive papers when I leave my desk.\nNever share passwords or discuss confidential matters outside work.\nDress neatly and keep my desk tidy.\nGreet every visitor and colleague politely.\nReply to messages promptly and help colleagues when I can.\nBe honest with money and records, decline gifts that could look like bribes and report wrongdoing through the right channel.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m01-t3",
+  "prompt": "A vendor, who is also your cousin, offers you a gift basket after you recommend his company for an office supplies contract. In 50 to 100 words, say what you do and why.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I would ...",
+  "rules": [
+    { "label": "Declines or returns the gift", "pattern": "decline|return|refuse|politely say no|not accept" },
+    { "label": "Declares the relationship or conflict of interest", "pattern": "declare|disclose|tell my manager|conflict of interest|inform" },
+    { "label": "Mentions fairness or the policy", "pattern": "fair|policy|competitive|quotes|objective|transparen" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would politely decline the gift basket and tell my manager about the relationship, because a gift from a vendor I recommended looks like a bribe or a conflict of interest. I would also ask that the contract decision be made fairly, with competitive quotes and someone else involved in choosing, so that nobody can question it. Being open protects me, my cousin and the company.",
+  "required": false
+}
+```
+
+Next lesson: communication at work.
+$md$, true, true, 1, array['poa-m01-t1', 'poa-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m03', 'professional-office-administration', 'Time, tasks and diary management', 3, null, null, '{}'::text[], array['Prioritising', 'Managing a manager''s diary', 'Reminders and follow-up', 'Handling interruptions']::text[])
+values ('poa-m02', 'professional-office-administration', 'Communication at work', 2, 'Work Comms', 'WORKCOMM', array['Write emails and letters', 'Handle phone and front desk', 'Write minutes and memos', 'Give and take instructions']::text[], array['Writing emails and letters', 'Telephone and front desk', 'Minutes, memos and reports', 'Giving and receiving instructions']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m04', 'professional-office-administration', 'Records, filing and documents', 4, null, null, '{}'::text[], array['Paper and digital filing', 'Naming and organising files', 'Confidential and sensitive records', 'Archiving and retention']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:communication-at-work', 'professional-office-administration', 'poa-m02', 'communication-at-work', 'Communication at Work', 'Write emails and letters, handle the telephone and front desk, prepare minutes, memos and reports and give and receive instructions clearly.', 30, $md$
+## Writing emails and letters
+
+Written communication is a core administrative skill. It represents you and your organisation, and it creates a record.
+
+**Professional email:**
+
+- **Subject line:** short and specific: *"Board meeting, Tuesday 12 March, 10 am, Room 2"* (not "Meeting").
+- **Greeting:** "Dear Mrs Eze," or "Good morning Mr Ade," (match the formality of the relationship).
+- **Opening:** state the purpose in the first line.
+- **Body:** short paragraphs; one idea each. Use bullet points or numbers for lists or steps. Include dates, times, amounts and names.
+- **Action:** say clearly what you need and by when.
+- **Closing:** "Kind regards," or "Yours sincerely," followed by your name, role and contact details.
+- **Attachments:** mention them in the text and check that they are attached.
+- **Check before sending:** recipient, spelling, tone, facts, attachments. Use **To** for people who must act, **Cc** for people who need to know, and **Bcc** only when you have a good reason.
+- **Reply promptly,** and reply to the right people (use "Reply all" only when needed).
+- **Tone:** polite, positive and clear. Never write in anger; never write something you would not want read aloud.
+
+**Formal letters** follow a standard layout: sender's address and date, recipient's name and address, a salutation ("Dear Sir/Madam" or a name), a subject line, the body, a closing ("Yours faithfully" if you began "Dear Sir/Madam"; "Yours sincerely" if you used a name), your signature and name. Keep a copy.
+
+**Rewrite example.**
+*Weak:* "Hi, can u send the report asap"
+*Better:* "Dear Mr Bello, Could you please send me the monthly sales report by 3 pm on Thursday? I need it for the management meeting on Friday. Thank you. Kind regards, Ada Okoro, Office Administrator."
+
+## Telephone and front desk
+
+Administrators often are the **first voice or face** of the business.
+
+**On the phone:** answer promptly (within three rings), greet and give your name, listen, take accurate notes, handle transfers politely, take clear messages and close courteously. A good message records: caller's name, company, phone number, message, date and time, and who took it.
+
+**At the front desk:**
+
+- **Greet every visitor** within seconds, with a smile.
+- **Find out who they are and who they want to see.**
+- **Check the diary,** announce them to the host, and ask visitors to sign in.
+- **Offer a seat and a drink** if appropriate, and tell them how long they may wait.
+- **Provide visitor badges** and follow security procedures.
+- **Handle difficult visitors** calmly and call security or a manager if necessary.
+- **Keep reception tidy** with up-to-date brochures and clear signs.
+- **Handle deliveries and mail** properly: record, sign, and pass on promptly.
+
+Use the **customer service skills** for complaints and angry callers: listen, apologise, solve or escalate.
+
+## Minutes, memos and reports
+
+**Minutes** record a meeting's decisions and actions. A good set includes: the title, date, time, place; attendees and apologies; agenda items with a summary of discussion and **decisions**; **actions** with owner and deadline; the date of the next meeting. Write them clearly and send them within 24 to 48 hours. Keep to **facts, decisions and actions;** do not record every word.
+
+**Memos** are short internal messages. Layout: **To, From, Date, Subject,** then a brief message. Use them for announcements, reminders and requests. Keep to one subject, and state any action needed.
+
+**Reports** present information and findings, often with recommendations. A simple structure:
+
+1. **Title and date.**
+2. **Summary** (the main points and recommendation).
+3. **Introduction/purpose.**
+4. **Findings** (facts, figures, tables).
+5. **Conclusions and recommendations.**
+6. **Appendices.**
+
+Write in plain language, use headings, bullets and tables to help scanning, check numbers carefully, and put the most important information first.
+
+## Giving and receiving instructions
+
+Many mistakes begin with unclear instructions.
+
+**Receiving instructions:**
+
+- **Listen fully,** and take notes.
+- **Ask questions** if anything is unclear: what, by when, in what format, for whom.
+- **Repeat back** the main points: "So you would like the draft letter to Mr Ade by 2 pm, on company letterhead, and copied to Mrs Eze. Is that right?"
+- **Confirm priorities** if you have several tasks: "Which should I do first?"
+- **Say early** if you cannot meet a deadline, and propose an alternative.
+- **Report back** when done.
+
+**Giving instructions** (to a junior colleague, a messenger or a vendor):
+
+- **Be specific:** the task, the outcome, the deadline and the standard.
+- **Explain why** it matters.
+- **Check understanding** by asking them to say it back.
+- **Provide what they need:** information, access, examples.
+- **Follow up politely** at the agreed time.
+- **Say thank you.**
+
+Use **writing** to confirm important instructions, so there is a record and fewer disputes.
+
+## Try it
+
+```task
+{
+  "id": "poa-m02-t1",
+  "prompt": "Write an **email** (60 to 120 words) to your manager, Mr Bello, asking him to approve a budget of ₦150,000 for new office chairs by Thursday. Include a subject line, a greeting, the reason, the action and deadline, and a closing.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Subject: ...\nDear Mr Bello,",
+  "rules": [
+    { "label": "Has a subject line", "pattern": "subject" },
+    { "label": "Greets by name", "pattern": "dear mr bello|good (morning|afternoon) mr bello|mr bello," },
+    { "label": "States the amount", "pattern": "150,?000" },
+    { "label": "Gives a reason", "pattern": "because|since|so that|reason|chairs (are|have)|backache|broken|replace" },
+    { "label": "States the action and deadline", "pattern": "approve|approval[\\s\\S]*(thursday|by)|thursday" },
+    { "label": "Courteous closing", "pattern": "regards|sincerely|thank you" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Subject: Approval requested: ₦150,000 for office chairs\nDear Mr Bello,\nI am writing to ask for your approval of ₦150,000 to replace six office chairs. Four of the current chairs are broken, and two staff have complained of back pain, which is affecting their work. I have attached three quotations; the lowest is from Neat Furniture at ₦148,000, with delivery included. Could you please approve this by Thursday, so that the chairs arrive before the new staff start on Monday? Please let me know if you need any further information.\nKind regards,\nAda Okoro, Office Administrator",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m02-t2",
+  "prompt": "Write the **minutes of a short meeting** in at least eight lines: title, date and place, attendees and apologies, three decisions and two actions with owners and deadlines, and the next meeting date.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "Minutes of ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Title, date and place", "pattern": "minutes[\\s\\S]*(date|\\d{1,2}\\s*(march|april|may|june|july|august|september|october|november|december|january|february))" },
+    { "label": "Attendees and apologies", "pattern": "present|attendees|attended[\\s\\S]*apolog|apolog" },
+    { "label": "Decisions", "pattern": "decision|agreed|resolved", "min": 3 },
+    { "label": "Actions with owners and deadlines", "pattern": "action[^\\n]*(by|owner)[^\\n]*\\d|action[^\\n]*\\d", "min": 2 },
+    { "label": "Next meeting", "pattern": "next meeting" }
+  ],
+  "sample": "Minutes of the Admin Team Meeting, 12 March, 10 am, Conference Room\nPresent: Ada Okoro (chair), Tunde Ade, Ngozi Bello. Apologies: Chidi Eze.\nDecision 1: the team agreed to move to a new supplier for printer paper.\nDecision 2: it was agreed that all visitors must sign in and wear a badge from 1 April.\nDecision 3: the monthly meeting will move to the first Tuesday.\nAction 1: Tunde to get three quotations for printer paper by 19 March.\nAction 2: Ngozi to order visitor badges by 22 March.\nNext meeting: Tuesday 2 April, 10 am.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m02-t3",
+  "prompt": "Your manager says quickly: *\"Send the report to the client and copy Mrs Eze, sometime today.\"* Write **three clarifying questions** and then the **repeat-back sentence** you would use. One per line.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Which report ...?",
+  "rules": [
+    { "label": "At least four lines", "minLines": 4 },
+    { "label": "Questions end with a question mark (at least three)", "pattern": "\\?", "min": 3 },
+    { "label": "Asks which report, which client or deadline time", "pattern": "which|what time|by when|format|deadline|attach" },
+    { "label": "Repeats back the instruction", "pattern": "so (you|i)|to confirm|let me confirm|just to confirm|if i understand" }
+  ],
+  "sample": "Which version of the report should I send, the draft or the final one?\nShould it go to Mr Bello at the client, and in what format, PDF or Word?\nWhat time today do you need it to reach him by?\nSo to confirm: I will send the final PDF report to Mr Bello at the client by 3 pm today, copying Mrs Eze. Is that right?",
+  "required": false
+}
+```
+
+Next lesson: time, tasks and diary management.
+$md$, true, true, 2, array['poa-m02-t1', 'poa-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m05', 'professional-office-administration', 'Office software', 5, null, null, '{}'::text[], array['Word processing for professional documents', 'Spreadsheets for lists and simple budgets', 'Presentations', 'Email, calendars and cloud storage']::text[])
+values ('poa-m03', 'professional-office-administration', 'Time, tasks and diary management', 3, 'Diary & Time', 'DIARY', array['Prioritise tasks', 'Manage a diary', 'Use reminders', 'Handle interruptions']::text[], array['Prioritising', 'Managing a manager''s diary', 'Reminders and follow-up', 'Handling interruptions']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m06', 'professional-office-administration', 'Meetings, events and travel', 6, null, null, '{}'::text[], array['Planning and running meetings', 'Agendas and minutes', 'Organising events', 'Booking travel and accommodation']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:time-tasks-and-diary-management', 'professional-office-administration', 'poa-m03', 'time-tasks-and-diary-management', 'Time, Tasks and Diary Management', 'Prioritise work, manage a manager''s diary, use reminders and follow-up and handle interruptions.', 25, $md$
+## Prioritising
+
+Administrators often have many requests at once from several people. **Prioritising** means deciding what to do first so that the most important and urgent work gets done, and nothing is forgotten.
+
+A simple tool is the **urgent and important matrix:**
+
+| | Urgent | Not urgent |
+| :-- | :-- | :-- |
+| **Important** | **Do now:** deadlines today, a crisis, the manager's priority | **Plan:** preparation, filing systems, training, improvements |
+| **Not important** | **Delegate or do quickly:** some interruptions and requests | **Drop or delay:** time wasters |
+
+Most people spend too much time on "urgent" and neglect "important, not urgent" tasks, which then become urgent later. Block time for planning and preparation.
+
+Practical habits:
+
+- **Make a to-do list every day,** ideally the night before or first thing. List tasks, deadlines and estimated times.
+- **Choose your top three** for the day.
+- **Do the hardest or most important tasks when you are fresh,** and routine ones when you are tired.
+- **Break big tasks into steps.**
+- **Group similar tasks** (all calls together, all filing together).
+- **Ask when priorities clash:** *"Mr Bello needs the letter at 2 pm and Mrs Eze needs the schedule by 3 pm. Which should I do first?"* Never guess silently.
+- **Say no or negotiate politely** when you cannot take on more: "I can do that after 4 pm. Would that be all right?"
+- **Review at the end of the day:** what is done, what moves to tomorrow.
+
+**A time audit** shows where your time goes. Example for a 40-hour week: email **10 hours** (25%), meetings and minutes **8 hours** (20%), phone and visitors **6 hours** (15%), filing and records **4 hours** (10%), and other tasks **12 hours** (30%). Looking at it, you might see that email takes a quarter of your time and decide to check it at set times instead of constantly.
+
+## Managing a manager's diary
+
+Managing a manager's **diary (calendar)** is a trusted job. A well-managed diary protects their time and prevents embarrassment.
+
+**Principles:**
+
+- **Know their priorities:** which meetings and people come first, and what time they must protect (thinking time, family commitments, travel).
+- **Know their preferences:** best times for meetings, how long they like, what they dislike.
+- **Keep one master diary,** updated immediately, and shared with the people who need it.
+- **Never double-book,** unless you have agreed it.
+- **Allow travel and buffer time** between meetings. Example: a manager has five meetings of **1 hour** each in an 8-hour day (9 am to 5 pm). With a **15-minute** buffer after each meeting: total meeting time = 5 hours; buffers = 5 × 0.25 = 1.25 hours; time used = 6.25 hours, which leaves **1.75 hours** for lunch, calls and thinking. A schedule with no buffers will run late.
+- **Include all details:** date, time, location or link, attendees, phone numbers, purpose and papers needed.
+- **Confirm appointments** by email or message the day before.
+- **Prepare papers and briefings** in advance.
+- **Check time zones** for international calls.
+- **Handle requests:** say "Let me check the diary and get back to you," and offer two or three options.
+- **Protect important blocks** (such as board meetings and deadlines) and ask before moving anything.
+- **Manage cancellations and changes** politely and quickly, informing everyone.
+- **Review the next day and week** with the manager at a fixed time.
+
+Use a shared digital calendar (Outlook, Google Calendar or similar) with reminders and colour categories, and keep a back-up of key dates.
+
+## Reminders and follow-up
+
+Much of an administrator's value is making sure **things actually happen.**
+
+- **Write everything down:** requests, deadlines, promises, "call me back."
+- **Use reminders:** calendar alerts, task apps, sticky notes, a follow-up file or "tickler" system (a set of folders for each day or month).
+- **Set reminders earlier than the deadline** (for example two days before) so there is time to act.
+- **Keep an action log:** task, who, date asked, due date, status. Review it daily.
+- **Follow up politely and persistently:** "I am following up on the signed form for the 3 pm courier. Could you let me have it by noon, please?"
+- **Confirm completion** and update your log.
+- **Remind your manager** of important deadlines, commitments and renewals (insurance, licences, contracts, anniversaries).
+- **Close the loop:** tell the person who asked when it is done.
+
+## Handling interruptions
+
+Interruptions are part of the job, but they can destroy focus and cause errors.
+
+- **Plan for them:** do not schedule your whole day; leave buffer time.
+- **Decide what is truly urgent:** emergencies and your manager's urgent needs come first; a casual question can wait or be scheduled.
+- **Use polite phrases:** "I am finishing something. Can I come to you in 15 minutes?" or "Let me note that down and come back to you at 2 pm."
+- **Return to your task:** write a quick note of where you stopped.
+- **Batch email and messages:** check at set times instead of every minute. Turn off non-essential notifications.
+- **Create quiet time** for tasks that need concentration, and tell colleagues.
+- **Handle visitors and calls efficiently:** be warm but keep them on track.
+- **Record repeated interruptions** and fix their causes (a common question might need an FAQ sheet).
+
+Keep calm and flexible. Good administrators protect their focus without being unhelpful.
+
+## Try it
+
+```task
+{
+  "id": "poa-m03-t1",
+  "prompt": "A manager has **five 1-hour meetings** in an 8-hour day (9 am to 5 pm) and you add a **15-minute buffer** after each. Work out the total meeting time, total buffer time, time used and the time left. Then say whether you would also fit in a sixth meeting and why.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Meetings = ...",
+  "rules": [
+    { "label": "5 hours of meetings", "pattern": "\\b5\\s*hours" },
+    { "label": "1.25 hours of buffer", "pattern": "1\\.25|75 minutes" },
+    { "label": "6.25 hours used", "pattern": "6\\.25" },
+    { "label": "1.75 hours left", "pattern": "1\\.75" },
+    { "label": "Says not to add a sixth (little time left, lunch, thinking time)", "pattern": "not|would not|wouldn't|avoid|lunch|thinking|calls|too tight|no" }
+  ],
+  "sample": "Meetings = 5 x 1 hour = 5 hours.\nBuffers = 5 x 15 minutes = 1.25 hours.\nTime used = 5 + 1.25 = 6.25 hours, which leaves 8 - 6.25 = 1.75 hours.\nI would not add a sixth meeting, because the remaining time is needed for lunch, calls and thinking time, and the schedule would have no room for delays.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m03-t2",
+  "prompt": "Write your **to-do list for one busy day** with at least eight tasks. For each, give a priority (do now, plan, delegate or delay) and an estimated time. One per line, with your top three marked.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "1. Letter to Mr Ade - do now - 30 min",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Each line has a priority category", "pattern": "do now|plan|delegate|delay|urgent|high|medium|low", "min": 8 },
+    { "label": "Each line has a time estimate", "pattern": "\\d+\\s*(min|minutes|hour|hours|hr)", "min": 8 },
+    { "label": "Marks the top three", "pattern": "top (three|3)|\\*|priority 1|first|#1|#2|#3" }
+  ],
+  "sample": "1. Prepare the board papers - do now - 90 min *\n2. Confirm Mr Bello's 2 pm meeting room - do now - 10 min *\n3. Reply to urgent vendor email - do now - 15 min *\n4. Book next week's flight - plan - 20 min\n5. File yesterday's invoices - plan - 30 min\n6. Collect courier parcel - delegate to the messenger - 10 min\n7. Order printer paper - plan - 15 min\n8. Tidy the stationery cupboard - delay to Friday - 30 min\nTop three are marked with *",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m03-t3",
+  "prompt": "A colleague interrupts you while you are finishing an urgent report. Write the **polite words** you would use in two different cases: (a) it is not urgent, (b) it is genuinely urgent. 40 to 90 words in total.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "(a) ...\n(b) ...",
+  "rules": [
+    { "label": "Has both cases (a) and (b)", "pattern": "\\(a\\)[\\s\\S]*\\(b\\)|case a[\\s\\S]*case b" },
+    { "label": "Case (a) postpones politely with a time", "pattern": "after|in \\d+ minutes|at \\d|come back|finish|when i" },
+    { "label": "Case (b) shows willingness to help now", "pattern": "now|straight away|of course|right away|let me" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "(a) \"I am finishing an urgent report for Mr Bello. Can I come to you at 3 pm so I can give you my full attention?\"\n(b) \"Of course, if it is urgent let me help you now. Let me save this and note where I stopped, so I can come straight back to the report afterwards.\"",
+  "required": false
+}
+```
+
+Next lesson: records, filing and documents.
+$md$, true, true, 3, array['poa-m03-t1', 'poa-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m07', 'professional-office-administration', 'Office management and supplies', 7, null, null, '{}'::text[], array['Ordering and stock', 'Working with vendors', 'Petty cash and expenses', 'Health, safety and equipment']::text[])
+values ('poa-m04', 'professional-office-administration', 'Records, filing and documents', 4, 'Records', 'RECORDS', array['Organise paper and digital files', 'Name files consistently', 'Protect confidential records', 'Archive and dispose properly']::text[], array['Paper and digital filing', 'Naming and organising files', 'Confidential and sensitive records', 'Archiving and retention']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:records-filing-and-documents', 'professional-office-administration', 'poa-m04', 'records-filing-and-documents', 'Records, Filing and Documents', 'Organise paper and digital filing, name and arrange files, protect confidential records and archive and dispose of documents properly.', 25, $md$
+## Paper and digital filing
+
+A good filing system lets you **find any document in under a minute,** protects important information and meets legal and audit requirements. A bad one wastes hours, loses papers and creates risk.
+
+**Principles:**
+
+- **One place for each thing.** Everyone should know where a document goes and where to find it.
+- **Simple and logical.** If a new colleague cannot understand the system quickly, it is too complicated.
+- **Consistent.** Apply the same rules to everything.
+- **File promptly,** not in a pile "for later."
+- **Keep originals safe,** and work from copies where possible.
+- **Remove duplicates** and out-of-date versions.
+
+**Common ways to arrange files:**
+
+| Method | How | Good for |
+| :-- | :-- | :-- |
+| **Alphabetical** | By name (A to Z) | Customers, suppliers, staff |
+| **Numerical** | By number (invoice or case number) | Invoices, orders, cases |
+| **Chronological** | By date | Correspondence, bank statements |
+| **Subject / category** | By topic (Finance, HR, Legal, Projects) | General office files |
+| **Geographical** | By place | Branches, regions |
+
+A filing system often combines them: for example, main folders by subject (Finance, HR, Clients), then sub-folders by name, then documents by date.
+
+**Paper filing tools:** lever-arch and ring binders, suspension files, labelled folders, dividers and a lockable cabinet. Label clearly, and leave space to grow. Keep active files within reach, and send old ones to archive.
+
+**Digital filing:** use a clear **folder structure** on a shared drive or cloud storage, with access permissions. Mirror the paper structure where you have both. **Scan** important paper documents at good quality, name them properly, and store them in the right folder, so you can retire the paper where the law allows.
+
+## Naming and organising files
+
+**File names** are the key to finding documents. A good **naming convention** is consistent, clear and sortable.
+
+Rules:
+
+- **Start with the date in a sortable format:** year-month-day, for example `2026-03-12`.
+- **Include the main identifiers:** client or project, document type, short description.
+- **Add a version number** for drafts: `v1`, `v2`, `FINAL`.
+- **Keep names short but meaningful,** avoid special characters, and use hyphens or underscores instead of spaces.
+- **Be consistent across the team.**
+
+Examples:
+
+- `2026-03-12_BrightSchools_Invoice_0147.pdf`
+- `2026-03-05_BoardMeeting_Minutes_v2.docx`
+- `2026-02_Budget_Marketing_FINAL.xlsx`
+
+Poor names: `new doc.docx`, `letter final final 2.docx`, `scan0001.pdf`.
+
+**Folder structure example:**
+```
+Company Admin
+  01 Finance
+    2026
+      Invoices
+      Bank statements
+  02 HR
+    Contracts
+    Leave records
+  03 Clients
+    Bright Schools
+      Contracts
+      Correspondence
+  04 Projects
+  05 Templates
+  99 Archive
+```
+
+Numbering the top folders keeps them in order. **Document control** for important documents includes a version history (who changed what and when), an owner for each document and a clear rule about which version is current.
+
+**Housekeeping:** at regular intervals (weekly or monthly) clear the desktop and downloads folder, file stray documents, delete duplicates and back up.
+
+## Confidential and sensitive records
+
+Some records need extra protection: personnel files, salaries, medical information, contracts, legal matters, financial data, customer personal data, passwords and strategy.
+
+**Physical security:**
+
+- Keep in a **locked cabinet or room,** with controlled keys.
+- **Clear desk:** do not leave sensitive papers out when you step away.
+- **Shred** confidential waste; do not just bin it.
+- **Sign in and out** files taken from storage.
+- **Limit who can enter** records areas.
+
+**Digital security:**
+
+- **Strong, unique passwords,** and two-step verification where possible.
+- **Access permissions:** only the people who need a file can open it.
+- **Lock your screen** when away.
+- **Encrypt or password-protect** sensitive files, especially when sending them.
+- **Be careful with email and USB drives;** check recipients and avoid personal storage for company data.
+- **Back up regularly:** a good rule is **3-2-1** (three copies of data, on two different types of storage, with one copy off-site or in the cloud).
+- **Keep software updated** and be alert to phishing emails.
+
+**Data protection:** under the Nigeria Data Protection Act 2023, personal data must be collected for a clear purpose, kept accurate and secure, used only as needed and not kept longer than necessary. Follow your organisation's data protection policy, and report any suspected data breach to the person responsible immediately.
+
+## Archiving and retention
+
+You cannot keep everything forever, and you cannot throw everything away. **Retention** rules say **how long** to keep each type of record, and **archiving** moves rarely used records to safe, organised storage.
+
+A **retention schedule** lists record types, how long to keep them and what to do afterwards. Examples (illustrative only; the periods depend on law, regulators and your organisation's policy, so **check the current requirements and take advice**):
+
+| Record type | Typical approach |
+| :-- | :-- |
+| Tax and accounting records | Keep for the period required by tax and company law (often several years) |
+| Employee records | Keep during employment and for a set period afterwards |
+| Contracts | Keep for the life of the contract plus a set period |
+| Meeting minutes and board papers | Often kept permanently |
+| Routine correspondence | Short period, then dispose of |
+| Job applications (unsuccessful) | Short period, then delete |
+| Health and safety records | As required by the regulations |
+
+**Archiving steps:** select records that are no longer active, list them (an index with contents, dates, box number and location), pack them in labelled boxes, store them safely (dry, secure, protected from fire and pests), and record the planned destruction date.
+
+**Disposal:** when the retention period ends and nothing prevents it (no legal hold or dispute), **destroy securely:** shred paper, permanently delete digital files (including backups where practical), and keep a **record of destruction.** Never dispose of confidential documents in ordinary waste.
+
+## Try it
+
+```task
+{
+  "id": "poa-m04-t1",
+  "prompt": "Rename these badly named files using a clear convention (date, name, type, version). Write **six new file names**, one per line: (1) a March 2026 invoice number 0147 for Bright Schools; (2) draft 2 of the March board meeting minutes; (3) a final marketing budget for February 2026; (4) a signed contract with ABC Ltd, 10 January 2026; (5) a staff leave form for Tola Ade, March 2026; (6) a scan of the office lease.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "2026-03_BrightSchools_Invoice_0147.pdf",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Each line starts with a date (year first)", "pattern": "^\\s*2026|^\\s*\\d{4}", "min": 5 },
+    { "label": "Each line has an extension", "pattern": "\\.(pdf|docx|xlsx|doc|jpg|png)", "min": 6 },
+    { "label": "Uses underscores or hyphens, no spaces in the name", "pattern": "_", "min": 6 },
+    { "label": "Includes a version or FINAL", "pattern": "v2|final|v1" }
+  ],
+  "sample": "2026-03_BrightSchools_Invoice_0147.pdf\n2026-03_BoardMeeting_Minutes_v2.docx\n2026-02_Marketing_Budget_FINAL.xlsx\n2026-01-10_ABC_Contract_Signed.pdf\n2026-03_Leave_Form_TolaAde.pdf\n2026_Office_Lease_Scan.pdf",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m04-t2",
+  "prompt": "Design a **folder structure** for a small company's shared drive: at least **ten folders and sub-folders**, one per line, using numbering and indentation (spaces) to show the hierarchy. Include an Archive and a Templates folder.",
+  "minutes": 10,
+  "rows": 14,
+  "placeholder": "01 Finance\n  2026\n    Invoices",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Includes finance and HR", "pattern": "finance[\\s\\S]*hr|hr[\\s\\S]*finance" },
+    { "label": "Includes clients or projects", "pattern": "client|project" },
+    { "label": "Includes Archive", "pattern": "archive" },
+    { "label": "Includes Templates", "pattern": "template" },
+    { "label": "Shows hierarchy with indentation", "pattern": "\\n\\s{2,}\\S" }
+  ],
+  "sample": "01 Finance\n  2026\n    Invoices\n    Bank statements\n02 HR\n  Contracts\n  Leave records\n03 Clients\n  Bright Schools\n    Contracts\n    Correspondence\n04 Projects\n05 Templates\n99 Archive",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m04-t3",
+  "prompt": "Write **six security rules** for confidential records in your office, one per line, covering paper, computer, email, passwords, backup and disposal. Add one line saying that retention periods must be checked against current law.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Keep personnel files in a locked cabinet ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "Locked storage or clear desk", "pattern": "lock|cabinet|clear desk|key" },
+    { "label": "Computer or screen lock", "pattern": "screen|computer|lock your|log off" },
+    { "label": "Passwords", "pattern": "password" },
+    { "label": "Backup", "pattern": "back ?up|backup|3-2-1" },
+    { "label": "Shredding or secure disposal", "pattern": "shred|dispose|destroy|delete" },
+    { "label": "Check retention against law", "pattern": "retention|law|check|advice|requirement" }
+  ],
+  "sample": "Keep personnel and salary files in a locked cabinet and sign out any file taken.\nKeep a clear desk and put sensitive papers away when I leave.\nLock my computer screen whenever I step away.\nUse strong, unique passwords and never share them.\nPassword-protect sensitive files and check the recipient before sending email.\nBack up data using the 3-2-1 rule, with one copy off-site.\nShred confidential paper and securely delete digital files at the end of the retention period.\nCheck retention periods against current law and company policy before disposal.",
+  "required": false
+}
+```
+
+Next lesson: office software.
+$md$, true, true, 4, array['poa-m04-t1', 'poa-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('poa-m08', 'professional-office-administration', 'Final project: an office administration toolkit', 8, null, null, '{}'::text[], array['Choosing the office', 'Building the toolkit', 'Presenting it', 'Review']::text[])
+values ('poa-m05', 'professional-office-administration', 'Office software', 5, 'Office Software', 'OFFSOFT', array['Format documents', 'Use spreadsheet formulas', 'Design slides', 'Use email, calendars and cloud']::text[], array['Word processing for professional documents', 'Spreadsheets for lists and simple budgets', 'Presentations', 'Email, calendars and cloud storage']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:office-software', 'professional-office-administration', 'poa-m05', 'office-software', 'Office Software', 'Use word processing, spreadsheets, presentations, email, calendars and cloud storage to produce professional work quickly.', 25, $md$
+## Word processing for professional documents
+
+Word processors (Microsoft Word, Google Docs and others) create letters, reports, memos, minutes, forms and policies. Most people use only a fraction of their features, and so spend too long on formatting. A few skills make documents look professional and save time.
+
+**Core skills:**
+
+- **Use styles** (Heading 1, Heading 2, Normal) instead of formatting each line by hand. Styles make documents consistent and let you generate a **table of contents** automatically.
+- **Set the page:** margins, orientation, paper size (A4), line spacing.
+- **Use a consistent font** (one or two fonts, readable size such as 11 or 12 points) and spacing.
+- **Lists and tables:** bullets and numbering for lists; tables for data and layouts. Do not use the space bar for alignment: use tabs, tables or indents.
+- **Headers, footers and page numbers** for longer documents (title, date, "Page X of Y").
+- **Templates:** save your letterhead, memo and minutes layouts as templates, so everyone starts from the same professional layout.
+- **Track changes and comments** for review: others can suggest edits that you accept or reject.
+- **Mail merge:** produce many personalised letters or labels from a list (names and addresses in a spreadsheet). It saves hours when sending invitations, notices or reminders.
+- **Spell check and proofreading:** use the tool, then read the document yourself, especially names, numbers and dates.
+- **Save and export:** use clear file names; **save as PDF** for documents you send out and do not want edited.
+
+Good document habits: put the main point first, use headings and short paragraphs, keep formatting simple and check the final result in print preview.
+
+## Spreadsheets for lists and simple budgets
+
+Spreadsheets (Microsoft Excel, Google Sheets) organise data in rows and columns and **calculate automatically.** Administrators use them for lists (contacts, stock, attendance), schedules, budgets, expense tracking and simple reports.
+
+**Basics:**
+
+- **Cells, rows, columns,** and cell references such as B2.
+- **Enter data in a clean table:** one row per item, one column per type of information, a header row, no blank rows or merged cells inside the data.
+- **Formulas start with =.** Examples:
+  - `=SUM(B2:B10)` adds a range.
+  - `=AVERAGE(B2:B10)` finds the average.
+  - `=B2*C2` multiplies (for example quantity times price).
+  - `=B2-C2` subtracts (for example budget minus spent).
+  - `=B2/C2` divides.
+  - `=MAX(B2:B10)` and `=MIN(B2:B10)` find the largest and smallest values.
+  - `=IF(D2>0,"Over","OK")` makes a decision.
+  - `=COUNTIF(A2:A50,"Paid")` counts matching items.
+- **Absolute references** (`$B$2`) keep a cell fixed when you copy a formula.
+- **Format:** number formats (currency, percentages, dates), column widths, borders and alignment.
+- **Sort and filter** to find and arrange data.
+- **Charts** to show data visually.
+- **Freeze the header row,** and protect cells that should not be changed.
+
+**Simple budget example.** Items: Chairs (quantity 6, unit price ₦25,000), Desks (quantity 3, unit price ₦40,000), Printer paper (quantity 20 reams, unit price ₦4,800).
+
+- Line totals: `=B2*C2` gives ₦150,000, ₦120,000 and ₦96,000.
+- Grand total: `=SUM(D2:D4)` gives **₦366,000.**
+- Add VAT at 7.5%: `=D5*0.075` gives **₦27,450;** total with VAT = ₦393,450.
+
+Always **check your formulas** by testing with simple numbers, and keep inputs (prices, rates) in clearly labelled cells so they can be changed.
+
+## Presentations
+
+Presentation software (PowerPoint, Google Slides) helps you communicate ideas to a group. As an administrator you may prepare slides for managers, meetings and training.
+
+Design rules:
+
+- **One message per slide,** with a clear title that states the point.
+- **Less text:** a few short bullets (about six words each), not paragraphs. The slide supports the speaker; it is not the speech.
+- **Readable:** large fonts (at least 24 points for body), strong contrast between text and background.
+- **Consistent design:** use the company template, colours and logo; avoid clutter and too many effects.
+- **Use visuals:** charts, photos, diagrams and icons instead of long text. Label charts clearly.
+- **Order logically:** title, purpose or agenda, main points, summary or recommendation, next steps.
+- **Keep it short:** about one slide per minute of talking.
+- **Check spelling, numbers and links.** Test on the projector or screen you will use.
+- **Notes and handouts:** add speaker notes, and save as PDF to share.
+
+Rehearse, and always have a backup copy (USB, email or cloud) in case of technical problems.
+
+## Email, calendars and cloud storage
+
+**Email tools** (Outlook, Gmail) have features that save time:
+
+- **Folders and labels** to organise messages.
+- **Rules and filters** to sort incoming mail automatically.
+- **Signatures** with your name, role and contact details.
+- **Templates and quick replies** for common messages.
+- **Out-of-office** messages with dates and who to contact.
+- **Scheduling** emails to send later.
+- **Search** to find messages quickly.
+- **Cc/Bcc** used correctly, and attachments within sensible size limits (share large files by link).
+
+**Calendars:**
+
+- **Create meetings with invitations,** so attendees can accept or decline and the room is booked.
+- **Share calendars** with permissions (see only free/busy, or full details).
+- **Set reminders and recurring events.**
+- **Use colours or categories** (meetings, deadlines, travel, personal).
+- **Add time zones** for international calls.
+
+**Cloud storage** (OneDrive, Google Drive, Dropbox and similar):
+
+- **Store files online** and access them from any device.
+- **Share by link or invitation,** with the right permission: view, comment or edit.
+- **Collaborate in real time** on the same document.
+- **Version history** lets you restore earlier versions.
+- **Back up** important files automatically.
+- **Security:** use strong passwords and two-step verification, share only with those who need access, and review who has access regularly. Never put confidential files in publicly accessible links.
+
+Keep skills current: software changes often. Spend a little time each week learning one new feature, using the built-in help, short tutorials or colleagues.
+
+## Try it
+
+```task
+{
+  "id": "poa-m05-t1",
+  "prompt": "A budget sheet has: **Chairs** 6 × ₦25,000, **Desks** 3 × ₦40,000, **Printer paper** 20 × ₦4,800. Write the **formula** for a line total (assuming quantity in B and price in C), the **line totals**, the **grand total**, **7.5% VAT** and the **total with VAT**.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Line total formula: =B2*C2",
+  "rules": [
+    { "label": "Line total formula =B2*C2", "pattern": "=\\s?b2\\s?\\*\\s?c2" },
+    { "label": "Line totals ₦150,000, ₦120,000 and ₦96,000", "pattern": "150,?000[\\s\\S]*120,?000[\\s\\S]*96,?000" },
+    { "label": "Grand total ₦366,000 with SUM", "pattern": "366,?000" },
+    { "label": "VAT of ₦27,450", "pattern": "27,?450" },
+    { "label": "Total with VAT ₦393,450", "pattern": "393,?450" }
+  ],
+  "sample": "Line total formula: =B2*C2\nChairs = 6 x 25,000 = ₦150,000; Desks = 3 x 40,000 = ₦120,000; Printer paper = 20 x 4,800 = ₦96,000\nGrand total: =SUM(D2:D4) = ₦366,000\nVAT at 7.5%: =D5*0.075 = ₦27,450\nTotal with VAT = 366,000 + 27,450 = ₦393,450",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m05-t2",
+  "prompt": "Write the **spreadsheet formula** for each need, one per line with a short note: (a) total of cells B2 to B20; (b) average of B2 to B20; (c) quantity in B2 times price in C2; (d) show \"Low\" if stock in D2 is below 10, otherwise \"OK\"; (e) count how many cells in A2 to A50 say \"Paid\".",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "(a) =SUM(B2:B20)",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "SUM", "pattern": "=\\s?sum\\(\\s?b2:b20\\s?\\)" },
+    { "label": "AVERAGE", "pattern": "=\\s?average\\(\\s?b2:b20\\s?\\)" },
+    { "label": "Multiplication", "pattern": "=\\s?b2\\s?\\*\\s?c2" },
+    { "label": "IF with Low and OK", "pattern": "=\\s?if\\(\\s?d2\\s?<\\s?10\\s?,\\s?\"low\"\\s?,\\s?\"ok\"\\s?\\)" },
+    { "label": "COUNTIF with Paid", "pattern": "=\\s?countif\\(\\s?a2:a50\\s?,\\s?\"paid\"\\s?\\)" }
+  ],
+  "sample": "(a) =SUM(B2:B20) adds the range\n(b) =AVERAGE(B2:B20) gives the average\n(c) =B2*C2 multiplies quantity by price\n(d) =IF(D2<10,\"Low\",\"OK\") flags low stock\n(e) =COUNTIF(A2:A50,\"Paid\") counts paid items",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m05-t3",
+  "prompt": "Write a **slide plan** for a 5-minute presentation to management proposing new office chairs: at least six slides, one per line, each with a title that states the point and one or two short bullets.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Slide 1: Title - ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Slide labels", "pattern": "slide\\s?\\d", "min": 6 },
+    { "label": "Includes problem and recommendation", "pattern": "problem[\\s\\S]*recommend|recommend[\\s\\S]*problem" },
+    { "label": "Includes cost", "pattern": "cost|₦\\s?\\d|budget" },
+    { "label": "Includes next steps", "pattern": "next steps?|decision|approval" }
+  ],
+  "sample": "Slide 1: Our chairs are failing - four of six are broken\nSlide 2: The problem - back pain complaints and lost work time\nSlide 3: Options - repair, buy basic, buy ergonomic\nSlide 4: Cost comparison - ₦150,000 for basic against ₦240,000 for ergonomic with a 5-year warranty\nSlide 5: Recommendation - buy six ergonomic chairs for ₦240,000\nSlide 6: Next steps - approval by Thursday and delivery in two weeks",
+  "required": false
+}
+```
+
+Next lesson: meetings, events and travel.
+$md$, true, true, 5, array['poa-m05-t1', 'poa-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('poa-m06', 'professional-office-administration', 'Meetings, events and travel', 6, 'Meetings & Events', 'MEETEVT', array['Run meetings', 'Write agendas and minutes', 'Plan events and budgets', 'Book travel']::text[], array['Planning and running meetings', 'Agendas and minutes', 'Organising events', 'Booking travel and accommodation']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:meetings-events-and-travel', 'professional-office-administration', 'poa-m06', 'meetings-events-and-travel', 'Meetings, Events and Travel', 'Plan and run meetings, write agendas and minutes, organise events and book travel and accommodation.', 25, $md$
+## Planning and running meetings
+
+Meetings are expensive: if ten people spend an hour, that is ten hours of work. Make every meeting **worth it.**
+
+**Before the meeting:**
+
+1. **Decide whether a meeting is needed.** An email or a call may do.
+2. **Define the purpose:** to decide, to inform, to solve a problem, to plan. Write the desired outcome.
+3. **Invite only the people needed,** and tell them why.
+4. **Choose the time and place:** check diaries, avoid clashes and book a suitable room or online link. Allow time to arrive and set up.
+5. **Send the agenda and papers in advance,** at least a day before for routine meetings and longer for big ones.
+6. **Prepare the room:** seating, name cards if needed, projector, water, refreshments, notepads, copies of papers, and a sign on the door.
+7. **Test technology** for online or hybrid meetings: link, camera, sound, screen sharing.
+
+**During the meeting:**
+
+- **Start on time,** welcome people, record attendance and apologies.
+- **Follow the agenda;** the chair keeps discussion focused and fair.
+- **Note decisions and actions** (what, who, by when).
+- **Keep to time,** and summarise before moving on.
+- **End on time** with a summary of decisions and actions, and the next meeting date.
+
+**After the meeting:**
+
+- **Send the minutes** within one or two days.
+- **Follow up on actions** and remind owners before the deadlines.
+- **Tidy the room** and return equipment.
+- **Record costs** if needed.
+
+**Online meetings:** send the link early, join a few minutes before, mute when not speaking, keep cameras on if the culture expects it, and manage who speaks. Record only with permission.
+
+## Agendas and minutes
+
+**An agenda** is the plan for the meeting. A good one includes:
+
+- Title, date, time, place or link.
+- Purpose or objective.
+- **Items in a logical order,** with a lead person and a time for each.
+- Apologies and minutes of the last meeting (in regular meetings).
+- Any other business (AOB).
+- Date of the next meeting.
+
+Example for a one-hour team meeting:
+
+| Time | Item | Lead |
+| :-- | :-- | :-- |
+| 10:00 | Welcome, apologies, last minutes | Chair |
+| 10:05 | Progress on office move | Tunde |
+| 10:25 | Budget for new equipment (decision) | Ada |
+| 10:45 | Any other business | All |
+| 10:55 | Summary of actions and next meeting | Chair |
+
+**Minutes** record what was decided and who will do what. Take notes during the meeting, then write them up clearly. Include: the meeting title, date, time and place; who attended and who sent apologies; a short summary of each item with the **decision;** a list of **actions** with the owner and deadline; and the date of the next meeting. Use neutral language, past tense, and keep them short. Have the chair check the draft before circulating, and keep them in the right file.
+
+## Organising events
+
+Events include staff meetings, training days, conferences, client dinners, product launches, open days and celebrations. Treat them as small **projects.**
+
+**Plan:**
+
+1. **Purpose and audience:** why are we holding it, and who is coming?
+2. **Date and time:** check for clashes with holidays, religious observances, exams or other key dates.
+3. **Budget:** list all costs, get quotations and add a contingency of about 10%.
+4. **Venue:** size, location, access, parking, facilities, cost, power backup and safety.
+5. **Programme:** timings, speakers, activities.
+6. **Catering and equipment:** food, drinks (including dietary and religious needs), sound, projector, chairs, decorations.
+7. **Invitations and registration:** send early, track responses, send reminders.
+8. **Roles:** who does what on the day (reception, speakers, technical, catering, photos).
+9. **Safety and security:** emergency exits, first aid, security staff.
+10. **Checklist and timeline:** work backwards from the event date.
+
+**Example budget:** an event for **50 guests.** Catering at ₦8,000 a head = ₦400,000. Venue hire ₦150,000. Sound and projector ₦60,000. Decorations and printing ₦40,000. Subtotal = ₦650,000. Contingency at 10% = ₦65,000. **Total = ₦715,000,** so the cost per guest = 715,000 ÷ 50 = **₦14,300.**
+
+**On the day:** arrive early, check everything, brief the team, greet guests, keep to the programme, handle problems calmly and record attendance.
+
+**After:** thank guests and speakers, collect feedback, settle suppliers promptly, compare actual costs with the budget and note lessons.
+
+## Booking travel and accommodation
+
+Administrators often arrange business trips. Do it carefully, since mistakes cost money and embarrass people.
+
+**Start with the facts:** who is travelling (full names as on their ID or passport), where, dates and times, purpose, budget, preferences (airline, seat, hotel area), special needs, and approvals.
+
+**Transport:**
+
+- **Compare options and prices** across airlines, bus, rail or car hire; allow for airport transfers and travel time.
+- **Check requirements:** passport validity, visas, health requirements, travel advice and insurance for international trips.
+- **Book early** for better prices, and check change and cancellation rules.
+- **Allow time:** do not schedule meetings too tightly after arrival.
+- **Send the itinerary:** flight details, booking references, hotel address, phone numbers, transport and meeting schedule.
+
+**Accommodation:**
+
+- **Location** near the meeting venue, **safety,** facilities (Wi-Fi, breakfast, power backup), price and reviews.
+- **Confirm in writing** the dates, room type, payment and cancellation terms.
+
+**Costs and expenses:** prepare a trip budget. Example: for **2 people,** return flights ₦120,000 each = ₦240,000; hotel **3 nights** at ₦45,000 each person per night = 3 × 45,000 × 2 = ₦270,000; daily allowance ₦20,000 for 3 days each = 3 × 20,000 × 2 = ₦120,000. **Total = ₦630,000.** Keep receipts and complete the expense claim promptly.
+
+**Safety and care:** share emergency contacts, check local conditions, keep copies of documents, and have a plan for delays or cancellations. After the trip, collect the receipts, reconcile costs and file the records.
+
+## Try it
+
+```task
+{
+  "id": "poa-m06-t1",
+  "prompt": "Write an **agenda for a one-hour team meeting** with at least five items, each with a time and a lead, plus the purpose at the top and the next meeting date at the end.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Purpose: ...\n10:00 - ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States the purpose", "pattern": "purpose|objective" },
+    { "label": "Times for items", "pattern": "\\d{1,2}[:.]\\d{2}", "min": 5 },
+    { "label": "Leads named", "pattern": "lead|chair|led by|\\(\\w+\\)", "min": 4 },
+    { "label": "Includes any other business", "pattern": "any other business|aob" },
+    { "label": "Next meeting", "pattern": "next meeting" }
+  ],
+  "sample": "Purpose: agree the office move plan and the equipment budget\n10:00 - Welcome, apologies and last minutes - Chair\n10:05 - Progress on the office move - Tunde\n10:25 - Budget for new equipment (decision) - Ada\n10:45 - Any other business (AOB) - All\n10:55 - Summary of actions - Chair\nNext meeting: Tuesday 2 April, 10 am",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m06-t2",
+  "prompt": "Plan the **budget for an event for 50 guests**: catering ₦8,000 a head, venue ₦150,000, sound and projector ₦60,000, decorations and printing ₦40,000, and a **10% contingency**. Work out each cost, the subtotal, the contingency, the total and the cost per guest.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Catering = ...",
+  "rules": [
+    { "label": "Catering ₦400,000", "pattern": "400,?000" },
+    { "label": "Subtotal ₦650,000", "pattern": "650,?000" },
+    { "label": "Contingency ₦65,000", "pattern": "65,?000" },
+    { "label": "Total ₦715,000", "pattern": "715,?000" },
+    { "label": "Cost per guest ₦14,300", "pattern": "14,?300" }
+  ],
+  "sample": "Catering = 50 x 8,000 = ₦400,000.\nSubtotal = 400,000 + 150,000 + 60,000 + 40,000 = ₦650,000.\nContingency at 10% = ₦65,000.\nTotal = 650,000 + 65,000 = ₦715,000.\nCost per guest = 715,000 / 50 = ₦14,300.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m06-t3",
+  "prompt": "Prepare a **trip budget** for **2 people**: return flights ₦120,000 each, **3 nights** at ₦45,000 per person per night, and a daily allowance of ₦20,000 per person for **3 days**. Work out each cost and the total, and list **five details** you must check before booking.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Flights = ...",
+  "rules": [
+    { "label": "Flights ₦240,000", "pattern": "240,?000" },
+    { "label": "Hotel ₦270,000", "pattern": "270,?000" },
+    { "label": "Allowance ₦120,000", "pattern": "120,?000" },
+    { "label": "Total ₦630,000", "pattern": "630,?000" },
+    { "label": "Checks (names as on ID, passport, dates, cancellation, approval, visa)", "pattern": "name|passport|id|visa|dates|cancellation|approval|budget|insurance", "min": 4 }
+  ],
+  "sample": "Flights = 2 x 120,000 = ₦240,000. Hotel = 3 nights x 45,000 x 2 people = ₦270,000. Allowance = 3 days x 20,000 x 2 = ₦120,000.\nTotal = 240,000 + 270,000 + 120,000 = ₦630,000.\nBefore booking I check: the travellers' full names as on their ID or passport, passport validity and any visa, the exact dates and times, the cancellation and change rules, and the approval and budget.",
+  "required": false
+}
+```
+
+Next lesson: office management and supplies.
+$md$, true, true, 6, array['poa-m06-t1', 'poa-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('poa-m07', 'professional-office-administration', 'Office management and supplies', 7, 'Office Management', 'OFFMGMT', array['Control supplies and reorder levels', 'Work with vendors', 'Run petty cash', 'Keep the office safe']::text[], array['Ordering and stock', 'Working with vendors', 'Petty cash and expenses', 'Health, safety and equipment']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:office-management-and-supplies', 'professional-office-administration', 'poa-m07', 'office-management-and-supplies', 'Office Management and Supplies', 'Order and control supplies, work with vendors, handle petty cash and expenses and look after health, safety and equipment.', 25, $md$
+## Ordering and stock
+
+An office that runs out of paper, toner or cleaning supplies loses time; an office that over-orders wastes money and space. Good supply management keeps **enough, not too much.**
+
+**Know what you use:**
+
+- **List the regular items:** paper, pens, toner, cleaning materials, kitchen supplies, first-aid items, light bulbs, batteries.
+- **Track usage:** note how much is used each week or month.
+- **Set minimum levels and reorder points.**
+
+**Reorder level** = (average use per week × lead time in weeks) + safety stock. Example: the office uses **10 reams** of paper a week, delivery takes **2 weeks** and you want **1 week** of safety stock. Reorder level = 10 × 2 + 10 = **30 reams.** When stock falls to 30, order. Order quantity might be a month's supply (about 40 reams) to get a better price while avoiding overstock.
+
+**Good practice:**
+
+- **Keep a stock list** (spreadsheet or book) with item, location, quantity, minimum level, supplier and price.
+- **Do a regular stock check** and update the list.
+- **Store supplies in a tidy, locked cupboard,** with oldest stock used first, and control who can take them.
+- **Get approval** for orders according to the spending limits.
+- **Check deliveries** against the order and delivery note: quantity, items and condition. Report problems to the supplier at once, and keep the delivery note until you have matched it to the invoice.
+- **Order in bulk** for items you use steadily, if storage and cash allow.
+- **Avoid waste:** reuse, print only what you need and double-sided where suitable.
+- **Plan ahead** for busy periods (year-end, events, new staff).
+
+## Working with vendors
+
+Vendors (suppliers) provide supplies and services: stationery, printing, cleaning, maintenance, courier, catering, IT support and utilities. A good vendor saves you time and money; a poor one causes problems.
+
+**Choosing:**
+
+- **Compare at least three quotations** for significant purchases: price, quality, delivery time, payment terms, warranty, reliability and references.
+- **Check the vendor is genuine:** registered business, address and contact details, references.
+- **Follow the organisation's purchasing policy** and approval limits.
+- **Look at total cost,** not just the unit price: delivery, installation, service, warranties.
+
+**Working with them:**
+
+- **Agree in writing:** what, quantity, price, delivery date and payment terms. Use a **purchase order** for larger items.
+- **Check what arrives** and pay only against correct invoices.
+- **Keep a vendor list** with contacts, products, prices and performance notes.
+- **Build good relationships:** be polite, pay on time, give clear instructions.
+- **Handle problems early:** wrong items, late delivery or poor service, politely but firmly, and record them.
+- **Review regularly:** are they still the best option?
+- **Stay ethical:** do not accept gifts or kickbacks that influence your choice, and declare conflicts of interest.
+
+**Comparing quotations example:**
+
+| | Vendor A | Vendor B | Vendor C |
+| :-- | :-- | :-- | :-- |
+| Paper, 40 reams | ₦192,000 | ₦184,000 | ₦188,000 |
+| Delivery | Free | ₦6,000 | Free |
+| **Total** | **₦192,000** | **₦190,000** | **₦188,000** |
+| Delivery time | 2 days | 5 days | 3 days |
+
+Vendor C has the lowest total (₦188,000), and delivers in 3 days, so it looks best here, even though B has the lowest price before delivery.
+
+## Petty cash and expenses
+
+**Petty cash** is a small amount of cash kept for minor, urgent expenses (stamps, small repairs, refreshments, local transport). It must be controlled carefully, because cash is easy to misuse.
+
+The **imprest system** is the standard method:
+
+1. **Set a float:** a fixed amount, for example ₦50,000, kept in a locked box under the control of one named person (the petty cashier).
+2. **Every payment needs a voucher** (a form with date, amount, purpose, the person paid, signature and approval) and **a receipt** where possible.
+3. **Keep a petty cash book** recording the float, each payment and the running balance.
+4. **At any time,** cash in the box plus the total of vouchers should equal the float.
+5. **Top up (reimburse)** the float when it runs low, by the exact amount spent, with the vouchers as evidence.
+6. **Count the cash regularly,** and have someone independent check it.
+
+Example: float ₦50,000. Vouchers total **₦38,500.** The cash in the box should be 50,000 − 38,500 = **₦11,500.** If the actual count is ₦11,000, there is a **shortage of ₦500,** which must be investigated and reported. A shortage or surplus should never be hidden.
+
+**Rules:** do not mix petty cash with personal money, do not lend from it, set a limit per payment (for example ₦5,000) and have larger items go through normal purchasing.
+
+**Expenses and claims:** staff claim back money spent for the business (travel, meals, supplies). Good practice: use a standard **expense claim form,** attach receipts, state the purpose, get approval, and pay promptly. Check claims against the policy (rates, limits) and watch for duplicates and false claims.
+
+## Health, safety and equipment
+
+A safe, comfortable office protects people and the business.
+
+**Health and safety:**
+
+- **Fire safety:** clear exits, working extinguishers, alarms, and regular drills. Know where the assembly point is.
+- **First aid:** a stocked kit, and named first aiders.
+- **Electrical safety:** do not overload sockets, report damaged cables, switch off equipment when not in use, and have installations checked by competent people.
+- **Slips, trips and falls:** keep floors and walkways clear and dry; report spills and loose carpets.
+- **Safe lifting:** use trolleys and ask for help with heavy items.
+- **Security:** control visitor access, lock up at night, protect valuables and secure keys.
+- **Report and record** accidents and near misses.
+- **Hygiene and cleanliness:** clean kitchens and toilets, safe drinking water.
+
+**Ergonomics** (comfort and posture): adjust chairs and screens, support the back and wrists, take regular breaks from the screen, and ensure good lighting.
+
+**Equipment:**
+
+- **Keep an equipment register:** item, serial number, location, user, purchase date, warranty and service records.
+- **Maintain and service** printers, copiers, air conditioners, generators and computers according to schedule.
+- **Report faults quickly** and keep vendor and repair contacts handy.
+- **Train staff** to use equipment properly.
+- **Control access and use,** and protect against theft.
+- **Plan replacement** when equipment is old or costly to repair.
+- **Dispose of old equipment responsibly,** wiping data from computers and phones first.
+
+Good office management means noticing small problems before they become big ones, and keeping people safe and productive.
+
+## Try it
+
+```task
+{
+  "id": "poa-m07-t1",
+  "prompt": "The office uses **10 reams** of paper a week. Delivery takes **2 weeks** and you want **1 week** of safety stock. Work out the **reorder level**. Stock now is **28 reams**: should you order? Then compare quotes for 40 reams: **A** ₦192,000 free delivery; **B** ₦184,000 plus ₦6,000 delivery; **C** ₦188,000 free delivery. Which is cheapest in total?",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Reorder level = ...",
+  "rules": [
+    { "label": "Reorder level of 30 reams", "pattern": "\\b30\\b" },
+    { "label": "Says to order now", "pattern": "order (now|today)|yes|should order|below" },
+    { "label": "B total ₦190,000", "pattern": "190,?000" },
+    { "label": "C is cheapest at ₦188,000", "pattern": "\\bc\\b[^\\n]*188,?000|188,?000[^\\n]*\\bc\\b|vendor c" }
+  ],
+  "sample": "Reorder level = 10 x 2 + 10 = 30 reams. Stock is 28, which is below 30, so I should order now.\nTotals: A = ₦192,000; B = 184,000 + 6,000 = ₦190,000; C = ₦188,000.\nVendor C is the cheapest in total at ₦188,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m07-t2",
+  "prompt": "Petty cash float is **₦50,000**. Vouchers total **₦38,500** and the box holds **₦11,000**. Work out the cash that **should** be in the box, the **difference** and what you do next. Then list **four petty cash rules**.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Cash should be ...",
+  "rules": [
+    { "label": "Cash should be ₦11,500", "pattern": "11,?500" },
+    { "label": "Shortage of ₦500", "pattern": "\\b500\\b" },
+    { "label": "Investigate and report", "pattern": "investigat|report|find out|check|tell" },
+    { "label": "Rules (vouchers, receipts, limit, locked box, counted regularly)", "pattern": "voucher|receipt|limit|locked|count|float|approv", "min": 4 }
+  ],
+  "sample": "Cash should be 50,000 - 38,500 = ₦11,500. The box holds ₦11,000, so there is a shortage of ₦500.\nI would recount, check the vouchers and receipts for errors, investigate and report the shortage to my manager.\nRules: every payment needs a voucher and a receipt; keep the box locked with one named person; set a limit per payment; count the cash regularly with an independent check.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m07-t3",
+  "prompt": "Write an **office safety walk-round checklist** with at least eight items, one per line, covering fire, electrical, first aid, floors, security, ergonomics, equipment and reporting.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Check fire exits are clear",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Fire", "pattern": "fire|extinguisher|exit|alarm" },
+    { "label": "Electrical", "pattern": "electric|socket|cable|plug" },
+    { "label": "First aid", "pattern": "first aid|first-aid" },
+    { "label": "Floors or walkways", "pattern": "floor|walkway|spill|trip|clutter" },
+    { "label": "Security", "pattern": "lock|security|visitor|key" },
+    { "label": "Ergonomics or equipment", "pattern": "chair|screen|ergonomic|equipment|printer|generator" },
+    { "label": "Reporting", "pattern": "report|record|log" }
+  ],
+  "sample": "Check fire exits are clear and extinguishers are in date\nTest the fire alarm and confirm the assembly point is known\nCheck sockets are not overloaded and cables are not damaged\nCheck the first-aid kit is stocked and first aiders are named\nCheck floors and walkways are clear, dry and free of clutter\nCheck doors, windows and the cash and records cupboards are locked\nCheck chairs and screens are adjusted and equipment is working and serviced\nReport faults and record any accidents or near misses in the log",
+  "required": false
+}
+```
+
+Next lesson: your office administration toolkit.
+$md$, true, true, 7, array['poa-m07-t1', 'poa-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('poa-m08', 'professional-office-administration', 'Final project: an office administration toolkit', 8, 'Admin Toolkit', 'ADMINKIT', array['Build an administration toolkit', 'Create usable templates', 'Cost events and supplies', 'Present to a manager']::text[], array['Choosing the office', 'Building the toolkit', 'Presenting it', 'Review']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('professional-office-administration:final-project-an-office-administration-toolkit', 'professional-office-administration', 'poa-m08', 'final-project-an-office-administration-toolkit', 'Final Project: An Office Administration Toolkit', 'Choose an office, build a toolkit of templates and procedures, present it and review it.', 55, $md$
+## What you are building
+
+You have learned the professional skills of an administrator: conduct and confidentiality, clear communication, time and diary management, records, office software, meetings, events and travel, and managing supplies and the office. Now you assemble them into **an office administration toolkit:** the set of templates, checklists and procedures that helps an office run smoothly, and that a new administrator could pick up and use on the first day.
+
+Choose an **office** you know: a small company, a clinic, a school, a church or NGO office, a shop's back office, or a realistic office you invent with **5 to 30 staff.** Describe it briefly: what it does, the people (a managing director, managers, staff), and the main administrative challenges (missed messages, disorganised files, double-booked rooms, running out of supplies).
+
+Use realistic figures and details, and keep everything professional and confidential (do not use real people's private information).
+
+## Your toolkit has seven parts
+
+1. **Office profile and priorities:** a short description and the top three administrative problems your toolkit will fix.
+2. **Communication templates:** a professional email (with a subject line), a formal letter outline, a phone message form, a memo and a set of meeting minutes.
+3. **Time and diary system:** a daily to-do format, a weekly diary routine for a manager, and a follow-up (reminder) system, with the key rules you will follow.
+4. **Filing and records:** a folder structure, a file naming convention with five examples, confidentiality rules and a short retention schedule.
+5. **Software and spreadsheets:** a simple budget or tracker (with formulas written out) for supplies, expenses or visitors, and a three-slide outline for a presentation.
+6. **Meetings, events and travel:** a standard agenda, an event checklist with a budget and a travel booking checklist.
+7. **Office management:** a supplies list with reorder levels, a vendor comparison method, a petty cash procedure and a safety checklist.
+
+## Presenting the toolkit
+
+Write for the manager or owner who will approve using it. Open with a **one-page summary:** the problems, the toolkit's contents, how it saves time and money and how you would introduce it. Make the templates **usable on their own:** someone should be able to copy and use them without your help. Keep each part short and practical, use tables where they help and check every figure and formula.
+
+Prepare for questions such as: *How will staff learn to use it? How do we keep it up to date? Is the confidential information safe? What does it save us?*
+
+> [!TIP]
+> Test one template with a friend. Ask them to fill in the phone message form or follow the petty cash procedure without any help from you. Wherever they hesitate, simplify.
+
+## Try it
+
+```task
+{
+  "id": "poa-m08-t1",
+  "prompt": "Write the **office profile and top three priorities** in 60 to 130 words: what the office does, the number of staff and roles, and the three administrative problems your toolkit will fix.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "The office is ...",
+  "rules": [
+    { "label": "Says what the office does", "pattern": "office|company|clinic|school|church|ngo|business|firm" },
+    { "label": "States the staff numbers", "pattern": "\\d+\\s*(staff|employees|people|workers)" },
+    { "label": "Names roles", "pattern": "manager|director|administrator|secretary|receptionist|accountant|owner" },
+    { "label": "Lists problems", "pattern": "missed|lost|disorganis|double-?book|running out|late|messages|filing|supplies|clutter|problem" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "The office is the head office of Brightway Logistics in Ikeja, with 18 staff: a managing director, four managers, an accountant, drivers' coordinators, a receptionist and one office administrator. The three biggest administrative problems are messages and calls that are not passed on, files that are hard to find because there is no naming system, and supplies that run out without warning, causing rush purchases. The toolkit will give the administrator templates for communication, a filing and naming system, a diary routine and a simple supplies and petty cash procedure.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m08-t2",
+  "prompt": "Write your **communication templates**: an **email** to a manager requesting approval of a ₦100,000 purchase (with subject, greeting, reason, action and deadline, closing), and a **phone message form** with at least six fields. Label each.",
+  "minutes": 15,
+  "rows": 13,
+  "placeholder": "Email subject: ...\nDear ...,\nPhone message form: Caller name: ...",
+  "rules": [
+    { "label": "Has an email subject line", "pattern": "subject" },
+    { "label": "Has a greeting and closing", "pattern": "dear[\\s\\S]*(regards|sincerely|thank you)" },
+    { "label": "States the amount ₦100,000", "pattern": "100,?000" },
+    { "label": "States an action and deadline", "pattern": "approve|approval[\\s\\S]*(by|before|on)|by (monday|tuesday|wednesday|thursday|friday|\\d)" },
+    { "label": "Phone message form with fields", "pattern": "phone message[\\s\\S]*(caller|name)[\\s\\S]*(number|phone)[\\s\\S]*(message)[\\s\\S]*(date|time)[\\s\\S]*(taken by|received by|who)" },
+    { "label": "At least 70 words in total", "minWords": 70, "maxWords": 220 }
+  ],
+  "sample": "Email subject: Approval requested: ₦100,000 for printer toner and paper\nDear Mr Bello,\nI would like your approval to purchase printer toner and paper for ₦100,000, because current stock will run out on Friday and the lowest quotation is attached. Please could you approve it by Wednesday so that we receive delivery before the month-end reports are printed? Thank you.\nKind regards, Ada Okoro, Office Administrator\nPhone message form: Caller name: ____; Company: ____; Phone number: ____; Message: ____; Date and time: ____; Action needed: ____; Taken by: ____",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m08-t3",
+  "prompt": "Write your **filing and records plan**: a folder structure (at least eight folders with numbering), **five file-name examples** in the convention, **four confidentiality rules** and a **retention schedule** with three record types and a note to confirm current law. At least eighteen lines.",
+  "minutes": 15,
+  "rows": 20,
+  "placeholder": "01 Finance\n...\nFile name: ...",
+  "rules": [
+    { "label": "At least eighteen lines", "minLines": 18 },
+    { "label": "Numbered folders", "pattern": "0[1-9] [a-z]", "min": 5 },
+    { "label": "Five file names with extensions", "pattern": "\\.(pdf|docx|xlsx)", "min": 5 },
+    { "label": "Confidentiality rules", "pattern": "confidential|lock|password|shred", "min": 3 },
+    { "label": "Retention schedule items", "pattern": "retention|keep for|years", "min": 3 },
+    { "label": "Notes to confirm current law", "pattern": "confirm|check|current law|advice" }
+  ],
+  "sample": "01 Finance\n02 HR\n03 Clients\n04 Projects\n05 Suppliers\n06 Templates\n07 Policies\n99 Archive\nFile name: 2026-03-12_BrightSchools_Invoice_0147.pdf\nFile name: 2026-03-05_BoardMeeting_Minutes_v2.docx\nFile name: 2026-02_Budget_Marketing_FINAL.xlsx\nFile name: 2026-01-10_ABC_Contract_Signed.pdf\nFile name: 2026-03_Visitor_Log.xlsx\nConfidentiality rule: keep personnel files in a locked cabinet\nConfidentiality rule: lock screens and use strong passwords\nConfidentiality rule: shred confidential paper\nConfidentiality rule: check recipients before sending sensitive files\nRetention: tax and accounting records - keep for the period required by law, often several years\nRetention: employee records - keep during employment and for a set period afterwards\nRetention: routine correspondence - keep for one year\nNote: confirm all retention periods with current law and take advice before disposing of records",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "poa-m08-t4",
+  "prompt": "Write your **office management procedures** in at least ten lines: three supply items with reorder levels (show one calculation), how you compare vendor quotes, a petty cash procedure with a float and limit, and five items for a safety checklist.",
+  "minutes": 15,
+  "rows": 14,
+  "placeholder": "Printer paper: use 10 reams a week ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Reorder levels", "pattern": "reorder", "min": 2 },
+    { "label": "A calculation for reorder", "pattern": "\\d+\\s*[x×*]\\s*\\d+\\s*\\+\\s*\\d+|=\\s*\\d+" },
+    { "label": "Compare at least three quotes", "pattern": "three quotes|three quotations|compare" },
+    { "label": "Petty cash float and limit", "pattern": "float[\\s\\S]*(limit|voucher)|petty cash" },
+    { "label": "Safety checklist items", "pattern": "fire|first aid|electric|floor|security", "min": 3 }
+  ],
+  "sample": "Printer paper: use 10 reams a week, lead time 2 weeks, safety 1 week; reorder level = 10 x 2 + 10 = 30 reams\nToner: use 1 cartridge a month, lead time 1 month, safety 1; reorder level = 1 x 1 + 1 = 2 cartridges\nCleaning supplies: reorder when fewer than 4 refills remain\nVendors: get at least three quotes for purchases above ₦50,000 and compare price, delivery, warranty and time, using the total cost\nPetty cash: float of ₦50,000 kept in a locked box by one named person\nPetty cash: every payment needs a voucher and a receipt, with a limit of ₦5,000 per payment\nPetty cash: count the cash weekly and top up with the vouchers\nSafety: check fire exits and extinguishers monthly\nSafety: check first-aid kit and named first aiders\nSafety: check electrical sockets and cables, clear floors and lock up at night",
+  "required": true
+}
+```
+
+When you are done, submit your complete office administration toolkit as your final project.
+$md$, true, true, 8, array['poa-m08-t1', 'poa-m08-t2', 'poa-m08-t3', 'poa-m08-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Bookkeeping & Small Business Finance
@@ -107808,6 +109041,500 @@ values ('cscm-f15', 1, 'Evidence-based plans win approval.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: The Professional Administrator: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m01-check', 'professional-office-administration', 'module', 'poa-m01', 'The Professional Administrator: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m01-q1', 'poa-m01-check', 1, 'Which best describes the administrator''s role?', '["Only typing","Keeping the organisation running smoothly through communication, organisation, records and support","Only answering phones","Only ordering"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m01-q1', 1, 'The role covers many supporting tasks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m01-q2', 'poa-m01-check', 2, 'A friend asks for a colleague''s salary. What do you do?', '["Tell them","Politely decline: it is confidential","Guess","Post it online"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m01-q2', 1, 'Discretion is essential.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m01-q3', 'poa-m01-check', 3, 'If unsure whether information is confidential you should:', '["Share it","Treat it as confidential and ask","Ignore it","Post it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m01-q3', 1, 'When in doubt, protect it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m01-q4', 'poa-m01-check', 4, 'A vendor who is your relative offers a gift. You should:', '["Accept quietly","Decline and declare the conflict of interest","Hide it","Ask for more"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m01-q4', 1, 'Declare and decline.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m01-q5', 'poa-m01-check', 5, 'Which behaviour is professional?', '["Gossiping","Greeting visitors politely and keeping a tidy desk","Personal calls all day","Blaming colleagues"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m01-q5', 1, 'Courtesy and tidiness.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Communication at Work: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m02-check', 'professional-office-administration', 'module', 'poa-m02', 'Communication at Work: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m02-q1', 'poa-m02-check', 1, 'A good email subject line is:', '["Hi","Meeting","Board meeting, Tuesday 12 March, 10 am, Room 2","Urgent!!!"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m02-q1', 2, 'Specific and informative.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m02-q2', 'poa-m02-check', 2, 'What should minutes record?', '["Every word","Decisions and actions with owners and deadlines","Only attendance","Opinions only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m02-q2', 1, 'Decisions and actions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m02-q3', 'poa-m02-check', 3, 'When you receive instructions you should:', '["Guess the details","Ask questions and repeat back the main points","Wait silently","Ignore them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m02-q3', 1, 'Repeat back to confirm.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m02-q4', 'poa-m02-check', 4, 'Which closing goes with a letter starting ''Dear Sir/Madam''?', '["Yours sincerely","Yours faithfully","Cheers","Love"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m02-q4', 1, 'Faithfully for Sir/Madam.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m02-q5', 'poa-m02-check', 5, 'Which should you avoid in a work email?', '["A greeting","Writing in capitals as if shouting","A clear request","A courteous closing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m02-q5', 1, 'Capitals read as shouting.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Time, Tasks and Diary Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m03-check', 'professional-office-administration', 'module', 'poa-m03', 'Time, Tasks and Diary Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m03-q1', 'poa-m03-check', 1, 'Which tasks are ''important but not urgent''?', '["Crisis calls","Planning and preparation","Time wasters","Some interruptions"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m03-q1', 1, 'Plan them before they become urgent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m03-q2', 'poa-m03-check', 2, 'Five 1-hour meetings with a 15-minute buffer each take how long in total?', '["5 hours","5.5 hours","6.25 hours","7 hours"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m03-q2', 2, '5 + 1.25.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m03-q3', 'poa-m03-check', 3, 'What should you do when two managers give conflicting priorities?', '["Guess","Ask which comes first","Do neither","Pick the easiest"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m03-q3', 1, 'Ask, don''t guess.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m03-q4', 'poa-m03-check', 4, 'Why set reminders earlier than the deadline?', '["To annoy people","So there is time to act","It is a rule","To look busy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m03-q4', 1, 'Early reminders leave time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m03-q5', 'poa-m03-check', 5, 'A polite way to handle a non-urgent interruption is:', '["Ignore them","Say you are finishing something and will come to them at a set time","Shout","Leave"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m03-q5', 1, 'Postpone politely with a time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Records, Filing and Documents: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m04-check', 'professional-office-administration', 'module', 'poa-m04', 'Records, Filing and Documents: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m04-q1', 'poa-m04-check', 1, 'Which file name is best?', '["new doc.docx","scan0001.pdf","2026-03_BrightSchools_Invoice_0147.pdf","letter final final 2.docx"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m04-q1', 2, 'Date, name, type and number.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m04-q2', 'poa-m04-check', 2, 'The 3-2-1 backup rule means:', '["3 copies, 2 types of storage, 1 off-site","3 folders, 2 drives, 1 printer","3 passwords, 2 locks, 1 key","3 days, 2 weeks, 1 month"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m04-q2', 0, 'A resilient backup approach.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m04-q3', 'poa-m04-check', 3, 'Confidential paper should be:', '["Binned","Shredded","Left on the desk","Taken home"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m04-q3', 1, 'Shred sensitive waste.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m04-q4', 'poa-m04-check', 4, 'Retention periods depend on:', '["Your mood","Law, regulators and organisation policy","The weather","The size of the cabinet"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m04-q4', 1, 'Check requirements.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m04-q5', 'poa-m04-check', 5, 'Why number the top-level folders?', '["Decoration","To keep them in a logical order","To hide them","It is required"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m04-q5', 1, 'Numbering orders folders.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Office Software: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m05-check', 'professional-office-administration', 'module', 'poa-m05', 'Office Software: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m05-q1', 'poa-m05-check', 1, 'Which formula adds B2 to B10?', '["=B2+B10","=SUM(B2:B10)","=COUNT(B2:B10)","=ADD(B2,B10)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m05-q1', 1, 'SUM adds a range.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m05-q2', 'poa-m05-check', 2, '6 chairs at ₦25,000, 3 desks at ₦40,000 and 20 reams at ₦4,800. What is the total?', '["₦336,000","₦366,000","₦396,000","₦426,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m05-q2', 1, '150,000 + 120,000 + 96,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m05-q3', 'poa-m05-check', 3, 'Why use styles in a word processor?', '["To waste time","Consistent formatting and automatic contents","To lower page count","To hide text"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m05-q3', 1, 'Styles save time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m05-q4', 'poa-m05-check', 4, 'A good presentation slide has:', '["Paragraphs of text","One message with a few short bullets or a visual","Tiny fonts","Many effects"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m05-q4', 1, 'One message per slide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m05-q5', 'poa-m05-check', 5, 'Mail merge is used to:', '["Delete files","Produce many personalised letters from a list","Print one page","Scan documents"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m05-q5', 1, 'Personalised bulk documents.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Meetings, Events and Travel: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m06-check', 'professional-office-administration', 'module', 'poa-m06', 'Meetings, Events and Travel: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m06-q1', 'poa-m06-check', 1, 'When should an agenda be sent?', '["After the meeting","In advance","Never","During the meeting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m06-q1', 1, 'Send ahead.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m06-q2', 'poa-m06-check', 2, 'Event for 50 guests: ₦650,000 subtotal and 10% contingency. What is the total?', '["₦660,000","₦700,000","₦715,000","₦750,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m06-q2', 2, '650,000 × 1.1.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m06-q3', 'poa-m06-check', 3, '715,000 ÷ 50 guests is:', '["₦12,300","₦13,300","₦14,300","₦15,300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m06-q3', 2, 'Cost per guest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m06-q4', 'poa-m06-check', 4, 'Why use full names as on ID when booking flights?', '["It looks neat","Names must match the travel documents","To save money","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m06-q4', 1, 'Mismatches cause refusals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m06-q5', 'poa-m06-check', 5, 'When should minutes be sent?', '["Within a day or two","After a month","Never","Before the meeting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m06-q5', 0, 'Promptly while fresh.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Office Management and Supplies: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m07-check', 'professional-office-administration', 'module', 'poa-m07', 'Office Management and Supplies: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m07-q1', 'poa-m07-check', 1, 'Use 10 reams a week, lead time 2 weeks, safety 1 week. What is the reorder level?', '["20","30","40","50"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m07-q1', 1, '10 × 2 + 10.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m07-q2', 'poa-m07-check', 2, 'Float ₦50,000 and vouchers ₦38,500. How much cash should be in the box?', '["₦8,500","₦11,500","₦38,500","₦88,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m07-q2', 1, '50,000 − 38,500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m07-q3', 'poa-m07-check', 3, 'The box holds ₦11,000 instead. What do you do?', '["Hide it","Investigate and report the ₦500 shortage","Top up silently","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m07-q3', 1, 'Never hide differences.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m07-q4', 'poa-m07-check', 4, 'How many quotations should you compare for a significant purchase?', '["One","At least three","Ten","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m07-q4', 1, 'Compare several.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m07-q5', 'poa-m07-check', 5, 'What should be checked when supplies are delivered?', '["Nothing","Quantity, items and condition against the delivery note","Only the box","The driver''s name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m07-q5', 1, 'Check deliveries.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: An Office Administration Toolkit: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('poa-m08-check', 'professional-office-administration', 'module', 'poa-m08', 'Final Project: An Office Administration Toolkit: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m08-q1', 'poa-m08-check', 1, 'How should the toolkit open for the manager?', '["With the retention table","With a one-page summary of the problems, contents, savings and rollout","With the safety list","With a joke"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m08-q1', 1, 'Start with the summary.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m08-q2', 'poa-m08-check', 2, 'Why should templates be usable on their own?', '["To look neat","So a new administrator can use them without help","It is a rule","To lengthen the toolkit"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m08-q2', 1, 'Practical templates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m08-q3', 'poa-m08-check', 3, 'How can you test a template?', '["Never","Ask a friend to use it without help and see where they hesitate","Print it","Email it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m08-q3', 1, 'User testing finds problems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m08-q4', 'poa-m08-check', 4, 'Retention periods in the toolkit should:', '["Be guessed","Be confirmed against current law and policy","Be skipped","Be permanent for everything"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m08-q4', 1, 'Confirm requirements.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-m08-q5', 'poa-m08-check', 5, 'Reorder level: use 1 cartridge a month, lead 1 month, safety 1. What is it?', '["1","2","3","4"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-m08-q5', 1, '1 × 1 + 1 = 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Professional Office Administration: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('professional-office-administration-final', 'professional-office-administration', 'final', null, 'Professional Office Administration: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f01', 'professional-office-administration-final', 1, 'An administrator must above all be:', '["Loud","Reliable, organised, discreet and helpful","Fast at gossip","Rarely present"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f01', 1, 'Core qualities.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f02', 'professional-office-administration-final', 2, 'What do you do about confidential information at a social gathering?', '["Share it","Keep it private","Hint at it","Post it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f02', 1, 'Discretion.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f03', 'professional-office-administration-final', 3, 'Which is the best email practice?', '["Vague subject","A specific subject, a greeting, the action and deadline, and a closing","All capitals","No greeting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f03', 1, 'Clarity and courtesy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f04', 'professional-office-administration-final', 4, 'Five 1-hour meetings with 15-minute buffers use how many hours?', '["5","5.75","6.25","7"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f04', 2, '5 + 1.25.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f05', 'professional-office-administration-final', 5, 'Which is the best file name?', '["scan.pdf","2026-03-05_BoardMeeting_Minutes_v2.docx","new.docx","final final.docx"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f05', 1, 'Sortable and descriptive.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f06', 'professional-office-administration-final', 6, 'The formula for quantity in B2 times price in C2 is:', '["=B2+C2","=B2*C2","=SUM(B2:C2)","=B2/C2"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f06', 1, 'Multiplication.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f07', 'professional-office-administration-final', 7, '₦366,000 plus 7.5% VAT is:', '["₦373,000","₦393,450","₦400,000","₦406,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f07', 1, '366,000 × 1.075.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f08', 'professional-office-administration-final', 8, 'What should be in minutes?', '["Everything said","Decisions and actions with owners and dates","Gossip","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f08', 1, 'Decisions and actions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f09', 'professional-office-administration-final', 9, 'Event: ₦650,000 plus 10% contingency for 50 guests costs per guest:', '["₦13,000","₦14,300","₦15,000","₦16,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f09', 1, '715,000 ÷ 50.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f10', 'professional-office-administration-final', 10, 'Trip: flights ₦240,000, hotel ₦270,000, allowance ₦120,000. Total?', '["₦530,000","₦630,000","₦730,000","₦830,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f10', 1, 'Sum.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f11', 'professional-office-administration-final', 11, 'Reorder level for 10 reams a week, lead 2 weeks, safety 1 week is:', '["20","30","40","50"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f11', 1, '10 × 2 + 10.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f12', 'professional-office-administration-final', 12, 'A petty cash shortage of ₦500 should be:', '["Hidden","Investigated and reported","Taken from the next float","Ignored"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f12', 1, 'Report differences.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f13', 'professional-office-administration-final', 13, 'Under the imprest system, the float is topped up by:', '["A round figure","The exact amount spent, supported by vouchers","Whatever is asked","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f13', 1, 'Exact reimbursement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f14', 'professional-office-administration-final', 14, 'Which gives the best price comparison?', '["Unit price only","Total cost including delivery, with delivery time and warranty","The vendor''s reputation only","The first quote"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f14', 1, 'Compare total value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('poa-f15', 'professional-office-administration-final', 15, 'Before disposing of old records you must:', '["Delete everything","Check retention requirements and dispose securely","Throw them away","Give them to staff"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('poa-f15', 1, 'Confirm retention and shred.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -108246,6 +109973,16 @@ values ('cscm-service-improvement-plan', 'customer-service-client-management', '
 Submit a link to your plan (a shared document, PDF or folder) and paste your **diagnosis** (the top three problems with root causes) and your **new service standards** below, with a short note on where to find each part.
 
 Write for the owner or manager who must approve the plan: lead with a one-page summary, show the evidence and be honest about what you assumed.$md$, array['The service and its customers, channels, current standards and expectations.', 'Evidence of the problems from at least four sources, with figures.', 'Diagnosis: the top three problems ranked, with root causes and the cost of leaving them.', 'Improvements: new service standards, scripts or templates, a ticket and records system and an escalation matrix.', 'Measurement: metrics and targets, a feedback method and a review schedule.', 'Rollout: owners, timeline, training, cost and the expected benefit in naira.']::text[], '{}'::text[], array['The service, customers and channels are described clearly and specifically.', 'Evidence comes from several sources and includes figures; assumptions are stated honestly.', 'Problems are ranked sensibly and root causes are identified, not just symptoms.', 'Standards are measurable, scripts are natural and customer-focused and the ticket system and escalation matrix are workable.', 'Metrics and targets are tied to the problems and can actually be collected.', 'The rollout is realistic, with owners, dates, a cost and a credible benefit.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: An office administration toolkit
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('poa-office-admin-toolkit', 'professional-office-administration', 'An office administration toolkit', 'A toolkit of templates, checklists and procedures that helps a real or realistic office run smoothly.', $md$Choose an office you know (or invent a realistic one with 5 to 30 staff) and build the toolkit a new administrator could use on their first day: communication templates, a time and diary system, a filing and records plan, a simple spreadsheet and presentation outline, meeting, event and travel checklists, and office management procedures.
+
+Keep everything professional and confidential, and do not use real people's private information. Submit a link to your toolkit (a shared document, PDF or folder) and paste your **office profile and priorities** and your **filing structure and naming convention** below, with a short note on where to find each part.
+
+Write for the manager or owner who will approve using it: lead with a one-page summary, make the templates usable on their own and check every figure and formula.$md$, array['Office profile and the top three administrative problems the toolkit fixes.', 'Communication templates: an email, a formal letter outline, a phone message form, a memo and meeting minutes.', 'Time and diary system: a daily to-do format, a weekly diary routine and a follow-up system.', 'Filing and records: a folder structure, a naming convention with examples, confidentiality rules and a retention schedule (with a note to confirm current law).', 'Software: a simple spreadsheet (with formulas written out) and a three-slide presentation outline.', 'Meetings, events and travel: a standard agenda, an event checklist with a budget and a travel booking checklist.', 'Office management: a supplies list with reorder levels, a vendor comparison method, a petty cash procedure and a safety checklist.']::text[], '{}'::text[], array['The office profile is specific and the toolkit addresses the stated problems.', 'Communication templates are clear, polite and ready to use.', 'The time and diary system is practical and includes follow-up.', 'Filing, naming and confidentiality rules are consistent and secure, with retention flagged for confirmation.', 'Spreadsheet formulas and calculations are correct, and slides follow good design rules.', 'Meeting, event and travel tools are complete and the budgets add up.', 'Supplies, vendor, petty cash and safety procedures are controlled and realistic.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 

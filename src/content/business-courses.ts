@@ -639,6 +639,17 @@ const SPECS: Spec[] = [
     prerequisites: ["No experience needed", "Basic computer use"],
     audience: ["Aspiring and new office administrators", "Receptionists and secretaries", "Executive and personal assistants", "Graduates preparing for office jobs"],
     outcomes: ["Communicate professionally in writing and in person", "Manage a diary, inbox and tasks", "Organise files and records, on paper and digital", "Use word processing, spreadsheet and email tools well", "Plan meetings, events and travel", "Support managers and teams with confidence"],
+    opened: { completionBadge: "Office Administrator", estimatedHours: 4 },
+    built: {
+      "poa-m01": { lesson: "the-professional-administrator", badge: "Administrator", badgeCode: "ADMINPRO", skills: ["Explain the administrator's role", "Behave professionally", "Protect confidentiality", "Act ethically"] },
+      "poa-m02": { lesson: "communication-at-work", badge: "Work Comms", badgeCode: "WORKCOMM", skills: ["Write emails and letters", "Handle phone and front desk", "Write minutes and memos", "Give and take instructions"] },
+      "poa-m03": { lesson: "time-tasks-and-diary-management", badge: "Diary & Time", badgeCode: "DIARY", skills: ["Prioritise tasks", "Manage a diary", "Use reminders", "Handle interruptions"] },
+      "poa-m04": { lesson: "records-filing-and-documents", badge: "Records", badgeCode: "RECORDS", skills: ["Organise paper and digital files", "Name files consistently", "Protect confidential records", "Archive and dispose properly"] },
+      "poa-m05": { lesson: "office-software", badge: "Office Software", badgeCode: "OFFSOFT", skills: ["Format documents", "Use spreadsheet formulas", "Design slides", "Use email, calendars and cloud"] },
+      "poa-m06": { lesson: "meetings-events-and-travel", badge: "Meetings & Events", badgeCode: "MEETEVT", skills: ["Run meetings", "Write agendas and minutes", "Plan events and budgets", "Book travel"] },
+      "poa-m07": { lesson: "office-management-and-supplies", badge: "Office Management", badgeCode: "OFFMGMT", skills: ["Control supplies and reorder levels", "Work with vendors", "Run petty cash", "Keep the office safe"] },
+      "poa-m08": { lesson: "final-project-an-office-administration-toolkit", badge: "Admin Toolkit", badgeCode: "ADMINKIT", skills: ["Build an administration toolkit", "Create usable templates", "Cost events and supplies", "Present to a manager"] },
+    },
     projectTitle: "An office administration toolkit",
     projectSummary: "Templates, a filing system, a meeting pack and a weekly routine for a real or realistic office.",
     modules: [
