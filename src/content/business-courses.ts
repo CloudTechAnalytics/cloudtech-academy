@@ -247,6 +247,17 @@ const SPECS: Spec[] = [
     prerequisites: ["No experience needed"],
     audience: ["People starting an online shop", "Small businesses moving online", "Social media sellers who want a real store", "Anyone curious about online business models"],
     outcomes: ["Pick a niche and products with real demand", "Set up a store and product pages that sell", "Accept payments safely", "Plan delivery, stock and returns", "Bring in traffic and repeat customers", "Read simple store numbers and grow"],
+    opened: { completionBadge: "Online Seller", estimatedHours: 5 },
+    built: {
+      "ecom-m01": { lesson: "how-online-business-works", badge: "Online Business", badgeCode: "ONLBIZ", skills: ["Compare e-commerce models", "Count the costs of an online order", "Calculate margin", "Choose a model that fits"] },
+      "ecom-m02": { lesson: "niche-and-product-selection", badge: "Niche & Products", badgeCode: "NICHE", skills: ["Find a niche", "Research demand", "Source and test suppliers", "Price for profit per order"] },
+      "ecom-m03": { lesson: "building-your-store", badge: "Store Builder", badgeCode: "STORE", skills: ["Choose a platform", "Build product pages", "Take photos and write descriptions", "Set policies and trust signals"] },
+      "ecom-m04": { lesson: "payments-and-checkout", badge: "Payments", badgeCode: "ECOMPAY", skills: ["Offer the right payment methods", "Handle pay on delivery", "Prevent fraud", "Issue invoices and receipts"] },
+      "ecom-m05": { lesson: "fulfilment-and-delivery", badge: "Fulfilment", badgeCode: "FULFIL", skills: ["Manage inventory and reorder points", "Package well", "Choose couriers", "Track and handle delays"] },
+      "ecom-m06": { lesson: "marketing-and-traffic", badge: "Store Marketing", badgeCode: "STOREMKT", skills: ["Sell on social and WhatsApp", "Run profitable store ads", "Use search and email", "Win reviews and referrals"] },
+      "ecom-m07": { lesson: "customer-service-and-returns", badge: "Customer Care", badgeCode: "CUSTCARE", skills: ["Answer customers well", "Write a returns policy", "Handle complaints", "Build loyalty"] },
+      "ecom-m08": { lesson: "analytics-scaling-and-final-project", badge: "Store Launch", badgeCode: "LAUNCH", skills: ["Track store metrics", "Improve conversion", "Scale safely", "Launch a store"] },
+    },
     projectTitle: "Launch an online store",
     projectSummary: "A working store or storefront with products, payments, delivery options and a launch plan.",
     modules: [

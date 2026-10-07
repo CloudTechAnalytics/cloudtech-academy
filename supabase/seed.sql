@@ -81290,42 +81290,1148 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: E-commerce & Online Business
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('ecommerce-online-business', 'full', null, 'ecommerce-online-business', 'ECOM', 'E-commerce & Online Business', 'Choose a product, build an online store, take payments, deliver orders and bring in customers.', 'A hands-on course for people who want to sell online: on their own store, on social media and on marketplaces. You learn to choose a niche and products, set up a store, handle payments and delivery, attract customers and look after them.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Product and niche selection', 'Building an online store', 'Payments and pricing', 'Fulfilment and delivery', 'Online customer acquisition', 'Customer service and returns']::text[], array['No experience needed']::text[], 'Launch an online store', true, true, true, true, false, 60, 52)
+values ('ecommerce-online-business', 'short', 'Online Seller', 'ecommerce-online-business', 'ECOM', 'E-commerce & Online Business', 'Choose a product, build an online store, take payments, deliver orders and bring in customers.', 'A hands-on course for people who want to sell online: on their own store, on social media and on marketplaces. You learn to choose a niche and products, set up a store, handle payments and delivery, attract customers and look after them.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', 5, false, 'available', true, array['Product and niche selection', 'Building an online store', 'Payments and pricing', 'Fulfilment and delivery', 'Online customer acquisition', 'Customer service and returns']::text[], array['No experience needed']::text[], 'Launch an online store', true, true, true, true, false, 60, 52)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'Selling online is simple to start and hard to do well. This course covers the whole chain: what to sell, where to sell it, how to get paid, how to deliver and how to bring in customers, with a launched store as your project.', audience = array['People starting an online shop', 'Small businesses moving online', 'Social media sellers who want a real store', 'Anyone curious about online business models']::text[], included = '{}'::text[], project_previews = '[{"title":"Launch an online store","summary":"A working store or storefront with products, payments, delivery options and a launch plan."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Pick a niche and products with real demand', 'Set up a store and product pages that sell', 'Accept payments safely', 'Plan delivery, stock and returns', 'Bring in traffic and repeat customers', 'Read simple store numbers and grow']::text[], difficulty_max = 'intermediate', duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'ecommerce-online-business' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'Selling online is simple to start and hard to do well. This course covers the whole chain: what to sell, where to sell it, how to get paid, how to deliver and how to bring in customers, with a launched store as your project.', audience = array['People starting an online shop', 'Small businesses moving online', 'Social media sellers who want a real store', 'Anyone curious about online business models']::text[], included = '{}'::text[], project_previews = '[{"title":"Launch an online store","summary":"A working store or storefront with products, payments, delivery options and a launch plan."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Pick a niche and products with real demand', 'Set up a store and product pages that sell', 'Accept payments safely', 'Plan delivery, stock and returns', 'Bring in traffic and repeat customers', 'Read simple store numbers and grow']::text[], difficulty_max = 'intermediate', duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'ecommerce-online-business' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m01', 'ecommerce-online-business', 'How online business works', 1, null, null, '{}'::text[], array['E-commerce models: own store, marketplace, social, dropshipping', 'Costs and margins', 'Choosing a model that fits you']::text[])
+values ('ecom-m01', 'ecommerce-online-business', 'How online business works', 1, 'Online Business', 'ONLBIZ', array['Compare e-commerce models', 'Count the costs of an online order', 'Calculate margin', 'Choose a model that fits']::text[], array['E-commerce models: own store, marketplace, social, dropshipping', 'Costs and margins', 'Choosing a model that fits you']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m02', 'ecommerce-online-business', 'Niche and product selection', 2, null, null, '{}'::text[], array['Finding a niche', 'Product research and demand', 'Suppliers and sourcing', 'Pricing and profit per order']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:how-online-business-works', 'ecommerce-online-business', 'ecom-m01', 'how-online-business-works', 'How Online Business Works', 'Understand the main e-commerce models (own store, marketplace, social selling and dropshipping), the costs and margins of each and how to choose a model that fits you.', 25, $md$
+## What e-commerce is
+
+**E-commerce** is buying and selling goods or services online. Customers browse, choose, pay and receive their order, with much of the process handled through websites, apps and messaging. For a seller, the internet removes some barriers (no shop rent, a customer base far beyond your street) and adds others (more competition, trust to be earned, delivery to be solved).
+
+In Nigeria, online selling spans huge marketplaces, brands with their own websites and an enormous amount of selling on **Instagram, Facebook and WhatsApp.** Many successful sellers start very small, with one product and a phone.
+
+Whatever the model, the basics of the business are the same: **a product people want, at a price that makes a profit, a way to get paid safely, a way to deliver reliably and a way to be found.** This course goes through each, in order.
+
+## E-commerce models
+
+| Model | How it works | Strengths | Weaknesses |
+| :-- | :-- | :-- | :-- |
+| **Own online store** | You build a website (with a store platform) and sell directly | You own the brand, customer data and experience; no commission on each sale | You must bring all the traffic; setup and upkeep |
+| **Marketplace** (such as Jumia, Jiji, Konga-type platforms, Amazon, Etsy) | You list products on a large platform that brings buyers | Existing traffic and trust; quick start | Commissions and fees; competition; the platform controls the rules |
+| **Social selling** (Instagram, Facebook, WhatsApp, TikTok) | You show products on social media and take orders by message or link | Almost free to start; personal; strong for visual products | Manual work; hard to scale; depends on platform rules |
+| **Dropshipping** | You sell products that a supplier stores and ships directly to your customer | No stock to buy; low start-up money | Lower margins; less control over quality and delivery; heavy competition |
+| **Own products or made-to-order** | You make or source your own stock | Higher margins; unique brand | Money tied up in stock; production or sourcing effort |
+| **Digital products and services** | You sell downloads, courses, bookings or services online | No shipping; high margins | Needs expertise; piracy and trust issues |
+
+Many businesses **combine** them: sell on Instagram and WhatsApp, list on a marketplace for reach and later add an own store for repeat customers and better margins.
+
+## Costs and margins
+
+Know exactly what an order costs you. **Costs of selling online** include:
+
+- **Product cost** (what you pay the supplier or the cost of making it).
+- **Packaging** (boxes, bags, labels, inserts).
+- **Delivery** (courier cost, if you pay it).
+- **Payment fees** (gateway or bank charges).
+- **Marketplace commission or platform fees,** if any.
+- **Marketing cost per order** (ads, creators, discounts).
+- **Returns and refunds,** and damaged or lost goods.
+- **Fixed costs:** store subscription, tools, internet, storage space, your own time.
+
+Example for a tote bag on a marketplace. Selling price **₦12,000**, product cost **₦6,500**, packaging **₦500**, marketplace commission **10%** (₦1,200).
+
+- Profit per order before marketing and delivery = 12,000 − 6,500 − 500 − 1,200 = **₦3,800.**
+- Margin = 3,800 ÷ 12,000 = **31.7%.**
+
+If you add ₦1,500 of delivery you pay, the profit falls to ₦2,300. And if marketing costs ₦1,500 per order, you keep **₦800.** Small items can disappear into costs, so **calculate before you launch.**
+
+Dropshipping often looks attractive because there is no stock, but the supplier's price is higher than wholesale and the selling price is limited by competition, so margins are thin and there is little room for ads, returns or mistakes.
+
+## Choosing a model that fits you
+
+Ask yourself:
+
+1. **What am I selling,** and to whom? Visual, personal items sell well on social media; commodities and comparison-shopped goods do well on marketplaces; strong brands build their own stores.
+2. **How much money and time do I have?** Social selling and marketplaces need the least to start.
+3. **Do I want a brand or just sales?** An own store builds a brand and customer list.
+4. **Who has the customers?** Selling where your customers already are beats building a new place.
+5. **How will I deliver and handle payments?** Some models make this easier.
+6. **What are my margins?** A model with high fees needs a higher price or lower costs.
+
+A practical path for most beginners: **start where your first customers are** (often Instagram and WhatsApp, or a marketplace), prove that people buy, learn your numbers, then add an own store and email list as you grow. Avoid investing heavily in a polished website before you know what sells.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m01-t1",
+  "prompt": "A tote bag sells for **₦12,000**. Product cost is **₦6,500**, packaging **₦500** and the marketplace commission is **10%**. Work out the commission in naira, the profit per order and the margin. Then work out the profit if you also pay **₦1,500** delivery and **₦1,500** marketing per order.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Commission = ...",
+  "rules": [
+    { "label": "Commission of ₦1,200", "pattern": "1,?200" },
+    { "label": "Profit of ₦3,800", "pattern": "3,?800" },
+    { "label": "Margin of about 31.7%", "pattern": "31\\.7|31\\.67|32 ?%" },
+    { "label": "Profit of ₦800 after delivery and marketing", "pattern": "\\b800\\b" }
+  ],
+  "sample": "Commission = 10% of 12,000 = ₦1,200.\nProfit = 12,000 - 6,500 - 500 - 1,200 = ₦3,800 per order.\nMargin = 3,800 / 12,000 = 31.7%.\nAfter ₦1,500 delivery and ₦1,500 marketing: 3,800 - 1,500 - 1,500 = ₦800 per order.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m01-t2",
+  "prompt": "Choose the **best starting model** for this seller and explain in 50 to 100 words: *Ada makes handmade soaps. She has ₦100,000, a phone and 800 Instagram followers, and no website.* Give two reasons and one limit of the model.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Ada should start with ...",
+  "rules": [
+    { "label": "Chooses social selling (Instagram/WhatsApp)", "pattern": "instagram|whatsapp|social" },
+    { "label": "Gives reasons (followers, low cost, visual, personal)", "pattern": "because|since|followers|cost|free|cheap|visual|personal|quick|already" },
+    { "label": "Gives a limit (manual work, hard to scale, platform rules)", "pattern": "limit|manual|scale|rules|depend|time|drawback|but" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Ada should start with social selling on Instagram and WhatsApp. She already has 800 followers who can become her first customers, it costs almost nothing to start, and handmade soap is visual and personal, so photos and messages sell it well. She can test demand before spending her ₦100,000 on a website. The limit is that taking orders by message is manual and hard to scale, and she depends on the platforms' rules, so later she should add an own store and a customer list.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m01-t3",
+  "prompt": "List the **costs of selling one order online** that you would count for your own product, at least eight lines, with an estimate in naira for each.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Product cost - ₦...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Product cost", "pattern": "product cost|cost of (the )?(product|goods)|supplier" },
+    { "label": "Packaging", "pattern": "packag" },
+    { "label": "Delivery", "pattern": "deliver|courier|shipping" },
+    { "label": "Payment fees", "pattern": "payment|gateway|fee|bank charge" },
+    { "label": "Marketing cost per order", "pattern": "marketing|ads|advert|discount" },
+    { "label": "Returns or damages", "pattern": "return|refund|damage|loss" },
+    { "label": "Naira amounts", "pattern": "₦\\s?\\d", "min": 6 }
+  ],
+  "sample": "Product cost - ₦6,500\nPackaging (box, tissue, label) - ₦500\nDelivery paid by me - ₦1,000\nPayment gateway fee - ₦280\nMarketplace commission - ₦1,200\nMarketing cost per order - ₦1,500\nAllowance for returns and damages - ₦250\nShare of fixed costs (tools, data) - ₦200",
+  "required": false
+}
+```
+
+Next lesson: choosing a niche and products.
+$md$, true, true, 1, array['ecom-m01-t1', 'ecom-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m03', 'ecommerce-online-business', 'Building your store', 3, null, null, '{}'::text[], array['Choosing a platform', 'Store design and product pages', 'Photos and descriptions that sell', 'Policies and trust signals']::text[])
+values ('ecom-m02', 'ecommerce-online-business', 'Niche and product selection', 2, 'Niche & Products', 'NICHE', array['Find a niche', 'Research demand', 'Source and test suppliers', 'Price for profit per order']::text[], array['Finding a niche', 'Product research and demand', 'Suppliers and sourcing', 'Pricing and profit per order']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m04', 'ecommerce-online-business', 'Payments and checkout', 4, null, null, '{}'::text[], array['Payment methods for Nigeria and abroad', 'Card, transfer and cash on delivery', 'Fraud and chargebacks', 'Invoices and receipts']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:niche-and-product-selection', 'ecommerce-online-business', 'ecom-m02', 'niche-and-product-selection', 'Niche and Product Selection', 'Find a niche, research product demand, source from suppliers and price for profit after every cost of an online order.', 25, $md$
+## Finding a niche
+
+A **niche** is a focused segment of the market: a specific type of customer with specific needs. "Bags" is a category; "durable, stylish work totes for women who commute in Lagos" is a niche. A focused niche makes everything easier: you know who to talk to, what to stock, how to describe it, where to advertise and why customers should pick you over bigger sellers.
+
+Good niches are:
+
+- **Specific enough** to stand out, but **large enough** to earn from.
+- **Close to something you know or care about,** so you can sell with authority and stay motivated.
+- **Reachable,** with communities, groups, hashtags or places where those customers gather.
+- **Backed by demand:** people already spend money on the problem.
+- **Profitable:** the margins work after all costs.
+
+Ways to find one: start with your own interests and skills; notice problems people complain about; follow trends in marketplaces and social media; look at what people ask for in groups and comments; and consider seasonal and event-driven needs (school, weddings, festivals).
+
+Write a **niche statement:** *"We sell [product type] for [customer] who [need/problem], with [difference]."*
+
+## Product research and demand
+
+Before you commit money, **check demand and competition.**
+
+- **Marketplaces:** search your product on Jumia, Jiji and others. How many sellers? What are the prices? How many reviews and sales? Which reviews are negative, and why?
+- **Search interest:** Google Trends and search suggestions show whether interest is rising, steady or seasonal.
+- **Social media:** look at Instagram and TikTok hashtags, creators and comments. What do people ask?
+- **Direct feedback:** ask potential customers, post a test and see if people ask the price.
+- **Pre-sell:** take orders or deposits before buying stock.
+
+Good beginner products are often **small, light, durable and easy to ship,** with a **healthy margin** and **repeat or related purchases** (consumables, accessories). Be careful with: fragile or heavy goods, items needing special approval (for example NAFDAC-regulated products), and branded goods you are not authorised to sell, since fake or unauthorised branded goods bring legal trouble.
+
+## Suppliers and sourcing
+
+Where you get products shapes your costs and quality.
+
+- **Local makers and tailors,** for custom or handmade items; easy to check and fast.
+- **Wholesale markets and distributors** in Nigeria.
+- **Importers and wholesalers** who bring in goods.
+- **Direct imports** from overseas suppliers (see the Import, Export & Mini Importation course), for higher margins with more risk.
+- **Dropship suppliers,** who ship for you.
+
+For any supplier: **order samples,** check quality and consistency, compare at least three, agree prices, minimum order, lead time and returns in writing, start small and **test with a small order.** Keep a second supplier in mind.
+
+## Pricing and profit per order
+
+Price must cover **every cost** and leave a profit. For one online order, add up:
+
+| Item | Example |
+| :-- | :-- |
+| Selling price | ₦12,000 |
+| Product cost | ₦6,500 |
+| Packaging | ₦500 |
+| Delivery paid by you | ₦1,000 |
+| Payment fee (1.5%) | ₦180 |
+| **Contribution before marketing** | **₦3,820** |
+| Marketing cost per order | ₦1,500 |
+| **Profit per order** | **₦2,320** (19.3% margin) |
+
+Check: 12,000 − 6,500 − 500 − 1,000 − 180 = **3,820.** Then 3,820 − 1,500 = **2,320**, and 2,320 ÷ 12,000 = **19.3%.**
+
+The contribution before marketing (₦3,820) is the **most you can spend on marketing per order and still break even.** If you sell ₦12,000 per order, your **break-even ROAS** (revenue ÷ ad spend) is 12,000 ÷ 3,820 = **3.14.** Ads that return less than ₦3.14 for each ₦1 spent lose money.
+
+**Pricing approaches:**
+
+- **Cost-plus:** add your target margin to your total cost.
+- **Competitor-based:** match the market, and justify any difference with value.
+- **Value-based:** price on what the product is worth to the customer.
+- **Bundles and tiers:** raise the average order value (two items at a small discount).
+- **Psychology:** a clear, consistent price; avoid constant discounts that teach customers to wait.
+
+Always test: a small price rise often loses fewer customers than expected.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m02-t1",
+  "prompt": "Selling price **₦12,000**, product cost **₦6,500**, packaging **₦500**, delivery paid by you **₦1,000**, payment fee **1.5%**. Work out the payment fee, the **contribution before marketing**, the **break-even ROAS**, and the **profit per order** if marketing costs **₦1,500** an order.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Payment fee = ...",
+  "rules": [
+    { "label": "Payment fee of ₦180", "pattern": "\\b180\\b" },
+    { "label": "Contribution of ₦3,820", "pattern": "3,?820" },
+    { "label": "Break-even ROAS of about 3.14", "pattern": "3\\.1[0-9]?" },
+    { "label": "Profit of ₦2,320", "pattern": "2,?320" }
+  ],
+  "sample": "Payment fee = 1.5% of 12,000 = ₦180.\nContribution before marketing = 12,000 - 6,500 - 500 - 1,000 - 180 = ₦3,820.\nBreak-even ROAS = 12,000 / 3,820 = 3.14.\nProfit per order = 3,820 - 1,500 = ₦2,320.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m02-t2",
+  "prompt": "Write your **niche statement** and a short **product shortlist**: the niche statement in one sentence, then three products with an expected price and unit cost. One item per line.",
+  "minutes": 12,
+  "rows": 7,
+  "placeholder": "Niche: We sell ... for ... who ..., with ...\nProduct 1: ... price ₦... cost ₦...",
+  "rules": [
+    { "label": "Has a niche statement", "pattern": "niche|we sell" },
+    { "label": "Names a customer and a need", "pattern": "for [a-z]|who " },
+    { "label": "Lists three products", "pattern": "product 1[\\s\\S]*product 2[\\s\\S]*product 3" },
+    { "label": "Gives price and cost in naira", "pattern": "price[^\\n]*₦[^\\n]*cost[^\\n]*₦|cost[^\\n]*₦[^\\n]*price[^\\n]*₦", "min": 3 }
+  ],
+  "sample": "Niche: We sell durable, stylish work totes for women who commute in Lagos and need to carry a laptop, with local ankara designs.\nProduct 1: ankara laptop tote - price ₦12,000 - cost ₦6,500\nProduct 2: matching clutch pouch - price ₦4,500 - cost ₦2,000\nProduct 3: tote and pouch gift set - price ₦15,500 - cost ₦8,300",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m02-t3",
+  "prompt": "Describe how you will **research demand and test a supplier** for your first product in 60 to 120 words: where you will look, what you will count, how you will check the supplier and your first small order.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "First I will check ...",
+  "rules": [
+    { "label": "Says where to research demand", "pattern": "jumia|jiji|instagram|tiktok|google|marketplace|trends|groups" },
+    { "label": "Says what to count or look for", "pattern": "sellers|reviews|prices|price|complain|questions|demand|how many" },
+    { "label": "Says how the supplier is checked (sample, references, visit)", "pattern": "sample|reference|visit|compare|three suppliers|quality" },
+    { "label": "Describes a small first order or pre-sale", "pattern": "small|first order|\\d+\\s*(units|pieces)|pre-?sell|deposit|test" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "First I will search tote bags on Jumia and Jiji and count how many sellers there are, their prices and the main complaints in reviews. I will also check Instagram hashtags and Google Trends. Then I will order samples from three local tailors, compare quality, price and lead time, and ask each for references. I will pre-sell 10 bags on Instagram with a small deposit, then place a first order of 20 pieces with the best supplier to test quality before I buy more.",
+  "required": false
+}
+```
+
+Next lesson: building your store.
+$md$, true, true, 2, array['ecom-m02-t1', 'ecom-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m05', 'ecommerce-online-business', 'Fulfilment and delivery', 5, null, null, '{}'::text[], array['Stock and inventory', 'Packaging', 'Couriers and delivery options', 'Tracking and delays']::text[])
+values ('ecom-m03', 'ecommerce-online-business', 'Building your store', 3, 'Store Builder', 'STORE', array['Choose a platform', 'Build product pages', 'Take photos and write descriptions', 'Set policies and trust signals']::text[], array['Choosing a platform', 'Store design and product pages', 'Photos and descriptions that sell', 'Policies and trust signals']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m06', 'ecommerce-online-business', 'Marketing and traffic', 6, null, null, '{}'::text[], array['Social media and WhatsApp selling', 'Ads for a store', 'Search and email', 'Reviews and referrals']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:building-your-store', 'ecommerce-online-business', 'ecom-m03', 'building-your-store', 'Building Your Store', 'Choose a platform, design a store and product pages that sell, take photos and write descriptions that convert and set policies and trust signals.', 30, $md$
+## Choosing a platform
+
+Your store platform is the tool you use to build and run your shop. Options include:
+
+- **Hosted store builders** (for example Shopify, Wix, Squarespace and Nigerian-focused builders): easiest, with templates, hosting, checkout and security included for a monthly fee.
+- **Open-source or self-hosted** (such as WooCommerce on WordPress): flexible and cheaper at scale, but you manage hosting, updates and security.
+- **Marketplace storefronts** (a shop page on a large marketplace): the least setup, with the marketplace's rules and fees.
+- **Social commerce tools:** catalogues and shops on Instagram, Facebook and WhatsApp Business.
+
+Choose with a checklist:
+
+1. **Ease of use:** can you manage it without a developer?
+2. **Cost:** subscription, transaction fees, app and theme costs, payment fees.
+3. **Payments:** does it work with the payment methods your customers use in Nigeria?
+4. **Delivery:** can it handle your shipping options and tracking?
+5. **Mobile:** is it fast and easy on a phone? Most of your customers will use one.
+6. **Growth:** can it handle more products and orders, and connect to marketing tools and analytics?
+7. **Support and community:** help when something breaks.
+8. **Control and data:** can you export your products and customer list?
+
+For most beginners, a **hosted builder or a social shop** is the sensible start. Platform features and prices change, so compare current offers.
+
+## Store design and product pages
+
+Your store should be **clear, fast and trustworthy.**
+
+**Store basics:**
+
+- **Simple navigation:** a few clear categories, a search bar and an easy way to reach the cart.
+- **A clean design** with your brand colours and logo, plenty of white space and readable text.
+- **Mobile first,** with large buttons and short forms.
+- **Fast pages:** compress images, avoid heavy features.
+- **A clear home page:** what you sell, for whom, your best sellers and why to trust you.
+- **Easy contact:** WhatsApp, phone, email and address.
+
+**A product page is where the sale happens.** Include:
+
+1. **A clear product name.**
+2. **Good photos,** several angles, in use, and a zoom.
+3. **A visible price** (and any discount shown clearly).
+4. **Key benefits and details,** in short bullets (size, material, colours, weight, what is included).
+5. **A description** answering likely questions.
+6. **Variants** (size, colour) with stock status.
+7. **Delivery information:** cost and time, so customers do not leave to find out.
+8. **Return policy** summary.
+9. **Reviews and ratings.**
+10. **A prominent "Add to cart" or "Order" button.**
+11. **Trust signals** such as secure payment icons and guarantees.
+
+## Photos and descriptions that sell
+
+Customers cannot touch your product, so **photos and words must do the work.**
+
+**Photos:**
+
+- Use **natural light** and a clean, plain background.
+- Show **the whole product, details and the product in use** (a model, a hand, a room).
+- Include a **size reference** (next to a common object, or on a person).
+- Keep **colours accurate** and style consistent across the store.
+- **Edit lightly** (crop, brighten) and compress for speed.
+- A **short video** of the product in use builds trust.
+
+**Descriptions:**
+
+- Start with the **benefit** to the customer, then the features.
+- Use **short paragraphs and bullets.**
+- Be **specific and honest:** measurements, materials, care, what is included.
+- Use **words your customers use,** and include the keywords people search for.
+- Answer common questions (fit, sizing, delivery, care).
+- End with a **clear call to action.**
+- Never exaggerate, since returns and bad reviews follow.
+
+Example: *"Kente Work Tote: fits a 15-inch laptop, a lunch box and your documents. Made from strong ankara fabric with a padded laptop pocket and a zip. 40 cm × 32 cm × 12 cm. Ships in 2 days within Lagos."*
+
+## Policies and trust signals
+
+Online customers worry: *Is this real? Will I get my order? What if it is wrong?* Reduce that fear with clear policies and proof.
+
+**Policies to publish:**
+
+- **Delivery policy:** areas, costs, times, how orders are tracked.
+- **Return and refund policy:** what can be returned, within how many days, who pays, how refunds are made.
+- **Payment policy:** accepted methods and security.
+- **Privacy policy:** what data you collect and how you use and protect it (important under data protection law).
+- **Terms and conditions:** the basic rules of buying from you.
+- **Contact and about pages:** a real name, address, phone and the story behind the business.
+
+**Trust signals:**
+
+- **Reviews and testimonials,** with real photos.
+- **Social proof:** number of customers, press mentions, followers.
+- **Secure checkout** and recognised payment options.
+- **Guarantees:** money-back, quality or delivery guarantees.
+- **Fast, helpful responses** to questions.
+- **Professional details:** consistent branding, correct spelling, working links.
+
+Trust takes time. Be honest, deliver what you promise and ask happy customers to review.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m03-t1",
+  "prompt": "Write a **product page** for one of your products: the **title**, **three benefit bullets**, a **description of 40 to 90 words**, the **price**, **delivery information** and a **return summary**. Label each part.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Title: ...\nBullets: ...",
+  "rules": [
+    { "label": "Has a title", "pattern": "title" },
+    { "label": "Has three bullets", "pattern": "(bullet|benefit)[\\s\\S]*(bullet|benefit)|(\\n\\s*[-•*].*){3}" },
+    { "label": "Has a description", "pattern": "description" },
+    { "label": "Has a price in naira", "pattern": "price[^\\n]*₦\\s?\\d" },
+    { "label": "Has delivery information", "pattern": "delivery|ships" },
+    { "label": "Has a return summary", "pattern": "return|refund" },
+    { "label": "At least 70 words", "minWords": 70, "maxWords": 220 }
+  ],
+  "sample": "Title: Kente Work Tote, Ankara Laptop Bag\nBenefits:\n- Fits a 15-inch laptop, a lunch box and documents\n- Strong ankara fabric with a padded laptop pocket and zip\n- Easy to carry on a daily commute\nDescription: This tote is made for busy women who commute in Lagos. The ankara print stands out, the padded pocket protects your laptop and the strong straps carry up to 5 kg comfortably. It measures 40 cm by 32 cm by 12 cm and is made in Lagos by our own tailors.\nPrice: ₦12,000\nDelivery: ships in 2 days within Lagos for ₦1,500, and in 3 to 5 days nationwide\nReturns: return within 7 days if unused, with a full refund or exchange",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m03-t2",
+  "prompt": "Choose a **platform** for your store and justify it in 50 to 100 words against at least four criteria (for example cost, ease, payments, mobile, growth).",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I will start with ...",
+  "rules": [
+    { "label": "Names a platform or option", "pattern": "shopify|wix|woocommerce|squarespace|instagram|whatsapp|marketplace|jumia|jiji|builder|social" },
+    { "label": "Mentions cost", "pattern": "cost|price|fee|cheap|subscription|free" },
+    { "label": "Mentions ease of use or mobile", "pattern": "easy|ease|simple|mobile|phone|no developer" },
+    { "label": "Mentions payments or delivery", "pattern": "payment|paystack|flutterwave|delivery|checkout" },
+    { "label": "Mentions growth or later changes", "pattern": "grow|scale|later|upgrade|export" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I will start with a hosted store builder, because it is easy to use without a developer and works well on a phone. The monthly subscription is predictable, and it supports Nigerian payment gateways and delivery options at checkout. I will also keep an Instagram catalogue for daily selling. Later, if orders grow, I can add apps and export my product list and customer data if I need to move to a different platform.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m03-t3",
+  "prompt": "List the **policies and trust signals** your store needs. Write at least eight lines, one per line, with a few words on what each says.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Delivery policy - ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Delivery policy", "pattern": "delivery" },
+    { "label": "Return or refund policy", "pattern": "return|refund" },
+    { "label": "Privacy policy", "pattern": "privacy" },
+    { "label": "Contact details", "pattern": "contact|address|phone|whatsapp" },
+    { "label": "Reviews or testimonials", "pattern": "review|testimonial" },
+    { "label": "Secure payment or guarantee", "pattern": "secure|guarantee|payment" }
+  ],
+  "sample": "Delivery policy - areas, cost and time, with tracking\nReturn and refund policy - 7 days, unused, who pays and how refunds are made\nPayment policy - accepted methods and secure checkout\nPrivacy policy - what data we collect and how we protect it\nTerms and conditions - the basic rules of buying from us\nContact page - real address, phone and WhatsApp number\nAbout page - who we are and why we started\nCustomer reviews and testimonials with real photos\nMoney-back guarantee on every order",
+  "required": false
+}
+```
+
+Next lesson: payments and checkout.
+$md$, true, true, 3, array['ecom-m03-t1', 'ecom-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m07', 'ecommerce-online-business', 'Customer service and returns', 7, null, null, '{}'::text[], array['Answering customers well', 'Returns and refunds', 'Handling complaints', 'Building loyalty']::text[])
+values ('ecom-m04', 'ecommerce-online-business', 'Payments and checkout', 4, 'Payments', 'ECOMPAY', array['Offer the right payment methods', 'Handle pay on delivery', 'Prevent fraud', 'Issue invoices and receipts']::text[], array['Payment methods for Nigeria and abroad', 'Card, transfer and cash on delivery', 'Fraud and chargebacks', 'Invoices and receipts']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:payments-and-checkout', 'ecommerce-online-business', 'ecom-m04', 'payments-and-checkout', 'Payments and Checkout', 'Choose payment methods for Nigeria and abroad, understand card, transfer and cash on delivery, protect yourself from fraud and chargebacks and issue invoices and receipts.', 25, $md$
+> [!NOTE]
+> Payment providers, fees and rules change. The fees in this lesson are **illustrative assumptions for practice.** **Check the current fees and terms of any provider before you choose.**
+
+## Payment methods for Nigeria and abroad
+
+Customers pay in different ways, and offering the right options raises sales. Common methods:
+
+| Method | How it works | Notes |
+| :-- | :-- | :-- |
+| **Card payment** (Visa, Mastercard, Verve) | Through a payment gateway on your checkout | Instant confirmation; gateway fee |
+| **Bank transfer** | Customer sends money to your account, or to a one-time account generated by a gateway | Very popular; check payment arrives |
+| **USSD and bank apps** | Pay with a bank code or app | Useful for customers without cards |
+| **Mobile wallets and pay-by-link** | Customer pays with a link or app | Convenient for social sellers |
+| **Pay on delivery (cash on delivery)** | Customer pays the rider on arrival | Builds trust, but has risks |
+| **International payments** | Cards and wallets in other currencies, through gateways that support them | Needed for customers abroad; check currency and settlement |
+
+**Payment gateways and processors** (such as Paystack, Flutterwave and others) collect money securely from customers and send it to your bank account, usually for a fee. When choosing, compare: fees, how fast you are paid, payment methods supported, ease of setup, security and customer support, and what documents they need from your business.
+
+## Card, transfer and cash on delivery
+
+**Cards and gateways.** The gateway handles sensitive card data, so you do not store it. Fees are commonly a percentage plus a small fixed amount per transaction. Suppose, as a practice assumption, a fee of **1.5% plus ₦100** on a ₦12,000 order: 1.5% = ₦180, plus ₦100 = **₦280** fee, so you receive ₦11,720. Include this in your pricing.
+
+**Bank transfers.** They are cheap and familiar, but need care: **confirm the money has actually arrived in your bank account** (not just a screenshot or an SMS) before you ship. Where possible use a gateway that gives each order a unique account number and confirms payment automatically.
+
+**Pay on delivery (POD).** Customers like it, especially if they are new to your store, but it has costs:
+
+- **Failed deliveries:** customers who are unavailable or refuse the order. If 7% of orders fail and each failed delivery costs ₦1,500 in wasted transport and repacking, then on 200 orders you lose 14 × 1,500 = **₦21,000.**
+- **Cash handling risk,** delays in remittance by riders, and reconciliation work.
+- **Cash flow:** you wait for money.
+
+Reduce POD problems by: confirming the order by call or message before dispatch, charging a small non-refundable deposit or delivery fee up front, limiting POD to certain areas or order values, and using trusted couriers who remit promptly.
+
+## Fraud and chargebacks
+
+Online selling attracts fraud. Know the common ones and how to defend:
+
+- **Fake transfer receipts and alerts:** screenshots can be edited. **Check your own bank app or gateway dashboard.**
+- **Stolen cards:** orders with mismatched details, rush shipping to unfamiliar addresses and unusually large orders. A gateway's fraud checks help.
+- **Chargebacks and disputes:** a customer asks their bank to reverse a card payment. If you cannot prove you delivered what was ordered, you may lose the money and pay a fee. Keep **order confirmations, delivery proof, communication and photos.**
+- **"Overpayment" scams:** a buyer sends too much and asks for a refund of the difference; the original payment later turns out to be fake.
+- **Phishing:** fake messages that look like your payment provider asking for your login. Never share passwords or one-time codes.
+- **Account takeover:** protect your store and gateway accounts with strong passwords and two-step verification.
+
+Practical rules: **ship only after confirmed payment,** verify unusual orders by calling the customer, keep records of every order, use a reputable gateway, train staff and keep your software updated.
+
+## Invoices and receipts
+
+Every sale needs a record.
+
+- A **receipt** confirms that payment was received.
+- An **invoice** is a request for payment, or a record of a sale showing items, prices and tax.
+
+Include on each: your business name and details, the customer's name, a unique number, the date, a description of items, quantities, unit prices, delivery charge, any discount, **VAT where applicable,** the total and payment method. Send a **digital copy** automatically (most store platforms do) and keep your own copy.
+
+Why it matters: customers trust you, you have evidence in disputes, you can **track your income** and you meet your tax and bookkeeping duties. Keep records safely, and ask an accountant about VAT and tax registration when your sales grow.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m04-t1",
+  "prompt": "Assume a payment gateway fee of **1.5% plus ₦100** on a **₦12,000** order. Work out the fee and what you receive. Then work out the loss from **7% failed pay-on-delivery orders** out of **200 orders** if each failed delivery costs **₦1,500**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Fee = ...",
+  "rules": [
+    { "label": "Fee of ₦280", "pattern": "\\b280\\b" },
+    { "label": "Receive ₦11,720", "pattern": "11,?720" },
+    { "label": "14 failed deliveries", "pattern": "\\b14\\b" },
+    { "label": "Loss of ₦21,000", "pattern": "21,?000" }
+  ],
+  "sample": "Fee = 1.5% of 12,000 = 180, plus 100 = ₦280. I receive 12,000 - 280 = ₦11,720.\nFailed deliveries = 7% of 200 = 14.\nLoss = 14 x 1,500 = ₦21,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m04-t2",
+  "prompt": "Write a **payment and fraud checklist** for your store with at least eight rules, one per line: how you confirm payments, handle pay on delivery, spot fake orders, protect accounts and keep records.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Confirm every transfer in the bank app before shipping",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Confirm payment in the bank or gateway, not a screenshot", "pattern": "bank app|dashboard|confirm|verify|screenshot" },
+    { "label": "Pay on delivery rules", "pattern": "pay on delivery|pod|cash on delivery|deposit" },
+    { "label": "Spot suspicious orders", "pattern": "suspicious|unusual|mismatch|call the customer|large order" },
+    { "label": "Protect accounts (passwords, two-step)", "pattern": "password|two-step|2fa|authenticat" },
+    { "label": "Keep records and proof of delivery", "pattern": "record|proof|photos|receipt|invoice" },
+    { "label": "Overpayment scam awareness", "pattern": "overpay|refund the difference|extra" }
+  ],
+  "sample": "Confirm every transfer in my bank app or gateway dashboard before shipping, never from a screenshot.\nUse a gateway that gives each order a unique account and confirms it automatically.\nFor pay on delivery, confirm the order by call first and take a small deposit.\nLimit pay on delivery to areas and order values where it works.\nCall the customer to verify unusual or very large orders and any address mismatch.\nNever refund an overpayment until the original money is confirmed and cleared.\nProtect my store and gateway accounts with strong passwords and two-step verification.\nKeep order records, delivery proof and chats for every sale.\nIssue a receipt or invoice for every order.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m04-t3",
+  "prompt": "A customer sends a **screenshot** of a transfer for a ₦25,000 order and asks you to dispatch immediately because it is a gift. In 40 to 90 words, say what you will do and why.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I will not dispatch until ...",
+  "rules": [
+    { "label": "Says to check the bank app or account", "pattern": "bank app|account|dashboard|alert|confirm|verify" },
+    { "label": "Says not to rely on the screenshot", "pattern": "screenshot|not enough|can be (edited|faked)|fake" },
+    { "label": "Says to dispatch only after payment arrives", "pattern": "only after|once (the )?money|until|before (i )?(dispatch|ship)|wait" },
+    { "label": "Polite or offers an alternative", "pattern": "thank|apolog|understand|explain|polite|fast|quickly" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "I will politely explain that I dispatch only after the money has been confirmed in my bank app, because screenshots can be edited. I will check my account now, and as soon as the ₦25,000 shows as received, I will pack and send the gift the same day. I understand it is urgent, so I will update them quickly and give a tracking number, but I will not dispatch on a screenshot alone.",
+  "required": false
+}
+```
+
+Next lesson: fulfilment and delivery.
+$md$, true, true, 4, array['ecom-m04-t1', 'ecom-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ecom-m08', 'ecommerce-online-business', 'Analytics, scaling and final project', 8, null, null, '{}'::text[], array['Store metrics that matter', 'Improving conversion', 'Scaling what works', 'Launching your store']::text[])
+values ('ecom-m05', 'ecommerce-online-business', 'Fulfilment and delivery', 5, 'Fulfilment', 'FULFIL', array['Manage inventory and reorder points', 'Package well', 'Choose couriers', 'Track and handle delays']::text[], array['Stock and inventory', 'Packaging', 'Couriers and delivery options', 'Tracking and delays']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:fulfilment-and-delivery', 'ecommerce-online-business', 'ecom-m05', 'fulfilment-and-delivery', 'Fulfilment and Delivery', 'Manage stock and inventory, pack orders properly, choose couriers and delivery options and handle tracking and delays.', 20, $md$
+## Stock and inventory
+
+**Fulfilment** is everything between "order placed" and "order received": picking the item, packing it, handing it to a courier and making sure it arrives. It is where many online businesses succeed or fail, because customers judge you by what arrives and when.
+
+**Inventory** is the stock you hold. Keep it organised:
+
+- **Know what you have.** Count regularly and record every item in and out in a simple sheet or your store system.
+- **Label and store properly:** a clean, dry, secure place, with each product in its own labelled spot.
+- **Track by variant** (size, colour), since each sells differently.
+- **Reorder in time.** *Reorder point = daily sales × (lead time + safety days).* If you sell 8 a day, restocking takes 10 days and you want 5 days of safety, reorder when stock falls to 8 × (10 + 5) = **120 units.** With 120 units in hand and 8 sold a day, you have 120 ÷ 8 = **15 days** of cover.
+- **Avoid overselling:** keep the website and your records updated so you do not sell what you do not have. Mark items "out of stock" or allow pre-orders clearly.
+- **Watch slow stock** and clear it with bundles or discounts, because money sitting on shelves earns nothing.
+- **Protect against loss:** controlled access, a record of who takes what and regular checks.
+
+Small sellers can start from home, but plan space as you grow: a corner for stock, a table for packing and a place for returns.
+
+## Packaging
+
+Good packaging protects the product, reduces returns and is part of your brand.
+
+- **Protect:** strong boxes or mailers, padding for fragile items, waterproof bags and tape that holds.
+- **Right-size:** boxes that fit the product save on materials and sometimes on courier charges (some charge by size as well as weight).
+- **Be consistent and branded:** a sticker, a thank-you card or ribbon makes a good first impression and encourages sharing, without costing much.
+- **Include** the packing slip or invoice, care instructions and a return form if needed.
+- **Label clearly:** the customer's name, address and phone number, with your return address.
+- **Check before sealing:** right item, right size and colour, no defects.
+- **Photograph or record** the packed item for important orders, as evidence if there is a dispute.
+- **Think of cost and the environment:** avoid excessive plastic, reuse where you can.
+
+Test your packaging by dropping a sample parcel and shaking it. If it would arrive damaged, fix it before customers find out.
+
+## Couriers and delivery options
+
+Customers expect clear delivery choices and fair prices. Ways to deliver:
+
+| Option | Good for | Watch out for |
+| :-- | :-- | :-- |
+| **Your own rider or driver** | Same-day local deliveries, control | Cost, reliability, handling many orders |
+| **Local dispatch riders and courier companies** | Within a city, fast | Quality varies; vet them |
+| **Nationwide couriers and logistics companies** | Deliveries across states | Longer times; pickup points and fees |
+| **Parks and motor-park carriers** | Cheap long distance | Weak tracking and security |
+| **Pickup stations or pickup from you** | Reducing cost; customers who prefer it | Customer convenience |
+| **International courier** | Customers abroad | Cost, customs and duties |
+
+Choose couriers by **price, speed, reliability, coverage, tracking, handling of damage and payment remittance** (especially for pay on delivery). Test several with a few orders, and keep a back-up.
+
+Example comparison for Lagos: **Courier A** charges ₦1,500, delivers next day with 95% on-time. **Courier B** charges ₦1,100, takes 2 to 3 days with 80% on-time. B saves ₦400 per order, but if 20% of its deliveries are late and each late delivery causes a complaint or refund costing about ₦2,000, the expected cost of lateness is 0.20 × 2,000 = ₦400, wiping out the saving and harming your reputation. **Reliability often beats the cheapest price.**
+
+**Delivery pricing options:** flat rate, rate by zone or weight, **free delivery above a minimum order** (for example, free over ₦20,000, which encourages bigger baskets), or delivery included in the price. Whatever you choose, show it clearly **before checkout** so customers are not surprised.
+
+## Tracking and delays
+
+Customers hate silence. Keep them informed:
+
+- **Confirm the order** immediately, with the expected delivery date.
+- **Send dispatch notice** with the courier's name and tracking number or rider's phone number.
+- **Track parcels** yourself and act on delays quickly.
+- **Tell the customer early** if something is late, with the cause and a new date, instead of waiting for them to ask.
+- **Have a plan for common problems:** unavailable customer, wrong address, damaged parcel, lost parcel, courier strike or weather delay.
+- **Record delivery proof:** signature, photo or code.
+
+Measure your delivery performance: **on-time rate, failed delivery rate, damage rate, cost per delivery and delivery complaints.** Review each month, talk to your couriers about problems and fix recurring causes.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m05-t1",
+  "prompt": "You sell **8 units a day**, restocking takes **10 days** and you want **5 days of safety stock**. Work out the **reorder point**. You currently hold **120** units: how many **days of cover** is that, and should you reorder now?",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Reorder point = ...",
+  "rules": [
+    { "label": "Reorder point of 120 units", "pattern": "\\b120\\b" },
+    { "label": "Days of cover of 15", "pattern": "\\b15\\b" },
+    { "label": "Says to reorder now (stock is at the reorder point)", "pattern": "reorder now|should reorder|yes|at the reorder point|now" }
+  ],
+  "sample": "Reorder point = 8 x (10 + 5) = 120 units.\nDays of cover = 120 / 8 = 15 days.\nStock is exactly at the reorder point, so I should reorder now.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m05-t2",
+  "prompt": "Courier A charges **₦1,500**, next day, **95%** on time. Courier B charges **₦1,100**, 2 to 3 days, **80%** on time. Each late delivery costs about **₦2,000** in complaints and refunds. Work out the expected cost of lateness per order for each and say which you would choose, with a reason.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "A lateness cost = ...",
+  "rules": [
+    { "label": "A lateness cost of ₦100", "pattern": "\\b100\\b" },
+    { "label": "B lateness cost of ₦400", "pattern": "\\b400\\b" },
+    { "label": "Total cost of A ₦1,600 and B ₦1,500", "pattern": "1,?600[\\s\\S]*1,?500|1,?500[\\s\\S]*1,?600" },
+    { "label": "Makes a choice with a reason (reliability, reputation, speed)", "pattern": "choose|pick|prefer|go with|reliab|reputation|faster|next day" }
+  ],
+  "sample": "A: 5% late x ₦2,000 = ₦100 expected lateness cost, so total = 1,500 + 100 = ₦1,600 per order.\nB: 20% late x ₦2,000 = ₦400, so total = 1,100 + 400 = ₦1,500 per order.\nB looks slightly cheaper, but the difference is only ₦100 and A is faster and more reliable, which protects my reputation, so I would choose A for most orders and use B for non-urgent ones.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m05-t3",
+  "prompt": "Write your **order fulfilment checklist** from order received to delivered: at least eight steps in order, one per line.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1. Confirm payment ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Confirm payment or order", "pattern": "confirm|payment|order" },
+    { "label": "Pick or check the item", "pattern": "pick|check|inspect|quality|right item" },
+    { "label": "Pack and label", "pattern": "pack|label|box" },
+    { "label": "Hand to courier or dispatch", "pattern": "courier|rider|dispatch|hand" },
+    { "label": "Send tracking information", "pattern": "track|notify|message|update" },
+    { "label": "Confirm delivery or follow up", "pattern": "deliver|follow|review|proof" }
+  ],
+  "sample": "1. Confirm the payment in the bank app or gateway.\n2. Print or write the order and the delivery address.\n3. Pick the right item, size and colour from the shelf.\n4. Inspect it for defects.\n5. Pack it in a protective box with the invoice and a thank-you card.\n6. Label the parcel clearly with the customer's details.\n7. Hand it to the courier and record the pickup.\n8. Message the customer with the tracking number and delivery date.\n9. Follow up on delays and confirm delivery with proof.\n10. Ask for a review after delivery.",
+  "required": false
+}
+```
+
+Next lesson: marketing and traffic.
+$md$, true, true, 5, array['ecom-m05-t1', 'ecom-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ecom-m06', 'ecommerce-online-business', 'Marketing and traffic', 6, 'Store Marketing', 'STOREMKT', array['Sell on social and WhatsApp', 'Run profitable store ads', 'Use search and email', 'Win reviews and referrals']::text[], array['Social media and WhatsApp selling', 'Ads for a store', 'Search and email', 'Reviews and referrals']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:marketing-and-traffic', 'ecommerce-online-business', 'ecom-m06', 'marketing-and-traffic', 'Marketing and Traffic', 'Sell through social media and WhatsApp, run ads for a store, use search and email and win reviews and referrals.', 25, $md$
+## Social media and WhatsApp selling
+
+For many Nigerian online sellers, **Instagram, Facebook, TikTok and WhatsApp** are the shop window. To do it well:
+
+- **Make your profile a mini-store:** clear name, a bio saying what you sell and where you deliver, a link to your store or WhatsApp, and highlights for prices, delivery, reviews and how to order.
+- **Post consistently:** product photos and short videos showing the item in use, behind-the-scenes, customer photos, tips and offers.
+- **Use captions with the price and how to order** so customers do not have to ask for basics.
+- **Use Stories and status** for daily updates, new arrivals, polls and limited offers.
+- **Show proof:** reviews, delivery photos, before-and-after.
+- **Reply fast.** Many sales are won or lost in the first hour. Use **WhatsApp Business** features: catalogue, quick replies, labels, away messages and greeting.
+- **Move conversations to orders:** have a simple order process: product, size, address, payment, delivery date.
+- **Build your own list:** invite buyers to a broadcast list or newsletter, with permission, since you own those contacts.
+- **Collaborate** with micro-creators for honest reviews and a unique code.
+
+Respect each platform's rules and privacy law: ask before adding people to groups or broadcast lists, and do not spam.
+
+## Ads for a store
+
+Paid ads can bring customers quickly, but only if the **numbers work.** Use what you learned in the product economics.
+
+Example: you spend **₦60,000** on ads and receive **25 orders** at **₦12,000.**
+
+- Revenue = 25 × 12,000 = **₦300,000.**
+- **ROAS** = 300,000 ÷ 60,000 = **5.0.**
+- **Cost per order (CPA)** = 60,000 ÷ 25 = **₦2,400.**
+- Your contribution before marketing is ₦3,820 per order, so profit from the ads = (25 × 3,820) − 60,000 = 95,500 − 60,000 = **₦35,500.**
+- Your break-even ROAS is 12,000 ÷ 3,820 = 3.14, and 5.0 is well above it, so these ads are profitable. Scale carefully.
+
+Tips for store ads:
+
+- **Start with a small budget** and test two or three creatives and audiences.
+- **Show the product in use** in the first seconds of a video, with the price or offer.
+- **Retarget** people who viewed a product or added to cart but did not buy.
+- **Send ad traffic to the exact product page,** not just the home page.
+- **Install tracking** (pixel and analytics) so results can be measured.
+- **Watch the cost per order against your break-even** every few days. Pause losers and scale winners slowly.
+- **Follow the platform's ad policies.**
+
+## Search and email
+
+**Search (SEO).** People search for what they need ("laptop tote bag Lagos"). Help them find you:
+
+- Use clear **product names and descriptions** with the words customers search.
+- Write **page titles and descriptions** with the product and your location.
+- Use **descriptive image names and alt text.**
+- Add **reviews and useful content** (buying guides, care tips).
+- Set up **Google Business Profile** if you have a physical location or serve a local area.
+
+Search is slow but builds free, steady traffic.
+
+**Email and messaging.** Your list is a lasting asset.
+
+- **Collect emails and numbers** at checkout and with a small incentive, with permission.
+- **Send a welcome message** with a thank-you or first-order discount.
+- **Send useful, occasional updates:** new arrivals, restocks, tips, offers.
+- **Use automations:** abandoned cart reminders, order updates, review requests, birthday offers and win-back messages.
+- **Segment** by what people bought.
+- **Include an easy way to opt out.**
+
+Email and messaging typically cost the least per sale because the customer already knows you.
+
+## Reviews and referrals
+
+Reviews are among the strongest ways to win trust.
+
+- **Ask at the right time:** a few days after delivery, when the customer is happy. Send a short message with a link or simple question.
+- **Make it easy:** one click or one reply.
+- **Use real photos and quotes** (with permission) on your store and social media.
+- **Respond to every review,** thanking happy customers and handling unhappy ones professionally. A calm reply to criticism builds trust in everyone who reads it.
+- **Never fake reviews.** It is dishonest, breaks platform rules and can be illegal.
+
+**Referrals:** happy customers recommend you if you make it easy and rewarding. A simple scheme: *"Share your code with a friend. They get ₦1,000 off their first order, and you get ₦1,000 off your next."* Calculate the cost: if the average contribution is ₦3,820 and you give ₦2,000 in total discounts, you still keep ₦1,820 and gained a customer without ad spend.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m06-t1",
+  "prompt": "You spend **₦60,000** on ads and get **25 orders** at **₦12,000**. Your contribution before marketing is **₦3,820** an order. Work out **revenue**, **ROAS**, **cost per order** and the **profit from the ads**, and say whether they are worth scaling.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Revenue = ...",
+  "rules": [
+    { "label": "Revenue of ₦300,000", "pattern": "300,?000" },
+    { "label": "ROAS of 5", "pattern": "\\b5(\\.0)?\\b" },
+    { "label": "Cost per order of ₦2,400", "pattern": "2,?400" },
+    { "label": "Profit of ₦35,500", "pattern": "35,?500" },
+    { "label": "Says yes, worth scaling carefully", "pattern": "worth|scale|profitable|above (the )?break-?even|yes" }
+  ],
+  "sample": "Revenue = 25 x 12,000 = ₦300,000.\nROAS = 300,000 / 60,000 = 5.0.\nCost per order = 60,000 / 25 = ₦2,400.\nProfit from ads = 25 x 3,820 - 60,000 = 95,500 - 60,000 = ₦35,500.\nThe ROAS of 5.0 is above my break-even of 3.14, so the ads are profitable and worth scaling carefully.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m06-t2",
+  "prompt": "Write a **social post caption** (40 to 80 words) to sell one product: a hook, the benefit, the price, how to order and delivery information.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Tired of ...",
+  "rules": [
+    { "label": "Has a hook (question or bold statement)", "pattern": "\\?|tired|imagine|meet|new|finally" },
+    { "label": "States a benefit", "pattern": "fits|carry|keeps|strong|save|comfortable|protect|stylish|easy|perfect" },
+    { "label": "States a price in naira", "pattern": "₦\\s?\\d" },
+    { "label": "Says how to order", "pattern": "order|dm|whatsapp|message|click|link" },
+    { "label": "States delivery", "pattern": "deliver|ship|nationwide|within lagos|days" },
+    { "label": "Between 40 and 80 words", "minWords": 40, "maxWords": 85 }
+  ],
+  "sample": "Tired of carrying your laptop in a plastic bag? Meet the Kente Work Tote: strong ankara fabric, a padded laptop pocket and a zip that keeps your things safe. It fits a 15-inch laptop, your lunch and your documents. Price: ₦12,000. To order, send us a DM or WhatsApp with your colour choice and address. We deliver within Lagos in 2 days and nationwide in 3 to 5 days.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m06-t3",
+  "prompt": "Design a **review and referral plan** in at least five lines: when you ask for reviews, the message you send, how you use reviews, and a referral reward with the cost to you.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Ask for a review 3 days after delivery ...",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Says when to ask for a review", "pattern": "days? after|after delivery|when (the )?(customer|they)" },
+    { "label": "Includes a message", "pattern": "message|whatsapp|text|say|ask" },
+    { "label": "Says how reviews are used", "pattern": "store|page|post|social|share|display|photos" },
+    { "label": "Includes a referral reward", "pattern": "referral|refer|friend|code|₦\\s?1,?000|discount" },
+    { "label": "Mentions the cost to you or the profit left", "pattern": "cost|keep|profit|₦\\s?\\d" }
+  ],
+  "sample": "Ask for a review three days after delivery, when the customer has used the item.\nMessage: \"Hi Tola, we hope you love your tote! Could you tell us how it is, in one line, with a photo if you like?\"\nUse the best reviews and customer photos on the product page and on Instagram, with permission.\nReply to every review, thanking happy customers and fixing problems for unhappy ones.\nReferral: a friend gets ₦1,000 off their first order and the referrer gets ₦1,000 off the next.\nCost: ₦2,000 in discounts against ₦3,820 contribution, so I still keep ₦1,820 and win a customer without ads.",
+  "required": false
+}
+```
+
+Next lesson: customer service and returns.
+$md$, true, true, 6, array['ecom-m06-t1', 'ecom-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ecom-m07', 'ecommerce-online-business', 'Customer service and returns', 7, 'Customer Care', 'CUSTCARE', array['Answer customers well', 'Write a returns policy', 'Handle complaints', 'Build loyalty']::text[], array['Answering customers well', 'Returns and refunds', 'Handling complaints', 'Building loyalty']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:customer-service-and-returns', 'ecommerce-online-business', 'ecom-m07', 'customer-service-and-returns', 'Customer Service and Returns', 'Answer customers well, set a fair returns and refunds policy, handle complaints calmly and build loyalty that brings repeat sales.', 25, $md$
+## Answering customers well
+
+Online, customer service **is** the shop assistant. Fast, friendly, accurate answers make the difference between a sale and a lost customer.
+
+**Principles:**
+
+- **Reply quickly.** Set a standard (for example within one hour in working hours) and say so. Use **quick replies** for common questions and an away message after hours.
+- **Be clear and polite.** Use the customer's name, short sentences and plain words.
+- **Answer the question fully,** and add the next step ("Would you like me to reserve one?").
+- **Be honest** about stock, delivery times and product limits. Do not promise what you cannot deliver.
+- **Keep records** of conversations and orders.
+- **Know your products and policies,** and keep a short FAQ for yourself and customers.
+- **Match the channel:** reply where the customer wrote (WhatsApp, Instagram, email).
+
+Most questions repeat: price, sizes, availability, delivery time and cost, payment, returns. Put the answers on your store, in your highlights and in saved replies.
+
+## Returns and refunds
+
+Returns are a normal part of online selling, because customers cannot touch the product first. A clear, fair policy **increases sales** (customers feel safe) and reduces arguments.
+
+A good policy states:
+
+- **What can be returned** (unused, in original packaging, with proof of purchase) and **what cannot** (for hygiene reasons, personalised or perishable items).
+- **How long they have** (for example 7 days from delivery).
+- **How to start** a return (a message with order number and photos).
+- **Who pays return shipping** (you if the item is faulty or wrong; the customer if they changed their mind).
+- **What the customer gets:** refund to the original method, exchange or store credit, and how long a refund takes.
+- **Faulty, damaged or wrong items:** always fixed at your cost, quickly.
+
+Follow consumer protection rules that apply to you, and never promise what the law or your policy does not allow.
+
+Know the **cost of returns.** Example: 200 orders a month, **5%** returned = 10 returns. If each return costs ₦3,000 in delivery both ways and handling, the monthly cost is 10 × 3,000 = **₦30,000**, before any lost margin on refunded orders. Reduce returns by:
+
+- **Accurate descriptions, sizes and photos.**
+- **Quality checks** before dispatch.
+- **Good packaging.**
+- **Asking customers sensible questions** (size, use) before they buy.
+- **Analysing reasons** for returns and fixing the cause.
+
+## Handling complaints
+
+A complaint is a chance to keep a customer. Use a simple method:
+
+1. **Listen** and let them finish. Do not argue or interrupt.
+2. **Apologise** sincerely for the problem or the experience.
+3. **Take ownership:** "I will sort this out for you."
+4. **Find the facts** (order number, photos, dates) and check what happened.
+5. **Offer a fair solution:** replacement, repair, refund, discount or another remedy, and a clear timeline.
+6. **Do it** and confirm with the customer.
+7. **Learn:** record the cause and fix the process.
+
+Stay calm even with angry or rude customers. Do not take it personally and do not reply in anger or in public. If the customer is clearly dishonest, stay polite, stick to your policy and keep your evidence.
+
+Example reply: *"Hello Ngozi, I am very sorry that your tote arrived with a broken zip. That is not the quality we want you to receive. Please send a photo, and I will send a replacement today at no cost. You will have it by Thursday. Thank you for your patience."*
+
+**Respond to public complaints** (reviews, social comments) politely and briefly, offer to resolve it privately and then update once solved. Other readers watch how you behave.
+
+## Building loyalty
+
+Keeping a customer costs far less than finding a new one. Repeat customers spend more and recommend you.
+
+Ways to build loyalty:
+
+- **Deliver well, every time.** Reliability is the best loyalty programme.
+- **Thank customers** and include a small personal touch.
+- **Follow up** after delivery to ask if all is well.
+- **Reward repeat buyers:** points, a discount on the third order, early access to new items.
+- **Keep in touch** with useful messages, restock alerts and personalised suggestions.
+- **Listen:** ask for feedback and show what you changed.
+- **Create community:** a WhatsApp group or page for your best customers.
+
+Measure it: the **repeat purchase rate** is customers who buy again ÷ total customers. If 60 of 200 customers order again, the repeat rate is 60 ÷ 200 = **30%.** Raising it from 30% to 40% means 20 more repeat customers without ad costs. Track it monthly.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m07-t1",
+  "prompt": "Of **200 orders**, **5%** are returned and each return costs **₦3,000**. 60 of **200 customers** order again. Work out the number of returns, the monthly cost of returns and the repeat purchase rate.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Returns = ...",
+  "rules": [
+    { "label": "10 returns", "pattern": "\\b10\\b" },
+    { "label": "Cost of ₦30,000", "pattern": "30,?000" },
+    { "label": "Repeat rate of 30%", "pattern": "\\b30\\s?%" }
+  ],
+  "sample": "Returns = 5% of 200 = 10.\nCost = 10 x 3,000 = ₦30,000.\nRepeat purchase rate = 60 / 200 = 30%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m07-t2",
+  "prompt": "Write your **returns and refund policy** in at least six lines: what can be returned, the time limit, how to start a return, who pays shipping, what the customer receives and how faulty items are handled.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Returns window: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States what can be returned", "pattern": "unused|original packaging|can be returned|eligible|proof of purchase" },
+    { "label": "States a time limit in days", "pattern": "\\d+\\s*days?" },
+    { "label": "States how to start a return", "pattern": "message|contact|whatsapp|email|order number|photos" },
+    { "label": "States who pays shipping", "pattern": "shipping|delivery cost|we pay|customer pays|pay for the return" },
+    { "label": "States refund or exchange", "pattern": "refund|exchange|credit" },
+    { "label": "States faulty items are fixed at our cost", "pattern": "faulty|damaged|wrong item|defect" }
+  ],
+  "sample": "What can be returned: unused items in their original packaging with proof of purchase.\nTime limit: within 7 days of delivery.\nHow to start: message us on WhatsApp with your order number and photos.\nShipping: if you changed your mind you pay the return shipping; if the item is wrong or faulty, we pay.\nWhat you get: a refund to your original payment method within 5 working days, or an exchange or store credit if you prefer.\nFaulty or damaged items: replaced or refunded at our cost, quickly.\nNot returnable: personalised items and items for hygiene reasons.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m07-t3",
+  "prompt": "A customer writes: **\"My bag arrived with a broken zip. This is rubbish!\"** Write your reply in 50 to 100 words: apologise, take ownership, ask for what you need, offer a clear fix with a date and thank them.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Hello ...",
+  "rules": [
+    { "label": "Apologises", "pattern": "sorry|apolog" },
+    { "label": "Takes ownership", "pattern": "i will|we will|let me|our (mistake|fault)|not the quality|sort this out" },
+    { "label": "Asks for what is needed (photo, order number)", "pattern": "photo|picture|order number|send" },
+    { "label": "Offers a fix with a timeline", "pattern": "replace|refund|repair|free|today|tomorrow|by (monday|tuesday|wednesday|thursday|friday)|within" },
+    { "label": "Thanks them", "pattern": "thank" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Hello Ngozi, I am very sorry that your tote arrived with a broken zip. That is not the quality we want you to receive, and I will sort it out for you. Please send a photo of the zip and your order number. As soon as I have it, I will send a replacement at no cost today, and you should have it by Thursday. If you prefer a refund, tell me and I will arrange it. Thank you for your patience.",
+  "required": false
+}
+```
+
+Next lesson: analytics, scaling and your final project.
+$md$, true, true, 7, array['ecom-m07-t1', 'ecom-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ecom-m08', 'ecommerce-online-business', 'Analytics, scaling and final project', 8, 'Store Launch', 'LAUNCH', array['Track store metrics', 'Improve conversion', 'Scale safely', 'Launch a store']::text[], array['Store metrics that matter', 'Improving conversion', 'Scaling what works', 'Launching your store']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ecommerce-online-business:analytics-scaling-and-final-project', 'ecommerce-online-business', 'ecom-m08', 'analytics-scaling-and-final-project', 'Analytics, Scaling and Final Project', 'Track the store metrics that matter, improve conversion, scale what works and plan the launch of your own online store.', 50, $md$
+## Store metrics that matter
+
+Numbers tell you what is working. Track a few, regularly, from your store platform, payment dashboard and analytics tool.
+
+| Metric | Formula | Meaning |
+| :-- | :-- | :-- |
+| **Sessions (visits)** | Count | How many visits the store gets |
+| **Conversion rate** | Orders ÷ sessions | How many visitors buy |
+| **Average order value (AOV)** | Revenue ÷ orders | How much each order is worth |
+| **Cart abandonment rate** | (Carts created − orders) ÷ carts created | How many people leave without paying |
+| **Customer acquisition cost (CAC)** | Marketing spend ÷ new customers | What it costs to win a customer |
+| **Contribution per order** | Price minus product, packaging, delivery and payment costs | What each sale leaves before marketing |
+| **ROAS** | Revenue from ads ÷ ad spend | Return on ads |
+| **Repeat purchase rate** | Repeat customers ÷ customers | Loyalty |
+| **Return rate** | Returns ÷ orders | Product and description quality |
+| **On-time delivery rate** | On-time deliveries ÷ deliveries | Fulfilment quality |
+
+Example month: **1,200 sessions** and **36 orders** worth **₦432,000.**
+
+- Conversion rate = 36 ÷ 1,200 = **3%.**
+- AOV = 432,000 ÷ 36 = **₦12,000.**
+- If 100 people added to cart and 30 completed payment, abandonment = (100 − 30) ÷ 100 = **70%.**
+
+Average e-commerce conversion rates vary by industry and traffic source, so compare yourself with **your own past figures** and improve steadily.
+
+## Improving conversion
+
+Conversion improves when you **remove reasons not to buy** and **add reasons to buy.** Work through the customer's path:
+
+1. **Traffic quality:** are the right people arriving? Better targeting often beats more traffic.
+2. **Product pages:** clearer photos and videos, more honest detail, visible price, delivery and returns, reviews.
+3. **Trust:** policies, secure payment signs, real contacts, reviews.
+4. **Mobile experience:** fast loading, large buttons, simple menus.
+5. **Checkout:** fewer fields, guest checkout, payment options customers like, no surprise delivery fees.
+6. **Cart recovery:** reminders to people who left items in the cart.
+7. **Offers:** a first-order discount, bundle, free delivery above a threshold.
+8. **Support:** quick answers by chat or WhatsApp on the product page.
+
+Change **one thing at a time** and measure. For example, if conversion rises from 3% to 3.6% on the same 1,200 sessions, orders rise from 36 to 43.2, about **7 more orders (a 20% increase)**, with no extra ad cost.
+
+Also raise **average order value:** bundles ("buy the tote and pouch together"), minimum-spend free delivery, add-ons at checkout and tiered pricing.
+
+## Scaling what works
+
+Scale only when the **unit economics are proven**: each order makes a profit after all costs, including marketing, delivery and returns.
+
+Steps:
+
+1. **Know your numbers:** contribution per order, CAC, repeat rate, on-time delivery.
+2. **Fix weak points first.** Scaling a leaking process just makes more mistakes.
+3. **Increase ad spend gradually** (for example 20% at a time) while watching cost per order.
+4. **Expand products** that customers already ask for, and drop slow ones.
+5. **Expand channels** (marketplace, own store, more social platforms) one at a time.
+6. **Build stock and cash carefully.** Growth uses cash: more stock, more ad spend, more delivery costs before the money returns. Keep a reserve.
+7. **Automate and delegate:** order management, replies, packing and tracking, with clear procedures.
+8. **Strengthen suppliers and couriers,** with backups.
+9. **Protect customer service,** since quality often slips during growth.
+
+The warning signs of scaling too fast: late deliveries, rising returns, falling reviews, stockouts, cash running low. Slow down and fix them.
+
+## Launching your store
+
+A launch plan turns your learning into a live business. A simple 30-day approach:
+
+- **Before launch:** niche and products chosen, supplier tested, costs and prices worked out, store or social shop set up, payment and delivery tested with a real order, policies written, product photos taken.
+- **Soft launch:** open to friends, family and your first followers; take the first orders; fix problems; gather the first reviews.
+- **Public launch:** announce on your channels, with a launch offer, content and a small ad test.
+- **After launch:** track the metrics weekly, reply to every message, collect reviews, improve one thing at a time.
+
+Before you launch, **place a test order yourself,** from adding to cart through payment, delivery and a return. You will find problems you did not expect.
+
+## Try it
+
+```task
+{
+  "id": "ecom-m08-t1",
+  "prompt": "A month's store figures: **1,200 sessions**, **36 orders**, **₦432,000** revenue, **100** carts created, **30** completed. Work out the **conversion rate**, **AOV** and **cart abandonment rate**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Conversion rate = ...",
+  "rules": [
+    { "label": "Conversion rate of 3%", "pattern": "\\b3\\s?%" },
+    { "label": "AOV of ₦12,000", "pattern": "12,?000" },
+    { "label": "Cart abandonment of 70%", "pattern": "\\b70\\s?%" }
+  ],
+  "sample": "Conversion rate = 36 / 1,200 = 3%.\nAOV = 432,000 / 36 = ₦12,000.\nCart abandonment = (100 - 30) / 100 = 70%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m08-t2",
+  "prompt": "If conversion rises from **3% to 3.6%** on **1,200 sessions**, how many orders would you get and how many more than now? Then give **three changes** you would test to raise conversion, one per line.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Orders at 3.6% = ...",
+  "rules": [
+    { "label": "43 orders (43.2)", "pattern": "43\\.2|\\b43\\b" },
+    { "label": "About 7 more orders", "pattern": "7\\.2|\\b7\\b" },
+    { "label": "Three tests (photos, checkout, trust, delivery, reviews, offer)", "pattern": "photo|checkout|trust|delivery|review|offer|mobile|price|guest|reminder" },
+    { "label": "At least four lines", "minLines": 4 }
+  ],
+  "sample": "Orders at 3.6% = 1,200 x 0.036 = 43.2, about 43, which is about 7 more than 36.\nTest clearer photos and a short video on the best-selling product page.\nTest guest checkout with fewer form fields.\nShow delivery cost and time and the return policy before checkout.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m08-t3",
+  "prompt": "Write your **store plan summary** in at least eight lines: the niche statement, three products with price and cost, the model and platform, payment methods, delivery option and cost, return policy summary, your first marketing channel and your contribution per order.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Niche: ...\nProducts: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Niche", "pattern": "niche|we sell" },
+    { "label": "Products with price and cost", "pattern": "product[\\s\\S]*price[\\s\\S]*cost|product[\\s\\S]*cost[\\s\\S]*price" },
+    { "label": "Model and platform", "pattern": "platform|model|instagram|whatsapp|shopify|marketplace|store" },
+    { "label": "Payment methods", "pattern": "payment|transfer|card|gateway" },
+    { "label": "Delivery", "pattern": "delivery|courier|rider" },
+    { "label": "Returns", "pattern": "return|refund" },
+    { "label": "Contribution per order", "pattern": "contribution|profit per order" }
+  ],
+  "sample": "Niche: we sell durable ankara work totes for women who commute in Lagos.\nProducts: tote - price ₦12,000 - cost ₦6,500; pouch - price ₦4,500 - cost ₦2,000; gift set - price ₦15,500 - cost ₦8,300\nModel and platform: social selling on Instagram and WhatsApp first, then a hosted store\nPayment: card and transfer through a gateway, and pay on delivery only with a deposit\nDelivery: own riders within Lagos for ₦1,500, a nationwide courier for other states\nReturns: 7 days if unused; faulty items replaced at our cost\nFirst marketing channel: Instagram Reels and WhatsApp status, then a small ad test\nContribution per order: ₦3,820 before marketing on the tote",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ecom-m08-t4",
+  "prompt": "Write your **30-day launch plan**: week 1, week 2, week 3 and week 4, each with two or three actions and a measurable target. At least eight lines.",
+  "minutes": 15,
+  "rows": 10,
+  "placeholder": "Week 1: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Covers weeks 1 to 4", "pattern": "week 1[\\s\\S]*week 2[\\s\\S]*week 3[\\s\\S]*week 4" },
+    { "label": "Includes a test order", "pattern": "test order|place an order|test the" },
+    { "label": "Includes first sales or reviews targets with numbers", "pattern": "\\d+\\s*(orders|sales|reviews|customers)" },
+    { "label": "Includes marketing actions", "pattern": "post|ad|whatsapp|instagram|announce|launch" },
+    { "label": "Includes tracking the metrics", "pattern": "track|metric|conversion|review the numbers|measure" }
+  ],
+  "sample": "Week 1: finish product photos, write policies and place a test order through payment, delivery and a return.\nWeek 1 target: store and social shop ready, test order delivered.\nWeek 2: soft launch to friends, family and 800 followers; fix any problems.\nWeek 2 target: 10 orders and 5 reviews.\nWeek 3: public launch with an offer, daily posts and a small ad test of ₦20,000.\nWeek 3 target: 25 orders and an ad ROAS above 3.14.\nWeek 4: track conversion, delivery and returns, reply to every review and improve one thing.\nWeek 4 target: 40 orders in total and a repeat purchase from 5 customers.",
+  "required": true
+}
+```
+
+When you are done, submit your complete store plan as your final project.
+$md$, true, true, 8, array['ecom-m08-t1', 'ecom-m08-t2', 'ecom-m08-t3', 'ecom-m08-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Import, Export & Mini Importation
@@ -99831,6 +100937,500 @@ values ('dms-f15', 1, 'Summaries drive decisions.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: How Online Business Works: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m01-check', 'ecommerce-online-business', 'module', 'ecom-m01', 'How Online Business Works: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m01-q1', 'ecom-m01-check', 1, 'Which model needs the least money and effort to start for a small seller with a social following?', '["Building a custom website","Social selling on Instagram and WhatsApp","Opening a physical shop","Importing a container"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m01-q1', 1, 'Social selling is almost free to start.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m01-q2', 'ecom-m01-check', 2, 'A ₦12,000 item costs ₦6,500, packaging ₦500, with a 10% marketplace commission. What is the profit before delivery and marketing?', '["₦3,000","₦3,800","₦4,500","₦5,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m01-q2', 1, '12,000 − 6,500 − 500 − 1,200 = ₦3,800.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m01-q3', 'ecom-m01-check', 3, 'What is a major weakness of dropshipping?', '["It needs a warehouse","Thin margins and less control over quality and delivery","It cannot be sold online","It needs no supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m01-q3', 1, 'Dropshipping margins are thin and control is limited.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m01-q4', 'ecom-m01-check', 4, 'Which is a benefit of an own online store compared with a marketplace?', '["Built-in traffic","You own the brand and customer data","No setup","No competition"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m01-q4', 1, 'An own store gives ownership and control.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m01-q5', 'ecom-m01-check', 5, 'Before launching, you should:', '["Guess your costs","Calculate the profit per order after all costs","Skip packaging","Ignore delivery"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m01-q5', 1, 'Know your numbers first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Niche and Product Selection: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m02-check', 'ecommerce-online-business', 'module', 'ecom-m02', 'Niche and Product Selection: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m02-q1', 'ecom-m02-check', 1, 'Which is a strong niche?', '["Bags","Durable, stylish work totes for women who commute in Lagos","Everything for everyone","Random items"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m02-q1', 1, 'A niche is specific, reachable and wanted.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m02-q2', 'ecom-m02-check', 2, 'Price ₦12,000, product ₦6,500, packaging ₦500, delivery ₦1,000, payment fee ₦180. What is the contribution before marketing?', '["₦3,000","₦3,820","₦4,000","₦5,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m02-q2', 1, '12,000 − 8,180 = ₦3,820.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m02-q3', 'ecom-m02-check', 3, 'What is the break-even ROAS for a ₦12,000 price and ₦3,820 contribution?', '["About 1.5","About 3.14","About 5","About 12"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m02-q3', 1, '12,000 ÷ 3,820 = 3.14.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m02-q4', 'ecom-m02-check', 4, 'How should you test a new supplier?', '["Order a large stock at once","Order samples and start with a small order","Pay in full without checks","Rely on photos"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m02-q4', 1, 'Test small before committing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m02-q5', 'ecom-m02-check', 5, 'Which products usually suit beginners?', '["Fragile and heavy items","Small, light, durable items with healthy margins","Items needing special approval","Unauthorised branded goods"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m02-q5', 1, 'Small, light and durable is easier to ship and profit from.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Building Your Store: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m03-check', 'ecommerce-online-business', 'module', 'ecom-m03', 'Building Your Store: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m03-q1', 'ecom-m03-check', 1, 'What matters most on a phone-first audience?', '["Heavy animations","A fast, simple mobile experience","Long forms","Tiny buttons"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m03-q1', 1, 'Most customers browse on mobile.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m03-q2', 'ecom-m03-check', 2, 'Which belongs on a product page?', '["Only a logo","Clear photos, price, key details, delivery and returns information, and reviews","No price","A long history"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m03-q2', 1, 'Customers need all the information to buy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m03-q3', 'ecom-m03-check', 3, 'Which photo practice helps sell?', '["Poor lighting","Natural light, a clean background and the product in use","A single blurry image","Edited colours that differ from reality"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m03-q3', 1, 'Honest, clear photos build trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m03-q4', 'ecom-m03-check', 4, 'Which is a trust signal?', '["Hidden contact details","Real reviews, clear policies and secure checkout","Misspellings","No returns policy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m03-q4', 1, 'Trust signals reduce buyer fear.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m03-q5', 'ecom-m03-check', 5, 'How should descriptions be written?', '["Exaggerated","Benefit-led, specific and honest","Vague","Copied from competitors"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m03-q5', 1, 'Honest detail reduces returns.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Payments and Checkout: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m04-check', 'ecommerce-online-business', 'module', 'ecom-m04', 'Payments and Checkout: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m04-q1', 'ecom-m04-check', 1, 'With a fee of 1.5% plus ₦100 on a ₦12,000 order, what is the fee?', '["₦180","₦280","₦300","₦1,800"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m04-q1', 1, '180 + 100 = ₦280.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m04-q2', 'ecom-m04-check', 2, 'A customer sends a transfer screenshot. What should you do before shipping?', '["Ship immediately","Confirm the money in your bank app or gateway","Ask them to resend","Ship half"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m04-q2', 1, 'Screenshots can be edited.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m04-q3', 'ecom-m04-check', 3, '7% of 200 pay-on-delivery orders fail, each costing ₦1,500. What is the loss?', '["₦14,000","₦21,000","₦30,000","₦42,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m04-q3', 1, '14 × 1,500 = ₦21,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m04-q4', 'ecom-m04-check', 4, 'A buyer overpays and asks you to refund the difference. What should you do?', '["Refund at once","Wait until the original payment is confirmed and cleared","Keep the extra","Ignore"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m04-q4', 1, 'Overpayment scams are common.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m04-q5', 'ecom-m04-check', 5, 'Why issue receipts and invoices?', '["It is decoration","Customer trust, evidence and records for tax","To avoid payment","To hide sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m04-q5', 1, 'Records protect both sides.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Fulfilment and Delivery: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m05-check', 'ecommerce-online-business', 'module', 'ecom-m05', 'Fulfilment and Delivery: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m05-q1', 'ecom-m05-check', 1, 'You sell 8 a day, lead time 10 days, safety 5 days. What is the reorder point?', '["80","100","120","150"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m05-q1', 2, '8 × 15 = 120.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m05-q2', 'ecom-m05-check', 2, 'Which matters most when choosing a courier?', '["Only the lowest price","Price, speed, reliability, tracking and remittance together","The courier''s logo","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m05-q2', 1, 'Reliability often outweighs the cheapest price.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m05-q3', 'ecom-m05-check', 3, 'Why show delivery cost before checkout?', '["To confuse","Surprise costs make customers abandon the cart","It is optional decoration","It lowers prices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m05-q3', 1, 'Transparency reduces abandonment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m05-q4', 'ecom-m05-check', 4, 'What should you do if a delivery will be late?', '["Say nothing","Tell the customer early with the cause and a new date","Blame them","Cancel the order"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m05-q4', 1, 'Proactive updates keep trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m05-q5', 'ecom-m05-check', 5, 'Good packaging should:', '["Be as large as possible","Protect the product and fit it","Use no label","Skip the invoice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m05-q5', 1, 'Protect, right-size and label.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Marketing and Traffic: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m06-check', 'ecommerce-online-business', 'module', 'ecom-m06', 'Marketing and Traffic: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m06-q1', 'ecom-m06-check', 1, '₦60,000 ad spend brings 25 orders of ₦12,000. What is the ROAS?', '["2.0","3.6","5.0","7.5"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m06-q1', 2, '300,000 ÷ 60,000 = 5.0.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m06-q2', 'ecom-m06-check', 2, 'A break-even ROAS of 3.14 and an actual ROAS of 5.0 mean:', '["The ads lose money","The ads are profitable","Nothing","Stop selling"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m06-q2', 1, '5.0 is above break-even.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m06-q3', 'ecom-m06-check', 3, 'Which is an ethical way to get reviews?', '["Fake them","Ask real customers a few days after delivery","Pay for fake ones","Delete bad ones"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m06-q3', 1, 'Real reviews build trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m06-q4', 'ecom-m06-check', 4, 'What should you do before adding customers to a broadcast list?', '["Add them all","Get their permission","Hide it","Charge them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m06-q4', 1, 'Permission and privacy matter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m06-q5', 'ecom-m06-check', 5, 'Where should store ad traffic go?', '["The home page only","The exact product page","A blank page","An unrelated page"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m06-q5', 1, 'Match the ad to the page.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Customer Service and Returns: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m07-check', 'ecommerce-online-business', 'module', 'ecom-m07', 'Customer Service and Returns: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m07-q1', 'ecom-m07-check', 1, '200 orders with a 5% return rate give how many returns?', '["5","10","20","50"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m07-q1', 1, '5% of 200 = 10.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m07-q2', 'ecom-m07-check', 2, 'What should a returns policy state?', '["Nothing","What can be returned, time limit, how to start, who pays and what the customer gets","Only the price","Only the logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m07-q2', 1, 'Clarity reduces arguments.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m07-q3', 'ecom-m07-check', 3, 'Who pays when an item is faulty or wrong?', '["The customer","You, quickly","The courier always","Nobody"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m07-q3', 1, 'Faulty items are fixed at your cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m07-q4', 'ecom-m07-check', 4, 'A good first reply to an angry customer is to:', '["Argue","Apologise, take ownership and offer a clear fix","Ignore","Blame them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m07-q4', 1, 'Complaints are a chance to keep customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m07-q5', 'ecom-m07-check', 5, '60 of 200 customers order again. What is the repeat rate?', '["20%","30%","40%","60%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m07-q5', 1, '60 ÷ 200 = 30%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Analytics, Scaling and Final Project: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecom-m08-check', 'ecommerce-online-business', 'module', 'ecom-m08', 'Analytics, Scaling and Final Project: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m08-q1', 'ecom-m08-check', 1, '36 orders from 1,200 sessions give a conversion rate of:', '["1%","2%","3%","4%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m08-q1', 2, '36 ÷ 1,200 = 3%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m08-q2', 'ecom-m08-check', 2, '100 carts created and 30 completed give an abandonment rate of:', '["30%","50%","70%","100%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m08-q2', 2, '(100 − 30) ÷ 100 = 70%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m08-q3', 'ecom-m08-check', 3, 'Conversion rises from 3% to 3.6% on 1,200 sessions. About how many orders?', '["36","40","43","50"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m08-q3', 2, '1,200 × 0.036 = 43.2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m08-q4', 'ecom-m08-check', 4, 'When should you scale ad spend?', '["Before knowing your numbers","When each order is profitable after all costs","On the first day","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m08-q4', 1, 'Scale proven unit economics.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-m08-q5', 'ecom-m08-check', 5, 'What should you do before launch?', '["Nothing","Place a test order yourself from cart to delivery and return","Hide your policies","Skip photos"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-m08-q5', 1, 'A test order reveals problems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: E-commerce & Online Business: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ecommerce-online-business-final', 'ecommerce-online-business', 'final', null, 'E-commerce & Online Business: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f01', 'ecommerce-online-business-final', 1, 'What is the best way to start for most beginners?', '["A large website first","Start where your first customers are and prove people buy","Import a container","Spend heavily on ads"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f01', 1, 'Prove demand, then invest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f02', 'ecommerce-online-business-final', 2, 'A ₦12,000 item with a 10% commission, ₦6,500 product cost and ₦500 packaging earns:', '["₦3,000","₦3,800","₦4,500","₦5,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f02', 1, '12,000 − 6,500 − 500 − 1,200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f03', 'ecommerce-online-business-final', 3, 'Contribution before marketing is ₦3,820 on a ₦12,000 price. The break-even ROAS is about:', '["1.5","3.14","5","12"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f03', 1, '12,000 ÷ 3,820.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f04', 'ecommerce-online-business-final', 4, 'Which is a strong niche statement?', '["We sell stuff","We sell durable work totes for women who commute in Lagos","We sell everything","Bags"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f04', 1, 'A niche names the product, customer and need.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f05', 'ecommerce-online-business-final', 5, 'How should you test a new supplier?', '["Order in bulk","Order samples and a small first order","Pay in full upfront","Ignore quality"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f05', 1, 'Test before scaling.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f06', 'ecommerce-online-business-final', 6, 'A gateway fee is 1.5% plus ₦100 on ₦12,000. What do you receive?', '["₦11,520","₦11,720","₦11,820","₦12,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f06', 1, '12,000 − 280.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f07', 'ecommerce-online-business-final', 7, 'Which protects you from fake transfer screenshots?', '["Shipping at once","Confirming payment in your bank app or gateway first","Asking for a second screenshot","Ignoring it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f07', 1, 'Verify the money.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f08', 'ecommerce-online-business-final', 8, 'Courier A: ₦1,500, 95% on time. B: ₦1,100, 80% on time, each late costs ₦2,000. Which total is correct?', '["A ₦1,600; B ₦1,500","A ₦1,500; B ₦1,100","A ₦1,100; B ₦1,500","A ₦1,700; B ₦1,300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f08', 0, 'A = 1,500 + 100; B = 1,100 + 400.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f09', 'ecommerce-online-business-final', 9, '₦60,000 of ads and 25 orders of ₦12,000 with ₦3,820 contribution each. Profit from ads?', '["₦35,500","₦95,500","₦240,000","₦300,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f09', 0, '95,500 − 60,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f10', 'ecommerce-online-business-final', 10, 'Which is a trust signal on a store?', '["Real reviews and clear policies","No contact details","Misspellings","No returns"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f10', 0, 'Trust signals reduce fear.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f11', 'ecommerce-online-business-final', 11, '5% of 200 orders are returned at ₦3,000 each. The monthly cost is:', '["₦10,000","₦15,000","₦30,000","₦60,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f11', 2, '10 × 3,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f12', 'ecommerce-online-business-final', 12, '60 of 200 customers return to buy. The repeat rate is:', '["20%","30%","40%","60%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f12', 1, '60 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f13', 'ecommerce-online-business-final', 13, '36 orders from 1,200 sessions and ₦432,000 revenue give an AOV of:', '["₦10,000","₦12,000","₦14,000","₦36,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f13', 1, '432,000 ÷ 36.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f14', 'ecommerce-online-business-final', 14, 'Conversion from 3% to 3.6% on 1,200 sessions adds about how many orders?', '["2","7","14","20"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f14', 1, '43.2 − 36 = 7.2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ecom-f15', 'ecommerce-online-business-final', 15, 'When is it right to scale spending?', '["When each order is profitable after all costs and delivery is reliable","On day one","When competitors scale","When you feel confident"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ecom-f15', 0, 'Scale proven economics.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -100229,6 +101829,16 @@ values ('dms-full-campaign', 'digital-marketing-sales', 'A complete marketing ca
 Use real prices and information where you can, and state your assumptions. Submit a link to your campaign plan (a shared document, PDF or folder) and paste your **goal and budget maths** and your **core message** below, with a short note on where to find each part.
 
 Write for the owner or client who must approve the budget: lead with a one-page summary, then show the evidence and the numbers.$md$, array['Goal, audience and strategy: a SMART goal worked back to leads, customers and budget, a customer persona and the core message.', 'Channels and budget: two or three channels with reasons, a budget split and expected results.', 'Creative assets: an ad (headline, text, call to action), a landing page plan and an email or WhatsApp message.', 'A four-week content calendar with channels, formats and calls to action.', 'Funnel and conversion: the customer journey, the offer and a planned A/B test.', 'Tracking and measurement: metrics, UTM links, pixels or codes, how leads and sales are recorded, and scale or stop rules.', 'Timeline, risks and the report you will deliver at the end.']::text[], '{}'::text[], array['The goal is specific and the budget and lead numbers are calculated correctly from it.', 'The audience, message and positioning are clear and consistent across all assets.', 'Channels are justified by where the customer is, and the budget split is realistic.', 'Creative assets are clear, benefit-led and ethical, with one call to action each.', 'The funnel and landing page plan remove friction and include a sensible test.', 'Tracking is set up so results can be traced to channels, with clear scale or stop rules.', 'The plan complies with consent and advertising rules, and risks are acknowledged honestly.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: Launch an online store
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('ecom-launch-store', 'ecommerce-online-business', 'Launch an online store', 'Plan and set up an online store or social shop: niche, products, unit economics, store pages, payments, delivery, policies and a 30-day launch.', $md$Plan the launch of an online store (an own store, a marketplace shop or a social shop on Instagram and WhatsApp) for a real or realistic product line.
+
+Use real prices and costs where you can, and state your assumptions. Submit a link to your plan or your live store (a shared document, PDF, folder or store link) and paste your **niche statement** and your **profit per order** below, with a short note on where to find each part.
+
+Write for a mentor or a lender who will judge whether the business can make money: show the numbers behind every claim.$md$, array['Niche and products: a niche statement and three products with price, cost and supplier.', 'Unit economics: the full cost of one order, contribution before marketing, break-even ROAS and profit per order.', 'The store: model and platform, plus a complete product page for your best product.', 'Payments and checkout: methods, fees, pay-on-delivery rules and a fraud checklist.', 'Fulfilment: stock and reorder point, packaging, courier choice with costs and tracking plan.', 'Policies: delivery, returns and refunds, privacy and a customer service routine.', 'Marketing and a 30-day launch plan with targets, plus the metrics you will track.']::text[], '{}'::text[], array['The niche is specific and the products are backed by demand and a tested supplier.', 'The unit economics include every cost and the profit per order is calculated correctly.', 'The product page is clear, honest and complete, with price, delivery and returns information.', 'Payments and fraud controls are realistic, including confirming payments before shipping.', 'Fulfilment, courier choice and stock planning are practical and costed.', 'Policies are clear and fair, and customer service is planned.', 'The launch plan has measurable targets, and the metrics tracked are the right ones.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
