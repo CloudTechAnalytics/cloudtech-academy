@@ -3,6 +3,7 @@ import { Award, BookOpen, HelpCircle, CheckCircle2, Clock, FolderKanban, Graduat
 import type { Course } from "@/content/types";
 import { useCourses, useProgrammes, type useLearner } from "@/lib/data";
 import { PathwayStrip } from "@/components/PathwayStrip";
+import { useAuth } from "@/lib/auth";
 import { levelText } from "@/components/CourseCard";
 import { pathwaysFor } from "@/content/pathways";
 import { categoryName } from "@/content";
@@ -43,7 +44,11 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
   const programmes = useProgrammes();
   const allCourses = useCourses();
   const parents = programmes.filter((t) => isPaid(t) && programmeCourseIds(t).includes(course.id));
+  const auth = useAuth();
+  const isAdmin = auth.status === "signed-in" && auth.user.role === "admin";
   const enrolled = !!learner.enrollment;
+  // Admins see every lesson open, the way a learner does once enrolled.
+  const open = enrolled || isAdmin;
   const resume = lessons.find((l) => l.id === learner.enrollment?.lastLessonId) ?? lessons.find((l) => !learner.progress.completedLessons.includes(l.id)) ?? lessons[0];
   const price = coursePrice(course);
   const state = enrolmentState(course);
@@ -118,7 +123,24 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
           <aside className="lg:col-span-5">
             <div className="rounded-2xl border border-brass/40 bg-paper p-6 text-ink shadow-[0_30px_60px_-35px_rgba(0,0,0,0.6)]">
               {course.thumbnail && <img src={course.thumbnail} alt="" className="-mx-6 -mt-6 mb-5 h-40 w-[calc(100%+3rem)] rounded-t-2xl object-cover" />}
-              {enrolled ? (
+              {isAdmin && !enrolled ? (
+                <>
+                  <p className="flex items-center gap-2 font-semibold text-brass-dark">
+                    <CheckCircle2 aria-hidden className="h-5 w-5" /> Admin preview: everything is open to you
+                  </p>
+                  <p className="mt-2 text-[0.875rem] text-muted">
+                    {lessons.length ? `This course has ${lessons.length} lessons.` : "This course has no lessons yet, so learners see Opens soon. Add lessons in the editor to open it."}
+                  </p>
+                  {resume && (
+                    <ButtonLink to={`/learn/${course.slug}/${resume.slug}`} className="mt-4 w-full">
+                      Open the first lesson
+                    </ButtonLink>
+                  )}
+                  <ButtonLink to={`/admin/courses/${course.slug}`} variant="secondary" className="mt-3 w-full">
+                    Edit this course
+                  </ButtonLink>
+                </>
+              ) : enrolled ? (
                 <>
                   <p className="flex items-center gap-2 font-semibold text-success">
                     <CheckCircle2 aria-hidden className="h-5 w-5" /> You are enrolled
@@ -206,12 +228,12 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                         <span className="w-7 shrink-0 pt-0.5 font-serif text-[0.95rem] text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
                         <span className="min-w-0 flex-1 font-medium">{m.title}</span>
                         {items.length > 0 && <span className="shrink-0 pt-0.5 text-[0.8125rem] text-muted">{items.reduce((n, l) => n + l.minutes, 0)} min</span>}
-                        {!enrolled && <Lock aria-label="Unlocks when you enroll" className="mt-1 h-3.5 w-3.5 shrink-0 text-subtle" />}
+                        {!open && <Lock aria-label="Unlocks when you enroll" className="mt-1 h-3.5 w-3.5 shrink-0 text-subtle" />}
                       </summary>
                       <ul className="ml-11 mt-3 space-y-2 text-[0.9rem] text-muted">
                         {items.map((l) => (
                           <li key={l.id}>
-                            {enrolled ? (
+                            {open ? (
                               <Link to={`/learn/${course.slug}/${l.slug}`} className="hover:text-brass-dark">
                                 {l.title}
                               </Link>
@@ -359,7 +381,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
               </ul>
             </section>
           )}
-          {!enrolled && (state === "open" || bundled) && (
+          {!open && (state === "open" || bundled) && (
             <div className="rounded-xl border border-line-strong bg-paper p-5">
               <p className="font-serif text-[1.2rem]">Ready to build your career?</p>
               <div className="mt-4">{buy}</div>

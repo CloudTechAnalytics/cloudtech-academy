@@ -8,6 +8,7 @@ import { PATHWAYS } from "@/content/pathways";
 import { CourseCard } from "@/components/CourseCard";
 import { PathwayStrip } from "@/components/PathwayStrip";
 import { TrackCard } from "@/components/TrackCard";
+import { ProfessionalByArea } from "@/components/ProfessionalByArea";
 import { breadcrumbs } from "@/lib/schema";
 import { isPaid } from "@/lib/commerce";
 import { DURATIONS, durationBucket, inCatalogue, matchesLevel } from "@/lib/catalogue";
@@ -82,7 +83,8 @@ export default function Courses() {
   const showPathways = !programmesOnly && !term && !level && !duration && !category && !access && (area === "" || area === "trade" || area === "business");
   const categories = CATEGORIES.filter((c) => !c.future && (!area || divisionOf(c.id).id === area));
   const future = CATEGORIES.filter((c) => c.future);
-  const total = (programmesOnly ? 0 : ordered.length) + (showProgrammes || programmesOnly ? matchProgrammes.length : 0);
+  const proCourses = courses.filter((c) => isPaid(c) && (!area || divisionOf(c.categoryId).id === area)).length;
+  const total = programmesOnly ? (!area || area === "data-tech" ? matchProgrammes.length : 0) + proCourses : ordered.length + (showProgrammes ? matchProgrammes.length : 0);
   const anyFilter = !!(area || category || access || level || duration || q);
 
   return (
@@ -228,7 +230,9 @@ export default function Courses() {
               </section>
             )}
 
-            {(showProgrammes || programmesOnly) && matchProgrammes.length > 0 && (
+            {programmesOnly && <ProfessionalByArea tracks={matchProgrammes} courses={all} area={area} />}
+
+            {showProgrammes && !programmesOnly && matchProgrammes.length > 0 && (
               <section id="programmes" aria-labelledby="programmes-title" className="scroll-mt-24">
                 <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3">
                   <h2 id="programmes-title" className="font-serif text-[2rem] leading-tight">

@@ -37,8 +37,10 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
   const set = <K extends keyof Course>(k: K, v: Course[K]) => setC((x) => ({ ...x, [k]: v }));
   const rule = <K extends keyof Course["certificate"]>(k: K, v: Course["certificate"][K]) => setC((x) => ({ ...x, certificate: { ...x.certificate, [k]: v } }));
 
+  const lessonCount = course.modules.flatMap((m) => m.lessons).length;
   const save = async () => {
     setMsg(null);
+    if (c.status === "available" && lessonCount === 0) return setMsg({ tone: "error", text: "This course has no lessons yet. Add at least one lesson under Curriculum below before setting it to Available; until then learners only see Opens soon." });
     if (c.title.trim().length < 3) return setMsg({ tone: "error", text: "The title is too short." });
     const score = c.certificate.passingScore;
     if (!Number.isInteger(score) || score < 1 || score > 100) return setMsg({ tone: "error", text: "The pass mark must be a whole number from 1 to 100." });
@@ -71,6 +73,11 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
       }}
     >
       <h2 className="font-serif text-[1.4rem]">Details</h2>
+      {lessonCount === 0 && (
+        <Alert tone="info">
+          This course has no lessons yet ({course.modules.length} modules are listed). Learners see "Opens soon" and cannot enrol until you add lessons under Curriculum below and set Status to Available. As an admin you can preview everything from the course page.
+        </Alert>
+      )}
       <TextField label="Title" value={c.title} onChange={(e) => set("title", e.target.value)} />
       <TextArea label="Summary (one or two sentences, used on cards and in search results)" rows={2} value={c.summary} onChange={(e) => set("summary", e.target.value)} />
       <TextArea label="Description" rows={5} value={c.description} onChange={(e) => set("description", e.target.value)} />

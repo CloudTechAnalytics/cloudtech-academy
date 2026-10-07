@@ -15,6 +15,7 @@ import type { Course } from "@/content/types";
 import { Badge } from "@/components/CourseCard";
 import { Button, ButtonLink } from "@/components/Button";
 import { TrackCard } from "@/components/TrackCard";
+import { ProfessionalByArea } from "@/components/ProfessionalByArea";
 import NotFound from "./NotFound";
 
 /** How long a course takes, as shown on its card. */
@@ -28,7 +29,7 @@ export function TracksList() {
   const free = tracks.filter((t) => !isPaid(t));
   useSeo({
     title: "Professional Programmes | CloudTech Academy",
-    description: "Complete, structured programmes in data analytics, data science, business analysis, AI engineering, cloud and software development: full curriculum, projects, a capstone and a professional certificate.",
+    description: "Professional programmes and courses from CloudTech Academy: data analytics, data science, business analysis, AI engineering, cloud, software, business, trade and logistics, project management, HR and more. Full curriculum, projects and a professional certificate.",
     jsonLd: breadcrumbs([["Professional Programmes", "/programmes"]]),
   });
   return (
@@ -53,14 +54,8 @@ export function TracksList() {
           </ol>
         </div>
       </section>
-      <section className="container-page max-w-5xl py-14">
-        <ul className="grid gap-5 sm:grid-cols-2">
-          {professional.map((t) => (
-            <li key={t.id}>
-              <TrackCard track={t} courses={courses} />
-            </li>
-          ))}
-        </ul>
+      <section className="container-page py-14">
+        <ProfessionalByArea tracks={professional} courses={courses} />
         {free.length > 0 && (
           <>
             <h2 className="mt-16 font-serif text-[1.8rem]">Free learning paths</h2>
