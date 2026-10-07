@@ -94705,50 +94705,1599 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Bookkeeping & Small Business Finance
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('bookkeeping-small-business-finance', 'full', null, 'bookkeeping-small-business-finance', 'BKP', 'Bookkeeping & Small Business Finance', 'Keep proper books, read financial statements, manage cash and understand tax, so you always know how your business is doing.', 'A practical course for small business owners, bookkeepers and anyone who wants to understand business money. You learn how to record transactions, keep a cashbook and ledgers, reconcile accounts, prepare basic statements, budget, manage cash and understand tax basics.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Double-entry bookkeeping', 'Cashbooks and ledgers', 'Reconciliation', 'Financial statements', 'Budgeting and cash flow', 'Tax basics']::text[], array['No experience needed', 'Basic arithmetic']::text[], 'A set of books for a small business', true, true, true, true, false, 60, 61)
+values ('bookkeeping-small-business-finance', 'short', 'Bookkeeper', 'bookkeeping-small-business-finance', 'BKP', 'Bookkeeping & Small Business Finance', 'Keep proper books, read financial statements, manage cash and understand tax, so you always know how your business is doing.', 'A practical course for small business owners, bookkeepers and anyone who wants to understand business money. You learn how to record transactions, keep a cashbook and ledgers, reconcile accounts, prepare basic statements, budget, manage cash and understand tax basics.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', 7, false, 'available', true, array['Double-entry bookkeeping', 'Cashbooks and ledgers', 'Reconciliation', 'Financial statements', 'Budgeting and cash flow', 'Tax basics']::text[], array['No experience needed', 'Basic arithmetic']::text[], 'A set of books for a small business', true, true, true, true, false, 60, 61)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 to 3 months', overview = 'If you cannot see your numbers, you cannot run your business. This course teaches the practical bookkeeping process step by step, then how to read the statements and use them to make decisions, with spreadsheet tools and a set of books of your own to finish.', audience = array['Small business owners who keep their own books', 'Aspiring bookkeepers and accounts assistants', 'Store and admin staff who handle money', 'Freelancers and traders']::text[], included = '{}'::text[], project_previews = '[{"title":"A set of books for a small business","summary":"Record a month of real or realistic transactions and prepare the trial balance, financial statements and a cash flow forecast."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Record every transaction correctly', 'Keep a cashbook, ledgers and a trial balance', 'Reconcile bank statements', 'Prepare a profit and loss statement and a balance sheet', 'Budget and manage cash flow', 'Understand VAT, PAYE and company tax basics in Nigeria', 'Use spreadsheets or software to keep books']::text[], difficulty_max = 'intermediate', duration_weeks = 10, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 to 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'bookkeeping-small-business-finance' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 to 3 months', overview = 'If you cannot see your numbers, you cannot run your business. This course teaches the practical bookkeeping process step by step, then how to read the statements and use them to make decisions, with spreadsheet tools and a set of books of your own to finish.', audience = array['Small business owners who keep their own books', 'Aspiring bookkeepers and accounts assistants', 'Store and admin staff who handle money', 'Freelancers and traders']::text[], included = '{}'::text[], project_previews = '[{"title":"A set of books for a small business","summary":"Record a month of real or realistic transactions and prepare the trial balance, financial statements and a cash flow forecast."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Record every transaction correctly', 'Keep a cashbook, ledgers and a trial balance', 'Reconcile bank statements', 'Prepare a profit and loss statement and a balance sheet', 'Budget and manage cash flow', 'Understand VAT, PAYE and company tax basics in Nigeria', 'Use spreadsheets or software to keep books']::text[], difficulty_max = 'intermediate', duration_weeks = 10, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 to 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'bookkeeping-small-business-finance' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m01', 'bookkeeping-small-business-finance', 'Why books matter: accounting basics', 1, null, null, '{}'::text[], array['The purpose of bookkeeping', 'Assets, liabilities, equity, income and expenses', 'The accounting equation', 'Cash and accrual basis']::text[])
+values ('bkp-m01', 'bookkeeping-small-business-finance', 'Why books matter: accounting basics', 1, 'Accounting Basics', 'ACCBASIC', array['Explain why books matter', 'Classify the five account types', 'Apply the accounting equation', 'Tell cash from accrual']::text[], array['The purpose of bookkeeping', 'Assets, liabilities, equity, income and expenses', 'The accounting equation', 'Cash and accrual basis']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m02', 'bookkeeping-small-business-finance', 'Double-entry bookkeeping', 2, null, null, '{}'::text[], array['Debits and credits', 'The chart of accounts', 'Journals and ledgers', 'The trial balance']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:why-books-matter-accounting-basics', 'bookkeeping-small-business-finance', 'bkp-m01', 'why-books-matter-accounting-basics', 'Why Books Matter: Accounting Basics', 'Understand the purpose of bookkeeping, the five types of account, the accounting equation and the difference between cash and accrual accounting.', 25, $md$
+## The purpose of bookkeeping
+
+**Bookkeeping** is the systematic recording of a business's financial transactions: every sale, purchase, payment and receipt. **Accounting** uses those records to produce reports (such as the profit and loss statement and the balance sheet) and to help people make decisions.
+
+Without books, an owner cannot answer basic questions:
+
+- *Am I making a profit, or just handling a lot of cash?*
+- *How much do customers owe me, and how much do I owe suppliers?*
+- *Can I afford to hire, expand or take a loan?*
+- *How much tax is due?*
+- *Where is the money going?*
+
+Good books also **prevent fraud and errors,** help you **get loans and attract investors** (banks and funders ask for statements), **support tax filing** and give you **evidence** if there is a dispute. Many small businesses fail not because they lack customers, but because they do not know their numbers.
+
+Throughout this course we follow one small business. **Kunle's Phone Accessories** is a shop in Ikeja that sells phone cases, chargers and earphones. Kunle starts it on **1 March** with ₦500,000 of his own money. We will record its first month, then prepare its statements, budget and tax records.
+
+## Assets, liabilities, equity, income and expenses
+
+Every transaction affects one or more of five types of account:
+
+| Type | What it is | Examples |
+| :-- | :-- | :-- |
+| **Assets** | Things the business owns or is owed, which have value | Cash, bank balance, stock (inventory), equipment, money owed by customers (receivables), vehicles |
+| **Liabilities** | What the business owes to others | Money owed to suppliers (payables), loans, accrued wages, tax owed |
+| **Equity (capital)** | The owner's stake: what is left for the owner after liabilities | Money invested by the owner, plus profits kept in the business, minus money taken out (drawings) |
+| **Income (revenue)** | Money earned from selling goods or services | Sales, service fees, interest received |
+| **Expenses** | Costs of running the business | Rent, wages, electricity, transport, advertising, depreciation |
+
+Be careful with a few common confusions:
+
+- **Buying equipment is not an expense;** it is an asset (it is used over many years). Its cost is spread over its life as **depreciation** (module 5).
+- **Buying stock** is an asset until it is sold; then its cost becomes an expense called **cost of goods sold.**
+- **Money you take out for yourself** is **drawings** (reducing equity), not a business expense.
+- **A loan** brings in cash but is a liability, not income.
+
+## The accounting equation
+
+Everything in accounting rests on one equation:
+
+**Assets = Liabilities + Equity**
+
+What the business owns equals what it owes plus what belongs to the owner. This equation must **always balance.** Rearranged: **Equity = Assets − Liabilities.**
+
+Example: assets are ₦1,200,000 and liabilities ₦450,000. Equity = 1,200,000 − 450,000 = **₦750,000.**
+
+See how Kunle's first transactions keep it balanced:
+
+| Transaction | Assets | = Liabilities | + Equity |
+| :-- | :-- | :-- | :-- |
+| 1 March: Kunle invests ₦500,000 cash | Cash +500,000 | | Capital +500,000 |
+| 2 March: Buys shelves for ₦120,000 cash | Cash −120,000, Equipment +120,000 | | |
+| 3 March: Buys ₦200,000 of stock on credit from Alpha Traders | Inventory +200,000 | Payables +200,000 | |
+
+After these three: Assets = Cash 380,000 + Equipment 120,000 + Inventory 200,000 = **₦700,000.** Liabilities = **₦200,000.** Equity = **₦500,000.** Check: 200,000 + 500,000 = 700,000. ✓
+
+**Profit increases equity.** Selling goods for more than they cost increases assets (cash or receivables) and equity (through profit). **Losses reduce equity.**
+
+## Cash and accrual basis
+
+There are two ways to decide **when** to record income and expenses.
+
+**Cash basis:** record income when money is **received** and expenses when money is **paid.** Simple, and many very small businesses use it.
+
+**Accrual basis:** record income when it is **earned** (when you sell or deliver) and expenses when they are **incurred** (when you use the goods or services), whether or not cash has moved. It gives a truer picture of performance, because it matches income with the costs of earning it.
+
+Example: in March Kunle sells goods for ₦80,000 on credit to Ngozi, who pays in April.
+
+- **Cash basis:** the ₦80,000 counts as income in **April.**
+- **Accrual basis:** the ₦80,000 counts as income in **March,** and ₦80,000 is recorded as a receivable until she pays.
+
+Which to use? Cash basis is easier, but it can mislead: a business may seem profitable in a month when customers pay, even though it earned little. Accrual shows whether the business is really earning, and is needed for credit sales, stock, accrued expenses and larger businesses. This course teaches the **accrual basis** with a cash view alongside it. Whichever you choose, **be consistent,** and follow the tax rules that apply to you.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m01-t1",
+  "prompt": "Classify each as **asset, liability, equity, income or expense**, one per line with a short reason: (1) cash in the till; (2) money owed to Alpha Traders for stock; (3) Kunle's ₦500,000 investment; (4) sales of phone cases; (5) shop rent paid; (6) shelves bought for the shop; (7) money owed by customer Ngozi; (8) a bank loan.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "1. Asset - ...",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Cash is an asset", "pattern": "cash[^\\n]*asset|asset[^\\n]*cash|1\\.[^\\n]*asset" },
+    { "label": "Money owed to supplier is a liability", "pattern": "alpha[^\\n]*liabilit|owed to[^\\n]*liabilit|2\\.[^\\n]*liabilit" },
+    { "label": "Investment is equity", "pattern": "investment[^\\n]*equity|equity[^\\n]*investment|3\\.[^\\n]*equity|capital" },
+    { "label": "Sales is income", "pattern": "sales[^\\n]*income|income[^\\n]*sales|4\\.[^\\n]*income|revenue" },
+    { "label": "Rent is an expense", "pattern": "rent[^\\n]*expense|5\\.[^\\n]*expense" },
+    { "label": "Shelves are an asset (equipment)", "pattern": "shelves[^\\n]*asset|6\\.[^\\n]*asset|equipment" },
+    { "label": "Loan is a liability", "pattern": "loan[^\\n]*liabilit|8\\.[^\\n]*liabilit" }
+  ],
+  "sample": "1. Asset - cash is owned by the business.\n2. Liability - money owed to Alpha Traders.\n3. Equity (capital) - the owner's investment.\n4. Income - sales earn money for the business.\n5. Expense - rent is a cost of running the shop.\n6. Asset - shelves are equipment used for years, not an expense.\n7. Asset - a receivable, money owed to the business.\n8. Liability - a loan must be repaid.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m01-t2",
+  "prompt": "Show the **accounting equation** after each step for Kunle: (a) invests ₦500,000 cash; (b) buys shelves for ₦120,000 cash; (c) buys ₦200,000 of stock on credit. Give the **assets, liabilities and equity** at the end and check that the equation balances. Also work out equity if assets are ₦1,200,000 and liabilities ₦450,000.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "After (a): Assets = ...",
+  "rules": [
+    { "label": "Assets of ₦700,000", "pattern": "700,?000" },
+    { "label": "Liabilities of ₦200,000", "pattern": "200,?000" },
+    { "label": "Equity of ₦500,000", "pattern": "500,?000" },
+    { "label": "Says it balances", "pattern": "balance" },
+    { "label": "Equity of ₦750,000 for the second case", "pattern": "750,?000" }
+  ],
+  "sample": "After (a): Assets (cash) 500,000 = Liabilities 0 + Equity 500,000.\nAfter (b): Assets: cash 380,000 + equipment 120,000 = 500,000; equity 500,000.\nAfter (c): Assets: cash 380,000 + equipment 120,000 + inventory 200,000 = 700,000; liabilities (payables) 200,000; equity 500,000.\nCheck: 200,000 + 500,000 = 700,000, so the equation balances.\nSecond case: equity = 1,200,000 - 450,000 = ₦750,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m01-t3",
+  "prompt": "In March Kunle sells goods for **₦80,000 on credit** to Ngozi, who pays in **April**. Say when the income is recorded under the **cash basis** and under the **accrual basis**, what is recorded in March under accrual, and in 40 to 80 words which method you would recommend for Kunle and why.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Cash basis: ...",
+  "rules": [
+    { "label": "Cash basis records it in April", "pattern": "cash basis[^\\n]*april|april[^\\n]*cash basis" },
+    { "label": "Accrual basis records it in March", "pattern": "accrual[^\\n]*march|march[^\\n]*accrual" },
+    { "label": "Receivable recorded", "pattern": "receivable|owed by|ngozi owes" },
+    { "label": "Recommends accrual with a reason (true picture, credit sales, matching)", "pattern": "accrual[\\s\\S]*(because|since|true|picture|matching|credit|earned)" },
+    { "label": "At least 40 words", "minWords": 40, "maxWords": 140 }
+  ],
+  "sample": "Cash basis: the ₦80,000 is income in April, when the money is received.\nAccrual basis: it is income in March, when the sale is made, and in March a receivable of ₦80,000 is recorded for money owed by Ngozi.\nI would recommend the accrual basis for Kunle, because he will sell on credit and hold stock, and accrual gives a true picture of what he earned each month by matching income with the related costs.",
+  "required": false
+}
+```
+
+Next lesson: double-entry bookkeeping.
+$md$, true, true, 1, array['bkp-m01-t1', 'bkp-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m03', 'bookkeeping-small-business-finance', 'Recording daily transactions', 3, null, null, '{}'::text[], array['Sales and receipts', 'Purchases and payments', 'The cashbook and petty cash', 'Invoices, receipts and documents']::text[])
+values ('bkp-m02', 'bookkeeping-small-business-finance', 'Double-entry bookkeeping', 2, 'Double Entry', 'DBLENTRY', array['Debit and credit correctly', 'Use a chart of accounts', 'Post journals to ledgers', 'Prepare a trial balance']::text[], array['Debits and credits', 'The chart of accounts', 'Journals and ledgers', 'The trial balance']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m04', 'bookkeeping-small-business-finance', 'Bank and account reconciliation', 4, null, null, '{}'::text[], array['Bank reconciliation', 'Customer and supplier accounts', 'Finding and fixing errors', 'Month-end routine']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:double-entry-bookkeeping', 'bookkeeping-small-business-finance', 'bkp-m02', 'double-entry-bookkeeping', 'Double-Entry Bookkeeping', 'Understand debits and credits, the chart of accounts, journals and ledgers and the trial balance, using Kunle''s first month.', 25, $md$
+## Debits and credits
+
+**Double-entry bookkeeping** records **every transaction twice:** once as a **debit** in one account and once as a **credit** in another, for the same amount. This keeps the accounting equation in balance and makes errors easier to find.
+
+Debit and credit are only labels: **debit (Dr) is the left side** of an account and **credit (Cr) is the right side.** They do not mean "good" or "bad." What matters is which accounts they increase:
+
+| Account type | Increases with | Decreases with |
+| :-- | :-- | :-- |
+| **Assets** | Debit | Credit |
+| **Expenses** | Debit | Credit |
+| **Liabilities** | Credit | Debit |
+| **Equity** | Credit | Debit |
+| **Income** | Credit | Debit |
+
+A memory aid: **assets and expenses are on the debit side** of the equation; **liabilities, equity and income are on the credit side.**
+
+For every transaction, ask two questions:
+
+1. **Which two (or more) accounts are affected?**
+2. **Does each go up or down, and so is it a debit or a credit?**
+
+Example: Kunle invests ₦500,000 cash. **Cash** (asset) goes up: **Dr Cash 500,000.** **Capital** (equity) goes up: **Cr Capital 500,000.** Total debits equal total credits.
+
+## The chart of accounts
+
+A **chart of accounts** is the list of all accounts the business uses, each with a name and a code. A simple chart for Kunle:
+
+| Code | Account | Type |
+| :-- | :-- | :-- |
+| 1000 | Cash | Asset |
+| 1100 | Receivables (customers) | Asset |
+| 1200 | Inventory | Asset |
+| 1500 | Equipment | Asset |
+| 2000 | Payables (suppliers) | Liability |
+| 3000 | Owner's capital | Equity |
+| 4000 | Sales | Income |
+| 5000 | Cost of goods sold | Expense |
+| 6000 | Rent | Expense |
+| 6100 | Wages | Expense |
+
+Keep the chart **simple, consistent and logical,** adding accounts only when you need to track something separately. Group codes by type (1000s assets, 2000s liabilities, 3000s equity, 4000s income, 5000s and 6000s expenses).
+
+## Journals and ledgers
+
+A **journal** is the book of first entry: a **chronological** record of each transaction with its debits and credits and a short narration. A **ledger** is the collection of **accounts,** where entries from the journal are **posted** so that you can see each account's balance.
+
+**Journal entry format:**
+
+*Date | Account debited | Account credited | Amount | Narration*
+
+Kunle's March transactions (including the cost of goods sold):
+
+| Date | Debit | Credit | Amount | Narration |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 Mar | Cash | Capital | 500,000 | Owner invests |
+| 2 Mar | Equipment | Cash | 120,000 | Buys shelves |
+| 3 Mar | Inventory | Payables | 200,000 | Stock from Alpha Traders on credit |
+| 10 Mar | Cash | Sales | 150,000 | Cash sales |
+| 10 Mar | Cost of goods sold | Inventory | 90,000 | Cost of goods sold (cash sales) |
+| 15 Mar | Receivables | Sales | 80,000 | Credit sale to Ngozi |
+| 15 Mar | Cost of goods sold | Inventory | 48,000 | Cost of goods sold (credit sale) |
+| 20 Mar | Rent | Cash | 30,000 | Rent for March |
+| 25 Mar | Payables | Cash | 100,000 | Pays Alpha Traders |
+| 28 Mar | Cash | Receivables | 50,000 | Ngozi pays part |
+| 31 Mar | Wages | Cash | 40,000 | Pays wages |
+
+**Posting to ledger accounts** (shown as T-accounts, debits left and credits right). **Cash account:** debits 500,000 + 150,000 + 50,000 = 700,000; credits 120,000 + 30,000 + 100,000 + 40,000 = 290,000. **Balance = 700,000 − 290,000 = ₦410,000 debit.** **Inventory:** debit 200,000; credits 90,000 + 48,000 = 138,000; balance **₦62,000** debit. **Receivables:** debit 80,000; credit 50,000; balance **₦30,000** debit. **Payables:** debit 100,000; credit 200,000; balance **₦100,000** credit.
+
+## The trial balance
+
+A **trial balance** lists every ledger account's balance in a debit or credit column, to check that **total debits equal total credits.**
+
+Kunle's trial balance at 31 March:
+
+| Account | Debit | Credit |
+| :-- | :-- | :-- |
+| Cash | 410,000 | |
+| Receivables | 30,000 | |
+| Inventory | 62,000 | |
+| Equipment | 120,000 | |
+| Payables | | 100,000 |
+| Capital | | 500,000 |
+| Sales | | 230,000 |
+| Cost of goods sold | 138,000 | |
+| Rent | 30,000 | |
+| Wages | 40,000 | |
+| **Total** | **830,000** | **830,000** |
+
+Debits: 410,000 + 30,000 + 62,000 + 120,000 + 138,000 + 30,000 + 40,000 = **830,000.** Credits: 100,000 + 500,000 + 230,000 = **830,000.** They agree, which suggests the books are arithmetically correct.
+
+A balanced trial balance does **not** prove there are no errors. It will not detect: an entry **omitted** entirely, an entry posted to the **wrong account** of the right type, **compensating errors,** or an amount **wrong on both sides.** But when the trial balance does not balance, there is definitely an error to find (module 4). The trial balance is also the starting point for the **financial statements** (module 6).
+
+## Try it
+
+```task
+{
+  "id": "bkp-m02-t1",
+  "prompt": "Write the **journal entries** (Dr and Cr with amounts) for these Kunle transactions: (1) sells goods for **₦150,000 cash**; (2) the cost of those goods was **₦90,000**; (3) sells goods to Ngozi on credit for **₦80,000**; (4) pays **₦30,000** rent in cash; (5) Ngozi pays **₦50,000**. One entry per line, in the form \"Dr Cash 150,000 / Cr Sales 150,000\".",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "1. Dr Cash 150,000 / Cr Sales 150,000",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Every line has Dr and Cr", "pattern": "dr[^\\n]*cr", "perLine": true },
+    { "label": "Cash sale: Dr Cash, Cr Sales 150,000", "pattern": "dr cash 150,?000[\\s\\S]*cr sales 150,?000" },
+    { "label": "Cost of goods sold: Dr COGS, Cr Inventory 90,000", "pattern": "dr (cost of goods sold|cogs)[^\\n]*90,?000[\\s\\S]*cr inventory[^\\n]*90,?000|dr (cost of goods sold|cogs) 90,?000" },
+    { "label": "Credit sale: Dr Receivables, Cr Sales 80,000", "pattern": "dr receivables 80,?000" },
+    { "label": "Rent: Dr Rent, Cr Cash 30,000", "pattern": "dr rent 30,?000" },
+    { "label": "Receipt: Dr Cash, Cr Receivables 50,000", "pattern": "dr cash 50,?000" }
+  ],
+  "sample": "1. Dr Cash 150,000 / Cr Sales 150,000\n2. Dr Cost of goods sold 90,000 / Cr Inventory 90,000\n3. Dr Receivables 80,000 / Cr Sales 80,000\n4. Dr Rent 30,000 / Cr Cash 30,000\n5. Dr Cash 50,000 / Cr Receivables 50,000",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m02-t2",
+  "prompt": "Work out the **balance of the Cash account** from these entries: debits **₦500,000, ₦150,000, ₦50,000**; credits **₦120,000, ₦30,000, ₦100,000, ₦40,000**. Show total debits, total credits and the balance, and say whether it is a debit or credit balance and why.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Total debits = ...",
+  "rules": [
+    { "label": "Total debits ₦700,000", "pattern": "700,?000" },
+    { "label": "Total credits ₦290,000", "pattern": "290,?000" },
+    { "label": "Balance ₦410,000", "pattern": "410,?000" },
+    { "label": "Debit balance because debits exceed credits (an asset)", "pattern": "debit balance|debits (are )?(more|greater|exceed)|asset" }
+  ],
+  "sample": "Total debits = 500,000 + 150,000 + 50,000 = ₦700,000.\nTotal credits = 120,000 + 30,000 + 100,000 + 40,000 = ₦290,000.\nBalance = 700,000 - 290,000 = ₦410,000, a debit balance, because debits exceed credits and cash is an asset.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m02-t3",
+  "prompt": "Complete **Kunle's trial balance** from these balances: Cash 410,000 Dr; Receivables 30,000 Dr; Inventory 62,000 Dr; Equipment 120,000 Dr; Payables 100,000 Cr; Capital 500,000 Cr; Sales 230,000 Cr; Cost of goods sold 138,000 Dr; Rent 30,000 Dr; Wages 40,000 Dr. Give the **total debits and credits** and say what the trial balance does **not** prove.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Total debits = ...",
+  "rules": [
+    { "label": "Total debits ₦830,000", "pattern": "830,?000" },
+    { "label": "Total credits ₦830,000", "pattern": "830,?000[\\s\\S]*830,?000" },
+    { "label": "They agree or balance", "pattern": "agree|balance|equal|match" },
+    { "label": "Does not prove no errors (omission, wrong account, compensating)", "pattern": "omit|omission|wrong account|compensat|not prove|does not prove|doesn't prove" }
+  ],
+  "sample": "Total debits = 410,000 + 30,000 + 62,000 + 120,000 + 138,000 + 30,000 + 40,000 = ₦830,000.\nTotal credits = 100,000 + 500,000 + 230,000 = ₦830,000.\nThe two totals agree, so the trial balance balances.\nIt does not prove there are no errors: an omitted entry, an entry posted to the wrong account or errors that cancel each other would not show.",
+  "required": false
+}
+```
+
+Next lesson: recording daily transactions.
+$md$, true, true, 2, array['bkp-m02-t1', 'bkp-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m05', 'bookkeeping-small-business-finance', 'Inventory, assets and adjustments', 5, null, null, '{}'::text[], array['Stock records', 'Fixed assets and depreciation', 'Accruals and prepayments', 'Bad debts']::text[])
+values ('bkp-m03', 'bookkeeping-small-business-finance', 'Recording daily transactions', 3, 'Daily Records', 'DAILYREC', array['Record sales and purchases', 'Keep a cashbook', 'Run petty cash', 'Use invoices and receipts']::text[], array['Sales and receipts', 'Purchases and payments', 'The cashbook and petty cash', 'Invoices, receipts and documents']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m06', 'bookkeeping-small-business-finance', 'Financial statements', 6, null, null, '{}'::text[], array['The profit and loss statement', 'The balance sheet', 'The cash flow statement', 'Reading and explaining the numbers']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:recording-daily-transactions', 'bookkeeping-small-business-finance', 'bkp-m03', 'recording-daily-transactions', 'Recording Daily Transactions', 'Record sales and receipts, purchases and payments, keep the cashbook and petty cash and manage invoices, receipts and documents.', 30, $md$
+## Sales and receipts
+
+Every sale should be recorded **promptly and with evidence.** There are two main kinds:
+
+**Cash sales:** the customer pays at once (cash, card, transfer). Record:
+
+- **Dr Cash (or Bank)** and **Cr Sales.**
+
+**Credit sales:** the customer is given time to pay. Record:
+
+- At the sale: **Dr Receivables** and **Cr Sales.**
+- When the customer pays: **Dr Cash (or Bank)** and **Cr Receivables.**
+
+Also record the **cost of the goods sold:** **Dr Cost of goods sold** and **Cr Inventory.** (Some small businesses calculate cost of sales at the month-end instead; module 5 covers stock.)
+
+**Documents and controls for sales:**
+
+- **A sales invoice** for credit sales (what, how much, terms) or a **receipt** for cash sales. Number them in sequence.
+- **A daily sales summary** from the till or sales book, matched to the cash and transfers received.
+- **Banking:** pay takings into the bank promptly rather than keeping large cash sums.
+- **Returns and discounts:** record a **credit note** for returns (Dr Sales returns, Cr Receivables or Cash), and record discounts allowed.
+- **Cut-off:** put each sale in the right month.
+
+Example: on 10 March Kunle's cash sales are **₦150,000** and the cost of these goods was **₦90,000.** On 15 March, sale to Ngozi on credit: **₦80,000,** cost **₦48,000.** The sales for the month are 150,000 + 80,000 = **₦230,000** and the cost of goods sold is 90,000 + 48,000 = **₦138,000,** giving a gross profit of ₦92,000.
+
+## Purchases and payments
+
+**Purchases of stock** and **expenses** are recorded when incurred.
+
+- **Stock bought for cash:** Dr Inventory, Cr Cash.
+- **Stock bought on credit:** Dr Inventory, Cr Payables; later when paid: Dr Payables, Cr Cash.
+- **Expenses paid in cash** (rent, wages, electricity, transport): Dr the expense account, Cr Cash or Bank.
+- **Expenses billed but not yet paid:** Dr the expense account, Cr Payables.
+- **Equipment bought:** Dr Equipment, Cr Cash or Payables (not an expense).
+
+**Documents and controls for purchases:**
+
+- **A purchase order** (what you ordered), a **delivery note** (what arrived) and the **supplier invoice** (what they charge). **Check all three match** before paying (three-way match).
+- **Keep every invoice and receipt,** filed in order.
+- **Pay on time,** but not early (use agreed credit terms to help cash flow), and note any settlement discounts.
+- **Approve payments** and use a record of who authorised what.
+- **Pay by traceable methods** (bank transfer or cheque) where possible.
+
+Example: 3 March, Kunle buys ₦200,000 of stock from Alpha Traders on credit: **Dr Inventory 200,000, Cr Payables 200,000.** On 25 March he pays ₦100,000: **Dr Payables 100,000, Cr Cash 100,000.** The balance owed is ₦100,000.
+
+## The cashbook and petty cash
+
+A **cashbook** records all money moving in and out of the cash box and bank account, in date order. It acts as both a **journal and a ledger** for cash. It has a **debit side (receipts)** and a **credit side (payments),** and a running balance.
+
+Kunle's March cashbook:
+
+| Date | Details | Receipts | Payments | Balance |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 Mar | Capital | 500,000 | | 500,000 |
+| 2 Mar | Shelves | | 120,000 | 380,000 |
+| 10 Mar | Cash sales | 150,000 | | 530,000 |
+| 20 Mar | Rent | | 30,000 | 500,000 |
+| 25 Mar | Alpha Traders | | 100,000 | 400,000 |
+| 28 Mar | Ngozi | 50,000 | | 450,000 |
+| 31 Mar | Wages | | 40,000 | 410,000 |
+
+Total receipts = 500,000 + 150,000 + 50,000 = **₦700,000.** Total payments = 120,000 + 30,000 + 100,000 + 40,000 = **₦290,000.** Closing balance = **₦410,000,** matching the Cash account.
+
+Keep a separate cashbook column (or a separate cashbook) for **bank** transactions if you use a bank account, and **count the cash** regularly against the cashbook.
+
+**Petty cash** is for small expenses (see also the Office Administration course). Using the **imprest system:** a fixed float (for example ₦20,000). Each payment is supported by a **voucher.** At any time, cash in the box plus vouchers should equal the float. When the vouchers total **₦14,300,** the cash left should be 20,000 − 14,300 = **₦5,700.** To restore the float, withdraw ₦14,300 from the bank. In the books the vouchers are posted as expenses: **Dr the expense accounts, Cr Petty cash** (and **Dr Petty cash, Cr Bank** for the top-up).
+
+## Invoices, receipts and documents
+
+Documents are the **evidence** behind every entry. Know the key ones:
+
+| Document | What it is | Who issues it |
+| :-- | :-- | :-- |
+| **Quotation** | An offer of price | Seller |
+| **Purchase order** | A buyer's order | Buyer |
+| **Delivery note** | What was delivered | Seller |
+| **Invoice** | A request for payment: items, prices, tax, terms | Seller |
+| **Receipt** | Proof that payment was received | Seller |
+| **Credit note** | Reduces an invoice (returns, errors) | Seller |
+| **Statement** | A summary of invoices and payments for an account | Seller |
+| **Bank statement** | The bank's record | Bank |
+
+A proper **invoice** shows: the seller's name and address, the buyer's name, a unique **invoice number,** the date, a description of goods or services, quantities, unit prices, any discount, **VAT** where applicable, the total, payment terms and bank details.
+
+**Good document habits:**
+
+- **Number documents in sequence** and account for every number.
+- **Never write a figure without a document** (or an explanation).
+- **File them in order** (by date, by supplier or by number) and keep them for the required retention period.
+- **Record transactions as soon as possible,** daily if you can, not at the end of the month.
+- **Keep digital copies** (scan or photograph) in an organised folder with backups.
+- **Separate business and personal money.**
+
+> [!TIP]
+> If you cannot show what a payment was for, you cannot claim it as a business expense for tax, and you cannot spot mistakes. A receipt in a shoe box is better than none, but a filed, matched document is best.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m03-t1",
+  "prompt": "Write the **cashbook** for these transactions and give the receipts total, payments total and closing balance: 1 Apr opening balance **₦410,000**; 5 Apr cash sales **₦120,000**; 8 Apr buys stock for cash **₦90,000**; 12 Apr Ngozi pays **₦30,000**; 15 Apr pays rent **₦30,000**; 20 Apr pays wages **₦50,000**.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1 Apr - opening balance - 410,000",
+  "rules": [
+    { "label": "Receipts total ₦560,000 (410,000 + 120,000 + 30,000)", "pattern": "560,?000" },
+    { "label": "Payments total ₦170,000", "pattern": "170,?000" },
+    { "label": "Closing balance ₦390,000", "pattern": "390,?000" },
+    { "label": "Mentions each transaction", "pattern": "sales[\\s\\S]*stock[\\s\\S]*ngozi[\\s\\S]*rent[\\s\\S]*wages" }
+  ],
+  "sample": "1 Apr - opening balance - receipt 410,000 - balance 410,000\n5 Apr - cash sales - receipt 120,000 - balance 530,000\n8 Apr - stock for cash - payment 90,000 - balance 440,000\n12 Apr - Ngozi - receipt 30,000 - balance 470,000\n15 Apr - rent - payment 30,000 - balance 440,000\n20 Apr - wages - payment 50,000 - balance 390,000\nTotal receipts = 410,000 + 120,000 + 30,000 = 560,000. Total payments = 90,000 + 30,000 + 50,000 = 170,000. Closing balance = 560,000 - 170,000 = ₦390,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m03-t2",
+  "prompt": "Petty cash float is **₦20,000** and vouchers total **₦14,300**. Work out the cash that should remain and the amount to top up. Then write the **journal entries** for the vouchers (they were for transport ₦6,800, refreshments ₦4,500 and stationery ₦3,000) and for the top-up.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Cash remaining = ...",
+  "rules": [
+    { "label": "Cash remaining ₦5,700", "pattern": "5,?700" },
+    { "label": "Top-up ₦14,300", "pattern": "14,?300" },
+    { "label": "Dr transport 6,800", "pattern": "dr transport 6,?800" },
+    { "label": "Dr refreshments 4,500 and stationery 3,000", "pattern": "refreshments? 4,?500[\\s\\S]*stationery 3,?000|stationery 3,?000[\\s\\S]*refreshments? 4,?500" },
+    { "label": "Cr petty cash", "pattern": "cr petty cash" },
+    { "label": "Dr petty cash / Cr bank for the top-up", "pattern": "dr petty cash[\\s\\S]*cr bank" }
+  ],
+  "sample": "Cash remaining = 20,000 - 14,300 = ₦5,700; top up by ₦14,300 to restore the ₦20,000 float.\nDr Transport 6,800 / Cr Petty cash 6,800\nDr Refreshments 4,500 / Cr Petty cash 4,500\nDr Stationery 3,000 / Cr Petty cash 3,000\nTop-up: Dr Petty cash 14,300 / Cr Bank 14,300",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m03-t3",
+  "prompt": "Prepare a **sales invoice** for Kunle: invoice to Ngozi Eze for **10 phone cases at ₦3,000** and **5 chargers at ₦6,000**, with a **5% discount** on the total, payment due in 14 days. Include the invoice number, date, items, quantities, prices, discount, total and payment terms. Show the maths.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Invoice number: ...",
+  "rules": [
+    { "label": "Has an invoice number and date", "pattern": "invoice (number|no)[\\s\\S]*date|date[\\s\\S]*invoice (number|no)" },
+    { "label": "Phone cases line ₦30,000", "pattern": "30,?000" },
+    { "label": "Chargers line ₦30,000", "pattern": "30,?000[\\s\\S]*30,?000" },
+    { "label": "Subtotal ₦60,000", "pattern": "60,?000" },
+    { "label": "Discount ₦3,000", "pattern": "3,?000" },
+    { "label": "Total ₦57,000", "pattern": "57,?000" },
+    { "label": "Payment terms 14 days", "pattern": "14 days" }
+  ],
+  "sample": "Kunle's Phone Accessories, Ikeja\nInvoice number: KPA-0007; Date: 14 March 2026\nBill to: Ngozi Eze\n10 phone cases x ₦3,000 = ₦30,000\n5 chargers x ₦6,000 = ₦30,000\nSubtotal = ₦60,000\nDiscount at 5% = ₦3,000\nTotal due = ₦57,000\nPayment terms: due within 14 days, by bank transfer",
+  "required": false
+}
+```
+
+Next lesson: bank and account reconciliation.
+$md$, true, true, 3, array['bkp-m03-t1', 'bkp-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m07', 'bookkeeping-small-business-finance', 'Budgeting, cash flow and decisions', 7, null, null, '{}'::text[], array['Budgets and forecasts', 'Managing cash flow', 'Break-even and margins', 'Using the numbers to decide']::text[])
+values ('bkp-m04', 'bookkeeping-small-business-finance', 'Bank and account reconciliation', 4, 'Reconciliation', 'RECON', array['Reconcile the bank', 'Manage customer and supplier accounts', 'Find and fix errors', 'Run a month-end routine']::text[], array['Bank reconciliation', 'Customer and supplier accounts', 'Finding and fixing errors', 'Month-end routine']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m08', 'bookkeeping-small-business-finance', 'Tax and compliance in Nigeria', 8, null, null, '{}'::text[], array['Taxes a small business meets', 'VAT and PAYE basics', 'Company income tax basics', 'Keeping records for tax', 'Working with an accountant']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:bank-and-account-reconciliation', 'bookkeeping-small-business-finance', 'bkp-m04', 'bank-and-account-reconciliation', 'Bank and Account Reconciliation', 'Reconcile the bank statement to the cashbook, manage customer and supplier accounts, find and fix errors and follow a month-end routine.', 30, $md$
+## Bank reconciliation
+
+A **bank reconciliation** compares the **cashbook** (your record) with the **bank statement** (the bank's record) and explains any differences. They should agree after allowing for timing differences and items you have not yet recorded. It is one of the most useful controls, because it catches errors, missed charges and fraud.
+
+Why they differ:
+
+- **Unpresented (outstanding) cheques:** you recorded a cheque as paid, but it has not yet cleared the bank.
+- **Deposits in transit (uncredited lodgements):** you recorded a deposit, but the bank has not yet credited it.
+- **Bank charges, interest and direct debits** that the bank recorded and you have not.
+- **Direct transfers in** (customers paying by transfer) that you have not yet recorded.
+- **Dishonoured (bounced) cheques.**
+- **Errors,** by you or the bank.
+
+**Steps:**
+
+1. **Tick off** each item in the cashbook against the bank statement.
+2. **List the unticked items** on each side.
+3. **Update the cashbook** for items on the statement that are not in it (bank charges, interest, direct payments), to get the **adjusted cashbook balance.**
+4. **Reconcile the statement:** *Statement balance + deposits in transit − unpresented cheques = adjusted bank balance.*
+5. **The two adjusted balances must agree.** If not, look for errors.
+
+**Example for Kunle at 31 March.** The cashbook shows **₦410,000.** The bank statement shows **₦421,500.** Differences:
+
+- A **deposit in transit** of **₦12,000** (recorded in the cashbook, not yet credited by the bank).
+- An **unpresented cheque** of **₦25,000** (recorded, not yet cleared).
+- **Bank charges** of **₦1,500** on the statement, not yet in the cashbook.
+
+*Adjust the cashbook:* 410,000 − 1,500 = **₦408,500.** The journal entry: **Dr Bank charges 1,500, Cr Cash/Bank 1,500.**
+
+*Reconcile the statement:* 421,500 + 12,000 − 25,000 = **₦408,500.** Both agree at **₦408,500,** so the reconciliation is complete, and the true bank balance is ₦408,500.
+
+Do this **at least monthly,** and weekly if there are many transactions. Keep a signed copy, and investigate old unpresented cheques.
+
+## Customer and supplier accounts
+
+**Receivables (customers):** each credit customer has an account showing invoices raised and payments received, so you know who owes what. The total of all customer accounts should equal the **receivables control account** in the ledger.
+
+- **Send statements** regularly.
+- **Prepare an ageing list:** group outstanding invoices by how long overdue.
+
+| Customer | Current | 1 to 30 days | 31 to 60 days | Over 60 days | Total |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Ngozi Eze | 0 | 30,000 | 0 | 0 | 30,000 |
+
+- **Chase overdue accounts** politely and firmly; stop credit to persistent late payers.
+- **Record bad debts** (module 5) when you decide you will not be paid.
+
+**Payables (suppliers):** each supplier has an account showing invoices received and payments made. **Check supplier statements** against your records at least monthly, to make sure they agree: query missing invoices, duplicates or unrecorded payments. Pay according to terms, and take any early-payment discount if worthwhile. Alpha Traders: invoices ₦200,000, payments ₦100,000, balance ₦100,000.
+
+The **sum of customer balances** and the **sum of supplier balances** should agree to the totals in the ledger. If not, find the difference.
+
+## Finding and fixing errors
+
+Errors happen. The goal is to find them early and correct them properly.
+
+**Common types:**
+| Error | Example |
+| :-- | :-- |
+| **Omission** | A transaction not recorded at all |
+| **Transposition** | ₦4,560 recorded as ₦4,650 (digits swapped) |
+| **Wrong account** | Rent posted to the wages account |
+| **Wrong amount** | ₦5,000 recorded as ₦500 |
+| **Reversal** | Debit and credit swapped |
+| **Duplicate** | The same invoice entered twice |
+| **Compensating** | Two errors that cancel each other |
+| **Principle** | Equipment cost treated as an expense |
+
+**Tips for finding a trial balance difference:**
+
+1. **Check the arithmetic** of the totals.
+2. **Find the difference:** if it is exactly divisible by **9,** a transposition is likely. Example: 4,650 − 4,560 = **90,** and 90 ÷ 9 = 10, which points to swapped digits.
+3. **If the difference is double a figure,** look for an entry posted on the wrong side (a reversal): half the difference is the amount.
+4. **If it equals a single figure,** look for a missing entry on one side.
+5. **Re-check balances** carried forward and the ledger postings from the journal.
+6. **Check against documents** and the bank reconciliation.
+
+**Correcting errors:** never use correction fluid or delete a posted entry. Make a **correcting journal entry** with a clear narration, so the audit trail stays visible. Example: rent of ₦30,000 was wrongly debited to Wages. Correct with **Dr Rent 30,000, Cr Wages 30,000.**
+
+## Month-end routine
+
+A regular month-end routine keeps books accurate and ready for reports:
+
+1. **Record all transactions** for the month (sales, purchases, receipts, payments, petty cash).
+2. **Post to the ledger** and check the cashbook totals.
+3. **Reconcile the bank statement** to the cashbook.
+4. **Count the cash** and petty cash and agree them with the books.
+5. **Review receivables:** update the ageing list, chase overdue amounts.
+6. **Reconcile supplier statements** and review payables due.
+7. **Count the stock** (or reconcile the stock records) and agree to the inventory account.
+8. **Record adjustments** (depreciation, accruals, prepayments, bad debts; module 5).
+9. **Prepare the trial balance** and investigate any difference.
+10. **Prepare the financial statements** (module 6) and review them for sense.
+11. **File documents** and back up the records.
+12. **Report** to the owner and agree actions.
+13. **Close the month:** do not change closed months without a recorded reason.
+
+Set a **timetable** (for example complete by the 5th working day of the next month) and stick to it.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m04-t1",
+  "prompt": "Reconcile the bank for Kunle: cashbook **₦410,000**; bank statement **₦421,500**; **deposit in transit ₦12,000**; **unpresented cheque ₦25,000**; **bank charges ₦1,500** not yet in the cashbook. Work out the **adjusted cashbook balance** and the **adjusted bank balance**, check that they agree and write the **journal entry** for the bank charges.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Adjusted cashbook = ...",
+  "rules": [
+    { "label": "Adjusted cashbook ₦408,500", "pattern": "408,?500" },
+    { "label": "Adjusted bank balance calculation 421,500 + 12,000 - 25,000", "pattern": "421,?500\\s?\\+\\s?12,?000\\s?[-−]\\s?25,?000" },
+    { "label": "Says they agree", "pattern": "agree|match|equal|reconcile" },
+    { "label": "Journal: Dr Bank charges 1,500", "pattern": "dr bank charges 1,?500" },
+    { "label": "Journal: Cr Cash or Bank 1,500", "pattern": "cr (cash|bank)( at bank)? 1,?500" }
+  ],
+  "sample": "Adjusted cashbook = 410,000 - 1,500 = ₦408,500.\nAdjusted bank balance = 421,500 + 12,000 - 25,000 = ₦408,500.\nThe two balances agree at ₦408,500, so the bank reconciliation is complete.\nJournal: Dr Bank charges 1,500 / Cr Bank 1,500.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m04-t2",
+  "prompt": "The trial balance does not balance. (a) A transposition: **₦4,650** was recorded as **₦4,560**; (b) rent of **₦30,000** was debited to **Wages**. For (a), work out the difference and why divisibility by 9 helps. For (b), write the **correcting journal entry**. Then name **two other** types of error a trial balance would **not** reveal.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "(a) Difference = ...",
+  "rules": [
+    { "label": "Difference of 90", "pattern": "\\b90\\b" },
+    { "label": "Divisible by 9", "pattern": "9[^\\n]*(divis|transpos|digits)|divis[^\\n]*9" },
+    { "label": "Correcting entry Dr Rent 30,000 / Cr Wages 30,000", "pattern": "dr rent 30,?000[\\s\\S]*cr wages 30,?000" },
+    { "label": "Names errors not revealed (omission, compensating, wrong account, principle)", "pattern": "omission|omitted|compensat|wrong account|principle|reversal" }
+  ],
+  "sample": "(a) Difference = 4,650 - 4,560 = 90. A difference divisible by 9 (90 / 9 = 10) suggests two digits were swapped.\n(b) Correcting entry: Dr Rent 30,000 / Cr Wages 30,000 with the narration \"correct rent wrongly posted to wages\".\nA trial balance would not reveal an omission of a whole transaction, or compensating errors that cancel each other.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m04-t3",
+  "prompt": "Write your **month-end checklist** for a small business with at least ten steps, one per line, covering recording, posting, bank reconciliation, cash count, receivables, payables, stock, adjustments, trial balance, statements, backup and closing.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "1. Record all transactions ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Bank reconciliation", "pattern": "bank reconcil|reconcile the bank" },
+    { "label": "Cash count", "pattern": "count the cash|cash count|petty cash" },
+    { "label": "Receivables and payables", "pattern": "receivable|customers?[\\s\\S]*(payable|supplier)|(payable|supplier)[\\s\\S]*(receivable|customer)" },
+    { "label": "Stock", "pattern": "stock|inventory" },
+    { "label": "Adjustments", "pattern": "adjustment|depreciation|accrual" },
+    { "label": "Trial balance and statements", "pattern": "trial balance[\\s\\S]*statements?|statements?[\\s\\S]*trial balance" },
+    { "label": "Backup or filing", "pattern": "back ?up|file|archive" }
+  ],
+  "sample": "1. Record all sales, purchases, receipts and payments for the month.\n2. Post the entries to the ledger and check the cashbook totals.\n3. Reconcile the bank statement to the cashbook.\n4. Count the cash and petty cash and agree them to the books.\n5. Update the customers' ageing list and chase overdue amounts.\n6. Reconcile supplier statements and list payables due.\n7. Count the stock and agree it to the inventory account.\n8. Record adjustments: depreciation, accruals, prepayments and bad debts.\n9. Prepare the trial balance and investigate any difference.\n10. Prepare the financial statements and review them for sense.\n11. File the documents and back up the records.\n12. Report to the owner and close the month.",
+  "required": false
+}
+```
+
+Next lesson: inventory, assets and adjustments.
+$md$, true, true, 4, array['bkp-m04-t1', 'bkp-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m09', 'bookkeeping-small-business-finance', 'Tools: spreadsheets and accounting software', 9, null, null, '{}'::text[], array['Setting up books in a spreadsheet', 'Accounting software overview', 'Backups and security', 'Good habits']::text[])
+values ('bkp-m05', 'bookkeeping-small-business-finance', 'Inventory, assets and adjustments', 5, 'Adjustments', 'ADJUST', array['Value stock with FIFO and average cost', 'Calculate depreciation', 'Record accruals and prepayments', 'Handle bad debts']::text[], array['Stock records', 'Fixed assets and depreciation', 'Accruals and prepayments', 'Bad debts']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:inventory-assets-and-adjustments', 'bookkeeping-small-business-finance', 'bkp-m05', 'inventory-assets-and-adjustments', 'Inventory, Assets and Adjustments', 'Keep stock records, record fixed assets and depreciation, handle accruals and prepayments and deal with bad debts.', 30, $md$
+## Stock records
+
+For a business that sells goods, **stock (inventory)** is often the largest asset and the biggest source of error. Two systems:
+
+- **Perpetual:** update the stock records with every purchase and sale, so you always know what you should have. Needs a record per product.
+- **Periodic:** count the stock at the end of a period and work out the cost of goods sold: *Opening stock + purchases − closing stock = cost of goods sold.*
+
+Whichever you use, **count the stock physically** at least at each year-end (and more often for important items), compare with the records and investigate differences (theft, damage, errors).
+
+**Valuation.** Stock is valued at the **lower of cost and net realisable value** (what it can be sold for, less costs of sale). Damaged or obsolete stock should be written down. When the cost of identical goods changes over time, you need a method to decide which cost to use for goods sold:
+
+- **FIFO (first in, first out):** assume the oldest stock is sold first.
+- **Weighted average cost:** use the average cost of all units.
+
+Example: Kunle buys **100 units at ₦1,000** and later **100 units at ₦1,200,** then sells **150.**
+
+- **FIFO:** the first 100 sold cost ₦1,000 each = 100,000; the next 50 cost ₦1,200 each = 60,000. **Cost of goods sold = ₦160,000.** Closing stock = 50 × 1,200 = **₦60,000.**
+- **Weighted average:** average cost = (100,000 + 120,000) ÷ 200 = **₦1,100** per unit. Cost of goods sold = 150 × 1,100 = **₦165,000.** Closing stock = 50 × 1,100 = **₦55,000.**
+
+The two methods give different profits (FIFO's cost of sales is ₦5,000 lower in this example, so profit is ₦5,000 higher). Choose one, apply it consistently and follow the tax and accounting rules that apply to you.
+
+Control stock with: **a stock card** or list for each product, **numbered goods received and issued documents,** secure storage, regular counts, and a record of write-offs.
+
+## Fixed assets and depreciation
+
+**Fixed assets** are long-term assets used in the business (equipment, furniture, vehicles, buildings, computers). They are not expensed when bought; their cost is spread over their useful life through **depreciation,** reflecting that they wear out or become obsolete.
+
+**Straight-line depreciation** (the simplest method):
+
+*Annual depreciation = (Cost − Residual value) ÷ Useful life in years*
+
+Example: Kunle's shelves cost **₦120,000,** with an expected life of **5 years** and no residual value. Annual depreciation = 120,000 ÷ 5 = **₦24,000.** Monthly = 24,000 ÷ 12 = **₦2,000.**
+
+Journal entry for March: **Dr Depreciation expense 2,000, Cr Accumulated depreciation 2,000.** *Accumulated depreciation* is a contra-asset account that reduces the asset's value on the balance sheet. The **net book value (carrying value)** = cost − accumulated depreciation: at the end of March, 120,000 − 2,000 = **₦118,000.**
+
+Keep a **fixed asset register:** description, date bought, cost, useful life, depreciation method, accumulated depreciation, location and serial number. When an asset is sold or scrapped, remove it and record any profit or loss on disposal. Depreciation is a **non-cash expense:** it reduces profit but does not use cash. (Tax rules may allow different depreciation rates; your accountant can advise.)
+
+## Accruals and prepayments
+
+Under the accrual basis, expenses and income belong to the period they relate to, whatever the payment date. Two adjustments handle timing:
+
+**Accrued expense:** an expense **incurred but not yet paid** by the period-end. Example: Kunle's staff earned **₦10,000** of wages in the last days of March, to be paid in April. Record: **Dr Wages 10,000, Cr Accrued wages (a liability) 10,000.** March's wages expense becomes 40,000 + 10,000 = **₦50,000.**
+
+**Prepaid expense:** an expense **paid in advance** that covers future periods. Example: on 1 April Kunle pays **₦90,000** rent for three months (April to June). At the end of April, one month (**₦30,000**) is an expense and **₦60,000** is a **prepayment** (an asset). Record at payment: **Dr Prepaid rent 90,000, Cr Cash 90,000;** each month: **Dr Rent 30,000, Cr Prepaid rent 30,000.**
+
+**Accrued income** (earned but not yet billed) and **deferred income** (paid in advance by customers) work in the same way for income.
+
+Rule of thumb: ask, *"Does this amount belong to this month? Have I recorded all of this month's costs and income?"*
+
+## Bad debts
+
+Some customers do not pay. A **bad debt** is a receivable you decide you will not collect. Record it as an expense: **Dr Bad debts expense, Cr Receivables.** If a debt previously written off is later paid, reverse it.
+
+Because some debts are likely to go bad, many businesses also set up an **allowance for doubtful debts (provision):** an estimate of the share of receivables that will not be paid.
+
+Example: Kunle's receivables at 31 March are **₦30,000.** He estimates **10%** may not be paid. Allowance = 10% × 30,000 = **₦3,000.** Record: **Dr Bad debts expense 3,000, Cr Allowance for doubtful debts 3,000.** On the balance sheet, receivables are shown at 30,000 − 3,000 = **₦27,000** (net).
+
+Prevent bad debts by checking customers before giving credit, setting credit limits, agreeing clear terms, invoicing promptly, following up early and stopping credit to late payers.
+
+**Summary of Kunle's March adjustments:** depreciation ₦2,000; accrued wages ₦10,000; allowance for doubtful debts ₦3,000. These reduce profit by 2,000 + 10,000 + 3,000 = **₦15,000.** Module 6 shows the effect.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m05-t1",
+  "prompt": "Kunle buys **100 units at ₦1,000** and later **100 units at ₦1,200**, then sells **150 units**. Work out the **cost of goods sold** and the **closing stock value** under **FIFO** and under **weighted average cost**, and say which gives the higher profit.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "FIFO cost of goods sold = ...",
+  "rules": [
+    { "label": "FIFO COGS ₦160,000", "pattern": "160,?000" },
+    { "label": "FIFO closing stock ₦60,000", "pattern": "60,?000" },
+    { "label": "Average cost ₦1,100", "pattern": "1,?100" },
+    { "label": "Average COGS ₦165,000", "pattern": "165,?000" },
+    { "label": "Average closing stock ₦55,000", "pattern": "55,?000" },
+    { "label": "FIFO gives the higher profit (lower COGS)", "pattern": "fifo[^\\n]*(higher|more)[^\\n]*profit|higher profit[^\\n]*fifo|lower cost" }
+  ],
+  "sample": "FIFO: first 100 at 1,000 = 100,000, next 50 at 1,200 = 60,000, so cost of goods sold = ₦160,000 and closing stock = 50 x 1,200 = ₦60,000.\nWeighted average: (100,000 + 120,000) / 200 = ₦1,100 a unit, so cost of goods sold = 150 x 1,100 = ₦165,000 and closing stock = 50 x 1,100 = ₦55,000.\nFIFO gives the higher profit, by ₦5,000, because its cost of goods sold is lower.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m05-t2",
+  "prompt": "Kunle's shelves cost **₦120,000**, life **5 years**, no residual value. Work out annual and **monthly depreciation**, write the **March journal entry** and give the **net book value** at the end of March. Then record: **wages accrued ₦10,000** and **an allowance of 10%** on **₦30,000** receivables (journal entries and the amounts).",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Annual depreciation = ...",
+  "rules": [
+    { "label": "Annual depreciation ₦24,000", "pattern": "24,?000" },
+    { "label": "Monthly depreciation ₦2,000", "pattern": "2,?000" },
+    { "label": "Journal Dr Depreciation / Cr Accumulated depreciation", "pattern": "dr depreciation[\\s\\S]*cr accumulated depreciation" },
+    { "label": "Net book value ₦118,000", "pattern": "118,?000" },
+    { "label": "Dr Wages / Cr Accrued wages 10,000", "pattern": "dr wages 10,?000[\\s\\S]*cr accrued wages" },
+    { "label": "Allowance ₦3,000, receivables net ₦27,000", "pattern": "3,?000[\\s\\S]*27,?000|27,?000[\\s\\S]*3,?000" }
+  ],
+  "sample": "Annual depreciation = 120,000 / 5 = ₦24,000; monthly = ₦2,000.\nMarch entry: Dr Depreciation expense 2,000 / Cr Accumulated depreciation 2,000.\nNet book value = 120,000 - 2,000 = ₦118,000.\nAccrued wages: Dr Wages 10,000 / Cr Accrued wages 10,000.\nAllowance: 10% x 30,000 = ₦3,000; Dr Bad debts expense 3,000 / Cr Allowance for doubtful debts 3,000; receivables are shown net at ₦27,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m05-t3",
+  "prompt": "On 1 April Kunle pays **₦90,000** rent for **April to June**. Write the **entry at payment**, the **entry each month**, and the **prepayment balance** at the end of April and of May. Explain in one or two sentences why this is not simply ₦90,000 of April expense.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "At payment: Dr Prepaid rent ...",
+  "rules": [
+    { "label": "Payment entry Dr Prepaid rent 90,000 / Cr Cash", "pattern": "dr prepaid rent 90,?000[\\s\\S]*cr (cash|bank)" },
+    { "label": "Monthly entry Dr Rent 30,000 / Cr Prepaid rent 30,000", "pattern": "dr rent 30,?000[\\s\\S]*cr prepaid rent 30,?000" },
+    { "label": "Prepayment at end of April ₦60,000", "pattern": "60,?000" },
+    { "label": "Prepayment at end of May ₦30,000", "pattern": "30,?000[\\s\\S]*may|may[\\s\\S]*30,?000" },
+    { "label": "Explains matching to the months it relates to", "pattern": "relates|matching|belongs|three months|each month|future|period" }
+  ],
+  "sample": "At payment: Dr Prepaid rent 90,000 / Cr Cash 90,000.\nEach month: Dr Rent 30,000 / Cr Prepaid rent 30,000.\nPrepayment at the end of April = 90,000 - 30,000 = ₦60,000; at the end of May = ₦30,000.\nIt is not all April's expense because the payment covers three months, and under accrual accounting each month should bear only the rent that relates to it.",
+  "required": false
+}
+```
+
+Next lesson: financial statements.
+$md$, true, true, 5, array['bkp-m05-t1', 'bkp-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bkp-m10', 'bookkeeping-small-business-finance', 'Final project: a set of books', 10, null, null, '{}'::text[], array['Recording the transactions', 'Preparing the statements', 'Writing a short report', 'Review']::text[])
+values ('bkp-m06', 'bookkeeping-small-business-finance', 'Financial statements', 6, 'Fin Statements', 'FINSTMT', array['Prepare a profit and loss', 'Prepare a balance sheet', 'Prepare a cash flow statement', 'Explain the numbers']::text[], array['The profit and loss statement', 'The balance sheet', 'The cash flow statement', 'Reading and explaining the numbers']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:financial-statements', 'bookkeeping-small-business-finance', 'bkp-m06', 'financial-statements', 'Financial Statements', 'Prepare the profit and loss statement, balance sheet and cash flow statement from the books and read and explain the numbers.', 45, $md$
+## The profit and loss statement
+
+The **profit and loss statement (income statement)** shows whether the business made a profit or loss **over a period** (for example a month or a year). It starts with income, subtracts the costs of earning it and ends with **net profit.**
+
+Structure:
+
+1. **Sales (revenue).**
+2. **Cost of goods sold (COGS)** (what the goods sold cost).
+3. **Gross profit** = Sales − Cost of goods sold.
+4. **Operating expenses:** rent, wages, depreciation, bad debts, transport, advertising, electricity.
+5. **Net profit** = Gross profit − Operating expenses.
+
+**Kunle's March profit and loss** (after the module 5 adjustments):
+
+| | ₦ |
+| :-- | :-- |
+| Sales | 230,000 |
+| Cost of goods sold | (138,000) |
+| **Gross profit** | **92,000** |
+| Rent | 30,000 |
+| Wages (40,000 paid + 10,000 accrued) | 50,000 |
+| Depreciation | 2,000 |
+| Bad debts (allowance) | 3,000 |
+| **Total expenses** | **(85,000)** |
+| **Net profit** | **7,000** |
+
+Two key ratios:
+
+- **Gross margin** = Gross profit ÷ Sales = 92,000 ÷ 230,000 = **40%.**
+- **Net margin** = Net profit ÷ Sales = 7,000 ÷ 230,000 = **3.0%.**
+
+Without the adjustments Kunle's profit would have looked like ₦22,000 (92,000 − 30,000 − 40,000). The adjustments (₦15,000 in all) show a more truthful, lower figure. Profit is **not** the same as cash: Kunle's cash is ₦410,000, but most of it is his own capital.
+
+## The balance sheet
+
+The **balance sheet (statement of financial position)** is a snapshot at a **date.** It lists **assets, liabilities and equity,** and must balance: **Assets = Liabilities + Equity.**
+
+Layout:
+
+- **Current assets** (expected to turn into cash within a year): cash, receivables, inventory, prepayments.
+- **Non-current (fixed) assets:** equipment, vehicles, buildings, at cost less accumulated depreciation.
+- **Current liabilities** (due within a year): payables, accruals, short-term loans, tax due.
+- **Non-current liabilities:** long-term loans.
+- **Equity:** capital plus retained profit, minus drawings.
+
+**Kunle's balance sheet at 31 March:**
+
+| Assets | ₦ |
+| :-- | :-- |
+| Cash | 410,000 |
+| Receivables (30,000 less allowance 3,000) | 27,000 |
+| Inventory | 62,000 |
+| **Current assets** | **499,000** |
+| Equipment (120,000 less depreciation 2,000) | 118,000 |
+| **Total assets** | **617,000** |
+
+| Liabilities and equity | ₦ |
+| :-- | :-- |
+| Payables | 100,000 |
+| Accrued wages | 10,000 |
+| **Total liabilities** | **110,000** |
+| Capital | 500,000 |
+| Net profit for March | 7,000 |
+| **Total equity** | **507,000** |
+| **Total liabilities and equity** | **617,000** |
+
+Check: assets **617,000** = liabilities 110,000 + equity 507,000 = **617,000.** ✓
+
+Useful measures:
+
+- **Current ratio** = Current assets ÷ Current liabilities = 499,000 ÷ 110,000 = **about 4.5.** It shows the ability to pay short-term debts. Many businesses aim for at least 1.5 to 2, but too high may mean idle cash or stock.
+- **Working capital** = Current assets − Current liabilities = 499,000 − 110,000 = **₦389,000.**
+
+## The cash flow statement
+
+Profit is not cash. The **cash flow statement** shows where cash **came from** and **went** during the period, in three groups:
+
+- **Operating activities:** cash from selling and running the business (receipts from customers, payments to suppliers and staff).
+- **Investing activities:** buying or selling long-term assets (equipment).
+- **Financing activities:** owner's capital, loans and repayments, drawings.
+
+**Kunle's March cash flow (direct method):**
+
+| | ₦ |
+| :-- | :-- |
+| Cash received from customers (150,000 + 50,000) | 200,000 |
+| Paid to suppliers | (100,000) |
+| Paid for rent | (30,000) |
+| Paid for wages | (40,000) |
+| **Net cash from operating activities** | **30,000** |
+| Bought equipment | (120,000) |
+| **Net cash from investing activities** | **(120,000)** |
+| Capital invested by owner | 500,000 |
+| **Net cash from financing activities** | **500,000** |
+| **Net increase in cash** | **410,000** |
+| Opening cash | 0 |
+| **Closing cash** | **410,000** |
+
+Closing cash of ₦410,000 agrees with the balance sheet. Notice that the business made a profit of ₦7,000 but **operating cash flow was ₦30,000.** The difference is explained by timing: stock bought but not yet sold, customers who have not yet paid, and costs accrued but not paid. A profitable business can still **run out of cash** if it grows stock and receivables faster than it collects.
+
+## Reading and explaining the numbers
+
+Statements are useful only if you can explain them in plain words to an owner, a banker or a partner.
+
+**Ask:**
+
+1. **Profit:** Did we make a profit? Is the margin healthy for this type of business? How does it compare with last period or the budget?
+2. **Margins:** Is gross margin stable? If it falls, check prices, discounts, cost increases or stock loss.
+3. **Expenses:** Which costs are biggest? Are any rising faster than sales?
+4. **Cash:** Is cash flow from operations positive? How long will the cash last?
+5. **Liquidity:** Can we pay our short-term debts (current ratio)?
+6. **Receivables and stock:** Is too much money tied up? Are customers paying late?
+7. **Debt:** Do we owe too much?
+8. **Trends:** compare several months to spot patterns.
+
+**Explaining Kunle's month in words:** *"Kunle made ₦230,000 of sales and a gross profit of ₦92,000, a 40% margin. After rent, wages, depreciation and bad debts, net profit was ₦7,000. Most of the ₦410,000 cash is his own capital. The shop has ₦62,000 of stock and is owed ₦30,000 by one customer, and it owes ₦110,000, mainly to its supplier. Sales will need to rise, or costs fall, for the shop to earn a meaningful profit."*
+
+Always flag **limits:** statements are historical, depend on estimates (depreciation, allowances) and show only financial matters.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m06-t1",
+  "prompt": "Prepare Kunle's **profit and loss statement** for March from: sales ₦230,000; cost of goods sold ₦138,000; rent ₦30,000; wages paid ₦40,000 plus ₦10,000 accrued; depreciation ₦2,000; bad debts allowance ₦3,000. Show the **gross profit**, **total expenses**, **net profit**, **gross margin** and **net margin**.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "Sales ...",
+  "rules": [
+    { "label": "Gross profit ₦92,000", "pattern": "92,?000" },
+    { "label": "Total expenses ₦85,000", "pattern": "85,?000" },
+    { "label": "Net profit ₦7,000", "pattern": "7,?000" },
+    { "label": "Gross margin 40%", "pattern": "\\b40\\s?%" },
+    { "label": "Net margin about 3%", "pattern": "3\\.0\\s?%|3\\.04|\\b3\\s?%" }
+  ],
+  "sample": "Sales 230,000\nCost of goods sold (138,000)\nGross profit 92,000\nRent 30,000; wages 50,000 (40,000 + 10,000 accrued); depreciation 2,000; bad debts 3,000\nTotal expenses 85,000\nNet profit = 92,000 - 85,000 = ₦7,000\nGross margin = 92,000 / 230,000 = 40%; net margin = 7,000 / 230,000 = 3.0%",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m06-t2",
+  "prompt": "Prepare Kunle's **balance sheet** at 31 March: cash ₦410,000; receivables ₦30,000 less allowance ₦3,000; inventory ₦62,000; equipment ₦120,000 less depreciation ₦2,000; payables ₦100,000; accrued wages ₦10,000; capital ₦500,000; net profit ₦7,000. Show total assets, total liabilities, total equity, and **check that it balances**. Also work out the current ratio.",
+  "minutes": 14,
+  "rows": 12,
+  "placeholder": "Assets: ...",
+  "rules": [
+    { "label": "Current assets ₦499,000", "pattern": "499,?000" },
+    { "label": "Total assets ₦617,000", "pattern": "617,?000" },
+    { "label": "Total liabilities ₦110,000", "pattern": "110,?000" },
+    { "label": "Total equity ₦507,000", "pattern": "507,?000" },
+    { "label": "Says it balances", "pattern": "balance" },
+    { "label": "Current ratio about 4.5", "pattern": "4\\.5|4\\.54" }
+  ],
+  "sample": "Current assets = 410,000 + 27,000 + 62,000 = ₦499,000; equipment 118,000; total assets = ₦617,000.\nLiabilities = 100,000 + 10,000 = ₦110,000.\nEquity = 500,000 + 7,000 = ₦507,000.\nCheck: 110,000 + 507,000 = 617,000, so the balance sheet balances.\nCurrent ratio = 499,000 / 110,000 = 4.5.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m06-t3",
+  "prompt": "Prepare Kunle's **cash flow statement**: receipts from customers ₦200,000; payments to suppliers ₦100,000, rent ₦30,000, wages ₦40,000; equipment bought ₦120,000; capital invested ₦500,000. Give net cash from operating, investing and financing, and the closing cash. Then explain in 40 to 90 words why profit (₦7,000) is different from operating cash (₦30,000).",
+  "minutes": 14,
+  "rows": 12,
+  "placeholder": "Operating: ...",
+  "rules": [
+    { "label": "Operating cash ₦30,000", "pattern": "30,?000" },
+    { "label": "Investing ₦(120,000)", "pattern": "120,?000" },
+    { "label": "Financing ₦500,000", "pattern": "500,?000" },
+    { "label": "Closing cash ₦410,000", "pattern": "410,?000" },
+    { "label": "Explains timing differences (stock, receivables, payables, accruals)", "pattern": "stock|inventory|receivable|payable|accru|timing|not yet|depreciation" }
+  ],
+  "sample": "Operating: 200,000 - 100,000 - 30,000 - 40,000 = ₦30,000.\nInvesting: equipment (₦120,000).\nFinancing: capital ₦500,000.\nNet increase = 30,000 - 120,000 + 500,000 = ₦410,000, so closing cash is ₦410,000.\nProfit differs from operating cash because of timing: stock was bought but not yet sold, a customer has not yet paid, wages are accrued but unpaid and depreciation is not a cash cost.",
+  "required": true
+}
+```
+
+Next lesson: budgeting, cash flow and decisions.
+$md$, true, true, 6, array['bkp-m06-t1', 'bkp-m06-t2', 'bkp-m06-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bkp-m07', 'bookkeeping-small-business-finance', 'Budgeting, cash flow and decisions', 7, 'Budget & Cash', 'BUDCASH', array['Build a budget', 'Forecast cash flow', 'Calculate break-even', 'Decide with numbers']::text[], array['Budgets and forecasts', 'Managing cash flow', 'Break-even and margins', 'Using the numbers to decide']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:budgeting-cash-flow-and-decisions', 'bookkeeping-small-business-finance', 'bkp-m07', 'budgeting-cash-flow-and-decisions', 'Budgeting, Cash Flow and Decisions', 'Build budgets and forecasts, manage cash flow, work out break-even and margins and use the numbers to decide.', 30, $md$
+## Budgets and forecasts
+
+A **budget** is a plan for income and spending over a period, in numbers. A **forecast** is a best estimate of what will happen. Together they let you see problems **before** they happen and compare **plans with results.**
+
+**Building a simple budget:**
+
+1. **Start from last period's actuals** (Kunle's March statements).
+2. **Estimate sales** using the past, the season, planned promotions and capacity. Be realistic and write down your assumptions.
+3. **Estimate cost of goods sold** using your gross margin.
+4. **Estimate expenses:** fixed costs (rent, wages, depreciation) and variable costs (transport, packaging, card fees).
+5. **Calculate the budgeted profit.**
+6. **Prepare a cash flow forecast** (below).
+7. **Review and agree** with the owner.
+
+**Kunle's April budget:** sales target **₦280,000** at a 40% gross margin gives a gross profit of **₦112,000.** Expenses: rent 30,000, wages 50,000, depreciation 2,000 and other costs 8,000 = **₦90,000.** Budgeted net profit = 112,000 − 90,000 = **₦22,000.**
+
+**Variance analysis:** compare **actual** with **budget** each month, and ask why. Suppose April actual sales are **₦260,000.** The sales variance = 260,000 − 280,000 = **−₦20,000** (**adverse**), or −20,000 ÷ 280,000 = **−7.1%.** Investigate causes (fewer customers? lower prices? stock-outs?) and respond. A **favourable** variance is better than budget. Look at costs too: an overspend may be justified (more sales) or a problem.
+
+Update the budget as you learn, and use **scenarios** (best, expected, worst case) to prepare for uncertainty.
+
+## Managing cash flow
+
+**Cash flow** is the movement of cash in and out. Profit on paper does not pay wages: **cash does.** Many profitable small businesses fail because they run out of cash.
+
+A **cash flow forecast** lists expected receipts and payments for each future period:
+
+| | April (₦) |
+| :-- | :-- |
+| **Opening cash** | 410,000 |
+| Receipts: collect from Ngozi | 30,000 |
+| Receipts: cash sales | 200,000 |
+| **Total receipts** | **230,000** |
+| Payments: Alpha Traders (owed) | 100,000 |
+| Payments: rent | 30,000 |
+| Payments: wages | 50,000 |
+| Payments: new stock | 120,000 |
+| **Total payments** | **300,000** |
+| **Closing cash** | **340,000** |
+
+Check: 410,000 + 230,000 − 300,000 = **₦340,000.** If the closing cash were negative, the business would need to act **before** that month: delay purchases, collect faster, negotiate longer supplier terms, arrange an overdraft or funding.
+
+**Ways to improve cash flow:**
+
+- **Collect faster:** clear invoices, shorter terms, deposits, reminders, accept easy payment methods.
+- **Pay suppliers on time but not early;** negotiate terms.
+- **Control stock:** do not tie up cash in slow-moving goods.
+- **Control costs** and avoid unnecessary spending.
+- **Increase prices or margins** where possible.
+- **Keep a cash reserve** for at least one or two months of fixed costs.
+- **Separate business and personal money.**
+- **Plan big purchases** and funding in advance.
+
+Review the forecast **weekly** when cash is tight.
+
+## Break-even and margins
+
+**Break-even** is the level of sales where the business makes **neither a profit nor a loss.** Understanding it helps with pricing, targets and decisions.
+
+- **Fixed costs** do not change with sales in the short term (rent, wages of permanent staff, depreciation).
+- **Variable costs** rise with sales (cost of goods, packaging, delivery).
+- **Contribution margin** = Sales − variable costs. As a percentage: **contribution margin ratio.** For a shop where the only variable cost is the cost of goods, the contribution margin ratio equals the gross margin.
+
+*Break-even sales = Fixed costs ÷ Contribution margin ratio.*
+
+Kunle's monthly fixed costs: rent ₦30,000, wages ₦50,000, depreciation ₦2,000 = **₦82,000.** Gross margin = **40%.**
+
+Break-even sales = 82,000 ÷ 0.40 = **₦205,000** a month.
+
+At sales of ₦230,000 (March), he is above break-even. The **margin of safety** = (Actual sales − Break-even sales) ÷ Actual sales = (230,000 − 205,000) ÷ 230,000 = **10.9%,** meaning sales could fall by about 11% before he makes a loss. That is thin, so he needs to raise sales or margin.
+
+**Price and margin decisions:**
+
+- **Margin** = profit ÷ sales. **Markup** = profit ÷ cost. An item costing ₦6,000 sold at ₦10,000 has a profit of ₦4,000, a **margin of 40%** and a **markup of 66.7%.**
+- A **price cut** needs more sales to give the same profit. If the margin is 40% and you cut prices by 10%, the margin on the new price falls. For an item with cost 60 and price 100: after a 10% cut the price is 90 and profit is 30 (a 33.3% margin), so you must sell 40 ÷ 30 = **1.33 times** as many just to make the same profit.
+
+## Using the numbers to decide
+
+Numbers support good decisions. Common ones for a small business:
+
+- **Pricing:** can I afford a discount? What price gives my target margin?
+- **Hiring:** will the extra sales cover the new wage? (Extra gross profit must exceed the extra cost.)
+- **Buying equipment:** will it pay for itself? **Payback** = cost ÷ yearly benefit. A ₦300,000 machine that saves ₦100,000 a year pays back in **3 years.**
+- **Stock:** should I buy in bulk for a discount? Compare the saving with the cost of tied-up cash and storage risk.
+- **Borrowing:** can the business afford the repayments from cash flow, even if sales are 20% lower?
+- **Dropping or adding a product:** compare each product's contribution.
+- **Expanding:** will a second shop reach break-even, and how much cash is needed until it does?
+
+A simple decision method: **define the options, estimate costs and benefits (with assumptions), consider risks, test a worst case, then decide and review.** Numbers do not replace judgement, but they stop guesswork.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m07-t1",
+  "prompt": "Build **Kunle's April budget**: sales **₦280,000** at a **40%** gross margin; expenses rent ₦30,000, wages ₦50,000, depreciation ₦2,000, other ₦8,000. Work out the **gross profit**, **total expenses** and **budgeted profit**. Then if actual sales are **₦260,000**, work out the **sales variance** in naira and percent and say whether it is favourable or adverse.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Gross profit = ...",
+  "rules": [
+    { "label": "Gross profit ₦112,000", "pattern": "112,?000" },
+    { "label": "Total expenses ₦90,000", "pattern": "90,?000" },
+    { "label": "Budgeted profit ₦22,000", "pattern": "22,?000" },
+    { "label": "Variance −₦20,000", "pattern": "20,?000" },
+    { "label": "Variance −7.1%", "pattern": "7\\.1" },
+    { "label": "Says adverse", "pattern": "adverse|unfavourable|unfavorable" }
+  ],
+  "sample": "Gross profit = 40% of 280,000 = ₦112,000.\nTotal expenses = 30,000 + 50,000 + 2,000 + 8,000 = ₦90,000.\nBudgeted profit = 112,000 - 90,000 = ₦22,000.\nSales variance = 260,000 - 280,000 = -₦20,000, or -20,000 / 280,000 = -7.1%, which is adverse.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m07-t2",
+  "prompt": "Complete a **cash flow forecast** for April: opening cash **₦410,000**; receipts: collect **₦30,000** from Ngozi and **₦200,000** cash sales; payments: **₦100,000** to Alpha Traders, rent **₦30,000**, wages **₦50,000**, new stock **₦120,000**. Work out the total receipts, total payments and closing cash. Then say what you would do if the closing cash were **negative**.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Total receipts = ...",
+  "rules": [
+    { "label": "Total receipts ₦230,000", "pattern": "230,?000" },
+    { "label": "Total payments ₦300,000", "pattern": "300,?000" },
+    { "label": "Closing cash ₦340,000", "pattern": "340,?000" },
+    { "label": "Action if negative (delay purchases, collect faster, supplier terms, overdraft, funding)", "pattern": "delay|collect|terms|overdraft|fund|reduce|defer|negotiate|loan" }
+  ],
+  "sample": "Total receipts = 30,000 + 200,000 = ₦230,000.\nTotal payments = 100,000 + 30,000 + 50,000 + 120,000 = ₦300,000.\nClosing cash = 410,000 + 230,000 - 300,000 = ₦340,000.\nIf it were negative, I would act in advance: delay the stock purchase, collect from customers faster, negotiate longer supplier terms or arrange short-term funding.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m07-t3",
+  "prompt": "Kunle's monthly **fixed costs are ₦82,000** and his **gross margin is 40%**. Work out the **break-even sales** and the **margin of safety** at sales of **₦230,000**. Then say in 40 to 90 words what you would advise him to do about the thin margin of safety.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Break-even = ...",
+  "rules": [
+    { "label": "Break-even ₦205,000", "pattern": "205,?000" },
+    { "label": "Margin of safety about 10.9%", "pattern": "10\\.9|11 ?%" },
+    { "label": "Advises raising sales or margin or cutting fixed costs", "pattern": "raise|increase|improve|reduce|cut|margin|price|sales|costs" },
+    { "label": "At least 40 words", "minWords": 40, "maxWords": 140 }
+  ],
+  "sample": "Break-even sales = 82,000 / 0.40 = ₦205,000. Margin of safety = (230,000 - 205,000) / 230,000 = 10.9%.\nThe margin of safety is thin, so a fall of only 11% in sales would cause a loss. I would advise Kunle to raise sales through promotions and better stock of fast-selling items, improve the gross margin by negotiating better supplier prices, and keep fixed costs under tight control, so that he builds a safer cushion.",
+  "required": false
+}
+```
+
+Next lesson: tax and compliance in Nigeria.
+$md$, true, true, 7, array['bkp-m07-t1', 'bkp-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bkp-m08', 'bookkeeping-small-business-finance', 'Tax and compliance in Nigeria', 8, 'Tax Basics', 'TAXBASIC', array['Know the main taxes', 'Calculate VAT payable', 'Keep tax records', 'Work with an accountant']::text[], array['Taxes a small business meets', 'VAT and PAYE basics', 'Company income tax basics', 'Keeping records for tax', 'Working with an accountant']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:tax-and-compliance-in-nigeria', 'bookkeeping-small-business-finance', 'bkp-m08', 'tax-and-compliance-in-nigeria', 'Tax and Compliance in Nigeria', 'Understand the main taxes a small business meets, VAT and PAYE basics, company income tax basics, how to keep records for tax and how to work with an accountant.', 30, $md$
+> [!WARNING]
+> This lesson is a **general introduction, not tax advice.** Tax laws, rates, thresholds, reliefs, filing dates and tax authorities in Nigeria have been **under reform and change often.** The figures here are **practice illustrations.** **Always confirm the current rules with the relevant tax authority or a qualified accountant or tax adviser before you file or pay.**
+
+## Taxes a small business meets
+
+Most small businesses in Nigeria come across some or all of these:
+
+| Tax or levy | What it is, in outline |
+| :-- | :-- |
+| **Personal income tax** | Tax on the income of individuals, including sole proprietors and partners on their business profits, and on employees' salaries (collected through PAYE) |
+| **Company income tax** | Tax on the profits of registered companies, with different treatment for small companies depending on current thresholds |
+| **Value added tax (VAT)** | Tax on the supply of goods and services, charged to customers and collected by registered businesses |
+| **Pay as you earn (PAYE)** | Income tax that employers deduct from employees' pay and remit to the tax authority |
+| **Withholding tax (WHT)** | Tax deducted at source from certain payments (for example to contractors) and remitted |
+| **Other levies** | Employer pension contributions, employees' compensation and training fund contributions, development levies and state or local government charges, depending on your situation |
+
+Which apply depends on **your legal form** (sole proprietor, partnership, company), **turnover,** **staff numbers,** **location** and **type of business.** You need a **Tax Identification Number (TIN)** to deal with tax authorities, and you should register for the taxes that apply to you. Different tax types are managed by federal and state authorities, so make sure you know which office handles each.
+
+**Penalties and interest** apply to late filing, late payment and unfiled returns, so build deadlines into your calendar.
+
+## VAT and PAYE basics
+
+**VAT.** VAT is charged at a standard rate (7.5% at the time of writing, which you should confirm) on taxable supplies. Some items are **exempt** or **zero-rated** under the law. A VAT-registered business:
+
+- **Charges VAT** on its taxable sales (**output VAT**).
+- **Pays VAT** on its purchases from other registered businesses (**input VAT**), which it can usually reclaim.
+- **Files returns** and pays the difference to the tax authority by the due date.
+
+*VAT payable = Output VAT − Input VAT.*
+
+Illustration: in a month, taxable sales (before VAT) are **₦2,000,000.** Output VAT at 7.5% = **₦150,000.** Purchases (before VAT) are **₦1,200,000,** with input VAT of 7.5% = **₦90,000.** VAT payable = 150,000 − 90,000 = **₦60,000.** If input VAT were higher than output VAT, the business would be in a refund or credit position (check the rules).
+
+Keep **proper tax invoices** showing the VAT, record output and input VAT in your books (as a liability and as an asset/recoverable), and **never treat VAT collected as your own money:** it is owed to the tax authority. Whether you must register depends on turnover and the type of supply, so check the current rules.
+
+**PAYE.** If you have employees, you deduct income tax from their pay each month according to the tax rules and reliefs, and **remit it** (with a schedule) to the right tax authority by the deadline. You also issue employees with documents showing what was deducted. Keep payroll records carefully. Employer pension and other statutory contributions are covered in the Human Resources course and also need regular remittance.
+
+## Company income tax basics
+
+A **registered company** is taxed on its **profits,** which are not simply the accounting profit: the tax authority adjusts accounting profit by adding back **non-deductible expenses** (for example, some entertainment, fines, or depreciation that is replaced by tax allowances) and subtracting **allowable deductions** and **capital allowances.** The result is **taxable profit,** which is multiplied by the tax rate to give the tax payable.
+
+Points to know (all subject to current law):
+
+- **Small companies** may qualify for relief or a reduced treatment below a set turnover threshold, but the thresholds and conditions have changed. Check what applies.
+- **Companies must file annual tax returns,** with accounts, normally within a set time after the year-end, and usually make payments on time.
+- **Capital allowances** replace accounting depreciation for tax, at rates set by law.
+- **Losses** may be carried forward under rules.
+- **Development and other levies** may apply.
+- **Sole proprietors and partners** are taxed as individuals on their share of business profit, under personal income tax rules, and also need to file returns.
+
+Because rates, reliefs and rules differ for businesses, a professional can often **save more than they cost,** through correct allowances and avoiding penalties.
+
+## Keeping records for tax
+
+Good records are the foundation of correct tax. The tax authority can ask for evidence, and you must be able to show **where figures came from.**
+
+Keep, in an organised way:
+
+- **Sales records:** invoices, receipts, till summaries, bank deposits.
+- **Purchase and expense records:** supplier invoices, receipts, contracts, bank payments.
+- **Bank statements** and reconciliations.
+- **Payroll records:** payslips, PAYE schedules, pension remittances.
+- **VAT records:** invoices issued and received, VAT account, returns and proof of payment.
+- **Fixed asset register** and depreciation or allowance calculations.
+- **Stock records** and counts.
+- **Tax returns, assessments, correspondence and payment receipts.**
+- **Registration documents:** TIN certificate, company registration documents.
+- **Contracts and loan agreements.**
+
+Principles: **record transactions promptly, separate personal and business money, keep documents for the required period (confirm the current retention rules), back up digital records,** and **be honest.** Never invent or alter documents or hide income. Tax evasion is a serious offence with heavy penalties, while **tax planning within the law** is legitimate.
+
+Build a **tax calendar:** for each tax, the filing and payment dates (monthly, quarterly, annual), who is responsible, and reminders in advance. Set aside cash for tax regularly (for example, keep VAT collected in a separate account) so that bills do not come as a surprise.
+
+## Working with an accountant
+
+A good accountant or tax adviser helps with filing, advice, planning, financial statements and compliance. When you hire one:
+
+- **Check qualifications and registration** with the professional body (for example, as a chartered accountant or tax practitioner) and ask for references.
+- **Agree the scope and fee in writing:** bookkeeping, payroll, VAT returns, annual accounts, tax returns, advice.
+- **Give them complete, organised records** on time. Bad records cost money.
+- **Ask questions** and make sure you understand what is filed in your name; you remain responsible for it.
+- **Do not ask them to do anything improper,** and walk away from anyone who suggests it.
+- **Meet regularly** to review the numbers and plan ahead.
+- **Keep copies** of everything filed and the receipts.
+- **Share information** about changes (new staff, new products, a loan, an asset sale).
+
+Even if you have an accountant, **you should understand your own books.** Use the skills from this course to ask better questions and spot mistakes early.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m08-t1",
+  "prompt": "Using **practice figures**: taxable sales (before VAT) **₦2,000,000**; purchases (before VAT) **₦1,200,000**; VAT at **7.5%**. Work out the **output VAT**, the **input VAT** and the **VAT payable**. State that the rate and rules must be confirmed. Then say why VAT collected should not be treated as the business's own money.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Output VAT = ...",
+  "rules": [
+    { "label": "Output VAT ₦150,000", "pattern": "150,?000" },
+    { "label": "Input VAT ₦90,000", "pattern": "90,?000" },
+    { "label": "VAT payable ₦60,000", "pattern": "60,?000" },
+    { "label": "Says to confirm rates or that figures are illustrative", "pattern": "confirm|check|illustrat|practice|current" },
+    { "label": "Explains VAT collected is owed to the tax authority", "pattern": "owed|belongs|not (the )?(business|our|my)|tax authority|remit|liabilit" }
+  ],
+  "sample": "Output VAT = 7.5% of 2,000,000 = ₦150,000. Input VAT = 7.5% of 1,200,000 = ₦90,000. VAT payable = 150,000 - 90,000 = ₦60,000.\nThese are practice figures; I would confirm the current rate and rules.\nVAT collected is not the business's own money: it is a liability owed to the tax authority, so I should set it aside and remit it on time.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m08-t2",
+  "prompt": "Write a **tax calendar** for a small business with at least eight lines: the tax or levy, how often it is due and who is responsible (VAT, PAYE, pension, withholding tax, annual return, and two others). End with a line saying the dates must be confirmed with the tax authority.",
+  "minutes": 12,
+  "rows": 11,
+  "placeholder": "VAT return - monthly - accountant",
+  "rules": [
+    { "label": "At least nine lines", "minLines": 9 },
+    { "label": "VAT", "pattern": "vat" },
+    { "label": "PAYE", "pattern": "paye" },
+    { "label": "Pension", "pattern": "pension" },
+    { "label": "Annual return", "pattern": "annual|yearly" },
+    { "label": "Frequencies", "pattern": "monthly|quarterly|annual|yearly", "min": 6 },
+    { "label": "Says to confirm dates", "pattern": "confirm|check" }
+  ],
+  "sample": "VAT return and payment - monthly - accountant\nPAYE remittance - monthly - payroll officer\nPension remittance - monthly - payroll officer\nWithholding tax remittance - monthly - accountant\nEmployees' compensation contribution - monthly - payroll officer\nTraining fund contribution - annually - accountant\nAnnual tax return and accounts - annually - accountant and owner\nTax payment reserve review - monthly - owner\nAll dates must be confirmed with the tax authority or my accountant",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m08-t3",
+  "prompt": "A supplier offers a **discount if you pay in cash with no invoice**. In 50 to 100 words, explain why you should refuse and what records you need instead.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I would refuse because ...",
+  "rules": [
+    { "label": "Refuses", "pattern": "refuse|decline|not accept|say no|would not" },
+    { "label": "Explains risk (tax, evidence, expense not allowable, fraud, penalties)", "pattern": "tax|evidence|allowable|deduct|penalt|fraud|record|proof|illegal" },
+    { "label": "Says to get an invoice or receipt", "pattern": "invoice|receipt" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would refuse the offer, because without an invoice I have no evidence of the purchase. I could not claim it as a business expense or reclaim any VAT, my records would be incomplete, and I could face penalties if the tax authority asked questions. It would also encourage tax evasion by the supplier, which is illegal. Instead I would insist on a proper invoice and receipt, pay by traceable bank transfer and file the documents, even if it costs a little more.",
+  "required": false
+}
+```
+
+Next lesson: tools: spreadsheets and accounting software.
+$md$, true, true, 8, array['bkp-m08-t1', 'bkp-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bkp-m09', 'bookkeeping-small-business-finance', 'Tools: spreadsheets and accounting software', 9, 'Books Tools', 'BKTOOLS', array['Set up books in a spreadsheet', 'Understand accounting software', 'Back up and secure data', 'Build good habits']::text[], array['Setting up books in a spreadsheet', 'Accounting software overview', 'Backups and security', 'Good habits']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:tools-spreadsheets-and-accounting-software', 'bookkeeping-small-business-finance', 'bkp-m09', 'tools-spreadsheets-and-accounting-software', 'Tools: Spreadsheets and Accounting Software', 'Set up books in a spreadsheet, understand accounting software, protect your data with backups and security and build good habits.', 25, $md$
+## Setting up books in a spreadsheet
+
+A well-designed spreadsheet can run the books of a very small business, and teaches you how bookkeeping works. As the business grows, you may move to accounting software (next section), but the same principles apply.
+
+**A simple structure (one workbook, several sheets):**
+
+1. **Chart of accounts:** account code, name, type.
+2. **Journal (or transactions):** one row per entry: date, reference, account debited, account credited, amount, narration.
+3. **Cashbook:** date, details, receipts, payments, balance.
+4. **Sales and purchases lists:** invoices, customers or suppliers, amounts, dates paid.
+5. **Ledger summary or trial balance:** each account's total debits, credits and balance.
+6. **Reports:** profit and loss, balance sheet.
+7. **Settings:** the business name, the period, tax rates.
+
+**Good spreadsheet practice:**
+
+- **One row per transaction, one column per type of information,** with a header row. No blank rows or merged cells in data tables.
+- **Consistent formats:** dates as dates, amounts as numbers.
+- **Use drop-down lists** (data validation) for account names, to avoid spelling differences.
+- **Keep inputs separate from calculations,** and use formulas rather than typing totals.
+- **Colour and label** input cells, and protect formula cells.
+- **Add checks** (for example, a cell that shows "OK" when debits equal credits).
+
+**Useful formulas:**
+
+- `=SUM(E2:E100)` adds a column.
+- `=SUMIF(C:C,"Sales",E:E)` totals amounts where column C says "Sales."
+- `=SUMIFS(E:E,C:C,"Sales",A:A,">="&DATE(2026,3,1),A:A,"<="&DATE(2026,3,31))` totals sales for March.
+- `=B2-C2` gives a balance (receipts minus payments).
+- `=IF(ROUND(SUM(D:D)-SUM(E:E),2)=0,"Balanced","Check")` tests a trial balance.
+- `=XLOOKUP(A2,Accounts!A:A,Accounts!B:B)` looks up an account name from its code.
+- **Pivot tables** summarise transactions by account and month.
+- `=ROUND(x,2)` avoids rounding noise.
+
+Example: if the journal lists **Dr Cash 500,000** and **Cr Capital 500,000** on row 2, the trial balance sheet can use `=SUMIF(DebitAccount,"Cash",Amount)-SUMIF(CreditAccount,"Cash",Amount)` to get the balance of Cash. For Kunle's March transactions this gives **₦410,000.**
+
+**Limits of spreadsheets:** they depend on discipline; errors in formulas are easy to make and hard to spot; they are weak at **audit trails** (who changed what), multi-user work, automatic bank feeds, invoicing and VAT returns. When transactions grow beyond a few dozen a day, or several people need access, move to software.
+
+## Accounting software overview
+
+**Accounting software** (many cloud-based packages exist, with free or paid plans) automates much of bookkeeping. Typical features:
+
+- **Chart of accounts and double-entry** handled for you: you enter an invoice or payment and the software posts the debits and credits.
+- **Invoicing and quotes,** with your branding, tax, and online payment options.
+- **Customer and supplier accounts,** statements and reminders.
+- **Bank feeds or statement import,** with matching and **reconciliation** tools.
+- **Expense capture** (photographing receipts).
+- **Stock and inventory tracking** (in some packages).
+- **Payroll** (in some packages, and often as add-ons).
+- **VAT and tax reports.**
+- **Financial statements and dashboards** at the click of a button.
+- **Multi-user access** with roles and permissions.
+- **An audit trail** of who did what and when.
+- **Integration** with payment providers, online stores and other tools.
+
+**Choosing:** consider your size and needs, **cost** (subscription, add-ons, per-user fees), **ease of use,** support and training, whether it **suits Nigerian requirements** (naira, VAT, local banks, payment methods), whether it works well on slow connections, data export and the reputation of the provider. Try a free trial with your real data.
+
+**Moving from spreadsheets:** set up the chart of accounts, enter **opening balances** from your last trial balance, import or enter recent transactions, reconcile the bank, and run the old and new systems in parallel for a month if you can.
+
+**Software does not replace understanding.** If you enter wrong data, you get wrong reports ("garbage in, garbage out"). You still need to know why a transaction is a debit or credit, check reconciliations and review the reports.
+
+## Backups and security
+
+Your books are valuable, sensitive records. Protect them.
+
+**Backups:**
+
+- **Back up regularly** (daily or weekly, depending on activity).
+- Follow **3-2-1:** three copies, on two different types of storage, with one copy off-site or in the cloud.
+- **Test restores:** a backup that cannot be restored is useless.
+- **Save before and after** big changes, and keep monthly closing copies.
+- For cloud software, check how the provider backs up and how you can export your data.
+
+**Security:**
+
+- **Strong, unique passwords** and a password manager; **two-step verification.**
+- **Limit access:** only people who need it, with the right permission level. Separate duties: the person who records payments should not be the only one who approves and reconciles them.
+- **Log out and lock screens.**
+- **Keep devices updated** and protected with security software.
+- **Beware of phishing:** fake emails or messages asking for logins or payments. Verify before you click or pay.
+- **Protect bank details** and online banking tokens.
+- **Encrypt or password-protect** sensitive files you email.
+- **Control paper records** (locked cabinet, shredding).
+- **Follow data protection law:** customer and employee records are personal data.
+- **Have a plan** for lost devices, staff leaving (remove access promptly) and suspected fraud.
+
+## Good habits
+
+Good tools matter less than good habits.
+
+- **Record daily** or at least weekly, never leave it all to the month-end.
+- **Keep every document,** and file it where you can find it.
+- **Reconcile the bank every month** (and check the cash).
+- **Separate business and personal money** completely.
+- **Review reports monthly** and ask "why?" about big changes.
+- **Follow the month-end routine** and close the month.
+- **Be consistent** in how you treat items and name accounts.
+- **Pay yourself a set amount** (drawings) and record it.
+- **Keep learning:** read your statements, ask your accountant questions, and update your skills as rules and software change.
+- **Be honest and accurate:** books are only useful if they are true.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m09-t1",
+  "prompt": "Write the **spreadsheet formulas** for each need, one per line with a short note: (a) total of amounts in E2 to E100; (b) total of amounts in column E where column C says \"Sales\"; (c) receipts in B2 minus payments in C2; (d) show \"Balanced\" if total debits in D equal total credits in E, otherwise \"Check\"; (e) look up an account name in the Accounts sheet from the code in A2.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "(a) =SUM(E2:E100)",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "SUM", "pattern": "=\\s?sum\\(\\s?e2:e100\\s?\\)" },
+    { "label": "SUMIF with Sales", "pattern": "=\\s?sumif\\(\\s?c:c\\s?,\\s?\"sales\"\\s?,\\s?e:e\\s?\\)" },
+    { "label": "Receipts minus payments", "pattern": "=\\s?b2\\s?-\\s?c2" },
+    { "label": "IF with Balanced and Check", "pattern": "=\\s?if\\([^\\n]*\"balanced\"[^\\n]*\"check\"" },
+    { "label": "XLOOKUP or VLOOKUP", "pattern": "xlookup|vlookup" }
+  ],
+  "sample": "(a) =SUM(E2:E100) adds the amounts\n(b) =SUMIF(C:C,\"Sales\",E:E) totals the sales\n(c) =B2-C2 gives receipts minus payments\n(d) =IF(SUM(D:D)=SUM(E:E),\"Balanced\",\"Check\") tests the trial balance\n(e) =XLOOKUP(A2,Accounts!A:A,Accounts!B:B) finds the account name",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m09-t2",
+  "prompt": "Design a **workbook layout** for a small shop's books: list at least **six sheets**, one per line, with the main **columns** on each. Include a chart of accounts, journal, cashbook and trial balance.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Sheet 1: Chart of accounts - code, name, type",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Chart of accounts", "pattern": "chart of accounts" },
+    { "label": "Journal with debit and credit", "pattern": "journal[^\\n]*(debit|dr)[^\\n]*(credit|cr)" },
+    { "label": "Cashbook with receipts and payments", "pattern": "cashbook[^\\n]*receipts[^\\n]*payments" },
+    { "label": "Trial balance", "pattern": "trial balance" },
+    { "label": "Reports (profit and loss, balance sheet)", "pattern": "profit and loss|balance sheet|reports" }
+  ],
+  "sample": "Sheet 1: Chart of accounts - code, name, type\nSheet 2: Journal - date, reference, debit account, credit account, amount, narration\nSheet 3: Cashbook - date, details, receipts, payments, balance\nSheet 4: Sales and customers - invoice number, customer, amount, date paid\nSheet 5: Trial balance - account, total debits, total credits, balance, check\nSheet 6: Reports - profit and loss and balance sheet\nSheet 7: Settings - business name, period and tax rate",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m09-t3",
+  "prompt": "Write a **data protection plan** for your books with at least eight rules, one per line, covering backups (3-2-1), passwords, access, separation of duties, phishing, paper records, staff leaving and testing a restore.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Back up daily using 3-2-1",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Backups with 3-2-1", "pattern": "back ?up|3-2-1" },
+    { "label": "Passwords and two-step verification", "pattern": "password|two-step|2fa|authenticat" },
+    { "label": "Limit access or roles", "pattern": "access|permission|role|limit" },
+    { "label": "Separation of duties", "pattern": "separat|different people|approve|reconcile" },
+    { "label": "Phishing", "pattern": "phishing|fake email|suspicious" },
+    { "label": "Paper records", "pattern": "paper|locked|shred" },
+    { "label": "Staff leaving or lost device", "pattern": "leav|lost|remove access" },
+    { "label": "Test the restore", "pattern": "restore|test" }
+  ],
+  "sample": "Back up the books daily using 3-2-1: three copies, two types of storage and one off-site or cloud copy.\nTest a restore every quarter to make sure the backup works.\nUse strong, unique passwords and two-step verification on accounting and bank logins.\nLimit access so that people only see what their job needs.\nSeparate duties: the person who records payments is not the one who approves and reconciles them.\nWatch for phishing emails and verify any payment request by phone before acting.\nKeep paper records in a locked cabinet and shred what is no longer needed.\nRemove access immediately when a staff member leaves or a device is lost.",
+  "required": false
+}
+```
+
+Next lesson: your set of books.
+$md$, true, true, 9, array['bkp-m09-t1', 'bkp-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bkp-m10', 'bookkeeping-small-business-finance', 'Final project: a set of books', 10, 'Set of Books', 'BKSET', array['Record a month of transactions', 'Adjust and balance the books', 'Prepare the statements', 'Report to the owner']::text[], array['Recording the transactions', 'Preparing the statements', 'Writing a short report', 'Review']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('bookkeeping-small-business-finance:final-project-a-set-of-books', 'bookkeeping-small-business-finance', 'bkp-m10', 'final-project-a-set-of-books', 'Final Project: A Set of Books', 'Record a month of transactions for a small business, prepare its financial statements and write a short report.', 80, $md$
+## What you are building
+
+Throughout the course you have followed Kunle's phone-accessories shop. Now you do the whole job yourself, for **a small business of your own choosing.** You will **record a month of transactions, prepare the trial balance, make adjustments, produce the three financial statements and write a short report** to the owner.
+
+Pick a **simple business** you understand: a shop, a salon, a food seller, a tutoring business, a printing business, a transport business or a freelancer. Give it a name and describe what it sells.
+
+**Invent a realistic month of transactions** (at least **12**), using sensible Nigerian prices. Include:
+
+- The **owner investing money** to start (cash).
+- **Buying equipment** (an asset).
+- **Buying stock or supplies,** some **on credit.**
+- **Cash sales** and at least one **credit sale,** with the **cost of goods sold** for each (or a service business with no stock).
+- **Paying expenses:** rent, wages, transport or electricity.
+- **Paying a supplier** and **receiving payment from a customer.**
+- At the end: **adjustments** for **depreciation,** **an accrued expense** and **an allowance for doubtful debts** (or a prepayment).
+
+Use round, clear numbers so that you can check your own work, and make sure the **numbers tie together.**
+
+## Your set of books has seven parts
+
+1. **The business and the transactions:** a short description and your numbered list of transactions with dates and amounts.
+2. **The journal:** a journal entry (Dr and Cr) for every transaction.
+3. **The ledger balances and trial balance:** the closing balance of each account and a trial balance showing total debits equal total credits.
+4. **The adjustments:** depreciation, accrual, prepayment or allowance, with journal entries and amounts.
+5. **The financial statements:** profit and loss statement, balance sheet (which must balance) and cash flow statement (which must agree with the cash balance).
+6. **The analysis:** gross margin, net margin, current ratio and break-even sales.
+7. **The report:** a short report (150 to 250 words) explaining the month to the owner, with three insights and three recommendations, and a note on tax and records you would need to keep (with a reminder to confirm current tax rules).
+
+## Checking your work
+
+Before you submit, run these checks:
+
+- **Every journal entry has equal debits and credits.**
+- **The trial balance totals agree.**
+- **Net profit** on the profit and loss equals the profit added to equity on the balance sheet.
+- **The balance sheet balances** (assets = liabilities + equity).
+- **Closing cash** on the cash flow statement equals the cash balance in the ledger and balance sheet.
+- **The report's numbers match the statements.**
+
+> [!TIP]
+> If something does not balance, use the techniques from module 4: check the arithmetic, look at the size of the difference (divisible by 9? double a figure? equal to one entry?) and re-check each posting against your list of transactions.
+
+## Try it
+
+```task
+{
+  "id": "bkp-m10-t1",
+  "prompt": "Describe your **business and list at least twelve numbered transactions** with dates and amounts, one per line: the owner's investment, equipment, stock on credit, cash sales and cost of goods sold, a credit sale, rent, wages, paying a supplier and a customer paying. After the list, add one line stating the **opening capital**.",
+  "minutes": 15,
+  "rows": 16,
+  "placeholder": "Business: ...\n1. 1 May - owner invests ₦...",
+  "rules": [
+    { "label": "At least thirteen lines", "minLines": 13 },
+    { "label": "Describes the business", "pattern": "business|shop|salon|seller|service" },
+    { "label": "Twelve numbered transactions", "pattern": "(^|\\n)\\s*\\d{1,2}\\.\\s", "min": 12 },
+    { "label": "Includes owner investment, equipment, stock, sales, rent and wages", "pattern": "invest[\\s\\S]*(equipment|shelves|machine)[\\s\\S]*(stock|inventory|purchase)[\\s\\S]*sale[\\s\\S]*rent[\\s\\S]*wages" },
+    { "label": "Naira amounts", "pattern": "₦\\s?\\d", "min": 10 },
+    { "label": "States opening capital", "pattern": "capital" }
+  ],
+  "sample": "Business: Tola's Hair Care, a small shop selling hair products in Yaba\n1. 1 May - owner invests ₦400,000 cash\n2. 2 May - buys equipment for ₦100,000 cash\n3. 3 May - buys stock for ₦180,000 on credit from Beauty Wholesale\n4. 10 May - cash sales ₦140,000, cost of goods ₦84,000\n5. 12 May - credit sale to Ada ₦60,000, cost ₦36,000\n6. 15 May - pays rent ₦25,000\n7. 18 May - pays Beauty Wholesale ₦90,000\n8. 22 May - Ada pays ₦40,000\n9. 25 May - cash sales ₦100,000, cost of goods ₦60,000\n10. 28 May - pays wages ₦35,000\n11. 30 May - pays electricity ₦8,000\n12. 31 May - pays transport ₦7,000\nOpening capital: ₦400,000",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m10-t2",
+  "prompt": "Write the **journal entries** for all your transactions, one per line in the form \"Dr Account amount / Cr Account amount\" (include the cost of goods sold entries). Then give the **closing balance of the Cash account** with total receipts and payments. At least fourteen lines.",
+  "minutes": 20,
+  "rows": 18,
+  "placeholder": "1. Dr Cash 400,000 / Cr Capital 400,000",
+  "rules": [
+    { "label": "At least fourteen lines", "minLines": 14 },
+    { "label": "At least twelve entries with Dr and Cr", "pattern": "dr [^/\\n]+/\\s*cr", "min": 12 },
+    { "label": "Includes cost of goods sold", "pattern": "cost of goods sold|cogs" },
+    { "label": "Includes Capital, Equipment, Inventory, Payables, Sales, Rent and Wages", "pattern": "capital[\\s\\S]*equipment[\\s\\S]*inventory[\\s\\S]*payables[\\s\\S]*sales[\\s\\S]*rent[\\s\\S]*wages" },
+    { "label": "Cash balance with receipts and payments", "pattern": "receipts[\\s\\S]*payments[\\s\\S]*balance|closing (cash )?balance" }
+  ],
+  "sample": "1. Dr Cash 400,000 / Cr Capital 400,000\n2. Dr Equipment 100,000 / Cr Cash 100,000\n3. Dr Inventory 180,000 / Cr Payables 180,000\n4. Dr Cash 140,000 / Cr Sales 140,000\n4b. Dr Cost of goods sold 84,000 / Cr Inventory 84,000\n5. Dr Receivables 60,000 / Cr Sales 60,000\n5b. Dr Cost of goods sold 36,000 / Cr Inventory 36,000\n6. Dr Rent 25,000 / Cr Cash 25,000\n7. Dr Payables 90,000 / Cr Cash 90,000\n8. Dr Cash 40,000 / Cr Receivables 40,000\n9. Dr Cash 100,000 / Cr Sales 100,000\n9b. Dr Cost of goods sold 60,000 / Cr Inventory 60,000\n10. Dr Wages 35,000 / Cr Cash 35,000\n11. Dr Electricity 8,000 / Cr Cash 8,000\n12. Dr Transport 7,000 / Cr Cash 7,000\nCash: total receipts = 400,000 + 140,000 + 40,000 + 100,000 = 680,000; total payments = 100,000 + 25,000 + 90,000 + 35,000 + 8,000 + 7,000 = 265,000; closing balance = ₦415,000",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m10-t3",
+  "prompt": "Prepare your **trial balance** (each account with its Dr or Cr balance and the **totals**, which must agree), then record **three adjustments** (depreciation, an accrued expense and an allowance for doubtful debts) with their journal entries and amounts. At least fifteen lines.",
+  "minutes": 20,
+  "rows": 18,
+  "placeholder": "Cash 415,000 Dr\n...\nTotal debits = ... Total credits = ...",
+  "rules": [
+    { "label": "At least fifteen lines", "minLines": 15 },
+    { "label": "Accounts with Dr or Cr balances", "pattern": "\\b(dr|cr)\\b", "min": 10 },
+    { "label": "States totals of debits and credits", "pattern": "total debits[\\s\\S]*total credits|debits total[\\s\\S]*credits total" },
+    { "label": "Says they agree", "pattern": "agree|equal|balance" },
+    { "label": "Depreciation adjustment", "pattern": "depreciation" },
+    { "label": "Accrual adjustment", "pattern": "accru" },
+    { "label": "Allowance or bad debt", "pattern": "allowance|bad debt|doubtful" }
+  ],
+  "sample": "Cash 415,000 Dr\nReceivables 20,000 Dr\nInventory 0 Dr\nEquipment 100,000 Dr\nPayables 90,000 Cr\nCapital 400,000 Cr\nSales 300,000 Cr\nCost of goods sold 180,000 Dr\nRent 25,000 Dr\nWages 35,000 Dr\nElectricity 8,000 Dr\nTransport 7,000 Dr\nTotal debits = 415,000 + 20,000 + 100,000 + 180,000 + 25,000 + 35,000 + 8,000 + 7,000 = 790,000; total credits = 90,000 + 400,000 + 300,000 = 790,000; they agree\nAdjustment 1 depreciation: 100,000 / 5 years / 12 = 1,667 a month; Dr Depreciation 1,667 / Cr Accumulated depreciation 1,667\nAdjustment 2 accrual: Dr Wages 5,000 / Cr Accrued wages 5,000\nAdjustment 3 allowance for doubtful debts: 10% of 20,000 = 2,000; Dr Bad debts 2,000 / Cr Allowance for doubtful debts 2,000",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bkp-m10-t4",
+  "prompt": "Prepare your **financial statements** and a **short report**. Give the **profit and loss** (sales, cost of goods sold, gross profit, expenses, net profit), the **balance sheet** (total assets, total liabilities, equity, and that it balances), the **closing cash** from the cash flow statement, then **gross margin, net margin, current ratio and break-even sales**, and a **report of 100 to 200 words** with three insights, three recommendations and a note to confirm current tax rules. At least eleven lines.",
+  "minutes": 25,
+  "rows": 20,
+  "placeholder": "Profit and loss: sales ...\nBalance sheet: ...",
+  "rules": [
+    { "label": "At least eleven lines", "minLines": 11 },
+    { "label": "Profit and loss with gross profit and net profit", "pattern": "gross profit[\\s\\S]*net profit" },
+    { "label": "Balance sheet totals and balance", "pattern": "total assets[\\s\\S]*(liabilities|equity)[\\s\\S]*balance" },
+    { "label": "Closing cash", "pattern": "closing cash|cash flow" },
+    { "label": "Ratios: gross margin, net margin, current ratio", "pattern": "gross margin[\\s\\S]*net margin[\\s\\S]*current ratio" },
+    { "label": "Break-even sales", "pattern": "break-?even" },
+    { "label": "Insights and recommendations", "pattern": "insight[\\s\\S]*recommend|recommend[\\s\\S]*insight" },
+    { "label": "Tax note", "pattern": "tax[\\s\\S]*(confirm|check|current)|(confirm|check|current)[\\s\\S]*tax" },
+    { "label": "At least 120 words", "minWords": 120, "maxWords": 450 }
+  ],
+  "sample": "Profit and loss: sales 300,000; cost of goods sold 180,000; gross profit 120,000; expenses: rent 25,000, wages 40,000 (35,000 paid and 5,000 accrued), electricity 8,000, transport 7,000, depreciation 1,667, bad debts 2,000 = 83,667; net profit 36,333\nBalance sheet: cash 415,000; receivables net 18,000; equipment net 98,333; total assets 531,333; liabilities: payables 90,000 and accrued wages 5,000 = 95,000; equity: capital 400,000 + profit 36,333 = 436,333; total liabilities and equity 531,333, so it balances\nCash flow: operating cash 115,000, investing -100,000, financing 400,000; closing cash 415,000, which agrees with the balance sheet\nGross margin 40%; net margin 12.1%; current ratio = 433,000 / 95,000 = 4.6; break-even sales = fixed costs 81,667 / 40% = about 204,200\nInsight 1: the shop earned a healthy 40% gross margin and a 12% net margin in its first month.\nInsight 2: most of the cash is the owner's capital, and operating cash flow is positive at 115,000.\nInsight 3: break-even sales of about 204,200 are well below the 300,000 achieved, giving a good margin of safety.\nRecommendation 1: collect the remaining ₦20,000 from Ada quickly and set credit limits.\nRecommendation 2: keep stock aligned to the best sellers to protect margin and cash.\nRecommendation 3: set aside cash for tax and keep all invoices and receipts for the records.\nNote: tax rates, VAT registration and filing rules must be confirmed with the tax authority or an accountant before filing.",
+  "required": true
+}
+```
+
+When you are done, submit your complete set of books as your final project.
+$md$, true, true, 10, array['bkp-m10-t1', 'bkp-m10-t2', 'bkp-m10-t3', 'bkp-m10-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Assessment: SQL for Data Analysis: final assessment
@@ -109535,6 +111084,592 @@ values ('poa-f15', 1, 'Confirm retention and shred.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Why Books Matter: Accounting Basics: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m01-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m01', 'Why Books Matter: Accounting Basics: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m01-q1', 'bkp-m01-check', 1, 'Which equation must always balance?', '["Income = Expenses","Assets = Liabilities + Equity","Cash = Profit","Sales = Costs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m01-q1', 1, 'The accounting equation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m01-q2', 'bkp-m01-check', 2, 'Assets ₦1,200,000 and liabilities ₦450,000. What is equity?', '["₦450,000","₦750,000","₦1,200,000","₦1,650,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m01-q2', 1, '1,200,000 − 450,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m01-q3', 'bkp-m01-check', 3, 'Money owed to a supplier is a:', '["Asset","Liability","Income","Equity"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m01-q3', 1, 'A payable is a liability.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m01-q4', 'bkp-m01-check', 4, 'A sale of ₦80,000 on credit in March, paid in April, is income in March under:', '["Cash basis","Accrual basis","Neither","Both"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m01-q4', 1, 'Accrual records income when earned.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m01-q5', 'bkp-m01-check', 5, 'Buying shelves for the shop is recorded as:', '["An expense","An asset","Income","A liability"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m01-q5', 1, 'Equipment is an asset, not an expense.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Double-Entry Bookkeeping: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m02-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m02', 'Double-Entry Bookkeeping: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m02-q1', 'bkp-m02-check', 1, 'The owner invests ₦500,000 cash. What is the entry?', '["Dr Capital / Cr Cash","Dr Cash / Cr Capital","Dr Sales / Cr Cash","Dr Cash / Cr Sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m02-q1', 1, 'Cash up (debit), capital up (credit).')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m02-q2', 'bkp-m02-check', 2, 'Which accounts increase with a debit?', '["Assets and expenses","Liabilities and income","Equity only","Income only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m02-q2', 0, 'Assets and expenses are debit accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m02-q3', 'bkp-m02-check', 3, 'A credit sale of ₦80,000 is recorded as:', '["Dr Cash / Cr Sales","Dr Receivables / Cr Sales","Dr Sales / Cr Receivables","Dr Payables / Cr Sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m02-q3', 1, 'Receivable up, sales up.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m02-q4', 'bkp-m02-check', 4, 'Debits to Cash total ₦700,000 and credits ₦290,000. What is the balance?', '["₦290,000 Cr","₦410,000 Dr","₦990,000 Dr","₦410,000 Cr"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m02-q4', 1, '700,000 − 290,000 = 410,000 debit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m02-q5', 'bkp-m02-check', 5, 'A balanced trial balance proves:', '["There are no errors","Debits equal credits, but some errors can remain","Profit is correct","Cash is correct"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m02-q5', 1, 'Omissions and wrong-account errors do not show.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Recording Daily Transactions: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m03-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m03', 'Recording Daily Transactions: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m03-q1', 'bkp-m03-check', 1, 'Opening cash ₦410,000, receipts ₦150,000, payments ₦170,000. What is the closing balance?', '["₦390,000","₦410,000","₦430,000","₦730,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m03-q1', 0, '410,000 + 150,000 − 170,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m03-q2', 'bkp-m03-check', 2, 'Float ₦20,000 and vouchers ₦14,300. Cash remaining should be:', '["₦5,700","₦14,300","₦20,000","₦34,300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m03-q2', 0, '20,000 − 14,300.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m03-q3', 'bkp-m03-check', 3, 'Which document is the evidence that payment was received?', '["Quotation","Receipt","Purchase order","Delivery note"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m03-q3', 1, 'A receipt.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m03-q4', 'bkp-m03-check', 4, 'Before paying a supplier you should match:', '["Only the invoice","Purchase order, delivery note and invoice","The bank statement only","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m03-q4', 1, 'Three-way match.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m03-q5', 'bkp-m03-check', 5, 'A credit sale is later paid. The entry is:', '["Dr Cash / Cr Sales","Dr Cash / Cr Receivables","Dr Receivables / Cr Cash","Dr Sales / Cr Cash"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m03-q5', 1, 'Cash up, receivable down.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Bank and Account Reconciliation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m04-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m04', 'Bank and Account Reconciliation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m04-q1', 'bkp-m04-check', 1, 'Statement ₦421,500, deposit in transit ₦12,000, unpresented cheque ₦25,000. What is the adjusted bank balance?', '["₦384,500","₦408,500","₦434,500","₦458,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m04-q1', 1, '421,500 + 12,000 − 25,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m04-q2', 'bkp-m04-check', 2, 'Cashbook ₦410,000 and bank charges ₦1,500 not yet recorded. Adjusted cashbook?', '["₦408,500","₦411,500","₦410,000","₦425,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m04-q2', 0, '410,000 − 1,500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m04-q3', 'bkp-m04-check', 3, 'A difference of 90 that is divisible by 9 suggests:', '["A missing entry","A transposition error","A reversal","Fraud"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m04-q3', 1, 'Swapped digits.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m04-q4', 'bkp-m04-check', 4, 'How should you correct a wrong posting?', '["Use correction fluid","Make a correcting journal entry with a narration","Delete the entry","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m04-q4', 1, 'Keep the audit trail.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m04-q5', 'bkp-m04-check', 5, 'An unpresented cheque is one that has been:', '["Recorded but not yet cleared by the bank","Cleared but not recorded","Lost","Cancelled"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m04-q5', 0, 'Timing difference.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Inventory, Assets and Adjustments: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m05-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m05', 'Inventory, Assets and Adjustments: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m05-q1', 'bkp-m05-check', 1, '100 units at ₦1,000 then 100 at ₦1,200; 150 sold. FIFO cost of goods sold?', '["₦150,000","₦160,000","₦165,000","₦180,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m05-q1', 1, '100,000 + 60,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m05-q2', 'bkp-m05-check', 2, 'The weighted average cost per unit is:', '["₦1,000","₦1,100","₦1,200","₦2,200"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m05-q2', 1, '220,000 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m05-q3', 'bkp-m05-check', 3, 'Equipment ₦120,000, 5 years, no residual. Monthly depreciation?', '["₦1,000","₦2,000","₦2,400","₦24,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m05-q3', 1, '24,000 ÷ 12.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m05-q4', 'bkp-m05-check', 4, 'Wages earned but unpaid at month-end are:', '["Ignored","An accrued expense and a liability","A prepayment","Income"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m05-q4', 1, 'Accrual.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m05-q5', 'bkp-m05-check', 5, '10% allowance on ₦30,000 receivables is:', '["₦300","₦3,000","₦30,000","₦27,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m05-q5', 1, '0.10 × 30,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Financial Statements: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m06-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m06', 'Financial Statements: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m06-q1', 'bkp-m06-check', 1, 'Sales ₦230,000 and cost of goods sold ₦138,000. Gross profit?', '["₦68,000","₦92,000","₦138,000","₦230,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m06-q1', 1, '230,000 − 138,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m06-q2', 'bkp-m06-check', 2, 'Gross profit ₦92,000 and expenses ₦85,000. Net profit?', '["₦7,000","₦15,000","₦85,000","₦177,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m06-q2', 0, '92,000 − 85,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m06-q3', 'bkp-m06-check', 3, 'Total assets ₦617,000; liabilities ₦110,000. Equity must be:', '["₦507,000","₦617,000","₦727,000","₦110,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m06-q3', 0, '617,000 − 110,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m06-q4', 'bkp-m06-check', 4, 'The cash flow statement groups cash into:', '["Sales, costs, profit","Operating, investing and financing","Assets, liabilities, equity","Debits and credits"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m06-q4', 1, 'Three activity groups.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m06-q5', 'bkp-m06-check', 5, 'Current assets ₦499,000 and current liabilities ₦110,000. Current ratio?', '["About 0.2","About 2.2","About 4.5","About 5.5"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m06-q5', 2, '499 ÷ 110.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Budgeting, Cash Flow and Decisions: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m07-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m07', 'Budgeting, Cash Flow and Decisions: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m07-q1', 'bkp-m07-check', 1, 'Budgeted sales ₦280,000; actual ₦260,000. The variance is:', '["+₦20,000","−₦20,000 (adverse)","−₦260,000","+₦280,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m07-q1', 1, 'Below budget is adverse.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m07-q2', 'bkp-m07-check', 2, 'Opening ₦410,000, receipts ₦230,000, payments ₦300,000. Closing cash?', '["₦340,000","₦410,000","₦480,000","₦940,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m07-q2', 0, '410 + 230 − 300.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m07-q3', 'bkp-m07-check', 3, 'Fixed costs ₦82,000 and a 40% margin. Break-even sales?', '["₦32,800","₦164,000","₦205,000","₦328,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m07-q3', 2, '82,000 ÷ 0.4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m07-q4', 'bkp-m07-check', 4, 'Item cost ₦6,000 sold at ₦10,000. The margin is:', '["40%","50%","60%","66.7%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m07-q4', 0, '4,000 ÷ 10,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m07-q5', 'bkp-m07-check', 5, 'A ₦300,000 machine saves ₦100,000 a year. Payback?', '["1 year","2 years","3 years","4 years"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m07-q5', 2, '300,000 ÷ 100,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Tax and Compliance in Nigeria: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m08-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m08', 'Tax and Compliance in Nigeria: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m08-q1', 'bkp-m08-check', 1, 'Output VAT ₦150,000 and input VAT ₦90,000 (practice figures). VAT payable?', '["₦60,000","₦90,000","₦150,000","₦240,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m08-q1', 0, '150,000 − 90,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m08-q2', 'bkp-m08-check', 2, 'Why should rates in this lesson be confirmed?', '["They never change","Tax laws and rates change and apply differently","They are secret","They are the same for everyone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m08-q2', 1, 'Always confirm.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m08-q3', 'bkp-m08-check', 3, 'VAT collected from customers is:', '["The business''s profit","A liability owed to the tax authority","Income","An expense"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m08-q3', 1, 'It must be remitted.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m08-q4', 'bkp-m08-check', 4, 'What is PAYE?', '["Tax on company profit","Income tax employers deduct from pay and remit","A bank charge","A type of VAT"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m08-q4', 1, 'Pay As You Earn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m08-q5', 'bkp-m08-check', 5, 'A supplier offers a discount for no invoice. You should:', '["Accept","Refuse and insist on an invoice","Hide it","Pay in cash"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m08-q5', 1, 'No evidence, no deduction, and a risk of penalties.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Tools: Spreadsheets and Accounting Software: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m09-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m09', 'Tools: Spreadsheets and Accounting Software: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m09-q1', 'bkp-m09-check', 1, 'Which formula totals amounts in E where column C says Sales?', '["=SUM(C:E)","=SUMIF(C:C,\"Sales\",E:E)","=COUNT(E:E)","=IF(C1,E1)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m09-q1', 1, 'SUMIF.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m09-q2', 'bkp-m09-check', 2, 'The 3-2-1 backup rule means:', '["3 copies, 2 types of storage, 1 off-site","3 days, 2 weeks, 1 month","3 passwords, 2 keys, 1 lock","3 users, 2 roles, 1 admin"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m09-q2', 0, 'A resilient approach.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m09-q3', 'bkp-m09-check', 3, 'Why separate duties in the books?', '["To slow down","So one person cannot record, approve and hide mistakes or fraud","It is required for software","To save paper"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m09-q3', 1, 'Internal control.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m09-q4', 'bkp-m09-check', 4, 'What does ''garbage in, garbage out'' mean for software?', '["Software cleans bad data","Wrong data entered gives wrong reports","Old files are deleted","Trash must be emptied"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m09-q4', 1, 'Data quality matters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m09-q5', 'bkp-m09-check', 5, 'When should a backup be tested?', '["Never","By restoring from it","Only when lost","By printing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m09-q5', 1, 'Test the restore.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Set of Books: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bkp-m10-check', 'bookkeeping-small-business-finance', 'module', 'bkp-m10', 'Final Project: A Set of Books: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m10-q1', 'bkp-m10-check', 1, 'Which check shows the balance sheet is right?', '["Assets equal liabilities plus equity","It has many lines","It has the logo","Profit is large"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m10-q1', 0, 'It must balance.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m10-q2', 'bkp-m10-check', 2, 'Closing cash on the cash flow statement must equal:', '["Net profit","The cash balance in the ledger and balance sheet","Sales","Capital"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m10-q2', 1, 'Cash must agree.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m10-q3', 'bkp-m10-check', 3, 'Net profit on the profit and loss is added to equity:', '["On the balance sheet","Never","Only in tax","Only in the cashbook"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m10-q3', 0, 'Retained profit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m10-q4', 'bkp-m10-check', 4, 'Sales ₦300,000 and cost of goods ₦180,000. Gross margin?', '["30%","40%","50%","60%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m10-q4', 1, '120 ÷ 300.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-m10-q5', 'bkp-m10-check', 5, 'What should the report note about tax?', '["Nothing","That current rules and rates must be confirmed","That tax is optional","A fixed rate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-m10-q5', 1, 'Confirm current rules.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Bookkeeping & Small Business Finance: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bookkeeping-small-business-finance-final', 'bookkeeping-small-business-finance', 'final', null, 'Bookkeeping & Small Business Finance: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f01', 'bookkeeping-small-business-finance-final', 1, 'Assets of ₦700,000 and liabilities of ₦200,000 give equity of:', '["₦200,000","₦500,000","₦700,000","₦900,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f01', 1, '700,000 − 200,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f02', 'bookkeeping-small-business-finance-final', 2, 'Which accounts are increased by a credit?', '["Assets and expenses","Liabilities, equity and income","Only cash","Only expenses"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f02', 1, 'Credit accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f03', 'bookkeeping-small-business-finance-final', 3, 'The entry for a cash sale of ₦150,000 is:', '["Dr Sales / Cr Cash","Dr Cash / Cr Sales","Dr Receivables / Cr Sales","Dr Cash / Cr Capital"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f03', 1, 'Cash up, sales up.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f04', 'bookkeeping-small-business-finance-final', 4, 'A trial balance with debits of ₦830,000 and credits of ₦830,000:', '["Proves no errors","Balances, but some errors may remain","Is wrong","Shows profit"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f04', 1, 'It balances only arithmetically.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f05', 'bookkeeping-small-business-finance-final', 5, 'Statement ₦421,500 + ₦12,000 − ₦25,000 equals:', '["₦384,500","₦408,500","₦434,500","₦458,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f05', 1, 'Adjusted bank balance.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f06', 'bookkeeping-small-business-finance-final', 6, 'Equipment ₦120,000, 5 years. Net book value after 1 month:', '["₦96,000","₦118,000","₦120,000","₦122,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f06', 1, '120,000 − 2,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f07', 'bookkeeping-small-business-finance-final', 7, 'A prepayment of ₦90,000 rent for 3 months: after one month, the prepayment is:', '["₦30,000","₦60,000","₦90,000","₦0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f07', 1, '90,000 − 30,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f08', 'bookkeeping-small-business-finance-final', 8, 'Sales ₦230,000, cost of goods ₦138,000, expenses ₦85,000. Net profit?', '["₦7,000","₦15,000","₦92,000","₦170,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f08', 0, '230 − 138 − 85.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f09', 'bookkeeping-small-business-finance-final', 9, 'Gross margin on those figures is:', '["30%","40%","50%","60%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f09', 1, '92 ÷ 230.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f10', 'bookkeeping-small-business-finance-final', 10, 'Fixed costs ₦82,000 and a 40% margin. Break-even sales?', '["₦164,000","₦205,000","₦246,000","₦328,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f10', 1, '82,000 ÷ 0.4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f11', 'bookkeeping-small-business-finance-final', 11, 'Profit differs from cash flow mainly because of:', '["Timing: stock, receivables, payables and accruals","Luck","Tax only","Capital only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f11', 0, 'Timing differences.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f12', 'bookkeeping-small-business-finance-final', 12, 'VAT collected from customers should be:', '["Spent freely","Kept aside and remitted as a liability","Treated as profit","Ignored"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f12', 1, 'It is owed to the tax authority.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f13', 'bookkeeping-small-business-finance-final', 13, 'Which is the best backup rule?', '["One copy on the laptop","3-2-1","A paper copy only","Email it to yourself"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f13', 1, 'Three copies, two types, one off-site.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f14', 'bookkeeping-small-business-finance-final', 14, 'Before relying on any tax figure in your books you should:', '["Guess","Confirm current rules with the tax authority or an accountant","Copy a friend","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f14', 1, 'Rules change.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bkp-f15', 'bookkeeping-small-business-finance-final', 15, 'Opening cash ₦410,000, receipts ₦230,000, payments ₦300,000. Closing cash?', '["₦340,000","₦410,000","₦480,000","₦940,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bkp-f15', 0, '410 + 230 − 300.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -109983,6 +112118,16 @@ values ('poa-office-admin-toolkit', 'professional-office-administration', 'An of
 Keep everything professional and confidential, and do not use real people's private information. Submit a link to your toolkit (a shared document, PDF or folder) and paste your **office profile and priorities** and your **filing structure and naming convention** below, with a short note on where to find each part.
 
 Write for the manager or owner who will approve using it: lead with a one-page summary, make the templates usable on their own and check every figure and formula.$md$, array['Office profile and the top three administrative problems the toolkit fixes.', 'Communication templates: an email, a formal letter outline, a phone message form, a memo and meeting minutes.', 'Time and diary system: a daily to-do format, a weekly diary routine and a follow-up system.', 'Filing and records: a folder structure, a naming convention with examples, confidentiality rules and a retention schedule (with a note to confirm current law).', 'Software: a simple spreadsheet (with formulas written out) and a three-slide presentation outline.', 'Meetings, events and travel: a standard agenda, an event checklist with a budget and a travel booking checklist.', 'Office management: a supplies list with reorder levels, a vendor comparison method, a petty cash procedure and a safety checklist.']::text[], '{}'::text[], array['The office profile is specific and the toolkit addresses the stated problems.', 'Communication templates are clear, polite and ready to use.', 'The time and diary system is practical and includes follow-up.', 'Filing, naming and confidentiality rules are consistent and secure, with retention flagged for confirmation.', 'Spreadsheet formulas and calculations are correct, and slides follow good design rules.', 'Meeting, event and travel tools are complete and the budgets add up.', 'Supplies, vendor, petty cash and safety procedures are controlled and realistic.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A set of books for a small business
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('bkp-set-of-books', 'bookkeeping-small-business-finance', 'A set of books for a small business', 'Record a month of transactions for a small business, adjust and balance the books, prepare the three financial statements and report on the results.', $md$Choose a simple business you understand, give it a name and invent a realistic month of at least 12 transactions in naira, including the owner's investment, equipment, stock on credit, cash and credit sales with cost of goods sold, rent, wages, a supplier payment and a customer receipt. Record it from start to finish.
+
+Make the numbers tie together. Submit a link to your books (a spreadsheet, document or PDF) and paste your **net profit**, your **total assets** and your **closing cash** below, with a short note on where to find each part.
+
+Write for the owner: show every working so a reader can check your figures, and add a reminder that tax rates and rules must be confirmed with the tax authority or an accountant.$md$, array['The business and the numbered list of at least 12 transactions with dates and amounts.', 'The journal: a Dr and Cr entry for every transaction, including cost of goods sold.', 'The ledger balances and a trial balance whose debits equal its credits.', 'Adjustments: depreciation, an accrued expense, a prepayment or an allowance for doubtful debts, each with a journal entry.', 'The profit and loss statement, balance sheet (balanced) and cash flow statement (agreeing with the cash balance).', 'Analysis: gross margin, net margin, current ratio and break-even sales.', 'A short report to the owner with three insights, three recommendations and a note on tax and records.']::text[], '{}'::text[], array['Every transaction is recorded correctly with equal debits and credits, and cost of goods sold is included.', 'The trial balance balances and the adjustments are correct and explained.', 'The profit and loss, balance sheet and cash flow statement are correct and agree with each other.', 'Ratios and break-even are calculated correctly with the workings shown.', 'The report explains the results in plain language, with realistic insights and recommendations.', 'Records and tax points are sensible, and the report says current tax rules must be confirmed.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
