@@ -90468,58 +90468,1787 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Human Resources & People Management
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('human-resources-people-management', 'full', null, 'human-resources-people-management', 'HRPM', 'Human Resources & People Management', 'Hire well, onboard, develop and manage people fairly, and handle the legal and human side of work.', 'A practical course for HR officers, managers and business owners. You learn recruitment, onboarding, performance management, training, pay and benefits, employee relations, labour law basics in Nigeria, and how to build a healthy workplace.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Recruitment and selection', 'Onboarding and training', 'Performance management', 'Employee relations', 'Labour law basics in Nigeria', 'HR policies and records']::text[], array['No experience needed']::text[], 'An HR starter pack', true, true, true, true, false, 60, 58)
+values ('human-resources-people-management', 'short', 'HR Practitioner', 'human-resources-people-management', 'HRPM', 'Human Resources & People Management', 'Hire well, onboard, develop and manage people fairly, and handle the legal and human side of work.', 'A practical course for HR officers, managers and business owners. You learn recruitment, onboarding, performance management, training, pay and benefits, employee relations, labour law basics in Nigeria, and how to build a healthy workplace.', 'professional-skills', 'beginner', 2, 'Beginner to Intermediate', 6, false, 'available', true, array['Recruitment and selection', 'Onboarding and training', 'Performance management', 'Employee relations', 'Labour law basics in Nigeria', 'HR policies and records']::text[], array['No experience needed']::text[], 'An HR starter pack', true, true, true, true, false, 60, 58)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'People are the hardest and most important part of any organisation. This course teaches the HR cycle from workforce planning to exit, with templates you can use at once (job descriptions, interview guides, appraisal forms, policies) and a practical HR project to finish.', audience = array['HR officers and assistants', 'Managers and team leads', 'Business owners who employ people', 'Graduates entering HR']::text[], included = '{}'::text[], project_previews = '[{"title":"An HR starter pack","summary":"Job descriptions, a hiring plan, an onboarding checklist, an appraisal form and core HR policies for a real or realistic company."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Plan staffing and write job descriptions', 'Recruit, interview and select fairly', 'Onboard and train new staff', 'Run performance reviews that help', 'Handle discipline, grievances and exits properly', 'Understand pay, benefits and basic labour law', 'Write and apply HR policies']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'human-resources-people-management' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'People are the hardest and most important part of any organisation. This course teaches the HR cycle from workforce planning to exit, with templates you can use at once (job descriptions, interview guides, appraisal forms, policies) and a practical HR project to finish.', audience = array['HR officers and assistants', 'Managers and team leads', 'Business owners who employ people', 'Graduates entering HR']::text[], included = '{}'::text[], project_previews = '[{"title":"An HR starter pack","summary":"Job descriptions, a hiring plan, an onboarding checklist, an appraisal form and core HR policies for a real or realistic company."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Plan staffing and write job descriptions', 'Recruit, interview and select fairly', 'Onboard and train new staff', 'Run performance reviews that help', 'Handle discipline, grievances and exits properly', 'Understand pay, benefits and basic labour law', 'Write and apply HR policies']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'human-resources-people-management' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m01', 'human-resources-people-management', 'HR fundamentals', 1, null, null, '{}'::text[], array['The role of HR', 'The employee lifecycle', 'HR and line managers', 'Ethics and confidentiality']::text[])
+values ('hrpm-m01', 'human-resources-people-management', 'HR fundamentals', 1, 'HR Fundamentals', 'HRBASICS', array['Explain the role of HR', 'Follow the employee lifecycle', 'Share work with line managers', 'Keep HR confidential']::text[], array['The role of HR', 'The employee lifecycle', 'HR and line managers', 'Ethics and confidentiality']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m02', 'human-resources-people-management', 'Workforce planning and job design', 2, null, null, '{}'::text[], array['Planning how many people you need', 'Job analysis and job descriptions', 'Organisation structures', 'Budgeting for people']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:hr-fundamentals', 'human-resources-people-management', 'hrpm-m01', 'hr-fundamentals', 'HR Fundamentals', 'Understand the role of HR, the employee lifecycle, how HR and line managers share the work and why ethics and confidentiality matter.', 25, $md$
+## The role of HR
+
+**Human resources (HR)** is the part of a business that helps it **find, develop, reward and keep the people** it needs, and treats them fairly and legally. People are usually a business's biggest cost and its biggest asset, so how they are managed decides how well the business performs.
+
+HR is not only paperwork. Its main contributions:
+
+- **Getting the right people:** workforce planning, recruitment and selection.
+- **Making them effective:** onboarding, training, performance management and coaching.
+- **Rewarding fairly:** pay, benefits and recognition.
+- **Keeping good people:** engagement, development, culture and wellbeing.
+- **Managing relationships:** handling grievances, discipline and exits fairly.
+- **Staying legal:** contracts, employment law, pension and other statutory obligations, records and safety.
+- **Advising leaders:** with data and good practice.
+
+In a small business there may be no HR department. The owner, an office manager or an accountant does these jobs, often without training. This course gives you the tools to do them well, in an organised and fair way, whether you are an HR officer, a manager or a business owner.
+
+## The employee lifecycle
+
+The **employee lifecycle** is the journey a person takes with an organisation. Each stage is an HR responsibility:
+
+1. **Attract:** employer reputation, job adverts, careers presence.
+2. **Recruit and select:** screening, interviews, assessments, references, offer.
+3. **Onboard:** contract, induction, first 90 days, probation.
+4. **Develop:** training, coaching, career growth.
+5. **Manage performance:** goals, feedback, appraisal.
+6. **Reward and recognise:** pay, benefits and appreciation.
+7. **Engage and retain:** culture, wellbeing, communication.
+8. **Handle problems:** grievance, discipline, conflict.
+9. **Exit:** resignation, retirement, redundancy or dismissal, handover and exit interview.
+
+Each stage affects the next. A rushed hire leads to poor performance and early exits. Poor onboarding wastes the first months. Treating leavers badly harms your reputation with future candidates. Thinking in terms of the whole lifecycle helps you spot where problems start.
+
+## HR and line managers
+
+HR does not manage every employee. **Line managers** (the people who supervise others day to day) do most of the people management, and HR supports them.
+
+| Activity | Line manager | HR |
+| :-- | :-- | :-- |
+| Defining the job and needs | Describes the work and skills needed | Helps write the job description and grade |
+| Recruiting | Interviews and chooses | Advertises, screens, advises on fairness and law, prepares the contract |
+| Day-to-day work and goals | Sets tasks and goals, gives feedback | Designs the process and forms |
+| Performance reviews | Conducts the conversation | Provides the framework, checks consistency |
+| Discipline and grievances | Handles the first stage | Advises, ensures fair process and records |
+| Pay and benefits | Recommends within the budget | Designs structures, runs payroll |
+| Policies | Applies them consistently | Writes and maintains them |
+| Legal compliance | Follows procedures | Monitors the law, keeps records |
+
+Good practice is a **partnership:** HR gives clear policies, tools and advice; managers use them consistently and ask for help early. Many HR problems begin when a manager acts alone without a fair process, or when HR makes rules managers cannot use.
+
+## Ethics and confidentiality
+
+HR handles sensitive information: pay, health, family matters, performance problems, complaints. People must trust HR to behave properly.
+
+**Ethical principles:**
+
+- **Fairness:** treat people consistently and without discrimination.
+- **Honesty:** be truthful in recruitment, appraisals and communication.
+- **Respect and dignity** for every person.
+- **Confidentiality:** share personal information only with those who need it, for a legitimate reason.
+- **Integrity:** avoid conflicts of interest (hiring relatives without a fair process, favouritism) and never accept bribes or "payments for jobs."
+- **Compliance:** follow the law and company policy.
+- **Protecting people:** report harassment, safety risks and abuse.
+
+**Data protection:** employee records are personal data. In Nigeria the Nigeria Data Protection Act 2023 sets rules on collecting, using, storing and sharing personal data. In practice: collect only what you need, tell people how it will be used, keep it secure (locked files, password protection, limited access), do not share it without a proper reason, and delete it when it is no longer needed. Check the current rules and take advice for your situation.
+
+When something is confidential, say so clearly and do not gossip. If a manager asks for information they should not have, politely decline and explain. If you learn of serious wrongdoing, follow the proper route and do not ignore it.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m01-t1",
+  "prompt": "For each activity, say whether the **line manager** or **HR** leads it, with a short reason: (1) setting a cashier's daily targets; (2) writing the grievance procedure; (3) interviewing shortlisted candidates; (4) keeping employee files secure; (5) giving day-to-day feedback; (6) advising on a legal issue in a dismissal. One per line.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "1. Line manager - ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Uses both line manager and HR", "pattern": "line manager[\\s\\S]*hr|hr[\\s\\S]*line manager" },
+    { "label": "Gives reasons", "pattern": "because|since|daily|day-to-day|policy|legal|process|team|records|framework|job|work|knows|advises|fairness|responsible", "perLine": true }
+  ],
+  "sample": "1. Line manager - sets and reviews daily work with the team.\n2. HR - designs and maintains the policy and process.\n3. Line manager (with HR support) - knows the job and chooses, while HR checks fairness.\n4. HR - responsible for records and data protection.\n5. Line manager - gives day-to-day feedback to the team.\n6. HR - advises on the law and the fair process.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m01-t2",
+  "prompt": "Take a new **shop cashier** through the employee lifecycle. Write **at least seven stages**, one per line, with one thing HR or the manager does at each.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Attract: ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "Includes recruitment or selection", "pattern": "recruit|select|interview|attract|advert" },
+    { "label": "Includes onboarding or induction", "pattern": "onboard|induction|probation" },
+    { "label": "Includes training or development", "pattern": "train|develop" },
+    { "label": "Includes performance", "pattern": "performance|appraisal|goals|feedback" },
+    { "label": "Includes reward", "pattern": "reward|pay|benefit|recognis" },
+    { "label": "Includes exit", "pattern": "exit|resign|leave|termination|handover" }
+  ],
+  "sample": "Attract: advertise the cashier job on local job pages and in the shop window.\nRecruit and select: screen CVs, interview three candidates and check references.\nOnboard: sign the contract, give an induction on the till and customer service, and start probation.\nDevelop: train on the stock system and handling difficult customers.\nManage performance: set monthly goals on accuracy and speed, with a review each quarter.\nReward and recognise: pay on time, pension contributions and a monthly staff award.\nExit: if she resigns, agree notice, hand over the till, hold an exit conversation and settle final pay.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m01-t3",
+  "prompt": "A friend of the owner asks you, the HR officer, how much a colleague earns and why she was disciplined last month. In 50 to 100 words, say how you respond and why.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I would politely decline ...",
+  "rules": [
+    { "label": "Declines to share (confidential)", "pattern": "decline|cannot share|can't share|confidential|not able to|will not|won't" },
+    { "label": "Explains why (privacy, trust, data protection, policy)", "pattern": "privacy|trust|data protection|policy|personal|need to know|law" },
+    { "label": "Stays polite or offers a proper route", "pattern": "politely|respect|proper|ask (her|him|the)|appropriate|if (she|he) (wants|chooses)" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would politely decline to share any of it. Pay and disciplinary matters are confidential personal information, and sharing them without a proper reason would break employees' trust and could breach data protection rules and company policy. I would explain that I only share such information with people who need it for their job, and suggest that if my friend has a legitimate reason, they should ask the owner or the colleague directly.",
+  "required": false
+}
+```
+
+Next lesson: workforce planning and job design.
+$md$, true, true, 1, array['hrpm-m01-t1', 'hrpm-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m03', 'human-resources-people-management', 'Recruitment and selection', 3, null, null, '{}'::text[], array['Attracting candidates', 'Screening CVs', 'Interviewing and assessment', 'References, offers and fairness']::text[])
+values ('hrpm-m02', 'human-resources-people-management', 'Workforce planning and job design', 2, 'Workforce Planning', 'WORKPLAN', array['Calculate staffing needs', 'Write job descriptions', 'Choose a structure', 'Budget for people']::text[], array['Planning how many people you need', 'Job analysis and job descriptions', 'Organisation structures', 'Budgeting for people']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m04', 'human-resources-people-management', 'Onboarding and induction', 4, null, null, '{}'::text[], array['The first 90 days', 'Induction plans', 'Probation', 'Making new hires productive']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:workforce-planning-and-job-design', 'human-resources-people-management', 'hrpm-m02', 'workforce-planning-and-job-design', 'Workforce Planning and Job Design', 'Plan how many people you need, analyse jobs and write job descriptions, choose organisation structures and budget for people.', 25, $md$
+## Planning how many people you need
+
+**Workforce planning** means making sure the business has the **right number of people with the right skills in the right places at the right time**, now and in the future. Too few people means overwork, poor service and burnout; too many means wasted money.
+
+A simple process:
+
+1. **Look ahead:** what is the business planning? New branches, longer hours, more customers, new products?
+2. **Work out the work:** how many hours or tasks must be covered?
+3. **Count what you have:** current staff, skills, expected leavers, retirements, leave.
+4. **Find the gap:** what is missing, now and later?
+5. **Decide how to fill it:** hire, train, reorganise, outsource, use part-time or temporary staff, or use technology.
+6. **Plan the timing and cost.**
+
+**A simple staffing calculation.** A shop is open 12 hours a day, 7 days a week, and needs 2 staff on the floor at all times.
+
+- Hours to cover = 12 × 7 = **84 hours** a week.
+- Staff-hours needed = 84 × 2 = **168 hours** a week.
+- A full-time employee works 40 hours: 168 ÷ 40 = **4.2 people.**
+- But people take leave, are sick or are in training. If you allow **10% of time for absence**, effective availability is 90%: 4.2 ÷ 0.9 = **4.67**, so you need about **5 people.**
+
+Also consider **peaks:** busy days and seasons may need extra, with part-time or seasonal workers. And think about **skills,** not just numbers: a cashier, a stock keeper and a supervisor are different jobs.
+
+## Job analysis and job descriptions
+
+**Job analysis** is the study of a job: what the work is, how it is done, what skills and conditions are needed. Methods: observe the work, interview the person doing it and their manager, review documents and ask staff to keep a short log of tasks.
+
+Out of this you write:
+
+**A job description:** what the job is. It usually includes:
+
+- **Job title** and **department,** and who it reports to.
+- **Purpose** of the job in one or two sentences.
+- **Main duties and responsibilities,** in order of importance, starting with action verbs.
+- **Key relationships** (who they work with).
+- **Working conditions:** location, hours, travel, physical demands.
+- **Level of authority:** decisions they may make, budget or staff they manage.
+
+**A person specification:** the kind of person needed.
+
+- **Qualifications and training.**
+- **Experience.**
+- **Skills and knowledge.**
+- **Personal qualities** (reliable, organised, friendly).
+- Separate **essential** from **desirable.**
+
+Write requirements that are **really needed for the job** and are not discriminatory. Asking for a degree when the job does not need one, or for a "young, single" candidate, excludes good people unfairly and can be illegal. Keep job descriptions **accurate and up to date,** since they are used in recruitment, training, appraisals and disputes.
+
+## Organisation structures
+
+An **organisation structure** shows who reports to whom and how work is divided.
+
+- **Functional:** grouped by specialism (sales, operations, finance, HR). Clear expertise; can create silos.
+- **Divisional (product or region):** groups for each product line or area (Lagos, Abuja). Good for growth; duplicates some functions.
+- **Flat:** few levels; quick decisions; managers have many direct reports.
+- **Tall (hierarchical):** many levels; clear control; slower decisions.
+- **Matrix:** people report to a functional manager and a project or product manager; flexible but can confuse.
+
+Key ideas:
+
+- **Span of control:** how many people one manager supervises. Typically 5 to 10, depending on how complex the work is.
+- **Unity of command:** each person should have one main boss.
+- **Clear roles and responsibilities:** everyone knows what they own.
+- **Chain of communication:** how information flows up and down.
+
+A small business can start with a simple chart: the owner, a manager or supervisor, and a few staff in clearly defined roles. As you grow, add layers only when needed. Draw the chart, review it each year, and make sure it matches how work really happens.
+
+## Budgeting for people
+
+People cost more than the salary. The **total employment cost** includes:
+
+- **Basic pay and allowances** (housing, transport, others).
+- **Employer pension contributions** (see module 9).
+- **Statutory and insurance contributions** (for example employees' compensation and training fund contributions that apply to you, and group life insurance).
+- **Bonuses and benefits** (medical, meals, uniform).
+- **Recruitment and training costs.**
+- **Equipment and workspace.**
+- **Management and HR time.**
+
+Example: a cashier earns **₦120,000** a month. Add 10% employer pension and 5% for other costs and benefits: 120,000 × 1.15 = **₦138,000** per month. For five staff = **₦690,000** a month, or **₦8,280,000** a year.
+
+Build a **headcount and payroll budget:** number of people by role, the cost per person, expected pay rises, planned hires and leavers, and recruitment and training costs. Compare it with expected revenue. A common check is **payroll as a percentage of revenue**; if revenue is ₦3,000,000 a month and payroll is ₦690,000, payroll is 23% of revenue. Compare it with your sector and your targets, and raise concerns early if it is rising faster than revenue.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m02-t1",
+  "prompt": "A shop is open **12 hours a day, 7 days a week** and needs **2 staff** on the floor at all times. Work out the weekly hours to cover, the staff-hours needed, the number of full-time (40-hour) people, and the number needed allowing **10% for absence**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Hours to cover = ...",
+  "rules": [
+    { "label": "84 hours to cover", "pattern": "\\b84\\b" },
+    { "label": "168 staff-hours", "pattern": "\\b168\\b" },
+    { "label": "4.2 people", "pattern": "4\\.2" },
+    { "label": "About 4.67 and rounded to 5", "pattern": "4\\.6|4\\.67|\\b5\\b" }
+  ],
+  "sample": "Hours to cover = 12 x 7 = 84 hours a week.\nStaff-hours needed = 84 x 2 = 168 hours.\nFull-time people = 168 / 40 = 4.2.\nAllowing 10% absence: 4.2 / 0.9 = 4.67, so I need about 5 people.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m02-t2",
+  "prompt": "Write a **job description and person specification** for a role of your choice. One item per line: title, reports to, purpose, five main duties, working conditions, essential qualifications and skills, and one desirable item. At least eleven lines.",
+  "minutes": 15,
+  "rows": 13,
+  "placeholder": "Job title: ...\nReports to: ...",
+  "rules": [
+    { "label": "At least eleven lines", "minLines": 11 },
+    { "label": "Title and reports to", "pattern": "title[\\s\\S]*reports to|reports to[\\s\\S]*title" },
+    { "label": "Purpose", "pattern": "purpose" },
+    { "label": "Duties", "pattern": "dut(y|ies)", "min": 3 },
+    { "label": "Working conditions", "pattern": "working conditions|hours|location" },
+    { "label": "Essential requirements", "pattern": "essential" },
+    { "label": "Desirable", "pattern": "desirable" }
+  ],
+  "sample": "Job title: Shop Cashier\nReports to: Shop Supervisor\nPurpose: serve customers quickly and accurately and handle payments and the till honestly\nDuty 1: scan items and take payments by cash, card and transfer\nDuty 2: balance the till at the end of each shift\nDuty 3: answer customers' questions politely\nDuty 4: tidy the checkout area and restock bags\nDuty 5: report stock problems and shortages to the supervisor\nWorking conditions: shop floor, shifts of 8 hours including weekends, standing for long periods\nEssential: WAEC or equivalent, basic arithmetic, honesty and a friendly manner\nDesirable: previous cash-handling or retail experience",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m02-t3",
+  "prompt": "A cashier earns **₦120,000** a month. Add **10%** employer pension and **5%** for other costs. Work out the **monthly cost per person**, the cost for **5 people** a month and a year. Then work out payroll as a share of revenue if monthly revenue is **₦3,000,000**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Cost per person = ...",
+  "rules": [
+    { "label": "₦138,000 per person", "pattern": "138,?000" },
+    { "label": "₦690,000 a month", "pattern": "690,?000" },
+    { "label": "₦8,280,000 a year", "pattern": "8,?280,?000" },
+    { "label": "23% of revenue", "pattern": "\\b23\\s?%" }
+  ],
+  "sample": "Cost per person = 120,000 x 1.15 = ₦138,000 a month.\nFor 5 people = ₦690,000 a month, or 690,000 x 12 = ₦8,280,000 a year.\nPayroll share of revenue = 690,000 / 3,000,000 = 23%.",
+  "required": false
+}
+```
+
+Next lesson: recruitment and selection.
+$md$, true, true, 2, array['hrpm-m02-t1', 'hrpm-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m05', 'human-resources-people-management', 'Training and development', 5, null, null, '{}'::text[], array['Finding training needs', 'Training methods', 'Career development', 'Measuring training']::text[])
+values ('hrpm-m03', 'human-resources-people-management', 'Recruitment and selection', 3, 'Recruitment', 'RECRUIT', array['Write a job advert', 'Screen with a scoring matrix', 'Run structured interviews', 'Make fair offers']::text[], array['Attracting candidates', 'Screening CVs', 'Interviewing and assessment', 'References, offers and fairness']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m06', 'human-resources-people-management', 'Performance management', 6, null, null, '{}'::text[], array['Setting goals', 'Appraisals and feedback', 'Coaching conversations', 'Handling poor performance']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:recruitment-and-selection', 'human-resources-people-management', 'hrpm-m03', 'recruitment-and-selection', 'Recruitment and Selection', 'Attract candidates, screen CVs, interview and assess fairly and handle references, offers and fairness.', 30, $md$
+## Attracting candidates
+
+**Recruitment** is finding and attracting suitable candidates; **selection** is choosing among them. A great hire is worth far more than the cost of doing the process well, and a poor hire is expensive in lost time, errors, morale and the cost of starting again.
+
+**Where to find candidates:**
+
+- **Internal:** promote or transfer existing staff (motivating, cheaper, known).
+- **Referrals** from staff, with a fair process.
+- **Job boards and social media:** LinkedIn, Jobberman-type sites, Facebook and WhatsApp groups.
+- **Your own website and shop or office notice.**
+- **Schools, universities, training institutes, youth service (NYSC) and professional bodies.**
+- **Recruitment agencies** for senior or specialist roles (compare fees and check reputation).
+- **Walk-ins and speculative applications.**
+
+**Writing a good job advert:**
+
+- A **clear job title** people actually search for.
+- A **short summary** of the business and the role.
+- **Main duties** and **essential requirements** (not a wish list).
+- **Location, hours, type of contract** and, where possible, **pay or pay range.** Honest pay information attracts the right people and saves time.
+- **How to apply,** with a closing date and contact.
+- **An inclusive tone** without discriminatory wording about age, gender, religion, tribe, marital status or disability.
+- Beware of **scams:** never ask candidates to pay for a job, interview or "processing." Say clearly that no fee is charged.
+
+Your reputation as an employer matters: respond to applicants, treat people courteously, and pay on time. People talk.
+
+## Screening CVs
+
+You may receive many applications. Screen **consistently** against the essential criteria in the person specification.
+
+1. **Decide the criteria** and how much each matters before you read applications.
+2. **Score each CV** against them (for example 0 to 5 for each criterion).
+3. **Check for the essentials first,** then the desirables.
+4. **Look for evidence,** not buzzwords: achievements, results, responsibilities, progress in roles.
+5. **Note gaps or concerns** to ask about, not as automatic rejection.
+6. **Shortlist** the best, typically 3 to 8 for interview.
+7. **Keep records** of how you scored, in case a decision is questioned.
+8. **Tell unsuccessful applicants** politely, if you can.
+
+Example scoring matrix with weights: experience 40%, skills 30%, education 20%, communication 10%. Candidate A scores 4, 3, 5, 3 (out of 5):
+
+- Experience 4 × 0.40 = 1.6
+- Skills 3 × 0.30 = 0.9
+- Education 5 × 0.20 = 1.0
+- Communication 3 × 0.10 = 0.3
+- **Total = 3.8 out of 5.**
+
+Do not let unconscious bias (name, school, appearance, gender, tribe, age) shape your decision. Focus on the criteria.
+
+## Interviewing and assessment
+
+**Prepare:** read the CV, plan questions linked to the criteria, set the time and room, and invite appropriately.
+
+**Structured interviews** are the fairest and most reliable. Ask **all** candidates the **same core questions,** in the same order, and score each answer using a guide.
+
+**Types of questions:**
+
+- **Behavioural:** "Tell me about a time when...". Past behaviour predicts future behaviour. Use **STAR:** the **S**ituation, the **T**ask, the **A**ction the candidate took, and the **R**esult.
+- **Situational:** "What would you do if...?"
+- **Technical or knowledge:** test required skills.
+- **Motivation and fit:** why this role and this business.
+
+Examples: *"Tell me about a time you dealt with an angry customer. What happened and what did you do?"* and *"A customer says the price on the shelf is lower than at the till. What do you do?"*
+
+**During the interview:** put the candidate at ease, explain the process, listen more than you talk, take notes, give them the chance to ask questions, and describe the role honestly, including its challenges.
+
+**Other assessments:** a practical test (for example a till exercise or a writing task), a work trial, a presentation, a case study or a short aptitude test. Make sure they relate to the job.
+
+**Decide using the evidence,** scoring each candidate against the criteria, ideally with a second interviewer. Avoid illegal or inappropriate questions about marriage, pregnancy plans, religion, tribe or family responsibilities.
+
+## References, offers and fairness
+
+**References:** contact previous employers (with the candidate's permission) to confirm dates, role and performance, and ask specific questions: *"Would you re-employ this person? What were their strengths? Why did they leave?"* Verify qualifications and, where the job requires it (handling cash, security), appropriate background checks within the law.
+
+**The offer:**
+
+1. Phone the successful candidate and then confirm in **writing:** job title, start date, pay and benefits, hours, probation, notice period, and conditions (such as satisfactory references).
+2. Give them time to consider.
+3. Be ready to **negotiate** within your pay structure, and keep it fair compared with others in similar roles.
+4. When they accept, send the **contract** (module 9) and prepare their induction.
+5. **Tell the unsuccessful candidates** politely.
+
+**Fairness:** treat all candidates equally, document decisions and base them on job-related criteria. Under the Constitution and other laws, discrimination on grounds such as ethnic group, sex, religion or circumstances of birth is prohibited, and specific protections exist for people with disabilities. Keep candidate data confidential and delete it when no longer needed.
+
+Measure your process: **time to hire** (days from advert to acceptance), **cost per hire** (adverts, agency fees, staff time ÷ hires), **quality** (performance and retention of new hires).
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m03-t1",
+  "prompt": "Write a **job advert** (80 to 150 words) for a role of your choice: title, short business summary, main duties, essential requirements, location and hours, pay or pay range, how to apply and a closing date, and a line saying no fee is charged.",
+  "minutes": 15,
+  "rows": 10,
+  "placeholder": "Cashier wanted ...",
+  "rules": [
+    { "label": "Has a job title", "pattern": "wanted|vacancy|hiring|we are looking|position|role|job" },
+    { "label": "States duties", "pattern": "duties|you will|responsibilit" },
+    { "label": "States requirements", "pattern": "requirements|you must|essential|you have|experience" },
+    { "label": "States pay in naira", "pattern": "₦\\s?\\d" },
+    { "label": "States how to apply and a closing date", "pattern": "apply[\\s\\S]*(closing|deadline|by )|(closing|deadline)[\\s\\S]*apply" },
+    { "label": "Says no fee is charged", "pattern": "no fee|free of charge|do not pay|never ask|not charge|no payment" },
+    { "label": "Between 80 and 150 words", "minWords": 80, "maxWords": 155 }
+  ],
+  "sample": "Shop Cashier wanted at Fresh Mart, Ikeja. We are a busy supermarket looking for an honest, friendly cashier to join our team. Duties: scan items, take payments by cash, card and transfer, balance the till each shift and help customers. Requirements: WAEC or equivalent, good arithmetic, and a polite manner; cash-handling experience is an advantage. Location and hours: Ikeja, shifts of 8 hours including weekends. Pay: ₦120,000 a month plus pension. To apply, send your CV to jobs@freshmart.example by Friday 28 March. No fee is charged at any stage of our recruitment, and we will never ask applicants to pay anything.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m03-t2",
+  "prompt": "Score **Candidate A** with weights **experience 40%, skills 30%, education 20%, communication 10%**. Scores out of 5: **4, 3, 5, 3**. Show each weighted score and the total out of 5, and say why you decided the weights before reading CVs.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Experience = ...",
+  "rules": [
+    { "label": "Experience 1.6", "pattern": "1\\.6" },
+    { "label": "Skills 0.9", "pattern": "0\\.9" },
+    { "label": "Education 1.0", "pattern": "1\\.0|\\b1\\b" },
+    { "label": "Total of 3.8", "pattern": "3\\.8" },
+    { "label": "Explains fairness or bias", "pattern": "fair|bias|consistent|objective|same criteria|favour" }
+  ],
+  "sample": "Experience = 4 x 0.4 = 1.6. Skills = 3 x 0.3 = 0.9. Education = 5 x 0.2 = 1.0. Communication = 3 x 0.1 = 0.3.\nTotal = 1.6 + 0.9 + 1.0 + 0.3 = 3.8 out of 5.\nI decide the weights before reading CVs so that every candidate is judged by the same criteria, which keeps the process fair and reduces bias.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m03-t3",
+  "prompt": "Write **six structured interview questions** for your role: at least three **behavioural** (\"Tell me about a time...\") and one **situational**. One per line, each ending with a question mark. Add what a strong answer would include on the same line after the question.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Tell me about a time ...? Strong answer: ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "At least three behavioural questions", "pattern": "tell me about a time|describe a time|give an example", "min": 3 },
+    { "label": "A situational question", "pattern": "what would you do|how would you handle|if a customer|if you" },
+    { "label": "Every line has a question mark", "pattern": "\\?", "perLine": true },
+    { "label": "Says what a strong answer includes", "pattern": "strong answer|good answer|look for" }
+  ],
+  "sample": "Tell me about a time you dealt with an angry customer. What did you do? Strong answer: stays calm, listens, solves it and follows up.\nTell me about a time you made a mistake with money or stock. What happened? Strong answer: admits it, reports it quickly and fixes the cause.\nDescribe a time you worked under pressure. How did you cope? Strong answer: prioritises and keeps accuracy.\nGive an example of when you helped a colleague? Strong answer: teamwork and initiative.\nWhat would you do if the till is short by ₦5,000 at the end of your shift? Strong answer: recounts, checks receipts, reports honestly.\nWhy do you want this job and what do you want to learn here? Strong answer: genuine interest and realistic goals.",
+  "required": false
+}
+```
+
+Next lesson: onboarding and induction.
+$md$, true, true, 3, array['hrpm-m03-t1', 'hrpm-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m07', 'human-resources-people-management', 'Pay, benefits and recognition', 7, null, null, '{}'::text[], array['Pay structures', 'Benefits and pensions', 'Rewards and recognition', 'Payroll basics']::text[])
+values ('hrpm-m04', 'human-resources-people-management', 'Onboarding and induction', 4, 'Onboarding', 'ONBOARD', array['Plan the first 90 days', 'Build an induction checklist', 'Run probation fairly', 'Measure early attrition']::text[], array['The first 90 days', 'Induction plans', 'Probation', 'Making new hires productive']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m08', 'human-resources-people-management', 'Employee relations and discipline', 8, null, null, '{}'::text[], array['Handling grievances', 'Discipline step by step', 'Conflict and mediation', 'Termination and exit']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:onboarding-and-induction', 'human-resources-people-management', 'hrpm-m04', 'onboarding-and-induction', 'Onboarding and Induction', 'Plan the first 90 days, build an induction, manage probation fairly and make new hires productive quickly.', 25, $md$
+## The first 90 days
+
+**Onboarding** is the whole process of helping a new employee become a settled, productive member of the team. **Induction** is the structured introduction at the start. The first days and weeks shape how long the person stays and how well they perform.
+
+The risks of poor onboarding are real: confusion, mistakes, loneliness and early resignation. A common finding is that many new hires who leave do so within the first few months. Example: of **20 hires** in a year, if **5** leave within 90 days, early attrition is 5 ÷ 20 = **25%.** Each early leaver costs the recruitment spend and lost time again.
+
+Good onboarding aims to make a new hire **welcome, informed, equipped and clear.** A useful pattern:
+
+- **Before day 1:** send the contract, a welcome message, the start time, location, dress code, documents to bring and who to ask for. Prepare their workspace, tools, access and a buddy.
+- **Day 1:** a warm welcome, tour, introductions, key safety information, and a simple first task so they can contribute.
+- **Week 1:** induction sessions, shadowing, training on essential systems, and a clear outline of expectations.
+- **Month 1:** regular check-ins, early goals, feedback and answers to questions.
+- **Month 3:** probation review and a conversation about the future.
+
+## Induction plans
+
+Write an **induction plan** for each role, so it is consistent and nothing is forgotten. It usually covers:
+
+**About the organisation:** history, mission, values, products and customers, structure and key people.
+
+**About the job:** the job description, duties, standards, hours, how performance is judged, and who to go to for help.
+
+**Practical matters:** tools, systems and logins, uniform, access cards, breaks, how and when pay is made, how to report sickness or lateness.
+
+**Policies and rules:** attendance, conduct, dress code, data protection, anti-bribery, anti-harassment, social media and confidentiality.
+
+**Health and safety:** fire exits, first aid, safe lifting, emergency procedures and reporting accidents.
+
+**Training:** job-specific training, shadowing a colleague, and a plan for the first weeks.
+
+**People:** introductions to the team, key contacts and a **buddy** (a friendly, experienced colleague who answers everyday questions).
+
+**Paperwork:** signed contract, employee details, bank and pension details, emergency contact, copies of required documents, and acknowledgement of key policies.
+
+A simple **induction checklist** with tick boxes and dates, signed by both the employee and manager, ensures it is done and provides evidence.
+
+## Probation
+
+A **probation period** is an agreed early period (commonly three to six months) when both sides assess whether the job is right. It must be stated in the contract, including its length, the notice during probation and how confirmation works.
+
+Use it properly:
+
+- **Set clear objectives** for the probation period at the start, in writing.
+- **Check in regularly:** weekly in the first month, then every two to four weeks. Give honest, specific feedback.
+- **Offer support:** training, coaching and clear examples of the standard.
+- **Document** discussions and examples, good and bad.
+- **Hold a formal review** at the end (and at mid-point for longer periods): are the objectives met? Confirm the employee, extend probation (once, for a clear reason, with agreement), or end the employment with proper notice and a fair process.
+- **Tell them in good time.** Do not leave the decision until the last day, and do not let probation pass without a review: employees may be treated as confirmed.
+- **Act fairly and consistently,** and follow the law and the contract, even during probation.
+
+Probation is not a licence to treat people badly. It is a structured chance to learn together.
+
+## Making new hires productive
+
+Beyond the checklist, the biggest drivers of early success are:
+
+- **Clear expectations:** what good looks like, by when.
+- **A buddy or mentor** to ask questions without fear.
+- **A manager who spends time** with them regularly in the early weeks.
+- **Early wins:** small tasks they can complete successfully.
+- **Training in the right order,** starting with what they need first.
+- **Feedback early and often,** not only at the end.
+- **Connection:** introducing them to people across the business, including lunch or a team welcome.
+- **Asking for their feedback** on the onboarding experience, and improving it.
+
+Measure it: **time to productivity** (how long before they perform at a normal level), **early attrition** (leavers in the first 90 days), probation pass rate and the new hire's own rating of their first month.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m04-t1",
+  "prompt": "Of **20 hires** in a year, **5** leave within **90 days**. Work out the **early attrition rate**. If each early leaver costs **₦150,000** in recruitment and lost productivity, what is the annual cost? Then give **two ways** to reduce it.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Early attrition = ...",
+  "rules": [
+    { "label": "Early attrition of 25%", "pattern": "\\b25\\s?%" },
+    { "label": "Cost of ₦750,000", "pattern": "750,?000" },
+    { "label": "Suggests ways (better onboarding, buddy, clearer expectations, better selection)", "pattern": "onboard|buddy|expectation|selection|induction|check-?in|realistic|probation" }
+  ],
+  "sample": "Early attrition = 5 / 20 = 25%.\nCost = 5 x 150,000 = ₦750,000 a year.\nI would reduce it with a better induction and a buddy for every new hire, and by giving candidates a realistic picture of the job during selection.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m04-t2",
+  "prompt": "Write an **induction checklist** for a new employee of your choice, with at least **ten items**, one per line, covering the organisation, the job, practical matters, policies, health and safety, training, people and paperwork.",
+  "minutes": 12,
+  "rows": 12,
+  "placeholder": "Welcome and tour of the premises",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "About the organisation (mission, values, history)", "pattern": "mission|values|history|organisation|company|business" },
+    { "label": "About the job (duties, expectations)", "pattern": "job description|duties|expectations|role" },
+    { "label": "Policies", "pattern": "polic|conduct|attendance|data protection" },
+    { "label": "Health and safety", "pattern": "safety|fire|first aid|emergency" },
+    { "label": "Training or buddy", "pattern": "training|buddy|shadow|mentor" },
+    { "label": "Paperwork (contract, bank, pension)", "pattern": "contract|bank|pension|paperwork|details|documents" }
+  ],
+  "sample": "Welcome, tour of the premises and introductions to the team\nExplain our mission, values and customers\nGo through the job description, duties and what good performance looks like\nAssign a buddy for the first month\nSet up tools, system logins, uniform and access card\nExplain working hours, breaks and how to report lateness or sickness\nReview key policies: conduct, attendance, data protection and anti-bribery\nHealth and safety briefing: fire exits, first aid and emergency procedures\nJob-specific training and shadowing in week one\nComplete paperwork: signed contract, bank and pension details, emergency contact\nSet probation objectives and book the check-in dates",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m04-t3",
+  "prompt": "Write a **30-60-90 day plan** for a new hire in your chosen role: two or three goals for each period. At least six lines, each with a measurable target.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "First 30 days: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Covers 30, 60 and 90 days", "pattern": "30[\\s\\S]*60[\\s\\S]*90" },
+    { "label": "Includes measurable targets with numbers", "pattern": "\\d+\\s?%|\\d+\\s*(customers|errors|orders|days|hours|sales|tasks)|within \\d+", "min": 4 },
+    { "label": "Includes learning and performance goals", "pattern": "learn|train|complete|achieve|reach|reduce|handle" }
+  ],
+  "sample": "First 30 days: complete induction and system training and shadow three experienced cashiers.\nFirst 30 days: process transactions with supervision and keep errors under 5%.\nDays 31 to 60: work a till independently and keep till differences under ₦500 a shift.\nDays 31 to 60: handle at least 20 customer questions a shift using the standard answers.\nDays 61 to 90: reach full speed of 40 customers an hour and complete the safety and stock training.\nDays 61 to 90: pass the probation review with all objectives met.",
+  "required": false
+}
+```
+
+Next lesson: training and development.
+$md$, true, true, 4, array['hrpm-m04-t1', 'hrpm-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m09', 'human-resources-people-management', 'Labour law and compliance in Nigeria', 9, null, null, '{}'::text[], array['Employment contracts', 'Working conditions, leave and notice', 'Pension, NSITF and ITF basics', 'Records and compliance']::text[])
+values ('hrpm-m05', 'human-resources-people-management', 'Training and development', 5, 'Training', 'HRTRAIN', array['Find training needs', 'Choose training methods', 'Plan careers', 'Measure training ROI']::text[], array['Finding training needs', 'Training methods', 'Career development', 'Measuring training']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m10', 'human-resources-people-management', 'Culture, engagement and wellbeing', 10, null, null, '{}'::text[], array['Building culture', 'Engagement and retention', 'Diversity and inclusion', 'Health, safety and wellbeing']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:training-and-development', 'human-resources-people-management', 'hrpm-m05', 'training-and-development', 'Training and Development', 'Find training needs, choose training methods, support career development and measure whether training worked.', 25, $md$
+## Finding training needs
+
+**Training** gives people the skills and knowledge for their current job. **Development** prepares them for the future (bigger roles, new skills). Both improve performance, motivation and retention. But training is only worth the money if it fixes a **real need.**
+
+A **training needs analysis (TNA)** looks at three levels:
+
+1. **Organisation:** where is the business going? New services, systems, rules or customers create needs.
+2. **Job:** what skills does each role require?
+3. **Individual:** what is each person's gap between required and actual skills?
+
+Ways to find gaps:
+
+- **Performance reviews** and manager feedback.
+- **Errors, complaints and incidents:** patterns point to skill gaps.
+- **Observation** and **skills tests.**
+- **Surveys and interviews** with staff.
+- **Changes** in technology, law or products.
+- **Career aspirations** discussed in one-to-ones.
+
+Then **prioritise:** which needs affect the business the most, and which can be solved by training (rather than by a better process, tool, clearer instructions or a different person). Not every performance problem is a training problem.
+
+## Training methods
+
+Choose the method to suit the content, the people, the budget and the time.
+
+| Method | Good for | Notes |
+| :-- | :-- | :-- |
+| **On-the-job training** | Practical skills | Learn by doing with a skilled coach; low cost; depends on the coach |
+| **Shadowing and mentoring** | Learning the culture and role | Needs a willing, capable mentor |
+| **Classroom or workshop** | Knowledge, new procedures, groups | Interaction and discussion; scheduling and cost |
+| **E-learning and online courses** | Flexible learning, compliance, theory | Self-paced; needs motivation and a way to apply it |
+| **Coaching** | Individual skills and behaviour | One-to-one, tailored |
+| **Job rotation and stretch assignments** | Broadening experience | Plan carefully and support |
+| **External courses and certifications** | Specialist skills | Higher cost; check quality and relevance |
+| **Learning groups and communities** | Sharing practice | Informal and cheap |
+
+Good training principles: **link it to real work,** let people **practise and get feedback,** use **short sessions with follow-up,** and make sure **managers support** the learning afterwards. Many people forget most of what they learn unless they use it quickly.
+
+Mandatory training: safety, first aid, data protection, anti-bribery, anti-harassment and sector-specific requirements are regular, recorded training topics.
+
+## Career development
+
+Development is how people grow in the organisation. Offer a mix:
+
+- **Clear career paths:** show how one can move from cashier to supervisor to manager, and what is needed.
+- **Regular career conversations** in one-to-ones, asking what the person wants.
+- **Individual development plans (IDPs):** a short written plan with goals, actions, support and timelines.
+- **Stretch tasks and acting-up opportunities.**
+- **Mentoring and coaching.**
+- **Support for study:** time off, fees support or an agreement to pay back if the person leaves soon after (a **training bond**; use it carefully, fairly and legally, and in writing).
+- **Internal promotion** where possible, which motivates others.
+
+Small businesses may not have many levels, but they can still offer **new skills, responsibility and recognition.** People often stay where they see a future.
+
+## Measuring training
+
+A common model is **Kirkpatrick's four levels:**
+
+1. **Reaction:** did participants find it useful? (feedback forms)
+2. **Learning:** did they gain knowledge or skill? (tests, practical checks)
+3. **Behaviour:** do they apply it at work? (observation, manager feedback, after weeks)
+4. **Results:** did it improve business outcomes? (fewer errors, higher sales, better satisfaction)
+
+Calculate the **return on investment (ROI)** where you can. Example: training costs **₦300,000.** Errors were costing the business **₦200,000 a month**, and training cut them by **40%**, saving ₦80,000 a month.
+
+- Annual saving = 80,000 × 12 = **₦960,000.**
+- ROI = (960,000 − 300,000) ÷ 300,000 = **220%.**
+- Payback = 300,000 ÷ 80,000 = **3.75 months.**
+
+Record training given (who, what, when, cost), review it each year against the plan, and ask: *Did it change anything? What next?* Training without follow-up is only a cost.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m05-t1",
+  "prompt": "Training costs **₦300,000**. Errors cost **₦200,000** a month and training cuts them by **40%**. Work out the monthly saving, the annual saving, the **ROI** and the **payback period**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Monthly saving = ...",
+  "rules": [
+    { "label": "Monthly saving of ₦80,000", "pattern": "80,?000" },
+    { "label": "Annual saving of ₦960,000", "pattern": "960,?000" },
+    { "label": "ROI of 220%", "pattern": "\\b220\\s?%" },
+    { "label": "Payback of 3.75 months", "pattern": "3\\.75" }
+  ],
+  "sample": "Monthly saving = 40% of 200,000 = ₦80,000.\nAnnual saving = 80,000 x 12 = ₦960,000.\nROI = (960,000 - 300,000) / 300,000 = 220%.\nPayback = 300,000 / 80,000 = 3.75 months.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m05-t2",
+  "prompt": "Staff keep making **till errors**. Do a mini **training needs analysis** in at least six lines: what evidence you would check, whether training is the right fix, two other possible causes, the training method you would use and how you would measure the result.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Evidence: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Evidence (error records, observation, complaints)", "pattern": "evidence|records?|observ|complaint|data|error log" },
+    { "label": "Other causes (system, process, instructions, workload, equipment)", "pattern": "system|process|instruction|workload|equipment|other cause|not a training" },
+    { "label": "Training method", "pattern": "on-the-job|coach|workshop|shadow|e-learning|practice|training session" },
+    { "label": "Measurement (errors, before and after)", "pattern": "measure|before and after|error (rate|count)|reduce|track|compare" }
+  ],
+  "sample": "Evidence: count the till errors by cashier and by type for the past three months and observe a few shifts.\nIs it training? Only if the errors come from not knowing the procedure.\nOther cause 1: the till software is confusing, so a system fix may be needed.\nOther cause 2: queues and workload at peak times cause rushing.\nMethod: on-the-job coaching and a short practical session on the correct procedure, with a checklist.\nMeasurement: compare the error rate before and after for three months and check that till differences fall below ₦500 a shift.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m05-t3",
+  "prompt": "Write an **individual development plan** for an employee of your choice with at least **three goals**. For each: the goal, the action or training, the support needed and the date. One goal per line.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Goal: ... - Action: ... - Support: ... - By: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line has goal, action, support and date", "pattern": "goal[^\\n]*action[^\\n]*support[^\\n]*by", "perLine": true },
+    { "label": "Dates or time frames", "pattern": "\\d{1,2}\\s*(january|february|march|april|may|june|july|august|september|october|november|december)|month|q[1-4]|by \\d", "min": 3 }
+  ],
+  "sample": "Goal: become a shift supervisor - Action: complete a supervisor skills course - Support: paid time and a mentor - By: 30 September\nGoal: improve stock control skills - Action: shadow the stock manager one day a week - Support: stock manager's time - By: 31 July\nGoal: build confidence in handling complaints - Action: role-play practice and coaching sessions - Support: the manager gives monthly feedback - By: 30 June",
+  "required": false
+}
+```
+
+Next lesson: performance management.
+$md$, true, true, 5, array['hrpm-m05-t1', 'hrpm-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m11', 'human-resources-people-management', 'HR data, tools and policies', 11, null, null, '{}'::text[], array['HR records and systems', 'Key HR metrics', 'Writing HR policies', 'Using spreadsheets for HR']::text[])
+values ('hrpm-m06', 'human-resources-people-management', 'Performance management', 6, 'Performance', 'PERFORM', array['Set SMART goals', 'Give SBI feedback', 'Coach with GROW', 'Handle poor performance']::text[], array['Setting goals', 'Appraisals and feedback', 'Coaching conversations', 'Handling poor performance']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:performance-management', 'human-resources-people-management', 'hrpm-m06', 'performance-management', 'Performance Management', 'Set goals, run appraisals and give feedback, hold coaching conversations and handle poor performance fairly.', 25, $md$
+## Setting goals
+
+**Performance management** is the continuous process of agreeing what is expected, supporting people to do it, reviewing results and improving. It is not a once-a-year form. It works best as a regular conversation between manager and employee.
+
+Start with **clear goals.** People do better when they know what success looks like. Good goals:
+
+- Link to the **business's objectives** (so people see why their work matters).
+- Are **SMART:** specific, measurable, achievable, relevant, time-bound.
+- Are **few and focused:** three to five main goals.
+- Are **agreed together,** not simply imposed.
+- Cover **what** is achieved (results) and **how** (behaviours and values).
+
+Weak: "Do better at sales." Strong: "Achieve monthly sales of ₦2,000,000 by 30 June, with a customer satisfaction score of at least 4.5 out of 5."
+
+Some organisations use **OKRs** (Objectives and Key Results): an inspiring objective and measurable key results. Example: *Objective: delight our customers. Key results: reduce average waiting time from 10 to 5 minutes; reach a 4.5 satisfaction score; cut complaints by 30%.*
+
+Write goals down, give a copy to each person, and review them as the business changes.
+
+## Appraisals and feedback
+
+An **appraisal** (or performance review) is a structured conversation, usually once or twice a year, about how someone is doing, what they have achieved, how they are developing and what comes next. It should combine **regular feedback** with a **formal review.**
+
+**Preparing:** gather evidence (results, examples, customer feedback), ask the employee to prepare a self-assessment, choose a quiet time, and plan the key messages.
+
+**During:**
+
+- Start positively and explain the purpose.
+- Discuss **achievements** against goals, with examples.
+- Discuss **areas to improve,** with specific examples and the impact.
+- Listen to the employee's view and any obstacles.
+- Agree **development actions** and **goals** for the next period.
+- Agree a **rating** (if you use one) based on evidence.
+- Summarise and agree next steps.
+
+**After:** write it up, both sign, and follow through on actions.
+
+**Giving good feedback:** be **specific, timely and balanced,** and focus on **behaviour and impact,** not personality. A useful model is **SBI:** the **S**ituation, the **B**ehaviour you saw, and the **I**mpact. *"In yesterday's lunch rush (situation), you opened a second till and called the next customers forward (behaviour), which cut the queue from 12 minutes to 5 (impact). Thank you."* For a problem: *"On Tuesday morning (situation) the till was 15 minutes late opening (behaviour), so customers queued outside and two left (impact). What happened, and what can we do?"*
+
+Avoid vague praise or criticism ("good job," "you are careless"), surprises (raise issues when they happen, not months later), and bias (recency, favouritism, comparing people unfairly).
+
+Receiving feedback: encourage managers to ask for feedback too. Two-way conversations build trust.
+
+## Coaching conversations
+
+**Coaching** helps people find their own solutions and grow, by asking questions instead of giving all the answers. It fits well in regular one-to-ones.
+
+A simple model is **GROW:**
+
+- **G**oal: "What do you want to achieve?"
+- **R**eality: "Where are you now? What have you tried?"
+- **O**ptions: "What could you do? What else?"
+- **W**ill (way forward): "What will you do, and by when? What might get in the way? How can I help?"
+
+Tips: listen more than you talk, ask open questions, do not rush to solve, summarise, agree actions and follow up. Coaching is not the same as telling people what to do, but sometimes people simply need clear instruction. Use judgement.
+
+Hold **regular one-to-ones** (for example 30 minutes every one or two weeks): progress on goals, obstacles, feedback both ways, wellbeing and development.
+
+## Handling poor performance
+
+Sometimes performance falls short. Act early and fairly.
+
+1. **Check your facts.** What exactly is the gap, against what standard, for how long? Gather evidence.
+2. **Check the causes:** unclear expectations, lack of training or tools, workload, a personal or health problem, a poor fit, or lack of effort. Many problems are solved by clarity or support.
+3. **Talk informally first.** Describe the gap using SBI, listen, agree what will improve and by when, and offer support.
+4. **If no improvement, use a formal process** such as a **performance improvement plan (PIP):** write the problem, the standards required, the support offered, the timeline (for example 4 to 8 weeks), and how progress will be reviewed. Meet regularly and record outcomes.
+5. **If there is still no improvement,** follow the disciplinary or capability procedure in the contract and policy (module 8): a fair hearing, the right to be accompanied if the policy provides, a written decision and the right to appeal.
+6. **Keep records** at every stage and be consistent with how others have been treated.
+
+Example: a salesperson with a monthly target of ₦2,000,000 achieves ₦1,400,000. Attainment = 1,400,000 ÷ 2,000,000 = **70%.** The manager looks at three months of data, finds the person is strong on existing customers but makes few new calls, agrees to training on prospecting and weekly check-ins, and sets a target of ₦1,700,000 within eight weeks.
+
+Always treat the person with dignity, even if the outcome is dismissal. Take professional advice before dismissing for performance reasons.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m06-t1",
+  "prompt": "Write **three SMART goals** for an employee in a role of your choice, each with a number and a date, and **one behavioural goal**. One per line.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Goal 1: ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Three goals contain numbers", "pattern": "goal[^\\n]*\\d", "min": 3 },
+    { "label": "Goals contain dates or time frames", "pattern": "goal[^\\n]*(by |month|week|quarter|june|july|august|september|december|year)", "min": 3 },
+    { "label": "Includes a behavioural goal", "pattern": "behaviou?r|teamwork|customer|communicat|attitude|collaborat" }
+  ],
+  "sample": "Goal 1: achieve monthly sales of ₦2,000,000 by 30 June.\nGoal 2: keep till differences below ₦500 a shift every month.\nGoal 3: reach a customer satisfaction score of 4.5 out of 5 by the end of the third quarter.\nBehavioural goal: show teamwork by helping colleagues at busy times and being rated 4 out of 5 by peers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m06-t2",
+  "prompt": "Write **two pieces of feedback using SBI** (Situation, Behaviour, Impact): one **positive** and one about a **problem**. Label each and keep each to two or three sentences.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Positive: In ... (situation), you ... (behaviour), which ... (impact).",
+  "rules": [
+    { "label": "Has a positive and a problem example", "pattern": "positive[\\s\\S]*(problem|improve|concern)|(problem|improve|concern)[\\s\\S]*positive" },
+    { "label": "Mentions a specific situation", "pattern": "in (yesterday|today|last|the)|on (monday|tuesday|wednesday|thursday|friday)|during" },
+    { "label": "Describes behaviour", "pattern": "you (opened|called|were|arrived|handled|did|helped|left|forgot|made)" },
+    { "label": "States the impact", "pattern": "which (cut|meant|caused|led|saved|made)|so (customers|the|we)|as a result|impact" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "Positive: In yesterday's lunch rush, you opened a second till and called the next customers forward, which cut the queue from 12 minutes to 5. Thank you, that made a real difference.\nProblem: On Tuesday morning the till was 15 minutes late opening, so customers queued outside and two left without buying. I would like to understand what happened and agree how we make sure it does not happen again.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m06-t3",
+  "prompt": "An employee has met only **70%** of their sales target for three months (**₦1,400,000** of **₦2,000,000**). Describe in 80 to 150 words the steps you would take, in order, before any formal action.",
+  "minutes": 15,
+  "rows": 10,
+  "placeholder": "First I would ...",
+  "rules": [
+    { "label": "Checks facts and evidence", "pattern": "facts|evidence|data|records|check" },
+    { "label": "Looks for causes", "pattern": "cause|reason|why|obstacle|training|workload|tools|expectation" },
+    { "label": "Has an informal conversation with support", "pattern": "informal|conversation|talk|listen|support|coach" },
+    { "label": "Agrees a target and timeline", "pattern": "target|within \\d+|weeks|timeline|review|check-?in" },
+    { "label": "Mentions records or a formal plan if needed", "pattern": "record|document|pip|improvement plan|formal" },
+    { "label": "Between 80 and 150 words", "minWords": 80, "maxWords": 155 }
+  ],
+  "sample": "First I would check the facts: three months of sales data, the target and how others are doing, so I am sure the gap is real. Then I would look for causes, such as unclear expectations, lack of training, tools, workload or a personal problem. Next I would have an informal, private conversation, describe the gap using specific examples, listen to the employee and agree what support they need, for example training on finding new customers. We would agree a clear target of ₦1,700,000 within eight weeks, with weekly check-ins. I would keep notes of every meeting. If there is still no improvement, I would move to a formal improvement plan and follow the company's procedure fairly.",
+  "required": false
+}
+```
+
+Next lesson: pay, benefits and recognition.
+$md$, true, true, 6, array['hrpm-m06-t1', 'hrpm-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('hrpm-m12', 'human-resources-people-management', 'Final project: an HR starter pack', 12, null, null, '{}'::text[], array['Choosing the company', 'Building the pack', 'Presenting it', 'Review']::text[])
+values ('hrpm-m07', 'human-resources-people-management', 'Pay, benefits and recognition', 7, 'Pay & Rewards', 'PAYREW', array['Design pay grades', 'Know benefits and pension basics', 'Recognise people', 'Run payroll basics']::text[], array['Pay structures', 'Benefits and pensions', 'Rewards and recognition', 'Payroll basics']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:pay-benefits-and-recognition', 'human-resources-people-management', 'hrpm-m07', 'pay-benefits-and-recognition', 'Pay, Benefits and Recognition', 'Design pay structures, understand benefits and pensions, use rewards and recognition and learn payroll basics.', 25, $md$
+> [!NOTE]
+> Pension, tax and other statutory deductions and rates change. The figures here are **illustrations for practice.** **Confirm current rules with the relevant authorities or a qualified accountant before running payroll.**
+
+## Pay structures
+
+Pay is a major reason people join, stay or leave. It should be **fair, competitive, affordable and consistent.**
+
+**Total reward** is more than salary: basic pay, allowances, bonuses, benefits, development and recognition, and the quality of the work environment.
+
+Principles for setting pay:
+
+- **Job value:** pay reflects the size and responsibility of the job (not the person's gender, tribe or favour).
+- **Market:** what similar employers pay for similar roles (check job adverts, salary surveys and your own hiring experience).
+- **Affordability:** what the business can pay sustainably.
+- **Internal fairness:** similar jobs get similar pay; differences are explained by skill, experience or performance.
+- **Legal minimums:** pay must meet the national minimum wage and any applicable sector rules. Check the current national minimum wage and how it applies to your business.
+
+**A simple pay structure** uses **grades** (levels) with a **pay range** (minimum, midpoint and maximum) for each. People start in the range according to experience and move through it with performance and time.
+
+| Grade | Example roles | Minimum | Midpoint | Maximum |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 | Cleaner, helper | ₦90,000 | ₦105,000 | ₦120,000 |
+| 2 | Cashier, driver | ₦110,000 | ₦130,000 | ₦150,000 |
+| 3 | Supervisor | ₦160,000 | ₦200,000 | ₦240,000 |
+| 4 | Manager | ₦260,000 | ₦320,000 | ₦380,000 |
+
+A useful measure is the **compa-ratio** = salary ÷ midpoint of the range. A supervisor earning ₦180,000 against a midpoint of ₦200,000 has a compa-ratio of 180,000 ÷ 200,000 = **0.90**, meaning they are paid 10% below the midpoint. Below 1.0 may be normal for a newer employee; a long-serving, high performer well below 1.0 is a retention risk.
+
+Payments are usually described as **basic salary plus allowances** (housing, transport, meals), plus any variable pay. Many employers also split pay into components, which affects the base on which pension is calculated.
+
+## Benefits and pensions
+
+**Benefits** add value beyond pay. Common ones:
+
+- **Pension:** a legal requirement for most employers (see below).
+- **Health:** health insurance (for example through a Health Maintenance Organisation) or medical allowance.
+- **Leave:** annual, sick, maternity, paternity, compassionate and study leave, beyond the legal minimum if you can.
+- **Group life insurance** (also a legal requirement for pension-covered employers).
+- **Meals, transport support, uniforms, staff discounts.**
+- **Training and study support.**
+- **Flexible working** where possible.
+- **Loans and cooperative schemes.**
+
+**Pensions in Nigeria (in outline).** The Pension Reform Act 2014 requires employers of a set minimum number of staff (three or more) to contribute to a **contributory pension scheme.** The minimum rates are commonly stated as **10% of monthly emoluments from the employer and 8% from the employee,** where emoluments are at least basic salary, housing and transport allowances. Contributions are paid into each employee's retirement savings account with a pension fund administrator (PFA) chosen by the employee, and employers must also arrange **group life insurance.** There are other statutory contributions and deductions too (covered in module 9).
+
+**Costing benefits:** work out the cost per employee and per year. A benefit that costs little but is valued highly (flexibility, recognition, training) is often better value than a small pay increase.
+
+## Rewards and recognition
+
+People want to feel valued. Recognition costs little and has a big effect.
+
+- **Everyday recognition:** a sincere "thank you," specific praise, a note or message, mention in team meetings.
+- **Formal awards:** employee of the month, long-service awards, team awards.
+- **Performance-related pay:** bonuses or commission linked to clear, achievable targets. Make sure they are fair, understood and do not encourage bad behaviour (for example, pressuring customers or cutting corners).
+- **Profit sharing or team bonuses** to encourage cooperation.
+- **Non-cash rewards:** extra leave, training, a better work assignment, a gift or a meal.
+- **Career opportunities:** promotion and responsibility.
+
+Guidelines: **be specific** about what was done and why it matters; **be timely;** **be fair and consistent;** and **keep promises.** Unfair or unclear rewards demotivate.
+
+## Payroll basics
+
+**Payroll** is the process of calculating and paying employees correctly and on time, and meeting legal obligations.
+
+A basic monthly payroll steps:
+
+1. **Collect data:** hours worked, overtime, absences, leave, new joiners and leavers, changes in pay.
+2. **Calculate gross pay:** basic + allowances + overtime + bonuses.
+3. **Calculate deductions:** employee pension contribution, income tax (PAYE), other statutory deductions and any agreed deductions (loans). Only make deductions that the law or the employee's written agreement allows.
+4. **Calculate net pay** (take-home).
+5. **Calculate employer costs:** employer pension, other statutory contributions and insurance.
+6. **Pay employees** on the agreed date, with a **payslip** showing the breakdown.
+7. **Remit** deductions and contributions to the correct bodies by their deadlines.
+8. **Record and reconcile** everything.
+
+Illustration (simplified, excluding income tax and other deductions): gross monthly pay **₦200,000**, made up of basic ₦120,000, housing ₦40,000 and transport ₦40,000, so pension is calculated on all ₦200,000.
+
+- Employee pension at 8% = **₦16,000.**
+- Net pay before PAYE and other deductions = 200,000 − 16,000 = **₦184,000.**
+- Employer pension at 10% = **₦20,000.**
+- Employer cost = 200,000 + 20,000 = **₦220,000** (before other employer contributions).
+
+Pay on time, every time. Late or incorrect pay destroys trust. Protect payroll data, separate duties (the person who prepares payroll should not be the only one who approves and pays it), and check the figures each month before payment.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m07-t1",
+  "prompt": "A supervisor earns **₦180,000**. The range midpoint is **₦200,000**. Work out the **compa-ratio** and say what it means and what you would check about the employee.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Compa-ratio = ...",
+  "rules": [
+    { "label": "Compa-ratio of 0.9", "pattern": "0\\.9" },
+    { "label": "Says 10% below the midpoint", "pattern": "10\\s?%|below the midpoint|below midpoint" },
+    { "label": "Mentions checking experience, performance or retention risk", "pattern": "experience|performance|retention|new|tenure|market|risk" }
+  ],
+  "sample": "Compa-ratio = 180,000 / 200,000 = 0.9.\nThe supervisor is paid 10% below the midpoint of the range. I would check their experience and performance: below the midpoint may be fine for someone new, but for a long-serving strong performer it is a retention risk.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m07-t2",
+  "prompt": "A monthly gross pay of **₦200,000** is all pensionable. Work out the **employee pension at 8%**, the **net pay before PAYE**, the **employer pension at 10%** and the **employer cost**. State that these are illustrations.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Employee pension = ...",
+  "rules": [
+    { "label": "Employee pension of ₦16,000", "pattern": "16,?000" },
+    { "label": "Net pay of ₦184,000", "pattern": "184,?000" },
+    { "label": "Employer pension of ₦20,000", "pattern": "20,?000" },
+    { "label": "Employer cost of ₦220,000", "pattern": "220,?000" },
+    { "label": "Says illustration, simplified or to be confirmed", "pattern": "illustrat|simplif|confirm|check|excluding|before (paye|tax)" }
+  ],
+  "sample": "Employee pension = 8% of 200,000 = ₦16,000.\nNet pay before PAYE and other deductions = 200,000 - 16,000 = ₦184,000.\nEmployer pension = 10% of 200,000 = ₦20,000.\nEmployer cost = 200,000 + 20,000 = ₦220,000.\nThis is a simplified illustration that excludes income tax and other statutory items, which I would confirm with an accountant.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m07-t3",
+  "prompt": "Design a **simple recognition programme** for a small team in at least six lines: everyday recognition, a monthly award with criteria, one non-cash reward, the cost per month and how you will keep it fair.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Everyday: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Everyday recognition", "pattern": "everyday|daily|thank|praise" },
+    { "label": "Monthly award with criteria", "pattern": "monthly|employee of the month|award" },
+    { "label": "Criteria", "pattern": "criteria|based on|measured|nominated|votes?" },
+    { "label": "Non-cash reward", "pattern": "non-cash|leave|training|lunch|day off|gift|meal" },
+    { "label": "Cost in naira", "pattern": "₦\\s?\\d" },
+    { "label": "Fairness", "pattern": "fair|consistent|same criteria|transparent|panel" }
+  ],
+  "sample": "Everyday: managers say a specific thank you and mention good work in the morning huddle.\nMonthly award: Employee of the Month, chosen on customer compliments, accuracy and teamwork, and nominated by colleagues.\nCriteria: published in advance and scored by a panel of the supervisor and two staff.\nReward: ₦10,000 gift voucher and a half day off.\nNon-cash reward: a team lunch each quarter when the team meets its target.\nCost per month: about ₦10,000 for the award plus ₦7,000 average for lunch, about ₦17,000.\nFairness: the same criteria for everyone, with results and reasons shared openly.",
+  "required": false
+}
+```
+
+Next lesson: employee relations and discipline.
+$md$, true, true, 7, array['hrpm-m07-t1', 'hrpm-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('hrpm-m08', 'human-resources-people-management', 'Employee relations and discipline', 8, 'Employee Relations', 'EMPREL', array['Handle grievances', 'Run fair discipline', 'Mediate conflict', 'Manage exits']::text[], array['Handling grievances', 'Discipline step by step', 'Conflict and mediation', 'Termination and exit']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:employee-relations-and-discipline', 'human-resources-people-management', 'hrpm-m08', 'employee-relations-and-discipline', 'Employee Relations and Discipline', 'Handle grievances, run discipline step by step, manage conflict and mediation and handle termination and exit fairly.', 30, $md$
+> [!NOTE]
+> Procedures, notice periods and employee rights depend on the contract, company policy and the law, which change. This lesson teaches fair process. **Take advice from a labour lawyer or the relevant authority before dismissing or taking serious action.**
+
+## Handling grievances
+
+A **grievance** is a concern or complaint an employee raises about their work, treatment or conditions: pay, unfair treatment, bullying, harassment, safety, workload, a colleague or manager. How you handle grievances shows whether people can trust the business.
+
+Have a **written grievance procedure** that explains how to raise a concern and what happens next. A typical process:
+
+1. **Informal first:** many issues can be solved by a conversation with the manager.
+2. **Formal complaint:** the employee writes down the concern and gives it to their manager, or to HR if the manager is the issue.
+3. **Acknowledge** it quickly (within a day or two) and arrange a meeting within a reasonable time.
+4. **Hold a meeting** where the employee explains the problem and what they want. Take notes. Allow them to bring a colleague or representative if your policy allows.
+5. **Investigate** if needed: gather facts, speak to others, review documents. Stay impartial.
+6. **Decide and reply in writing,** explaining the outcome and reasons, and any actions.
+7. **Appeal:** let the employee ask for a review by someone more senior or independent.
+8. **Follow up** to make sure the action happened and the relationship is repaired.
+
+Principles: **take every complaint seriously, be fair to everyone involved, keep it confidential, act promptly,** and protect the person who complained from **victimisation.** Serious matters such as harassment, discrimination or safety need formal handling and sometimes outside reporting.
+
+## Discipline step by step
+
+**Discipline** deals with misconduct (breaking rules) or sometimes persistent poor performance. The aim is to **correct behaviour** in a fair way, not to punish. A fair process also protects the business if a decision is challenged.
+
+**Preparation:**
+
+- Have clear **rules and a disciplinary procedure** in writing, and make sure employees know them (the contract, handbook, induction).
+- Set out examples of **misconduct** (lateness, absence without permission, rudeness, breach of safety rules, dishonesty) and **gross misconduct** (theft, fraud, violence, serious safety breaches, serious harassment).
+
+**Typical steps (for less serious matters):**
+
+1. **Informal talk:** explain the problem and the standard expected.
+2. **Verbal warning** (recorded).
+3. **First written warning.**
+4. **Final written warning.**
+5. **Dismissal** (with notice or pay in lieu where required) or another sanction, if the problem continues.
+
+**Gross misconduct** may justify moving straight to a disciplinary hearing and, if proven, dismissal without notice, but you must still follow a fair process.
+
+**A fair process includes:**
+
+1. **Investigate promptly:** gather facts, statements and evidence. The investigator should be fair and, where possible, not the decision maker.
+2. **Suspend only if necessary** (with pay, usually), for as short as possible.
+3. **Write to the employee:** state the allegation, give the evidence, and invite them to a hearing with enough notice, and tell them of any right to be accompanied.
+4. **Hold the hearing:** present the case, let the employee respond and bring witnesses or evidence; take notes.
+5. **Decide** on the balance of evidence, considering the employee's record and any mitigating circumstances. Be consistent with how similar cases were handled.
+6. **Confirm the decision in writing,** with reasons and any warning's duration.
+7. **Allow an appeal** to a more senior manager.
+8. **Keep records** securely.
+
+Common mistakes: acting in anger, no evidence, skipping the hearing, inconsistent treatment, ignoring the contract and policy, and discussing the case with people who do not need to know.
+
+## Conflict and mediation
+
+Conflict between colleagues, or between a manager and an employee, is normal. Left alone it harms morale and performance.
+
+**Spotting conflict early:** tension, gossip, avoidance, reduced cooperation, repeated complaints.
+
+**Steps:**
+
+1. **Talk to each person separately** and listen. Stay neutral.
+2. **Identify the real issue:** a task, a misunderstanding, a clash of styles, unfairness.
+3. **Bring them together,** if appropriate, in a calm setting, with ground rules (listen without interrupting, focus on the issue).
+4. **Look for common ground and solutions:** what does each need? What can each change?
+5. **Agree actions in writing,** and review after a few weeks.
+
+**Mediation** is a structured process where a neutral person helps both sides reach their own agreement. It is voluntary and confidential, and works well for working relationship problems. If mediation fails or the behaviour is serious (bullying, harassment), move to formal procedures.
+
+## Termination and exit
+
+An employment relationship can end through **resignation, retirement, end of a fixed-term contract, redundancy, dismissal or death.** Handle each properly.
+
+**Resignation.** Get the resignation in writing, confirm the notice period in the contract, agree the last day, handover tasks and the return of company property. Hold an **exit interview,** a conversation to learn why the person is leaving and what could improve.
+
+**Dismissal.** Dismissal must be for a valid reason and follow a fair process and the contract's notice requirements. Typical valid reasons: gross misconduct, repeated misconduct after warnings, persistent poor performance after support, redundancy and illegality. Give written notice or **pay in lieu of notice** as the contract and law require, with a clear letter stating the reason and the effective date.
+
+**Redundancy** (when a role is no longer needed): consult, use fair and objective selection criteria, consider alternatives (redeployment, reduced hours), give proper notice and pay all entitlements. Follow the law and any agreement.
+
+**On exit:**
+
+- **Final pay:** salary to the last day, accrued leave payments where due, any pending allowances, and deductions only where lawful.
+- **Pension and other records:** make sure contributions are up to date and give the employee the information they need.
+- **Return of property, access removal** (systems, keys, accounts).
+- **A reference or experience letter** as appropriate.
+- **Handover** of work.
+- **Treat the person with respect.** Former employees talk about their treatment, and they may be future customers, candidates or referrers.
+
+Consider **exit interview data:** reasons for leaving, patterns by manager or department and ideas for retention.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m08-t1",
+  "prompt": "An employee raises a **formal grievance** that their supervisor shouts at them in front of customers. List the **steps you take** in order, at least eight lines, from receiving the complaint to the follow-up.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1. Acknowledge the complaint ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Acknowledge promptly", "pattern": "acknowledg" },
+    { "label": "Meeting with the employee", "pattern": "meeting|meet|listen|hear" },
+    { "label": "Investigate (witnesses, facts)", "pattern": "investigat|witness|facts|statements" },
+    { "label": "Decision in writing", "pattern": "decision|outcome|in writing|reply" },
+    { "label": "Appeal", "pattern": "appeal" },
+    { "label": "Confidentiality or protection from victimisation", "pattern": "confidential|victimis|victimiz|protect" },
+    { "label": "Follow up", "pattern": "follow-?up|follow up|check" }
+  ],
+  "sample": "1. Acknowledge the complaint in writing within a day or two.\n2. Explain the process and keep it confidential.\n3. Arrange a meeting with the employee and let them bring a colleague if the policy allows.\n4. Listen to the full account, take notes and ask what outcome they want.\n5. Investigate by speaking to the supervisor and any witnesses and reviewing facts.\n6. Protect the employee from victimisation while it is investigated.\n7. Decide fairly on the evidence and give the outcome and reasons in writing.\n8. Explain the right to appeal to a more senior manager.\n9. Follow up after a few weeks to check the behaviour has changed and the relationship is repaired.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m08-t2",
+  "prompt": "Write the **invitation letter to a disciplinary hearing** (80 to 150 words): state the allegation, enclose the evidence, give the date, time and place with reasonable notice, explain the right to respond and to be accompanied if allowed, and warn of possible outcomes without pre-judging.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Dear ...,",
+  "rules": [
+    { "label": "States the allegation", "pattern": "allegation|alleged|concern|it is alleged" },
+    { "label": "Refers to evidence", "pattern": "evidence|enclosed|statement|documents|attached" },
+    { "label": "Gives date, time and place", "pattern": "date|time|place|venue|\\d+\\s*(am|pm)|at the" },
+    { "label": "Right to respond and be accompanied", "pattern": "respond|accompanied|colleague|representative|your side|answer" },
+    { "label": "Mentions possible outcomes without pre-judging", "pattern": "no decision|possible outcome|may result|could result|not been (made|decided)|warning|dismissal" },
+    { "label": "Between 80 and 150 words", "minWords": 80, "maxWords": 155 }
+  ],
+  "sample": "Dear Mr Bello, I am writing to invite you to a disciplinary hearing. It is alleged that on 12 March you left the shop without permission during your shift, which is a breach of the attendance policy. The incident report and two witness statements are enclosed. The hearing will be on Friday 21 March at 10 am in the manager's office. You may respond to the allegation, bring documents or witnesses, and you may be accompanied by a colleague. No decision has been made. Possible outcomes may include a warning or a more serious sanction, depending on what is found. Please confirm that you will attend. Yours sincerely, HR Officer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m08-t3",
+  "prompt": "Write an **exit checklist** for a resigning employee with at least eight items, one per line: resignation letter, notice, handover, final pay, company property, access, pension and records, exit conversation and reference.",
+  "minutes": 8,
+  "rows": 10,
+  "placeholder": "Receive the resignation in writing",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Resignation in writing or notice", "pattern": "resignation|notice" },
+    { "label": "Handover", "pattern": "handover|hand over" },
+    { "label": "Final pay", "pattern": "final pay|salary|leave" },
+    { "label": "Return of property and access", "pattern": "property|access|keys|laptop|return" },
+    { "label": "Pension or records", "pattern": "pension|records|contributions" },
+    { "label": "Exit conversation or reference", "pattern": "exit (interview|conversation)|reference|experience letter" }
+  ],
+  "sample": "Receive the resignation in writing and confirm the notice period\nAgree the last working day\nPlan the handover of tasks and files\nCalculate and approve final pay, including accrued leave where due\nCollect company property: keys, laptop and uniform\nRemove system access and accounts on the last day\nConfirm pension contributions are up to date and give the employee the details\nHold an exit conversation to learn why they are leaving\nProvide a reference or experience letter\nUpdate records and file securely",
+  "required": false
+}
+```
+
+Next lesson: labour law and compliance in Nigeria.
+$md$, true, true, 8, array['hrpm-m08-t1', 'hrpm-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('hrpm-m09', 'human-resources-people-management', 'Labour law and compliance in Nigeria', 9, 'Labour Law', 'LABOUR', array['Write employment contracts', 'Know leave and notice basics', 'Budget statutory contributions', 'Keep compliance records']::text[], array['Employment contracts', 'Working conditions, leave and notice', 'Pension, NSITF and ITF basics', 'Records and compliance']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:labour-law-and-compliance-in-nigeria', 'human-resources-people-management', 'hrpm-m09', 'labour-law-and-compliance-in-nigeria', 'Labour Law and Compliance in Nigeria', 'Understand the basics of employment contracts, working conditions, leave and notice, pension, NSITF and ITF obligations and records, and know when to get advice.', 25, $md$
+> [!WARNING]
+> This lesson is a **general introduction, not legal advice.** Laws, rates, thresholds and the way they apply (including to different types of worker and to different states) change and have been under reform. **Always check the current law and get advice from a qualified labour lawyer, accountant or the relevant government body before you act.** The figures here are for practice.
+
+## Employment contracts
+
+An **employment contract** is the agreement between employer and employee. It can be written, oral or implied, but a **written contract** is the best protection for both sides, and the law expects employers to give workers a **written statement of the main terms** within a set time after they start (the Labour Act, for workers it covers, refers to three months).
+
+A good written contract includes:
+
+- **Parties:** names of the employer and employee.
+- **Job title and duties** (or reference to the job description).
+- **Start date,** and the **end date** if fixed-term.
+- **Place of work.**
+- **Pay:** the amount, components (basic, allowances), how and when it is paid.
+- **Hours of work** and overtime rules.
+- **Leave:** annual, sick, maternity, paternity and others.
+- **Probation:** length and conditions.
+- **Notice period** for each side.
+- **Benefits:** pension, insurance, medical.
+- **Confidentiality, conflict of interest and intellectual property** terms where relevant.
+- **Discipline and grievance procedures** (or a reference to the handbook).
+- **Termination provisions.**
+- **Signatures** and date, with a copy for the employee.
+
+Treat **fixed-term, part-time and casual** arrangements carefully: they must be real and not used to avoid obligations. **Independent contractors** are different from employees, so the contract must reflect how they work in reality; mislabelling employees as contractors can lead to legal trouble.
+
+The Labour Act (the main general labour statute) covers many employees but excludes some categories, such as certain managerial and professional staff, and other laws, sector rules and the contract itself matter too. A lawyer can tell you which rules apply to your staff.
+
+## Working conditions, leave and notice
+
+**Working hours.** The law and your contract set normal hours, rest and overtime. Keep to reasonable working hours, record time worked and pay agreed overtime.
+
+**Annual leave.** The Labour Act, for workers it covers, provides a minimum paid annual leave after a period of continuous service (commonly stated as at least six working days after twelve months). Many employers offer 15 to 20 days or more, which helps attract and keep staff. State the leave entitlement and how to request it in the contract.
+
+**Sick leave.** Workers who are ill and certified by a medical practitioner are generally entitled to a number of days of sick leave. Set out your policy and the evidence required.
+
+**Maternity leave.** The Labour Act provides for at least **twelve weeks** of maternity leave, with at least **half pay** under the Act for women workers it covers, and protects women from being dismissed because of pregnancy. Some state laws and many employers give more, and also provide paternity leave. Check the rules that apply to you.
+
+**Public holidays and rest days** according to the law and policy.
+
+**Minimum wage.** Employers covered by the National Minimum Wage Act must pay at least the current national minimum wage, which has been raised in recent years and applies to employers above a staff-size threshold. **Check the current minimum and whether it applies to you.**
+
+**Notice of termination.** The Labour Act sets **minimum notice** based on length of service, commonly described as: one day for a worker employed for under three months; one week for three months to under two years; two weeks for two to under five years; and one month for five years or more. Your contract may give longer notice. Either side may pay **in lieu of notice** if the contract allows. Summary dismissal for serious misconduct follows a fair process.
+
+**Equal treatment.** The Constitution prohibits discrimination on grounds such as ethnic group, place of origin, sex, religion and circumstances of birth, and a specific law protects people with disabilities. Treat staff fairly in hiring, pay, promotion and discipline, and prevent harassment and victimisation.
+
+**Health and safety.** Employers must provide a safe workplace, safe equipment and training, report serious accidents and keep first-aid and fire arrangements. Sector rules (factories, construction, food) add more.
+
+## Pension, NSITF and ITF basics
+
+Several statutory schemes apply to many employers. The details below are an outline.
+
+**Pension (Pension Reform Act 2014).** Employers with three or more employees must contribute to the contributory pension scheme. The minimum rates are commonly stated as **employer 10% and employee 8%** of monthly emoluments (at least basic, housing and transport), paid to the employee's retirement savings account with a pension fund administrator. Employers must also provide **group life insurance** for employees. Remit contributions within the legal time limits.
+
+**NSITF (Employees' Compensation).** The Nigeria Social Insurance Trust Fund runs the Employees' Compensation Scheme, which compensates workers for work-related injury, disease or death. Employers register and contribute, commonly stated as **1% of total monthly payroll.** Check current coverage and rules.
+
+**ITF (Industrial Training Fund).** Employers who meet the threshold (commonly stated as a certain number of employees or a turnover level) contribute **1% of annual payroll** to support training. Check the current threshold.
+
+**Other items.** Income tax (PAYE) must be deducted from employees' pay and remitted to the tax authority. A **national housing fund** contribution may apply to some employees. **Withholding tax** and other obligations may apply to payments to contractors.
+
+**Illustration (practice figures only).** Monthly payroll **₦2,000,000**, all pensionable:
+
+- Employer pension at 10% = **₦200,000**; employee pension at 8% = **₦160,000**; total pension remittance = **₦360,000** a month.
+- NSITF at 1% of payroll = **₦20,000** a month.
+- ITF at 1% of annual payroll (₦24,000,000) = **₦240,000** a year.
+
+These costs and deadlines need to be in your **budget and calendar.** Late or missed remittances bring penalties and cause real harm to employees' retirement savings.
+
+## Records and compliance
+
+Good records protect you and your staff. Keep, in a secure place:
+
+- **Employee files:** application, contract, ID, qualifications, job description, pay history.
+- **Time and attendance, leave and overtime records.**
+- **Payroll records** and payslips, and proof of statutory remittances.
+- **Training, appraisal and disciplinary records.**
+- **Accident and incident records.**
+- **Pension, NSITF, ITF and tax registration numbers** and certificates.
+- **Policies and handbook,** with signed acknowledgements.
+
+Keep them for the period required by law and your policy, and then delete securely. They are **personal data,** so follow the Nigeria Data Protection Act 2023: limit access, secure storage and use for legitimate purposes only.
+
+**Build a compliance calendar:** monthly (pension, PAYE, NSITF, payroll), annual (ITF, tax returns, insurance renewal), and as needed (contract renewals, probation reviews). **Review policies** each year and when the law changes.
+
+**When to get advice:** before dismissals, redundancies, changes to terms and conditions, serious investigations, complex contracts, and whenever you are unsure how a law applies. The cost of advice is small compared with the cost of a dispute.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m09-t1",
+  "prompt": "Using the **practice figures**: monthly payroll **₦2,000,000**, all pensionable; employer pension **10%**, employee **8%**, NSITF **1%** of monthly payroll, ITF **1%** of annual payroll. Work out each amount and the total monthly pension remittance. State that these are illustrations to confirm.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Employer pension = ...",
+  "rules": [
+    { "label": "Employer pension ₦200,000", "pattern": "200,?000" },
+    { "label": "Employee pension ₦160,000", "pattern": "160,?000" },
+    { "label": "Total remittance ₦360,000", "pattern": "360,?000" },
+    { "label": "NSITF ₦20,000", "pattern": "20,?000" },
+    { "label": "ITF ₦240,000", "pattern": "240,?000" },
+    { "label": "Says to confirm current rules", "pattern": "confirm|check|illustrat|current|advice" }
+  ],
+  "sample": "Employer pension = 10% of 2,000,000 = ₦200,000. Employee pension = 8% = ₦160,000. Total pension remittance = ₦360,000 a month.\nNSITF = 1% of 2,000,000 = ₦20,000 a month.\nITF = 1% of annual payroll (24,000,000) = ₦240,000 a year.\nThese are illustrations, and I would confirm the current rates and thresholds before budgeting.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m09-t2",
+  "prompt": "Write a **contract checklist** for a new employee with at least ten items, one per line, listing the terms a written contract should cover.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "Names of the employer and employee",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Parties and job title", "pattern": "parties|names|job title|duties" },
+    { "label": "Pay and hours", "pattern": "pay|salary|hours" },
+    { "label": "Leave", "pattern": "leave" },
+    { "label": "Probation and notice", "pattern": "probation[\\s\\S]*notice|notice[\\s\\S]*probation" },
+    { "label": "Pension or benefits", "pattern": "pension|benefits|insurance" },
+    { "label": "Discipline or grievance, confidentiality", "pattern": "discipline|grievance|confidential" },
+    { "label": "Signatures", "pattern": "signature|signed" }
+  ],
+  "sample": "Names of the employer and employee\nJob title, duties and place of work\nStart date and, if fixed-term, the end date\nPay: the amount, components and how and when it is paid\nHours of work and overtime rules\nAnnual leave, sick leave and maternity or paternity leave\nProbation period and conditions\nNotice period for each side\nPension, insurance and other benefits\nConfidentiality and conflict of interest\nDiscipline and grievance procedures\nSignatures and date, with a copy for the employee",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m09-t3",
+  "prompt": "Create a **compliance calendar** with at least eight items: what is due, how often and who is responsible (pension, PAYE, NSITF, ITF, contract reviews, policy review, records check and training).",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Pension remittance - monthly - Payroll officer",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes pension", "pattern": "pension" },
+    { "label": "Includes PAYE or tax", "pattern": "paye|tax" },
+    { "label": "Includes NSITF or ITF", "pattern": "nsitf|itf" },
+    { "label": "Includes frequency", "pattern": "monthly|annual|quarterly|yearly|every", "min": 6 },
+    { "label": "Includes who is responsible", "pattern": "officer|manager|hr|accountant|owner|payroll", "min": 6 }
+  ],
+  "sample": "Pension remittance - monthly - payroll officer\nPAYE remittance and return - monthly - accountant\nNSITF contribution - monthly - payroll officer\nITF contribution - annually - accountant\nGroup life insurance renewal - annually - HR officer\nProbation reviews - as due, checked monthly - line managers and HR\nPolicy and handbook review - annually - HR officer\nEmployee records check and secure disposal - annually - HR officer\nHealth and safety and compliance training - annually - operations manager",
+  "required": false
+}
+```
+
+Next lesson: culture, engagement and wellbeing.
+$md$, true, true, 9, array['hrpm-m09-t1', 'hrpm-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('hrpm-m10', 'human-resources-people-management', 'Culture, engagement and wellbeing', 10, 'Culture & Wellbeing', 'CULTURE', array['Build culture', 'Raise engagement', 'Promote inclusion', 'Protect health and safety']::text[], array['Building culture', 'Engagement and retention', 'Diversity and inclusion', 'Health, safety and wellbeing']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:culture-engagement-and-wellbeing', 'human-resources-people-management', 'hrpm-m10', 'culture-engagement-and-wellbeing', 'Culture, Engagement and Wellbeing', 'Build a healthy culture, raise engagement and retention, promote diversity and inclusion and protect health, safety and wellbeing.', 20, $md$
+## Building culture
+
+**Culture** is "how we do things here": the shared values, habits and unwritten rules that shape behaviour. It shows in how people treat customers and each other, how decisions are made, how mistakes are handled and what gets rewarded.
+
+Culture is built mostly by **what leaders do,** not what posters say. If the owner preaches honesty but cuts corners, staff will copy the behaviour.
+
+To shape culture:
+
+1. **Define the values** you want (for example honesty, respect, service, teamwork, excellence). Keep them few, and describe what they look like in action.
+2. **Role-model them:** leaders and managers must behave consistently with the values.
+3. **Hire and promote for them:** include values in selection and appraisals.
+4. **Reward behaviour that fits,** and challenge behaviour that does not, however senior or profitable the person.
+5. **Communicate openly:** share the business's direction, results and decisions.
+6. **Create rituals:** team meetings, celebrations, recognition, learning sessions.
+7. **Listen and act:** take feedback seriously.
+
+A strong culture helps people know what to do without being told, attracts the right candidates and holds staff in hard times. A toxic culture (fear, blame, favouritism, gossip, bribery) drives good people away.
+
+## Engagement and retention
+
+**Engagement** is how committed and motivated people are to their work and the organisation, and willing to give extra effort. Engaged employees are usually more productive, give better service and stay longer.
+
+Drivers of engagement:
+
+- **Meaningful work** and understanding how it matters.
+- **A good manager** who is fair, clear and supportive. People often leave managers, not businesses.
+- **Fair pay and recognition.**
+- **Growth and development.**
+- **Autonomy and trust.**
+- **Good relationships** with colleagues.
+- **Voice:** being heard and involved.
+- **Fair treatment** and job security as far as possible.
+- **Wellbeing and reasonable workload.**
+
+**Measuring engagement:** short regular **surveys** (for example 10 questions on a 1 to 5 scale), **one-to-ones,** exit interviews, stay interviews (asking current staff why they stay and what would make them leave), and signs such as absence and turnover. Examples of survey statements: *"I know what is expected of me," "My manager listens to me," "I have the chance to learn and grow," "I would recommend this business as a place to work."* Act on the results and tell people what you will change.
+
+**Retention** is keeping your good people. Measure **turnover:** *leavers in the period ÷ average headcount.* Example: **6 leavers** in a year with an average of **40 staff:** turnover = 6 ÷ 40 = **15%.** If each leaver costs about **₦400,000** to replace (recruitment, training, lost productivity), the annual cost is 6 × 400,000 = **₦2,400,000.**
+
+Ways to improve retention: fix the causes found in exit interviews, pay fairly, train managers, offer development, recognise good work, improve flexibility and tackle bullying quickly. Some turnover is healthy; **losing your best people is the concern.**
+
+## Diversity and inclusion
+
+**Diversity** means differences among people: gender, age, ethnic group, religion, disability, background, education, thinking style. **Inclusion** means making sure everyone is respected, can contribute and has a fair chance.
+
+Why it matters: it is **the right thing to do,** it is **required by law** (equal treatment and protection from discrimination), and it **improves decisions and service** by bringing different perspectives.
+
+Practical steps:
+
+- **Fair recruitment:** structured interviews and criteria; wording of adverts; diverse interview panels.
+- **Equal pay for equal work,** and check for unexplained gaps.
+- **Equal access** to training, promotion and flexible working.
+- **A zero-tolerance policy** on harassment and discrimination, with a safe way to report.
+- **Reasonable adjustments** for people with disabilities (accessible workplaces, flexible arrangements).
+- **Respect for religious and cultural practices** where possible.
+- **Support for women** and for staff with caring responsibilities (including maternity and paternity support).
+- **Manager training** on unconscious bias and respectful behaviour.
+- **Inclusive language** and meetings where everyone can speak.
+
+Do not treat inclusion as a slogan: look at who is hired, promoted and leaves, and ask staff how included they feel.
+
+## Health, safety and wellbeing
+
+Employers have a **duty of care:** to provide a **safe and healthy workplace.**
+
+**Health and safety basics:**
+
+- **Risk assessment:** identify hazards (slippery floors, electrical faults, heavy lifting, fire, machinery, violence), assess the risk and put controls in place.
+- **Safe equipment, maintenance and clear procedures.**
+- **Training:** safe lifting, equipment use, fire drills, first aid.
+- **Personal protective equipment** where needed.
+- **Fire safety:** clear exits, extinguishers, alarms and regular drills.
+- **First aid:** a kit, trained people and a procedure.
+- **Report and record** accidents and near misses, and learn from them.
+- **Consult employees,** since they know where the hazards are.
+- **Comply with the law** and sector rules.
+
+**Wellbeing** is broader: physical, mental and social health.
+
+- **Reasonable workloads and hours,** and rest breaks.
+- **Support for stress and mental health:** manager awareness, an open door, signposting to help, and a respectful culture. Burnout is real.
+- **Healthy workplace:** clean water, sanitation, rest areas, safe transport where possible.
+- **Flexible working** where the job allows.
+- **Support during illness and personal difficulty,** with compassion and clear policies.
+- **Protection from harassment and bullying.**
+- **Health insurance and checks** where affordable.
+
+A safe, supportive workplace reduces accidents, absence and turnover, and it is the right way to treat people.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m10-t1",
+  "prompt": "**6 leavers** in a year with an average headcount of **40**. Each leaver costs about **₦400,000** to replace. Work out the **turnover rate** and the **annual cost**, and give **two actions** to improve retention.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Turnover = ...",
+  "rules": [
+    { "label": "Turnover of 15%", "pattern": "\\b15\\s?%" },
+    { "label": "Cost of ₦2,400,000", "pattern": "2,?400,?000" },
+    { "label": "Two actions (exit interviews, manager training, pay, development, recognition, flexibility)", "pattern": "exit|manager|pay|develop|recogni|flexib|train|survey|career" }
+  ],
+  "sample": "Turnover = 6 / 40 = 15%.\nCost = 6 x 400,000 = ₦2,400,000 a year.\nI would use exit interviews to find the real reasons people leave, and train managers and offer clearer career development.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m10-t2",
+  "prompt": "Write **eight statements for a short engagement survey** (rated 1 to 5), one per line, covering clarity of role, manager support, development, recognition, fair treatment, workload and wellbeing, and whether they would recommend the business.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "I know what is expected of me.",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Clarity of role or expectations", "pattern": "expect|role|know what" },
+    { "label": "Manager support or listening", "pattern": "manager|supervisor|listens" },
+    { "label": "Development or learning", "pattern": "learn|grow|develop|career" },
+    { "label": "Recognition", "pattern": "recogni|valued|appreciated|thanked" },
+    { "label": "Workload or wellbeing", "pattern": "workload|wellbeing|stress|balance|safe" },
+    { "label": "Recommend", "pattern": "recommend" }
+  ],
+  "sample": "I know what is expected of me in my job.\nMy manager listens to me and supports me.\nI have the chance to learn and grow here.\nMy good work is recognised and appreciated.\nI am treated fairly, whoever I am.\nMy workload is reasonable.\nI feel safe and well supported at work.\nI would recommend this business as a place to work.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m10-t3",
+  "prompt": "Write a **simple health and safety plan** for a small shop in at least six lines: hazards you would check, the control for each, training, fire safety, first aid and how accidents are reported.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Hazard: wet floor - control: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Hazards and controls", "pattern": "hazard[\\s\\S]*control|control[\\s\\S]*hazard" },
+    { "label": "Training", "pattern": "training|train" },
+    { "label": "Fire safety", "pattern": "fire|extinguisher|exit|drill" },
+    { "label": "First aid", "pattern": "first aid" },
+    { "label": "Accident reporting", "pattern": "report|record|accident|near miss|log" }
+  ],
+  "sample": "Hazard: wet or slippery floor - control: mop promptly, use warning signs and non-slip mats.\nHazard: heavy stock lifting - control: lifting training, trolleys and a two-person rule for heavy items.\nHazard: faulty electrical equipment - control: regular checks by a competent electrician and no overloaded sockets.\nTraining: all new staff get safety training in their induction, repeated each year.\nFire safety: clear exits, working extinguishers and a fire drill twice a year.\nFirst aid: a stocked kit and two trained first aiders on each shift.\nReporting: every accident and near miss is recorded in a log and reviewed monthly.",
+  "required": false
+}
+```
+
+Next lesson: HR data, tools and policies.
+$md$, true, true, 10, array['hrpm-m10-t1', 'hrpm-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('hrpm-m11', 'human-resources-people-management', 'HR data, tools and policies', 11, 'HR Data', 'HRDATA', array['Keep HR records', 'Calculate HR metrics', 'Write policies', 'Use spreadsheets for HR']::text[], array['HR records and systems', 'Key HR metrics', 'Writing HR policies', 'Using spreadsheets for HR']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:hr-data-tools-and-policies', 'human-resources-people-management', 'hrpm-m11', 'hr-data-tools-and-policies', 'HR Data, Tools and Policies', 'Keep HR records and systems, track key HR metrics, write clear HR policies and use spreadsheets for HR work.', 30, $md$
+## HR records and systems
+
+HR depends on accurate, organised, confidential information. Whether you use paper files, spreadsheets or HR software, aim for the same things: **accuracy, security, accessibility to those who need it and compliance** with data protection law.
+
+**What to record:**
+
+- **Employee master data:** name, contact, emergency contact, job title, department, manager, start date, contract type, pay, bank details, pension and tax details.
+- **Documents:** contract, ID, certificates, signed policies, appraisals, warnings, training records.
+- **Time and attendance, leave and absence.**
+- **Recruitment records:** adverts, applications, scores, interview notes, offers.
+- **Payroll data** and statutory remittances.
+- **Health and safety records.**
+
+**Choosing a system.** For a small business, a well-organised spreadsheet and a locked filing cabinet or secured cloud folder can be enough. As you grow, consider **HR information systems (HRIS)** that handle employee records, leave, payroll, recruitment and reporting. Choose by need, cost, ease of use, security and local support. Whatever you choose:
+
+- **One source of truth:** avoid conflicting copies.
+- **Access controls:** only people who need information can see it, and sensitive data (pay, health, discipline) is protected.
+- **Back up regularly,** and store backups safely.
+- **Update promptly** when something changes.
+- **Retain and delete** according to policy and the law.
+- **Follow data protection rules:** tell employees how data is used, keep it secure and respect their rights.
+
+## Key HR metrics
+
+Metrics turn HR from opinion into evidence. Choose a few that match your questions.
+
+| Metric | Formula | What it shows |
+| :-- | :-- | :-- |
+| **Headcount** | Number of employees | Size and changes |
+| **Turnover rate** | Leavers ÷ average headcount | How many leave |
+| **Early attrition** | Leavers within 90 days ÷ new hires | Hiring and onboarding quality |
+| **Absenteeism rate** | Days absent ÷ (headcount × working days) | Attendance and wellbeing |
+| **Time to hire** | Days from advert to accepted offer | Recruitment speed |
+| **Cost per hire** | (Advert + agency + staff time) ÷ hires | Recruitment cost |
+| **Training hours per employee** | Total hours ÷ headcount | Investment in development |
+| **Payroll as % of revenue** | Payroll cost ÷ revenue | Affordability |
+| **Engagement score** | Average survey rating | Morale |
+| **Promotion or internal fill rate** | Internal hires ÷ all hires | Career opportunity |
+
+Example for absenteeism: **50 employees,** **22 working days** in the month, **40 days** of absence. Possible working days = 50 × 22 = **1,100.** Absenteeism = 40 ÷ 1,100 = **3.6%.**
+
+Use metrics well:
+
+- **Define each clearly,** and calculate it the same way every time.
+- **Track trends** over time and compare with targets or similar businesses.
+- **Look at the story behind numbers,** by department, manager or reason.
+- **Take action:** a high absence rate in one team may point to a management or workload issue.
+- **Protect privacy:** report in groups so that individuals cannot be identified.
+
+## Writing HR policies
+
+An **HR policy** is a clear statement of what the organisation expects and how it will act. Good policies **give consistency, protect people and the business, and save time** because managers know what to do.
+
+Common policies: **recruitment and equal opportunities, attendance and leave, working hours and overtime, code of conduct, disciplinary and grievance, anti-harassment and anti-bullying, health and safety, data protection and confidentiality, anti-bribery and conflict of interest, social media and technology use, expenses, performance management, training and development.**
+
+**How to write one:**
+
+1. **Purpose:** why the policy exists.
+2. **Scope:** who and what it applies to.
+3. **The rules and principles,** in plain, short sentences.
+4. **Responsibilities:** who does what (employees, managers, HR).
+5. **Procedure:** the steps, with timelines.
+6. **Consequences** of breaching it.
+7. **Related policies and laws.**
+8. **Owner, version and review date.**
+
+Writing tips: use plain language, short sentences, examples, and avoid unnecessary jargon. Make sure the policy is **lawful, realistic, fair and enforceable.** Ask managers and staff to review a draft. Have important policies checked by a lawyer.
+
+**Communicating policies:** put them in a handbook, explain them at induction, have employees sign that they have received them, and refresh them with reminders and training. A policy nobody has read cannot be enforced.
+
+**Review** policies each year and when the law or business changes.
+
+## Using spreadsheets for HR
+
+A spreadsheet can run a surprising amount of HR. Useful setups:
+
+- **Employee register:** one row per employee, with columns for ID, name, job title, department, manager, start date, contract type, salary, probation end date and status.
+- **Leave tracker:** entitlement, days taken, days remaining, planned leave.
+- **Recruitment tracker:** vacancy, candidates, stage, scores, dates.
+- **Training log:** employee, course, date, hours, cost, result.
+- **Payroll worksheet:** basic, allowances, gross, deductions, net, employer costs.
+- **HR dashboard:** headcount, turnover, absence, hiring.
+
+Useful formulas:
+
+- **=COUNTIF(range, "Sales")** counts employees in a department.
+- **=SUMIF(range, "Sales", pay_range)** totals pay for a department.
+- **=TODAY() − start_date** gives length of service in days, and **=DATEDIF(start, TODAY(), "m")** gives months.
+- **=days_absent / (headcount * working_days)** gives the absenteeism rate.
+- **=IF(probation_end < TODAY(), "Review due", "")** flags probation reviews.
+- **Pivot tables** summarise by department or month.
+
+Good practice: **lock formulas,** password-protect files holding sensitive data, **limit sharing,** keep a **version history** and back up, and do not email sensitive files carelessly.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m11-t1",
+  "prompt": "**50 employees**, **22 working days**, **40 days** of absence in the month. Work out the **possible working days** and the **absenteeism rate**. Then say what you would look at before acting on the number.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Possible working days = ...",
+  "rules": [
+    { "label": "1,100 possible working days", "pattern": "1,?100" },
+    { "label": "Absenteeism of 3.6%", "pattern": "3\\.6" },
+    { "label": "Looks at the story behind it (department, reasons, trend)", "pattern": "department|reason|trend|team|pattern|cause|manager|why" }
+  ],
+  "sample": "Possible working days = 50 x 22 = 1,100.\nAbsenteeism = 40 / 1,100 = 3.6%.\nBefore acting I would look at the story behind it: whether it is concentrated in one department or team, the reasons given and whether it is rising over several months.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m11-t2",
+  "prompt": "Write an **attendance and lateness policy** (at least eight lines) using the structure: purpose, scope, rules, responsibilities, procedure for reporting absence, consequences and review date.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Purpose: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Purpose and scope", "pattern": "purpose[\\s\\S]*scope|scope[\\s\\S]*purpose" },
+    { "label": "Rules (start time, notifying)", "pattern": "rules?|start|on time|notify|inform|report" },
+    { "label": "Responsibilities", "pattern": "responsibilit|employees|managers|hr" },
+    { "label": "Procedure for reporting absence", "pattern": "procedure|call|message|before|by \\d" },
+    { "label": "Consequences", "pattern": "consequence|disciplinary|warning" },
+    { "label": "Review date or owner", "pattern": "review|owner|version" }
+  ],
+  "sample": "Purpose: to make sure the business runs smoothly by setting clear expectations on attendance and punctuality.\nScope: applies to all employees, including part-time and probationary staff.\nRules: employees must be at work and ready to start at their agreed start time.\nRules: employees must tell their manager by phone before the start of their shift if they will be absent or late.\nResponsibilities: employees follow the procedure; managers record attendance and deal with problems fairly; HR keeps records.\nProcedure: a medical certificate is required for sickness absence longer than two days.\nConsequences: repeated lateness or unreported absence may lead to action under the disciplinary procedure.\nReview: owned by the HR officer and reviewed every year, version 1.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m11-t3",
+  "prompt": "Design an **employee register spreadsheet**: list at least **ten column headings**, one per line, and give **three formulas** you would use (for example to count by department, calculate length of service and flag probation reviews).",
+  "minutes": 12,
+  "rows": 14,
+  "placeholder": "Employee ID\nFull name\n...\nFormula: =COUNTIF(...)",
+  "rules": [
+    { "label": "At least thirteen lines", "minLines": 13 },
+    { "label": "Includes ID, name, job title, department", "pattern": "id[\\s\\S]*name[\\s\\S]*(job title|title)[\\s\\S]*department" },
+    { "label": "Includes start date and contract type", "pattern": "start date[\\s\\S]*contract|contract[\\s\\S]*start date" },
+    { "label": "Includes probation end date", "pattern": "probation" },
+    { "label": "Includes COUNTIF or SUMIF", "pattern": "countif|sumif" },
+    { "label": "Includes DATEDIF or TODAY", "pattern": "datedif|today\\(" },
+    { "label": "Includes an IF flag", "pattern": "=\\s?if\\(" }
+  ],
+  "sample": "Employee ID\nFull name\nJob title\nDepartment\nManager\nStart date\nContract type\nSalary\nProbation end date\nStatus\nFormula: =COUNTIF(D:D,\"Sales\") counts employees in Sales\nFormula: =DATEDIF(F2,TODAY(),\"m\") gives months of service\nFormula: =IF(I2<TODAY(),\"Review due\",\"\") flags probation reviews",
+  "required": false
+}
+```
+
+Next lesson: your HR starter pack.
+$md$, true, true, 11, array['hrpm-m11-t1', 'hrpm-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('hrpm-m12', 'human-resources-people-management', 'Final project: an HR starter pack', 12, 'HR Starter Pack', 'HRPACK', array['Build an HR starter pack', 'Cost the people plan', 'Write policies and procedures', 'Present to an owner']::text[], array['Choosing the company', 'Building the pack', 'Presenting it', 'Review']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('human-resources-people-management:final-project-an-hr-starter-pack', 'human-resources-people-management', 'hrpm-m12', 'final-project-an-hr-starter-pack', 'Final Project: An HR Starter Pack', 'Choose a company, build an HR starter pack, present it and review it.', 55, $md$
+## What you are building
+
+You have covered the whole HR journey: planning, hiring, onboarding, developing, managing performance, rewarding, handling problems, staying legal, building culture and using data. Now you create **an HR starter pack** for a small business, the set of tools a new HR officer, or an owner starting to take people seriously, would want in their first weeks.
+
+Choose a **company** you know (a shop, restaurant, school, clinic, logistics or services firm) or invent a realistic one with **10 to 40 employees.** Describe it briefly: what it does, how many staff, the main roles, and the main people problems it faces (high turnover, late staff, no contracts, unclear roles, conflict).
+
+Use real or realistic figures for pay and costs, and flag where law or rates must be confirmed.
+
+## Your starter pack has eight parts
+
+1. **The company profile and priorities:** a short description and the top three people problems.
+2. **Workforce plan and structure:** a simple organisation chart, headcount by role and an annual payroll budget.
+3. **A recruitment kit:** a job description, an advert and a structured interview guide with a scoring sheet for one key role.
+4. **An onboarding and probation plan:** an induction checklist and a 30-60-90 day plan.
+5. **Performance and development:** goal-setting and appraisal approach, a feedback model and a training plan with a budget.
+6. **Reward and payroll:** a pay grade table, a benefits summary and a payroll worksheet for one employee, with a note to confirm statutory rates.
+7. **Employee relations and policies:** a grievance and disciplinary procedure outline, and two policies written out in full.
+8. **Compliance, records and metrics:** a compliance calendar, an employee register design and five HR metrics with targets.
+
+## Presenting the pack
+
+Write for the owner or managing director who will approve it. Open with a **one-page summary:** the situation, what the pack contains, the costs and the first three actions. Use tables for grades, budgets and calendars, and keep each part short and usable. Show that the parts fit together: the job description matches the grade, the budget matches the headcount and the policies match the procedures.
+
+Prepare for questions such as: *What does this cost? What happens if someone breaks the policy? Is it legal? How will we know it works?* Be honest about limits, and recommend professional legal and tax advice where needed.
+
+> [!TIP]
+> Test your pack by asking someone to use one tool, such as the induction checklist or the disciplinary outline, without your help. If they get stuck, simplify it.
+
+## Try it
+
+```task
+{
+  "id": "hrpm-m12-t1",
+  "prompt": "Write the **company profile and people priorities** in 60 to 130 words: what the business does, how many staff, the main roles and the top three people problems the pack will address.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Fresh Mart is ...",
+  "rules": [
+    { "label": "Says what the business does", "pattern": "supermarket|shop|school|clinic|restaurant|company|business|firm|store" },
+    { "label": "States the number of staff", "pattern": "\\d+\\s*(staff|employees|people|workers)" },
+    { "label": "Names main roles", "pattern": "cashier|manager|supervisor|driver|cook|teacher|nurse|sales|roles" },
+    { "label": "Lists problems", "pattern": "turnover|late|absen|contract|conflict|unclear|training|pay|morale|problem" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "Fresh Mart is a family-owned supermarket in Ikeja with 28 staff: cashiers, shelf stackers, stock keepers, supervisors and a manager. It has grown quickly but has no HR function. The top three people problems are high staff turnover, with 8 people leaving last year, inconsistent contracts and unclear roles, and frequent lateness and absence without a proper policy. The pack will give the owner tools to hire better, onboard new staff, set clear expectations, handle problems fairly and stay compliant.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m12-t2",
+  "prompt": "Write your **workforce plan and payroll budget**: headcount by role (at least four roles), the monthly pay for each, employer pension at 10% and the total annual cost. Show the calculation for at least one role. Flag that statutory rates must be confirmed.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Cashiers - 8 - ₦120,000 ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "At least four roles with numbers and naira", "pattern": "\\d+\\s*[-x×]\\s*₦|₦\\s?\\d[\\d,]+\\s*(x|×)\\s*\\d+", "min": 4 },
+    { "label": "Employer pension at 10%", "pattern": "10\\s?%[^\\n]*pension|pension[^\\n]*10\\s?%" },
+    { "label": "Annual total in naira", "pattern": "annual|year" },
+    { "label": "Shows a calculation", "pattern": "=|x|×" },
+    { "label": "Flags that rates must be confirmed", "pattern": "confirm|check|current|illustrat|assum" }
+  ],
+  "sample": "Cashiers - 8 x ₦120,000 = ₦960,000 a month\nShelf stackers - 6 x ₦100,000 = ₦600,000 a month\nStock keepers - 4 x ₦130,000 = ₦520,000 a month\nSupervisors - 3 x ₦200,000 = ₦600,000 a month\nManager - 1 x ₦350,000 = ₦350,000 a month\nGross payroll = ₦3,030,000 a month; employer pension at 10% = ₦303,000; total = ₦3,333,000 a month\nAnnual cost = 3,333,000 x 12 = ₦39,996,000 (about ₦40 million), before other statutory contributions\nRates and contributions are assumptions and must be confirmed with an accountant before budgeting",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m12-t3",
+  "prompt": "Write the **recruitment and onboarding tools** for one key role: a **job title and five duties**, an **advert headline and application deadline**, **four interview questions** (two behavioural) and a **five-item induction checklist**. At least twelve lines.",
+  "minutes": 15,
+  "rows": 15,
+  "placeholder": "Job title: ...\nDuty 1: ...",
+  "rules": [
+    { "label": "At least twelve lines", "minLines": 12 },
+    { "label": "Job title and duties", "pattern": "job title[\\s\\S]*dut(y|ies)" },
+    { "label": "Advert and deadline", "pattern": "advert[\\s\\S]*(deadline|closing|by )" },
+    { "label": "Interview questions", "pattern": "question|tell me about a time", "min": 4 },
+    { "label": "Induction checklist", "pattern": "induction|checklist" },
+    { "label": "Mentions buddy, safety, policies or contract", "pattern": "buddy|safety|polic|contract" }
+  ],
+  "sample": "Job title: Shop Supervisor\nDuty 1: lead a team of six on each shift\nDuty 2: open and close the shop and balance the cash\nDuty 3: manage stock levels and replenishment\nDuty 4: handle customer complaints and escalate problems\nDuty 5: coach and appraise team members\nAdvert headline: Shop Supervisor wanted, Fresh Mart Ikeja; application deadline Friday 28 March; no fee is charged\nQuestion 1: Tell me about a time you led a team through a busy period.\nQuestion 2: Tell me about a time you handled an unhappy customer.\nQuestion 3: What would you do if two staff refused to work together?\nQuestion 4: Why do you want this role?\nInduction checklist: welcome and tour; sign contract and policies; health and safety briefing; assign a buddy; system training and probation objectives",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "hrpm-m12-t4",
+  "prompt": "Write your **employee relations and compliance outline** in at least ten lines: the grievance steps, the disciplinary steps, one policy title with its purpose, a pay grade table in two lines, three compliance calendar items and **five HR metrics** with a target each.",
+  "minutes": 15,
+  "rows": 15,
+  "placeholder": "Grievance: ...\nDiscipline: ...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Grievance steps", "pattern": "grievance" },
+    { "label": "Disciplinary steps", "pattern": "disciplin|warning" },
+    { "label": "A policy with purpose", "pattern": "policy[\\s\\S]*purpose|purpose[\\s\\S]*policy" },
+    { "label": "Pay grades", "pattern": "grade" },
+    { "label": "Compliance items (pension, PAYE, NSITF, ITF)", "pattern": "pension|paye|nsitf|itf" },
+    { "label": "HR metrics with targets", "pattern": "metric|turnover|absenteeism|time to hire|cost per hire|engagement", "min": 4 },
+    { "label": "Targets with numbers", "pattern": "target[^\\n]*\\d|below \\d+|under \\d+|\\d+\\s?%", "min": 4 }
+  ],
+  "sample": "Grievance: informal talk, written complaint, acknowledgement in 2 days, meeting, investigation, written decision and an appeal\nDiscipline: investigate, invite to a hearing, decide fairly, then verbal warning, written warning, final warning, dismissal; gross misconduct heard immediately\nPolicy: Attendance and Lateness - purpose is to set clear expectations on punctuality and reporting absence\nGrade 1 - cashier and shelf stacker: ₦100,000 to ₦130,000\nGrade 2 - supervisor: ₦160,000 to ₦240,000\nCompliance: pension monthly; PAYE monthly; NSITF monthly and ITF yearly\nMetric: turnover, target below 15%\nMetric: absenteeism, target under 3%\nMetric: time to hire, target 30 days\nMetric: cost per hire, target under ₦80,000\nMetric: engagement score, target 4 out of 5",
+  "required": true
+}
+```
+
+When you are done, submit your complete HR starter pack as your final project.
+$md$, true, true, 12, array['hrpm-m12-t1', 'hrpm-m12-t2', 'hrpm-m12-t3', 'hrpm-m12-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Customer Service & Client Management
@@ -103768,6 +105497,684 @@ values ('pmgt-f15', 1, 'Specific and actionable.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: HR Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m01-check', 'human-resources-people-management', 'module', 'hrpm-m01', 'HR Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m01-q1', 'hrpm-m01-check', 1, 'Which best describes HR?', '["Only payroll","Helping the business find, develop, reward and keep people, fairly and legally","Only hiring","Only discipline"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m01-q1', 1, 'HR covers the whole employee lifecycle.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m01-q2', 'hrpm-m01-check', 2, 'Who does most day-to-day people management?', '["HR alone","Line managers, supported by HR","The owner only","Payroll"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m01-q2', 1, 'Managers lead; HR supports.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m01-q3', 'hrpm-m01-check', 3, 'Which is a stage of the employee lifecycle?', '["Onboarding","Invoicing","Marketing","Budgeting stock"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m01-q3', 0, 'Onboarding is a lifecycle stage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m01-q4', 'hrpm-m01-check', 4, 'A friend asks how much a colleague earns. What should HR do?', '["Tell them","Politely decline: pay is confidential","Post it online","Guess"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m01-q4', 1, 'Confidentiality and trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m01-q5', 'hrpm-m01-check', 5, 'Employee records are:', '["Public","Personal data that must be protected","Not important","For friends"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m01-q5', 1, 'Data protection rules apply.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Workforce Planning and Job Design: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m02-check', 'human-resources-people-management', 'module', 'hrpm-m02', 'Workforce Planning and Job Design: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m02-q1', 'hrpm-m02-check', 1, 'A shop is open 12 hours, 7 days, with 2 staff always. How many staff-hours a week?', '["84","126","168","336"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m02-q1', 2, '84 × 2 = 168.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m02-q2', 'hrpm-m02-check', 2, '168 staff-hours ÷ 40 hours is:', '["3.2","4.2","5.2","6.2"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m02-q2', 1, '168 ÷ 40 = 4.2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m02-q3', 'hrpm-m02-check', 3, 'What is a person specification?', '["A pay slip","The qualifications, skills and qualities needed","A contract","A policy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m02-q3', 1, 'It describes the person needed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m02-q4', 'hrpm-m02-check', 4, 'A cashier earns ₦120,000; add 10% pension and 5% other costs. What is the cost per month?', '["₦126,000","₦132,000","₦138,000","₦150,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m02-q4', 2, '120,000 × 1.15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m02-q5', 'hrpm-m02-check', 5, 'Why should job requirements be genuinely necessary?', '["To look good","Unnecessary or discriminatory requirements exclude good people and may be illegal","Requirements do not matter","To lengthen the advert"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m02-q5', 1, 'Keep requirements job-related.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Recruitment and Selection: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m03-check', 'human-resources-people-management', 'module', 'hrpm-m03', 'Recruitment and Selection: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m03-q1', 'hrpm-m03-check', 1, 'Which is a scam warning sign in recruitment?', '["A clear job description","Asking candidates to pay a fee for the job","A closing date","Contact details"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m03-q1', 1, 'Never charge candidates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m03-q2', 'hrpm-m03-check', 2, 'Weights 40/30/20/10 and scores 4, 3, 5, 3 give a total of:', '["3.4","3.6","3.8","4.0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m03-q2', 2, '1.6 + 0.9 + 1.0 + 0.3.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m03-q3', 'hrpm-m03-check', 3, 'What does STAR stand for?', '["Situation, Task, Action, Result","Skill, Time, Ability, Result","Start, Test, Assess, Review","Self, Team, Attitude, Role"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m03-q3', 0, 'STAR structures behavioural answers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m03-q4', 'hrpm-m03-check', 4, 'Why use structured interviews?', '["To be quicker only","Same questions for all candidates make it fairer and more reliable","To avoid notes","To impress"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m03-q4', 1, 'Consistency improves fairness.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m03-q5', 'hrpm-m03-check', 5, 'Which question is inappropriate?', '["Tell me about a time you handled a complaint","Are you planning to get pregnant?","What is your availability?","What are your strengths?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m03-q5', 1, 'Questions on pregnancy plans are discriminatory.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Onboarding and Induction: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m04-check', 'human-resources-people-management', 'module', 'hrpm-m04', 'Onboarding and Induction: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m04-q1', 'hrpm-m04-check', 1, '5 of 20 hires leave within 90 days. What is the early attrition?', '["5%","20%","25%","40%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m04-q1', 2, '5 ÷ 20 = 25%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m04-q2', 'hrpm-m04-check', 2, 'What is a buddy for?', '["To supervise discipline","To answer everyday questions and help the new hire settle in","To do the work","To report faults"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m04-q2', 1, 'A friendly experienced guide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m04-q3', 'hrpm-m04-check', 3, 'What should be agreed at the start of probation?', '["Nothing","Clear objectives, in writing","Only the pay","A dismissal date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m04-q3', 1, 'Objectives make review fair.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m04-q4', 'hrpm-m04-check', 4, 'When should the probation review be held?', '["Never","In good time before probation ends","After a year","On the last day only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m04-q4', 1, 'Do not let probation pass without a review.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m04-q5', 'hrpm-m04-check', 5, 'Which helps a new hire become productive fastest?', '["No feedback","Clear expectations, early wins and regular check-ins","Hiding the standards","Long silence"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m04-q5', 1, 'Clarity and support.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Training and Development: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m05-check', 'human-resources-people-management', 'module', 'hrpm-m05', 'Training and Development: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m05-q1', 'hrpm-m05-check', 1, 'Training costs ₦300,000 and saves ₦80,000 a month. What is the payback?', '["3 months","3.75 months","4 months","5 months"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m05-q1', 1, '300,000 ÷ 80,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m05-q2', 'hrpm-m05-check', 2, 'Annual saving ₦960,000 and cost ₦300,000. What is the ROI?', '["120%","220%","320%","960%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m05-q2', 1, '(960 − 300) ÷ 300 = 220%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m05-q3', 'hrpm-m05-check', 3, 'Not every performance problem is:', '["A real problem","A training problem","Worth fixing","Measurable"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m05-q3', 1, 'Check other causes first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m05-q4', 'hrpm-m05-check', 4, 'In Kirkpatrick''s levels, ''Behaviour'' means:', '["Participants liked it","They apply it at work","They passed a test","Costs fell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m05-q4', 1, 'Level 3 is applied behaviour.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m05-q5', 'hrpm-m05-check', 5, 'What is an individual development plan?', '["A pay slip","A short written plan with goals, actions, support and dates","A warning","A contract"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m05-q5', 1, 'It guides growth.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Performance Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m06-check', 'human-resources-people-management', 'module', 'hrpm-m06', 'Performance Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m06-q1', 'hrpm-m06-check', 1, 'Which goal is SMART?', '["Do better at sales","Achieve ₦2,000,000 monthly sales by 30 June","Work hard","Be good"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m06-q1', 1, 'Specific, measurable and time-bound.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m06-q2', 'hrpm-m06-check', 2, 'In SBI feedback, what does ''I'' stand for?', '["Idea","Impact","Interest","Instruction"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m06-q2', 1, 'Situation, Behaviour, Impact.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m06-q3', 'hrpm-m06-check', 3, 'In GROW, what does ''W'' mean?', '["Work","Will (way forward)","Wage","Warning"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m06-q3', 1, 'The agreed next actions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m06-q4', 'hrpm-m06-check', 4, 'A salesperson makes ₦1,400,000 against a ₦2,000,000 target. What is attainment?', '["60%","65%","70%","75%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m06-q4', 2, '1.4 ÷ 2 = 70%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m06-q5', 'hrpm-m06-check', 5, 'What is the first step with poor performance?', '["Dismiss","Check the facts and causes and talk informally","Ignore","Warn publicly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m06-q5', 1, 'Understand before acting.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Pay, Benefits and Recognition: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m07-check', 'human-resources-people-management', 'module', 'hrpm-m07', 'Pay, Benefits and Recognition: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m07-q1', 'hrpm-m07-check', 1, 'Salary ₦180,000 and midpoint ₦200,000. What is the compa-ratio?', '["0.8","0.9","1.0","1.1"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m07-q1', 1, '180 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m07-q2', 'hrpm-m07-check', 2, 'With gross pay ₦200,000 all pensionable, employee pension at 8% is:', '["₦8,000","₦16,000","₦20,000","₦24,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m07-q2', 1, '0.08 × 200,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m07-q3', 'hrpm-m07-check', 3, 'Employer cost with 10% employer pension on ₦200,000 gross is:', '["₦200,000","₦210,000","₦220,000","₦240,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m07-q3', 2, '200,000 + 20,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m07-q4', 'hrpm-m07-check', 4, 'Which is true of recognition?', '["It costs a lot","Specific, timely thanks costs little and has a big effect","It is not needed","It must be cash"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m07-q4', 1, 'Recognition motivates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m07-q5', 'hrpm-m07-check', 5, 'Who should be able to prepare, approve and pay payroll alone?', '["One person","No one: duties should be separated","The owner''s friend","Anyone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m07-q5', 1, 'Separate duties.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Employee Relations and Discipline: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m08-check', 'human-resources-people-management', 'module', 'hrpm-m08', 'Employee Relations and Discipline: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m08-q1', 'hrpm-m08-check', 1, 'What should you do first with a formal grievance?', '["Ignore it","Acknowledge it promptly","Dismiss the employee","Discuss with everyone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m08-q1', 1, 'Prompt acknowledgement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m08-q2', 'hrpm-m08-check', 2, 'A fair disciplinary process includes:', '["No investigation","Investigation, a hearing, a fair decision and an appeal","Immediate dismissal always","Public warnings"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m08-q2', 1, 'Fair process protects both sides.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m08-q3', 'hrpm-m08-check', 3, 'What is mediation?', '["A court","A neutral person helps both sides reach their own agreement","A punishment","A warning"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m08-q3', 1, 'Voluntary and confidential.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m08-q4', 'hrpm-m08-check', 4, 'Which is a common mistake in discipline?', '["Keeping records","Acting in anger with no evidence","Offering an appeal","Being consistent"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m08-q4', 1, 'Evidence and calm matter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m08-q5', 'hrpm-m08-check', 5, 'What is an exit interview for?', '["Punishing leavers","Learning why people leave and how to improve","Closing accounts","Paying salary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m08-q5', 1, 'It gives retention insight.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Labour Law and Compliance in Nigeria: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m09-check', 'human-resources-people-management', 'module', 'hrpm-m09', 'Labour Law and Compliance in Nigeria: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m09-q1', 'hrpm-m09-check', 1, 'Employer pension (10%) on ₦2,000,000 payroll is:', '["₦100,000","₦160,000","₦200,000","₦360,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m09-q1', 2, '0.10 × 2,000,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m09-q2', 'hrpm-m09-check', 2, 'Employer plus employee pension (10% + 8%) on ₦2,000,000 is:', '["₦200,000","₦320,000","₦360,000","₦400,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m09-q2', 2, '200,000 + 160,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m09-q3', 'hrpm-m09-check', 3, 'Why should you get a written contract?', '["It is a fashion","It protects both sides by recording the terms","It avoids pay","It is optional decoration"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m09-q3', 1, 'Written terms prevent disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m09-q4', 'hrpm-m09-check', 4, 'Before dismissals or redundancies you should:', '["Act fast","Get advice from a labour lawyer or relevant authority","Ignore the law","Ask a friend"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m09-q4', 1, 'Advice is cheaper than a dispute.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m09-q5', 'hrpm-m09-check', 5, 'Why are laws and rates in this lesson only illustrative?', '["They never change","They change and apply differently, so you must confirm current rules","They are invented","Rates are fixed forever"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m09-q5', 1, 'Always confirm the current position.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Culture, Engagement and Wellbeing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m10-check', 'human-resources-people-management', 'module', 'hrpm-m10', 'Culture, Engagement and Wellbeing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m10-q1', 'hrpm-m10-check', 1, '6 leavers and an average headcount of 40 give turnover of:', '["10%","15%","20%","25%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m10-q1', 1, '6 ÷ 40.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m10-q2', 'hrpm-m10-check', 2, 'Culture is shaped most by:', '["Posters","What leaders do","Pay slips","The building"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m10-q2', 1, 'Leaders'' behaviour sets the tone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m10-q3', 'hrpm-m10-check', 3, 'What does inclusion mean?', '["Treating all the same without thought","Making sure everyone is respected and can contribute","Hiring only one group","Ignoring differences"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m10-q3', 1, 'Inclusion is respect and access.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m10-q4', 'hrpm-m10-check', 4, 'A risk assessment:', '["Is optional","Identifies hazards, assesses risk and sets controls","Replaces training","Is only for factories"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m10-q4', 1, 'It is the basis of safety.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m10-q5', 'hrpm-m10-check', 5, 'People often leave:', '["Because of the building","Their manager","Tuesdays","The colour of the logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m10-q5', 1, 'Manager quality drives retention.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: HR Data, Tools and Policies: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m11-check', 'human-resources-people-management', 'module', 'hrpm-m11', 'HR Data, Tools and Policies: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m11-q1', 'hrpm-m11-check', 1, '50 employees, 22 days, 40 absent days. What is the absenteeism rate?', '["2.7%","3.6%","4.0%","5.0%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m11-q1', 1, '40 ÷ 1,100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m11-q2', 'hrpm-m11-check', 2, 'Which belongs in a policy?', '["Gossip","Purpose, scope, rules, responsibilities, procedure and consequences","Jokes","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m11-q2', 1, 'Clear structure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m11-q3', 'hrpm-m11-check', 3, 'Which formula counts employees in Sales?', '["=SUM(A:A)","=COUNTIF(D:D,\"Sales\")","=TODAY()","=IF(A1,B1)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m11-q3', 1, 'COUNTIF counts matches.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m11-q4', 'hrpm-m11-check', 4, 'Why report HR metrics in groups?', '["To save space","To protect individuals'' privacy","To hide results","It is a law of maths"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m11-q4', 1, 'Privacy matters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m11-q5', 'hrpm-m11-check', 5, 'Why get employees to sign that they have received policies?', '["To waste time","It shows they were told, so rules can be enforced","Because it is fashionable","Nobody reads them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m11-q5', 1, 'Communication is the basis of enforcement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: An HR Starter Pack: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('hrpm-m12-check', 'human-resources-people-management', 'module', 'hrpm-m12', 'Final Project: An HR Starter Pack: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m12-q1', 'hrpm-m12-check', 1, 'How should the pack open for the owner?', '["With every policy","With a one-page summary and the first three actions","With the law","With the budget only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m12-q1', 1, 'Start with the summary.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m12-q2', 'hrpm-m12-check', 2, 'Which shows the parts fit together?', '["The job description matches the grade and the budget matches headcount","Many colours","Many pages","A logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m12-q2', 0, 'Consistency.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m12-q3', 'hrpm-m12-check', 3, 'Monthly gross payroll ₦3,030,000 plus 10% employer pension is:', '["₦3,303,000","₦3,333,000","₦3,363,000","₦3,500,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m12-q3', 1, '3,030,000 × 1.1.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m12-q4', 'hrpm-m12-check', 4, 'Why recommend professional legal and tax advice in the pack?', '["To avoid work","Laws and rates change and apply differently","It is required in every sentence","To lengthen it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m12-q4', 1, 'Honest about limits.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-m12-q5', 'hrpm-m12-check', 5, 'How can you test a tool in the pack?', '["Never test","Ask someone to use it without your help and see where they get stuck","Print it","Email it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-m12-q5', 1, 'User testing finds problems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Human Resources & People Management: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('human-resources-people-management-final', 'human-resources-people-management', 'final', null, 'Human Resources & People Management: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f01', 'human-resources-people-management-final', 1, 'Who shares responsibility for people management?', '["HR only","Line managers and HR together","The owner only","Finance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f01', 1, 'Partnership between managers and HR.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f02', 'human-resources-people-management-final', 2, 'A shop open 12 hours, 7 days, 2 staff always, needs how many staff-hours a week?', '["84","126","168","336"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f02', 2, '84 × 2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f03', 'human-resources-people-management-final', 3, 'What makes interviews fairer and more reliable?', '["Different questions for each","Structured questions scored against criteria","No notes","Gut feeling"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f03', 1, 'Structure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f04', 'human-resources-people-management-final', 4, '5 of 20 hires leave within 90 days. Early attrition is:', '["5%","15%","25%","50%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f04', 2, '5 ÷ 20.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f05', 'human-resources-people-management-final', 5, 'Training costs ₦300,000 and saves ₦960,000 a year. ROI is:', '["120%","220%","320%","420%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f05', 1, '(960 − 300) ÷ 300.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f06', 'human-resources-people-management-final', 6, 'Which feedback follows SBI?', '["You are careless","In Tuesday''s opening the till was 15 minutes late, so two customers left","Do better","Good job"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f06', 1, 'Situation, behaviour and impact.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f07', 'human-resources-people-management-final', 7, 'Salary ₦180,000, midpoint ₦200,000. Compa-ratio is:', '["0.8","0.9","1.0","1.1"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f07', 1, '180 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f08', 'human-resources-people-management-final', 8, 'A fair disciplinary process includes:', '["Dismissal at once always","Investigation, a hearing, a decision with reasons and an appeal","Public shaming","No records"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f08', 1, 'Fair process.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f09', 'human-resources-people-management-final', 9, 'Employer 10% and employee 8% pension on ₦2,000,000 total:', '["₦200,000","₦320,000","₦360,000","₦400,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f09', 2, '200,000 + 160,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f10', 'human-resources-people-management-final', 10, 'Before a dismissal you should:', '["Act quickly","Follow a fair process and get advice","Ignore the contract","Tell everyone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f10', 1, 'Process and advice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f11', 'human-resources-people-management-final', 11, '6 leavers, average headcount 40. Turnover is:', '["10%","15%","20%","25%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f11', 1, '6 ÷ 40.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f12', 'human-resources-people-management-final', 12, '50 employees, 22 working days, 40 days absent. Absenteeism is:', '["2.7%","3.6%","4.4%","5.5%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f12', 1, '40 ÷ 1,100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f13', 'human-resources-people-management-final', 13, 'What should a policy include?', '["Only the rules","Purpose, scope, rules, responsibilities, procedure, consequences and review date","Only consequences","Only the owner''s name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f13', 1, 'Complete structure.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f14', 'human-resources-people-management-final', 14, 'Why are statutory rates in HR courses illustrative?', '["They never change","They change, so current rules must be confirmed","They are secret","They are the same everywhere"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f14', 1, 'Always confirm.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('hrpm-f15', 'human-resources-people-management-final', 15, 'Which action best reduces early attrition?', '["Skipping induction","A good induction, a buddy and clear expectations","No feedback","Hiding the job''s challenges"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('hrpm-f15', 1, 'Support new hires.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -104186,6 +106593,16 @@ values ('pmgt-complete-project-plan', 'project-management', 'A complete project 
 Use real prices and durations where you can, and state your assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **one-page summary** and your **total budget and critical path** below, with a short note on where to find each part.
 
 Write for the sponsor who must approve the plan: open with the summary, make the parts agree with each other and have honest answers for the questions they will ask.$md$, array['Charter: purpose and business case, SMART objectives, success criteria, high-level scope, sponsor and stakeholders.', 'Scope: MoSCoW requirements, a scope statement with exclusions and acceptance criteria, and a work breakdown structure.', 'Schedule: activities, durations, dependencies, milestones, the critical path and float.', 'Budget: cost by work package, contingency and total, with a cash flow view.', 'Risk: a register with at least five scored risks, responses and owners.', 'People and communication: a RACI, stakeholder engagement and a communication plan.', 'Quality and change: acceptance checks, procurement needs and the change control process.', 'Control and closing: how progress is tracked (with a sample status report) and how the project will be closed.']::text[], '{}'::text[], array['The charter is clear, with a SMART objective, success criteria and defined scope boundaries.', 'Scope is prioritised, testable and fully broken down in a WBS that covers all the work.', 'The schedule has correct dependencies, a correctly calculated critical path and realistic durations.', 'The budget covers all costs, includes contingency and agrees with the WBS.', 'Risks are scored, have owners and proportionate responses and are reflected in the contingency.', 'Roles, stakeholder engagement and communication are specific and workable.', 'Quality, change control, progress tracking and closing are planned, and the whole plan is consistent.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: An HR starter pack
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('hrpm-starter-pack', 'human-resources-people-management', 'An HR starter pack', 'An HR starter pack for a small business: workforce plan, recruitment kit, onboarding, performance and training, pay, procedures and policies, and compliance and metrics.', $md$Choose a small company you know (or invent a realistic one with 10 to 40 employees) and build the HR starter pack a new HR officer or business owner would use in the first weeks.
+
+Use realistic figures, and flag where laws and statutory rates must be confirmed. Submit a link to your pack (a shared document, PDF or folder) and paste your **one-page summary** and your **annual payroll cost** below, with a short note on where to find each part.
+
+Write for the owner or managing director who will approve it: lead with the summary, make the tools easy to use and show that the parts fit together.$md$, array['Company profile and the top three people problems the pack addresses.', 'Workforce plan: organisation chart, headcount by role and an annual payroll budget with employer pension.', 'Recruitment kit for one key role: job description, advert, structured interview questions and a scoring sheet.', 'Onboarding and probation: an induction checklist and a 30-60-90 day plan.', 'Performance and development: goals and appraisal approach, a feedback model and a costed training plan.', 'Reward and payroll: a pay grade table, a benefits summary and a payroll worksheet for one employee, with a note to confirm statutory rates.', 'Employee relations and policies: grievance and disciplinary outlines and two policies written in full.', 'Compliance, records and metrics: a compliance calendar, an employee register design and five HR metrics with targets.']::text[], '{}'::text[], array['The company profile and people priorities are specific and the pack addresses them.', 'The workforce plan and payroll budget are calculated correctly and include employer costs.', 'The recruitment kit is fair, structured and based on a clear job description.', 'Onboarding and probation plans are practical, with measurable objectives.', 'Performance, training and reward tools are consistent with each other and costed.', 'Procedures and policies follow fair process and are written clearly.', 'Compliance and metrics are specific, the legal points are flagged for confirmation, and the whole pack is consistent.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
