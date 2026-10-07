@@ -80444,58 +80444,1585 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Logistics & Freight Forwarding
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('logistics-freight-forwarding', 'full', null, 'logistics-freight-forwarding', 'LFF', 'Logistics & Freight Forwarding', 'Understand how goods move by road, sea and air, and how a freight forwarder plans, documents, clears and delivers a shipment.', 'A practical course on logistics and freight forwarding for people who work in or want to enter shipping, clearing and forwarding, warehousing and transport. You learn the modes of transport, shipping documents, customs, freight rates, warehousing and how to run a forwarding business.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Transport modes and routes', 'Shipping documentation', 'Customs and clearing', 'Freight rates and quotations', 'Warehousing and distribution', 'Running a forwarding business']::text[], array['No experience needed']::text[], 'A complete shipment plan', true, true, true, true, false, 60, 55)
+values ('logistics-freight-forwarding', 'short', 'Logistics & Freight Practitioner', 'logistics-freight-forwarding', 'LFF', 'Logistics & Freight Forwarding', 'Understand how goods move by road, sea and air, and how a freight forwarder plans, documents, clears and delivers a shipment.', 'A practical course on logistics and freight forwarding for people who work in or want to enter shipping, clearing and forwarding, warehousing and transport. You learn the modes of transport, shipping documents, customs, freight rates, warehousing and how to run a forwarding business.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', 7, false, 'available', true, array['Transport modes and routes', 'Shipping documentation', 'Customs and clearing', 'Freight rates and quotations', 'Warehousing and distribution', 'Running a forwarding business']::text[], array['No experience needed']::text[], 'A complete shipment plan', true, true, true, true, false, 60, 55)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Every shipment is a chain of decisions: which mode, which route, which documents, who clears it and who delivers it. This course teaches the whole chain and how a freight forwarder coordinates it, ending with a complete shipment plan.', audience = array['Aspiring freight forwarders and clearing agents', 'Logistics and warehouse staff', 'Importers and exporters who manage shipments', 'Anyone planning a career in shipping and transport']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete shipment plan","summary":"Plan a shipment from origin to delivery: mode, route, documents, customs, quotation and delivery."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Explain how cargo moves by road, rail, sea and air', 'Choose the right mode and route for a shipment', 'Prepare and check shipping documents', 'Understand customs clearance and port processes', 'Build a freight quotation', 'Plan warehousing and last-mile delivery', 'Understand how to set up and run a forwarding business']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'logistics-freight-forwarding' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Every shipment is a chain of decisions: which mode, which route, which documents, who clears it and who delivers it. This course teaches the whole chain and how a freight forwarder coordinates it, ending with a complete shipment plan.', audience = array['Aspiring freight forwarders and clearing agents', 'Logistics and warehouse staff', 'Importers and exporters who manage shipments', 'Anyone planning a career in shipping and transport']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete shipment plan","summary":"Plan a shipment from origin to delivery: mode, route, documents, customs, quotation and delivery."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Explain how cargo moves by road, rail, sea and air', 'Choose the right mode and route for a shipment', 'Prepare and check shipping documents', 'Understand customs clearance and port processes', 'Build a freight quotation', 'Plan warehousing and last-mile delivery', 'Understand how to set up and run a forwarding business']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'logistics-freight-forwarding' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m01', 'logistics-freight-forwarding', 'Logistics fundamentals', 1, null, null, '{}'::text[], array['What logistics covers', 'The players in a shipment', 'Logistics and trade terms', 'Costs and service levels']::text[])
+values ('lff-m01', 'logistics-freight-forwarding', 'Logistics fundamentals', 1, 'Logistics Basics', 'LOGBAS', array['Define what logistics covers', 'Name the parties in a shipment', 'Read basic trade terms', 'Balance cost and service']::text[], array['What logistics covers', 'The players in a shipment', 'Logistics and trade terms', 'Costs and service levels']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m02', 'logistics-freight-forwarding', 'Modes of transport', 2, null, null, '{}'::text[], array['Road and rail', 'Sea freight: containers, bulk, RoRo', 'Air freight', 'Multimodal and intermodal transport']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:logistics-fundamentals', 'logistics-freight-forwarding', 'lff-m01', 'logistics-fundamentals', 'Logistics Fundamentals', 'Understand what logistics covers, who is involved in moving a shipment, how trade terms divide the work, and how cost and service level pull against each other.', 20, $md$
+## What logistics covers
+
+**Logistics** is planning and managing the movement and storage of goods, and the information that goes with them, from where they are made to where they are needed. When a customer in Kano receives a carton of goods ordered from a supplier in Guangzhou, logistics is everything in between: packing, transport, documents, customs, storage and delivery.
+
+Logistics is wider than transport. It includes:
+
+- **Transport:** moving goods by road, rail, sea or air.
+- **Warehousing and storage:** holding goods safely until needed.
+- **Inventory management:** having the right amount in the right place.
+- **Packaging and handling:** protecting goods and making them easy to move.
+- **Documentation and customs:** the paperwork that lets goods cross borders legally.
+- **Information and tracking:** knowing where goods are and when they will arrive.
+- **Last-mile delivery:** the final trip to the customer.
+
+Good logistics is invisible: goods arrive on time, undamaged, at a fair cost. Bad logistics is expensive and noisy: late deliveries, lost cargo, disputes and unhappy customers.
+
+## The players in a shipment
+
+| Player | Role |
+| :-- | :-- |
+| **Shipper (exporter / consignor)** | The party sending the goods |
+| **Consignee (importer / receiver)** | The party receiving them |
+| **Freight forwarder** | Organises the movement on behalf of the shipper or consignee |
+| **Carrier** | The shipping line, airline, trucking or rail company that moves the cargo |
+| **Customs broker / clearing agent** | Handles customs declarations and clearance |
+| **Port, terminal and airport operators** | Handle goods at the transfer points |
+| **Warehouse and haulage operators** | Store goods and move them over land |
+| **Insurers and banks** | Cover risk and move the money |
+| **Customs and regulators** | Control what crosses the border and collect duty |
+
+One company can play several roles. A large forwarder may also run warehouses and clear goods. A good logistics professional knows which role each party has, because that decides who is responsible when something goes wrong.
+
+## Logistics and trade terms
+
+**Incoterms** are standard trade terms that say who arranges and pays for each stage and who carries the risk. They split a journey between seller and buyer:
+
+- **EXW:** the buyer takes the goods at the seller's door and does everything from there.
+- **FOB:** the seller delivers the goods on board the ship at the port of loading. After that the buyer pays and carries the risk. (Sea freight.)
+- **CIF:** the seller pays freight and insurance to the destination port, but risk passes when the goods are on board. (Sea freight.)
+- **DAP:** the seller delivers to the named place; the buyer clears import.
+- **DDP:** the seller delivers with import duty and taxes paid.
+
+A forwarder must read the term on the sales contract to know **what they must arrange**. If a customer buys FOB, the forwarder's job starts at the origin port and includes the ocean freight and destination handling. If the customer sells DAP, the forwarder may need to deliver to the customer's door with import clearance still to be done.
+
+## Costs and service levels
+
+Every logistics decision trades **cost** against **service**:
+
+- **Faster** (air instead of sea) costs more.
+- **More stock close to customers** gives quicker delivery but ties up money and space.
+- **More tracking and handling** improves visibility and costs more.
+- **Cheaper, slower** options save money but risk delays and stockouts.
+
+**Service levels** are what you promise: delivery within 48 hours, 98% of orders complete, damage below 0.5%. Set them according to what the customer needs and will pay for, and measure them. A customer who needs medicines the same day will pay for air. A customer shipping furniture will accept six weeks by sea.
+
+Logistics cost is often measured as a share of sales. If a business spends ₦4,500,000 on logistics and sells ₦60,000,000 of goods, logistics is 4,500,000 ÷ 60,000,000 = **7.5%** of sales. Tracking this share, and the parts of it, shows where savings are possible.
+
+## Try it
+
+```task
+{
+  "id": "lff-m01-t1",
+  "prompt": "A shop in Kano buys 200 cartons of goods from a supplier in Guangzhou and sells them across northern Nigeria. Write **one line for each of six parties** involved (shipper, consignee, forwarder, carrier, clearing agent, customs), saying what each does for this shipment.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Shipper: ...\nConsignee: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Names the shipper and what they do", "pattern": "shipper|exporter|supplier" },
+    { "label": "Names the consignee", "pattern": "consignee|importer|shop|receiver" },
+    { "label": "Names the forwarder", "pattern": "forwarder" },
+    { "label": "Names the carrier", "pattern": "carrier|shipping line|airline|truck" },
+    { "label": "Names the clearing agent", "pattern": "clearing|broker" },
+    { "label": "Names customs and its role", "pattern": "customs[^\\n]*(duty|tax|check|release|inspect|declar)" }
+  ],
+  "sample": "Shipper: the supplier in Guangzhou who packs the goods and sends the invoice and packing list.\nConsignee: the shop in Kano that receives and pays for the goods.\nFreight forwarder: books space, arranges the transport and prepares the shipping documents.\nCarrier: the shipping line that carries the container from China to Lagos.\nClearing agent: handles the customs declaration and gets the goods released at the port.\nCustoms: checks the declaration, collects duty and taxes and releases the goods.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m01-t2",
+  "prompt": "A customer buys goods on **FOB Shenzhen** terms and asks you, a forwarder, to handle the shipment to Lagos. In 40 to 90 words, say what your job covers and what the seller has already done.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Under FOB the seller ...",
+  "rules": [
+    { "label": "Says the seller loads the goods on board at the port of origin", "pattern": "seller[^.]*(on board|load|deliver|export clear)" },
+    { "label": "Says the buyer or forwarder takes over from there", "pattern": "buyer|forwarder|we|i (book|arrange|handle)|from there|after that" },
+    { "label": "Mentions freight, destination handling or clearing", "pattern": "freight|destination|clear|handling|insur" },
+    { "label": "Mentions risk or cost passing", "pattern": "risk|cost|pay" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Under FOB Shenzhen the seller delivers the goods on board the ship at Shenzhen and clears them for export. From that point the cost and risk are the buyer's, so my job as forwarder covers booking the ocean freight to Lagos, arranging cargo insurance, handling the documents and destination charges, and arranging customs clearance and delivery to the customer. I must make sure the seller's documents match the order before the ship sails.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m01-t3",
+  "prompt": "A trader spent **₦4,500,000** on logistics last year and sold **₦60,000,000** of goods. Work out logistics cost as a percentage of sales. Then say in one or two sentences what this figure helps the trader to do.",
+  "minutes": 6,
+  "rows": 5,
+  "placeholder": "Logistics cost % = ...",
+  "rules": [
+    { "label": "Result of 7.5%", "pattern": "7\\.5\\s?%|7\\.5 percent" },
+    { "label": "Shows the division", "pattern": "4,?500,?000\\s*[/÷]\\s*60,?000,?000" },
+    { "label": "Says it helps track, compare or find savings", "pattern": "track|compare|saving|reduce|improve|monitor|target|benchmark" }
+  ],
+  "sample": "Logistics cost % = 4,500,000 / 60,000,000 = 7.5% of sales.\nThis figure helps the trader to track logistics cost over time, compare it with other businesses and see where savings are possible.",
+  "required": false
+}
+```
+
+Next lesson: the modes of transport and when to use each.
+$md$, true, true, 1, array['lff-m01-t1', 'lff-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m03', 'logistics-freight-forwarding', 'The role of a freight forwarder', 3, null, null, '{}'::text[], array['What forwarders do', 'Forwarder, carrier, agent and broker', 'Choosing and working with a forwarder', 'Liability and insurance']::text[])
+values ('lff-m02', 'logistics-freight-forwarding', 'Modes of transport', 2, 'Transport Modes', 'MODES', array['Compare road, rail, sea and air', 'Understand containers, bulk and RoRo', 'Calculate air chargeable weight', 'Explain multimodal transport']::text[], array['Road and rail', 'Sea freight: containers, bulk, RoRo', 'Air freight', 'Multimodal and intermodal transport']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m04', 'logistics-freight-forwarding', 'Shipping documents', 4, null, null, '{}'::text[], array['Commercial invoice and packing list', 'Bill of lading and airway bill', 'Certificates of origin and other certificates', 'Document checks and common errors']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:modes-of-transport', 'logistics-freight-forwarding', 'lff-m02', 'modes-of-transport', 'Modes of Transport', 'Compare road, rail, sea and air transport, understand containers, bulk and roll-on roll-off shipping, and combine modes in multimodal and intermodal transport.', 20, $md$
+## Choosing a mode
+
+Goods move by four main modes. Each has a different mix of **cost, speed, capacity, reliability and reach**. No mode is best for everything; good logistics matches the mode to the cargo.
+
+| Mode | Strengths | Weaknesses | Typical use |
+| :-- | :-- | :-- | :-- |
+| **Road** | Door to door, flexible, widely available | Limited load per truck, traffic, road condition, security | Most domestic freight in Nigeria; first and last leg |
+| **Rail** | Cheap for heavy loads over distance, safer from traffic | Limited network, fixed routes and timetables | Bulk and containers on connected corridors |
+| **Sea** | Lowest cost per tonne, huge capacity | Slow, port delays, weather | Most international trade by volume |
+| **Air** | Fastest, secure, global reach | Highest cost, size and weight limits | Urgent, high-value, light or perishable goods |
+| **Inland waterways / pipeline** | Cheap for specific cargoes | Limited routes | Bulk liquids, some barge cargo |
+
+## Road and rail
+
+**Road** carries most of the goods moved inside Nigeria. Trucks range from small vans to articulated trailers carrying a 40-foot container. Plan for road condition, weather, security, checkpoints, loading and unloading time, and driver hours. A truck is only profitable when it is full in both directions, so empty return trips are a major cost.
+
+**Rail** suits heavy, regular, long-distance cargo. It can be cheaper than road on routes it serves and removes trucks from congested roads. Its limit is reach: goods usually need road transport at each end, and capacity, schedules and access vary. Check the current services available on your route before building a plan around rail.
+
+## Sea freight: containers, bulk and RoRo
+
+Most international goods move by sea. The main forms:
+
+- **Containerised cargo.** Goods are packed in standard steel containers, which are loaded on ships and moved by truck or train without unpacking. Common sizes are the **20-foot** (about 33 cubic metres inside) and **40-foot** (about 67 cubic metres), plus the taller **40-foot high cube** (about 76). Types include general-purpose (dry), refrigerated ("reefer"), open-top, flat-rack and tank containers.
+- **Bulk cargo.** Loose cargo such as grain, coal or fertiliser carried in the hold of a bulk carrier, or liquid bulk in tankers.
+- **Breakbulk.** Individual pieces or packages too large or awkward for containers, such as machinery, handled one by one.
+- **RoRo (roll-on, roll-off).** Vehicles and wheeled cargo driven on and off the ship. Cars imported into Nigeria commonly arrive this way.
+
+Two terms matter for loads that do not fill a container: **FCL** (full container load, one shipper per container) and **LCL** (less than container load, several shippers share a container, charged by cubic metre or weight).
+
+## Air freight
+
+Air freight is the fastest option and suits urgent, valuable, light or perishable goods: electronics, medical supplies, fresh produce, samples and documents. It is charged on the **greater of actual weight and volumetric weight**:
+
+*Volumetric weight (kg) = length × width × height (cm) ÷ 6,000*
+
+A carton 60 × 50 × 40 cm weighs 18 kg. Volumetric weight is 120,000 ÷ 6,000 = **20 kg**, so the chargeable weight is 20 kg. At $5.50 a kilogram, one carton costs $110; ten cartons cost $1,100 (chargeable 200 kg).
+
+Air cargo also has limits on size, weight and dangerous goods, and it passes through airport cargo terminals with their own handling charges and processes.
+
+## Multimodal and intermodal transport
+
+Few shipments travel on one mode only.
+
+- **Intermodal transport** uses more than one mode with the goods staying in the same container or unit, so they are not repacked between modes. A container might go by truck to the port, by ship overseas, then by rail and truck to the customer.
+- **Multimodal transport** is intermodal movement under **one contract and one document**, with one party responsible for the whole journey.
+
+Benefits: the best mode for each leg, less handling and damage, and one point of contact. Challenges: more transfer points, where delays happen, and the need for strong coordination and clear responsibility.
+
+## Try it
+
+```task
+{
+  "id": "lff-m02-t1",
+  "prompt": "Choose the best main mode for each cargo and give a reason: (1) **30 kg of urgent medical samples** from Lagos to London; (2) **22 tonnes of rice** from Lagos port to Kano; (3) **800 cubic metres of furniture** from China to Lagos. One line each.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "1. Air - ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Chooses air for the urgent samples", "pattern": "air" },
+    { "label": "Chooses road or rail for the rice", "pattern": "road|rail|truck" },
+    { "label": "Chooses sea for the furniture", "pattern": "sea|container|ocean|ship" },
+    { "label": "Gives reasons", "pattern": "because|since|urgent|cheap|capacity|volume|fast|heavy", "perLine": true }
+  ],
+  "sample": "1. Air - the samples are urgent, small and valuable, and the cost per kilogram is acceptable for 30 kg.\n2. Road (or rail where available) - the rice is heavy and going inland, and trucks deliver door to door, while rail may be cheaper over the distance.\n3. Sea in containers - the furniture is bulky and not urgent, and sea freight is far cheaper per cubic metre.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m02-t2",
+  "prompt": "You send **10 cartons by air**, each **60 × 50 × 40 cm** and **18 kg**, at **$5.50 per kg**. Work out the volumetric weight per carton, the total chargeable weight and the cost.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Volumetric weight per carton = ...",
+  "rules": [
+    { "label": "Volumetric weight of 20 kg", "pattern": "\\b20\\s?kg|=\\s?20\\b" },
+    { "label": "Chargeable weight of 200 kg", "pattern": "\\b200\\s?kg|=\\s?200\\b" },
+    { "label": "Cost of $1,100", "pattern": "1,?100" },
+    { "label": "Says the greater of actual and volumetric weight is charged", "pattern": "greater|higher|bigger|more than|volumetric" }
+  ],
+  "sample": "Volumetric weight per carton = 60 x 50 x 40 / 6,000 = 20 kg, which is greater than the actual 18 kg, so 20 kg is chargeable.\nTotal chargeable weight = 10 x 20 = 200 kg.\nCost = 200 x $5.50 = $1,100.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m02-t3",
+  "prompt": "Explain in 40 to 90 words the difference between **intermodal** and **multimodal** transport, and give one benefit of using more than one mode.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Intermodal transport is ...",
+  "rules": [
+    { "label": "Explains intermodal (more than one mode, same container or unit)", "pattern": "intermodal[^.]*(mode|container|unit|same)" },
+    { "label": "Explains multimodal (one contract or one document or one responsible party)", "pattern": "multimodal[^.]*(contract|document|one|single|responsib)" },
+    { "label": "Gives a benefit", "pattern": "benefit|cheaper|less handling|damage|best mode|one point|faster|flexib" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Intermodal transport uses more than one mode, such as truck, ship and rail, with the goods staying in the same container so they are not repacked. Multimodal transport is intermodal movement under a single contract and one transport document, with one party responsible for the whole journey. A benefit of using more than one mode is that each leg can use the best mode for cost or speed, and there is less handling, so less damage.",
+  "required": false
+}
+```
+
+Next lesson: what a freight forwarder does.
+$md$, true, true, 2, array['lff-m02-t1', 'lff-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m05', 'logistics-freight-forwarding', 'Customs and clearing', 5, null, null, '{}'::text[], array['How customs works', 'HS codes, duty and valuation', 'Clearing at ports and airports', 'Bonded goods, transit and temporary import']::text[])
+values ('lff-m03', 'logistics-freight-forwarding', 'The role of a freight forwarder', 3, 'Forwarder Role', 'FWDER', array['Explain what a forwarder does', 'Tell forwarder, carrier and agent apart', 'Choose a forwarder', 'Understand liability and insurance']::text[], array['What forwarders do', 'Forwarder, carrier, agent and broker', 'Choosing and working with a forwarder', 'Liability and insurance']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m06', 'logistics-freight-forwarding', 'Freight rates and quotations', 6, null, null, '{}'::text[], array['How freight is priced', 'Surcharges and extra charges', 'Building a quotation', 'Negotiating with carriers']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:the-role-of-a-freight-forwarder', 'logistics-freight-forwarding', 'lff-m03', 'the-role-of-a-freight-forwarder', 'The Role of a Freight Forwarder', 'Understand what forwarders do and how they differ from carriers, agents and brokers, how to choose and work with one, and where liability and insurance fit.', 20, $md$
+## What a freight forwarder does
+
+A **freight forwarder** is a specialist who arranges the movement of goods for shippers and receivers. They usually do not own the ships or planes. They know the routes, the carriers, the rules and the paperwork, and they put the whole journey together.
+
+Typical services:
+
+- **Advice** on the best mode, route and trade terms.
+- **Rate quotations** and **booking space** with carriers.
+- **Collection** from the supplier and delivery to the customer.
+- **Consolidation:** combining small shipments from several customers into one container or air pallet to get a better rate.
+- **Documentation:** preparing and checking bills of lading, air waybills and customs documents.
+- **Customs clearance**, directly or through a licensed agent.
+- **Cargo insurance** arrangements.
+- **Warehousing** and distribution.
+- **Tracking** and updates.
+- **Handling problems:** delays, damage, claims and disputes.
+
+A forwarder takes the complexity so the customer does not have to deal with five different companies.
+
+## Forwarder, carrier, agent and broker
+
+These terms are often confused. They are different roles:
+
+| Role | What they do | Owns the transport? |
+| :-- | :-- | :-- |
+| **Carrier** | Moves the goods: shipping line, airline, trucking company, railway | Yes |
+| **Freight forwarder** | Arranges the transport and related services for the customer | Usually no |
+| **NVOCC** (non-vessel operating common carrier) | A forwarder-like company that issues its own bill of lading and sells container space it buys from shipping lines | No ships, but acts as a carrier |
+| **Agent** | Acts on behalf of a principal (for example, a forwarder's partner at the destination) | No |
+| **Customs broker / clearing agent** | Handles the customs declaration and clearance | No |
+
+When a forwarder issues its own **house bill of lading** to its customer, and the shipping line issues a **master bill of lading** to the forwarder, the forwarder is taking responsibility as a carrier for the customer. That changes who is liable if goods are lost or damaged, which is why the paperwork matters.
+
+## Choosing and working with a forwarder
+
+For a good result, pick the right partner and manage the relationship.
+
+**Choosing:**
+- **Experience on your route and with your cargo** (general goods, perishables, machinery, hazardous items).
+- **Licences, registration and memberships** appropriate to the work. Ask for proof and verify it.
+- **Network:** reliable agents at both ends.
+- **Transparent pricing:** a full quote listing every charge and what is not included.
+- **Communication and tracking:** will they tell you early when something goes wrong?
+- **References** from other customers, and how they handle problems.
+- **Financial stability:** you may pay in advance, so check they will still be around.
+- **Insurance** they hold for their own liability.
+
+**Working with them:**
+- Give **complete, accurate information** early: goods, quantities, weights, dimensions, values, dates and contacts.
+- **Confirm in writing** the terms, price, transit time and who does what.
+- Ask for **document drafts** and check them before the goods ship.
+- **Stay in touch** and ask for tracking updates.
+- Review their performance and give feedback.
+
+## Liability and insurance
+
+A forwarder is not automatically responsible for every loss. Their liability depends on their role, the contract and the law, and it is often **limited** to a small amount per kilogram or per package. Carrier liability under the international rules is also limited: for sea and air carriage, the carrier's payment for lost or damaged cargo is usually far below the value of the goods.
+
+This is why **cargo insurance** matters. A common basis is to insure for **110% of the CIF value** of the goods, which covers the goods, freight and insurance plus a margin for the importer's expected profit and costs.
+
+Example: goods are worth $8,000 and freight and insurance bring the CIF to $9,000. Insured at 110%, the cover is **$9,900**. If the cargo is lost, the insurer pays up to $9,900 depending on the terms. If it relied on carrier liability limited to, say, $2 a kilogram for 400 kg, it would recover about $800.
+
+Insurance policies differ in what they cover. The Institute Cargo Clauses (A), (B) and (C) range from wide "all risks" cover to narrower named-risk cover. Read what is covered and excluded, and arrange cover **before** the goods move.
+
+## Try it
+
+```task
+{
+  "id": "lff-m03-t1",
+  "prompt": "In 50 to 100 words, explain to a small business owner the difference between a **freight forwarder** and a **carrier**, and why they might use a forwarder instead of booking directly with a shipping line.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "A carrier is ...",
+  "rules": [
+    { "label": "Explains a carrier owns or operates the transport", "pattern": "carrier[^.]*(own|operate|move|ship|airline|truck)" },
+    { "label": "Explains a forwarder arranges the transport and services", "pattern": "forwarder[^.]*(arrange|organis|book|document|customs|services?)" },
+    { "label": "Gives a reason to use a forwarder (rates, expertise, paperwork, consolidation, one contact)", "pattern": "expertise|knowledge|paperwork|document|consolidat|rate|one (contact|company)|small|simpler|save" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "A carrier owns or operates the transport: the shipping line, airline or trucking company that actually moves the goods. A freight forwarder usually owns no ships or planes but arranges the whole journey for you, including booking space, preparing documents, customs, insurance and delivery. A small business may use a forwarder because it has the expertise and paperwork knowledge, can consolidate small shipments to get better rates and gives one point of contact instead of dealing with several companies.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m03-t2",
+  "prompt": "Write **six questions** you would ask before choosing a forwarder. One per line, each ending with a question mark.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Do you have experience on the ...?",
+  "rules": [
+    { "label": "Six questions", "minLines": 6 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Asks about experience on the route or with the cargo", "pattern": "experience|route|cargo|goods" },
+    { "label": "Asks about charges or the quote", "pattern": "charge|quote|price|cost|fee" },
+    { "label": "Asks about licences, insurance or liability", "pattern": "licen[cs]|insur|liab|registered|member" },
+    { "label": "Asks about tracking or communication", "pattern": "track|update|communicat" },
+    { "label": "Asks about references", "pattern": "reference|other customers|clients" }
+  ],
+  "sample": "Do you have experience shipping this type of cargo on the China to Lagos route?\nCan you give me a full quote that lists every charge and what is not included?\nAre you licensed and registered, and can I see the proof?\nWhat insurance do you hold, and how far does your liability go if goods are lost or damaged?\nHow will you track my shipment and how often will you update me?\nCan you give me references from two other customers who ship similar goods?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m03-t3",
+  "prompt": "Goods worth **$8,000** have freight and insurance of **$1,000**, giving a CIF value of **$9,000**. (a) What is the cargo insurance cover at **110% of CIF**? (b) The carrier's liability is limited to **$2 per kg** and the cargo weighs **400 kg**: what could you recover from the carrier? (c) Say in one sentence why insurance matters.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "(a) ...",
+  "rules": [
+    { "label": "Insurance cover of $9,900", "pattern": "9,?900" },
+    { "label": "Carrier recovery of $800", "pattern": "\\$?\\s?800\\b" },
+    { "label": "Says insurance covers far more than carrier liability", "pattern": "more|far|much|full|value|limited|low|covers" }
+  ],
+  "sample": "(a) 110% of 9,000 = $9,900 cover.\n(b) 400 kg x $2 = $800 from the carrier.\n(c) Insurance matters because carrier liability is limited and would repay only a small part of the goods' value, while insurance covers the full insured value.",
+  "required": false
+}
+```
+
+Next lesson: the shipping documents.
+$md$, true, true, 3, array['lff-m03-t1', 'lff-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m07', 'logistics-freight-forwarding', 'Cargo handling, packing and container loading', 7, null, null, '{}'::text[], array['Packing and marking', 'Container types and loading', 'Dangerous and special cargo', 'Cargo insurance and claims']::text[])
+values ('lff-m04', 'logistics-freight-forwarding', 'Shipping documents', 4, 'Shipping Documents', 'DOCS', array['Read the core shipping documents', 'Explain the bill of lading and air waybill', 'List certificates', 'Check documents for errors']::text[], array['Commercial invoice and packing list', 'Bill of lading and airway bill', 'Certificates of origin and other certificates', 'Document checks and common errors']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m08', 'logistics-freight-forwarding', 'Warehousing and distribution', 8, null, null, '{}'::text[], array['Warehouse operations', 'Inventory handling', 'Distribution networks', 'Last-mile delivery']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:shipping-documents', 'logistics-freight-forwarding', 'lff-m04', 'shipping-documents', 'Shipping Documents', 'Know the main shipping documents, what the bill of lading and air waybill do, which certificates may be needed and how to check documents and avoid common errors.', 25, $md$
+## Why documents matter
+
+Goods cannot move, clear customs or be paid for without the right documents. They are also the main source of avoidable delay: a wrong name, weight or description can hold a container at the port for days, with storage and demurrage charges adding up. A forwarder's value lies partly in getting documents right **the first time**.
+
+## The core documents
+
+| Document | Purpose | Who prepares it |
+| :-- | :-- | :-- |
+| **Commercial invoice** | The bill for the goods: parties, description, quantity, unit price, total, currency, terms of sale. Used for customs value | Seller |
+| **Packing list** | What is in each package: counts, weights, dimensions, marks | Seller |
+| **Bill of lading (B/L)** | Sea transport document | Shipping line or forwarder |
+| **Air waybill (AWB)** | Air transport document | Airline or forwarder |
+| **Certificate of origin** | Where the goods were made; may affect duty | Chamber of commerce or authority |
+| **Insurance certificate** | Proof of cargo insurance | Insurer |
+| **Customs declaration** | The formal declaration to customs (in Nigeria, with Form M and a PAAR for imports) | Customs broker / importer |
+| **Delivery order / release** | Authorises the terminal to release goods | Shipping line or agent |
+
+## The bill of lading and the air waybill
+
+A **bill of lading** does three jobs:
+
+1. It is a **receipt** from the carrier that the goods were received in the stated condition.
+2. It is evidence of the **contract of carriage**.
+3. It can be a **document of title**: the holder of an original B/L can claim the goods. This is why original B/Ls are valuable and are sometimes used in payment arrangements.
+
+Common types and terms:
+- **Master B/L:** issued by the shipping line to the forwarder or shipper.
+- **House B/L:** issued by the forwarder to its customer.
+- **Original B/L** (full set) versus **telex release** or **sea waybill:** the goods are released without surrendering the paper original, which is faster and suits trusted trading.
+- **Clean B/L:** no remarks about damage. A **claused** B/L notes problems and may be refused by a buyer or bank.
+
+An **air waybill** is the contract and receipt for air cargo. It is **not** a document of title, so the goods are released to the named consignee. It shows shipper, consignee, flight details, number of pieces, weights, goods description and charges.
+
+## Certificates and other documents
+
+Depending on the goods and the countries, you may also need:
+
+- **Certificate of origin** to prove the goods' origin and claim any trade preferences.
+- **Phytosanitary and veterinary certificates** for plants and animal products.
+- **Health, quality or conformity certificates** (for example SON or NAFDAC requirements in Nigeria).
+- **Dangerous goods declaration** for hazardous cargo.
+- **Import permits or licences** for controlled items.
+- **Inspection certificates** when the buyer or authorities require pre-shipment inspection.
+
+Check the requirements of **both** the exporting and the importing country early. A missing certificate found at the port is expensive.
+
+## Document checks and common errors
+
+Before goods ship, compare every document against the others:
+
+| Check | Typical error |
+| :-- | :-- |
+| **Names and addresses** | Shipper or consignee spelled differently on the invoice and B/L |
+| **Description of goods** | Vague ("electronics") or different on each document |
+| **Quantities** | Packing list says 14 cartons, invoice implies 15 |
+| **Weights and dimensions** | Gross and net weight reversed, or totals that do not add up |
+| **Values and currency** | Invoice value differs from the declaration, or the wrong currency |
+| **Terms of sale** | Invoice says FOB but the freight was paid like CIF |
+| **Container and seal numbers** | Wrong or missing |
+| **Dates** | Certificate dated after shipment, or expired |
+
+Fix errors **before** the vessel sails. Amending a B/L after departure costs money and time. Keep a checklist for every shipment and a copy of every final document.
+
+> [!WARNING]
+> Never alter or invent documents to make a shipment "work". False documents are an offence, and they can lead to seized cargo, penalties and loss of your licence.
+
+## Try it
+
+```task
+{
+  "id": "lff-m04-t1",
+  "prompt": "Check this document set. **Invoice:** 300 power banks, 20 per carton, consignee Tunde Trading Ltd, FOB Shenzhen. **Packing list:** 14 cartons, consignee Tunde Trading Limited. **Bill of lading:** 15 cartons, goods described as \"electronics\", consignee Tunde Trade Ltd. List **every problem** you can find and the fix. One per line.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Problem: ... - Fix: ...",
+  "rules": [
+    { "label": "At least three lines", "minLines": 3 },
+    { "label": "Spots the carton count mismatch (300 / 20 = 15, packing list says 14)", "pattern": "14|15|carton" },
+    { "label": "Spots the vague description", "pattern": "electronics|description|vague|specific" },
+    { "label": "Spots the consignee name differences", "pattern": "consignee|name|trading|limited|trade" },
+    { "label": "Gives fixes", "pattern": "correct|amend|fix|match|update|reissue|ask the" }
+  ],
+  "sample": "Problem: 300 power banks at 20 per carton is 15 cartons, but the packing list says 14 - Fix: recount and correct the packing list so it matches the invoice and B/L.\nProblem: the B/L describes the goods as \"electronics\", which is too vague - Fix: amend it to a specific description such as rechargeable power banks, matching the invoice.\nProblem: the consignee is spelled three different ways (Tunde Trading Ltd, Limited, Tunde Trade Ltd) - Fix: use the exact registered name on every document.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m04-t2",
+  "prompt": "In 40 to 90 words, explain the **three functions of a bill of lading**, and say how an air waybill differs from it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "A bill of lading is ...",
+  "rules": [
+    { "label": "Mentions it is a receipt for the goods", "pattern": "receipt" },
+    { "label": "Mentions the contract of carriage", "pattern": "contract" },
+    { "label": "Mentions document of title", "pattern": "title|claim the goods|ownership" },
+    { "label": "Says the air waybill is not a document of title", "pattern": "air ?waybill[^.]*(not|non|isn't)|not a document of title|no title" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "A bill of lading is a receipt from the carrier that the goods were received, evidence of the contract of carriage, and a document of title, so whoever holds the original can claim the goods. An air waybill is the contract and receipt for air cargo, but it is not a document of title: the goods are released to the consignee named on it, so it cannot be traded or used to claim the cargo in the same way.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m04-t3",
+  "prompt": "Write a **document checklist** for a sea shipment of food products from Turkey to Lagos: at least eight documents or certificates, one per line, with a few words on why each is needed.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Commercial invoice - ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes invoice and packing list", "pattern": "invoice[\\s\\S]*packing|packing[\\s\\S]*invoice" },
+    { "label": "Includes the bill of lading", "pattern": "bill of lading|b/l" },
+    { "label": "Includes the certificate of origin", "pattern": "origin" },
+    { "label": "Includes a food-related certificate (health, phytosanitary, NAFDAC, quality)", "pattern": "health|phytosanitary|nafdac|quality|sanitary|halal|analysis" },
+    { "label": "Includes insurance", "pattern": "insurance" },
+    { "label": "Includes Form M or PAAR", "pattern": "form m|paar" }
+  ],
+  "sample": "Commercial invoice - customs value and the terms of sale\nPacking list - what is in each carton, with weights\nBill of lading - receipt, contract of carriage and title to the goods\nCertificate of origin - shows where the goods were made\nHealth or phytosanitary certificate - proof the food is safe and free of pests\nCertificate of analysis or quality certificate - proves the product meets the standard\nNAFDAC approval - needed to sell regulated food in Nigeria\nInsurance certificate - proof of cargo cover\nForm M and PAAR - the import declaration and customs assessment",
+  "required": false
+}
+```
+
+Next lesson: customs and clearing.
+$md$, true, true, 4, array['lff-m04-t1', 'lff-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m09', 'logistics-freight-forwarding', 'Technology and tracking', 9, null, null, '{}'::text[], array['Tracking shipments', 'Logistics software and spreadsheets', 'Data for better decisions', 'Communication with customers']::text[])
+values ('lff-m05', 'logistics-freight-forwarding', 'Customs and clearing', 5, 'Customs & Clearing', 'CLEAR', array['Explain how customs works', 'Calculate duty and VAT', 'Follow the clearance steps', 'Know bonded, transit and temporary import']::text[], array['How customs works', 'HS codes, duty and valuation', 'Clearing at ports and airports', 'Bonded goods, transit and temporary import']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m10', 'logistics-freight-forwarding', 'Compliance, risk and problem solving', 10, null, null, '{}'::text[], array['Regulations and compliance', 'Delays, damage and disputes', 'Risk management', 'Customer service in logistics']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:customs-and-clearing', 'logistics-freight-forwarding', 'lff-m05', 'customs-and-clearing', 'Customs and Clearing', 'Understand how customs works, HS codes, duty and valuation, clearing at ports and airports, and how bonded, transit and temporary import arrangements work.', 20, $md$
+> [!NOTE]
+> Customs rates, procedures and systems change. This lesson teaches the principles and the right questions. **Always confirm current rules and rates with the Nigeria Customs Service or a licensed clearing agent before you quote or ship.**
+
+## How customs works
+
+**Customs** is the government authority that controls the movement of goods across a border. It has three main jobs:
+
+1. **Protect** the country by enforcing import and export bans and restrictions.
+2. **Collect revenue:** duty and taxes on imports (and in some cases exports).
+3. **Collect trade data** to measure trade and manage the economy.
+
+For every shipment that crosses a border, someone must make a **declaration** to customs that describes the goods, their value and classification, and shows the documents. Customs checks it, assesses what is owed, may examine the goods and then **releases** them.
+
+Forwarders and clearing agents deal with customs every day. They need to know the procedures and also the people, systems and timelines at each port.
+
+## HS codes, duty and valuation
+
+**HS codes.** The Harmonized System classifies goods. The first six digits are the same worldwide; countries add digits for their own tariff. The code decides the duty rate and any restrictions. Correct classification is the clearing agent's skill: mistakes lead to paying too much, being fined or having goods held.
+
+**Duty.** Import duty is normally a percentage of the customs value, set by the tariff for the HS code. In Nigeria, standard rates follow the ECOWAS Common External Tariff bands, commonly 0%, 5%, 10%, 20% and 35%, with some goods subject to other charges or restrictions.
+
+**VAT.** Charged on import, currently at 7.5% in Nigeria, on the customs value plus duty and certain charges.
+
+**Valuation.** The customs value is normally the **CIF value**: the price of the goods, plus insurance and freight to the port of entry. Customs expects the declared value to reflect what was truly paid.
+
+Worked example (ignoring small levies):
+- CIF value: ₦5,000,000
+- Duty at 5%: ₦250,000
+- VAT at 7.5% on (₦5,000,000 + ₦250,000 = ₦5,250,000): ₦393,750
+- **Total duty and VAT: ₦643,750**
+
+> [!WARNING]
+> Under-declaring value or misdescribing goods to reduce duty is an offence. It risks seizure, penalties and loss of your licence. Always declare truthfully.
+
+## Clearing at ports and airports
+
+A typical import clearance, step by step:
+
+1. **Before shipment:** the importer obtains the required import declaration (Form M in Nigeria) and approvals.
+2. **Arrival:** the vessel or aircraft arrives and the cargo is discharged to the terminal or cargo area.
+3. **Documents:** the clearing agent receives the shipping documents and prepares the declaration.
+4. **Assessment:** customs reviews the declaration, classification and value, and assesses duty and taxes.
+5. **Payment:** duty and port charges are paid through the official channels, with receipts.
+6. **Examination:** customs may inspect the goods, fully or in part.
+7. **Release:** customs and the terminal or shipping line release the goods.
+8. **Exit and delivery:** the goods are collected and transported to the customer.
+
+Time is money: after the free days the terminal charges storage and the shipping line charges container **demurrage**. Fast, accurate paperwork is the best way to control cost.
+
+## Bonded goods, transit and temporary import
+
+Not all goods are cleared for home use immediately. Several customs regimes help trade:
+
+- **Bonded warehouse:** goods are stored under customs control without paying duty until they are released for sale or exported. Useful for goods that may be re-exported or sold later.
+- **Transit:** goods pass **through** a country to another destination, with duty suspended while they remain under customs control, for example goods moving by road to a landlocked neighbouring country.
+- **Temporary import:** goods enter for a limited time (equipment for an exhibition or a project) and must leave again, with duty suspended or guaranteed.
+- **Re-export and drawback:** goods imported and later exported again may qualify for relief from duty, if the rules are met.
+
+Each regime has conditions: guarantees, time limits, seals and documents. Failing to meet them means duty becomes due, often with penalties.
+
+## Try it
+
+```task
+{
+  "id": "lff-m05-t1",
+  "prompt": "The CIF value of a shipment is **₦5,000,000**, duty is **5%** and VAT is **7.5% on CIF plus duty**. Work out the duty, the VAT and the total, ignoring other levies.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Duty = ...",
+  "rules": [
+    { "label": "Duty of ₦250,000", "pattern": "250,?000" },
+    { "label": "VAT base of ₦5,250,000", "pattern": "5,?250,?000" },
+    { "label": "VAT of ₦393,750", "pattern": "393,?750" },
+    { "label": "Total of ₦643,750", "pattern": "643,?750" }
+  ],
+  "sample": "Duty = 5% of 5,000,000 = ₦250,000.\nVAT base = 5,000,000 + 250,000 = ₦5,250,000.\nVAT = 7.5% of 5,250,000 = ₦393,750.\nTotal duty and VAT = 250,000 + 393,750 = ₦643,750.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m05-t2",
+  "prompt": "Put the clearance steps for an import in order. Write **eight steps**, one per line, covering the import declaration before shipment, arrival, documents, assessment, payment, examination, release and delivery.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "1. ...",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Includes the declaration or Form M before shipment", "pattern": "form m|declaration|before ship" },
+    { "label": "Includes arrival or discharge", "pattern": "arriv|discharge|land" },
+    { "label": "Includes documents", "pattern": "document" },
+    { "label": "Includes assessment", "pattern": "assess" },
+    { "label": "Includes payment of duty", "pattern": "pay|duty" },
+    { "label": "Includes examination", "pattern": "examin|inspect" },
+    { "label": "Includes release and delivery", "pattern": "releas[\\s\\S]*deliver|deliver[\\s\\S]*releas|releas|deliver" }
+  ],
+  "sample": "1. The importer raises the import declaration (Form M) before the goods ship.\n2. The vessel arrives and the cargo is discharged at the port.\n3. The clearing agent receives the shipping documents and prepares the declaration.\n4. Customs assesses the declaration, classification and value.\n5. Duty, taxes and port charges are paid through official channels.\n6. Customs may examine the goods.\n7. Customs and the terminal release the goods.\n8. The goods are collected and delivered to the customer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m05-t3",
+  "prompt": "In 40 to 90 words, explain the difference between a **bonded warehouse** and **transit**, and give one example of when each is useful.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "A bonded warehouse ...",
+  "rules": [
+    { "label": "Explains bonded warehouse (stored, duty suspended until release)", "pattern": "bonded[^.]*(stor|duty|warehouse|suspend|until)" },
+    { "label": "Explains transit (passing through to another destination)", "pattern": "transit[^.]*(through|another|destination|pass|suspend|move)" },
+    { "label": "Gives an example", "pattern": "example|for instance|such as|e\\.g\\.|when" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "A bonded warehouse stores imported goods under customs control without paying duty until they are released for sale or exported, which is useful for goods that may be re-exported later. Transit lets goods pass through a country on the way to another destination, with duty suspended while they stay under customs control, for example cargo landed at Lagos and moved by road to a neighbouring country. Both regimes have conditions such as guarantees and time limits.",
+  "required": false
+}
+```
+
+Next lesson: how freight is priced and quoted.
+$md$, true, true, 5, array['lff-m05-t1', 'lff-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m11', 'logistics-freight-forwarding', 'Running a forwarding business', 11, null, null, '{}'::text[], array['Business models for forwarders', 'Licences and requirements in Nigeria', 'Pricing and profit', 'Finding and keeping customers']::text[])
+values ('lff-m06', 'logistics-freight-forwarding', 'Freight rates and quotations', 6, 'Rates & Quotes', 'QUOTES', array['Understand how freight is priced', 'List surcharges', 'Build a quotation with margin', 'Negotiate with carriers']::text[], array['How freight is priced', 'Surcharges and extra charges', 'Building a quotation', 'Negotiating with carriers']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:freight-rates-and-quotations', 'logistics-freight-forwarding', 'lff-m06', 'freight-rates-and-quotations', 'Freight Rates and Quotations', 'Understand how freight is priced, the surcharges and extra charges that add up, how to build a clear quotation with your margin, and how to negotiate with carriers.', 25, $md$
+## How freight is priced
+
+Freight prices depend on **what** you move, **how** and **where**:
+
+- **Mode and service:** air, sea, road; express or standard.
+- **Cargo size and weight:** air by chargeable kilogram; LCL sea by cubic metre or tonne (whichever is greater); FCL sea per container; road per truck or per tonne.
+- **Route and distance:** direct or with transhipment; busy or quiet routes.
+- **Demand and capacity:** rates rise in busy seasons and when space is tight, and fall when space is plentiful.
+- **Fuel and operating costs.**
+- **Cargo type:** special or dangerous cargo costs more than general cargo.
+- **Terms and extras:** who pays port charges, insurance and delivery.
+
+Rates are quoted **per unit**: per kilogram (air), per cubic metre (LCL), per container (FCL). They change often, so quotes have a **validity period**.
+
+## Surcharges and extra charges
+
+The headline freight rate is usually not the whole bill. Typical additions:
+
+| Charge | What it is |
+| :-- | :-- |
+| **Origin handling / terminal handling charge (THC)** | Handling at the origin port or terminal |
+| **Destination handling / THC** | Handling at the arrival port |
+| **Documentation fee** | Preparing the transport documents |
+| **Bunker or fuel surcharge** | Passes fuel cost changes to the customer |
+| **Currency adjustment factor** | Covers exchange rate movement |
+| **Peak season surcharge** | In periods of high demand |
+| **Security and screening** | Cargo security checks, especially in air freight |
+| **Customs clearance fee** | The agent's service |
+| **Storage and demurrage / detention** | Charges if goods or containers are kept too long |
+| **Inland haulage / delivery** | Truck from port to the customer |
+| **Insurance** | If you arrange cover |
+
+A good quotation lists every charge, states what is **included and excluded**, and shows the currency. Hidden extras destroy trust.
+
+## Building a quotation
+
+A forwarder buys services from carriers and others, adds their own margin and sells to the customer. Build the quote in steps:
+
+1. **Collect the cargo details:** goods, quantity, weights, dimensions, origin, destination, terms of sale, dates.
+2. **Get costs** from carriers and partners for each part of the journey.
+3. **Add all the charges** in a consistent currency.
+4. **Add your margin or fee.**
+5. **State terms:** validity, payment terms, what is excluded, transit time estimate.
+
+Example: LCL sea freight of 4 CBM.
+
+| Item | Amount |
+| :-- | :-- |
+| Sea freight: 4 CBM × $90 | $360 |
+| Origin handling | $50 |
+| Documentation | $35 |
+| Destination handling | $70 |
+| Local delivery | $120 |
+| **Subtotal (cost)** | **$635** |
+| Margin at 15% of cost | $95.25 |
+| **Quotation to the customer** | **$730.25** |
+
+Be clear whether your margin is a percentage of cost or of the selling price, because they differ. Also state clearly what the customer must still pay separately, such as duty and VAT.
+
+## Negotiating with carriers
+
+Forwarders buy better when they:
+
+- **Bring volume.** Consolidating many customers' cargo gives bargaining power and lower rates.
+- **Commit to regular business** through a contract or agreed volume, rather than one-off bookings.
+- **Plan and book early,** avoiding the high prices of last-minute space.
+- **Compare several carriers** and routes, including indirect ones.
+- **Pay on time,** which builds trust and can earn better terms.
+- **Ask for the full picture:** rates, surcharges, free days at the port, and conditions.
+- **Build relationships** with carrier sales and operations staff.
+
+Always compare the **total cost and reliability**, not only the headline rate. A cheap rate on a route with constant delays can cost the customer more.
+
+## Try it
+
+```task
+{
+  "id": "lff-m06-t1",
+  "prompt": "Build a quotation for **4 CBM LCL** cargo. Sea freight $90 per CBM, origin handling $50, documentation $35, destination handling $70, local delivery $120. Work out the subtotal and the final price with a **15% margin on cost**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Sea freight = ...",
+  "rules": [
+    { "label": "Sea freight of $360", "pattern": "360" },
+    { "label": "Subtotal of $635", "pattern": "635" },
+    { "label": "Margin of $95.25", "pattern": "95\\.25|95\\.3" },
+    { "label": "Final price of $730.25", "pattern": "730\\.25|730\\.3" }
+  ],
+  "sample": "Sea freight = 4 x $90 = $360.\nSubtotal = 360 + 50 + 35 + 70 + 120 = $635.\nMargin at 15% = 0.15 x 635 = $95.25.\nQuotation = 635 + 95.25 = $730.25.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m06-t2",
+  "prompt": "A customer says: **\"Your quote is higher than another forwarder's. Why?\"** Write your reply in 60 to 120 words. Explain that you compare like with like, mention what your quote includes, and offer to compare the two line by line.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Thank you for ...",
+  "rules": [
+    { "label": "Polite", "pattern": "thank|appreciate|understand" },
+    { "label": "Mentions what is included or charges", "pattern": "include|charge|surcharge|handling|insurance|delivery|documentation" },
+    { "label": "Mentions hidden or missing extras on the other quote", "pattern": "exclud|missing|hidden|extra|not included|add" },
+    { "label": "Offers to compare line by line", "pattern": "compare|line by line|side by side|go through" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Thank you for sharing the other quote. I understand price matters, but the two may not cover the same things. Our quote includes origin and destination handling, documentation, insurance and delivery to your warehouse, with no hidden extras, while some quotes exclude those and add them later. If you send me the other quote, I would be happy to compare the two line by line and see whether they really cover the same service, and I can then confirm the lowest total cost for you.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m06-t3",
+  "prompt": "List **six surcharges or extra charges** that can be added to a freight quote, with a few words on each. One per line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Documentation fee - ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Includes a handling charge", "pattern": "handling|thc" },
+    { "label": "Includes a fuel or bunker surcharge", "pattern": "fuel|bunker" },
+    { "label": "Includes documentation", "pattern": "documentation|document" },
+    { "label": "Includes storage, demurrage or detention", "pattern": "storage|demurrage|detention" },
+    { "label": "Includes peak season, security or currency", "pattern": "peak|security|currency|exchange" }
+  ],
+  "sample": "Terminal handling charge - handling at the port of loading or discharge\nDocumentation fee - preparing the bill of lading and other documents\nBunker or fuel surcharge - passes fuel price changes to the customer\nPeak season surcharge - added when demand is high\nSecurity or screening charge - cargo security checks\nStorage and demurrage - charges when goods or containers stay too long\nCurrency adjustment factor - covers exchange rate movement",
+  "required": false
+}
+```
+
+Next lesson: packing, container loading and special cargo.
+$md$, true, true, 6, array['lff-m06-t1', 'lff-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('lff-m12', 'logistics-freight-forwarding', 'Final project: a complete shipment plan', 12, null, null, '{}'::text[], array['Choosing a shipment', 'Planning mode, route and documents', 'Costing and quoting', 'Presenting your plan']::text[])
+values ('lff-m07', 'logistics-freight-forwarding', 'Cargo handling, packing and container loading', 7, 'Cargo Handling', 'CARGO', array['Pack and mark cargo', 'Choose and load containers', 'Handle dangerous and special cargo', 'Make an insurance claim']::text[], array['Packing and marking', 'Container types and loading', 'Dangerous and special cargo', 'Cargo insurance and claims']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:cargo-handling-packing-and-container-loading', 'logistics-freight-forwarding', 'lff-m07', 'cargo-handling-packing-and-container-loading', 'Cargo Handling, Packing and Container Loading', 'Pack and mark cargo properly, choose and load containers, handle dangerous and special cargo, and deal with cargo insurance and claims.', 25, $md$
+## Packing and marking
+
+Cargo is lifted, stacked, shaken and sometimes dropped on its way. Good packing protects it and good marking makes sure it reaches the right place.
+
+**Packing principles:**
+
+- **Match the packing to the journey.** Sea cargo faces humidity, stacking and rough handling. Air cargo faces handling at several terminals. Road cargo faces vibration and braking.
+- **Use strong, clean, suitable materials:** double-wall cartons, wooden crates or pallets, strapping, shrink wrap, corner protectors.
+- **Fill empty space** with padding so goods cannot move inside the package.
+- **Protect from water and moisture** with plastic liners, desiccants or waterproof wrapping.
+- **Keep weight within limits** so cartons are safe to lift and do not crush those below.
+- **Palletise** where possible, so cargo can be moved quickly with forklifts.
+- **Treat wooden packaging** to international standards where required (heat treatment, with an approved mark), as untreated wood can be rejected.
+
+**Marking and labelling:**
+
+- **Shipping marks:** consignee, destination, carton number ("3 of 12") and reference.
+- **Handling marks:** "This way up", "Fragile", "Keep dry".
+- **Weight and dimensions** on the package.
+- **Country of origin** where required.
+- **Hazard labels** for dangerous goods.
+
+Clear, consistent marks make it easy to find missing cartons and prevent mix-ups at the destination.
+
+## Container types and loading
+
+Choose the container to suit the cargo:
+
+| Container | Use |
+| :-- | :-- |
+| **20-foot dry (about 33 CBM)** | Heavy or smaller loads |
+| **40-foot dry (about 67 CBM)** | Large volumes of general cargo |
+| **40-foot high cube (about 76 CBM)** | Light, bulky cargo |
+| **Refrigerated (reefer)** | Temperature-controlled goods such as food and medicine |
+| **Open-top / flat-rack** | Oversize cargo that cannot go through the door |
+| **Tank container** | Liquids |
+
+**Loading principles:**
+
+- **Check the container** before loading: clean, dry, no holes or damage, doors that seal.
+- **Do not exceed the payload.** Respect the maximum gross weight, and distribute weight evenly, with heavier items at the bottom and centre.
+- **Block and brace** the cargo so it cannot shift. Use dunnage, airbags, straps and lashing.
+- **Use the space** well, but do not overfill or jam the doors.
+- **Keep incompatible cargo apart** (for example, food away from chemicals or strong smells).
+- **Record the seal number** and photograph loading.
+
+**Planning the load.** Practical capacity is lower than the theoretical volume because of gaps, pallets and door space. A planner often uses about **85%** of the container volume. For a 20-foot container of about 33 CBM, the usable volume is 33 × 0.85 = 28.05 CBM. If each carton is 0.12 CBM, then 28.05 ÷ 0.12 = 233.75, so about **233 cartons** fit. Check weight too: 233 cartons at 15 kg is 3.5 tonnes, well within the container's payload.
+
+## Dangerous and special cargo
+
+**Dangerous goods** are substances that can cause harm to people, property or the environment: flammable liquids, gases, corrosives, batteries, aerosols, some chemicals. They are controlled by international rules: the **IMDG Code** for sea and the **IATA Dangerous Goods Regulations** for air. Each product has a UN number and a hazard class, and shipping it requires correct classification, packaging, marking, labelling and a **dangerous goods declaration**, plus trained staff. Misdeclaring dangerous goods is a serious offence and can cause accidents.
+
+**Special cargo** includes:
+
+- **Perishables:** need a cold chain and fast handling.
+- **Valuable cargo:** extra security and insurance.
+- **Live animals and plants:** strict rules and welfare requirements.
+- **Oversize or heavy-lift cargo:** special equipment, route surveys and permits.
+
+Ask your carrier and forwarder about restrictions **before** you accept the cargo.
+
+## Cargo insurance and claims
+
+**Cargo insurance** covers loss or damage in transit (see module 3). When something goes wrong, follow a clear process:
+
+1. **Inspect on delivery.** Note any damage, shortage or broken seals on the delivery note or receipt **before signing**, and take photographs.
+2. **Notify the carrier and insurer promptly,** in writing, within the time limits in the contract and policy.
+3. **Protect the goods** from further damage and keep the packaging and damaged items for inspection.
+4. **Collect documents:** invoice, packing list, B/L or AWB, delivery note, photos, survey report if there is one.
+5. **File the claim** with a clear description and the amount.
+6. **Follow up** and respond to questions from the insurer.
+
+Late notice or unrecorded damage often means no payment.
+
+## Try it
+
+```task
+{
+  "id": "lff-m07-t1",
+  "prompt": "A 20-foot container has about **33 CBM** of space. You plan to use **85%** of it. Each carton is **0.12 CBM**. Work out the usable volume and the number of cartons that fit (round down). Then say what else you must check besides volume.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Usable volume = ...",
+  "rules": [
+    { "label": "Usable volume of 28.05 CBM", "pattern": "28\\.05|28\\.1" },
+    { "label": "233 cartons", "pattern": "\\b233\\b" },
+    { "label": "Says to check weight or payload", "pattern": "weight|payload|kg|tonne" }
+  ],
+  "sample": "Usable volume = 33 x 0.85 = 28.05 CBM.\nCartons = 28.05 / 0.12 = 233.75, so 233 cartons fit.\nI must also check the total weight against the container's payload limit and that it is evenly distributed.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m07-t2",
+  "prompt": "Write a **packing and marking checklist** for a shipment of 120 cartons of glassware going by sea. At least eight points, one per line.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Use double-wall cartons ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Mentions strong cartons or crates", "pattern": "carton|crate|pallet|box" },
+    { "label": "Mentions padding or filling space", "pattern": "pad|fill|cushion|bubble|dividers?" },
+    { "label": "Mentions moisture or waterproofing", "pattern": "moisture|water|damp|desiccant|liner" },
+    { "label": "Mentions fragile or this-way-up marks", "pattern": "fragile|this way up|handling mark" },
+    { "label": "Mentions carton numbers or shipping marks", "pattern": "carton number|\\d of \\d|shipping marks?|consignee|destination" },
+    { "label": "Mentions blocking, bracing or securing in the container", "pattern": "block|brace|lash|secure|dunnage|airbag|strap" }
+  ],
+  "sample": "Use strong double-wall cartons with dividers for each item.\nFill empty space with padding so nothing can move.\nWrap cartons in plastic liners and add desiccant against moisture.\nPalletise and shrink-wrap the cartons for forklift handling.\nMark each carton Fragile and This Way Up.\nPut the consignee, destination and carton number (for example 3 of 120) on every carton.\nPhotograph the packing before loading.\nBlock and brace the cargo in the container with dunnage and straps so it cannot shift.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m07-t3",
+  "prompt": "A carton arrives with a crushed corner and the contents damaged. Write the **steps you take** in order, one per line (at least five), starting at the moment of delivery.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "1. Note the damage on the delivery note ...",
+  "rules": [
+    { "label": "At least five steps", "minLines": 5 },
+    { "label": "Notes the damage on the delivery note before signing", "pattern": "delivery note|before sign|note the damage|record the damage" },
+    { "label": "Takes photographs", "pattern": "photo" },
+    { "label": "Notifies the carrier or insurer in writing", "pattern": "notify|inform|report|tell[\\s\\S]*(carrier|insurer|forwarder)" },
+    { "label": "Keeps the goods and packaging", "pattern": "keep|retain|preserve|protect" },
+    { "label": "Files a claim with documents", "pattern": "claim|documents|invoice" }
+  ],
+  "sample": "1. Note the damage on the delivery note before signing.\n2. Take photographs of the carton, the contents and the packaging.\n3. Notify the carrier, forwarder and insurer in writing straight away.\n4. Keep the damaged goods and packaging for inspection and protect the rest from further damage.\n5. Collect the invoice, packing list, bill of lading and delivery note.\n6. File the claim with the insurer within the time limit and follow up.",
+  "required": false
+}
+```
+
+Next lesson: warehousing and distribution.
+$md$, true, true, 7, array['lff-m07-t1', 'lff-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('lff-m08', 'logistics-freight-forwarding', 'Warehousing and distribution', 8, 'Warehousing', 'WAREHSE', array['Describe warehouse operations', 'Use FIFO and FEFO', 'Design a distribution network', 'Improve last-mile delivery']::text[], array['Warehouse operations', 'Inventory handling', 'Distribution networks', 'Last-mile delivery']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:warehousing-and-distribution', 'logistics-freight-forwarding', 'lff-m08', 'warehousing-and-distribution', 'Warehousing and Distribution', 'Understand warehouse operations and inventory handling, how distribution networks are designed, and how to run reliable, cost-effective last-mile delivery.', 25, $md$
+## What a warehouse does
+
+A warehouse is more than a store. It is a place where goods are **received, held, picked, packed and dispatched** efficiently. It buffers supply against demand, consolidates shipments, protects goods and can add value through labelling, kitting and light assembly.
+
+## Warehouse operations
+
+The main flow:
+
+1. **Receiving.** Goods arrive by truck or container. Check them against the delivery note and purchase order: count, inspect, record any damage or shortage. Record the receipt in the system.
+2. **Put-away.** Move goods to storage locations, by size, weight, turnover and handling needs. Fast-moving goods go near the dispatch area.
+3. **Storage.** Keep goods safe, dry, organised and secure. Track each location.
+4. **Order picking.** Collect the items for each customer order. Methods include picking one order at a time, batching several orders, or picking by zone.
+5. **Packing.** Check and pack the order, add labels and documents.
+6. **Dispatch.** Load the vehicle, record what left and when, and hand over documents.
+7. **Returns.** Receive, inspect and decide to restock, repair, discard or return to the supplier.
+
+**Layout and safety.** Plan clear aisles, loading bays and a logical flow so goods and people do not cross paths. Use safe lifting and equipment practices, protect from fire, theft and pests, and train staff.
+
+## Inventory handling
+
+Accurate stock records are the heart of a warehouse.
+
+- **FIFO (first in, first out)** uses the oldest stock first. **FEFO (first expired, first out)** ships the earliest-expiring stock first, vital for food and medicine.
+- **Location control:** every item has an address, so it can be found quickly.
+- **Cycle counts:** counting a small part of the stock regularly, instead of one big annual count, finds errors early.
+- **Stock accuracy** is measured as records that match the physical count. Good warehouses aim for very high accuracy, such as 98% or more.
+- **Damaged, expired and slow-moving stock** should be separated, recorded and acted on.
+- **Security:** controlled access, signed issues and receipts, and CCTV where appropriate.
+
+Warehouse management can be done with simple tools (a spreadsheet and clear procedures) in a small business, or with a warehouse management system (WMS) in a larger one.
+
+## Distribution networks
+
+A **distribution network** is how goods get from the supplier or factory to customers. Key choices:
+
+- **Number and location of warehouses.** More warehouses near customers give faster delivery but cost more to run and need more stock. One central warehouse is cheaper to run but slower to serve distant customers.
+- **Direct delivery versus hub and spoke.** Goods may go straight to the customer, or to a regional hub and then onward to local points.
+- **Cross-docking:** goods arriving are moved straight to outbound vehicles with little or no storage, saving time and space.
+- **Own fleet versus outsourced transport.** Running trucks gives control but needs capital and management; hiring carriers is flexible but you depend on them.
+- **Customer service level** you promise: next day, two days or a week.
+
+The best network is the one that meets the service you promise at the lowest total cost. Review it as customers and volumes change.
+
+## Last-mile delivery
+
+The **last mile** is the final leg to the customer. It is often the most expensive and the most visible part of the journey, especially in busy cities with traffic and unclear addresses.
+
+Ways to make it work:
+
+- **Plan routes** to group nearby deliveries and avoid wasted trips.
+- **Use clear delivery information:** accurate address, landmark, contact number and a delivery window.
+- **Confirm before dispatch,** by call or message, to reduce failed deliveries.
+- **Use the right vehicle** (motorbike, van, truck) for the load and the area.
+- **Collect proof of delivery:** signature, photo or code.
+- **Handle cash on delivery carefully** with clear records.
+- **Measure and improve:** first-attempt success, cost per delivery and customer feedback.
+
+Example: a firm makes 120 deliveries in a day at a total cost of ₦480,000. The **cost per delivery** is 480,000 ÷ 120 = **₦4,000**. If 108 are delivered on the first attempt, the **first-attempt success rate** is 108 ÷ 120 = **90%**. Each failed delivery costs a second trip, so raising that rate cuts cost.
+
+## Try it
+
+```task
+{
+  "id": "lff-m08-t1",
+  "prompt": "A courier makes **120 deliveries** in a day at a total cost of **₦480,000**. **108** are delivered on the first attempt. Work out the **cost per delivery** and the **first-attempt success rate**, and say one way to improve it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Cost per delivery = ...",
+  "rules": [
+    { "label": "Cost per delivery of ₦4,000", "pattern": "4,?000" },
+    { "label": "Success rate of 90%", "pattern": "\\b90\\s?%|90 percent" },
+    { "label": "Suggests an improvement (confirm before dispatch, clear addresses, route planning)", "pattern": "confirm|address|route|phone|call|message|window|plan" }
+  ],
+  "sample": "Cost per delivery = 480,000 / 120 = ₦4,000.\nFirst-attempt success rate = 108 / 120 = 90%.\nI would improve it by confirming the address and a delivery window with each customer before dispatch, so fewer deliveries fail.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m08-t2",
+  "prompt": "Put the warehouse flow in order for a delivery of 200 cartons of canned food, **one step per line** (at least seven): receiving, checking, put-away, storage, picking, packing, dispatch. Add one line saying whether you use **FIFO or FEFO** for the food, and why.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1. Receive ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes receiving and checking against the delivery note", "pattern": "receiv[\\s\\S]*(check|count|inspect)|(check|count|inspect)[\\s\\S]*receiv" },
+    { "label": "Includes put-away and storage", "pattern": "put-?away|store|storage|location" },
+    { "label": "Includes picking and packing", "pattern": "pick[\\s\\S]*pack|pack[\\s\\S]*pick" },
+    { "label": "Includes dispatch", "pattern": "dispatch|load|ship" },
+    { "label": "Chooses FEFO (or FIFO) with a reason about expiry", "pattern": "fefo|first expired|expir|best before" }
+  ],
+  "sample": "1. Receive the delivery at the bay and check it against the delivery note and purchase order.\n2. Count and inspect the cartons and note any damage or shortage.\n3. Record the receipt in the stock system.\n4. Put the cartons away to their storage locations.\n5. Keep them stored, dry and secure, with locations recorded.\n6. Pick the items for each customer order.\n7. Pack and label the orders.\n8. Dispatch the loaded vehicle and record what left.\nI would use FEFO, first expired first out, because canned food has an expiry date and the earliest-expiring stock must go out first.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m08-t3",
+  "prompt": "A company with one warehouse in Lagos has many customers in Abuja and Kano who complain about slow delivery. In 50 to 100 words, suggest **two options** to improve this and the trade-off of each.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Option 1 ...",
+  "rules": [
+    { "label": "Suggests a second warehouse or hub nearer the customers", "pattern": "second warehouse|regional|hub|abuja|kano|closer|nearer|branch" },
+    { "label": "Suggests another option (carrier, cross-docking, faster transport, local partner)", "pattern": "carrier|cross-?dock|partner|faster|courier|3pl|outsourc|rail|air" },
+    { "label": "States a trade-off (cost, stock, complexity)", "pattern": "cost|stock|more|expens|complex|inventory|trade-?off" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Option 1 is to open a small regional warehouse or hub in Abuja to serve the north, which gives faster delivery, but it costs more to run and needs extra stock held there. Option 2 is to keep one warehouse but use a reliable carrier with a regional hub and cross-docking for the northern routes, which avoids new stock and rent, but the delivery is still slower than serving from a local warehouse and we depend on the carrier.",
+  "required": false
+}
+```
+
+Next lesson: technology and tracking.
+$md$, true, true, 8, array['lff-m08-t1', 'lff-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('lff-m09', 'logistics-freight-forwarding', 'Technology and tracking', 9, 'Tracking & Tech', 'TRACK', array['Track shipments by mode', 'Build a shipment tracker', 'Measure on-time and damage rates', 'Update customers well']::text[], array['Tracking shipments', 'Logistics software and spreadsheets', 'Data for better decisions', 'Communication with customers']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:technology-and-tracking', 'logistics-freight-forwarding', 'lff-m09', 'technology-and-tracking', 'Technology and Tracking', 'Track shipments, use logistics software and spreadsheets, turn data into better decisions and keep customers informed.', 20, $md$
+## Why visibility matters
+
+Customers want to know where their goods are. Forwarders also need to know, to catch delays early and act. **Visibility** means being able to see a shipment's status and location at any time. It reduces anxiety, phone calls and surprises, and it lets you move from reacting to problems to preventing them.
+
+## Tracking shipments
+
+Each mode gives you a reference to track:
+
+| Mode | Reference | What you can see |
+| :-- | :-- | :-- |
+| **Sea** | Booking number, bill of lading number, container number | Vessel, port calls, estimated arrival, discharge, gate-out |
+| **Air** | Air waybill number, flight number | Flight status, arrival, availability for collection |
+| **Courier** | Tracking number | Pickup, in transit, out for delivery, delivered |
+| **Road** | Truck registration, trip reference, GPS tracker | Location, stops, delivery status |
+
+Shipping lines, airlines and couriers provide tracking on their websites or apps. Forwarders may add **milestone updates**: cargo received at origin, loaded on vessel, vessel departed, arrived, customs cleared, out for delivery, delivered.
+
+Good tracking practice:
+
+- **Share the reference** with the customer at booking.
+- **Check at set points,** not only when asked.
+- **Compare actual with planned dates** and act on slippage.
+- **Record each milestone** with date and time, as evidence if there is a dispute.
+- **Know what each status means.** "Vessel arrived" does not mean "ready to collect".
+
+## Logistics software and spreadsheets
+
+You do not need expensive software to start. A well-organised spreadsheet with clear columns, consistent entries and a person responsible will beat a poorly used system.
+
+A simple **shipment tracker** has one row per shipment and columns such as: shipment reference, customer, origin, destination, mode, supplier, goods, quantity, weight or CBM, booking date, departure date, estimated arrival, actual arrival, customs status, delivery date, status, cost, price and notes.
+
+As volumes grow, software helps with:
+
+- **Transport management systems (TMS):** quoting, booking, tracking and invoicing.
+- **Warehouse management systems (WMS):** stock and order flow.
+- **Customer portals** where customers see their own shipments.
+- **Document management** and electronic documents.
+- **Accounting integration** to link jobs to invoices and costs.
+
+Choose tools that fit your size and process, and make sure staff are trained and data is backed up and access-controlled.
+
+## Data for better decisions
+
+Data turns experience into improvement. Track a few measures regularly:
+
+- **On-time delivery rate:** shipments delivered by the promised date ÷ total shipments. If 34 of 40 shipments arrive on time, the rate is 34 ÷ 40 = **85%**.
+- **Average transit time** by route and carrier.
+- **Cost per kilogram, CBM or container** by route.
+- **Damage and loss rate:** damaged or lost shipments ÷ total shipments.
+- **Customs delay days** and their causes.
+- **Quote-to-booking conversion:** bookings ÷ quotes sent.
+- **Profit per shipment and per customer.**
+
+Use these to compare carriers, find problem routes, improve quotes and focus on the most profitable customers. Review monthly. Data is only useful if someone looks at it and acts.
+
+## Communicating with customers
+
+Technology helps, but communication wins loyalty:
+
+- **Confirm every booking** in writing with the key details and dates.
+- **Send proactive updates** at milestones, and immediately when something changes.
+- **Be honest about delays,** with the cause and a new date.
+- **Use clear, simple language** and one named contact.
+- **Respond quickly,** even if only to say you are checking.
+- **Keep a written record** of important messages.
+
+A short, early message about a delay keeps more customers than a perfect delivery that nobody was told about.
+
+## Try it
+
+```task
+{
+  "id": "lff-m09-t1",
+  "prompt": "Of **40 shipments** last month, **34** arrived on time and **2** were damaged. Work out the **on-time rate** and the **damage rate**, and say which you would act on first and why.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "On-time rate = ...",
+  "rules": [
+    { "label": "On-time rate of 85%", "pattern": "\\b85\\s?%|85 percent" },
+    { "label": "Damage rate of 5%", "pattern": "\\b5\\s?%|5 percent" },
+    { "label": "Chooses one to act on with a reason", "pattern": "because|since|first|bigger|larger|more|priority|customer" }
+  ],
+  "sample": "On-time rate = 34 / 40 = 85%.\nDamage rate = 2 / 40 = 5%.\nI would act on the on-time rate first because 6 late shipments (15%) affect more customers than 2 damaged ones, though I would also look at the damage cause since each damaged shipment is costly.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m09-t2",
+  "prompt": "Design a **shipment tracker spreadsheet**. List at least **ten column headings**, one per line, that you would include.",
+  "minutes": 8,
+  "rows": 12,
+  "placeholder": "Shipment reference\nCustomer",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Includes a shipment reference", "pattern": "reference|ref|job|booking" },
+    { "label": "Includes customer", "pattern": "customer|consignee" },
+    { "label": "Includes origin and destination", "pattern": "origin[\\s\\S]*destination|destination[\\s\\S]*origin" },
+    { "label": "Includes dates (departure, ETA, arrival, delivery)", "pattern": "eta|arrival|departure|date|delivery" },
+    { "label": "Includes status", "pattern": "status" },
+    { "label": "Includes cost or price", "pattern": "cost|price|charge|profit" }
+  ],
+  "sample": "Shipment reference\nCustomer\nOrigin\nDestination\nMode\nGoods description\nQuantity and weight or CBM\nBooking date\nDeparture date\nEstimated arrival date (ETA)\nActual arrival date\nCustoms status\nDelivery date\nStatus\nCost\nPrice\nNotes",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m09-t3",
+  "prompt": "Write a **customer update message** (50 to 100 words) telling a customer that their sea shipment will arrive **five days later** than planned because the vessel was delayed at the previous port. Give the new date, the cause, what you are doing and offer a contact.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Dear ...,",
+  "rules": [
+    { "label": "Greets the customer", "pattern": "dear|hello|hi |good (morning|afternoon)" },
+    { "label": "States the delay of five days or a new date", "pattern": "five days|5 days|new (date|eta)|now expected|revised" },
+    { "label": "Gives the cause", "pattern": "vessel|port|delayed|congestion|weather|because" },
+    { "label": "Says what you are doing or will do", "pattern": "we are|i am|we will|i will|monitor|update|arrange|track" },
+    { "label": "Offers a contact", "pattern": "contact|call|phone|reach|email|whatsapp" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Dear Mrs Okafor, I am writing to let you know that your shipment on the vessel MV Ocean Star is now expected on 22 March, five days later than planned. The vessel was delayed at the previous port by congestion. We are tracking it daily and have asked our agent to prepare your customs clearance so that your goods can be released as soon as it arrives. I will update you the moment it docks. If you have any questions, please call or message me directly on 0803 000 0000.",
+  "required": false
+}
+```
+
+Next lesson: compliance, risk and problem solving.
+$md$, true, true, 9, array['lff-m09-t1', 'lff-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('lff-m10', 'logistics-freight-forwarding', 'Compliance, risk and problem solving', 10, 'Risk & Compliance', 'RISK', array['Know key regulations', 'Handle delays and damage', 'Score risks', 'Recover with good customer service']::text[], array['Regulations and compliance', 'Delays, damage and disputes', 'Risk management', 'Customer service in logistics']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:compliance-risk-and-problem-solving', 'logistics-freight-forwarding', 'lff-m10', 'compliance-risk-and-problem-solving', 'Compliance, Risk and Problem Solving', 'Understand the regulations a logistics business must follow, handle delays, damage and disputes, manage risk with a simple scoring method and deliver good customer service when things go wrong.', 25, $md$
+> [!NOTE]
+> Regulations change. This lesson teaches how to think about compliance. **Always check the current requirements with the relevant authority or a qualified adviser.**
+
+## Regulations and compliance
+
+Logistics is regulated because it moves goods across borders and through public spaces. Common areas:
+
+- **Customs and trade rules:** declarations, classification, valuation, prohibited and restricted goods, licences and permits.
+- **Product regulation:** food, drug, standards and safety rules (for example NAFDAC and SON in Nigeria).
+- **Dangerous goods rules:** classification, packaging, labelling and documentation.
+- **Transport rules:** vehicle roadworthiness, driver licences, axle loads, hours and permits.
+- **Maritime and aviation rules:** carrier and port requirements, security screening.
+- **Business and tax:** company registration, tax returns, employment law, insurance.
+- **Safety and security:** safe handling, fire safety, protection from theft and illegal goods.
+- **Anti-corruption and sanctions:** not paying bribes, and not dealing with banned parties or countries.
+
+Non-compliance brings fines, seized cargo, delays, lost licences and a damaged reputation. A forwarder's best protection is **systems**: written procedures, trained staff, checklists, correct documents and records. Never take a shortcut because a customer is in a hurry.
+
+## Delays, damage and disputes
+
+Problems are normal in logistics. What matters is how you handle them.
+
+**Common problems:**
+- **Delays** from congestion, weather, documents, inspection or a missed connection.
+- **Damage or loss** of cargo.
+- **Shortages** or wrong goods.
+- **Documentation errors** and customs holds.
+- **Disputes** over price, liability or who is at fault.
+
+**A sound response:**
+1. **Find the facts quickly:** what happened, where, when and what the paperwork shows.
+2. **Protect the cargo** and limit further loss.
+3. **Tell the customer early,** with what you know, what you are doing and when you will update them.
+4. **Act on the options:** re-route, re-book, repair, replace, claim.
+5. **Check the contract and insurance** to see who is responsible and what is covered.
+6. **Document everything:** photographs, dates, messages and receipts.
+7. **Resolve the dispute** fairly through discussion; escalate to formal channels only if needed.
+8. **Learn:** record the cause and change the process so it is less likely to happen again.
+
+## Risk management
+
+**Risk** is the chance that something goes wrong multiplied by how bad it would be. A simple way to manage it is a **risk register**:
+
+1. **List** the risks to a shipment or operation.
+2. **Score each for likelihood and impact,** for example from 1 (low) to 5 (high).
+3. **Multiply** the two to get a risk score (1 to 25).
+4. **Prioritise** the highest scores.
+5. **Decide the response:** avoid, reduce, transfer (for example, insurance) or accept.
+6. **Assign an owner** and review regularly.
+
+Example: *Customs delay*: likelihood 4, impact 3, score **12**. *Cargo theft*: likelihood 2, impact 5, score **10**. *Wrong document*: likelihood 3, impact 4, score **12**. Customs delay and the wrong document are the top priorities, and the responses are early document checks and an experienced agent.
+
+Typical logistics risks: delays, damage, theft, compliance failure, supplier or carrier failure, currency movement, fuel price rises, cyber attacks on systems, and safety incidents. Put controls and backup plans in place for the biggest.
+
+## Customer service in logistics
+
+When goods are late or damaged, your service decides whether the customer stays. A good response:
+
+- **Acknowledges** the problem without blame or excuses.
+- **Takes ownership:** "I will find out and come back to you by 3 pm."
+- **Explains clearly** what happened, in plain language.
+- **Offers a solution** and a realistic date.
+- **Follows through** and confirms the outcome.
+- **Apologises sincerely** when you are at fault, and fixes the cause.
+
+Keep calm and polite, even with an angry customer. People remember how you handled the problem more than the problem itself.
+
+## Try it
+
+```task
+{
+  "id": "lff-m10-t1",
+  "prompt": "Score these risks for a sea shipment using **likelihood × impact** (1 to 5 each): (a) customs delay, likelihood 4, impact 3; (b) cargo theft, likelihood 2, impact 5; (c) wrong document, likelihood 3, impact 4. Give each **risk score**, say which are the top priorities and suggest one response for each of the top two.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "(a) 4 x 3 = ...",
+  "rules": [
+    { "label": "Score of 12 for customs delay", "pattern": "4\\s?[x×*]\\s?3\\s?=\\s?12|customs[^.]*12" },
+    { "label": "Score of 10 for theft", "pattern": "2\\s?[x×*]\\s?5\\s?=\\s?10|theft[^.]*10" },
+    { "label": "Score of 12 for the wrong document", "pattern": "3\\s?[x×*]\\s?4\\s?=\\s?12|document[^.]*12" },
+    { "label": "Names the top priorities (customs delay and wrong document)", "pattern": "top|priorit|highest" },
+    { "label": "Gives a response (check documents, experienced agent, early clearance)", "pattern": "check|agent|early|prepare|verify|review|insur" }
+  ],
+  "sample": "(a) Customs delay: 4 x 3 = 12.\n(b) Cargo theft: 2 x 5 = 10.\n(c) Wrong document: 3 x 4 = 12.\nThe top priorities are the customs delay and the wrong document, both scoring 12. For the customs delay I would prepare clearance early with an experienced agent, and for the wrong document I would check every document against the others before the vessel sails.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m10-t2",
+  "prompt": "A customer's container is held by customs for two extra days because of a **document error** on your side. Write your **message to the customer** (60 to 120 words): acknowledge the problem, own it, say what you are doing, give the next update time and apologise.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Dear ...,",
+  "rules": [
+    { "label": "Acknowledges the problem", "pattern": "held|delay|error|mistake|problem" },
+    { "label": "Takes ownership", "pattern": "our (error|mistake|side)|we made|i made|responsib|my mistake|we are at fault" },
+    { "label": "Says what is being done", "pattern": "correct|amend|resubmit|fix|working|clear|arrange" },
+    { "label": "Gives the next update time", "pattern": "by \\d|today|tomorrow|update you|will (call|message|update)|within" },
+    { "label": "Apologises", "pattern": "sorry|apolog|regret" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Dear Mr Eze, I am sorry to tell you that your container is being held at customs for two more days because of an error in a document we prepared. This was our mistake and we take full responsibility. We have corrected the document, resubmitted it today and our agent is following it up with customs in person. I will update you by 4 pm today and again as soon as the container is released. I sincerely apologise for the delay and the inconvenience, and I will check every document twice from now on.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m10-t3",
+  "prompt": "List **five compliance habits** a forwarding company should build into everyday work. One per line, each with a short reason.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Check documents ... because ...",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Mentions checking documents or classification", "pattern": "document|classif|hs code|declar" },
+    { "label": "Mentions training or procedures", "pattern": "train|procedure|checklist|written|policy" },
+    { "label": "Mentions keeping records", "pattern": "record|file|copy|audit" },
+    { "label": "Mentions refusing bribes or false declarations", "pattern": "brib|false|truthful|honest|corrupt|never" }
+  ],
+  "sample": "Check every document and the HS code against the goods before shipment, because errors cause delays and fines.\nTrain staff on current customs and dangerous goods rules, because the rules change.\nUse written procedures and checklists, so no step is missed when we are busy.\nKeep full records of every shipment, because they protect us in a dispute or audit.\nNever pay bribes or make false declarations, because they risk prosecution and our licence.",
+  "required": false
+}
+```
+
+Next lesson: building a forwarding business.
+$md$, true, true, 10, array['lff-m10-t1', 'lff-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('lff-m11', 'logistics-freight-forwarding', 'Running a forwarding business', 11, 'Forwarding Business', 'BIZ', array['Compare business models', 'Check licences and requirements', 'Price for profit and break even', 'Find and keep customers']::text[], array['Business models for forwarders', 'Licences and requirements in Nigeria', 'Pricing and profit', 'Finding and keeping customers']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:running-a-forwarding-business', 'logistics-freight-forwarding', 'lff-m11', 'running-a-forwarding-business', 'Running a Forwarding Business', 'Understand the business models for forwarders, the licences and requirements to check in Nigeria, how to price for profit and how to find and keep customers.', 30, $md$
+> [!NOTE]
+> Licensing and regulatory requirements change. Use this lesson as a checklist of questions, and **confirm the current requirements with the relevant authorities and professional bodies** before you start.
+
+## Business models for forwarders
+
+Not every forwarder is the same. Common models:
+
+| Model | What it does | Notes |
+| :-- | :-- | :-- |
+| **Asset-light freight forwarder** | Arranges transport using other companies' ships, planes and trucks | Lowest startup cost; profit comes from the margin and service |
+| **Consolidator** | Combines many small shipments into full containers or pallets | Needs volume and a reliable network |
+| **NVOCC** | Sells container space under its own bill of lading | More responsibility; needs capital and systems |
+| **Customs broker / clearing agent** | Specialises in customs clearance | Needs licence, knowledge and relationships |
+| **Courier / express and last-mile delivery** | Moves small parcels | Needs route density and technology |
+| **Warehousing and 3PL (third-party logistics)** | Stores and distributes for customers | Needs property, equipment and people |
+| **Niche specialist** | Focuses on a type of cargo (perishables, machinery, e-commerce, imports for small traders) | Easier to stand out; builds expertise |
+
+A beginner often starts as a **small asset-light forwarder or agent for a niche**, such as helping small traders import from China, and adds services as the business grows.
+
+## Licences and requirements in Nigeria
+
+Check carefully what you need. Typical areas to investigate:
+
+- **Business registration** with the Corporate Affairs Commission, and a Tax Identification Number, with tax registration and returns.
+- **Customs licence** if you will clear goods yourself, and arrangements with licensed clearing agents if not.
+- **Memberships and approvals** in the freight and clearing industry and with relevant regulators for shipping, aviation or road transport.
+- **Insurance:** goods in transit, warehouse, vehicles, and professional or liability cover.
+- **Contracts and terms of business:** standard trading conditions that limit liability and set payment terms.
+- **Bank account and accounting** in the company name.
+- **Premises, vehicles and staff,** with the right permits and safety arrangements.
+- **Compliance procedures** for documents, dangerous goods and anti-bribery.
+
+Ask an experienced forwarder, an industry association and a lawyer or accountant. Do not guess.
+
+## Pricing and profit
+
+A forwarder earns from the **margin** between what carriers and suppliers charge and what the customer pays, plus fees for services such as documentation and clearance.
+
+Example: for one shipment the carrier and local costs total **$1,050**. You quote the customer **$1,300**.
+- Profit = 1,300 − 1,050 = **$250**.
+- Margin on selling price = 250 ÷ 1,300 = **19.2%**.
+- Markup on cost = 250 ÷ 1,050 = **23.8%**.
+
+Be clear which you are using. Also count your **overheads**: rent, staff, software, phone, marketing, insurance, licences and your own time. If your margin per shipment is $250 and your monthly overhead is $2,000, you need **8 shipments** a month to break even ($2,000 ÷ $250 = 8), and more to make a profit.
+
+Tips:
+- **Price for value, not just cost.** Service, speed and reliability support a better margin.
+- **Never quote without current rates.** Include a validity period.
+- **Add a contingency** for currency and minor extras, and say what is excluded.
+- **Watch cash flow:** you often pay carriers before your customer pays you. Agree payment terms, take deposits and chase late payments.
+
+## Finding and keeping customers
+
+- **Pick a niche** and become the expert: for example, small importers from China, exporters of agricultural produce or online shops.
+- **Be visible:** a clear website or social profile, listings, and a simple explanation of what you do and for whom.
+- **Network:** trade associations, markets, chambers of commerce, trade fairs, and referrals from carriers and customs agents.
+- **Reach out directly** to traders, manufacturers, online sellers and exporters, offering a free quote and a short consultation.
+- **Give a clear, fast quote** with all charges and honest timing.
+- **Deliver reliably** and communicate early, especially when something goes wrong.
+- **Ask for referrals and testimonials** after a good job.
+- **Keep in touch** with past customers, since repeat business is cheaper than finding new customers.
+
+One happy customer who tells five others is the best advertising a forwarder has.
+
+## Try it
+
+```task
+{
+  "id": "lff-m11-t1",
+  "prompt": "The carrier and local costs of a shipment total **$1,050** and you quote **$1,300**. Your monthly overhead is **$2,000**. Work out the profit, the margin on selling price, the markup on cost and how many such shipments you need a month to break even.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Profit = ...",
+  "rules": [
+    { "label": "Profit of $250", "pattern": "\\$?\\s?250\\b" },
+    { "label": "Margin of about 19.2%", "pattern": "19\\.2|19\\.23|19 ?%" },
+    { "label": "Markup of about 23.8%", "pattern": "23\\.8|23\\.81|24 ?%" },
+    { "label": "Break-even of 8 shipments", "pattern": "\\b8\\b|eight" }
+  ],
+  "sample": "Profit = 1,300 - 1,050 = $250.\nMargin on selling price = 250 / 1,300 = 19.2%.\nMarkup on cost = 250 / 1,050 = 23.8%.\nBreak-even = overhead 2,000 / profit per shipment 250 = 8 shipments a month.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m11-t2",
+  "prompt": "Choose a **niche** for a new freight forwarding business and write your plan in 60 to 130 words: who your customers are, what you offer, why you will be better than a general forwarder, and how you will find your first five customers.",
+  "minutes": 15,
+  "rows": 9,
+  "placeholder": "My niche is ...",
+  "rules": [
+    { "label": "Names the niche and its customers", "pattern": "niche|customers?|traders?|importers?|exporters?|shops?|sellers?|farmers?" },
+    { "label": "Says what is offered", "pattern": "offer|service|shipping|clearing|freight|consolidat|deliver|quote" },
+    { "label": "Says why you are better", "pattern": "because|better|expert|specialis|focus|know|understand|fast|reliab" },
+    { "label": "Says how to find first customers", "pattern": "first (five|5)|network|whatsapp|referral|association|market|instagram|contact|reach|visit" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "My niche is helping small online sellers in Lagos import goods from China. I offer consolidated air and sea freight, a clear all-in quote with duty estimates, document checking and delivery to the customer's door. I will be better than a general forwarder because I focus on small shipments, explain every charge in plain language and update customers on WhatsApp at each milestone. To find my first five customers I will join online seller groups, offer a free quote and landed cost check, ask my own contacts for referrals, and visit two markets with a one-page offer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m11-t3",
+  "prompt": "List **six requirements or questions** you would check before starting a forwarding business in Nigeria. One per line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Business registration ...",
+  "rules": [
+    { "label": "Six lines", "minLines": 6 },
+    { "label": "Mentions registration (CAC) or tax", "pattern": "cac|registration|registered|tax|tin" },
+    { "label": "Mentions customs licence or licensed agent", "pattern": "customs|licen[cs]|clearing agent" },
+    { "label": "Mentions insurance", "pattern": "insurance|insure" },
+    { "label": "Mentions trading terms or contracts", "pattern": "terms|contract|conditions|liability" },
+    { "label": "Mentions bank, accounting or cash flow", "pattern": "bank|account|cash flow|capital|payment" }
+  ],
+  "sample": "Register the business with the CAC and get a TIN and tax registration.\nCheck whether I need a customs licence or must work through a licensed clearing agent.\nFind out which industry memberships and approvals apply to freight forwarding.\nArrange insurance for goods in transit and professional liability.\nWrite standard terms of business that set liability limits and payment terms.\nOpen a business bank account and plan cash flow, because I will pay carriers before customers pay me.",
+  "required": false
+}
+```
+
+Next lesson: your own shipment plan.
+$md$, true, true, 11, array['lff-m11-t1', 'lff-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('lff-m12', 'logistics-freight-forwarding', 'Final project: a complete shipment plan', 12, 'Shipment Plan', 'SHIPPLAN', array['Plan a shipment end to end', 'Quote it fully', 'Score risks', 'Present a customer-ready plan']::text[], array['Choosing a shipment', 'Planning mode, route and documents', 'Costing and quoting', 'Presenting your plan']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('logistics-freight-forwarding:final-project-a-complete-shipment-plan', 'logistics-freight-forwarding', 'lff-m12', 'final-project-a-complete-shipment-plan', 'Final Project - A Complete Shipment Plan', 'Bring the course together by planning one shipment end to end: choose the shipment, plan the mode, route and documents, cost and quote it, and present your plan.', 45, $md$
+## What you are building
+
+You have learned how cargo moves, who does what, how to document, clear, price and handle it, and how to run the business. Now you plan **one real or realistic shipment from start to finish** and present it as a forwarder would to a customer and a manager.
+
+Choose a shipment you understand: a small trader importing 200 cartons of goods from China by sea, a 500 kg air shipment of fashion items from Lagos to London, an agricultural export, or the movement of machinery to a site. Use real rates where you can find them (from carriers, forwarders or published rate sheets), and state clearly where you assume a number.
+
+## Your plan has six parts
+
+1. **The shipment.** Goods, quantity, weight and volume, origin and destination, trade terms and the customer's needs (deadline, budget, service).
+2. **Mode, route and timing.** The mode or modes you chose, the route, the carriers or options considered, and the transit time with your allowance for delays.
+3. **Documents and compliance.** The documents needed, who prepares each, the certificates and permits, the HS code and any regulatory approvals.
+4. **Packing, loading and handling.** How the cargo will be packed, marked and loaded, and any special handling or dangerous goods.
+5. **Cost and quotation.** Every charge in a quotation, your margin and what is excluded, plus the estimated duty and taxes for the customer.
+6. **Risks and communication.** Your three biggest risks with responses, the insurance you recommend and how you will keep the customer informed.
+
+## Writing it up
+
+Write for the customer first, and your manager second. Lead with the recommendation (mode, route, price and date), then show the supporting detail. Use tables for costs and documents. State assumptions and exclusions clearly.
+
+> [!TIP]
+> Put yourself in the customer's shoes: would you be able to approve this plan without calling to ask questions? If not, add what is missing.
+
+## Try it
+
+```task
+{
+  "id": "lff-m12-t1",
+  "prompt": "Describe **the shipment and your mode and route choice** in 60 to 140 words: the goods, quantity, weight or volume, origin, destination, trade terms, the mode you chose and why, the route and the transit time including a delay allowance.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "The shipment is ...",
+  "rules": [
+    { "label": "Says what the goods are and the quantity", "pattern": "cartons?|pallets?|units?|tonnes?|kg|goods|machinery|boxes|container" },
+    { "label": "States origin and destination", "pattern": "from[\\s\\S]*to|origin[\\s\\S]*destination" },
+    { "label": "States the mode (sea, air, road)", "pattern": "sea|air|road|rail|lcl|fcl" },
+    { "label": "States trade terms", "pattern": "\\b(fob|exw|cif|dap|ddp)\\b" },
+    { "label": "Gives a reason for the mode", "pattern": "because|since|cheaper|faster|urgent|heavy|bulky" },
+    { "label": "Gives transit time", "pattern": "days?|weeks?" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 145 }
+  ],
+  "sample": "The shipment is 200 cartons of phone accessories, about 24 CBM and 3.2 tonnes, from Shenzhen, China to Lagos, Nigeria, on FOB Shenzhen terms for a Lagos importer. I chose sea freight in a 20-foot container, because the goods are not urgent and sea is far cheaper than air for this volume and weight. The route is Shenzhen to Lagos (Apapa or Tin Can) by a shipping line with a transhipment, with an estimated transit of about 35 days. I would allow a further 10 days for port congestion and customs, so the customer should plan on about 45 days from loading to delivery.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m12-t2",
+  "prompt": "List the **documents and compliance items** for your shipment, at least eight, one per line, saying who prepares each.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Commercial invoice - prepared by the supplier",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes commercial invoice and packing list", "pattern": "invoice[\\s\\S]*packing|packing[\\s\\S]*invoice" },
+    { "label": "Includes bill of lading or air waybill", "pattern": "bill of lading|air ?waybill|b/l|awb" },
+    { "label": "Includes the customs declaration (Form M, PAAR)", "pattern": "form m|paar|declaration" },
+    { "label": "Includes insurance", "pattern": "insurance" },
+    { "label": "Says who prepares them", "pattern": "supplier|forwarder|agent|importer|shipping line|insurer|customs" },
+    { "label": "Includes the HS code or a certificate or approval", "pattern": "hs code|certificate|approval|son|nafdac|origin|permit" }
+  ],
+  "sample": "Commercial invoice - prepared by the supplier\nPacking list - prepared by the supplier\nBill of lading - issued by the shipping line or forwarder\nCertificate of origin - issued by the chamber of commerce at origin\nHS code classification - confirmed by the clearing agent\nSON conformity certificate if required - importer and agent\nForm M and PAAR - raised by the importer through the bank and agent\nInsurance certificate - issued by the insurer arranged by the forwarder\nDelivery order - issued by the shipping line on payment of charges",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m12-t3",
+  "prompt": "Write your **quotation**, one line per charge: freight, origin handling, documentation, destination handling, customs clearance, local delivery, insurance, subtotal, your margin and the total, with an estimate of duty and VAT as a separate excluded item. At least ten lines.",
+  "minutes": 12,
+  "rows": 14,
+  "placeholder": "Sea freight: $...",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Includes freight", "pattern": "freight" },
+    { "label": "Includes handling and documentation", "pattern": "handling[\\s\\S]*documentation|documentation[\\s\\S]*handling" },
+    { "label": "Includes customs clearance and delivery", "pattern": "clearance[\\s\\S]*deliver|deliver[\\s\\S]*clearance" },
+    { "label": "Includes insurance", "pattern": "insurance" },
+    { "label": "Includes subtotal, margin and total", "pattern": "subtotal[\\s\\S]*margin[\\s\\S]*total" },
+    { "label": "Says duty and VAT are excluded or estimated separately", "pattern": "duty[\\s\\S]*(exclud|separate|estimate|not included)|(exclud|separate|estimate|not included)[\\s\\S]*duty" }
+  ],
+  "sample": "Sea freight 20-foot container Shenzhen to Lagos: $2,800\nOrigin handling and export documentation: $250\nDocumentation fee: $60\nDestination handling: $420\nCustoms clearance agent fee: $300\nLocal delivery to the customer's warehouse: $350\nInsurance at 110% of the CIF value: $90\nSubtotal: $4,270\nMargin at 12% of cost: $512.40\nTotal quotation: $4,782.40\nExcluded: import duty and VAT, estimated separately at about ₦3.2 million, and storage or demurrage beyond free days",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "lff-m12-t4",
+  "prompt": "Write your **top three risks** for this shipment, each with a response, and one line on how you will keep the customer informed. At least four lines.",
+  "minutes": 9,
+  "rows": 7,
+  "placeholder": "Risk: ... - Response: ...",
+  "rules": [
+    { "label": "At least four lines", "minLines": 4 },
+    { "label": "Lists risks with responses", "pattern": "risk[\\s\\S]*(response|fix|mitigat|action)" },
+    { "label": "Mentions realistic risks (delay, damage, customs, theft, documents, currency)", "pattern": "delay|damage|customs|theft|document|currency|exchange|demurrage" },
+    { "label": "Says how the customer is kept informed", "pattern": "update|inform|track|message|whatsapp|email|milestone" }
+  ],
+  "sample": "Risk: vessel delay or port congestion - Response: allow 10 extra days in the plan and track the vessel weekly.\nRisk: a document error holds the container at customs - Response: check every document against the others before the vessel sails and prepare clearance early.\nRisk: damage or loss of cargo in transit - Response: pack to sea standard and insure for 110% of the CIF value.\nCommunication: I will message the customer on WhatsApp at every milestone and straight away if anything changes.",
+  "required": true
+}
+```
+
+When you are done, submit your complete plan as your final project.
+$md$, true, true, 12, array['lff-m12-t1', 'lff-m12-t2', 'lff-m12-t3', 'lff-m12-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Supply Chain Management
@@ -89626,6 +91153,684 @@ values ('proc-f15', 1, 'Compare total landed cost, not the quoted unit price.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Logistics Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m01-check', 'logistics-freight-forwarding', 'module', 'lff-m01', 'Logistics Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m01-q1', 'lff-m01-check', 1, 'Which best describes logistics?', '["Only trucking","Planning and managing the movement and storage of goods and their information","Only customs clearance","Only warehousing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m01-q1', 1, 'Logistics covers transport, storage, inventory, documents and information.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m01-q2', 'lff-m01-check', 2, 'Who is the consignee?', '["The party sending the goods","The party receiving the goods","The shipping line","The customs officer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m01-q2', 1, 'The consignee is the receiver; the shipper or consignor sends.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m01-q3', 'lff-m01-check', 3, 'A customer buys FOB Shenzhen. Where does the seller''s responsibility for loading end?', '["At the buyer''s door","On board the ship at Shenzhen","At the Lagos port","At customs in Nigeria"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m01-q3', 1, 'FOB means the seller delivers on board at the port of loading.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m01-q4', 'lff-m01-check', 4, 'What usually happens when you choose a faster service?', '["It costs less","It costs more","It needs no documents","It removes risk"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m01-q4', 1, 'Speed generally costs more; logistics trades cost against service.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m01-q5', 'lff-m01-check', 5, 'Logistics cost ₦4,500,000 on sales of ₦60,000,000. What share of sales is that?', '["4.5%","6%","7.5%","13%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m01-q5', 2, '4.5 ÷ 60 = 7.5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Modes of Transport: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m02-check', 'logistics-freight-forwarding', 'module', 'lff-m02', 'Modes of Transport: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m02-q1', 'lff-m02-check', 1, 'Which mode is usually cheapest per tonne for large international volumes?', '["Air","Sea","Courier","Motorbike"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m02-q1', 1, 'Sea freight has the lowest cost per tonne for bulk and containers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m02-q2', 'lff-m02-check', 2, 'A carton is 60 × 50 × 40 cm and weighs 18 kg. What is the chargeable air weight (÷ 6,000)?', '["18 kg","20 kg","120 kg","50 kg"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m02-q2', 1, 'Volumetric 20 kg is greater than actual 18 kg.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m02-q3', 'lff-m02-check', 3, 'What does LCL mean?', '["Large Container Load","Less than Container Load: shared container space","Local Cargo Licence","Loaded Container Lot"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m02-q3', 1, 'LCL shares a container with other shippers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m02-q4', 'lff-m02-check', 4, 'What distinguishes multimodal from intermodal transport?', '["Nothing","Multimodal is under one contract and one document","Multimodal is by air only","Intermodal means road only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m02-q4', 1, 'Multimodal has a single contract and responsible party.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m02-q5', 'lff-m02-check', 5, 'Which cargo suits RoRo shipping?', '["Loose grain","Vehicles driven on and off the ship","Liquids in tankers","Documents"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m02-q5', 1, 'RoRo handles wheeled cargo such as cars.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: The Role of a Freight Forwarder: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m03-check', 'logistics-freight-forwarding', 'module', 'lff-m03', 'The Role of a Freight Forwarder: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m03-q1', 'lff-m03-check', 1, 'What does a freight forwarder usually do?', '["Owns the ships and planes","Arranges the transport and related services for customers","Collects duty","Makes the goods"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m03-q1', 1, 'Forwarders organise the journey, usually without owning the transport.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m03-q2', 'lff-m03-check', 2, 'What is consolidation?', '["Splitting cargo in half","Combining small shipments into one container or pallet for a better rate","A customs charge","A type of insurance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m03-q2', 1, 'Consolidation pools cargo from several customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m03-q3', 'lff-m03-check', 3, 'Goods have a CIF value of $9,000. What is cover at 110% of CIF?', '["$9,000","$9,900","$10,800","$8,100"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m03-q3', 1, '9,000 × 1.10 = $9,900.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m03-q4', 'lff-m03-check', 4, 'Why is cargo insurance important?', '["It speeds customs","Carrier liability is usually limited and far below the goods'' value","It replaces the invoice","It is free"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m03-q4', 1, 'Insurance covers the insured value; carrier liability is capped.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m03-q5', 'lff-m03-check', 5, 'What should you give a forwarder when booking?', '["Only the price you want","Complete and accurate goods, weight, dimensions, value and dates","Nothing until the ship sails","A verbal description only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m03-q5', 1, 'Accurate information avoids errors and delays.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Shipping Documents: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m04-check', 'logistics-freight-forwarding', 'module', 'lff-m04', 'Shipping Documents: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m04-q1', 'lff-m04-check', 1, 'Which is NOT a function of a bill of lading?', '["Receipt for the goods","Evidence of the contract of carriage","Document of title","A customs duty receipt"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m04-q1', 3, 'A B/L is a receipt, a contract and a document of title, not a duty receipt.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m04-q2', 'lff-m04-check', 2, 'How does an air waybill differ from a bill of lading?', '["It is a document of title","It is not a document of title; goods go to the named consignee","It is only for sea freight","It is issued by customs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m04-q2', 1, 'The AWB is a contract and receipt, but not a title document.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m04-q3', 'lff-m04-check', 3, 'The invoice says 15 cartons and the packing list says 14. What should you do?', '["Ignore it","Correct the documents before shipment so they match","Ship and fix later","Change the invoice only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m04-q3', 1, 'Mismatches cause delays and fines; fix them before the vessel sails.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m04-q4', 'lff-m04-check', 4, 'A clean bill of lading means:', '["The container was washed","It has no remarks about damage","It has no charges","It is a copy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m04-q4', 1, 'A clean B/L records the goods in apparent good condition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m04-q5', 'lff-m04-check', 5, 'A shipment will not clear without a certificate. What do you do?', '["Make one up","Obtain the genuine certificate; never falsify documents","Pay the agent extra","Change the goods description"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m04-q5', 1, 'False documents are an offence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Customs and Clearing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m05-check', 'logistics-freight-forwarding', 'module', 'lff-m05', 'Customs and Clearing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m05-q1', 'lff-m05-check', 1, 'CIF ₦5,000,000, duty 5%, VAT 7.5% on CIF plus duty. What is the total duty and VAT?', '["₦250,000","₦393,750","₦643,750","₦875,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m05-q1', 2, 'Duty ₦250,000 plus VAT ₦393,750.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m05-q2', 'lff-m05-check', 2, 'What does the HS code decide?', '["The shipping line","The duty rate and any restrictions","The container colour","The delivery date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m05-q2', 1, 'Classification drives duty and regulation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m05-q3', 'lff-m05-check', 3, 'What is demurrage?', '["A discount","Charges for keeping a container beyond the free period","A kind of insurance","A customs form"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m05-q3', 1, 'Delays after free days attract demurrage and storage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m05-q4', 'lff-m05-check', 4, 'Goods pass through a country to another destination with duty suspended. This is:', '["Temporary import","Transit","Re-export","Retail"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m05-q4', 1, 'Transit lets goods cross under customs control.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m05-q5', 'lff-m05-check', 5, 'A bonded warehouse allows you to:', '["Avoid customs forever","Store goods under customs control without paying duty until release","Skip documents","Ship by air only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m05-q5', 1, 'Duty is deferred while goods stay in bond.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Freight Rates and Quotations: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m06-check', 'logistics-freight-forwarding', 'module', 'lff-m06', 'Freight Rates and Quotations: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m06-q1', 'lff-m06-check', 1, 'Why must a quotation list every charge?', '["It looks professional","Hidden extras destroy trust and make quotes impossible to compare","Customs requires it","To raise the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m06-q1', 1, 'Clear, complete quotes avoid disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m06-q2', 'lff-m06-check', 2, '4 CBM at $90, plus $50, $35, $70 and $120 of other charges. What is the cost subtotal?', '["$360","$635","$730","$275"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m06-q2', 1, '360 + 50 + 35 + 70 + 120 = $635.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m06-q3', 'lff-m06-check', 3, 'A 15% margin on cost of $635 gives a price of about:', '["$650","$730.25","$760","$1,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m06-q3', 1, '635 × 1.15 = $730.25.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m06-q4', 'lff-m06-check', 4, 'What strengthens a forwarder''s bargaining with carriers?', '["Small random bookings","Volume, regular business and booking early","Late payment","Ignoring alternatives"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m06-q4', 1, 'Consistent volume and trust win better rates.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m06-q5', 'lff-m06-check', 5, 'A bunker surcharge covers:', '["Warehouse rent","Changes in fuel cost","Customs duty","Insurance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m06-q5', 1, 'Bunker surcharges pass on fuel price changes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Cargo Handling, Packing and Container Loading: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m07-check', 'logistics-freight-forwarding', 'module', 'lff-m07', 'Cargo Handling, Packing and Container Loading: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m07-q1', 'lff-m07-check', 1, 'A 20-foot container has about 33 CBM and you plan to use 85%. Cartons are 0.12 CBM. How many fit?', '["275","233","200","150"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m07-q1', 1, '28.05 ÷ 0.12 = 233.75, so 233.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m07-q2', 'lff-m07-check', 2, 'What should you do before signing for damaged cargo?', '["Sign and complain later","Note the damage on the delivery note and take photographs","Refuse to speak","Throw the carton away"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m07-q2', 1, 'Unrecorded damage can cost you the claim.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m07-q3', 'lff-m07-check', 3, 'Which code governs dangerous goods at sea?', '["IMDG","HS","CIF","FIFO"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m07-q3', 0, 'The IMDG Code governs sea carriage; IATA DGR governs air.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m07-q4', 'lff-m07-check', 4, 'Why block and brace cargo in a container?', '["For appearance","So it cannot shift and be damaged in transit","To increase weight","To avoid documents"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m07-q4', 1, 'Shifting cargo is a major cause of damage.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m07-q5', 'lff-m07-check', 5, 'Marking a carton ''3 of 120'' helps to:', '["Hide the goods","Find missing cartons and prevent mix-ups","Lower the duty","Replace the packing list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m07-q5', 1, 'Numbered marks make shortages easy to detect.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Warehousing and Distribution: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m08-check', 'logistics-freight-forwarding', 'module', 'lff-m08', 'Warehousing and Distribution: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m08-q1', 'lff-m08-check', 1, 'Which method ships the earliest-expiring stock first?', '["FIFO","FEFO","LIFO","WMS"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m08-q1', 1, 'FEFO is first expired, first out, vital for food and medicine.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m08-q2', 'lff-m08-check', 2, '120 deliveries cost ₦480,000. What is the cost per delivery?', '["₦3,000","₦4,000","₦4,800","₦40,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m08-q2', 1, '480,000 ÷ 120 = ₦4,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m08-q3', 'lff-m08-check', 3, '108 of 120 deliveries succeed on the first try. What is the success rate?', '["80%","85%","90%","95%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m08-q3', 2, '108 ÷ 120 = 90%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m08-q4', 'lff-m08-check', 4, 'What is cross-docking?', '["Storing goods for a year","Moving inbound goods straight to outbound vehicles with little storage","Counting stock","Returning goods"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m08-q4', 1, 'Cross-docking saves time and space.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m08-q5', 'lff-m08-check', 5, 'How do cycle counts help?', '["They replace all records","They find stock errors early through regular small counts","They reduce deliveries","They cut duty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m08-q5', 1, 'Frequent counts catch discrepancies sooner.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Technology and Tracking: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m09-check', 'logistics-freight-forwarding', 'module', 'lff-m09', 'Technology and Tracking: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m09-q1', 'lff-m09-check', 1, 'Which reference tracks a sea container?', '["Flight number","Container number or bill of lading number","Passport number","Invoice date"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m09-q1', 1, 'Containers are tracked by container, booking or B/L numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m09-q2', 'lff-m09-check', 2, '34 of 40 shipments arrive on time. What is the on-time rate?', '["75%","80%","85%","90%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m09-q2', 2, '34 ÷ 40 = 85%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m09-q3', 'lff-m09-check', 3, 'What is the best way to tell a customer of a delay?', '["Wait until they ask","Tell them early with the cause, a new date and what you are doing","Blame the carrier only","Say nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m09-q3', 1, 'Proactive, honest updates keep customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m09-q4', 'lff-m09-check', 4, 'What does a shipment tracker spreadsheet need to be useful?', '["Clear columns, consistent entries and someone responsible","Expensive software","Only the customer''s name","No dates"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m09-q4', 0, 'A well-kept spreadsheet beats a poorly used system.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m09-q5', 'lff-m09-check', 5, '''Vessel arrived'' means:', '["Goods are ready to collect","The ship is at the port; clearance and release are still to come","Customs is finished","The goods are delivered"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m09-q5', 1, 'Arrival is only one milestone.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Compliance, Risk and Problem Solving: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m10-check', 'logistics-freight-forwarding', 'module', 'lff-m10', 'Compliance, Risk and Problem Solving: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m10-q1', 'lff-m10-check', 1, 'Likelihood 4 and impact 3 give a risk score of:', '["7","10","12","15"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m10-q1', 2, '4 × 3 = 12.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m10-q2', 'lff-m10-check', 2, 'What is the best first reaction to a damaged shipment?', '["Hide it","Get the facts, protect the cargo and tell the customer early","Blame the driver","Cancel the order"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m10-q2', 1, 'Facts, protection and early communication come first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m10-q3', 'lff-m10-check', 3, 'What protects a forwarder from non-compliance?', '["Speed","Systems: procedures, training, checklists and records","Luck","A big discount"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m10-q3', 1, 'Good systems make compliance routine.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m10-q4', 'lff-m10-check', 4, 'Which is a way to transfer risk?', '["Ignoring it","Cargo insurance","Hiding documents","Delaying the shipment"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m10-q4', 1, 'Insurance transfers financial loss to the insurer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m10-q5', 'lff-m10-check', 5, 'When at fault for a delay, a good customer message:', '["Makes excuses","Owns the mistake, says what you are doing and gives the next update time","Blames customs","Is avoided"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m10-q5', 1, 'Ownership and a plan keep trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Running a Forwarding Business: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m11-check', 'logistics-freight-forwarding', 'module', 'lff-m11', 'Running a Forwarding Business: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m11-q1', 'lff-m11-check', 1, 'Carrier and local costs $1,050, quote $1,300. What is the profit?', '["$150","$250","$350","$1,300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m11-q1', 1, '1,300 − 1,050 = $250.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m11-q2', 'lff-m11-check', 2, 'Profit $250 on a $1,300 quote is a margin on selling price of about:', '["19.2%","23.8%","25%","30%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m11-q2', 0, '250 ÷ 1,300 = 19.2%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m11-q3', 'lff-m11-check', 3, 'Monthly overhead is $2,000 and profit per shipment $250. How many shipments to break even?', '["4","6","8","10"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m11-q3', 2, '2,000 ÷ 250 = 8.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m11-q4', 'lff-m11-check', 4, 'Why choose a niche?', '["To limit customers","It is easier to stand out and build expertise","Regulators require it","It removes competition"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m11-q4', 1, 'A niche lets a small forwarder compete on expertise.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m11-q5', 'lff-m11-check', 5, 'Why watch cash flow in a forwarding business?', '["You pay carriers before customers pay you","Carriers pay you first","It never matters","Customers always pay in advance"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m11-q5', 0, 'Payment timing can strain a small forwarder.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Complete Shipment Plan: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('lff-m12-check', 'logistics-freight-forwarding', 'module', 'lff-m12', 'Final Project: A Complete Shipment Plan: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m12-q1', 'lff-m12-check', 1, 'How should the plan be organised for the customer?', '["Detail first, recommendation last","Recommendation first, then supporting detail","Only a price","Only risks"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m12-q1', 1, 'Lead with the decision, then show the support.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m12-q2', 'lff-m12-check', 2, 'What should a quotation state clearly?', '["Only the total","Every charge, the margin, validity and what is excluded","Nothing about duty","Only the carrier name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m12-q2', 1, 'Complete quotes avoid disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m12-q3', 'lff-m12-check', 3, 'Why include a delay allowance in transit time?', '["To look slow","Delays are common and the customer needs a realistic date","Customs requires it","It lowers the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m12-q3', 1, 'A realistic date prevents broken promises.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m12-q4', 'lff-m12-check', 4, 'What belongs in the documents part?', '["Only the invoice","The documents, certificates, permits, HS code and who prepares each","Photos","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m12-q4', 1, 'Complete document planning avoids clearance delays.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-m12-q5', 'lff-m12-check', 5, 'Why list risks with responses?', '["To fill space","It shows you have planned for what could go wrong","Customers dislike risks","It is a tax rule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-m12-q5', 1, 'Planned responses make delays and damage manageable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Logistics & Freight Forwarding: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('logistics-freight-forwarding-final', 'logistics-freight-forwarding', 'final', null, 'Logistics & Freight Forwarding: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f01', 'logistics-freight-forwarding-final', 1, 'Which party arranges the movement of goods but usually does not own the transport?', '["The carrier","The freight forwarder","The consignee","The customs officer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f01', 1, 'Forwarders arrange transport using carriers'' capacity.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f02', 'logistics-freight-forwarding-final', 2, '10 cartons of 60 × 50 × 40 cm and 18 kg each go by air at $5.50 a kg. What is the freight?', '["$990","$1,100","$1,320","$11,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f02', 1, 'Chargeable 20 kg × 10 = 200 kg; 200 × 5.50 = $1,100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f03', 'logistics-freight-forwarding-final', 3, 'A bill of lading is all of the following EXCEPT:', '["A receipt","Evidence of the contract of carriage","A document of title","A duty payment"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f03', 3, 'It does not prove payment of duty.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f04', 'logistics-freight-forwarding-final', 4, 'What should you do about an error you find in the documents before shipment?', '["Ignore it","Correct it so all documents match","Ship anyway","Delete the packing list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f04', 1, 'Fix it before the vessel sails.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f05', 'logistics-freight-forwarding-final', 5, 'CIF ₦5,000,000, duty 5%, VAT 7.5% on CIF plus duty. What is total duty and VAT?', '["₦643,750","₦625,000","₦875,000","₦393,750"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f05', 0, '250,000 + 393,750.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f06', 'logistics-freight-forwarding-final', 6, 'What does a good quotation include?', '["Only the total","Every charge, margin, validity and exclusions","No exclusions","Only freight"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f06', 1, 'Transparent quotes win trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f07', 'logistics-freight-forwarding-final', 7, 'Cargo insurance at 110% of a $9,000 CIF value covers:', '["$9,000","$9,900","$8,100","$10,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f07', 1, '9,000 × 1.1.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f08', 'logistics-freight-forwarding-final', 8, 'A planner uses 85% of a 33 CBM container and cartons of 0.12 CBM. How many cartons fit?', '["275","233","250","200"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f08', 1, '28.05 ÷ 0.12 = 233.75, so 233.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f09', 'logistics-freight-forwarding-final', 9, 'Which stock method is best for food with expiry dates?', '["LIFO","FEFO","Random","Last in"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f09', 1, 'FEFO ships the soonest-expiring stock first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f10', 'logistics-freight-forwarding-final', 10, '120 deliveries cost ₦480,000 and 108 succeed first time. What are cost per delivery and first-attempt rate?', '["₦4,000 and 90%","₦4,800 and 90%","₦4,000 and 80%","₦3,000 and 95%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f10', 0, '480,000 ÷ 120 = 4,000; 108 ÷ 120 = 90%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f11', 'logistics-freight-forwarding-final', 11, 'Your container is held because you made a document error. What is the best message?', '["Blame customs","Own the mistake, say what you are doing and give an update time","Say nothing until released","Offer a discount only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f11', 1, 'Ownership and a plan keep customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f12', 'logistics-freight-forwarding-final', 12, 'Which risk has the highest score: A (4×3), B (2×5), C (3×4)?', '["A only","B only","A and C tie at 12","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f12', 2, 'A = 12, B = 10, C = 12.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f13', 'logistics-freight-forwarding-final', 13, 'A quote to the customer is $1,300 against costs of $1,050. What is the profit?', '["$150","$250","$350","$450"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f13', 1, '1,300 − 1,050 = 250.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f14', 'logistics-freight-forwarding-final', 14, 'Overhead is $2,000 a month and profit per shipment is $250. What number of shipments breaks even?', '["6","8","10","12"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f14', 1, '2,000 ÷ 250 = 8.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('lff-f15', 'logistics-freight-forwarding-final', 15, 'Which habit most protects a forwarder from compliance trouble?', '["Speed over accuracy","Written procedures, checklists, trained staff and records","Verbal agreements","Skipping documents for trusted customers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('lff-f15', 1, 'Systems make compliance routine.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -89974,6 +92179,16 @@ values ('proc-practical-procurement', 'procurement-sourcing', 'A practical procu
 Use real quotes where you can; where you assume a number, say so. Submit a link to your project (a shared document, PDF or folder) and paste your **recommendation** and the **total cost and saving** below, with a short note on where to find each part.
 
 Write for a manager who must approve the spending: lead with the recommendation, then show the evidence.$md$, array['The need and specification: what, why, how much, quality standard, delivery and budget.', 'A long list and a short list of at least three suppliers, with how you chose them.', 'The RFQ (or RFP) you sent, with the information given to every supplier.', 'A total cost comparison of the bids, on a common basis.', 'A weighted scoring matrix with criteria and weights agreed before scoring.', 'Your negotiation plan (target, walk-away, alternative, what you can trade) and the result, with the saving.', 'Your recommendation, with reasons and one main risk and how you will manage it.', 'A draft purchase order, and the controls (approval and three-way match) you would apply.']::text[], '{}'::text[], array['The need is specific and the specification is clear enough for suppliers to quote on the same basis.', 'Suppliers are identified from several sources and shortlisted using clear must-have criteria.', 'The request is complete and every supplier receives the same information.', 'Bids are compared on total cost and scored against criteria set in advance.', 'The negotiation plan is prepared and looks beyond price to terms and total cost.', 'The recommendation is justified with numbers, the saving is calculated with a clear baseline and a risk is managed.', 'The purchase order is complete and the controls named are appropriate.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A complete shipment plan
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('lff-shipment-plan', 'logistics-freight-forwarding', 'A complete shipment plan', 'Plan one shipment end to end: mode, route, documents, packing, a full quotation, risks and how you will keep the customer informed.', $md$Choose a real or realistic shipment, such as 200 cartons by sea from China to Lagos, an air shipment of goods from Lagos to London, an agricultural export or the movement of machinery, and plan it as a freight forwarder would.
+
+Use real rates where you can find them and state any assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **recommended mode and route** and your **total quotation** below, with a short note on where to find each part.
+
+Write for the customer first and your manager second: lead with the recommendation, then show the detail.$md$, array['The shipment: goods, quantity, weight and volume, origin, destination, trade terms and the customer''s needs.', 'Mode, route and timing: options compared, the choice and why, transit time with a delay allowance.', 'Documents and compliance: every document and certificate, who prepares each, the HS code and any approvals.', 'Packing, loading and handling: packing and marking, container or load plan with a capacity calculation, and any special or dangerous cargo.', 'A full quotation: every charge, your margin, total, validity, what is excluded and an estimate of duty and VAT for the customer.', 'A risk register with scores for the top risks and a response for each, plus the insurance you recommend.', 'A communication plan: milestones you will update the customer on and how.']::text[], '{}'::text[], array['The shipment is specific and the customer''s needs are clear.', 'The mode and route are justified with a comparison of options and a realistic transit time including delays.', 'Documents and compliance are complete and match the goods and the countries involved.', 'Packing and loading are practical, with a sensible container or load calculation.', 'The quotation lists every charge, is calculated correctly and states exclusions and validity.', 'Risks are scored and have realistic responses, and insurance is recommended with reasons.', 'The communication plan is clear and the whole document is easy for a customer to approve.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
