@@ -46,6 +46,7 @@ A forwarder buys services from carriers and others, adds their own margin and se
 2. **Get costs** from carriers and partners for each part of the journey.
 3. **Add all the charges** in a consistent currency.
 4. **Add your margin or fee.**
+
 5. **State terms:** validity, payment terms, what is excluded, transit time estimate.
 
 Example: LCL sea freight of 4 CBM.

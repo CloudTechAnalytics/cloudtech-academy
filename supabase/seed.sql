@@ -78117,6 +78117,7 @@ When goods enter Nigeria you generally pay:
 **Customs value** is usually the **CIF value**: the cost of the goods plus insurance and freight to the Nigerian port. Customs converts it to naira at its own exchange rate, not necessarily the bank rate you paid at.
 
 Worked example (ignoring small levies):
+
 - CIF value: ₦2,000,000
 - Duty at 10%: ₦200,000
 - VAT at 7.5% on (₦2,000,000 + ₦200,000 = ₦2,200,000): ₦165,000
@@ -80232,6 +80233,7 @@ A **conflict of interest** exists when a personal interest could influence, or l
 - sharing inside information about one bid with another supplier
 
 The rules are simple:
+
 1. **Declare** the interest to your manager in writing.
 2. **Step back** from the decision.
 3. **Let someone else** decide.
@@ -80734,6 +80736,7 @@ When a forwarder issues its own **house bill of lading** to its customer, and th
 For a good result, pick the right partner and manage the relationship.
 
 **Choosing:**
+
 - **Experience on your route and with your cargo** (general goods, perishables, machinery, hazardous items).
 - **Licences, registration and memberships** appropriate to the work. Ask for proof and verify it.
 - **Network:** reliable agents at both ends.
@@ -80744,6 +80747,7 @@ For a good result, pick the right partner and manage the relationship.
 - **Insurance** they hold for their own liability.
 
 **Working with them:**
+
 - Give **complete, accurate information** early: goods, quantities, weights, dimensions, values, dates and contacts.
 - **Confirm in writing** the terms, price, transit time and who does what.
 - Ask for **document drafts** and check them before the goods ship.
@@ -80854,6 +80858,7 @@ A **bill of lading** does three jobs:
 3. It can be a **document of title**: the holder of an original B/L can claim the goods. This is why original B/Ls are valuable and are sometimes used in payment arrangements.
 
 Common types and terms:
+
 - **Master B/L:** issued by the shipping line to the forwarder or shipper.
 - **House B/L:** issued by the forwarder to its customer.
 - **Original B/L** (full set) versus **telex release** or **sea waybill:** the goods are released without surrendering the paper original, which is faster and suits trusted trading.
@@ -80991,6 +80996,7 @@ Forwarders and clearing agents deal with customs every day. They need to know th
 **Valuation.** The customs value is normally the **CIF value**: the price of the goods, plus insurance and freight to the port of entry. Customs expects the declared value to reflect what was truly paid.
 
 Worked example (ignoring small levies):
+
 - CIF value: ₦5,000,000
 - Duty at 5%: ₦250,000
 - VAT at 7.5% on (₦5,000,000 + ₦250,000 = ₦5,250,000): ₦393,750
@@ -81137,6 +81143,7 @@ A forwarder buys services from carriers and others, adds their own margin and se
 2. **Get costs** from carriers and partners for each part of the journey.
 3. **Add all the charges** in a consistent currency.
 4. **Add your margin or fee.**
+
 5. **State terms:** validity, payment terms, what is excluded, transit time estimate.
 
 Example: LCL sea freight of 4 CBM.
@@ -81668,6 +81675,7 @@ Non-compliance brings fines, seized cargo, delays, lost licences and a damaged r
 Problems are normal in logistics. What matters is how you handle them.
 
 **Common problems:**
+
 - **Delays** from congestion, weather, documents, inspection or a missed connection.
 - **Damage or loss** of cargo.
 - **Shortages** or wrong goods.
@@ -81675,6 +81683,7 @@ Problems are normal in logistics. What matters is how you handle them.
 - **Disputes** over price, liability or who is at fault.
 
 **A sound response:**
+
 1. **Find the facts quickly:** what happened, where, when and what the paperwork shows.
 2. **Protect the cargo** and limit further loss.
 3. **Tell the customer early,** with what you know, what you are doing and when you will update them.
@@ -81828,6 +81837,7 @@ Example: for one shipment the carrier and local costs total **$1,050**. You quot
 Be clear which you are using. Also count your **overheads**: rent, staff, software, phone, marketing, insurance, licences and your own time. If your margin per shipment is $250 and your monthly overhead is $2,000, you need **8 shipments** a month to break even ($2,000 ÷ $250 = 8), and more to make a profit.
 
 Tips:
+
 - **Price for value, not just cost.** Service, speed and reliability support a better margin.
 - **Never quote without current rates.** Include a validity period.
 - **Add a contingency** for currency and minor extras, and say what is excluded.
@@ -82027,58 +82037,1520 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Supply Chain Management
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('supply-chain-management', 'full', null, 'supply-chain-management', 'SCM', 'Supply Chain Management', 'See and improve the whole chain from raw materials to the customer: planning, sourcing, making, storing, delivering and measuring.', 'A practical supply chain course covering demand planning, sourcing, inventory, operations, warehousing, transport, risk and performance. You learn how the parts of a supply chain connect and how to improve cost, speed and reliability.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Demand planning and forecasting', 'Inventory management', 'Sourcing and supplier management', 'Warehousing and transport', 'Supply chain risk', 'Performance measurement']::text[], array['No experience needed', 'Basic spreadsheet use helps']::text[], 'Analyse and improve a supply chain', true, true, true, true, false, 60, 56)
+values ('supply-chain-management', 'short', 'Supply Chain Practitioner', 'supply-chain-management', 'SCM', 'Supply Chain Management', 'See and improve the whole chain from raw materials to the customer: planning, sourcing, making, storing, delivering and measuring.', 'A practical supply chain course covering demand planning, sourcing, inventory, operations, warehousing, transport, risk and performance. You learn how the parts of a supply chain connect and how to improve cost, speed and reliability.', 'trade-logistics', 'beginner', 2, 'Beginner to Intermediate', 7, false, 'available', true, array['Demand planning and forecasting', 'Inventory management', 'Sourcing and supplier management', 'Warehousing and transport', 'Supply chain risk', 'Performance measurement']::text[], array['No experience needed', 'Basic spreadsheet use helps']::text[], 'Analyse and improve a supply chain', true, true, true, true, false, 60, 56)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'A supply chain is only as strong as its weakest link. This course shows you the whole chain and the decisions that make it work, with spreadsheet exercises and a final project where you analyse and improve a real or realistic supply chain.', audience = array['Supply chain, operations and planning staff', 'Procurement and logistics professionals who want the bigger picture', 'Business owners with stock and suppliers', 'Graduates entering supply chain careers']::text[], included = '{}'::text[], project_previews = '[{"title":"Analyse and improve a supply chain","summary":"Map a supply chain, find its biggest problems with real or realistic numbers, and recommend improvements."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Map a supply chain and find its weak points', 'Forecast demand and plan stock', 'Decide how much to order and when', 'Work with suppliers and carriers', 'Understand and reduce supply chain risk', 'Measure performance with the right numbers', 'Recommend improvements to a real chain']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'supply-chain-management' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 100000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'A supply chain is only as strong as its weakest link. This course shows you the whole chain and the decisions that make it work, with spreadsheet exercises and a final project where you analyse and improve a real or realistic supply chain.', audience = array['Supply chain, operations and planning staff', 'Procurement and logistics professionals who want the bigger picture', 'Business owners with stock and suppliers', 'Graduates entering supply chain careers']::text[], included = '{}'::text[], project_previews = '[{"title":"Analyse and improve a supply chain","summary":"Map a supply chain, find its biggest problems with real or realistic numbers, and recommend improvements."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Map a supply chain and find its weak points', 'Forecast demand and plan stock', 'Decide how much to order and when', 'Work with suppliers and carriers', 'Understand and reduce supply chain risk', 'Measure performance with the right numbers', 'Recommend improvements to a real chain']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'supply-chain-management' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m01', 'supply-chain-management', 'Supply chain fundamentals', 1, null, null, '{}'::text[], array['What a supply chain is', 'Flows of goods, information and money', 'Supply chain strategy', 'Careers and roles']::text[])
+values ('scm-m01', 'supply-chain-management', 'Supply chain fundamentals', 1, 'SCM Basics', 'SCMBAS', array['Define a supply chain', 'Describe the three flows', 'Match strategy to product', 'Know SCM careers']::text[], array['What a supply chain is', 'Flows of goods, information and money', 'Supply chain strategy', 'Careers and roles']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m02', 'supply-chain-management', 'Demand planning and forecasting', 2, null, null, '{}'::text[], array['Why demand is hard to predict', 'Simple forecasting methods', 'Seasonality and trends', 'Sales and operations planning']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:supply-chain-fundamentals', 'supply-chain-management', 'scm-m01', 'supply-chain-fundamentals', 'Supply Chain Fundamentals', 'Understand what a supply chain is, the flows of goods, information and money through it, how strategy shapes it, and the careers it offers.', 25, $md$
+## What a supply chain is
+
+A **supply chain** is the network of organisations, people and activities that turns raw materials into a product and gets it to the customer. Think of a bottle of water on a shop shelf in Ibadan: the water source and treatment plant, the plastic maker, the bottler, the label printer, the distributor, the truck, the shop, and finally you. Each is a link, and the chain is only as strong as its weakest one.
+
+**Supply chain management (SCM)** is planning and coordinating all of these links so that the right product reaches the right customer, at the right time, in good condition, at a cost that leaves a profit. It is wider than logistics: logistics moves and stores goods, while SCM also covers planning, sourcing, making and the relationships between companies.
+
+## The main stages
+
+| Stage | Question it answers | Example |
+| :-- | :-- | :-- |
+| **Plan** | How much will we need, and how will we meet it? | Forecast demand, plan production and stock |
+| **Source** | Where do we get materials and services? | Choose and manage suppliers |
+| **Make** | How do we turn inputs into products? | Production, packing, quality control |
+| **Deliver** | How does the product reach the customer? | Warehousing, transport, last-mile |
+| **Return** | What happens to returns and waste? | Returns, repair, recycling |
+
+Most supply chain models, including the well-known SCOR model, use these same stages.
+
+## Flows of goods, information and money
+
+Three flows run through every chain, and problems in any one can hurt the others.
+
+1. **Goods flow forward:** materials to factories, products to warehouses, shops and customers.
+2. **Information flows both ways:** orders and forecasts go **backward**, from the customer toward suppliers; shipping notices and stock levels go **forward**. Poor or late information is behind most supply chain trouble.
+3. **Money flows backward:** customers pay the shop, the shop pays the distributor, the distributor pays the manufacturer, who pays suppliers. Payment terms decide who carries the cash burden.
+
+A shop that pays its supplier in 30 days but sells stock in 60 days must find the cash for 30 days. A chain with good information and fair terms keeps all three flows smooth.
+
+## Supply chain strategy
+
+A supply chain should fit what customers value. Two classic strategies:
+
+| | **Efficient** chain | **Responsive** chain |
+| :-- | :-- | :-- |
+| **Goal** | Lowest cost | Speed and flexibility |
+| **Best for** | Stable, predictable products (cooking oil, cement, rice) | Uncertain, fast-changing products (fashion, gadgets, fresh produce) |
+| **Typical features** | Large batches, low stock, cheapest suppliers | Spare capacity, more stock, faster suppliers and transport |
+| **Risk** | Cannot react quickly | Higher cost |
+
+Using the wrong strategy hurts. A fast, costly chain for a cheap, steady product wastes money. A lean, cheap chain for a trendy product leaves you with unsold stock or stockouts. Many companies run **different chains for different products** or segments.
+
+## Careers and roles
+
+Supply chain work is in demand across manufacturing, retail, oil and gas, FMCG, healthcare, agriculture and e-commerce. Typical roles: demand planner, procurement officer, logistics coordinator, warehouse manager, inventory controller, transport planner, supply chain analyst and supply chain manager. Useful skills: analysis and spreadsheet skills, communication, negotiation, problem solving and basic knowledge of trade and regulation.
+
+## Try it
+
+```task
+{
+  "id": "scm-m01-t1",
+  "prompt": "Map the supply chain of **one product you buy** (for example bottled water, garri, a phone, bread). List **six links** in order from raw material to you, one per line, with a few words on what each does.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "1. Farmer - grows the cassava\n2. ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Includes a raw material or farm or source", "pattern": "farm|raw|source|grow|mine|plant|supplier|harvest" },
+    { "label": "Includes a maker (factory, processor, producer)", "pattern": "factory|process|produc|manufactur|bottl|bak|mill|assembl" },
+    { "label": "Includes transport or a distributor", "pattern": "transport|truck|distribut|haul|deliver|ship" },
+    { "label": "Includes a retailer or shop", "pattern": "retail|shop|market|store|vendor|supermarket" },
+    { "label": "Ends with the customer", "pattern": "customer|consumer|you\\b|buyer" }
+  ],
+  "sample": "1. Cassava farmer - grows and harvests the cassava\n2. Aggregator - buys from many farmers and trucks it to the mill\n3. Garri processor - peels, grates, ferments and fries the garri\n4. Packaging supplier - provides the bags and labels\n5. Distributor - buys in bulk and delivers by truck to markets\n6. Market retailer - sells it by the cup or bag\n7. Customer - buys and eats it",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m01-t2",
+  "prompt": "For the same product, describe the **three flows**: what moves as goods, what moves as information and what moves as money, and in which direction. Write 50 to 110 words.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Goods flow ...",
+  "rules": [
+    { "label": "Describes the flow of goods", "pattern": "goods|product|cassava|materials?" },
+    { "label": "Describes information (orders, forecasts, stock levels)", "pattern": "information|order|forecast|demand|stock level|data" },
+    { "label": "Describes money (payment, terms, cash)", "pattern": "money|pay|payment|cash|terms|invoice" },
+    { "label": "States directions (forward, backward, towards the customer, upstream)", "pattern": "forward|backward|towards|toward|upstream|downstream|back to|to the customer" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "The goods flow forward: cassava goes from the farmer to the processor, then bags of garri go by truck to the distributor, the market trader and finally the customer. Information flows both ways: the customer's demand shows up as orders from the trader to the distributor and on to the processor, while delivery notices and stock levels travel forward. Money flows backward: the customer pays the trader, the trader pays the distributor, the distributor pays the processor and the processor pays the farmers, often on different payment terms.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m01-t3",
+  "prompt": "A company sells **fashionable sneakers** whose demand changes every month. Should it run an **efficient** or a **responsive** supply chain? In 40 to 90 words, give your choice and two features of that chain.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "It should run ...",
+  "rules": [
+    { "label": "Chooses a responsive chain", "pattern": "responsive" },
+    { "label": "Gives a reason (uncertain, fast-changing, trends)", "pattern": "uncertain|unpredictable|changes|trend|fast-?changing|volatile|fashion" },
+    { "label": "Names two features (spare capacity, faster suppliers, more stock, flexible, quick transport)", "pattern": "(capacity|faster|flexib|stock|quick|speed|air)[\\s\\S]*(capacity|faster|flexib|stock|quick|speed|air)" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "It should run a responsive supply chain, because fashionable sneakers have uncertain, fast-changing demand, and a cheap but slow chain would leave it with unsold styles or empty shelves. A responsive chain would use suppliers that can deliver quickly in small batches, keep some spare production capacity and use faster transport when needed. It costs more per unit, but it protects sales and avoids heavy markdowns.",
+  "required": false
+}
+```
+
+Next lesson: demand planning and forecasting.
+$md$, true, true, 1, array['scm-m01-t1', 'scm-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m03', 'supply-chain-management', 'Sourcing and supplier management', 3, null, null, '{}'::text[], array['Make or buy', 'Choosing and developing suppliers', 'Lead times and reliability', 'Supplier risk']::text[])
+values ('scm-m02', 'supply-chain-management', 'Demand planning and forecasting', 2, 'Demand Planner', 'DEMAND', array['Use moving averages', 'Apply seasonal indexes', 'Measure forecast error', 'Explain S&OP']::text[], array['Why demand is hard to predict', 'Simple forecasting methods', 'Seasonality and trends', 'Sales and operations planning']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m04', 'supply-chain-management', 'Inventory management', 4, null, null, '{}'::text[], array['Why hold stock', 'Reorder point and safety stock', 'Economic order quantity', 'ABC analysis', 'Stock accuracy and cycle counts']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:demand-planning-and-forecasting', 'supply-chain-management', 'scm-m02', 'demand-planning-and-forecasting', 'Demand Planning and Forecasting', 'Understand why demand is hard to predict, use simple forecasting methods, allow for seasonality and trends, measure forecast error and connect forecasts to plans through sales and operations planning.', 25, $md$
+## Why demand is hard to predict
+
+Almost every supply chain decision depends on a forecast: how much to make, buy, stock and ship. Yet demand is never certain. It moves with prices, promotions, competitors, the economy, the weather, festivals and plain customer whim. Forecasts are **always wrong to some degree**. The aim is not a perfect forecast but a **useful, honestly measured** one, and plans that cope with the error.
+
+A helpful rule: forecasts for a group of products or a longer period are more accurate than for one item or one day. Predicting total monthly sales is easier than predicting one colour on one Tuesday.
+
+## Simple forecasting methods
+
+You can forecast well with simple tools.
+
+**1. Naive forecast.** Next period will equal this period. Surprisingly hard to beat for stable items.
+
+**2. Moving average.** Average the last few periods. If the last four months' sales were 120, 135, 150 and 140, the **3-month moving average** of the latest three is (135 + 150 + 140) ÷ 3 = **141.7**, so forecast about **142** for next month. It smooths out random ups and downs but reacts slowly to real change.
+
+**3. Weighted moving average.** Give more weight to recent periods, for example 50% to the latest month, 30% to the one before and 20% to the one before that.
+
+**4. Exponential smoothing.** Next forecast = old forecast + α × (actual − old forecast), where α (between 0 and 1) says how fast to react. A larger α reacts faster to change.
+
+**5. Judgement and market information.** Salespeople know about a big order coming. Marketing knows about a promotion. Add these to the statistical forecast, but record them so you can learn which judgements were right.
+
+Always forecast **in the unit you plan in** (units, cartons or kilograms, not naira) and for the **period that matches your lead time**.
+
+## Seasonality and trends
+
+Demand often has patterns:
+
+- **Trend:** a steady rise or fall over time.
+- **Seasonality:** a repeating pattern, such as a December peak, rainy-season dips or beginning-of-term school supplies.
+- **Random variation:** unexplained noise.
+
+A **seasonal index** shows how a period compares with the average. If December sales are 300 and the average month is 200, the December index is 300 ÷ 200 = **1.5**. To forecast next December, take the underlying (deseasonalised) level, say 220 a month, and multiply: 220 × 1.5 = **330**. Use at least two years of data to see a season reliably, and watch for events that moved the pattern (for example, a one-off promotion).
+
+## Measuring forecast error
+
+You must know how wrong you are. For each period:
+
+- **Error = actual − forecast.** If you forecast 140 and sold 150, the error is +10.
+- **Percentage error = error ÷ actual.** 10 ÷ 150 = 6.7%.
+- **MAPE** (mean absolute percentage error): the average of the absolute percentage errors across periods. A lower number is better.
+- **Bias:** whether errors lean one way. If you consistently over-forecast, you build excess stock; consistent under-forecasting causes stockouts.
+
+Review errors every month, find the causes and improve. Keep **safety stock** (module 4) to cover the error that remains.
+
+## Sales and operations planning (S&OP)
+
+**S&OP** is a regular (usually monthly) process that brings sales, marketing, operations, purchasing, finance and management together to agree **one plan**:
+
+1. **Review** last month's performance against plan.
+2. **Update the demand plan** with new information.
+3. **Check supply:** capacity, materials, transport, and what is feasible.
+4. **Resolve gaps:** adjust demand (promotions), supply (overtime, extra suppliers) or inventory.
+5. **Agree one plan** and the financial impact.
+6. **Decide and communicate** it to everyone.
+
+Without S&OP, each department plans on its own numbers: sales promise more than operations can make, or purchasing buys what finance has not funded. With it, the business works from a single set of numbers.
+
+> [!NOTE]
+> A famous problem is the **bullwhip effect**: small changes in customer demand grow into bigger swings in orders further up the chain, because each link adds a safety buffer and reacts to the last order it received. Sharing real sales data along the chain reduces it.
+
+## Try it
+
+```task
+{
+  "id": "scm-m02-t1",
+  "prompt": "Monthly sales were **120, 135, 150, 140**. Work out the **3-month moving average forecast** for next month (use the latest three). Then forecast with a **weighted average** of 50% on the latest month, 30% on the one before and 20% on the one before that.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "3-month average = ...",
+  "rules": [
+    { "label": "Moving average of about 141.7 (or 142)", "pattern": "141\\.7|141\\.67|\\b142\\b" },
+    { "label": "Weighted forecast of 142", "pattern": "142\\.0|\\b142\\b" },
+    { "label": "Uses the latest three months (135, 150, 140)", "pattern": "135[\\s\\S]*150[\\s\\S]*140" }
+  ],
+  "sample": "3-month moving average = (135 + 150 + 140) / 3 = 425 / 3 = 141.7, so about 142.\nWeighted average = 0.5 x 140 + 0.3 x 150 + 0.2 x 135 = 70 + 45 + 27 = 142.0.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m02-t2",
+  "prompt": "December sales are usually **300**, and the average month is **200**. Work out the **December seasonal index**. Next year's underlying level is **220** a month. Forecast next December, and say what could make the forecast wrong.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Seasonal index = ...",
+  "rules": [
+    { "label": "Seasonal index of 1.5", "pattern": "1\\.5\\b" },
+    { "label": "Forecast of 330", "pattern": "\\b330\\b" },
+    { "label": "Names something that could make it wrong (promotion, economy, competitor, price, stockout, one-off)", "pattern": "promotion|economy|competitor|price|stock-?out|one-?off|weather|event|trend|change" }
+  ],
+  "sample": "Seasonal index = 300 / 200 = 1.5.\nForecast for next December = 220 x 1.5 = 330 units.\nIt could be wrong if a one-off promotion inflated last December's sales, if a competitor changes its prices, or if the economy changes how much customers spend.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m02-t3",
+  "prompt": "You forecast **140** units and sold **150**. Calculate the **error** and the **percentage error**. Then say in 30 to 70 words why it matters if you are wrong in the same direction every month.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Error = ...",
+  "rules": [
+    { "label": "Error of +10 (or 10)", "pattern": "\\+?\\b10\\b" },
+    { "label": "Percentage error of 6.7%", "pattern": "6\\.7|6\\.67" },
+    { "label": "Explains bias leads to stockouts or excess stock", "pattern": "bias|stock-?out|excess|too much|too little|consistent|over-?forecast|under-?forecast" },
+    { "label": "Between 30 and 80 words in total", "minWords": 30, "maxWords": 85 }
+  ],
+  "sample": "Error = 150 - 140 = +10. Percentage error = 10 / 150 = 6.7%.\nIf I am wrong in the same direction every month, that is bias. Consistent under-forecasting causes stockouts and lost sales, while consistent over-forecasting builds excess stock that ties up cash, so I must correct the method, not just add a buffer.",
+  "required": false
+}
+```
+
+Next lesson: sourcing and supplier management.
+$md$, true, true, 2, array['scm-m02-t1', 'scm-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m05', 'supply-chain-management', 'Operations and production planning', 5, null, null, '{}'::text[], array['Capacity and scheduling', 'Lean basics and waste', 'Quality management', 'Bottlenecks']::text[])
+values ('scm-m03', 'supply-chain-management', 'Sourcing and supplier management', 3, 'Sourcing', 'SOURCING', array['Decide make or buy', 'Develop suppliers', 'Plan around lead times', 'Manage supplier risk']::text[], array['Make or buy', 'Choosing and developing suppliers', 'Lead times and reliability', 'Supplier risk']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m06', 'supply-chain-management', 'Warehousing and distribution', 6, null, null, '{}'::text[], array['Warehouse layout and flow', 'Picking, packing and dispatch', 'Distribution network design', 'Cross-docking and fulfilment']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:sourcing-and-supplier-management', 'supply-chain-management', 'scm-m03', 'sourcing-and-supplier-management', 'Sourcing and Supplier Management', 'Decide what to make and what to buy, choose and develop suppliers, plan around lead times and reliability and manage supplier risk.', 20, $md$
+## Make or buy
+
+The first sourcing decision is whether to **make** something yourself or **buy** it. Make-or-buy depends on cost, capability, control and risk.
+
+**Reasons to make in-house:**
+
+- It is part of your core skill or competitive edge.
+- You need tight control over quality, secrecy or timing.
+- Volumes are high enough to cover the fixed cost.
+- No reliable supplier exists.
+
+**Reasons to buy:**
+
+- A specialist can make it better or cheaper.
+- Volumes are too low to justify equipment and staff.
+- You want to focus capital and attention on what you do best.
+- You need flexibility to scale up or down.
+
+Compare costs honestly. Example: making a part costs **₦2,000,000 a year in fixed costs** (equipment, supervisor) plus **₦300 per unit**; buying costs **₦500 per unit**.
+- Break-even volume = fixed cost ÷ (buy price − variable make cost) = 2,000,000 ÷ (500 − 300) = **10,000 units a year**.
+- At 12,000 units: making costs 2,000,000 + 12,000 × 300 = ₦5,600,000; buying costs 12,000 × 500 = ₦6,000,000. **Make** is ₦400,000 cheaper.
+- At 8,000 units: making costs 2,000,000 + 2,400,000 = ₦4,400,000; buying costs ₦4,000,000. **Buy** is cheaper.
+
+Also weigh non-cost factors: quality control, capacity, supplier dependence and what else the money could do.
+
+## Choosing and developing suppliers
+
+Selection looks at more than price (see the Procurement & Sourcing course for the full process). For a supply chain, pay special attention to:
+
+- **Capability and capacity:** can they meet your volume, and grow with you?
+- **Quality systems:** consistent quality, certifications, defect rates.
+- **Reliability:** on-time delivery and the variation in lead time.
+- **Flexibility:** can they handle changes in order size or timing?
+- **Financial health:** will they survive a bad year?
+- **Location and risk exposure:** floods, strikes, port problems, political risk.
+- **Cost and terms:** total cost, payment terms and price stability.
+
+**Supplier development** means helping good suppliers get better: sharing forecasts, giving feedback and scorecards, training, joint improvement projects and fair, longer-term agreements. It builds loyalty and quality, and costs less than finding a new supplier every year.
+
+## Lead times and reliability
+
+**Lead time** is the time from placing an order to receiving it ready to use. Two numbers matter:
+
+- **Average lead time:** how long it usually takes.
+- **Variability:** how much it moves around. A supplier with a 10-day lead time that sometimes takes 20 days is harder to plan around than one who always takes 12.
+
+Example: a supplier's last five lead times were 10, 12, 14, 10 and 14 days. Average = (10 + 12 + 14 + 10 + 14) ÷ 5 = **12 days**; the range is 10 to 14. You should plan around 14 days, or hold safety stock to cover the variation.
+
+Shorter and more reliable lead times mean less stock, lower cost and better service. Work with suppliers to reduce both the time and the variation, and measure them.
+
+## Supplier risk
+
+Every supplier carries risk. Common types:
+
+| Risk | Example |
+| :-- | :-- |
+| **Supply failure** | Factory fire, strike, shortage of materials |
+| **Quality** | Defects, contamination, inconsistent batches |
+| **Financial** | Supplier goes bankrupt |
+| **Location / external** | Floods, port closure, conflict, exchange rate shocks |
+| **Dependency** | One supplier provides a critical part |
+| **Compliance and reputation** | Child labour, safety or environmental violations |
+
+**Managing it:**
+
+- **Rank suppliers by spend and by how critical they are,** and focus on the high-risk ones.
+- **Dual-source** critical items, or at least pre-qualify a backup.
+- **Hold safety stock** of vital parts.
+- **Monitor** supplier performance, finances and news.
+- **Write continuity terms** into contracts.
+- **Audit** key suppliers.
+- **Plan responses** for the main scenarios before they happen.
+
+## Try it
+
+```task
+{
+  "id": "scm-m03-t1",
+  "prompt": "A part can be **made** for ₦2,000,000 a year fixed plus ₦300 a unit, or **bought** at ₦500 a unit. Work out the **break-even volume**, then the cost of each option at **12,000 units** and say which is cheaper.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Break-even = ...",
+  "rules": [
+    { "label": "Break-even of 10,000 units", "pattern": "10,?000" },
+    { "label": "Make cost of ₦5,600,000", "pattern": "5,?600,?000" },
+    { "label": "Buy cost of ₦6,000,000", "pattern": "6,?000,?000" },
+    { "label": "Says make is cheaper at 12,000", "pattern": "mak(e|ing)[^.]*(cheaper|lower|less|better)|cheaper[^.]*mak(e|ing)" }
+  ],
+  "sample": "Break-even = 2,000,000 / (500 - 300) = 10,000 units a year.\nAt 12,000 units: make = 2,000,000 + 12,000 x 300 = ₦5,600,000; buy = 12,000 x 500 = ₦6,000,000.\nMaking is cheaper by ₦400,000 at 12,000 units, because volume is above the break-even.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m03-t2",
+  "prompt": "A supplier's last five lead times were **10, 12, 14, 10 and 14** days. Work out the average, the range and say which lead time you would plan around and why. Then suggest one way to reduce the variation.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Average = ...",
+  "rules": [
+    { "label": "Average of 12 days", "pattern": "\\b12\\b" },
+    { "label": "Range of 10 to 14 days", "pattern": "10[\\s\\S]*14" },
+    { "label": "Plans around the longer lead time or safety stock", "pattern": "14|longest|safety stock|buffer|worst" },
+    { "label": "Suggests a way to reduce variation", "pattern": "supplier|forecast|share|agree|meeting|improve|review|contract|scorecard|feedback" }
+  ],
+  "sample": "Average = (10 + 12 + 14 + 10 + 14) / 5 = 12 days, with a range of 10 to 14 days.\nI would plan around 14 days, or hold safety stock, because the lead time varies and a late delivery causes a stockout.\nTo reduce the variation I would share forecasts with the supplier and review lead time performance on a monthly scorecard.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m03-t3",
+  "prompt": "A bakery buys its **flour from one supplier**. List **four actions** to reduce the risk. One per line.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Qualify a second supplier ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Includes a second or backup supplier", "pattern": "second|backup|alternative|dual|another supplier" },
+    { "label": "Includes safety stock", "pattern": "safety stock|buffer|stock" },
+    { "label": "Includes monitoring or audits", "pattern": "monitor|audit|watch|review|visit|track" },
+    { "label": "Includes contract terms or communication", "pattern": "contract|agreement|terms|share|communicat|notice" }
+  ],
+  "sample": "Qualify a second flour supplier and buy a small share from them regularly.\nHold safety stock of flour to cover two weeks.\nMonitor the main supplier's delivery performance and finances monthly.\nAgree contract terms that require early notice of any shortage and priority supply.",
+  "required": false
+}
+```
+
+Next lesson: inventory management.
+$md$, true, true, 3, array['scm-m03-t1', 'scm-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m07', 'supply-chain-management', 'Transport and logistics', 7, null, null, '{}'::text[], array['Choosing transport modes', 'Route and load planning', 'Transport cost and service', 'Working with carriers']::text[])
+values ('scm-m04', 'supply-chain-management', 'Inventory management', 4, 'Inventory Control', 'INVCTRL', array['Set reorder points and safety stock', 'Calculate EOQ', 'Classify by ABC', 'Keep stock accurate']::text[], array['Why hold stock', 'Reorder point and safety stock', 'Economic order quantity', 'ABC analysis', 'Stock accuracy and cycle counts']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m08', 'supply-chain-management', 'Supply chain technology and data', 8, null, null, '{}'::text[], array['ERP and planning tools', 'Tracking and visibility', 'Using spreadsheets for supply chain analysis', 'Data quality']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:inventory-management', 'supply-chain-management', 'scm-m04', 'inventory-management', 'Inventory Management', 'Understand why stock is held, set reorder points and safety stock, calculate economic order quantity, classify items by ABC analysis and keep stock records accurate.', 25, $md$
+## Why hold stock
+
+Inventory is money sitting on a shelf. It costs to hold, but it also does useful work:
+
+- **Buffers against uncertainty** in demand and supply.
+- **Smooths** production and delivery so you do not stop and start.
+- **Earns discounts** from larger purchases.
+- **Protects service,** by keeping goods available.
+- **Hedges** against price rises and shortages.
+
+The costs: capital tied up, storage space, handling, insurance, damage, theft, expiry and obsolescence. As a rule of thumb, holding stock costs roughly **15% to 30% of its value per year**. The aim is not zero stock but the **right** stock: enough to serve customers, no more.
+
+## Reorder point and safety stock
+
+When stock falls to the **reorder point (ROP)** you place an order, so that it arrives before you run out.
+
+*ROP = (average daily demand × lead time in days) + safety stock*
+
+**Safety stock** covers variation in demand and lead time. A simple statistical form for variable demand:
+
+*Safety stock = z × (standard deviation of daily demand) × √(lead time in days)*
+
+where **z** reflects the service level you want (about 1.28 for 90%, 1.65 for 95% and 2.33 for 99%).
+
+Example: average demand 40 units a day, daily standard deviation 10, lead time 9 days, 95% service level.
+- Safety stock = 1.65 × 10 × √9 = 1.65 × 10 × 3 = **49.5**, about **50 units**.
+- ROP = (40 × 9) + 50 = 360 + 50 = **410 units**.
+
+A higher service level needs much more safety stock, which is why 100% is almost never worth chasing.
+
+## Economic order quantity (EOQ)
+
+The **economic order quantity** is the order size that minimises the total of ordering cost and holding cost. Order too often and you pay for many orders; order too much and you pay to hold stock.
+
+*EOQ = √(2 × D × S ÷ H)*
+
+where **D** is annual demand, **S** is the cost of placing one order and **H** is the cost of holding one unit for a year.
+
+Example: D = 12,000 units a year, S = ₦5,000 per order, H = ₦120 per unit a year.
+- EOQ = √(2 × 12,000 × 5,000 ÷ 120) = √(120,000,000 ÷ 120) = √1,000,000 = **1,000 units**.
+- Orders per year = 12,000 ÷ 1,000 = **12**, about one a month.
+
+EOQ is a guide, not a law. Adjust for supplier minimums, price breaks, shelf life and storage space.
+
+## ABC analysis
+
+Not all items deserve the same attention. **ABC analysis** ranks items by annual usage value (units × cost) and groups them:
+
+- **A items:** the top items that make up about **80%** of the value, usually a small share of items. Manage tightly: frequent review, accurate counts, careful forecasts, close supplier contact.
+- **B items:** the next about **15%**. Moderate control.
+- **C items:** the many items that make up the last about **5%**. Simple rules and bulk ordering.
+
+Example: five items with annual usage value ₦60m (P), ₦20m (Q), ₦10m (R), ₦6m (S) and ₦4m (T), total ₦100m.
+- P = 60% cumulative, Q = 80% → **A**.
+- R = 90% → **B**.
+- S = 96%, T = 100% → **C**.
+
+## Stock accuracy and cycle counts
+
+Good planning is useless if the records are wrong. **Stock accuracy** is how closely the records match the physical stock. Improve it by:
+
+- **Recording every receipt and issue,** promptly and by one clear method.
+- **Locating** each item with a fixed address.
+- **Cycle counting:** count a few items every day or week, counting A items most often, instead of a once-a-year stocktake. Investigate every difference and fix the cause.
+- **Controlling access** to the store and requiring signed issues.
+- **Handling damaged, expired and returned goods** by clear procedures.
+
+Aim for very high accuracy (95% to 99%+ by item). A recorded stock of 50 that is really 30 leads to stockouts nobody sees coming.
+
+## Try it
+
+```task
+{
+  "id": "scm-m04-t1",
+  "prompt": "Annual demand is **12,000 units**, the cost of placing an order is **₦5,000** and the cost of holding a unit for a year is **₦120**. Calculate the **EOQ** and the **number of orders a year**. Say in one sentence why you would still check the result against supplier minimums and storage space.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "EOQ = ...",
+  "rules": [
+    { "label": "EOQ of 1,000 units", "pattern": "1,?000" },
+    { "label": "12 orders a year", "pattern": "\\b12\\b" },
+    { "label": "Shows the formula (square root of 2DS/H)", "pattern": "√|sqrt|square root|2\\s?[x×*]" },
+    { "label": "Mentions minimums, storage, price breaks or shelf life", "pattern": "minimum|storage|space|price break|shelf|constraint|practical" }
+  ],
+  "sample": "EOQ = sqrt(2 x 12,000 x 5,000 / 120) = sqrt(1,000,000) = 1,000 units.\nOrders per year = 12,000 / 1,000 = 12.\nI would still check it against supplier minimum order sizes, price breaks, shelf life and storage space, because EOQ only balances ordering and holding cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m04-t2",
+  "prompt": "Average demand is **40 units a day**, the daily standard deviation is **10**, lead time is **9 days** and you want a **95% service level (z = 1.65)**. Calculate the **safety stock** and the **reorder point**.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Safety stock = ...",
+  "rules": [
+    { "label": "Safety stock of about 49.5 (or 50)", "pattern": "49\\.5|\\b50\\b" },
+    { "label": "Demand during lead time of 360", "pattern": "\\b360\\b" },
+    { "label": "Reorder point of about 410", "pattern": "\\b41[0-9]\\b" }
+  ],
+  "sample": "Safety stock = 1.65 x 10 x sqrt(9) = 1.65 x 10 x 3 = 49.5, about 50 units.\nDemand during lead time = 40 x 9 = 360.\nReorder point = 360 + 50 = 410 units.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m04-t3",
+  "prompt": "Classify these items by ABC analysis (A up to 80% cumulative, B to 95%, C the rest): **P ₦60m, Q ₦20m, R ₦10m, S ₦6m, T ₦4m** annual usage value. Give each item's cumulative percentage and class, one per line.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "P - 60% - A",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "P and Q are class A (60% and 80%)", "pattern": "p[\\s\\S]*60[\\s\\S]*a[\\s\\S]*q[\\s\\S]*80[\\s\\S]*a" },
+    { "label": "R is class B at 90%", "pattern": "r[^\\n]*90[^\\n]*b" },
+    { "label": "S and T are class C", "pattern": "s[^\\n]*96[^\\n]*c[\\s\\S]*t[^\\n]*100[^\\n]*c" }
+  ],
+  "sample": "P - 60% - A\nQ - 80% - A\nR - 90% - B\nS - 96% - C\nT - 100% - C",
+  "required": false
+}
+```
+
+Next lesson: operations and production planning.
+$md$, true, true, 4, array['scm-m04-t1', 'scm-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m09', 'supply-chain-management', 'Risk, resilience and sustainability', 9, null, null, '{}'::text[], array['Types of supply chain risk', 'Contingency and backup plans', 'Resilience versus cost', 'Sustainable supply chains']::text[])
+values ('scm-m05', 'supply-chain-management', 'Operations and production planning', 5, 'Operations', 'OPS', array['Plan capacity and utilisation', 'Spot lean waste', 'Manage quality', 'Find bottlenecks']::text[], array['Capacity and scheduling', 'Lean basics and waste', 'Quality management', 'Bottlenecks']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m10', 'supply-chain-management', 'Performance measurement', 10, null, null, '{}'::text[], array['KPIs: fill rate, on-time delivery, inventory turns', 'Cost to serve', 'Dashboards and reviews', 'Continuous improvement']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:operations-and-production-planning', 'supply-chain-management', 'scm-m05', 'operations-and-production-planning', 'Operations and Production Planning', 'Plan capacity and schedules, apply lean thinking to remove waste, manage quality and find and manage bottlenecks.', 25, $md$
+## Capacity and scheduling
+
+**Capacity** is the most a process can produce in a given time. **Demand** is what customers want. Planning matches the two.
+
+*Utilisation = actual output ÷ capacity × 100%*
+
+Example: a bakery can make 1,000 loaves a week and plans 900. Utilisation is 900 ÷ 1,000 = **90%**. Running near 100% leaves no room for breakdowns, rush orders or growth; running at 40% wastes money on idle equipment and staff. Many operations aim for a high but not total utilisation, often 80% to 90%.
+
+When demand exceeds capacity you can:
+
+- Add shifts, overtime or temporary staff.
+- Outsource some work.
+- Build stock ahead in quiet periods.
+- Add equipment or space.
+- Smooth demand through booking, pricing or promotions.
+
+**Scheduling** decides **what is made, when and on which resource.** A good schedule respects capacity, due dates, material availability and set-up times. Group similar jobs to reduce changeovers, but do not make so much that you create unwanted stock. Update the schedule when plans change and tell everyone affected.
+
+## Lean basics and waste
+
+**Lean** is a way of working that focuses on **value** (what the customer will pay for) and removes **waste** (everything else). It began with Toyota and now applies in factories, warehouses, hospitals and offices.
+
+The eight common wastes (remembered as TIMWOODS):
+
+| Waste | Example |
+| :-- | :-- |
+| **T**ransport | Moving goods further or more often than needed |
+| **I**nventory | Too much stock sitting idle |
+| **M**otion | Workers walking and reaching unnecessarily |
+| **W**aiting | Staff or machines idle waiting for materials or approvals |
+| **O**verproduction | Making more than is ordered |
+| **O**ver-processing | Doing more work than the customer needs |
+| **D**efects | Rework, scrap and returns |
+| **S**kills (unused) | Not using people's knowledge and ideas |
+
+Basic lean tools: **5S** (sort, set in order, shine, standardise, sustain) for a tidy, safe workplace; **visual management** (boards and signs showing status); **standard work** (the best-known way, written down); **continuous improvement** (small regular improvements by everyone); and **pull** systems, where you make what has been used or ordered instead of what you guess.
+
+## Quality management
+
+Quality means meeting what the customer needs, consistently. Poor quality costs: scrap, rework, returns, warranty claims, lost customers and lost reputation.
+
+- **Prevent, don't just inspect.** Fix the cause in the process instead of catching defects at the end.
+- **Measure:** defect rate, first-pass yield, returns and complaints.
+- **Find the root cause** with simple tools: the 5 Whys, a cause-and-effect (fishbone) diagram and Pareto charts showing the few causes behind most defects.
+- **Use standards and checks** at critical points, and train staff.
+- **Involve suppliers:** many defects start with bad inputs.
+
+Example: a plant makes 2,000 units a week and **3%** are defective, each costing ₦1,500 to rework. Defects = 0.03 × 2,000 = 60 units; cost = 60 × 1,500 = **₦90,000 a week**, about ₦4.7 million a year. Halving the defect rate saves over ₦2 million a year, which pays for the improvement work.
+
+## Bottlenecks
+
+A **bottleneck** is the step with the least capacity. It limits the output of the whole process, no matter how fast the other steps are.
+
+Example: a three-step process makes 120 units an hour at step A, 80 at step B and 100 at step C. The bottleneck is step B, so **the whole line produces 80 units an hour**. Speeding up A or C only builds a queue in front of B. An hour lost at B is an hour lost for the whole system.
+
+The approach (from the Theory of Constraints):
+
+1. **Identify** the bottleneck.
+2. **Exploit** it: keep it busy, never starve it, avoid breakdowns and set-up delays.
+3. **Subordinate** everything else to it: other steps match its pace.
+4. **Elevate** it: add capacity at the bottleneck.
+5. **Repeat:** a new bottleneck will appear elsewhere.
+
+## Try it
+
+```task
+{
+  "id": "scm-m05-t1",
+  "prompt": "A process has three steps: **A makes 120 units an hour, B 80 and C 100**. Which step is the bottleneck, what is the output of the whole line, and what is the best first action to increase output? Explain in 40 to 90 words.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "The bottleneck is ...",
+  "rules": [
+    { "label": "Names step B as the bottleneck", "pattern": "\\bstep b\\b|\\bb\\b[^.]*bottleneck|bottleneck[^.]*\\bb\\b" },
+    { "label": "States the output of 80 units an hour", "pattern": "\\b80\\b" },
+    { "label": "Recommends improving or protecting B (not A or C)", "pattern": "increase|improve|add|protect|keep (it )?busy|exploit|capacity at b|speed up b|reduce (downtime|set-?up)" },
+    { "label": "Says speeding up A or C does not help", "pattern": "a or c|a and c|other steps|queue|no benefit|does not help|won't help|waste" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "The bottleneck is step B, because it has the lowest capacity at 80 units an hour, so the whole line can make only 80 units an hour. The best first action is to increase B's capacity or keep it fully busy, for example by cutting breakdowns and set-up time and making sure it never waits for materials. Speeding up A or C would not help, because the extra output would only build a queue in front of B.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m05-t2",
+  "prompt": "Read this: *\"At a printing shop, jobs wait two days for approval. Staff walk across the shop to fetch paper from a far store. They print 500 extra copies 'just in case' and throw many away. Three of every hundred jobs are reprinted because of mistakes.\"* Name **four wastes** from the eight and give one improvement for each. One per line.",
+  "minutes": 12,
+  "rows": 7,
+  "placeholder": "Waiting - ... - Improvement: ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Names waiting", "pattern": "waiting|wait" },
+    { "label": "Names motion or transport", "pattern": "motion|transport|walking|fetch" },
+    { "label": "Names overproduction", "pattern": "overproduct|extra copies|too many" },
+    { "label": "Names defects", "pattern": "defect|reprint|mistake|rework" },
+    { "label": "Gives improvements", "pattern": "improve|fix|move|set|approve|check|standard|store|print only|same day|5s|train" }
+  ],
+  "sample": "Waiting - jobs wait two days for approval - Improvement: approve within a few hours with a clear checklist.\nMotion - staff walk to a far store for paper - Improvement: keep common paper next to the machines.\nOverproduction - printing 500 extra copies - Improvement: print only what is ordered.\nDefects - 3% of jobs are reprinted - Improvement: add a proof check before printing and train staff.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m05-t3",
+  "prompt": "A plant makes **2,000 units a week**; **3%** are defective and each costs **₦1,500** to rework. Work out the weekly rework cost and the yearly cost (52 weeks). What would halving the defect rate save per year?",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Defects per week = ...",
+  "rules": [
+    { "label": "60 defects a week", "pattern": "\\b60\\b" },
+    { "label": "Weekly cost of ₦90,000", "pattern": "90,?000" },
+    { "label": "Yearly cost of ₦4,680,000", "pattern": "4,?680,?000" },
+    { "label": "Saving of ₦2,340,000", "pattern": "2,?340,?000" }
+  ],
+  "sample": "Defects per week = 0.03 x 2,000 = 60 units.\nWeekly rework cost = 60 x 1,500 = ₦90,000.\nYearly cost = 90,000 x 52 = ₦4,680,000.\nHalving the defect rate saves 4,680,000 / 2 = ₦2,340,000 a year.",
+  "required": false
+}
+```
+
+Next lesson: warehousing and distribution design.
+$md$, true, true, 5, array['scm-m05-t1', 'scm-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m11', 'supply-chain-management', 'Global supply chains and trade', 11, null, null, '{}'::text[], array['Global sourcing', 'Trade, tariffs and lead times', 'Currency and cost', 'Managing across countries']::text[])
+values ('scm-m06', 'supply-chain-management', 'Warehousing and distribution', 6, 'Warehouse & Dist', 'WHDIST', array['Design warehouse flow', 'Improve picking', 'Compare network designs', 'Use cross-docking and 3PLs']::text[], array['Warehouse layout and flow', 'Picking, packing and dispatch', 'Distribution network design', 'Cross-docking and fulfilment']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:warehousing-and-distribution', 'supply-chain-management', 'scm-m06', 'warehousing-and-distribution', 'Warehousing and Distribution', 'Design warehouse layout and flow, improve picking, packing and dispatch, design a distribution network by comparing total cost and use cross-docking and fulfilment models.', 25, $md$
+## Warehouse layout and flow
+
+A warehouse should be designed around **flow**: goods arrive, are checked, stored, picked, packed and leave, with as little travelling and handling as possible. Poor layout means long walking distances, congestion and errors. Most of a picker's time is spent travelling, so reducing distance is the biggest lever.
+
+Design principles:
+
+- **One-way flow** where possible: receiving at one end, dispatch at the other, or at the same side in a U shape for shared docks and supervision.
+- **Slotting by ABC.** Put fast-moving (A) items near dispatch, at waist height and in easy-to-reach locations. Slow movers go further away or higher up.
+- **Group items that are often ordered together.**
+- **Clear aisles and marked locations.** Every location has an address.
+- **Enough space** at receiving and dispatch so goods do not pile up in the aisles.
+- **Safety:** separate people and vehicles, fire exits, safe racking and lighting.
+- **Use height.** Vertical space is cheaper than floor space, if you have racking and safe equipment.
+
+Review the layout when the product range or volumes change. A layout that worked for 500 orders a day may fail at 2,000.
+
+## Picking, packing and dispatch
+
+**Picking** is usually the biggest labour cost in a warehouse. Common methods:
+
+| Method | How it works | Best for |
+| :-- | :-- | :-- |
+| **Discrete (single-order)** | One picker collects one order at a time | Low volume, large orders |
+| **Batch picking** | One picker collects items for several orders at once, then sorts | Many small orders with common items |
+| **Zone picking** | Each picker covers one zone; orders pass between zones | Large warehouses |
+| **Wave picking** | Orders released in timed groups to match dispatch times | Fixed courier cut-off times |
+
+Productivity measure: **lines picked per labour hour.** If four pickers pick 480 order lines in 8 hours, that is 480 ÷ (4 × 8) = **15 lines per picker-hour.** Track it, find the reasons for low days and test improvements.
+
+**Packing** should check the order against the picklist, protect the goods and keep packaging cost and weight sensible. **Dispatch** groups orders by route or carrier, checks documents, loads vehicles safely and records departure so you can answer "where is my order?".
+
+Accuracy matters more than speed alone: a wrong or damaged order costs far more than the seconds saved.
+
+## Distribution network design
+
+A **distribution network** is the set of warehouses and routes that deliver goods. The central question: how many warehouses, and where? Compare **total cost** (not any single part):
+
+- **Transport cost** falls as warehouses move closer to customers.
+- **Warehousing cost** rises with the number of sites.
+- **Inventory cost** rises, because each site needs its own safety stock.
+- **Service level** (delivery time) improves with proximity.
+
+Example for one year:
+
+| | One central warehouse | Two regional warehouses |
+| :-- | :-- | :-- |
+| Transport | ₦8,000,000 | ₦5,000,000 |
+| Warehousing | ₦5,000,000 | ₦9,000,000 |
+| Extra inventory cost | — | ₦1,000,000 |
+| **Total** | **₦13,000,000** | **₦15,000,000** |
+
+The central warehouse is ₦2,000,000 cheaper. The two-warehouse design is faster, so it is justified only if the faster service wins or keeps enough sales. Total cost, service and risk together decide.
+
+Other design choices include a **hub-and-spoke** model (goods consolidated at a hub, then sent out) and whether to run your own fleet or use carriers.
+
+## Cross-docking and fulfilment
+
+- **Cross-docking:** inbound goods are unloaded and moved almost directly to outbound vehicles, with little or no storage. It cuts storage and handling and speeds up flow, but needs accurate timing and information.
+- **Fulfilment** is picking, packing and shipping orders to customers. **E-commerce fulfilment** means many small orders, fast delivery promises, returns and tight cut-off times. Businesses either run it themselves or use a **third-party logistics provider (3PL)** who stores and ships on their behalf.
+- **Returns handling** (reverse logistics) needs its own process: receive, inspect and decide to restock, repair, sell cheaper or dispose.
+
+## Try it
+
+```task
+{
+  "id": "scm-m06-t1",
+  "prompt": "Compare two network designs. **One warehouse:** transport ₦8,000,000, warehousing ₦5,000,000. **Two warehouses:** transport ₦5,000,000, warehousing ₦9,000,000, extra inventory ₦1,000,000. Work out the **total cost** of each, say which is cheaper and when the other could still be the better choice.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "One warehouse = ...",
+  "rules": [
+    { "label": "One-warehouse total of ₦13,000,000", "pattern": "13,?000,?000" },
+    { "label": "Two-warehouse total of ₦15,000,000", "pattern": "15,?000,?000" },
+    { "label": "Says one warehouse is cheaper by ₦2,000,000", "pattern": "2,?000,?000|cheaper" },
+    { "label": "Says when two could be better (faster service, sales, customers)", "pattern": "service|faster|speed|sales|customers|delivery|response|win" }
+  ],
+  "sample": "One warehouse = 8,000,000 + 5,000,000 = ₦13,000,000.\nTwo warehouses = 5,000,000 + 9,000,000 + 1,000,000 = ₦15,000,000.\nOne warehouse is cheaper by ₦2,000,000. Two warehouses could still be better if the faster delivery to customers wins or keeps enough extra sales to cover the higher cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m06-t2",
+  "prompt": "Four pickers pick **480 order lines** in an **8-hour** shift. Calculate **lines per picker-hour**. Then give **three ways** to improve picking productivity without hurting accuracy. One per line after the calculation.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Lines per picker-hour = ...",
+  "rules": [
+    { "label": "15 lines per picker-hour", "pattern": "\\b15\\b" },
+    { "label": "At least four lines", "minLines": 4 },
+    { "label": "Suggests slotting fast movers near dispatch", "pattern": "slot|fast-?mov|near dispatch|abc|closer" },
+    { "label": "Suggests a picking method (batch, zone, wave)", "pattern": "batch|zone|wave" },
+    { "label": "Suggests layout, labelling, training or technology", "pattern": "layout|label|train|scanner|barcode|signage|route|path" }
+  ],
+  "sample": "Lines per picker-hour = 480 / (4 x 8) = 15.\nSlot the fastest-moving items near the dispatch area at easy-to-reach heights.\nUse batch or zone picking so pickers travel less.\nLabel every location clearly and use barcode scanners to cut search time and errors.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m06-t3",
+  "prompt": "An online shop with 300 orders a day is struggling with late deliveries and returns. In 50 to 100 words, say whether it should use a **3PL** or run fulfilment itself, with two reasons.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "I recommend ...",
+  "rules": [
+    { "label": "Makes a recommendation (3PL or in-house)", "pattern": "3pl|third-?party|in-?house|ourselves|outsourc" },
+    { "label": "Gives reasons (cost, skills, scale, control, capital, focus)", "pattern": "cost|skills?|scale|control|capital|focus|expertise|flexib" },
+    { "label": "Mentions returns or delivery performance", "pattern": "return|deliver|cut-?off|speed|late" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I recommend trying a 3PL, for two reasons. First, a 3PL already has the warehouse space, systems and courier contracts, so the shop avoids heavy capital spending and can scale up on busy days. Second, it can bring expertise in cut-off times and returns handling, which are the current problems. The trade-off is less direct control and a per-order fee, so the shop should agree service levels in writing and review performance monthly before committing long term.",
+  "required": false
+}
+```
+
+Next lesson: transport and logistics planning.
+$md$, true, true, 6, array['scm-m06-t1', 'scm-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('scm-m12', 'supply-chain-management', 'Final project: analyse and improve a supply chain', 12, null, null, '{}'::text[], array['Mapping the chain', 'Finding the problems with data', 'Recommending improvements', 'Presenting your case']::text[])
+values ('scm-m07', 'supply-chain-management', 'Transport and logistics', 7, 'Transport Planner', 'TRANSP', array['Choose transport modes', 'Plan routes and loads', 'Measure transport cost', 'Manage carriers']::text[], array['Choosing transport modes', 'Route and load planning', 'Transport cost and service', 'Working with carriers']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:transport-and-logistics', 'supply-chain-management', 'scm-m07', 'transport-and-logistics', 'Transport and Logistics', 'Choose transport modes for a supply chain, plan routes and loads, measure transport cost and service, and manage carriers.', 25, $md$
+## Transport in the supply chain
+
+Transport is usually the largest single logistics cost, and it shapes both **cost** and **service**: how fast, how reliably and in what condition goods reach the customer. The Logistics & Freight Forwarding course covers shipping documents and forwarding in detail; here the focus is how a supply chain planner **decides and controls** transport.
+
+## Choosing transport modes
+
+Choose by comparing **cost, speed, reliability, capacity and risk** for the cargo:
+
+| Factor | Questions to ask |
+| :-- | :-- |
+| **Value and urgency** | Is the product costly or urgent enough to justify faster transport? |
+| **Volume and weight** | Does it fill a truck or container, or travel in small lots? |
+| **Distance and route** | Is the road, rail, port or airport available and reliable? |
+| **Product type** | Fragile, perishable, hazardous or oversize? |
+| **Customer promise** | What delivery time did you promise? |
+
+A useful comparison is the **total cost including inventory**. Faster transport costs more per trip but reduces the stock in transit and the safety stock you need. For a high-value product the saving in stock and the benefit of speed can outweigh the freight premium. For cheap bulk goods, slow and cheap wins.
+
+## Route and load planning
+
+Two ideas save money in transport: **fill the vehicle** and **shorten the route.**
+
+**Load utilisation** = weight (or volume) carried ÷ vehicle capacity. A 10-tonne truck carrying 7.5 tonnes is **75%** utilised. Empty space is paid for anyway, so higher utilisation lowers cost per tonne.
+
+**Consolidation** combines small loads into fuller vehicles. **Milk runs** collect from or deliver to several points on one trip. Example: three separate trips would cost 3 × ₦120,000 = ₦360,000, while one planned route covering all three stops costs ₦210,000, a saving of **₦150,000 (41.7%)**.
+
+Route planning tips:
+
+- **Group deliveries by area** and sequence stops so the vehicle does not backtrack.
+- **Allow for traffic, loading time and delivery windows,** not just distance.
+- **Avoid empty return trips** by arranging back-loads.
+- **Use simple tools:** maps, spreadsheets, and route-planning apps as volume grows.
+- **Keep drivers informed** and ask them for feedback, since they know the roads.
+
+## Transport cost and service
+
+Measure transport so you can manage it:
+
+- **Cost per trip, per tonne and per tonne-kilometre.** A trip of 500 km carrying 8 tonnes costs ₦400,000. Cost per tonne = 400,000 ÷ 8 = **₦50,000**. Cost per tonne-km = 400,000 ÷ (8 × 500) = **₦100**.
+- **Load utilisation** and **empty running** (distance travelled without cargo).
+- **On-time delivery** and **delivery in full.**
+- **Damage and claims rate.**
+- **Fuel use per 100 km** and maintenance cost.
+- **Cost as a share of sales** for each customer or route.
+
+Balance cost and service. The cheapest transport that misses delivery promises costs you customers; the fastest transport on every order wastes money. Decide the **service level per customer or product** and plan to it.
+
+## Working with carriers
+
+Whether you run your own fleet or hire carriers, manage them as partners:
+
+- **Select** carriers on cost, reliability, safety record, insurance, capacity, coverage and communication.
+- **Contract clearly:** rates, service levels, liability, insurance, claims, payment terms and penalties.
+- **Share forecasts** so they can plan capacity.
+- **Track performance** on a carrier scorecard: on-time %, damage rate, cost per tonne-km, responsiveness.
+- **Use more than one carrier** on important routes, to protect against failure and keep prices competitive.
+- **Review regularly** and give feedback.
+
+Example: you must move 20 tonnes over 500 km (10,000 tonne-km). **Carrier A** charges ₦95 per tonne-km with 90% on-time delivery. **Carrier B** charges ₦85 with 78% on time. A costs ₦950,000 and B costs ₦850,000. B is ₦100,000 cheaper but late 22% of the time; if late deliveries cost you more than that in lost sales, penalties or extra handling, A is the better choice.
+
+## Try it
+
+```task
+{
+  "id": "scm-m07-t1",
+  "prompt": "A trip of **500 km** carries **8 tonnes** and costs **₦400,000**. A 10-tonne truck usually carries 7.5 tonnes. Calculate the **cost per tonne**, the **cost per tonne-km** and the **load utilisation** of the usual load.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Cost per tonne = ...",
+  "rules": [
+    { "label": "Cost per tonne of ₦50,000", "pattern": "50,?000" },
+    { "label": "Cost per tonne-km of ₦100", "pattern": "₦?\\s?100\\b" },
+    { "label": "Load utilisation of 75%", "pattern": "\\b75\\s?%|75 percent" }
+  ],
+  "sample": "Cost per tonne = 400,000 / 8 = ₦50,000.\nCost per tonne-km = 400,000 / (8 x 500) = ₦100.\nLoad utilisation = 7.5 / 10 = 75%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m07-t2",
+  "prompt": "Compare carriers for **20 tonnes over 500 km** (10,000 tonne-km). **A:** ₦95 per tonne-km, 90% on time. **B:** ₦85 per tonne-km, 78% on time. Work out each cost, the difference, and say which you would choose for **urgent medical supplies** and which for **bulk cement**, with reasons.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "A = ...",
+  "rules": [
+    { "label": "A costs ₦950,000", "pattern": "950,?000" },
+    { "label": "B costs ₦850,000", "pattern": "850,?000" },
+    { "label": "Difference of ₦100,000", "pattern": "100,?000" },
+    { "label": "Chooses A for urgent medical supplies", "pattern": "a[^.]*(medical|urgent)|(medical|urgent)[^.]*\\ba\\b" },
+    { "label": "Gives a reason (reliability, on-time, cost, lateness)", "pattern": "reliab|on-?time|late|cheaper|cost|deadline" }
+  ],
+  "sample": "A = 10,000 x 95 = ₦950,000. B = 10,000 x 85 = ₦850,000. B is ₦100,000 cheaper.\nFor urgent medical supplies I would choose A, because 90% on-time reliability matters far more than the ₦100,000 saving.\nFor bulk cement I would choose B, because the cargo is not urgent, a late delivery costs little and the lower cost adds up over many trips.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m07-t3",
+  "prompt": "Three separate trips cost **₦120,000** each. One planned route that serves all three stops costs **₦210,000**. Work out the **saving** and the **percentage saving**, and give two things to check before switching to the combined route.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Separate trips = ...",
+  "rules": [
+    { "label": "Separate trips total ₦360,000", "pattern": "360,?000" },
+    { "label": "Saving of ₦150,000", "pattern": "150,?000" },
+    { "label": "Percentage of about 41.7%", "pattern": "41\\.7|41\\.67|42 ?%" },
+    { "label": "Names a check (delivery windows, vehicle capacity, time, customer agreement)", "pattern": "window|capacity|time|agree|load|customers?|schedule|driver" }
+  ],
+  "sample": "Separate trips = 3 x 120,000 = ₦360,000.\nSaving = 360,000 - 210,000 = ₦150,000, which is 150,000 / 360,000 = 41.7%.\nBefore switching I would check that the delivery windows for all three customers can be met and that the combined load fits within the vehicle's capacity.",
+  "required": false
+}
+```
+
+Next lesson: supply chain technology and data.
+$md$, true, true, 7, array['scm-m07-t1', 'scm-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('scm-m08', 'supply-chain-management', 'Supply chain technology and data', 8, 'SC Technology', 'SCTECH', array['Know the main systems', 'Use visibility well', 'Analyse in spreadsheets', 'Protect data quality']::text[], array['ERP and planning tools', 'Tracking and visibility', 'Using spreadsheets for supply chain analysis', 'Data quality']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:supply-chain-technology-and-data', 'supply-chain-management', 'scm-m08', 'supply-chain-technology-and-data', 'Supply Chain Technology and Data', 'Understand ERP and planning tools, tracking and visibility, how to use spreadsheets for supply chain analysis and why data quality decides whether any of it works.', 25, $md$
+## Tools that run a supply chain
+
+Technology connects the stages of the chain so decisions use the same, current numbers. You do not need every tool, and many small businesses run well on spreadsheets. As the business grows, systems take over repetitive work and give faster, more accurate information.
+
+| Tool | What it does |
+| :-- | :-- |
+| **ERP (enterprise resource planning)** | One system for orders, inventory, purchasing, production, finance and reporting, so departments share one set of data |
+| **Demand planning / forecasting software** | Statistical forecasts, S&OP support |
+| **Warehouse management system (WMS)** | Receiving, locations, picking and dispatch |
+| **Transport management system (TMS)** | Quoting, booking, routing, tracking and freight costs |
+| **Barcode and RFID scanning** | Fast, accurate capture of stock movements |
+| **Supplier and customer portals** | Share orders, forecasts and status online |
+| **Business intelligence (BI) dashboards** | Charts and KPIs from the data |
+
+When choosing a tool, start with the **process and the problem**, not the product. Fix a broken process before automating it, or you will only make mistakes faster. Plan training, migration of data, and who owns the system.
+
+## Tracking and visibility
+
+**Visibility** means seeing where goods are and what will happen next. It supports earlier action:
+
+- **Order status:** confirmed, in production, shipped.
+- **Shipments:** location, expected arrival, delays, customs status (using tracking numbers, GPS or carrier portals).
+- **Inventory:** real-time stock by location.
+- **Supplier performance:** lead times and delivery status.
+
+Visibility pays only if someone **acts** on the alerts: a late supplier shipment should trigger a plan (expedite, re-allocate stock, tell the customer) rather than a surprise on the day. Share the right information with customers and partners as well, so that they can plan.
+
+## Using spreadsheets for supply chain analysis
+
+A spreadsheet is the planner's everyday tool. A few skills go a long way:
+
+- **Clean, consistent data:** one row per record, one column per field, no merged cells.
+- **SUM, AVERAGE, MIN and MAX** for quick summaries.
+- **SUMIF / SUMIFS and COUNTIF** to total by product, customer or month, for example `=SUMIF(A:A,"Cement",B:B)` totals column B where column A says Cement.
+- **XLOOKUP or VLOOKUP** to pull prices, lead times or supplier names from a master table.
+- **Pivot tables** to summarise orders by supplier, product or month in seconds.
+- **IF and simple formulas** such as days of stock = stock on hand ÷ average daily sales, `=B2/C2`.
+- **Charts** to show trends and compare suppliers.
+- **Conditional formatting** to highlight stockouts, late orders and unusual numbers.
+
+Keep inputs separate from calculations, label assumptions, protect formulas and save versions. A spreadsheet with hidden errors is worse than none.
+
+## Data quality
+
+Every analysis and every system is only as good as its data. Common problems:
+
+- **Duplicates:** the same supplier or item with different spellings or codes.
+- **Missing or wrong values:** a unit of measure missing, a lead time that is blank, weights in kilograms for some items and pounds for others.
+- **Out-of-date master data:** old prices, closed suppliers, wrong addresses.
+- **Inconsistent units and dates.**
+- **Manual entry mistakes** and delays in recording transactions.
+
+Good habits:
+
+- Give each item and supplier **one unique code** and a clear naming rule.
+- Define each field: what it means, unit, who is responsible.
+- **Validate on entry** with drop-down lists and required fields.
+- **Check regularly** for duplicates and outliers, and correct at the source.
+- **Record transactions at once,** at the point of work.
+- **Back up** data and control access.
+
+A rule worth repeating: **garbage in, garbage out.**
+
+## Try it
+
+```task
+{
+  "id": "scm-m08-t1",
+  "prompt": "Write the spreadsheet formulas for these tasks. (a) Total the quantities in column B where column A equals \"Cement\". (b) Days of stock for an item, where B2 is stock on hand and C2 is average daily sales. (c) Look up a product's lead time from a table. One formula per line, with a few words of explanation.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "(a) =SUMIF(...)",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Uses SUMIF for the total", "pattern": "sumif" },
+    { "label": "Divides stock by daily sales", "pattern": "b2\\s*/\\s*c2|b2\\/c2" },
+    { "label": "Uses XLOOKUP or VLOOKUP", "pattern": "xlookup|vlookup|index\\s*\\(" }
+  ],
+  "sample": "(a) =SUMIF(A:A,\"Cement\",B:B) adds up column B only where column A says Cement.\n(b) =B2/C2 gives the days of stock left.\n(c) =XLOOKUP(E2,Products!A:A,Products!D:D) pulls the lead time for the product code in E2 from the Products table.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m08-t2",
+  "prompt": "A stock list has these problems: the same supplier appears as \"Ade Foods\", \"ADE FOODS Ltd\" and \"Adefoods\"; some weights are in kg and others in lb; the lead time is blank for 12 items. List **three data quality problems** and **a fix for each**. One per line.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Problem: ... - Fix: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Spots duplicate supplier names", "pattern": "duplicate|spell|different names|same supplier|inconsistent name" },
+    { "label": "Spots unit inconsistency", "pattern": "unit|kg|lb|inconsistent" },
+    { "label": "Spots missing lead times", "pattern": "missing|blank|lead time|empty" },
+    { "label": "Gives fixes (unique code, standard unit, required field, validation)", "pattern": "unique code|standard|one unit|required|validat|drop-?down|fill|rule" }
+  ],
+  "sample": "Problem: the same supplier is entered under three different names - Fix: give every supplier one unique code and a naming rule, and merge the duplicates.\nProblem: weights are in kg and lb - Fix: choose one standard unit and convert the rest.\nProblem: 12 items have no lead time - Fix: make lead time a required field and fill the gaps with the supplier.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m08-t3",
+  "prompt": "A shipment tracker shows your supplier's container will arrive **six days late**. In 50 to 100 words, say what you would do **with that information** over the next two days so that it helps.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I would ...",
+  "rules": [
+    { "label": "Checks stock cover and the impact", "pattern": "stock|cover|impact|run out|affect|production" },
+    { "label": "Takes an action (expedite, re-allocate, alternative supply, air freight)", "pattern": "expedite|re-?allocate|alternative|backup|air|prioriti|other supplier|split" },
+    { "label": "Informs customers or colleagues", "pattern": "inform|tell|notify|update|communicat|customers|sales|planner" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I would first check how many days of stock we have against the new arrival date, to see which orders and production runs are at risk. Then I would take action: ask the supplier to expedite or split the shipment, check whether part can come by air, re-allocate the available stock to the most important customers and ask another supplier about a small emergency order. I would also tell sales and the affected customers about the new date straight away, and update the plan so everyone works from the same information.",
+  "required": false
+}
+```
+
+Next lesson: risk, resilience and sustainability.
+$md$, true, true, 8, array['scm-m08-t1', 'scm-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('scm-m09', 'supply-chain-management', 'Risk, resilience and sustainability', 9, 'Risk & Resilience', 'RESIL', array['Assess supply chain risk', 'Write contingency plans', 'Weigh resilience against cost', 'Estimate transport emissions']::text[], array['Types of supply chain risk', 'Contingency and backup plans', 'Resilience versus cost', 'Sustainable supply chains']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:risk-resilience-and-sustainability', 'supply-chain-management', 'scm-m09', 'risk-resilience-and-sustainability', 'Risk, Resilience and Sustainability', 'Identify types of supply chain risk, plan contingencies and backups, weigh resilience against cost and build more sustainable chains.', 25, $md$
+## Types of supply chain risk
+
+Supply chains are long and connected, so a problem in one link can spread. Recent years showed this clearly: pandemics, port congestion, conflict, currency shocks and fuel price spikes. Risks fall into groups:
+
+| Group | Examples |
+| :-- | :-- |
+| **Supply** | Supplier failure, shortages, quality problems, late deliveries |
+| **Demand** | Sudden drops or surges, forecast errors, a lost major customer |
+| **Process / operations** | Breakdowns, strikes, errors, stockouts, fire, IT failure |
+| **Transport / logistics** | Accidents, delays, theft, port or road closures |
+| **External** | Floods, politics, regulation changes, exchange rate and fuel price moves |
+| **Financial** | Supplier or customer insolvency, late payment |
+| **Cyber and information** | System attacks, data loss |
+| **Reputation and compliance** | Unethical suppliers, safety or environmental violations |
+
+**Assessing risk** means asking for each: how **likely** is it, and how **bad** would it be? Multiply the two (for example 1 to 5 each) and focus on the highest scores. Another way is **expected loss**: probability × impact. If there is a 5% chance in a year of losing a key supplier, and the loss would cost ₦40,000,000, the expected loss is 0.05 × 40,000,000 = **₦2,000,000.**
+
+## Contingency and backup plans
+
+Once you know the major risks, decide how to respond:
+
+- **Avoid:** do not do the risky thing (stop using a high-risk supplier).
+- **Reduce:** lower the chance or impact (preventive maintenance, quality checks, safety stock).
+- **Transfer:** share the risk (insurance, contract terms).
+- **Accept:** if the cost of action is more than the likely loss.
+
+A **contingency plan** is written in advance: *if X happens, we do Y*. A good one states the trigger, the actions, who does what, who to contact and how to communicate. Examples:
+
+- **A key supplier fails:** switch to the pre-qualified backup, release safety stock, tell customers.
+- **A port is closed:** reroute through another port, or switch to air for urgent items.
+- **A warehouse fire:** use a second site or a 3PL, and recover records from backup.
+
+Practise and update the plans, since an untested plan often fails.
+
+## Resilience versus cost
+
+**Resilience** is the ability to keep going and recover quickly when something goes wrong. It costs money: backup suppliers, extra stock, spare capacity, flexible transport and better information. **Lean** chains, which hold little stock and rely on few suppliers, are cheap in calm times and fragile in a crisis.
+
+Decide how much resilience to buy by comparing cost with expected loss.
+
+Example: you buy 30% of a ₦100,000,000 spend from a second supplier that charges a 10% premium. The extra cost is 0.10 × 30,000,000 = **₦3,000,000** a year. If that backup removes the chance of a loss with an expected value of ₦2,000,000 a year, the premium is not worth it on that number alone. If the loss would also lose customers, damage reputation or stop the business, the true impact is higher and the backup may well be justified. Use judgement as well as arithmetic, and protect the **critical** items first.
+
+Cheaper ways to build resilience include pre-qualifying a backup without buying much from it, holding stock only of critical parts, cross-training staff, and sharing information with partners.
+
+## Sustainable supply chains
+
+Customers, regulators and investors increasingly expect supply chains to be **sustainable**: to reduce harm to the environment and people.
+
+Main areas:
+
+- **Emissions and energy:** transport is a large share of a supply chain's carbon footprint. Fuller loads, shorter routes, less air freight, efficient vehicles and better warehouse energy use all help.
+- **Waste and packaging:** reduce, reuse and recycle. Right-size packaging and avoid overproduction.
+- **Responsible sourcing:** fair labour, safe working conditions, no child or forced labour, and responsible materials.
+- **Circular practices:** repair, refurbish, recycle and take back products at end of life.
+- **Local and inclusive sourcing:** where it makes sense for cost and quality.
+
+A rough way to estimate transport emissions is **tonne-km × an emission factor**. For illustration, using 0.1 kg of CO₂ per tonne-km (real factors vary by vehicle and fuel): moving 20 tonnes over 500 km is 10,000 tonne-km, so about **1,000 kg of CO₂**. If a fuller truck or better routing cuts the distance by 10%, the saving is about 100 kg for that trip.
+
+Sustainability and cost often align: less waste and less fuel mean lower cost. Measure it, set targets and report honestly.
+
+## Try it
+
+```task
+{
+  "id": "scm-m09-t1",
+  "prompt": "There is a **5% chance** a year of losing a key supplier, and the loss would cost **₦40,000,000**. A backup supplier would cost an extra **₦1,500,000** a year. Work out the **expected loss** and say whether the backup is worth buying, mentioning one non-financial factor.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Expected loss = ...",
+  "rules": [
+    { "label": "Expected loss of ₦2,000,000", "pattern": "2,?000,?000" },
+    { "label": "Compares with the ₦1,500,000 cost", "pattern": "1,?500,?000" },
+    { "label": "Concludes the backup is worth it (expected loss is higher than cost)", "pattern": "worth|justif|cheaper than|less than|yes|buy|reasonable" },
+    { "label": "Mentions a non-financial factor (customers, reputation, continuity)", "pattern": "customers?|reputation|continuity|trust|production|stop" }
+  ],
+  "sample": "Expected loss = 0.05 x 40,000,000 = ₦2,000,000 a year.\nThe backup costs ₦1,500,000, which is less than the expected loss, so it is worth buying. Besides the money, losing the key supplier could stop production and damage customer trust, which makes the case stronger.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m09-t2",
+  "prompt": "Write a **contingency plan** for this event: *\"Our main supplier of packaging cannot deliver for three weeks.\"* Give at least six lines: the trigger, who is told, immediate actions, the backup, how customers are updated and how you recover.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Trigger: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Names the trigger", "pattern": "trigger|if |when " },
+    { "label": "Names who is told or who is responsible", "pattern": "tell|inform|notify|responsible|owner|manager|planner|team" },
+    { "label": "Uses safety stock or a backup supplier", "pattern": "safety stock|backup|second supplier|alternative|other supplier" },
+    { "label": "Updates customers", "pattern": "customer" },
+    { "label": "Covers recovery or review", "pattern": "recover|review|restore|return|lesson|update the plan" }
+  ],
+  "sample": "Trigger: the supplier tells us it cannot deliver for three weeks, or a delivery is more than 5 days late.\nWho is told: the purchasing manager, production planner and sales manager the same day.\nImmediate actions: check how many days of packaging we hold and reduce non-urgent production.\nBackup: order from the pre-qualified second supplier and release safety stock.\nCustomers: sales tells affected customers about any change in delivery dates.\nRecovery: when the main supplier recovers, rebuild safety stock and review whether to keep a share with the backup.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m09-t3",
+  "prompt": "A truck carries **20 tonnes over 500 km**. Using an illustrative factor of **0.1 kg CO₂ per tonne-km**, work out the emissions. Then suggest **two ways** to cut them.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Tonne-km = ...",
+  "rules": [
+    { "label": "10,000 tonne-km", "pattern": "10,?000" },
+    { "label": "Emissions of 1,000 kg", "pattern": "1,?000\\s?kg|1 tonne|1,?000" },
+    { "label": "Suggests two ways (fuller loads, shorter routes, rail, less air freight, efficient vehicles)", "pattern": "fuller|load|route|rail|air freight|efficien|consolidat|shorter|fuel" }
+  ],
+  "sample": "Tonne-km = 20 x 500 = 10,000. Emissions = 10,000 x 0.1 = 1,000 kg of CO2.\nI would cut them by filling trucks fully and consolidating loads, and by planning shorter routes with fewer empty return trips.",
+  "required": false
+}
+```
+
+Next lesson: measuring supply chain performance.
+$md$, true, true, 9, array['scm-m09-t1', 'scm-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('scm-m10', 'supply-chain-management', 'Performance measurement', 10, 'SC Performance', 'SCKPI', array['Calculate core KPIs', 'Measure cost to serve', 'Build dashboards', 'Run continuous improvement']::text[], array['KPIs: fill rate, on-time delivery, inventory turns', 'Cost to serve', 'Dashboards and reviews', 'Continuous improvement']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:performance-measurement', 'supply-chain-management', 'scm-m10', 'performance-measurement', 'Performance Measurement', 'Use the right KPIs (fill rate, on-time delivery, inventory turns and cash-to-cash), understand cost to serve, build dashboards and reviews and run continuous improvement.', 20, $md$
+## Why measure
+
+You cannot improve what you do not measure, and you cannot manage what you measure badly. Good measures tell you **how the chain is performing, where it is failing and whether changes work.** Choose a small number of measures that match your goals: **service, cost, speed, quality and cash.**
+
+## Key performance indicators
+
+| KPI | Formula | What it shows |
+| :-- | :-- | :-- |
+| **Fill rate** | Units delivered from stock ÷ units ordered | How much of what customers order you can supply |
+| **On-time delivery** | Orders delivered by the promised date ÷ total orders | Reliability |
+| **OTIF** | Orders on time **and** complete ÷ total orders | The customer's real experience |
+| **Perfect order rate** | Orders on time × complete × damage-free × correct documents | A strict overall service measure |
+| **Inventory turnover** | Cost of goods sold ÷ average inventory value | How quickly stock sells |
+| **Days of inventory** | 365 ÷ inventory turnover | How long stock sits |
+| **Order cycle time** | Time from order to delivery | Speed |
+| **Forecast accuracy** | 1 − error % | Planning quality |
+| **Stock accuracy** | Items where records match count ÷ items counted | Data and process control |
+| **Cash-to-cash cycle** | Days of inventory + days of sales outstanding − days of payables | Cash tied up in the chain |
+
+Worked examples:
+
+- **Fill rate:** customers ordered 1,000 units and you shipped 940 from stock. Fill rate = 940 ÷ 1,000 = **94%**.
+- **Perfect order rate:** 95% on time and complete, 98% damage-free and 99% correct documents. 0.95 × 0.98 × 0.99 = **92.2%**.
+- **Inventory turnover:** cost of goods sold ₦240,000,000 and average inventory ₦40,000,000. Turnover = **6 times a year**; days of inventory = 365 ÷ 6 = **about 61 days**.
+- **Cash-to-cash:** 61 days of inventory + 30 days of sales outstanding − 45 days of payables = **46 days.** It means you fund the chain for about 46 days. Shortening it frees cash.
+
+Define each KPI **precisely** (what counts as on time? from which date?) and use the **same definition** every time, or the numbers cannot be compared.
+
+## Cost to serve
+
+**Cost to serve** shows the true cost of supplying each customer or channel, not just the cost of the product. Two customers may buy the same goods but cost very different amounts to serve because of order size, delivery distance, special packaging, returns, payment terms and service demands.
+
+Example for Customer X:
+
+| Item | Amount |
+| :-- | :-- |
+| Revenue | ₦10,000,000 |
+| Product cost | ₦6,000,000 |
+| Delivery | ₦1,200,000 |
+| Handling and packing | ₦500,000 |
+| Cost of credit and admin | ₦300,000 |
+| **Profit after cost to serve** | **₦2,000,000** (20%) |
+
+If another customer buys the same revenue but needs many small urgent deliveries and returns goods often, the profit after cost to serve might be 5%, or even a loss. Cost to serve helps you **price properly, set minimum order sizes, change delivery rules and decide where to focus.**
+
+## Dashboards and reviews
+
+A **dashboard** shows the key numbers at a glance, with targets, trends and colour signals (green, amber, red). Keep it simple: 6 to 10 KPIs, clear definitions, a monthly trend and the reason for any red. Use charts that make comparison easy.
+
+Hold **regular reviews:**
+
+- **Daily:** short operations check (orders, stock, deliveries).
+- **Weekly:** problem areas and actions.
+- **Monthly:** performance against targets, as part of S&OP.
+- **Quarterly:** strategy, supplier and customer reviews.
+
+In each review ask: What happened? Why? What will we do? Who will do it and by when? Reviews fail when they only report numbers and never lead to action.
+
+## Continuous improvement
+
+Improvement is a loop. One common version is **Plan – Do – Check – Act (PDCA):**
+
+1. **Plan:** pick a problem, find the root cause and design a fix with a target.
+2. **Do:** test it on a small scale.
+3. **Check:** measure the result against the target.
+4. **Act:** adopt it if it works, adjust if it does not, then start the next cycle.
+
+Tools: the 5 Whys, Pareto charts to find the biggest causes, process maps and simple experiments. Involve the people who do the work, celebrate improvements and keep a log of what you changed and what it achieved.
+
+## Try it
+
+```task
+{
+  "id": "scm-m10-t1",
+  "prompt": "Customers ordered **1,000 units** and you shipped **940**. Cost of goods sold is **₦240,000,000** and average inventory is **₦40,000,000**. Work out the **fill rate**, **inventory turnover** and **days of inventory** (round to a whole number).",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Fill rate = ...",
+  "rules": [
+    { "label": "Fill rate of 94%", "pattern": "\\b94\\s?%|94 percent" },
+    { "label": "Inventory turnover of 6", "pattern": "\\b6\\b" },
+    { "label": "About 61 days", "pattern": "\\b6[01]\\b" }
+  ],
+  "sample": "Fill rate = 940 / 1,000 = 94%.\nInventory turnover = 240,000,000 / 40,000,000 = 6 times a year.\nDays of inventory = 365 / 6 = 60.8, about 61 days.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m10-t2",
+  "prompt": "Days of inventory is **61**, days of sales outstanding **30** and days of payables **45**. Calculate the **cash-to-cash cycle**. Then give **two ways** to shorten it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Cash-to-cash = ...",
+  "rules": [
+    { "label": "Cash-to-cash of 46 days", "pattern": "\\b46\\b" },
+    { "label": "Shows 61 + 30 - 45", "pattern": "61\\s?\\+\\s?30\\s?[-−]\\s?45" },
+    { "label": "Suggests two ways (reduce stock, collect faster, negotiate longer supplier terms)", "pattern": "(stock|inventory|collect|receivable|payable|supplier terms|longer terms|invoice)[\\s\\S]*(stock|inventory|collect|receivable|payable|supplier terms|longer terms|invoice)" }
+  ],
+  "sample": "Cash-to-cash = 61 + 30 - 45 = 46 days.\nI could shorten it by reducing inventory with better forecasting and smaller, more frequent orders, and by collecting from customers faster through clearer invoices and follow-up.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m10-t3",
+  "prompt": "A customer orders ₦10,000,000 a year. Product cost is ₦6,000,000, delivery ₦1,200,000, handling ₦500,000 and credit and admin ₦300,000. Calculate the **profit after cost to serve** and the percentage. Then, in 30 to 60 words, say what you would do if another customer with the same revenue only made 3%.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Profit = ...",
+  "rules": [
+    { "label": "Profit of ₦2,000,000", "pattern": "2,?000,?000" },
+    { "label": "Margin of 20%", "pattern": "\\b20\\s?%|20 percent" },
+    { "label": "Suggests an action (minimum order, delivery charge, reprice, change terms)", "pattern": "minimum|charge|reprice|price|terms|delivery|order size|consolidat|review|renegotiat" },
+    { "label": "Between 40 and 100 words in total", "minWords": 40, "maxWords": 110 }
+  ],
+  "sample": "Profit after cost to serve = 10,000,000 - 6,000,000 - 1,200,000 - 500,000 - 300,000 = ₦2,000,000, which is 20% of revenue.\nFor the customer making only 3%, I would find what drives the cost, then set a minimum order size, charge for urgent or small deliveries, or review the price and credit terms with them.",
+  "required": false
+}
+```
+
+Next lesson: global supply chains and trade.
+$md$, true, true, 10, array['scm-m10-t1', 'scm-m10-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('scm-m11', 'supply-chain-management', 'Global supply chains and trade', 11, 'Global Chains', 'GLOBAL', array['Compare global and local sourcing', 'Calculate landed cost', 'Handle currency risk', 'Manage across countries']::text[], array['Global sourcing', 'Trade, tariffs and lead times', 'Currency and cost', 'Managing across countries']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:global-supply-chains-and-trade', 'supply-chain-management', 'scm-m11', 'global-supply-chains-and-trade', 'Global Supply Chains and Trade', 'Weigh global against local sourcing, allow for tariffs, trade rules and long lead times, account for currency and total cost, and manage supply across countries.', 20, $md$
+## Global sourcing
+
+A **global supply chain** buys, makes or sells across borders. Companies go global to reach lower costs, special skills or materials, larger markets and more suppliers. A Nigerian retailer may buy electronics from China, packaging from Turkey and sell in Ghana.
+
+Global chains offer opportunity and add distance, so more things can go wrong. Before sourcing abroad, compare it honestly with **local sourcing** (or **nearshoring**, sourcing from nearby countries) on **total cost, lead time, risk, quality and flexibility.**
+
+## Trade, tariffs and lead times
+
+International trade adds layers:
+
+- **Tariffs and duty:** taxes on imports, set by the tariff for each product.
+- **Non-tariff rules:** product standards, permits, quotas, bans and documentation.
+- **Trade agreements:** such as regional blocs and the African Continental Free Trade Area, which can reduce duty and paperwork between members if rules of origin are met.
+- **Customs clearance** at both ends, with time and cost.
+- **Longer, more variable lead times:** production, inland transport, port handling, ocean voyage, clearing and delivery. Forty to sixty days from order to shelf is common for sea freight from Asia.
+
+Long lead times have a hidden cost: **pipeline inventory.** If you sell 25 units a day and lead time is 40 days, about 25 × 40 = **1,000 units** are always somewhere between supplier and shelf. At ₦9,750 landed each, that is **₦9,750,000** of money tied up in transit, before any safety stock.
+
+## Currency and total cost
+
+Most imports are paid in foreign currency, so the **exchange rate** is part of your cost. A change between order and payment changes the naira cost. Manage it by:
+
+- **Pricing with a buffer** for currency movement.
+- **Paying promptly** once terms are agreed.
+- **Ordering smaller and more often** when rates are volatile.
+- **Using forward contracts or other tools** through your bank, where available and affordable.
+- **Reviewing prices frequently.**
+
+Compare sources on **total landed cost per unit**, not just the supplier's price:
+
+Example: an imported item costs $5.00 at ₦1,500 to the dollar = ₦7,500. Freight, insurance, duty, VAT, clearing and transport add about 30%, so the landed cost is 7,500 × 1.30 = **₦9,750**. A local supplier sells at ₦9,200. The local option is ₦550 cheaper per unit, so on 12,000 units it saves **₦6,600,000**, and it delivers faster and needs less stock. If the naira weakens by 10% to ₦1,650, the import becomes $5.00 × 1,650 × 1.30 = **₦10,725**, widening the gap.
+
+Always also weigh quality, minimum order size, flexibility and risk. Sometimes the imported item is still the right answer: when it is not available locally, quality is better or volumes are large.
+
+## Managing across countries
+
+Running a chain across several countries needs extra discipline:
+
+- **Clear contracts** with agreed terms (Incoterms), currency, quality, dispute resolution and the governing law.
+- **Reliable partners:** a good freight forwarder, clearing agent, inspection company and bank.
+- **Quality control at source:** pre-shipment inspection, certificates and samples.
+- **Compliance:** customs rules, product standards, sanctions, anti-bribery and labour laws in each country.
+- **Time zones, language and culture:** agree communication routines, use clear written specifications and confirm in writing.
+- **Visibility:** track shipments and supplier performance.
+- **Contingency:** alternative routes, ports and suppliers.
+
+A global chain should be **designed deliberately**, not drift into being a patchwork of cheapest options.
+
+## Try it
+
+```task
+{
+  "id": "scm-m11-t1",
+  "prompt": "An imported item costs **$5.00** at **₦1,500 to $1**. Freight, insurance, duty, VAT, clearing and transport add **30%** to the naira cost. A local supplier sells the same item at **₦9,200**. Work out the **landed cost**, which is cheaper and by how much per unit, and the saving on **12,000 units**.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Product cost in naira = ...",
+  "rules": [
+    { "label": "Product cost of ₦7,500", "pattern": "7,?500" },
+    { "label": "Landed cost of ₦9,750", "pattern": "9,?750" },
+    { "label": "Local is cheaper by ₦550", "pattern": "550" },
+    { "label": "Saving of ₦6,600,000", "pattern": "6,?600,?000" }
+  ],
+  "sample": "Product cost = 5.00 x 1,500 = ₦7,500.\nLanded cost = 7,500 x 1.30 = ₦9,750.\nThe local supplier at ₦9,200 is cheaper by 9,750 - 9,200 = ₦550 per unit.\nOn 12,000 units the saving is 12,000 x 550 = ₦6,600,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m11-t2",
+  "prompt": "Lead time from the overseas supplier is **40 days** and you sell **25 units a day**. Landed cost is **₦9,750** a unit. Work out the **pipeline inventory** in units and in naira, and say in one or two sentences why it matters.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Pipeline units = ...",
+  "rules": [
+    { "label": "1,000 units in the pipeline", "pattern": "1,?000" },
+    { "label": "₦9,750,000 tied up", "pattern": "9,?750,?000" },
+    { "label": "Explains the cash tied up or cost of holding", "pattern": "cash|tied|money|capital|financ|cost|interest|working capital" }
+  ],
+  "sample": "Pipeline inventory = 40 x 25 = 1,000 units.\nIn naira = 1,000 x 9,750 = ₦9,750,000.\nThat money is tied up in goods in transit and cannot be used elsewhere, so long lead times add a hidden financing cost.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m11-t3",
+  "prompt": "The naira weakens by **10%** to **₦1,650 to $1**. Work out the new **landed cost** of the $5.00 item (with the same 30% added) and the new gap with the local price of ₦9,200. Then say in 30 to 70 words how you would respond.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "New product cost = ...",
+  "rules": [
+    { "label": "New product cost of ₦8,250", "pattern": "8,?250" },
+    { "label": "New landed cost of ₦10,725", "pattern": "10,?725" },
+    { "label": "New gap of ₦1,525", "pattern": "1,?525" },
+    { "label": "Suggests a response (shift to local, renegotiate, reprice, order smaller, buffer)", "pattern": "local|renegotiat|reprice|price|smaller|buffer|supplier|alternative|hedg|forward" }
+  ],
+  "sample": "New product cost = 5.00 x 1,650 = ₦8,250. New landed cost = 8,250 x 1.30 = ₦10,725. The local price of ₦9,200 is now ₦1,525 cheaper per unit.\nI would move more volume to the local supplier, renegotiate the import price, reprice where I can, and order smaller batches more often so I can adjust quickly.",
+  "required": false
+}
+```
+
+Next lesson: your own supply chain analysis.
+$md$, true, true, 11, array['scm-m11-t1', 'scm-m11-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('scm-m12', 'supply-chain-management', 'Final project: analyse and improve a supply chain', 12, 'SC Project', 'SCPROJ', array['Map and diagnose a chain', 'Recommend with numbers', 'Build a business case', 'Plan the actions']::text[], array['Mapping the chain', 'Finding the problems with data', 'Recommending improvements', 'Presenting your case']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('supply-chain-management:final-project-analyse-and-improve-a-supply-chain', 'supply-chain-management', 'scm-m12', 'final-project-analyse-and-improve-a-supply-chain', 'Final Project - Analyse and Improve a Supply Chain', 'Map a real or realistic supply chain, find its problems with data, recommend improvements with numbers and present your case.', 55, $md$
+## What you are building
+
+You now have the tools to plan demand, set stock, manage suppliers, design warehousing and transport, measure performance and weigh risk. In this project you apply them to **one supply chain** and show how it could work better.
+
+Choose a chain you can find information about: a shop or business you know, a product you buy (rice, bread, phone accessories, a medicine), a school canteen, a company's published case study or a realistic business you invent with sensible numbers. Use real data where you can, and state your assumptions where you cannot.
+
+## Your project has six parts
+
+1. **The chain.** Describe the product and customers and **map** the chain from source to customer: the links, the flows of goods, information and money, and the strategy (efficient or responsive).
+2. **The data.** Present the numbers you will use: demand history, lead times, stock levels, costs, delivery performance, service levels. Say where each came from.
+3. **The diagnosis.** Calculate at least **four measures** (for example fill rate, on-time delivery, inventory turns, days of inventory, cost per delivery, cash-to-cash, forecast error) and identify the **three biggest problems**, with evidence.
+4. **The improvements.** For each problem, a specific recommendation: a forecast method, a reorder point or EOQ, a supplier change, a layout or route change, a risk response. Show the **calculation** behind each.
+5. **The business case.** The expected benefit in naira (savings, cash released or sales protected), the cost and effort, and the risks.
+6. **The plan.** Who does what by when, and how you will measure whether it worked.
+
+## Writing it up
+
+Write for the owner or manager who will decide whether to act. Open with a one-paragraph summary: the main problems, the recommendations and the expected benefit. Use a diagram or table for the map and a table for the KPIs. Show formulas and workings so a reader can check them.
+
+> [!TIP]
+> Good projects choose a few problems and solve them with numbers, instead of listing everything that could be better. Rank by size of benefit and ease.
+
+## Try it
+
+```task
+{
+  "id": "scm-m12-t1",
+  "prompt": "Describe your **chosen supply chain** in 60 to 140 words: the product, the customers, the main links from source to customer, and whether it should be an **efficient or responsive** chain and why.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "The product is ...",
+  "rules": [
+    { "label": "Names the product and customers", "pattern": "product|customers?|sells?|buys?|shop|business" },
+    { "label": "Names links (supplier, producer, distributor, retailer, transport)", "pattern": "supplier|producer|manufactur|distribut|retail|wholesal|transport|warehouse" },
+    { "label": "Chooses efficient or responsive", "pattern": "efficient|responsive" },
+    { "label": "Gives a reason", "pattern": "because|since|so that|stable|predictable|fast-?changing|uncertain|cost|speed" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 145 }
+  ],
+  "sample": "The product is bagged rice sold by a family wholesale business in Ibadan to market traders and small shops. The chain runs from rice farms and a mill in the north, through a transporter and a regional distributor, to the wholesaler's warehouse and then to traders and shops. Demand is steady and prices are tight, so it should run an efficient chain, because customers value low cost and reliable availability more than speed, and demand is predictable apart from the festive season. The weak links appear to be the long lead time from the mill, too much stock at the warehouse and late deliveries to traders.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m12-t2",
+  "prompt": "Present **four measures** for your chain with the numbers and the calculation, one per line: for example fill rate, on-time delivery, inventory turns or days of inventory, cost per delivery or cash-to-cash. Label any figure you assumed.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Fill rate = 900 / 1,000 = 90%",
+  "rules": [
+    { "label": "At least four lines", "minLines": 4 },
+    { "label": "Shows calculations (divisions or equals signs)", "pattern": "=|/|÷", "perLine": true },
+    { "label": "Includes a service measure (fill rate, on-time, OTIF)", "pattern": "fill rate|on-?time|otif|perfect order" },
+    { "label": "Includes an inventory or cost measure", "pattern": "turn|days of inventory|cost per|cash-to-cash|inventory|accuracy" },
+    { "label": "Gives percentages or numbers", "pattern": "\\d+\\s?%|\\d{2,}" }
+  ],
+  "sample": "Fill rate = 900 units shipped / 1,000 ordered = 90%\nOn-time delivery = 68 orders on time / 85 orders = 80%\nInventory turnover = cost of goods sold ₦180,000,000 / average inventory ₦45,000,000 = 4 times a year (assumed from the owner's estimate)\nDays of inventory = 365 / 4 = 91 days\nCost per delivery = ₦2,400,000 / 600 deliveries = ₦4,000",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m12-t3",
+  "prompt": "State your **three biggest problems** and a **recommendation with a calculation** for each, one per line, in the form \"Problem - evidence - recommendation - benefit\". At least three lines.",
+  "minutes": 15,
+  "rows": 9,
+  "placeholder": "Problem: ... - Evidence: ... - Recommendation: ... - Benefit: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line has a problem and a recommendation", "pattern": "problem[^\\n]*recommend", "perLine": true },
+    { "label": "Each line has evidence or a number", "pattern": "\\d", "perLine": true },
+    { "label": "Each line states a benefit", "pattern": "benefit|save|saving|release|protect|reduce|improve|₦", "perLine": true }
+  ],
+  "sample": "Problem: too much slow stock at the warehouse - Evidence: 91 days of inventory against a 60-day target - Recommendation: reorder with a reorder point and EOQ, and clear slow lines - Benefit: about ₦15 million of cash released.\nProblem: 20% of deliveries are late - Evidence: 68 of 85 orders on time - Recommendation: plan routes by area and confirm delivery windows - Benefit: fewer penalties and an on-time rate near 90%.\nProblem: stockouts in December - Evidence: fill rate of 90% at the festive peak - Recommendation: use a seasonal index of 1.4 and raise safety stock in November - Benefit: about 8% more sales protected.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "scm-m12-t4",
+  "prompt": "Write your **business case and action plan** in 60 to 140 words: the total expected benefit in naira, the cost and effort, the main risk, who does what by when, and the KPI you will watch.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "The expected benefit is ...",
+  "rules": [
+    { "label": "States a benefit in naira", "pattern": "₦\\s?\\d|naira" },
+    { "label": "States a cost or effort", "pattern": "cost|effort|invest|time|training|spend" },
+    { "label": "States a risk", "pattern": "risk" },
+    { "label": "Says who does what by when", "pattern": "by (end|the|week|month|\\d)|within|owner|manager|responsible|weeks?|months?" },
+    { "label": "Names a KPI to watch", "pattern": "kpi|fill rate|on-?time|turnover|days of inventory|cash-to-cash|measure" },
+    { "label": "Between 60 and 140 words", "minWords": 60, "maxWords": 145 }
+  ],
+  "sample": "The expected benefit is about ₦15 million of cash released from stock and ₦2.4 million a year saved on late-delivery penalties and rush trips, against a cost of about ₦600,000 for training and a simple tracking spreadsheet. The main risk is that staff do not follow the new reorder rules, so the warehouse manager will own them and train the team by the end of month one. The logistics supervisor will introduce route planning in month two. We will watch days of inventory and on-time delivery every month and review them in the management meeting.",
+  "required": true
+}
+```
+
+When you are done, submit your complete project.
+$md$, true, true, 12, array['scm-m12-t1', 'scm-m12-t2', 'scm-m12-t3', 'scm-m12-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Project Management
@@ -91831,6 +93303,684 @@ values ('lff-f15', 1, 'Systems make compliance routine.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Supply Chain Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m01-check', 'supply-chain-management', 'module', 'scm-m01', 'Supply Chain Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m01-q1', 'scm-m01-check', 1, 'Which best describes a supply chain?', '["Only the trucks that deliver goods","The network of organisations and activities that turns materials into products and delivers them to customers","A warehouse","A purchasing department"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m01-q1', 1, 'A supply chain spans suppliers, makers, distributors, retailers and customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m01-q2', 'scm-m01-check', 2, 'In which direction does money normally flow?', '["Forward, from suppliers to customers","Backward, from customers toward suppliers","Only between banks","It does not flow"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m01-q2', 1, 'Customers pay retailers, who pay distributors, who pay manufacturers and suppliers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m01-q3', 'scm-m01-check', 3, 'Which product suits a responsive supply chain?', '["Cement","Fashion sneakers with changing demand","Table salt","Rice with steady sales"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m01-q3', 1, 'Uncertain, fast-changing demand needs speed and flexibility.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m01-q4', 'scm-m01-check', 4, 'What is the main difference between SCM and logistics?', '["None","SCM also covers planning, sourcing, making and partner relationships; logistics moves and stores goods","Logistics is wider","SCM is only about customs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m01-q4', 1, 'Logistics is one part of SCM.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m01-q5', 'scm-m01-check', 5, 'Poor information in a supply chain usually leads to:', '["Better decisions","Late deliveries, stockouts or excess stock","Lower tax","Faster transport"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m01-q5', 1, 'Many chain problems start with late or wrong information.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Demand Planning and Forecasting: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m02-check', 'supply-chain-management', 'module', 'scm-m02', 'Demand Planning and Forecasting: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m02-q1', 'scm-m02-check', 1, 'Sales were 120, 135, 150 and 140. What is the 3-month moving average of the latest three?', '["135","141.7","145","150"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m02-q1', 1, '(135 + 150 + 140) ÷ 3 = 141.7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m02-q2', 'scm-m02-check', 2, 'December sales are 300 and the average month is 200. What is the December seasonal index?', '["0.67","1.0","1.5","2.0"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m02-q2', 2, '300 ÷ 200 = 1.5.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m02-q3', 'scm-m02-check', 3, 'Forecast 140, actual 150. What is the percentage error against actual?', '["5%","6.7%","7.1%","10%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m02-q3', 1, '10 ÷ 150 = 6.7%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m02-q4', 'scm-m02-check', 4, 'What does consistently over-forecasting cause?', '["Stockouts","Excess stock and tied-up cash","Faster delivery","Lower costs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m02-q4', 1, 'Forecasting too high means ordering too much.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m02-q5', 'scm-m02-check', 5, 'What is the purpose of S&OP?', '["To print reports","To agree one plan across sales, operations, purchasing and finance","To hire staff","To set tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m02-q5', 1, 'S&OP aligns departments around a single set of numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Sourcing and Supplier Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m03-check', 'supply-chain-management', 'module', 'scm-m03', 'Sourcing and Supplier Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m03-q1', 'scm-m03-check', 1, 'Make: ₦2,000,000 fixed plus ₦300 a unit. Buy: ₦500 a unit. What is the break-even volume?', '["4,000","8,000","10,000","20,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m03-q1', 2, '2,000,000 ÷ (500 − 300) = 10,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m03-q2', 'scm-m03-check', 2, 'At 12,000 units with those costs, which is cheaper?', '["Buy","Make","They are equal","Cannot tell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m03-q2', 1, 'Make = ₦5,600,000; buy = ₦6,000,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m03-q3', 'scm-m03-check', 3, 'Lead times were 10, 12, 14, 10, 14 days. What is the average?', '["10","11","12","14"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m03-q3', 2, '60 ÷ 5 = 12.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m03-q4', 'scm-m03-check', 4, 'Why does lead time variability matter?', '["It does not","It forces you to plan around the longer time or hold safety stock","It lowers cost","It removes risk"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m03-q4', 1, 'Variable lead times make planning harder.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m03-q5', 'scm-m03-check', 5, 'A good way to reduce risk with a critical single supplier is to:', '["Ignore it","Pre-qualify a backup and hold safety stock","Pay early","Cancel orders"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m03-q5', 1, 'Backups and buffers protect supply.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Inventory Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m04-check', 'supply-chain-management', 'module', 'scm-m04', 'Inventory Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m04-q1', 'scm-m04-check', 1, 'D = 12,000, S = ₦5,000, H = ₦120. What is the EOQ?', '["500","1,000","2,000","12,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m04-q1', 1, '√(2 × 12,000 × 5,000 ÷ 120) = 1,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m04-q2', 'scm-m04-check', 2, 'Demand 40 a day, lead time 9 days, safety stock 50. What is the reorder point?', '["360","410","450","490"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m04-q2', 1, '40 × 9 + 50 = 410.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m04-q3', 'scm-m04-check', 3, 'In ABC analysis, A items are:', '["The cheapest items","The few items making up about 80% of usage value","The slowest items","Returned items"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m04-q3', 1, 'A items are high-value and managed tightly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m04-q4', 'scm-m04-check', 4, 'Why do cycle counts help?', '["They replace every record","They find stock errors early through regular small counts","They cut prices","They reduce demand"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m04-q4', 1, 'Frequent counts catch discrepancies sooner.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m04-q5', 'scm-m04-check', 5, 'What happens to safety stock if you want a higher service level?', '["It falls","It rises, often steeply","It stays the same","It vanishes"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m04-q5', 1, 'Higher service levels need more buffer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Operations and Production Planning: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m05-check', 'supply-chain-management', 'module', 'scm-m05', 'Operations and Production Planning: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m05-q1', 'scm-m05-check', 1, 'A bakery plans 900 loaves on a capacity of 1,000. What is utilisation?', '["80%","90%","100%","110%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m05-q1', 1, '900 ÷ 1,000 = 90%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m05-q2', 'scm-m05-check', 2, 'Steps make 120, 80 and 100 units an hour. What is the line output?', '["120","100","80","300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m05-q2', 2, 'The bottleneck sets the output: 80.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m05-q3', 'scm-m05-check', 3, 'Which of these is a lean waste?', '["Overproduction","Customer value","Right-first-time","Standard work"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m05-q3', 0, 'Making more than is needed is waste.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m05-q4', 'scm-m05-check', 4, '2,000 units with 3% defects at ₦1,500 rework each. What is the weekly cost?', '["₦45,000","₦60,000","₦90,000","₦150,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m05-q4', 2, '60 units × ₦1,500 = ₦90,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m05-q5', 'scm-m05-check', 5, 'Speeding up a non-bottleneck step will usually:', '["Raise total output","Only build a queue in front of the bottleneck","Lower defects","Cut demand"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m05-q5', 1, 'Output is limited by the bottleneck.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Warehousing and Distribution: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m06-check', 'supply-chain-management', 'module', 'scm-m06', 'Warehousing and Distribution: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m06-q1', 'scm-m06-check', 1, 'Why slot fast-moving items near dispatch?', '["To hide them","To cut picker travel, the biggest part of picking time","To raise rent","It is a law"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m06-q1', 1, 'Less travel means higher productivity.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m06-q2', 'scm-m06-check', 2, 'Four pickers pick 480 lines in 8 hours. What is lines per picker-hour?', '["12","15","60","120"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m06-q2', 1, '480 ÷ (4 × 8) = 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m06-q3', 'scm-m06-check', 3, 'One warehouse costs ₦13,000,000 and two cost ₦15,000,000 in total. When might two still be right?', '["Never","When faster service wins or keeps enough extra sales","When rent falls","When stock is lower"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m06-q3', 1, 'Service benefit can outweigh higher cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m06-q4', 'scm-m06-check', 4, 'What is cross-docking?', '["Long-term storage","Moving inbound goods almost directly to outbound vehicles","Stock counting","Returning goods"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m06-q4', 1, 'It cuts storage and handling.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m06-q5', 'scm-m06-check', 5, 'What is a 3PL?', '["A tax","A third-party logistics provider that stores and ships for you","A forecasting method","A type of container"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m06-q5', 1, '3PLs outsource warehousing and fulfilment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Transport and Logistics: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m07-check', 'supply-chain-management', 'module', 'scm-m07', 'Transport and Logistics: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m07-q1', 'scm-m07-check', 1, 'A 500 km trip carries 8 tonnes for ₦400,000. What is the cost per tonne-km?', '["₦50","₦100","₦400","₦500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m07-q1', 1, '400,000 ÷ (8 × 500) = ₦100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m07-q2', 'scm-m07-check', 2, 'A 10-tonne truck carries 7.5 tonnes. What is its load utilisation?', '["50%","65%","75%","85%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m07-q2', 2, '7.5 ÷ 10 = 75%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m07-q3', 'scm-m07-check', 3, 'Three trips cost ₦120,000 each; one combined route costs ₦210,000. What is the saving?', '["₦90,000","₦150,000","₦210,000","₦360,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m07-q3', 1, '360,000 − 210,000 = ₦150,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m07-q4', 'scm-m07-check', 4, 'For urgent medicines, which carrier choice is usually better?', '["The cheapest, even if often late","The more reliable one, even if dearer","Either","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m07-q4', 1, 'Reliability matters more than a small saving.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m07-q5', 'scm-m07-check', 5, 'Why use a carrier scorecard?', '["To lower fuel","To track on-time %, damage and cost so you can manage performance","To set tax","To avoid contracts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m07-q5', 1, 'Measurement drives improvement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supply Chain Technology and Data: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m08-check', 'supply-chain-management', 'module', 'scm-m08', 'Supply Chain Technology and Data: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m08-q1', 'scm-m08-check', 1, 'Which formula totals column B where column A is ''Cement''?', '["=SUM(A:B)","=SUMIF(A:A,\"Cement\",B:B)","=COUNT(B:B)","=IF(A1,B1)"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m08-q1', 1, 'SUMIF adds the values that meet a condition.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m08-q2', 'scm-m08-check', 2, 'Which is a data quality problem?', '["A unique supplier code","The same supplier entered under three different names","A required lead time field","One unit of measure"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m08-q2', 1, 'Duplicates distort analysis.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m08-q3', 'scm-m08-check', 3, 'What is the benefit of shipment visibility?', '["It speeds the ship","Earlier warning and action when something goes wrong","It removes duties","It lowers tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m08-q3', 1, 'Visibility helps only if someone acts on it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m08-q4', 'scm-m08-check', 4, 'What should come first when choosing a system?', '["The most expensive tool","The process and problem to solve","A logo","The vendor''s slogan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m08-q4', 1, 'Fix the process before automating it.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m08-q5', 'scm-m08-check', 5, '''Garbage in, garbage out'' means:', '["Dirty warehouses are cheaper","Poor input data produces poor results","Waste should be recycled","Always delete data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m08-q5', 1, 'Analysis is only as good as the data.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Risk, Resilience and Sustainability: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m09-check', 'supply-chain-management', 'module', 'scm-m09', 'Risk, Resilience and Sustainability: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m09-q1', 'scm-m09-check', 1, 'A 5% chance of a ₦40,000,000 loss has an expected loss of:', '["₦200,000","₦2,000,000","₦4,000,000","₦20,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m09-q1', 1, '0.05 × 40,000,000 = ₦2,000,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m09-q2', 'scm-m09-check', 2, 'Buying insurance against a risk is an example of:', '["Avoiding it","Transferring it","Accepting it","Ignoring it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m09-q2', 1, 'Insurance transfers the financial loss.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m09-q3', 'scm-m09-check', 3, 'Why can lean chains be fragile?', '["They hold little stock and rely on few suppliers","They are always expensive","They use too many suppliers","They have no costs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m09-q3', 0, 'Little buffer means little room for shocks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m09-q4', 'scm-m09-check', 4, '20 tonnes over 500 km at 0.1 kg CO₂ per tonne-km gives about:', '["100 kg","500 kg","1,000 kg","10,000 kg"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m09-q4', 2, '10,000 tonne-km × 0.1 = 1,000 kg.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m09-q5', 'scm-m09-check', 5, 'What should a contingency plan state?', '["Only the budget","The trigger, actions, owners and communication","A logo","Nothing until a crisis"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m09-q5', 1, 'Plans must be written before they are needed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Performance Measurement: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m10-check', 'supply-chain-management', 'module', 'scm-m10', 'Performance Measurement: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m10-q1', 'scm-m10-check', 1, '1,000 units ordered and 940 shipped from stock. What is the fill rate?', '["90%","92%","94%","96%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m10-q1', 2, '940 ÷ 1,000 = 94%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m10-q2', 'scm-m10-check', 2, 'COGS ₦240m and average inventory ₦40m. What is inventory turnover?', '["4","5","6","8"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m10-q2', 2, '240 ÷ 40 = 6.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m10-q3', 'scm-m10-check', 3, 'Days of inventory 61, sales outstanding 30, payables 45. What is the cash-to-cash cycle?', '["16 days","46 days","76 days","136 days"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m10-q3', 1, '61 + 30 − 45 = 46.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m10-q4', 'scm-m10-check', 4, 'What does cost to serve show?', '["Only the product cost","The true cost of supplying a customer or channel","The supplier''s margin","Customs duty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m10-q4', 1, 'Same revenue can have very different service costs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m10-q5', 'scm-m10-check', 5, 'What is the last step of PDCA?', '["Plan","Do","Check","Act: adopt or adjust"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m10-q5', 3, 'Act adopts what worked or adjusts and restarts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Global Supply Chains and Trade: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m11-check', 'supply-chain-management', 'module', 'scm-m11', 'Global Supply Chains and Trade: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m11-q1', 'scm-m11-check', 1, '$5.00 at ₦1,500 plus 30% costs is a landed cost of:', '["₦7,500","₦8,750","₦9,750","₦11,250"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m11-q1', 2, '7,500 × 1.30 = ₦9,750.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m11-q2', 'scm-m11-check', 2, 'Lead time 40 days and sales 25 a day. How many units are in the pipeline?', '["250","640","1,000","1,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m11-q2', 2, '40 × 25 = 1,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m11-q3', 'scm-m11-check', 3, 'If the naira weakens, what happens to the cost of a dollar-priced import?', '["It falls","It rises","No change","Duty disappears"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m11-q3', 1, 'Each dollar costs more naira.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m11-q4', 'scm-m11-check', 4, 'Why compare sources on total landed cost?', '["The supplier''s price leaves out freight, duty and other costs","It is a law","It lowers duty","It speeds shipping"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m11-q4', 0, 'Only landed cost shows the real comparison.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m11-q5', 'scm-m11-check', 5, 'What is nearshoring?', '["Sourcing from nearby countries","Selling only locally","Storing goods near the sea","Using only air freight"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m11-q5', 0, 'Nearshoring shortens distance and lead time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: Analyse and Improve a Supply Chain: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('scm-m12-check', 'supply-chain-management', 'module', 'scm-m12', 'Final Project: Analyse and Improve a Supply Chain: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m12-q1', 'scm-m12-check', 1, 'What should open your project report?', '["A long history","A one-paragraph summary of problems, recommendations and benefit","A list of every idea","A picture"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m12-q1', 1, 'Decision-makers need the summary first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m12-q2', 'scm-m12-check', 2, 'How should you choose which problems to solve?', '["All of them","Rank by size of benefit and ease","Pick at random","Pick the easiest only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m12-q2', 1, 'Focus on the few that matter most.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m12-q3', 'scm-m12-check', 3, 'Why show formulas and workings?', '["To fill pages","So a reader can check your numbers","Because it is required by customs","To hide results"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m12-q3', 1, 'Transparent workings build credibility.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m12-q4', 'scm-m12-check', 4, 'What belongs in the business case?', '["Benefit only","Benefit, cost and effort, and risks","Only the cost","Only the supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m12-q4', 1, 'A fair case weighs benefit against cost and risk.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-m12-q5', 'scm-m12-check', 5, 'How will you know if your improvements worked?', '["Hope","Measure a KPI before and after","Ask no one","Wait a year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-m12-q5', 1, 'A KPI with a baseline shows the result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Supply Chain Management: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('supply-chain-management-final', 'supply-chain-management', 'final', null, 'Supply Chain Management: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f01', 'supply-chain-management-final', 1, 'Which flow runs backward through a supply chain?', '["Goods","Money","Finished products","Raw materials"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f01', 1, 'Customers pay back toward suppliers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f02', 'supply-chain-management-final', 2, 'Which strategy suits stable, predictable products?', '["Efficient","Responsive","Neither","Both exactly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f02', 0, 'Stable demand rewards a low-cost efficient chain.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f03', 'supply-chain-management-final', 3, 'The 3-month moving average of 135, 150, 140 is about:', '["135","141.7","150","142.5 exactly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f03', 1, '425 ÷ 3 = 141.7.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f04', 'supply-chain-management-final', 4, 'A seasonal index of 1.5 and an underlying level of 220 give a forecast of:', '["220","310","330","370"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f04', 2, '220 × 1.5 = 330.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f05', 'supply-chain-management-final', 5, 'Make-or-buy break-even: fixed ₦2,000,000, variable ₦300, buy ₦500. What volume?', '["5,000","8,000","10,000","20,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f05', 2, '2,000,000 ÷ 200 = 10,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f06', 'supply-chain-management-final', 6, 'What is the EOQ for D = 12,000, S = ₦5,000, H = ₦120?', '["500","1,000","1,200","2,400"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f06', 1, '√1,000,000 = 1,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f07', 'supply-chain-management-final', 7, 'Which items does ABC analysis ask you to control most tightly?', '["A items","B items","C items","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f07', 0, 'A items carry most of the value.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f08', 'supply-chain-management-final', 8, 'A process makes 120, 80 and 100 units an hour in sequence. What limits output?', '["The 120 step","The 80 step","The 100 step","The average"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f08', 1, 'The slowest step is the bottleneck.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f09', 'supply-chain-management-final', 9, 'One warehouse costs ₦13m, two cost ₦15m in total. Which is cheaper?', '["Two warehouses","One warehouse","Equal","Cannot tell"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f09', 1, '13 < 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f10', 'supply-chain-management-final', 10, 'A 500 km trip with 8 tonnes costing ₦400,000 is how much per tonne?', '["₦40,000","₦50,000","₦100,000","₦400,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f10', 1, '400,000 ÷ 8 = 50,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f11', 'supply-chain-management-final', 11, 'What most improves data quality?', '["More spreadsheets","Unique codes, standard units and validation on entry","Hiding the data","Deleting old records"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f11', 1, 'Clean master data prevents errors.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f12', 'supply-chain-management-final', 12, '5% chance of a ₦40m loss; backup costs ₦1.5m a year. What follows?', '["Expected loss ₦2m exceeds the cost, so a backup is justified","Never buy a backup","Expected loss is ₦200,000","Expected loss is ₦20m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f12', 0, '0.05 × 40m = ₦2m.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f13', 'supply-chain-management-final', 13, 'COGS ₦240m and average inventory ₦40m give days of inventory of about:', '["30","45","61","90"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f13', 2, '365 ÷ 6 = 61.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f14', 'supply-chain-management-final', 14, 'Days of inventory 61, receivables 30, payables 45. What is cash-to-cash?', '["46 days","76 days","16 days","136 days"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f14', 0, '61 + 30 − 45 = 46.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('scm-f15', 'supply-chain-management-final', 15, 'An import''s landed cost is ₦9,750 and the local price is ₦9,200. Which is cheaper per unit?', '["Import by ₦550","Local by ₦550","Equal","Import by ₦1,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('scm-f15', 1, 'Local is ₦550 cheaper.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -92189,6 +94339,16 @@ values ('lff-shipment-plan', 'logistics-freight-forwarding', 'A complete shipmen
 Use real rates where you can find them and state any assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **recommended mode and route** and your **total quotation** below, with a short note on where to find each part.
 
 Write for the customer first and your manager second: lead with the recommendation, then show the detail.$md$, array['The shipment: goods, quantity, weight and volume, origin, destination, trade terms and the customer''s needs.', 'Mode, route and timing: options compared, the choice and why, transit time with a delay allowance.', 'Documents and compliance: every document and certificate, who prepares each, the HS code and any approvals.', 'Packing, loading and handling: packing and marking, container or load plan with a capacity calculation, and any special or dangerous cargo.', 'A full quotation: every charge, your margin, total, validity, what is excluded and an estimate of duty and VAT for the customer.', 'A risk register with scores for the top risks and a response for each, plus the insurance you recommend.', 'A communication plan: milestones you will update the customer on and how.']::text[], '{}'::text[], array['The shipment is specific and the customer''s needs are clear.', 'The mode and route are justified with a comparison of options and a realistic transit time including delays.', 'Documents and compliance are complete and match the goods and the countries involved.', 'Packing and loading are practical, with a sensible container or load calculation.', 'The quotation lists every charge, is calculated correctly and states exclusions and validity.', 'Risks are scored and have realistic responses, and insurance is recommended with reasons.', 'The communication plan is clear and the whole document is easy for a customer to approve.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: Analyse and improve a supply chain
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('scm-analyse-improve', 'supply-chain-management', 'Analyse and improve a supply chain', 'Map a real or realistic supply chain, diagnose its problems with data, recommend improvements with numbers and build the business case.', $md$Choose one supply chain: a business you know, a product you buy, a school canteen, a published case study or a realistic business with sensible numbers. Map it, measure how well it performs and recommend improvements.
+
+Use real data where you can and state your assumptions where you cannot. Submit a link to your project (a shared document, PDF or folder) and paste your **summary** (the main problems, your recommendations and the expected benefit in naira) below, with a short note on where to find each part.
+
+Write for the owner or manager who will decide whether to act: open with the summary, show your workings and rank problems by size of benefit.$md$, array['A map of the chain showing links and the flows of goods, information and money, with the strategy (efficient or responsive) and why.', 'The data you used and where each figure came from, with assumptions labelled.', 'At least four calculated KPIs (for example fill rate, on-time delivery, inventory turns, days of inventory, cost per delivery, cash-to-cash, forecast error).', 'The three biggest problems, each with evidence.', 'A recommendation for each problem, with the calculation behind it (forecast, reorder point or EOQ, supplier, transport, warehouse or risk).', 'A business case: expected benefit in naira, cost and effort, and the main risks.', 'An action plan with owners and dates, and the KPIs you will use to measure success.']::text[], '{}'::text[], array['The map is clear and shows all three flows, and the strategy fits the product and customers.', 'Data sources are stated and assumptions are labelled honestly.', 'KPIs are defined and calculated correctly and show real problems.', 'The three main problems are supported by evidence and ranked sensibly.', 'Each recommendation is specific and backed by a correct calculation.', 'The business case weighs benefit, cost and risk fairly.', 'The action plan is realistic, with owners, dates and KPIs to check the result.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 

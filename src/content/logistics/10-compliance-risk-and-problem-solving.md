@@ -27,6 +27,7 @@ Non-compliance brings fines, seized cargo, delays, lost licences and a damaged r
 Problems are normal in logistics. What matters is how you handle them.
 
 **Common problems:**
+
 - **Delays** from congestion, weather, documents, inspection or a missed connection.
 - **Damage or loss** of cargo.
 - **Shortages** or wrong goods.
@@ -34,6 +35,7 @@ Problems are normal in logistics. What matters is how you handle them.
 - **Disputes** over price, liability or who is at fault.
 
 **A sound response:**
+
 1. **Find the facts quickly:** what happened, where, when and what the paperwork shows.
 2. **Protect the cargo** and limit further loss.
 3. **Tell the customer early,** with what you know, what you are doing and when you will update them.

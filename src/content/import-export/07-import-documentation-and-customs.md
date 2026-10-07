@@ -45,6 +45,7 @@ When goods enter Nigeria you generally pay:
 **Customs value** is usually the **CIF value**: the cost of the goods plus insurance and freight to the Nigerian port. Customs converts it to naira at its own exchange rate, not necessarily the bank rate you paid at.
 
 Worked example (ignoring small levies):
+
 - CIF value: ₦2,000,000
 - Duty at 10%: ₦200,000
 - VAT at 7.5% on (₦2,000,000 + ₦200,000 = ₦2,200,000): ₦165,000

@@ -30,6 +30,7 @@ Forwarders and clearing agents deal with customs every day. They need to know th
 **Valuation.** The customs value is normally the **CIF value**: the price of the goods, plus insurance and freight to the port of entry. Customs expects the declared value to reflect what was truly paid.
 
 Worked example (ignoring small levies):
+
 - CIF value: ₦5,000,000
 - Duty at 5%: ₦250,000
 - VAT at 7.5% on (₦5,000,000 + ₦250,000 = ₦5,250,000): ₦393,750

@@ -50,6 +50,7 @@ Example: for one shipment the carrier and local costs total **$1,050**. You quot
 Be clear which you are using. Also count your **overheads**: rent, staff, software, phone, marketing, insurance, licences and your own time. If your margin per shipment is $250 and your monthly overhead is $2,000, you need **8 shipments** a month to break even ($2,000 ÷ $250 = 8), and more to make a profit.
 
 Tips:
+
 - **Price for value, not just cost.** Service, speed and reliability support a better margin.
 - **Never quote without current rates.** Include a validity period.
 - **Add a contingency** for currency and minor extras, and say what is excluded.

@@ -30,6 +30,7 @@ A **bill of lading** does three jobs:
 3. It can be a **document of title**: the holder of an original B/L can claim the goods. This is why original B/Ls are valuable and are sometimes used in payment arrangements.
 
 Common types and terms:
+
 - **Master B/L:** issued by the shipping line to the forwarder or shipper.
 - **House B/L:** issued by the forwarder to its customer.
 - **Original B/L** (full set) versus **telex release** or **sea waybill:** the goods are released without surrendering the paper original, which is faster and suits trusted trading.

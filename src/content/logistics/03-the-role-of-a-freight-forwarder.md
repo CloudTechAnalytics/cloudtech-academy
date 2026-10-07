@@ -42,6 +42,7 @@ When a forwarder issues its own **house bill of lading** to its customer, and th
 For a good result, pick the right partner and manage the relationship.
 
 **Choosing:**
+
 - **Experience on your route and with your cargo** (general goods, perishables, machinery, hazardous items).
 - **Licences, registration and memberships** appropriate to the work. Ask for proof and verify it.
 - **Network:** reliable agents at both ends.
@@ -52,6 +53,7 @@ For a good result, pick the right partner and manage the relationship.
 - **Insurance** they hold for their own liability.
 
 **Working with them:**
+
 - Give **complete, accurate information** early: goods, quantities, weights, dimensions, values, dates and contacts.
 - **Confirm in writing** the terms, price, transit time and who does what.
 - Ask for **document drafts** and check them before the goods ship.

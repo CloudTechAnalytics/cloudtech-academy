@@ -40,6 +40,7 @@ A **conflict of interest** exists when a personal interest could influence, or l
 - sharing inside information about one bid with another supplier
 
 The rules are simple:
+
 1. **Declare** the interest to your manager in writing.
 2. **Step back** from the decision.
 3. **Let someone else** decide.
