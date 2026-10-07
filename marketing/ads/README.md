@@ -32,6 +32,10 @@ Six ad concepts as images in four sizes, and three videos. Every ad sends people
 
 The videos have no sound on purpose: most people watch muted, and the words carry the message. You can add trending or licensed music inside Instagram, CapCut or the Meta ad editor.
 
+## Videos with a voice-over
+
+Ten more videos, with a voice-over and burned-in captions, are in `voice/` (see `voice/README.md` for the scripts, suggested ad copy, links and what to check before you run them). Videos 01 to 06 promote free courses; 07 to 10 promote the new paid business and trade courses and need enrolment open first.
+
 ## Links to use
 
 Send ads to the sign-up page, or to the course list if you want people to browse first. Add `utm_` tags so you can tell the ads apart in analytics.
