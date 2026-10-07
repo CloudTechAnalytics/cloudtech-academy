@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { getBackend, type AdminCourseOrder, type AdminEnrollment } from "@/lib/backend";
 import { TRACKS } from "@/content/tracks";
+import { divisionOf } from "@/content/catalog";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { formatPrice } from "@/lib/commerce";
@@ -378,13 +379,14 @@ const pct = (n: number, d: number) => (d ? `${Math.round((n / d) * 100)}%` : "â€
 export function AdminAnalytics() {
   const { data: all, error } = useAdminData(async () => {
     const b = await getBackend();
-    const [courses, programmes] = await Promise.all([b.admin.listCourseStats(), b.admin.listProgrammeStats()]);
-    return { courses, programmes };
+    const [courses, programmes, catalogue] = await Promise.all([b.admin.listCourseStats(), b.admin.listProgrammeStats(), b.listCourses({ includeUnpublished: true })]);
+    return { courses, programmes, area: new Map(catalogue.map((c) => [c.id, divisionOf(c.categoryId).name])) };
   });
   if (error) return <Alert tone="error">{error}</Alert>;
   if (!all) return <PageLoading />;
   const data = all.courses;
   const programmes = all.programmes;
+  const areaOf = (id: string) => all.area.get(id) ?? "";
 
   const free = data.filter((c) => c.accessType === "free");
   const revenue: Record<string, number> = {};
@@ -478,6 +480,7 @@ export function AdminAnalytics() {
           <thead>
             <tr>
               <th>Course</th>
+              <th>Area</th>
               <th>Access</th>
               <th>Enrolled</th>
               <th>Completed</th>
@@ -492,6 +495,7 @@ export function AdminAnalytics() {
                   {c.title}
                   {!c.published && <span className="block text-[0.75rem] text-muted">Draft</span>}
                 </td>
+                <td>{areaOf(c.courseId)}</td>
                 <td>{c.accessType === "paid" ? (c.price ? `Paid Â· ${formatPrice(c.price, c.currency)}` : "Paid") : "Free"}</td>
                 <td>
                   {c.enrollments}

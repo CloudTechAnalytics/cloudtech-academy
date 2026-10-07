@@ -1,9 +1,10 @@
-import { isPaid, priceLabel } from "@/lib/commerce";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { enrolmentState, isPaid, priceLabel } from "@/lib/commerce";
+import { useMemo, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router";
+import { DIVISIONS, divisionOf } from "@/content/catalog";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
-import { CATEGORIES } from "@/content";
+import { CATEGORIES, categoryName } from "@/content";
 import type { Course } from "@/content/types";
 import { Badge } from "@/components/CourseCard";
 import { Button } from "@/components/Button";
@@ -14,12 +15,41 @@ import { courseInput, slugOk, useAdminCourses } from "./useAdmin";
 export default function AdminCourses() {
   const { data: courses, error, reload } = useAdminCourses();
   const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
+  const get = (k: string) => params.get(k) ?? "";
+  const set = (k: string, v: string) => {
+    const next = new URLSearchParams(params);
+    if (v) next.set(k, v);
+    else next.delete(k);
+    setParams(next, { replace: true });
+  };
   const [creating, setCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [code, setCode] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
+
+  const q = get("q").trim().toLowerCase();
+  const shown = useMemo(
+    () =>
+      (courses ?? []).filter((c) => {
+        const a = get("access");
+        const st = get("status");
+        const v = get("state");
+        const state = c.archived ? "archived" : c.published ? "published" : c.publishedAt ? "unpublished" : "draft";
+        return (
+          (!get("area") || divisionOf(c.categoryId).id === get("area")) &&
+          (!a || (a === "free" ? !isPaid(c) : a === "paid" ? isPaid(c) && c.price != null : isPaid(c) && c.price == null)) &&
+          (!st || c.status === st) &&
+          (!v || state === v) &&
+          (!q || c.title.toLowerCase().includes(q) || c.slug.includes(q))
+        );
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [courses, params],
+  );
+  const filterCls = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.9375rem]";
 
   const togglePublish = async (c: Course) => {
     setBusy(c.id);
@@ -99,11 +129,68 @@ export default function AdminCourses() {
         </form>
       )}
 
+      <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <label className="text-[0.8125rem] font-medium lg:col-span-1">
+          Search
+          <input type="search" className={filterCls} value={get("q")} onChange={(e) => set("q", e.target.value)} placeholder="Title or slug" />
+        </label>
+        <label className="text-[0.8125rem] font-medium">
+          Area
+          <select className={filterCls} value={get("area")} onChange={(e) => set("area", e.target.value)}>
+            <option value="">All areas</option>
+            {DIVISIONS.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-[0.8125rem] font-medium">
+          Access
+          <select className={filterCls} value={get("access")} onChange={(e) => set("access", e.target.value)}>
+            <option value="">Free and paid</option>
+            <option value="free">Free</option>
+            <option value="paid">Paid, sold on its own</option>
+            <option value="programme">Paid, inside a programme</option>
+          </select>
+        </label>
+        <label className="text-[0.8125rem] font-medium">
+          Status
+          <select className={filterCls} value={get("status")} onChange={(e) => set("status", e.target.value)}>
+            <option value="">Any status</option>
+            <option value="available">Available</option>
+            <option value="coming_soon">Coming soon</option>
+          </select>
+        </label>
+        <label className="text-[0.8125rem] font-medium">
+          Visibility
+          <select className={filterCls} value={get("state")} onChange={(e) => set("state", e.target.value)}>
+            <option value="">Any</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+            <option value="unpublished">Unpublished</option>
+            <option value="archived">Archived</option>
+          </select>
+        </label>
+      </div>
+      <p className="mb-3 text-[0.875rem] text-muted" aria-live="polite">
+        Showing {shown.length} of {courses.length} courses
+        {params.size > 0 && (
+          <>
+            {" "}
+            <button type="button" className="font-semibold text-brass-dark" onClick={() => setParams({}, { replace: true })}>
+              Clear filters
+            </button>
+          </>
+        )}
+      </p>
+
       <div className="table-scroll rounded-2xl border border-line bg-paper">
         <table>
           <thead>
             <tr>
               <th>Course</th>
+              <th>Area</th>
               <th>Status</th>
               <th>Access</th>
               <th>Lessons</th>
@@ -114,7 +201,7 @@ export default function AdminCourses() {
             </tr>
           </thead>
           <tbody>
-            {courses.map((c) => (
+            {shown.map((c) => (
               <tr key={c.id}>
                 <td>
                   <Link to={`/admin/courses/${c.slug}`} className="font-semibold hover:text-brass-dark">
@@ -123,13 +210,25 @@ export default function AdminCourses() {
                   <span className="block text-[0.75rem] text-muted">/{c.slug}</span>
                 </td>
                 <td>
+                  {divisionOf(c.categoryId).name}
+                  <span className="block text-[0.75rem] text-muted">{categoryName(c.categoryId)}</span>
+                </td>
+                <td>
                   <Badge tone={c.status === "available" ? "free" : "soon"}>{c.status === "available" ? "Available" : "Coming soon"}</Badge>
                 </td>
                 <td>
                   <Badge tone={isPaid(c) ? "neutral" : "free"}>{isPaid(c) ? (c.courseType === "professional" ? "Professional" : "Paid") : "Free"}</Badge>
-                  {isPaid(c) && <span className="block text-[0.75rem] text-muted">{priceLabel(c)}</span>}
+                  {isPaid(c) && (
+                    <span className="block text-[0.75rem] text-muted">
+                      {c.price == null ? "Inside a programme" : priceLabel(c)}
+                      {c.price != null && c.status === "available" && enrolmentState(c) !== "open" ? " · enrolment closed" : ""}
+                    </span>
+                  )}
                 </td>
-                <td>{c.modules.flatMap((m) => m.lessons).length}</td>
+                <td>
+                  {c.modules.flatMap((m) => m.lessons).length}
+                  <span className="block text-[0.75rem] text-muted">{c.modules.length} modules</span>
+                </td>
                 <td>{c.archived ? "Archived" : c.published ? "Published" : c.publishedAt ? "Unpublished" : "Draft"}</td>
                 <td className="whitespace-nowrap text-right">
                   <button type="button" disabled={busy === c.id} onClick={() => void togglePublish(c)} className="text-[0.8125rem] font-semibold text-brass-dark disabled:opacity-50">
@@ -138,6 +237,13 @@ export default function AdminCourses() {
                 </td>
               </tr>
             ))}
+            {shown.length === 0 && (
+              <tr>
+                <td colSpan={7} className="py-8 text-center text-muted">
+                  No courses match.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
