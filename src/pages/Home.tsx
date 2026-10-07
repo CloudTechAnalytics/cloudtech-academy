@@ -35,39 +35,18 @@ const GOALS: { icon: LucideIcon; title: string; body: string; course: string; ct
   { icon: GraduationCap, title: "Get ready for work", body: "A CV that gets read, a LinkedIn profile, and your first internship.", course: "career-essentials", cta: "Start with your CV" },
 ];
 
-/** The hero's picture: a lesson in progress, the practice check and a badge earned, drawn in code. */
+/** The hero's picture: real learners at work, with a progress card and a certificate card over it. */
 function HeroVisual() {
   return (
-    <div aria-hidden className="relative mx-auto w-full max-w-[34rem] pb-10 lg:pb-0">
-      <div className="relative overflow-hidden rounded-[2rem] bg-[#1E1D1B] p-6 pb-8 shadow-[0_40px_80px_-40px_rgba(23,23,23,0.7)] sm:p-8 sm:pb-10">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#C9A45C]/30 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-[#C9A45C]/15 blur-3xl" />
-        <div className="relative flex items-center justify-between">
-          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.28em] text-[#C9A45C]">Lesson 3 of 8</p>
-          <p className="text-[0.75rem] text-[#E6DECB]/70">12 min</p>
-        </div>
-        <p className="relative mt-3 font-serif text-[1.6rem] leading-tight text-white sm:text-[1.9rem]">Filter your data with WHERE</p>
-        <div className="relative mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-[38%] rounded-full bg-[#C9A45C]" />
-        </div>
-        <div className="relative mt-6 overflow-hidden rounded-xl border border-white/10 bg-black/30">
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-[0.6875rem] text-[#E6DECB]/70">
-            <span>Practice</span>
-            <span className="rounded bg-[#C9A45C] px-2 py-0.5 font-semibold text-[#1E1D1B]">Run and check</span>
-          </div>
-          <pre className="overflow-hidden px-4 py-3 font-mono text-[0.75rem] leading-relaxed text-[#E6DECB]">{"SELECT customer, total\nFROM orders\nWHERE total > 50000\nORDER BY total DESC;"}</pre>
-          <p className="flex items-center gap-2 border-t border-white/10 bg-[#1f3a2a] px-4 py-2.5 text-[0.75rem] font-medium text-[#8fd6a8]">
-            <CheckCircle2 className="h-4 w-4" /> Correct. Your result matches.
-          </p>
-        </div>
-        <ul className="relative mt-5 grid grid-cols-3 gap-2 text-center text-[0.6875rem] text-[#E6DECB]/80">
-          {["Learn it", "Try it", "Get a badge"].map((t, i) => (
-            <li key={t} className={`rounded-lg border px-2 py-2 ${i < 2 ? "border-[#C9A45C]/40 bg-[#C9A45C]/10 text-[#E8CF96]" : "border-white/10 bg-white/5"}`}>
-              {t}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="relative mx-auto w-full max-w-[34rem] pb-10 lg:pb-0">
+      <img
+        src="/images/hero-learners.jpg"
+        width={1100}
+        height={733}
+        alt="Two learners studying together at a laptop while a mentor looks on"
+        fetchPriority="high"
+        className="aspect-[4/3] w-full rounded-[2rem] object-cover shadow-[0_40px_80px_-40px_rgba(23,23,23,0.7)]"
+      />
       <div className="absolute -bottom-3 left-3 w-52 rounded-xl border border-line bg-paper p-4 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-left-6 lg:-bottom-6">
         <div className="flex items-center justify-between text-[0.75rem]">
           <span className="font-medium text-muted">Your progress</span>
@@ -79,11 +58,11 @@ function HeroVisual() {
       </div>
       <div className="absolute -top-4 right-3 hidden items-center gap-2.5 rounded-xl border border-line bg-paper px-3.5 py-2.5 shadow-[0_20px_40px_-24px_rgba(23,32,51,0.45)] sm:-right-5 sm:flex">
         <span className="grid h-8 w-8 place-items-center rounded-lg bg-brass-pale text-brass-dark">
-          <Award className="h-4 w-4" />
+          <Award aria-hidden className="h-4 w-4" />
         </span>
         <span className="text-[0.75rem] leading-tight">
           <span className="block text-subtle">Badge earned</span>
-          <span className="block font-semibold text-ink">SQL Querying</span>
+          <span className="block font-semibold text-ink">Module complete</span>
         </span>
       </div>
     </div>
@@ -111,8 +90,8 @@ function SectionHeading({ id, kicker, title, intro, link }: { id: string; kicker
 
 export default function Home() {
   useSeo({
-    title: "CloudTech Academy | Learn Data, Analytics & Technology for Free",
-    description: "Free, practical courses in data, analytics, AI and technology from CloudTech Analytics. Learn step by step, practise in your browser, earn badges and build projects.",
+    title: "CloudTech Academy | Learn Data, Business, Trade & Technology Skills",
+    description: "Free and professional courses in data, analytics, AI, business, trade and logistics from CloudTech Analytics. Learn step by step, practise in your browser, earn badges and build projects.",
     jsonLd: webSiteJsonLd(),
   });
   const all = useCourses();
@@ -125,7 +104,7 @@ export default function Home() {
       <section className="border-b border-line bg-paper" style={{ backgroundImage: "radial-gradient(60rem 28rem at 85% -10%, rgba(201,164,92,0.16), transparent 60%)" }}>
         <div className="container-page grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">Free courses in data, AI and technology</p>
+            <p className="inline-flex items-center gap-2 rounded-full bg-brass-pale px-3 py-1 text-[0.8125rem] font-semibold text-brass-dark">Free courses and professional programmes in data, business and trade</p>
             <h1 className="mt-5 font-serif text-[2.5rem] leading-[1.08] tracking-[-0.025em] sm:text-[3.4rem]">
               Learn a skill that gets you <span className="text-brass-accent">noticed.</span> Start free today.
             </h1>
