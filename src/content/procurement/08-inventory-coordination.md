@@ -20,6 +20,7 @@ Four numbers do most of the work:
 *Reorder point = (average daily usage × lead time in days) + safety stock*
 
 Example: the school uses **20 reams of paper a day**. Lead time is **7 days**. Safety stock is **40 reams**.
+
 - Usage during lead time: 20 × 7 = 140 reams.
 - Reorder point = 140 + 40 = **180 reams**.
 

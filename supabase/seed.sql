@@ -79870,50 +79870,1422 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Digital Marketing & Sales
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('digital-marketing-sales', 'full', null, 'digital-marketing-sales', 'DMS', 'Digital Marketing & Sales', 'Plan and run marketing that brings in customers: content, social media, ads, search, email and conversion, with the numbers to prove it works.', 'A practical digital marketing course for business owners, marketers and beginners. You learn strategy and brand, content and social media, paid ads, search, email and WhatsApp marketing, sales funnels and analytics, then run a full campaign plan.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Marketing strategy', 'Content and social media', 'Paid advertising', 'Search engine optimisation', 'Email and WhatsApp marketing', 'Funnels and analytics']::text[], array['No experience needed', 'A smartphone or computer with internet']::text[], 'A complete marketing campaign', true, true, true, true, false, 60, 51)
+values ('digital-marketing-sales', 'short', 'Digital Marketer', 'digital-marketing-sales', 'DMS', 'Digital Marketing & Sales', 'Plan and run marketing that brings in customers: content, social media, ads, search, email and conversion, with the numbers to prove it works.', 'A practical digital marketing course for business owners, marketers and beginners. You learn strategy and brand, content and social media, paid ads, search, email and WhatsApp marketing, sales funnels and analytics, then run a full campaign plan.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', 6, false, 'available', true, array['Marketing strategy', 'Content and social media', 'Paid advertising', 'Search engine optimisation', 'Email and WhatsApp marketing', 'Funnels and analytics']::text[], array['No experience needed', 'A smartphone or computer with internet']::text[], 'A complete marketing campaign', true, true, true, true, false, 60, 51)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Digital marketing is not posting and hoping. You learn to start with the customer, pick the right channels, make content and ads that work, and measure results so you know what to do more of. You finish by planning and building a full campaign.', audience = array['Business owners who market themselves', 'Aspiring digital marketers', 'Social media managers', 'Sales teams that want more leads']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete marketing campaign","summary":"Strategy, content calendar, ad set-up, funnel and measurement plan for a real or realistic business."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Build a marketing strategy around your customer', 'Create content that people want to read and share', 'Run and measure paid ads', 'Make a website and content easier to find on Google', 'Use email and WhatsApp to sell', 'Report on what is working']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'digital-marketing-sales' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Digital marketing is not posting and hoping. You learn to start with the customer, pick the right channels, make content and ads that work, and measure results so you know what to do more of. You finish by planning and building a full campaign.', audience = array['Business owners who market themselves', 'Aspiring digital marketers', 'Social media managers', 'Sales teams that want more leads']::text[], included = '{}'::text[], project_previews = '[{"title":"A complete marketing campaign","summary":"Strategy, content calendar, ad set-up, funnel and measurement plan for a real or realistic business."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Build a marketing strategy around your customer', 'Create content that people want to read and share', 'Run and measure paid ads', 'Make a website and content easier to find on Google', 'Use email and WhatsApp to sell', 'Report on what is working']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'digital-marketing-sales' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m01', 'digital-marketing-sales', 'Marketing fundamentals and strategy', 1, null, null, '{}'::text[], array['How marketing and sales fit together', 'Customers and segments', 'Setting goals', 'Choosing channels and a budget']::text[])
+values ('dms-m01', 'digital-marketing-sales', 'Marketing fundamentals and strategy', 1, 'Marketing Strategy', 'MKTSTRAT', array['Connect marketing and sales', 'Build customer personas', 'Set SMART marketing goals', 'Choose channels and budget']::text[], array['How marketing and sales fit together', 'Customers and segments', 'Setting goals', 'Choosing channels and a budget']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m02', 'digital-marketing-sales', 'Brand and positioning', 2, null, null, '{}'::text[], array['Brand identity', 'Positioning and messaging', 'Tone of voice', 'A simple brand guide']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:marketing-fundamentals-and-strategy', 'digital-marketing-sales', 'dms-m01', 'marketing-fundamentals-and-strategy', 'Marketing Fundamentals and Strategy', 'See how marketing and sales fit together, understand customers and segments, set goals and choose channels and a budget.', 25, $md$
+## How marketing and sales fit together
+
+**Marketing** creates interest and trust: it helps the right people know you exist, understand what you offer and want to talk to you. **Sales** turns that interest into a purchase. They are two halves of one job, which is **winning and keeping customers profitably.**
+
+Marketing answers: *Who needs this, what do they care about, how do we reach them and what do we say?* Sales answers: *How do we help this person decide and buy?* When they are disconnected, marketing brings leads that sales cannot close, or sales complains about lead quality while marketing complains about slow follow-up. Good businesses agree **one definition of a good lead**, share data and review results together.
+
+**Digital marketing** uses online channels such as search engines, social media, email, messaging apps, websites and online ads. Its great strength is that you can **measure** almost everything: who saw a message, who clicked and who bought. This allows small businesses to test cheaply and improve quickly. Its great weakness is that it is easy to waste money on activity (likes, views) that does not bring customers.
+
+## Customers and segments
+
+You cannot market well to "everyone." A **segment** is a group of customers with similar needs, behaviour or characteristics. Common ways to segment:
+
+- **Who they are:** age, gender, income, occupation, location, business type and size.
+- **What they need or want:** the problem, the benefit they care about most.
+- **How they behave:** how they buy, how often, how they find products, which channels they use.
+- **Where they are in the journey:** unaware, researching, ready to buy, existing customer.
+
+Choose one or two **target segments** where you can serve people well and profitably. For each, create a short **customer profile (persona):** a realistic description such as *"Chioma, 32, runs a small salon in Lekki, uses Instagram daily, worries about slow weeks and cannot afford an agency."* Include her goals, frustrations, where she gets information, what makes her trust a brand and what stops her buying.
+
+The persona should come from **real conversations and data**, not imagination: talk to customers, read reviews and comments, look at your sales records and website analytics.
+
+## Setting goals
+
+Marketing goals should connect to **business results** and be **SMART** (specific, measurable, achievable, relevant, time-bound).
+
+Weak goal: *"Get more followers."* Strong goal: *"Generate 60 qualified leads and 15 sales from digital channels in the next three months, at no more than ₦3,000 per sale."*
+
+Different goals suit different stages:
+
+| Goal type | Example measures |
+| :-- | :-- |
+| **Awareness** | Reach, impressions, video views, website visitors |
+| **Consideration** | Clicks, sign-ups, enquiries, email subscribers |
+| **Conversion** | Leads, orders, sales, bookings |
+| **Retention** | Repeat purchases, reviews, referrals |
+
+Work **backwards from revenue.** If you need 30 new customers and your target cost to acquire a customer is ₦3,000, your marketing budget for that goal is 30 × 3,000 = **₦90,000.** If your conversion rate from lead to customer is 25%, you need 120 leads to win 30 customers.
+
+## Choosing channels and a budget
+
+Match channels to where your **target customers already spend time** and what you are trying to achieve.
+
+| Channel | Strength | Cost and effort |
+| :-- | :-- | :-- |
+| **Search (SEO)** | People actively looking for what you offer | Slow to build, cheap in the long run |
+| **Google Ads** | Reach people searching now | Pay per click; fast |
+| **Social media (organic)** | Build awareness and community | Time-heavy; low cost |
+| **Social media ads** | Targeted reach and quick tests | Pay per result |
+| **Email** | Nurture and sell to people who know you | Cheap; needs a list |
+| **WhatsApp** | Personal, high-response in Nigeria | Cheap; needs permission |
+| **Content (blog, video)** | Builds trust and search traffic | Time and skill |
+| **Referrals and partnerships** | Highest trust | Low cost |
+
+Start with **two or three channels** and do them well. Spreading thin on ten channels usually fails.
+
+**Budget:** decide how much you can spend and split it. A common approach for a new business is to spend a modest share of revenue, often **5% to 15%**, more when launching. Divide it between **testing** (most), **proven channels** and a small **reserve.** Track results weekly, and move money to what works.
+
+> [!TIP]
+> Test small before you scale. Spend ₦10,000 to learn which message and audience work, before spending ₦100,000.
+
+## Try it
+
+```task
+{
+  "id": "dms-m01-t1",
+  "prompt": "Create a **customer persona** for your business or a business you know, in 60 to 130 words: name and basic details, goals, frustrations, where they get information and what would make them trust a brand.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Meet Chioma, 32 ...",
+  "rules": [
+    { "label": "Gives a name and basic details (age, job, place)", "pattern": "\\b\\d{2}\\b|aged|runs|works|lives|based|owner|student" },
+    { "label": "States goals", "pattern": "goal|wants|hopes|aims|needs to|wishes" },
+    { "label": "States frustrations or worries", "pattern": "frustrat|worr|struggl|problem|cannot|can't|afraid|pain|stress" },
+    { "label": "Says where they get information", "pattern": "instagram|whatsapp|facebook|tiktok|google|youtube|friends|linkedin|radio|search|online" },
+    { "label": "Says what builds trust", "pattern": "trust|reviews?|recommend|proof|referral|testimonial|reliable" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "Meet Chioma, 32, who runs a small hair salon in Lekki with three staff. Her goal is to fill her quiet midweek slots and attract customers who pay for premium styles. Her frustrations are slow weeks, unreliable walk-ins and the fact that agencies cost more than she can afford, so she worries about wasting money on marketing she cannot measure. She finds ideas on Instagram, WhatsApp groups and Google. She trusts brands that show real customer photos, honest reviews and recommendations from other business owners she knows.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m01-t2",
+  "prompt": "Write **one SMART marketing goal** and work backwards to the numbers. You want **30 new customers** at a target cost of **₦3,000** each, and **25%** of leads become customers. Work out the budget and the number of leads needed.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Goal: ...\nBudget = ...",
+  "rules": [
+    { "label": "States a goal with a number and a time frame", "pattern": "goal[^\\n]*\\d[^\\n]*(month|week|quarter|year|by )" },
+    { "label": "Budget of ₦90,000", "pattern": "90,?000" },
+    { "label": "120 leads needed", "pattern": "\\b120\\b" },
+    { "label": "Shows the calculation", "pattern": "=|/|÷|[x×*]" }
+  ],
+  "sample": "Goal: win 30 new customers from digital channels in the next three months at no more than ₦3,000 per customer.\nBudget = 30 x 3,000 = ₦90,000.\nLeads needed = 30 / 0.25 = 120 leads.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m01-t3",
+  "prompt": "Choose **three channels** for your business, say **why** each fits your customer and how you will **split a ₦90,000 budget** between them (percentages adding to 100%). One channel per line.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Instagram ads - 50% - because ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Every line has a percentage", "pattern": "\\d+\\s?%", "perLine": true },
+    { "label": "Names real channels", "pattern": "instagram|facebook|tiktok|whatsapp|google|email|seo|youtube|linkedin|referral" },
+    { "label": "Gives reasons", "pattern": "because|since|so|where|fits|customers", "perLine": true }
+  ],
+  "sample": "Instagram and Facebook ads - 50% (₦45,000) - because my customers are on Instagram daily and ads let me test quickly\nWhatsApp broadcasts and status - 20% (₦18,000) - because customers prefer messaging and it is where bookings happen\nGoogle Business Profile and local search - 30% (₦27,000) - because people search 'hair salon near me' when ready to book",
+  "required": false
+}
+```
+
+Next lesson: brand and positioning.
+$md$, true, true, 1, array['dms-m01-t1', 'dms-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m03', 'digital-marketing-sales', 'Content marketing', 3, null, null, '{}'::text[], array['Content that serves the customer', 'Formats: posts, video, blogs', 'Writing for the web', 'A content calendar', 'Repurposing content']::text[])
+values ('dms-m02', 'digital-marketing-sales', 'Brand and positioning', 2, 'Brand Builder', 'BRAND', array['Define brand identity', 'Write a positioning statement', 'Set a tone of voice', 'Create a brand guide']::text[], array['Brand identity', 'Positioning and messaging', 'Tone of voice', 'A simple brand guide']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m04', 'digital-marketing-sales', 'Social media marketing', 4, null, null, '{}'::text[], array['Choosing platforms', 'Instagram, Facebook, TikTok, LinkedIn and X', 'Community and engagement', 'Working with creators', 'Social media routines']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:brand-and-positioning', 'digital-marketing-sales', 'dms-m02', 'brand-and-positioning', 'Brand and Positioning', 'Build a brand identity, position your business clearly, set a consistent tone of voice and write a simple brand guide.', 25, $md$
+## Brand identity
+
+A **brand** is what people think, feel and expect when they meet your business. It is shaped by your name, logo and look, but above all by **what you do and how you treat people.** A brand is a promise, and a reputation is how well you keep it.
+
+**Brand identity** is the visible and verbal expression of the brand:
+
+- **Name and tagline:** easy to say, spell, remember and search for. Check that it is not already taken.
+- **Logo:** simple, clear at small sizes (a phone screen, a profile photo) and in one colour.
+- **Colours:** one or two main colours and a few supporting ones. Colours carry meaning and make you recognisable.
+- **Typography:** one or two fonts, readable on a phone.
+- **Imagery:** the style of photos and graphics you use, consistently.
+- **Voice:** how you write and speak.
+- **Experience:** how customers are treated in messages, delivery and support.
+
+You do not need an expensive designer to start. A clean, consistent look made with simple tools beats a fancy but inconsistent one. Use the same logo, colours and fonts everywhere, so people recognise you.
+
+## Positioning and messaging
+
+**Positioning** is the place you hold in your customers' minds compared with alternatives. It answers: *For whom are we the best choice, and why?* Without a clear position, you compete on price, which is a hard way to win.
+
+A simple **positioning statement:**
+
+*For [target customer] who [need or problem], [brand] is the [category] that [key benefit]. Unlike [alternative], we [reason to believe].*
+
+Example: *For busy professionals in Lagos who have no time to cook, FreshBox is the healthy meal subscription that delivers balanced lunches to the office. Unlike fast food or canteens, we cook with fresh ingredients and deliver on time, every working day.*
+
+Good positioning is **specific** (a clear audience), **different** (not what every competitor says), **valuable** (customers care) and **believable** (you can prove it).
+
+**Messaging** turns positioning into words. Create:
+
+- A **core message:** one sentence for the main promise.
+- **Three supporting messages:** proof points or benefits.
+- **Audience versions:** the same promise, phrased for each segment.
+- **Proof:** numbers, reviews, awards, guarantees and examples.
+
+Lead with the **customer's problem and benefit**, not with how long you have been in business or your list of features.
+
+## Tone of voice
+
+Your **tone of voice** is your brand's personality in words. Decide how you want to sound, and stay consistent across posts, emails, WhatsApp messages and customer service.
+
+Pick three or four traits, and for each say what it means and what it does not. Example:
+
+| Trait | We are | We are not |
+| :-- | :-- | :-- |
+| **Friendly** | Warm, welcoming, use first names | Overly casual or jokey with complaints |
+| **Clear** | Plain, short sentences, no jargon | Vague, long or technical |
+| **Honest** | Open about prices, delivery times and limits | Hyping or hiding things |
+| **Helpful** | Practical tips, quick replies | Pushy or salesy |
+
+Tone can adapt (more playful on social media, more careful in an apology), but the personality should be recognisably the same. Write the way your customers speak, and check that your writing sounds like a real person.
+
+## A simple brand guide
+
+A **brand guide** is a short document so that anyone (you, a freelancer, an employee) can produce consistent work. For a small business, one to three pages is enough:
+
+1. **Brand story and mission:** why you exist, in two or three sentences.
+2. **Positioning statement** and **core message.**
+
+3. **Audience:** your main segment(s).
+4. **Logo:** versions, minimum size, space around it, and what not to do.
+5. **Colours:** with their codes (so they can be matched exactly).
+6. **Fonts:** names and where to use them.
+7. **Imagery style:** examples and rules.
+8. **Tone of voice:** traits, do and don't, example phrases.
+9. **Examples:** a sample post, a sample email, a sample reply to a complaint.
+10. **Contact:** who owns the brand and approves new materials.
+
+Keep it where your team can find it, and update it when the business changes.
+
+## Try it
+
+```task
+{
+  "id": "dms-m02-t1",
+  "prompt": "Write your **positioning statement** using: *For [customer] who [need], [brand] is the [category] that [benefit]. Unlike [alternative], we [reason to believe].*",
+  "minutes": 10,
+  "rows": 5,
+  "placeholder": "For ... who ..., ... is the ... that ... Unlike ..., we ...",
+  "rules": [
+    { "label": "Starts with 'For' and names a customer", "pattern": "for [a-z]" },
+    { "label": "Includes 'who' and a need", "pattern": "who " },
+    { "label": "Says 'is the ... that'", "pattern": "is the [^.]* that" },
+    { "label": "Contrasts with an alternative using 'Unlike'", "pattern": "unlike" },
+    { "label": "Between 25 and 80 words", "minWords": 25, "maxWords": 85 }
+  ],
+  "sample": "For busy professionals in Lagos who have no time to cook, FreshBox is the healthy meal subscription that delivers balanced lunches to the office every working day. Unlike fast food or canteens, we cook with fresh ingredients, show the nutrition on every box and deliver on time or the next meal is free.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m02-t2",
+  "prompt": "Define your **tone of voice**: four traits, each with what you are and what you are not. One trait per line in the form \"Trait: we are ... / we are not ...\".",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Friendly: we are ... / we are not ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Each line has 'we are' and 'we are not'", "pattern": "we are[^\\n]*we are not", "perLine": true },
+    { "label": "Includes clear or honest or helpful or friendly", "pattern": "clear|honest|helpful|friendly|warm|professional|playful" }
+  ],
+  "sample": "Friendly: we are warm and use first names / we are not too casual when handling a complaint\nClear: we are plain and use short sentences / we are not vague or technical\nHonest: we are open about prices and delivery times / we are not hyping or hiding limits\nHelpful: we are practical and reply quickly / we are not pushy or salesy",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m02-t3",
+  "prompt": "Write your **core message** (one sentence) and **three supporting messages** with proof. One per line, labelled.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "Core message: ...\nSupport 1: ... (proof: ...)",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Has a core message", "pattern": "core message" },
+    { "label": "Has three supporting messages", "pattern": "support 1[\\s\\S]*support 2[\\s\\S]*support 3" },
+    { "label": "Includes proof (numbers, reviews, guarantee)", "pattern": "proof|reviews?|\\d+|guarantee|customers" }
+  ],
+  "sample": "Core message: fresh, healthy lunch delivered to your desk, on time, every working day.\nSupport 1: balanced meals with the nutrition shown on every box (proof: reviewed by a registered dietitian)\nSupport 2: on time or your next meal is free (proof: 96% on-time delivery last quarter)\nSupport 3: loved by busy professionals (proof: 4.8 average rating from 210 reviews)",
+  "required": false
+}
+```
+
+Next lesson: content marketing.
+$md$, true, true, 2, array['dms-m02-t1', 'dms-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m05', 'digital-marketing-sales', 'Paid advertising', 5, null, null, '{}'::text[], array['How online ads work', 'Meta (Facebook and Instagram) ads', 'Google and YouTube ads', 'Audiences, budgets and creative', 'Reading ad results']::text[])
+values ('dms-m03', 'digital-marketing-sales', 'Content marketing', 3, 'Content Creator', 'CONTENT', array['Find content ideas from customer questions', 'Choose formats', 'Write for the web', 'Plan and repurpose content']::text[], array['Content that serves the customer', 'Formats: posts, video, blogs', 'Writing for the web', 'A content calendar', 'Repurposing content']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m06', 'digital-marketing-sales', 'Search engine optimisation', 6, null, null, '{}'::text[], array['How search works', 'Keyword research', 'On-page SEO', 'Local search and Google Business Profile', 'Links and authority']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:content-marketing', 'digital-marketing-sales', 'dms-m03', 'content-marketing', 'Content Marketing', 'Create content that serves the customer, choose formats, write for the web, plan with a content calendar and repurpose content to get more from each piece.', 30, $md$
+## Content that serves the customer
+
+**Content marketing** means creating and sharing useful, relevant material, such as posts, videos, guides and answers, to attract and keep the right customers. Instead of shouting "buy now," you **help first**, and build trust, so that when people need what you sell, they think of you.
+
+Useful content does at least one of these:
+
+- **Teaches** (how to do something, how to choose, how to avoid a mistake).
+- **Solves a problem** (a checklist, a template, a calculator).
+- **Inspires** (a story, a result, a transformation).
+- **Entertains** in a way that fits your brand.
+- **Proves** (a case study, a customer story, behind the scenes).
+
+Start from **customer questions.** What do they ask you every week? What do they search for? What worries them before buying? Every common question is a piece of content. For a salon: *"How often should I wash braids?"* and *"What does a silk press cost?"* For a business tutor: *"How do I write a CV with no experience?"*
+
+Balance your content. A common mix: **mostly helpful and engaging content, some proof, and a smaller share of direct offers.**
+
+Create content pillars: three to five **themes** you will return to, such as *tips, customer stories, behind the scenes, offers and answers to questions.* Pillars keep you consistent and make planning easy.
+
+## Formats: posts, video, blogs
+
+| Format | Best for | Notes |
+| :-- | :-- | :-- |
+| **Short posts and carousels** | Quick tips, lists, step-by-step ideas | Easy to make and share |
+| **Short video (Reels, TikTok, Shorts)** | Reach and personality | A phone is enough; hook in the first 3 seconds |
+| **Longer video (YouTube)** | Teaching and trust | Good for search; more effort |
+| **Blog articles and guides** | Search traffic, depth, trust | Slow start; long life |
+| **Stories and status updates** | Daily presence and behind the scenes | Short-lived; frequent |
+| **Email newsletters** | Staying in touch with subscribers | Own your list |
+| **Podcasts and live sessions** | Authority and community | More time and consistency |
+| **Customer reviews and case studies** | Proof | Ask permission to share |
+
+Choose formats you can **keep up**, and that your customers actually use. One format done well and regularly beats five done once.
+
+## Writing for the web
+
+Most people **scan** online. Make your writing easy to read.
+
+- **Lead with the point.** Put the main message and benefit first.
+- **Use a clear headline** that tells the reader what they will get. *"5 Ways to Save on Generator Fuel"* beats *"Fuel Tips."*
+- **Short sentences and short paragraphs** (one to three lines on a phone).
+- **Plain words.** Write as you would speak to a customer.
+- **Use subheadings, bullets and numbers** to organise.
+- **Be specific.** Give numbers, examples and names.
+- **Speak to "you."**
+- **End with one clear call to action:** what should they do next?
+- **Edit.** Cut every word that does not help. Check spelling, facts and links.
+
+For video, **hook** the viewer in the first seconds, show the point quickly, use captions (many watch without sound) and end with a clear next step.
+
+## A content calendar
+
+A **content calendar** plans what you will publish, where and when, so you are consistent and not scrambling daily.
+
+A simple monthly calendar has columns for: **date, channel, format, pillar, topic or headline, call to action, who is responsible and status.**
+
+Example for four weeks, three posts a week (12 pieces):
+
+| Week | Mon | Wed | Fri |
+| :-- | :-- | :-- | :-- |
+| 1 | Tip (pillar: tips) | Customer story | Offer |
+| 2 | Behind the scenes | Tip | Answer to a question |
+| 3 | Tip | Customer story | Offer |
+| 4 | Answer to a question | Behind the scenes | Offer |
+
+Tips:
+
+- **Plan a month ahead,** and batch-create (make several pieces in one session).
+- **Mark key dates** such as holidays, festive seasons, school terms and your own promotions.
+- **Leave room** for timely or trending posts.
+- **Track which pieces perform,** and make more of them.
+- **Be realistic.** A calendar you cannot keep is worse than a smaller one you can.
+
+## Repurposing content
+
+Do not start from zero every time. **Repurpose** one idea into several forms:
+
+*One blog article → a carousel of its key tips → three short videos, each on one tip → a newsletter summary → a WhatsApp status with a link → a Q&A answering comments.*
+
+A single 10-minute video can become five clips, a quote graphic, a blog post and an audio clip. Adapt each to the platform (size, length and style), instead of posting the identical file everywhere.
+
+Also **refresh** old content that still performs: update facts, add examples and re-share. And **collect user-generated content** (customer photos, reviews, comments) with permission, which is free proof.
+
+## Try it
+
+```task
+{
+  "id": "dms-m03-t1",
+  "prompt": "Choose **three content pillars** for your business, and for each give **two post ideas** that answer real customer questions. One pillar per line in the form \"Pillar: idea 1; idea 2\".",
+  "minutes": 12,
+  "rows": 6,
+  "placeholder": "Tips: how often to ...; how to choose ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Every line has two ideas separated by a semicolon", "pattern": ":[^;\\n]+;[^;\\n]+", "perLine": true },
+    { "label": "Mentions customers' questions or how/what/why", "pattern": "how|what|why|which|when" }
+  ],
+  "sample": "Tips: how often to wash braids; how to protect your hair at night\nCustomer stories: Tola's before-and-after silk press; how a bride's hair lasted all wedding day\nBehind the scenes: how we sanitise our tools; meet the stylists",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m03-t2",
+  "prompt": "Build a **two-week content calendar** with at least **six entries**, one per line, each with the day, channel, format, pillar, topic and call to action.",
+  "minutes": 15,
+  "rows": 9,
+  "placeholder": "Mon - Instagram - carousel - tips - ... - CTA: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Includes days", "pattern": "mon|tue|wed|thu|fri|sat|sun|week", "min": 4 },
+    { "label": "Includes channels", "pattern": "instagram|facebook|tiktok|whatsapp|youtube|email|linkedin|blog", "min": 4 },
+    { "label": "Includes formats", "pattern": "carousel|reel|video|post|story|article|blog|newsletter|status", "min": 4 },
+    { "label": "Includes calls to action", "pattern": "cta|call to action|book|order|message|visit|reply|dm|sign up", "min": 4 }
+  ],
+  "sample": "Mon - Instagram - carousel - tips - 5 ways to protect braids - CTA: book a slot\nWed - Instagram - reel - customer story - Tola's silk press transformation - CTA: DM to book\nFri - WhatsApp status - photo - offer - 10% off weekday bookings - CTA: reply to book\nMon - Facebook - post - behind the scenes - how we sanitise our tools - CTA: visit our page\nWed - Instagram - story - answer to a question - how often to wash braids - CTA: send your question\nFri - Email - newsletter - tips and offer - monthly hair care guide - CTA: book online",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m03-t3",
+  "prompt": "Show how to **repurpose one blog article** into at least **five other pieces** of content for different channels. One piece per line, with the channel and format.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Instagram carousel of the five tips",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Includes different channels or formats", "pattern": "carousel|video|reel|story|status|newsletter|email|quote|clip|thread|post", "min": 4 },
+    { "label": "Mentions a channel", "pattern": "instagram|facebook|tiktok|whatsapp|youtube|email|linkedin" }
+  ],
+  "sample": "Instagram carousel with the five key tips\nThree short Reels, each explaining one tip\nA WhatsApp status with the headline and a link to the article\nA newsletter summary with a link to the full guide\nA quote graphic for Facebook with the most useful tip\nA live Q&A answering questions from the comments",
+  "required": false
+}
+```
+
+Next lesson: social media marketing.
+$md$, true, true, 3, array['dms-m03-t1', 'dms-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m07', 'digital-marketing-sales', 'Email and WhatsApp marketing', 7, null, null, '{}'::text[], array['Building a list', 'Email campaigns and automation', 'WhatsApp Business and broadcasts', 'Messages that get replies']::text[])
+values ('dms-m04', 'digital-marketing-sales', 'Social media marketing', 4, 'Social Media', 'SOCIAL', array['Choose platforms', 'Build community', 'Work with creators', 'Keep a social routine']::text[], array['Choosing platforms', 'Instagram, Facebook, TikTok, LinkedIn and X', 'Community and engagement', 'Working with creators', 'Social media routines']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m08', 'digital-marketing-sales', 'Funnels, landing pages and conversion', 8, null, null, '{}'::text[], array['The customer journey', 'Landing pages that convert', 'Offers and calls to action', 'Testing and improving']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:social-media-marketing', 'digital-marketing-sales', 'dms-m04', 'social-media-marketing', 'Social Media Marketing', 'Choose the right platforms, understand how Instagram, Facebook, TikTok, LinkedIn and X differ, build community and engagement, work with creators and set up a routine you can keep.', 20, $md$
+## Choosing platforms
+
+Social media is not one thing. Each platform has different people, habits and formats. Do not try to be everywhere. Choose **one or two** where your customers already spend time and where your content fits.
+
+Ask:
+
+1. **Where is my customer?** (age, interests, what they use daily)
+2. **What do they do there?** (browse, learn, network, shop)
+3. **What can I create consistently** for that platform?
+4. **What is my goal?** (awareness, leads, sales, community, hiring)
+
+Platform characteristics change over time, so check current features, but general patterns are:
+
+| Platform | Typical strengths | Good for |
+| :-- | :-- | :-- |
+| **Instagram** | Visual: photos, Reels, Stories, shops | Fashion, beauty, food, lifestyle, services with strong visuals |
+| **Facebook** | Broad audience, groups, local pages, events, ads | Local businesses, communities, older audiences, events |
+| **TikTok** | Short entertaining video with high discovery | Reaching new, younger audiences; personality-led brands |
+| **LinkedIn** | Professional network | B2B, recruitment, consultants, career content |
+| **X (Twitter)** | Real-time conversation, news, customer care | Updates, thought leadership, support |
+| **YouTube** | Search and longer video | Teaching, product demos, trust |
+| **WhatsApp** | Private, personal messaging | Conversations, orders, support and broadcasts |
+
+## Instagram, Facebook, TikTok, LinkedIn and X
+
+A few practical tips for each:
+
+**Instagram.** Keep your profile clear: a recognisable photo, a bio saying who you help and how, a link, and a contact button. Mix feed posts, **Reels** (short video) for reach and **Stories** for daily updates and polls. Use clear visuals and captions with a hook. Use a few relevant hashtags and the location tag.
+
+**Facebook.** Set up a business page with complete details, hours and a messaging button. Join and add value in relevant local and interest **groups** (follow their rules; do not spam). Use Events, and post reviews and photos. Its ad system is shared with Instagram.
+
+**TikTok.** Short, authentic, entertaining or educational video. Hook in the first two seconds, show the point fast, use trends that fit your brand, and use captions. Do not just copy; add your own angle.
+
+**LinkedIn.** Complete your profile as a clear promise of value. Post useful insights, lessons, case results and opinions; comment thoughtfully on others' posts; and connect with a personal note. Good for B2B leads and credibility.
+
+**X.** Short, timely updates. Useful for announcements, quick customer replies and joining conversations in your industry.
+
+Whatever the platform: **respond to messages and comments quickly**, and follow each platform's rules and local law, including advertising and privacy rules.
+
+## Community and engagement
+
+Social media works best as a **conversation**, not a billboard.
+
+- **Reply to comments and messages** promptly and personally.
+- **Ask questions,** use polls and invite opinions.
+- **Share customer content** (with permission) and thank people publicly.
+- **Show the people** behind the business.
+- **Handle criticism well:** respond politely, take it to a private message if needed, solve the problem. A public, calm response impresses other viewers.
+- **Build a community** around a shared interest, not only your product: a group, a hashtag or a regular event.
+
+**Engagement rate** shows how well content connects. A simple formula: *(likes + comments + shares + saves) ÷ followers × 100.* If a post with 4,000 followers gets 90 likes, 20 comments and 10 shares, that is 120 interactions, so engagement = 120 ÷ 4,000 = **3%.** Compare posts to learn what your audience likes. Remember that followers are not customers. A small, engaged, relevant audience is worth more than a large, silent one.
+
+## Working with creators
+
+**Creators and influencers** are people with an audience who trust them. Working with them can give you reach and credibility.
+
+How to do it well:
+
+- **Choose by fit and trust, not only follower count.** A micro-creator with 5,000 loyal local followers may beat a celebrity with 500,000 mixed ones.
+- **Check their audience and engagement:** real comments, relevant followers, past partnerships.
+- **Agree the deal in writing:** what they will create, when, where, payment or product, usage rights, whether it must be labelled as an ad, and how results will be measured.
+- **Follow the rules:** content that is paid or gifted should be clearly disclosed as such.
+- **Give a clear brief but let them use their own voice.**
+- **Use tracking:** a unique code or link to measure results.
+- **Start small:** test with one or two creators, then scale.
+
+## Social media routines
+
+A routine keeps you consistent without taking over your day.
+
+**Daily (15 to 30 minutes):** reply to messages and comments, post or schedule a story, check notifications, engage with a few relevant accounts.
+
+**Weekly:** create and schedule next week's content, review what performed best, plan any ads, check messages that need follow-up.
+
+**Monthly:** review results against goals (reach, engagement, enquiries, sales), update the content calendar, try one new idea.
+
+Use free tools to **schedule posts**, and keep a folder of photos, captions and ideas. Batch your work (for example, film a week of videos in one session). Protect your accounts with strong passwords and two-step verification, and limit who has access.
+
+## Try it
+
+```task
+{
+  "id": "dms-m04-t1",
+  "prompt": "Choose the **best main platform** for each business and give a reason: (1) a consultant selling training to companies; (2) a bakery making custom cakes; (3) a local church or community event; (4) a young fashion brand targeting students. One line each.",
+  "minutes": 10,
+  "rows": 6,
+  "placeholder": "1. LinkedIn - ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Consultant: LinkedIn", "pattern": "linkedin" },
+    { "label": "Bakery: Instagram or Facebook", "pattern": "instagram|facebook" },
+    { "label": "Fashion brand: TikTok or Instagram", "pattern": "tiktok|instagram" },
+    { "label": "Gives reasons", "pattern": "because|since|visual|b2b|professional|local|students|community|video|photos", "perLine": true }
+  ],
+  "sample": "1. LinkedIn - because the buyers are professionals and companies and it is a B2B network.\n2. Instagram - because custom cakes are visual and customers browse photos and message to order.\n3. Facebook - because it has local groups, pages and events that reach the community.\n4. TikTok (with Instagram) - because students watch short, entertaining video and discover new brands there.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m04-t2",
+  "prompt": "A post on an account with **4,000 followers** gets **90 likes**, **20 comments** and **10 shares**. Work out the **engagement rate**. A second post gets **150 interactions**; compare them and say what you would learn.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Engagement rate = ...",
+  "rules": [
+    { "label": "120 interactions", "pattern": "\\b120\\b" },
+    { "label": "Engagement rate of 3%", "pattern": "\\b3\\s?%|3 percent" },
+    { "label": "Second post engagement of 3.75%", "pattern": "3\\.75" },
+    { "label": "Says what to learn (what worked, topic, format, make more)", "pattern": "learn|worked|format|topic|more of|better|why|compare" }
+  ],
+  "sample": "Interactions = 90 + 20 + 10 = 120, so engagement = 120 / 4,000 = 3%.\nThe second post: 150 / 4,000 = 3.75%.\nThe second post connected better, so I would look at its topic and format to learn why and make more like it.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m04-t3",
+  "prompt": "Write your **social media routine** with at least five items, one per line: what you do daily, weekly and monthly, and roughly how long each takes.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Daily (20 minutes) - reply to messages ...",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Includes daily tasks", "pattern": "daily|every day" },
+    { "label": "Includes weekly tasks", "pattern": "weekly|every week|each week" },
+    { "label": "Includes monthly review", "pattern": "monthly|every month|each month" },
+    { "label": "Includes replying to messages or comments", "pattern": "repl|respond|messages|comments" },
+    { "label": "Gives time estimates", "pattern": "\\d+\\s*(minutes|mins|hours|hrs)", "min": 3 }
+  ],
+  "sample": "Daily (20 minutes) - reply to every message and comment and post a story\nDaily (10 minutes) - engage with five relevant accounts\nWeekly (1 hour) - schedule next week's posts from the calendar\nWeekly (30 minutes) - review the top posts and follow up leads\nMonthly (1 hour) - review reach, engagement and sales against goals\nMonthly (30 minutes) - update the content calendar and try one new idea",
+  "required": false
+}
+```
+
+Next lesson: paid advertising.
+$md$, true, true, 4, array['dms-m04-t1', 'dms-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m09', 'digital-marketing-sales', 'Analytics and reporting', 9, null, null, '{}'::text[], array['Key marketing metrics', 'Google Analytics basics', 'Tracking campaigns', 'Reporting to a boss or client']::text[])
+values ('dms-m05', 'digital-marketing-sales', 'Paid advertising', 5, 'Paid Ads', 'PAIDADS', array['Set up Meta and Google campaigns', 'Choose audiences and budgets', 'Write ad creative', 'Read CPM, CTR, CPA and ROAS']::text[], array['How online ads work', 'Meta (Facebook and Instagram) ads', 'Google and YouTube ads', 'Audiences, budgets and creative', 'Reading ad results']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:paid-advertising', 'digital-marketing-sales', 'dms-m05', 'paid-advertising', 'Paid Advertising', 'Understand how online ads work, set up Meta and Google campaigns sensibly, choose audiences, budgets and creative, and read ad results with the right numbers.', 30, $md$
+> [!NOTE]
+> Ad platforms change their menus, names, features and rules often. This lesson teaches the lasting ideas and the numbers to watch. **Check each platform's current help pages and advertising policies before you spend.**
+
+## How online ads work
+
+Online advertising lets you pay to put your message in front of chosen people. Most platforms use an **auction:** many advertisers compete to show ads to the same person, and the platform picks based on **how much you bid, how relevant and engaging your ad is to that person** and the expected result. A relevant, well-made ad can cost less than a poor one.
+
+Common ways you are charged:
+
+- **CPM (cost per 1,000 impressions):** you pay for views.
+- **CPC (cost per click):** you pay when someone clicks.
+- **CPA / CPL (cost per action or lead):** you pay for a result, or the platform optimises toward it.
+
+Every campaign has a clear **objective** (awareness, traffic, leads, messages, sales), a **target audience,** a **budget and schedule,** and the **ad creative** (image or video, text, headline and a call to action). The platform optimises toward the objective you choose, so choose the one that matches your real goal.
+
+## Meta (Facebook and Instagram) ads
+
+Meta ads reach people on Facebook, Instagram and related apps. Strengths: detailed audience options, visual formats, and the ability to drive **messages** (to WhatsApp or Messenger), **leads** and **sales.**
+
+Setup in outline:
+
+1. **Create a business account and page,** and verify your business as required.
+2. **Choose the objective** (for example Leads, Sales, or messages).
+3. **Define the audience:** location (for example Lagos), age, interests and behaviours; or upload a customer list; or a lookalike of your best customers; or retarget people who visited your website or engaged with your page.
+4. **Choose placements** (automatic is a good starting point).
+5. **Set the budget and schedule.**
+
+6. **Create the ad:** a strong image or short video, a clear headline, short primary text and a call-to-action button.
+7. **Install tracking** (the Meta Pixel and/or conversions setup) so results are measured.
+8. **Review before publishing,** to meet the ad policies, then monitor.
+
+## Google and YouTube ads
+
+**Google Ads** shows your ads when people **search** for something, so the intent is strong: someone typing "AC repair Lekki" needs it now.
+
+- **Search ads:** text ads on search results, triggered by **keywords.** Use match types carefully (broad, phrase, exact) and add **negative keywords** (for example "free", "jobs") to avoid wasted clicks.
+- **Display and Performance Max:** image and automated ads across Google properties.
+- **YouTube ads:** video ads, good for awareness, demonstrations and retargeting.
+- **Local campaigns and Google Business Profile** help local services appear on maps.
+
+Your **ad quality** and the **landing page** matter. A relevant ad that sends people to a page matching what they searched earns more clicks at a lower cost and converts better.
+
+## Audiences, budgets and creative
+
+**Audiences.** Start with a narrow but reachable group that matches your persona (for example women aged 25 to 40 in Lekki interested in hair care), and test variations. Use **retargeting** to reach people who already know you, as they convert best.
+
+**Budgets.** Start small, and decide a fixed daily or total budget you can afford. Let each test run long enough to give data (often several days) before judging. Do not change everything at once. Increase spend gradually on what works, and pause what does not.
+
+**Creative.** The ad itself is usually the biggest factor in performance.
+
+- **Hook** attention in the first second or the first line.
+- **One clear message** and **one clear call to action.**
+- Show the **benefit** and **the product in use,** with real, good-quality photos or video.
+- **Test** two or three versions (image vs video, different headlines).
+- Use **plain, honest language,** and respect the platform's advertising rules. Do not make false claims.
+
+## Reading ad results
+
+Know these numbers and how to calculate them. Example campaign: you spend **₦50,000**; get **100,000 impressions**, **1,500 clicks**, **60 leads** and **15 sales** worth **₦12,000** each.
+
+| Metric | Formula | Example |
+| :-- | :-- | :-- |
+| **CPM** | Spend ÷ impressions × 1,000 | 50,000 ÷ 100,000 × 1,000 = **₦500** |
+| **CTR** (click-through rate) | Clicks ÷ impressions | 1,500 ÷ 100,000 = **1.5%** |
+| **CPC** | Spend ÷ clicks | 50,000 ÷ 1,500 = **₦33.33** |
+| **Lead conversion rate** | Leads ÷ clicks | 60 ÷ 1,500 = **4%** |
+| **CPL** (cost per lead) | Spend ÷ leads | 50,000 ÷ 60 = **₦833** |
+| **CPA** (cost per sale) | Spend ÷ sales | 50,000 ÷ 15 = **₦3,333** |
+| **ROAS** (return on ad spend) | Revenue ÷ spend | (15 × 12,000 = 180,000) ÷ 50,000 = **3.6** |
+
+A ROAS of 3.6 means each ₦1 of ads brought ₦3.60 of revenue. Whether that is profitable depends on your **margin:** if your profit margin is 30%, ₦3.60 of revenue gives about ₦1.08 of gross profit per ₦1 spent, a small profit before other costs.
+
+If **CTR is low,** the ad or audience is weak. If **clicks are high but leads are low,** the landing page or offer is the problem. If **CPA is higher than your profit per sale,** change something or stop.
+
+## Try it
+
+```task
+{
+  "id": "dms-m05-t1",
+  "prompt": "You spend **₦50,000**, get **100,000 impressions**, **1,500 clicks**, **60 leads** and **15 sales** worth **₦12,000** each. Work out **CPM, CTR, CPC, CPL, CPA** and **ROAS**.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "CPM = ...",
+  "rules": [
+    { "label": "CPM of ₦500", "pattern": "\\b500\\b" },
+    { "label": "CTR of 1.5%", "pattern": "1\\.5\\s?%" },
+    { "label": "CPC of about ₦33", "pattern": "33\\.3|33\\b" },
+    { "label": "CPL of about ₦833", "pattern": "83[34]" },
+    { "label": "CPA of about ₦3,333", "pattern": "3,?33[34]" },
+    { "label": "ROAS of 3.6", "pattern": "3\\.6" }
+  ],
+  "sample": "CPM = 50,000 / 100,000 x 1,000 = ₦500.\nCTR = 1,500 / 100,000 = 1.5%.\nCPC = 50,000 / 1,500 = ₦33.33.\nCPL = 50,000 / 60 = ₦833.\nCPA = 50,000 / 15 = ₦3,333.\nROAS = (15 x 12,000) / 50,000 = 180,000 / 50,000 = 3.6.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m05-t2",
+  "prompt": "Write a **Meta ad** for your business: a **headline** (under 8 words), **primary text** (30 to 70 words) with a hook, a benefit and proof, and a **call-to-action button**. Label each part.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Headline: ...\nPrimary text: ...\nCall to action: ...",
+  "rules": [
+    { "label": "Has a headline", "pattern": "headline" },
+    { "label": "Has primary text", "pattern": "primary text|text:" },
+    { "label": "Has a call to action", "pattern": "call to action|cta|button" },
+    { "label": "Mentions a benefit", "pattern": "save|fresh|fast|easy|never|get|enjoy|free|delivered|book" },
+    { "label": "Includes proof or a number", "pattern": "\\d+|reviews?|customers|guarantee|rated" },
+    { "label": "Between 40 and 100 words", "minWords": 40, "maxWords": 105 }
+  ],
+  "sample": "Headline: Lunch at your desk by 12:30\nPrimary text: Tired of queuing for lunch or skipping it? FreshBox delivers a fresh, balanced meal to your office every working day, so you keep your whole break. Over 200 professionals in Ikeja rate us 4.8 out of 5, and your first meal is free if we are late. Order today and get 10% off your first week.\nCall to action: Order now",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m05-t3",
+  "prompt": "An ad has a **high CTR** but **very few leads**. In 40 to 90 words, say what is likely wrong and **two things** you would check or change.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "The problem is probably ...",
+  "rules": [
+    { "label": "Points to the landing page, offer or form", "pattern": "landing page|offer|form|page|website|checkout|sign-?up" },
+    { "label": "Says the ad is working at getting clicks", "pattern": "ad (is )?(working|good|attract|doing)|click|interest|ctr" },
+    { "label": "Suggests two checks or changes", "pattern": "check|change|test|simplify|speed|mobile|match|clear" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "The ad is doing its job because people click, so the problem is probably after the click: the landing page or the offer. I would check that the page matches the ad's promise, loads fast and is easy to use on a phone, and I would simplify the form so there are fewer fields. I would also test a clearer offer and call to action, and measure the lead conversion rate before and after.",
+  "required": false
+}
+```
+
+Next lesson: search engine optimisation.
+$md$, true, true, 5, array['dms-m05-t1', 'dms-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('dms-m10', 'digital-marketing-sales', 'Final project: a full campaign', 10, null, null, '{}'::text[], array['Planning the campaign', 'Building the assets', 'Setting up tracking', 'Presenting the plan']::text[])
+values ('dms-m06', 'digital-marketing-sales', 'Search engine optimisation', 6, 'SEO', 'SEO', array['Research keywords', 'Optimise pages', 'Win local search', 'Earn links honestly']::text[], array['How search works', 'Keyword research', 'On-page SEO', 'Local search and Google Business Profile', 'Links and authority']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:search-engine-optimisation', 'digital-marketing-sales', 'dms-m06', 'search-engine-optimisation', 'Search Engine Optimisation', 'Understand how search works, research keywords, optimise pages, win local search with Google Business Profile and build links and authority.', 30, $md$
+## How search works
+
+When someone types a question into a search engine such as Google, the engine looks through pages it has found and stored (**crawling and indexing**), then ranks the ones it believes best answer that search (**ranking**). **Search engine optimisation (SEO)** is the work of making your website and content easy for search engines to find and understand, and genuinely helpful to the people searching.
+
+SEO is valuable because search traffic is **high-intent** (people are looking for what you offer now) and **free to click** once you rank. Its limits: it is slow (often weeks or months), competitive, and the rules change. There are no tricks. The lasting approach is to **be the most useful, trustworthy result** for a clear search.
+
+Three broad areas:
+
+- **Content:** pages that answer what people search for.
+- **Technical:** a site that is fast, secure, mobile-friendly and easy for search engines to read.
+- **Authority:** other trusted sites linking to and mentioning you, plus good reviews.
+
+## Keyword research
+
+A **keyword** is a word or phrase people type into search. **Keyword research** finds what your customers search for, in their words.
+
+Steps:
+
+1. **Brainstorm** the products, services, problems and questions of your customers.
+2. **Use tools:** Google's search suggestions and "People also ask", related searches at the bottom of results, and free keyword tools. Look at your competitors' pages.
+3. **Check intent.** What does the searcher want?
+   - **Informational:** "how to remove stains from a sofa."
+   - **Commercial investigation:** "best sofa cleaning service in Lagos."
+   - **Transactional:** "book sofa cleaning Lekki."
+   - **Navigational:** "FreshClean Lagos."
+4. **Judge difficulty and volume.** Popular, broad keywords ("cleaning") are very competitive. **Longer, specific phrases (long-tail)** such as "affordable sofa cleaning in Lekki" have fewer searches but are easier to win and convert better.
+5. **Choose one main keyword per page,** with a few related ones.
+6. **Map keywords to pages** in a simple sheet: keyword, intent, page, status.
+
+For a local business, always include **place names** (area, city) where relevant.
+
+## On-page SEO
+
+**On-page SEO** is what you do on each page.
+
+- **Title tag:** the clickable headline in search results. Include the main keyword near the start, keep it to roughly 50 to 60 characters so it is not cut off, and make it appealing. *"Sofa Cleaning in Lekki, Lagos | FreshClean"*.
+- **Meta description:** the short summary under the title. Roughly 140 to 155 characters, with a benefit and a call to action. It does not directly rank you but influences clicks.
+- **Headings:** one clear main heading (H1) with the topic, and subheadings (H2, H3) that organise the page.
+- **Content:** answer the searcher's question fully, clearly and honestly. Write for people. Use the keyword and related words naturally, never stuffed.
+- **URLs:** short and descriptive (`/sofa-cleaning-lekki`).
+- **Images:** descriptive file names and **alt text** that describes the image (helps accessibility and search).
+- **Internal links:** link related pages to each other with clear link text.
+- **Speed and mobile:** most Nigerian searches are on phones. Compress images, avoid heavy pages and test on a phone.
+- **Trust:** contact details, address, reviews, clear pricing or ranges, and a secure (HTTPS) site.
+
+## Local search and Google Business Profile
+
+For a business serving a local area, **local SEO** is often the fastest win. When people search "salon near me" or "plumber in Yaba," Google shows a **map and a list of local businesses**, drawn largely from **Google Business Profile** (GBP), a free listing.
+
+Set it up well:
+
+1. **Claim and verify** your business profile.
+2. **Complete every field:** exact business name, correct category, address or service area, phone, website, hours, services, products and a clear description.
+3. **Add good photos** of the premises, team, work and products, and update them.
+4. **Ask happy customers for reviews,** and reply to every review, good or bad, politely.
+5. **Post updates** and offers regularly.
+6. **Keep name, address and phone (NAP) consistent** everywhere online.
+7. **Use messaging, booking and Q&A features** where available.
+8. **Add your location to your website** and embed the map.
+
+Reviews and complete, accurate information strongly influence local ranking and whether people choose you.
+
+## Links and authority
+
+Search engines see a link from another site as a **vote of trust,** especially from relevant, reputable sites. Earn links the honest way:
+
+- **Create genuinely useful content** others want to reference.
+- **Get listed** in respected local directories, trade associations and chambers.
+- **Partner and collaborate:** guest articles, suppliers who list you, community organisations.
+- **Get press and mentions** for real news about your business.
+- **Share your content** so people find it.
+
+Avoid buying links or link schemes, which can lead to penalties. Quality beats quantity.
+
+Measure progress with free tools: **Google Search Console** shows which searches bring impressions and clicks and flags technical problems, and **Google Analytics** shows visits and behaviour. Be patient: review monthly, not daily.
+
+## Try it
+
+```task
+{
+  "id": "dms-m06-t1",
+  "prompt": "For a **cleaning service in Lekki, Lagos**, list **eight keyword ideas**, one per line, each with its search intent (informational, commercial or transactional). Include some long-tail phrases with the place name.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "sofa cleaning in Lekki - transactional",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Includes the place name", "pattern": "lekki|lagos", "min": 4 },
+    { "label": "Includes intent labels", "pattern": "informational|commercial|transactional", "min": 6 },
+    { "label": "Includes an informational keyword (how to)", "pattern": "how to|what is|why|tips" },
+    { "label": "Includes a transactional keyword (book, hire, price)", "pattern": "book|hire|price|cost|near me|quote" }
+  ],
+  "sample": "sofa cleaning in Lekki - transactional\nhow to remove stains from a sofa - informational\nbest carpet cleaning service in Lagos - commercial\nhire office cleaners in Lekki - transactional\naffordable home cleaning Lekki Phase 1 - commercial\nprice of deep cleaning an apartment in Lagos - transactional\nhow often should you deep clean a house - informational\ncleaning company near me Lekki - transactional",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m06-t2",
+  "prompt": "Write the **title tag** (about 50 to 60 characters) and **meta description** (about 140 to 155 characters) for your page about sofa cleaning in Lekki. Then give three **on-page improvements** you would make to the page itself. Label each part.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Title tag: ...\nMeta description: ...\nImprovement 1: ...",
+  "rules": [
+    { "label": "Has a title tag", "pattern": "title tag" },
+    { "label": "Has a meta description", "pattern": "meta description" },
+    { "label": "Mentions the keyword and place", "pattern": "sofa cleaning[\\s\\S]*lekki|lekki[\\s\\S]*sofa cleaning" },
+    { "label": "Has three improvements", "pattern": "improvement 1[\\s\\S]*improvement 2[\\s\\S]*improvement 3" },
+    { "label": "Improvements mention headings, images, speed, links or reviews", "pattern": "heading|alt text|image|speed|mobile|internal link|review|url" }
+  ],
+  "sample": "Title tag: Sofa Cleaning in Lekki, Lagos | FreshClean\nMeta description: Professional sofa cleaning in Lekki. We remove stains and odours in one visit. Free quote on WhatsApp. Book today.\nImprovement 1: add one clear H1 heading and subheadings for prices and the process\nImprovement 2: add descriptive alt text to the before-and-after photos and compress them for speed\nImprovement 3: add customer reviews and an internal link to our carpet cleaning page",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m06-t3",
+  "prompt": "Write a **Google Business Profile checklist** with at least seven actions, one per line.",
+  "minutes": 8,
+  "rows": 9,
+  "placeholder": "Claim and verify the profile",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "Claim or verify", "pattern": "claim|verify" },
+    { "label": "Complete fields: category, hours, address, phone", "pattern": "category|hours|address|phone|description" },
+    { "label": "Photos", "pattern": "photo" },
+    { "label": "Reviews and replies", "pattern": "review" },
+    { "label": "Posts or updates", "pattern": "post|update|offer" },
+    { "label": "Consistency of name, address and phone", "pattern": "consisten|nap" }
+  ],
+  "sample": "Claim and verify the business profile\nChoose the correct main category and add services\nComplete the address or service area, phone, website and opening hours\nWrite a clear description with the keywords customers use\nAdd good photos of the team, work and premises\nAsk happy customers for reviews and reply to every review\nPost updates and offers regularly\nKeep the name, address and phone consistent across the web",
+  "required": false
+}
+```
+
+Next lesson: email and WhatsApp marketing.
+$md$, true, true, 6, array['dms-m06-t1', 'dms-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('dms-m07', 'digital-marketing-sales', 'Email and WhatsApp marketing', 7, 'Email & WhatsApp', 'EMAILWA', array['Build a consent-based list', 'Run email campaigns', 'Use WhatsApp Business well', 'Write messages that get replies']::text[], array['Building a list', 'Email campaigns and automation', 'WhatsApp Business and broadcasts', 'Messages that get replies']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:email-and-whatsapp-marketing', 'digital-marketing-sales', 'dms-m07', 'email-and-whatsapp-marketing', 'Email and WhatsApp Marketing', 'Build a permission-based list, run email campaigns and simple automation, use WhatsApp Business and broadcasts properly and write messages that get replies.', 25, $md$
+## Building a list
+
+An **email or contact list** of people who have **agreed** to hear from you is one of your most valuable assets, because **you own it.** Social media algorithms change; your list does not.
+
+Ways to build it honestly:
+
+- **A sign-up form on your website** with a clear promise ("Get our monthly hair-care guide").
+- **A lead magnet:** a useful free gift in exchange for contact details, such as a checklist, a discount code, a template, a mini-course or a price guide.
+- **At the point of sale or booking,** with permission.
+- **On social media and WhatsApp,** with a link in your bio and posts.
+- **At events and in the shop,** with a simple sign-up.
+
+**Consent matters, legally and for results.** In Nigeria the Nigeria Data Protection Act (2023) and its regulator, the Nigeria Data Protection Commission, set rules on collecting and using personal data. In outline: tell people what you will use their data for, get clear permission, collect only what you need, keep it safe, and respect requests to stop messages or delete data. **Never buy lists or add people to groups without consent.** A smaller list of willing people beats a large list of annoyed ones. Check the current rules and take advice for your situation.
+
+Always include an easy way to **unsubscribe or stop** messages.
+
+## Email campaigns and automation
+
+**Email marketing** tools (many have free plans) let you design emails, manage lists, send campaigns and see results.
+
+Types of email:
+
+- **Welcome email:** sent immediately after sign-up. Highest open rates; set the tone and deliver the promised gift.
+- **Newsletter:** regular helpful content and news.
+- **Promotional:** an offer with a deadline.
+- **Transactional:** order confirmations, receipts and delivery updates.
+- **Re-engagement:** to people who have gone quiet.
+
+**Automation** sends the right email at the right time without you doing it by hand. A simple **welcome series** might be: Day 0, welcome and gift; Day 2, your story and best tip; Day 5, social proof and customer story; Day 8, a gentle offer. Other automations: abandoned cart reminders, birthday offers, post-purchase review requests and "we miss you" messages.
+
+Write good emails:
+
+- **Subject line:** short, specific, interesting; no tricks or false urgency.
+- **One clear purpose** and **one main call-to-action** button.
+- **Short paragraphs,** scannable, mobile-friendly.
+- **Personal tone;** use the reader's name where you can.
+- **A recognisable sender name** (a real person or the brand).
+- **Test** subject lines and send times.
+
+Measure with these numbers. Example: you send an email to 1,000 addresses; **960 are delivered**, **288 open it** and **48 click.**
+
+| Metric | Formula | Example |
+| :-- | :-- | :-- |
+| **Delivery rate** | Delivered ÷ sent | 960 ÷ 1,000 = **96%** |
+| **Open rate** | Opens ÷ delivered | 288 ÷ 960 = **30%** |
+| **Click-through rate** | Clicks ÷ delivered | 48 ÷ 960 = **5%** |
+| **Click-to-open rate** | Clicks ÷ opens | 48 ÷ 288 = **16.7%** |
+
+Note that open rates are less exact than they used to be, because some email apps load images automatically, so give more weight to **clicks and replies and sales.**
+
+## WhatsApp Business and broadcasts
+
+WhatsApp is hugely popular in Nigeria and customers reply there quickly. Use it professionally.
+
+**WhatsApp Business** (the free app) offers: a **business profile** (hours, address, website, description), a **catalogue** of products with prices, **labels** to organise chats, **quick replies** for common answers, **greeting and away messages,** and statistics. A larger **business platform and API** exists for bigger companies, with its own rules and fees.
+
+**Broadcasts and status.**
+
+- A **broadcast list** sends one message individually to many contacts, but only to people who **have saved your number and agreed** to receive it.
+- **Status updates** let you show offers, new arrivals and behind-the-scenes to your contacts for 24 hours.
+- **Groups** suit communities and customers who want to chat, but need clear rules and moderation.
+
+Rules for good behaviour:
+
+- **Get permission** and honour requests to stop.
+- **Do not spam,** send too often or send irrelevant messages.
+- **Respect WhatsApp's business policies.** Misuse can get a number banned.
+- **Reply quickly** during stated hours, and use a friendly human voice.
+- **Keep customer data safe** and do not share chats or numbers.
+
+## Messages that get replies
+
+Whether on email or WhatsApp, effective messages are:
+
+- **Relevant:** about something the person cares about, at the right time.
+- **Short:** get to the point in the first line.
+- **Clear:** one idea and one action.
+- **Personal:** use their name, refer to their last purchase or question.
+- **Easy to answer:** "Reply YES to book" or a link or button.
+- **Valuable:** give something useful, not only ask.
+- **Timely:** reminders before an appointment, follow-ups after delivery.
+
+Example WhatsApp broadcast: *"Hi Tola, this is Ada from Luxe Hair. Slots for weekday silk presses are 15% off this week only. Reply YES and I'll hold a time for you. Reply STOP to opt out."*
+
+Always read your message from the customer's side, asking: *Why would I want this? What do I do next?*
+
+## Try it
+
+```task
+{
+  "id": "dms-m07-t1",
+  "prompt": "You send an email to **1,000** addresses. **960** are delivered, **288** open it and **48** click. Work out the **delivery rate**, **open rate**, **click-through rate** and **click-to-open rate**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Delivery rate = ...",
+  "rules": [
+    { "label": "Delivery rate of 96%", "pattern": "\\b96\\s?%" },
+    { "label": "Open rate of 30%", "pattern": "\\b30\\s?%" },
+    { "label": "Click-through rate of 5%", "pattern": "\\b5\\s?%" },
+    { "label": "Click-to-open of about 16.7%", "pattern": "16\\.7|16\\.67|17 ?%" }
+  ],
+  "sample": "Delivery rate = 960 / 1,000 = 96%.\nOpen rate = 288 / 960 = 30%.\nClick-through rate = 48 / 960 = 5%.\nClick-to-open rate = 48 / 288 = 16.7%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m07-t2",
+  "prompt": "Write a **welcome email** for new subscribers: a **subject line** and a **body** of 60 to 120 words that thanks them, delivers the gift you promised, tells them what to expect and has one clear call to action.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Subject: ...\nHi ...",
+  "rules": [
+    { "label": "Has a subject line", "pattern": "subject" },
+    { "label": "Thanks them", "pattern": "thank|welcome" },
+    { "label": "Delivers the gift or promise", "pattern": "gift|guide|checklist|code|discount|download|here is|here's|attached|link" },
+    { "label": "Says what to expect", "pattern": "expect|each (week|month)|every (week|month)|you will (get|receive)|we will send|you'll (get|receive)" },
+    { "label": "Has one call to action", "pattern": "click|book|reply|visit|shop|download|start" },
+    { "label": "Between 60 and 125 words", "minWords": 60, "maxWords": 130 }
+  ],
+  "sample": "Subject: Welcome! Your free hair-care guide is inside\nHi Tola, thank you for joining the Luxe Hair family. As promised, here is your free guide, 10 Ways to Keep Your Braids Fresh, which you can download using the link below. Each month we will send you one practical hair-care tip, news of our open slots and occasional offers, and never more than two emails a month. If you ever want to stop, there is an unsubscribe link at the bottom. To get started, click the button below to download your guide. Warm regards, Ada.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m07-t3",
+  "prompt": "Write a **WhatsApp broadcast message** (30 to 70 words) that uses the customer's name, makes one offer with a deadline, is easy to answer and lets them opt out.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Hi ...",
+  "rules": [
+    { "label": "Uses a name or greeting", "pattern": "hi |hello|dear" },
+    { "label": "Makes an offer", "pattern": "off|discount|free|offer|special|slot|%" },
+    { "label": "Has a deadline", "pattern": "this week|today|tomorrow|until|by (friday|sunday|monday)|ends|only" },
+    { "label": "Easy to answer (reply, click)", "pattern": "reply|click|tap|send" },
+    { "label": "Offers an opt-out", "pattern": "stop|opt out|unsubscribe" },
+    { "label": "Between 30 and 70 words", "minWords": 30, "maxWords": 75 }
+  ],
+  "sample": "Hi Tola, this is Ada from Luxe Hair. Weekday silk press slots are 15% off this week only. Reply YES and I will hold a time for you. If you would rather not get these messages, reply STOP and I will remove you straight away. Thank you!",
+  "required": false
+}
+```
+
+Next lesson: funnels, landing pages and conversion.
+$md$, true, true, 7, array['dms-m07-t1', 'dms-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('dms-m08', 'digital-marketing-sales', 'Funnels, landing pages and conversion', 8, 'Conversion', 'CONVERT', array['Map the customer journey', 'Build a landing page', 'Write offers and CTAs', 'Run A/B tests']::text[], array['The customer journey', 'Landing pages that convert', 'Offers and calls to action', 'Testing and improving']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:funnels-landing-pages-and-conversion', 'digital-marketing-sales', 'dms-m08', 'funnels-landing-pages-and-conversion', 'Funnels, Landing Pages and Conversion', 'Map the customer journey, build landing pages that convert, craft offers and calls to action and test and improve results step by step.', 30, $md$
+## The customer journey
+
+Customers rarely buy at first sight. They move through stages, and marketing should **help at each one.** A **funnel** is a way to picture this journey, wide at the top (many people who know you a little) and narrow at the bottom (the few who buy).
+
+A common model:
+
+| Stage | The customer thinks | What you offer | Example measures |
+| :-- | :-- | :-- | :-- |
+| **Awareness** | "I have a problem" or "I've seen this brand" | Helpful content, videos, ads | Reach, visits |
+| **Interest / consideration** | "Which options solve it?" | Guides, comparisons, reviews, demos | Sign-ups, engagement |
+| **Decision** | "Is this right, and can I trust you?" | Offers, proof, a free trial, clear pricing, talking to you | Enquiries, add-to-cart |
+| **Action** | "I'll buy" | An easy checkout, booking or order | Sales, bookings |
+| **Loyalty and referral** | "Was it good? Would I tell others?" | Great service, follow-up, rewards | Repeat purchases, reviews |
+
+**Map the journey for your own customer.** At each stage, ask: What questions do they have? Where are they? What stops them moving on? Then fill the gaps. Many businesses are strong at the top (posting daily) and weak in the middle (no proof, no easy next step) so they lose people they have already attracted.
+
+Funnel maths shows where you leak. Example: 10,000 visitors → 500 sign-ups (5%) → 50 enquiries (10% of sign-ups) → 15 customers (30% of enquiries). Overall, 15 ÷ 10,000 = **0.15%.** Improving any step lifts the whole funnel, and the step with the lowest rate is usually the best place to start.
+
+## Landing pages that convert
+
+A **landing page** is a page created for **one purpose** and one audience, usually linked from an ad, email or post. It is not your whole website. Its job is to persuade the visitor to take **one action.**
+
+Elements of a strong landing page:
+
+1. **A headline that matches the ad or link they clicked.** If the ad says "Free sofa-cleaning quote," the page must say so immediately.
+2. **A sub-headline** that explains the benefit.
+3. **A clear, relevant image or short video** that shows the product or result.
+4. **The key benefits,** in short bullets, in the customer's language.
+5. **Social proof:** reviews, testimonials, ratings, logos, numbers, before and after.
+6. **A simple offer,** with clear price or what they get.
+7. **One prominent call-to-action button,** repeated further down.
+8. **A short form:** ask only for what you need (name and phone is often enough).
+9. **Trust signals:** guarantee, secure payment, real contact details, privacy note.
+10. **Fast, mobile-friendly design,** with little clutter and no distracting links.
+
+Remove anything that does not help the visitor take the action. Use plain language, and answer likely questions (price, time, delivery, refunds).
+
+## Offers and calls to action
+
+An **offer** is what you give in return for their action. It must be **clear, valuable and low-risk** from the customer's side. Strong offers include a free quote, a free trial or sample, a first-order discount, a free guide, a bonus, a guarantee, or a bundle.
+
+Make the offer **specific:** "Free quote within 2 hours" is stronger than "Contact us." Add **honest urgency** where it is real (a limited number of slots, a date the price changes). **Reduce risk:** money-back guarantee, clear refund rules, free delivery or free returns.
+
+A **call to action (CTA)** tells people exactly what to do next. Good CTAs:
+
+- **Start with a verb:** "Get my free quote," "Book my slot," "Download the guide."
+- **Say what happens** and the benefit: "Get my quote in 2 hours."
+- **Stand out** in colour and position, and are large enough to tap on a phone.
+- **Focus on one main action** per page.
+- Match the stage: a "Learn more" for early visitors, "Buy now" for ready ones.
+
+## Testing and improving
+
+Do not guess; **test.** An **A/B test** shows two versions (A and B) to similar visitors at the same time and compares results.
+
+Example: version A of a landing page converts **40** of **1,000** visitors (4%). Version B, with a shorter form, converts **55** of **1,000** (5.5%). The relative improvement is (5.5 − 4) ÷ 4 = **37.5%.** If each conversion is worth ₦20,000 profit, then over 10,000 visitors, B brings (550 − 400) × 20,000 = **₦3,000,000** more.
+
+Rules for good tests:
+
+- **Change one thing at a time** (headline, image, button text, form length, price display).
+- **Decide in advance** what you are measuring.
+- **Run the test long enough** and with enough visitors to be confident, since small numbers mislead.
+- **Do not stop early** because one version looks ahead after a day.
+- **Record results** and what you learned.
+- **Keep what wins,** then test the next idea.
+
+Start testing where the effect is biggest: the headline, the offer and the call to action. Also fix the basics first, such as loading speed, broken links, confusing forms and mobile display, because those lose customers silently.
+
+## Try it
+
+```task
+{
+  "id": "dms-m08-t1",
+  "prompt": "Version A converts **40 of 1,000** visitors. Version B converts **55 of 1,000**. Work out each conversion rate, the **relative improvement** of B, and the extra profit over **10,000 visitors** if each conversion is worth **₦20,000** profit.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "A = ...",
+  "rules": [
+    { "label": "A rate of 4%", "pattern": "\\b4\\s?%" },
+    { "label": "B rate of 5.5%", "pattern": "5\\.5\\s?%" },
+    { "label": "Relative improvement of 37.5%", "pattern": "37\\.5" },
+    { "label": "Extra profit of ₦3,000,000", "pattern": "3,?000,?000" }
+  ],
+  "sample": "A = 40 / 1,000 = 4%. B = 55 / 1,000 = 5.5%.\nRelative improvement = (5.5 - 4) / 4 = 37.5%.\nOver 10,000 visitors: A converts 400 and B converts 550, so 150 more x ₦20,000 = ₦3,000,000 extra profit.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m08-t2",
+  "prompt": "Plan a **landing page** for an offer of your choice. List at least **eight elements** top to bottom, one per line, with the actual words for the headline, sub-headline and button.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Headline: ...\nSub-headline: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Headline", "pattern": "headline" },
+    { "label": "Sub-headline or benefits", "pattern": "sub-?headline|benefit" },
+    { "label": "Social proof", "pattern": "testimonial|review|rating|proof|customers" },
+    { "label": "Call to action button", "pattern": "button|cta|call to action" },
+    { "label": "Form", "pattern": "form|name and|phone|fields" },
+    { "label": "Guarantee or trust", "pattern": "guarantee|trust|secure|refund|privacy" }
+  ],
+  "sample": "Headline: Get your sofa cleaned in one visit, or it's free\nSub-headline: Professional stain and odour removal in Lekki, with a free quote in 2 hours\nImage: a short before-and-after photo of a cleaned sofa\nBenefits: removes stains and odours; dries in 3 hours; safe for children and pets\nSocial proof: 4.9 rating from 180 reviews and three customer testimonials\nOffer: free quote and 10% off your first clean\nForm: only name and phone number\nButton: Get my free quote\nGuarantee and trust: free re-clean if you are not happy; real address and phone number shown",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m08-t3",
+  "prompt": "Design an **A/B test** for your landing page in 50 to 100 words: what you will change, version A and B, what you will measure, how many visitors you need and what result means you adopt B.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I will test ...",
+  "rules": [
+    { "label": "States what is changed", "pattern": "change|test|headline|button|form|image|offer" },
+    { "label": "Names versions A and B", "pattern": "\\ba\\b[\\s\\S]*\\bb\\b|version a|version b" },
+    { "label": "States the measure (conversion rate)", "pattern": "conversion|rate|sign-?ups|leads|sales" },
+    { "label": "States visitor numbers or time", "pattern": "\\d+\\s*(visitors|people|days|weeks)|\\d{3,}" },
+    { "label": "States the adoption rule", "pattern": "if|adopt|keep|win|higher|better" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I will test the length of the form, changing only that one thing. Version A has five fields and version B has only name and phone number. I will measure the lead conversion rate, which is leads divided by visitors. I will send 1,000 visitors to each version over two weeks, splitting traffic equally. If B converts at least 20% better than A and the difference holds for the whole period, I will adopt B and then test the headline next.",
+  "required": false
+}
+```
+
+Next lesson: analytics and reporting.
+$md$, true, true, 8, array['dms-m08-t1', 'dms-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('dms-m09', 'digital-marketing-sales', 'Analytics and reporting', 9, 'Marketing Analytics', 'MKTDATA', array['Choose key metrics', 'Use Google Analytics basics', 'Track with UTM links', 'Report results clearly']::text[], array['Key marketing metrics', 'Google Analytics basics', 'Tracking campaigns', 'Reporting to a boss or client']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:analytics-and-reporting', 'digital-marketing-sales', 'dms-m09', 'analytics-and-reporting', 'Analytics and Reporting', 'Know the key marketing metrics, use Google Analytics basics, track campaigns with UTM links and report results clearly to a boss or client.', 20, $md$
+> [!NOTE]
+> Analytics tools change their names, screens and settings often. This lesson explains the lasting ideas. **Check the tool's current help pages for exact steps.**
+
+## Key marketing metrics
+
+Measure what connects to goals. Group your metrics:
+
+**Reach and awareness:** impressions, reach, video views, website visitors, followers (the weakest measure on its own).
+
+**Engagement:** clicks, likes, comments, shares, saves, time on site, pages per visit, email opens and clicks.
+
+**Conversion:** leads, sign-ups, enquiries, add-to-carts, orders, bookings and the **conversion rate** (conversions ÷ visitors or clicks).
+
+**Cost and return:**
+
+- **CAC (customer acquisition cost):** marketing spend ÷ new customers.
+- **CPL (cost per lead):** spend ÷ leads.
+- **ROAS (return on ad spend):** revenue from ads ÷ ad spend.
+- **ROI (return on investment):** (revenue − cost) ÷ cost. If a campaign costs ₦150,000 and brings ₦450,000 of revenue, ROI = (450,000 − 150,000) ÷ 150,000 = **200%**, and ROAS = 450,000 ÷ 150,000 = **3.0.** To judge profit, remember that revenue is not profit: subtract the cost of the goods and other costs.
+
+**Retention:** repeat purchase rate, customer lifetime value, reviews and referrals.
+
+Beware **vanity metrics:** numbers that look good but do not lead to money, such as followers or views alone. Always ask: *So what? Did this bring customers or sales?*
+
+## Google Analytics basics
+
+**Google Analytics** (GA4 in its current version) is a free tool that shows how people find and use your website or app. The main ideas:
+
+- **Users and sessions:** how many people visit and how many visits they make.
+- **Traffic sources:** where visitors come from: search, social, email, direct, referral and paid.
+- **Pages and screens:** which pages are viewed most.
+- **Events:** actions such as page views, clicks, scrolls, form submissions and purchases.
+- **Conversions (key events):** the events you mark as important (a lead form sent, an order placed).
+- **Audience and devices:** location, device type (most Nigerian traffic is on mobile), and new versus returning users.
+- **Engagement:** how long people stay and what they do.
+
+Setup in outline: create a property, add the tracking tag or snippet to your website (or connect it through your website platform), check the data appears, **define your key conversions,** and link it with Google Ads and Search Console. Respect privacy rules: tell visitors you use analytics, and follow cookie and consent requirements that apply.
+
+When you read reports, ask three questions: **Where do my best visitors come from? What do they do? Where do they drop off?**
+
+## Tracking campaigns
+
+You need to know **which campaign, channel or link** brought each result. Use **UTM parameters** on links you share. They are labels added to a web address:
+
+- **utm_source:** where the link is placed (instagram, newsletter, facebook)
+- **utm_medium:** the type of channel (social, email, cpc)
+- **utm_campaign:** the campaign name (april_promo)
+- Optional: **utm_content** (which ad or button) and **utm_term** (the keyword).
+
+Example link:
+`https://www.example.com/offer?utm_source=instagram&utm_medium=social&utm_campaign=april_promo`
+
+Analytics will then show "instagram / social / april_promo" with visits and conversions.
+
+Other tracking:
+
+- **Platform pixels and tags** (Meta Pixel, Google Ads tag) to measure ad conversions.
+- **Unique discount codes** per channel or creator.
+- **A "How did you hear about us?"** question in forms and at checkout.
+- **Dedicated phone numbers or WhatsApp links** per campaign.
+- **A simple spreadsheet** where you record leads and sales by source, especially for offline conversions.
+
+Use a **consistent naming system** (lower case, no spaces) so reports are clean.
+
+## Reporting to a boss or client
+
+A good report shows **results, meaning and next steps** on one or two pages.
+
+Structure:
+
+1. **Summary:** the headline result against the goal.
+2. **Key numbers:** 5 to 8 metrics, with last period and the trend.
+3. **What worked and what did not,** with reasons.
+4. **Insights:** what you learned about customers.
+5. **Recommendations:** what to do next and what you need.
+6. **Spend and return:** cost, revenue and ROI or ROAS.
+
+Tips:
+
+- **Start with the answer.** Do not make the reader dig.
+- **Use charts sparingly and clearly,** with labels.
+- **Compare with goals and previous periods.**
+- **Explain in plain language;** avoid jargon.
+- **Be honest about weak results,** and show how you will improve.
+- **Be consistent.** Use the same format monthly, so trends are visible.
+
+Example summary: *"In April, digital marketing brought 112 leads and 28 customers at ₦3,200 each, against a goal of 100 leads and ₦3,500 per customer. WhatsApp ads were the best channel (₦2,400 per customer); Google Ads were the most expensive. In May we will move 20% of the budget from Google to WhatsApp ads and test a shorter form."*
+
+## Try it
+
+```task
+{
+  "id": "dms-m09-t1",
+  "prompt": "A campaign costs **₦150,000** and brings **₦450,000** of revenue. Work out the **ROAS** and the **ROI**. Then say in one or two sentences why revenue is not the same as profit.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "ROAS = ...",
+  "rules": [
+    { "label": "ROAS of 3.0", "pattern": "\\b3(\\.0)?\\b" },
+    { "label": "ROI of 200%", "pattern": "\\b200\\s?%" },
+    { "label": "Explains that costs of goods and other costs must be subtracted", "pattern": "cost|margin|expenses|goods|subtract|profit" }
+  ],
+  "sample": "ROAS = 450,000 / 150,000 = 3.0.\nROI = (450,000 - 150,000) / 150,000 = 200%.\nRevenue is not profit because I still have to subtract the cost of the goods and other expenses before I know what I really earned.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m09-t2",
+  "prompt": "Build a **UTM link** for an Instagram post promoting an April promotion to the page `https://www.example.com/offer`. Write the full link, then explain in one line what each of the three UTM parameters means.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "https://www.example.com/offer?utm_source=...",
+  "rules": [
+    { "label": "Includes the page address", "pattern": "https://www\\.example\\.com/offer\\?" },
+    { "label": "Includes utm_source=instagram", "pattern": "utm_source=instagram" },
+    { "label": "Includes utm_medium", "pattern": "utm_medium=[a-z_]+" },
+    { "label": "Includes utm_campaign with an April name", "pattern": "utm_campaign=[a-z_0-9]*(april|apr)" },
+    { "label": "Explains the parameters", "pattern": "source[^\\n]*(where|platform|link)|medium[^\\n]*(type|channel)|campaign[^\\n]*(name|promotion|promo)" }
+  ],
+  "sample": "https://www.example.com/offer?utm_source=instagram&utm_medium=social&utm_campaign=april_promo\nutm_source says where the link was placed (Instagram).\nutm_medium says the type of channel (social).\nutm_campaign names the campaign (the April promotion).",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m09-t3",
+  "prompt": "Write a **monthly marketing report summary** (60 to 120 words): the headline against goal, two key numbers, the best and worst channel, and your next action. Use realistic figures.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "In April, ...",
+  "rules": [
+    { "label": "States results against a goal", "pattern": "goal|target|against|compared" },
+    { "label": "Gives numbers (leads, customers, cost)", "pattern": "\\d+\\s*(leads|customers|sales)|₦\\s?\\d" },
+    { "label": "Names the best and worst channels", "pattern": "best[\\s\\S]*(worst|expensive|weak)|(worst|expensive|weak)[\\s\\S]*best" },
+    { "label": "States a next action", "pattern": "next|will|move|test|shift|plan" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "In April, digital marketing brought 112 leads and 28 customers at ₦3,200 each, against a goal of 100 leads and ₦3,500 per customer. WhatsApp ads were the best channel at ₦2,400 per customer, while Google Ads were the most expensive at ₦5,100. Our landing page converts 5% of visitors. Next month we will move 20% of the Google budget to WhatsApp ads, test a shorter form to lift the conversion rate and report again on 5 June.",
+  "required": false
+}
+```
+
+Next lesson: your complete campaign.
+$md$, true, true, 9, array['dms-m09-t1', 'dms-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('dms-m10', 'digital-marketing-sales', 'Final project: a full campaign', 10, 'Campaign Plan', 'CAMPAIGN', array['Plan a full campaign', 'Create the assets', 'Set up tracking', 'Present the plan']::text[], array['Planning the campaign', 'Building the assets', 'Setting up tracking', 'Presenting the plan']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('digital-marketing-sales:final-project-a-full-campaign', 'digital-marketing-sales', 'dms-m10', 'final-project-a-full-campaign', 'Final Project: A Full Campaign', 'Plan a full marketing campaign, build the assets, set up tracking and present the plan to decision makers.', 45, $md$
+## What you are building
+
+You now have the pieces: strategy, brand, content, social, ads, search, email and WhatsApp, funnels and analytics. In this project you use them in **one complete campaign** for a real or realistic business, and present it as a marketer would to an owner or client.
+
+Choose a business you know (your own, a friend's or a realistic one) and a **specific goal**, such as launching a product, filling a service's quiet days, promoting an event or gaining new customers in a month. Use real prices and real information, and state your assumptions.
+
+## Your campaign has six parts
+
+1. **Goal, audience and strategy.** A SMART goal worked back to numbers (leads, customers, budget), your target persona and the core message.
+2. **Channels and budget.** Two or three channels, the reason for each and a budget split with expected results.
+3. **Creative and content.** The key assets: an ad (headline, text, call to action), a landing page plan, an email or WhatsApp message and a four-week content calendar.
+4. **Funnel and conversion.** The customer journey from first contact to sale, the offer and how you will test one improvement.
+5. **Tracking and measurement.** Your metrics, UTM links, pixels or codes, and how leads and sales will be recorded.
+6. **Timeline, risks and report.** A schedule, the main risks, and what your final report will show.
+
+## Presenting the plan
+
+Write for the owner or client who will approve the budget. Open with a one-page **summary:** the goal, the plan, the budget and the expected result. Use tables for the budget, calendar and metrics. Show the maths. Anticipate questions: *Why these channels? What if results are half? How will we know it worked?* Have honest answers.
+
+> [!TIP]
+> A modest, well-tracked campaign you can learn from is better than a large one you cannot measure. Plan to test, learn and adjust.
+
+## Try it
+
+```task
+{
+  "id": "dms-m10-t1",
+  "prompt": "State your **campaign goal and the numbers behind it**, one item per line: the business, a SMART goal, target customers, cost per customer you can afford, total budget, leads needed and your assumed lead-to-customer rate. At least six lines.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Business: ...\nGoal: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States the business", "pattern": "business" },
+    { "label": "States a goal with a number and a date", "pattern": "goal[^\\n]*\\d[^\\n]*(day|week|month|by )" },
+    { "label": "States the audience", "pattern": "audience|customers?|persona" },
+    { "label": "States the budget in naira", "pattern": "budget[^\\n]*₦\\s?\\d" },
+    { "label": "Works out leads needed", "pattern": "leads?[^\\n]*(=|/|÷|\\d)" }
+  ],
+  "sample": "Business: FreshBox, a healthy lunch delivery service in Ikeja\nGoal: win 60 new customers in the next 8 weeks\nAudience: office workers aged 25 to 40 in Ikeja with little time for lunch\nAffordable cost per customer: ₦3,000\nBudget: ₦180,000 (60 x 3,000)\nLeads needed: 60 / 0.25 = 240 leads, assuming 25% of leads become customers",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m10-t2",
+  "prompt": "Write your **channels and budget split**: three channels, each with the percentage and naira amount, the reason and the result you expect (for example leads). One channel per line. The percentages must add to 100.",
+  "minutes": 12,
+  "rows": 6,
+  "placeholder": "Instagram and Facebook ads - 50% (₦90,000) - because ... - expect 120 leads",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line has a percentage and a naira amount", "pattern": "\\d+\\s?%[^\\n]*₦\\s?\\d", "perLine": true },
+    { "label": "Each line has a reason", "pattern": "because|since|so|where|fits", "perLine": true },
+    { "label": "Each line has an expected result", "pattern": "expect|leads|customers|enquiries|bookings", "perLine": true }
+  ],
+  "sample": "Instagram and Facebook ads - 50% (₦90,000) - because our customers are on Instagram daily and ads let us test quickly - expect 120 leads\nWhatsApp broadcasts and status - 20% (₦36,000) - because bookings and replies happen on WhatsApp - expect 60 leads\nGoogle Business Profile and local search - 30% (₦54,000) - because workers search for lunch near their office - expect 60 leads",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m10-t3",
+  "prompt": "Write your **campaign assets**: the **ad** (headline and 30 to 60 words of primary text), the **landing page headline and button**, and a **short WhatsApp or email message**. Label each part.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Ad headline: ...\nAd text: ...\nLanding page headline: ...\nButton: ...\nMessage: ...",
+  "rules": [
+    { "label": "Has an ad headline", "pattern": "ad headline|headline:" },
+    { "label": "Has ad text", "pattern": "ad text|primary text" },
+    { "label": "Has a landing page headline", "pattern": "landing page" },
+    { "label": "Has a button or CTA", "pattern": "button|cta|call to action" },
+    { "label": "Has a message (WhatsApp or email)", "pattern": "message|whatsapp|email" },
+    { "label": "Includes a benefit and an offer", "pattern": "free|off|discount|save|fresh|never|on time" },
+    { "label": "At least 70 words in total", "minWords": 70, "maxWords": 220 }
+  ],
+  "sample": "Ad headline: Lunch at your desk by 12:30\nAd text: Tired of queuing for lunch or skipping it? FreshBox delivers a fresh, balanced meal to your office every working day, so you keep your whole break. Over 200 professionals rate us 4.8 out of 5, and your first week is 10% off.\nLanding page headline: Fresh lunch at your desk, on time or free\nButton: Get my first week 10% off\nMessage: Hi Tola, it is Ada from FreshBox. Your first week of lunches is 10% off until Friday. Reply YES and I will set up your first delivery. Reply STOP to opt out.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "dms-m10-t4",
+  "prompt": "Write your **tracking and measurement plan** in at least six lines: the metrics, one UTM link, how leads and sales are recorded, the review dates and what result would make you scale the campaign or stop it.",
+  "minutes": 6,
+  "rows": 9,
+  "placeholder": "Metrics: ...\nUTM link: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Lists metrics", "pattern": "metrics?|cpl|cpa|roas|conversion|ctr|cost per" },
+    { "label": "Includes a UTM link", "pattern": "utm_source=[a-z]+[^\\s]*utm_campaign=" },
+    { "label": "Says how leads and sales are recorded", "pattern": "record|spreadsheet|sheet|crm|log|track" },
+    { "label": "Gives review dates", "pattern": "weekly|every (monday|friday|week)|week [1-8]|day [0-9]+|review" },
+    { "label": "States a scale or stop rule", "pattern": "scale|stop|pause|increase|if .* (below|above|more than|less than|higher|lower)" }
+  ],
+  "sample": "Metrics: impressions, CTR, cost per lead, lead conversion rate, cost per customer and ROAS\nUTM link: https://www.freshbox.example/offer?utm_source=instagram&utm_medium=social&utm_campaign=launch_week\nRecording: every lead and sale goes into a shared spreadsheet with its source, entered the same day\nPixel and tags: install the Meta Pixel and set up Google Analytics key events for form submissions\nReview: every Friday I check spend, leads and cost per customer\nRule: if cost per customer stays below ₦3,000 for two weeks I will increase that channel's budget by 20%; if it is above ₦5,000 I will pause it and change the creative",
+  "required": true
+}
+```
+
+When you are done, submit your complete campaign plan as your final project.
+$md$, true, true, 10, array['dms-m10-t1', 'dms-m10-t2', 'dms-m10-t3', 'dms-m10-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: E-commerce & Online Business
@@ -80675,6 +82047,7 @@ Airlines charge for the **greater of the actual weight and the volumetric weight
 *Volumetric weight (kg) = length × width × height (cm) ÷ 6,000*
 
 Example: one carton is 60 × 40 × 50 cm and weighs 15 kg.
+
 - Volumetric weight = 60 × 40 × 50 ÷ 6,000 = 120,000 ÷ 6,000 = **20 kg**.
 - Actual weight is 15 kg, so the **chargeable weight is 20 kg**.
 
@@ -82542,6 +83915,7 @@ Four numbers do most of the work:
 *Reorder point = (average daily usage × lead time in days) + safety stock*
 
 Example: the school uses **20 reams of paper a day**. Lead time is **7 days**. Safety stock is **40 reams**.
+
 - Usage during lead time: 20 × 7 = 140 reams.
 - Reorder point = 140 + 40 = **180 reams**.
 
@@ -84543,6 +85917,7 @@ Ask an experienced forwarder, an industry association and a lawyer or accountant
 A forwarder earns from the **margin** between what carriers and suppliers charge and what the customer pays, plus fees for services such as documentation and clearance.
 
 Example: for one shipment the carrier and local costs total **$1,050**. You quote the customer **$1,300**.
+
 - Profit = 1,300 − 1,050 = **$250**.
 - Margin on selling price = 250 ÷ 1,300 = **19.2%**.
 - Markup on cost = 250 ÷ 1,050 = **23.8%**.
@@ -85017,6 +86392,7 @@ The first sourcing decision is whether to **make** something yourself or **buy**
 - You need flexibility to scale up or down.
 
 Compare costs honestly. Example: making a part costs **₦2,000,000 a year in fixed costs** (equipment, supervisor) plus **₦300 per unit**; buying costs **₦500 per unit**.
+
 - Break-even volume = fixed cost ÷ (buy price − variable make cost) = 2,000,000 ÷ (500 − 300) = **10,000 units a year**.
 - At 12,000 units: making costs 2,000,000 + 12,000 × 300 = ₦5,600,000; buying costs 12,000 × 500 = ₦6,000,000. **Make** is ₦400,000 cheaper.
 - At 8,000 units: making costs 2,000,000 + 2,400,000 = ₦4,400,000; buying costs ₦4,000,000. **Buy** is cheaper.
@@ -85163,6 +86539,7 @@ When stock falls to the **reorder point (ROP)** you place an order, so that it a
 where **z** reflects the service level you want (about 1.28 for 90%, 1.65 for 95% and 2.33 for 99%).
 
 Example: average demand 40 units a day, daily standard deviation 10, lead time 9 days, 95% service level.
+
 - Safety stock = 1.65 × 10 × √9 = 1.65 × 10 × 3 = **49.5**, about **50 units**.
 - ROP = (40 × 9) + 50 = 360 + 50 = **410 units**.
 
@@ -85177,6 +86554,7 @@ The **economic order quantity** is the order size that minimises the total of or
 where **D** is annual demand, **S** is the cost of placing one order and **H** is the cost of holding one unit for a year.
 
 Example: D = 12,000 units a year, S = ₦5,000 per order, H = ₦120 per unit a year.
+
 - EOQ = √(2 × 12,000 × 5,000 ÷ 120) = √(120,000,000 ÷ 120) = √1,000,000 = **1,000 units**.
 - Orders per year = 12,000 ÷ 1,000 = **12**, about one a month.
 
@@ -85191,6 +86569,7 @@ Not all items deserve the same attention. **ABC analysis** ranks items by annual
 - **C items:** the many items that make up the last about **5%**. Simple rules and bulk ordering.
 
 Example: five items with annual usage value ₦60m (P), ₦20m (Q), ₦10m (R), ₦6m (S) and ₦4m (T), total ₦100m.
+
 - P = 60% cumulative, Q = 80% → **A**.
 - R = 90% → **B**.
 - S = 96%, T = 100% → **C**.
@@ -97866,6 +99245,592 @@ values ('bds-f15', 1, 'Clear next steps move deals forward.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Marketing Fundamentals and Strategy: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m01-check', 'digital-marketing-sales', 'module', 'dms-m01', 'Marketing Fundamentals and Strategy: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m01-q1', 'dms-m01-check', 1, 'How do marketing and sales fit together?', '["They are unrelated","Marketing builds interest and trust; sales turns it into a purchase","Sales comes before marketing always","Marketing only means ads"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m01-q1', 1, 'They are two halves of winning customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m01-q2', 'dms-m01-check', 2, 'Which is a SMART marketing goal?', '["Get more followers","Win 30 customers from digital channels in three months at no more than ₦3,000 each","Be popular","Go viral"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m01-q2', 1, 'It has numbers, a time frame and a cost limit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m01-q3', 'dms-m01-check', 3, 'You need 30 customers at ₦3,000 each. What is the budget?', '["₦30,000","₦90,000","₦120,000","₦300,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m01-q3', 1, '30 × 3,000 = ₦90,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m01-q4', 'dms-m01-check', 4, '25% of leads become customers. How many leads for 30 customers?', '["30","75","120","300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m01-q4', 2, '30 ÷ 0.25 = 120.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m01-q5', 'dms-m01-check', 5, 'How many channels should a new business start with?', '["All of them","Two or three, done well","One only forever","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m01-q5', 1, 'Spreading thin usually fails.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Brand and Positioning: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m02-check', 'digital-marketing-sales', 'module', 'dms-m02', 'Brand and Positioning: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m02-q1', 'dms-m02-check', 1, 'What is a brand?', '["Only a logo","What people think, feel and expect about your business","A slogan","A colour"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m02-q1', 1, 'A brand is a promise and a reputation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m02-q2', 'dms-m02-check', 2, 'What does positioning answer?', '["How much to charge","For whom are we the best choice, and why?","Where the office is","What staff to hire"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m02-q2', 1, 'It is your place in customers'' minds.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m02-q3', 'dms-m02-check', 3, 'Good positioning is:', '["Vague and broad","Specific, different, valuable and believable","The same as competitors","Hidden"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m02-q3', 1, 'Specificity and proof make it work.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m02-q4', 'dms-m02-check', 4, 'Why define a tone of voice?', '["To sound the same as everyone","So the brand sounds consistent across all messages","To avoid customers","It is optional decoration"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m02-q4', 1, 'Consistency builds recognition and trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m02-q5', 'dms-m02-check', 5, 'What does a brand guide help with?', '["Tax","Anyone producing consistent work for the brand","Hiring only","Delivery"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m02-q5', 1, 'It keeps logos, colours, fonts and voice consistent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Content Marketing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m03-check', 'digital-marketing-sales', 'module', 'dms-m03', 'Content Marketing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m03-q1', 'dms-m03-check', 1, 'What is the best starting point for content ideas?', '["What competitors posted","Real questions your customers ask","Random trends","Your favourite topic"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m03-q1', 1, 'Answer real customer questions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m03-q2', 'dms-m03-check', 2, 'Which is a content pillar?', '["A single post","A theme you return to, such as tips or customer stories","A hashtag","A paid ad"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m03-q2', 1, 'Pillars keep content consistent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m03-q3', 'dms-m03-check', 3, 'What is repurposing?', '["Deleting old posts","Turning one idea into several formats for different channels","Posting the same file everywhere","Copying competitors"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m03-q3', 1, 'One idea can become many pieces.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m03-q4', 'dms-m03-check', 4, 'How should you write for the web?', '["Long and dense","Point first, short paragraphs and one clear call to action","Full of jargon","Without headings"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m03-q4', 1, 'People scan.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m03-q5', 'dms-m03-check', 5, 'Why plan with a content calendar?', '["To look busy","To be consistent and avoid daily scrambling","To avoid tracking","To post at random"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m03-q5', 1, 'A calendar keeps you consistent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Social Media Marketing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m04-check', 'digital-marketing-sales', 'module', 'dms-m04', 'Social Media Marketing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m04-q1', 'dms-m04-check', 1, 'Which platform best suits a B2B consultant?', '["LinkedIn","TikTok only","None","Snapchat only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m04-q1', 0, 'LinkedIn is the professional network.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m04-q2', 'dms-m04-check', 2, '90 likes, 20 comments and 10 shares on 4,000 followers give an engagement rate of:', '["1.5%","2.5%","3%","30%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m04-q2', 2, '120 ÷ 4,000 = 3%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m04-q3', 'dms-m04-check', 3, 'How should you choose a creator to work with?', '["Follower count only","By fit, trust and engaged audience","The cheapest","Random"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m04-q3', 1, 'Fit and trust beat raw numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m04-q4', 'dms-m04-check', 4, 'How should paid or gifted creator content be handled?', '["Hidden","Clearly disclosed as an ad or partnership","Deleted","Posted twice"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m04-q4', 1, 'Disclosure is expected and often required.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m04-q5', 'dms-m04-check', 5, 'What is the best way to handle public criticism?', '["Ignore it","Reply politely and solve the problem, in private if needed","Argue","Delete everything"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m04-q5', 1, 'A calm response impresses other viewers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Paid Advertising: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m05-check', 'digital-marketing-sales', 'module', 'dms-m05', 'Paid Advertising: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m05-q1', 'dms-m05-check', 1, '₦50,000 spent, 100,000 impressions. What is the CPM?', '["₦50","₦500","₦5,000","₦50,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m05-q1', 1, '50,000 ÷ 100,000 × 1,000 = ₦500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m05-q2', 'dms-m05-check', 2, '1,500 clicks on 100,000 impressions gives a CTR of:', '["0.15%","1.5%","15%","150%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m05-q2', 1, '1,500 ÷ 100,000 = 1.5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m05-q3', 'dms-m05-check', 3, '₦50,000 spend and 15 sales of ₦12,000 each. What is the ROAS?', '["0.36","3.6","36","180"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m05-q3', 1, '180,000 ÷ 50,000 = 3.6.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m05-q4', 'dms-m05-check', 4, 'High clicks but few leads suggests the problem is likely:', '["The audience size only","The landing page or offer after the click","The currency","The time of day only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m05-q4', 1, 'Check what happens after the click.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m05-q5', 'dms-m05-check', 5, 'How should you start paid ads?', '["With a very large budget","Small, test a few versions and scale what works","Change everything daily","Never track"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m05-q5', 1, 'Test small before you scale.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Search Engine Optimisation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m06-check', 'digital-marketing-sales', 'module', 'dms-m06', 'Search Engine Optimisation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m06-q1', 'dms-m06-check', 1, 'What is a long-tail keyword?', '["A very short popular term","A longer, specific phrase with less competition","A paid keyword","A hashtag"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m06-q1', 1, 'Specific phrases are easier to win and convert better.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m06-q2', 'dms-m06-check', 2, 'Which intent is ''how to remove stains from a sofa''?', '["Transactional","Informational","Navigational","Commercial"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m06-q2', 1, 'The searcher wants to learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m06-q3', 'dms-m06-check', 3, 'About how long should a title tag be?', '["10 characters","50 to 60 characters","200 characters","500 characters"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m06-q3', 1, 'Longer titles are cut off.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m06-q4', 'dms-m06-check', 4, 'What most helps local search ranking and choice?', '["A complete Google Business Profile and good reviews","Buying links","Keyword stuffing","Hiding your address"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m06-q4', 0, 'Complete profiles and reviews matter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m06-q5', 'dms-m06-check', 5, 'What should you avoid in link building?', '["Useful content","Buying links or link schemes","Local directories","Partnerships"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m06-q5', 1, 'Link schemes risk penalties.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Email and WhatsApp Marketing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m07-check', 'digital-marketing-sales', 'module', 'dms-m07', 'Email and WhatsApp Marketing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m07-q1', 'dms-m07-check', 1, '960 delivered, 288 opened. What is the open rate?', '["28.8%","30%","33%","96%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m07-q1', 1, '288 ÷ 960 = 30%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m07-q2', 'dms-m07-check', 2, 'Before messaging people in bulk you must have:', '["Their consent","Their address","A discount","A logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m07-q2', 0, 'Permission and data protection rules apply.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m07-q3', 'dms-m07-check', 3, 'A WhatsApp broadcast only reaches people who:', '["Have saved your number and agreed to receive it","Follow you on Instagram","Live in Lagos","Are in a group"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m07-q3', 0, 'Broadcasts need saved numbers and permission.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m07-q4', 'dms-m07-check', 4, 'Which email usually has the highest open rate?', '["Welcome email","Random promotion","Spam","Old newsletter"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m07-q4', 0, 'Welcome emails are expected and timely.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m07-q5', 'dms-m07-check', 5, 'What should every marketing message include?', '["A long story","An easy way to opt out","Jargon","No call to action"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m07-q5', 1, 'Easy unsubscribe protects trust and compliance.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Funnels, Landing Pages and Conversion: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m08-check', 'digital-marketing-sales', 'module', 'dms-m08', 'Funnels, Landing Pages and Conversion: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m08-q1', 'dms-m08-check', 1, '40 of 1,000 visitors convert on A; 55 of 1,000 on B. What is B''s relative improvement?', '["1.5%","15%","37.5%","55%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m08-q1', 2, '(5.5 − 4) ÷ 4 = 37.5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m08-q2', 'dms-m08-check', 2, 'What should a landing page''s headline do?', '["Be a surprise","Match the ad or link they clicked","Be as long as possible","Hide the offer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m08-q2', 1, 'Consistency reassures visitors.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m08-q3', 'dms-m08-check', 3, 'How many main actions should a landing page focus on?', '["Five","One","Ten","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m08-q3', 1, 'One page, one purpose.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m08-q4', 'dms-m08-check', 4, 'In an A/B test, you should change:', '["Everything","One thing at a time","Nothing","Only the logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m08-q4', 1, 'Change one thing to learn what caused the result.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m08-q5', 'dms-m08-check', 5, 'Which CTA is strongest?', '["Submit","Get my free quote in 2 hours","Click","Learn"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m08-q5', 1, 'It starts with a verb and states the benefit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Analytics and Reporting: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m09-check', 'digital-marketing-sales', 'module', 'dms-m09', 'Analytics and Reporting: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m09-q1', 'dms-m09-check', 1, 'A campaign costs ₦150,000 and brings ₦450,000. What is the ROI?', '["100%","200%","300%","450%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m09-q1', 1, '(450,000 − 150,000) ÷ 150,000 = 200%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m09-q2', 'dms-m09-check', 2, 'What do UTM parameters do?', '["Speed up a page","Label links so analytics shows which campaign brought each visit","Block ads","Encrypt data"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m09-q2', 1, 'UTMs identify source, medium and campaign.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m09-q3', 'dms-m09-check', 3, 'Which is a vanity metric?', '["Cost per customer","Followers on their own","Sales","Conversion rate"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m09-q3', 1, 'Followers alone do not prove business results.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m09-q4', 'dms-m09-check', 4, 'How should a report start?', '["With every chart","With a summary and the headline result against the goal","With jargon","With excuses"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m09-q4', 1, 'Start with the answer.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m09-q5', 'dms-m09-check', 5, 'Revenue of ₦450,000 means profit of:', '["₦450,000","Revenue minus costs, which need to be subtracted","Nothing ever","₦150,000 always"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m09-q5', 1, 'Revenue is not profit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Full Campaign: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('dms-m10-check', 'digital-marketing-sales', 'module', 'dms-m10', 'Final Project: A Full Campaign: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m10-q1', 'dms-m10-check', 1, 'How should a campaign plan be introduced to a client?', '["With a long history","With a one-page summary of goal, plan, budget and expected result","With only a logo","Verbally only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m10-q1', 1, 'Decision makers need the summary first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m10-q2', 'dms-m10-check', 2, 'Why plan tracking before launch?', '["To look professional","So you can learn which channels and messages worked","It is required by law","To avoid spending"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m10-q2', 1, 'Without tracking you cannot learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m10-q3', 'dms-m10-check', 3, '60 customers at ₦3,000 each need a budget of:', '["₦60,000","₦120,000","₦180,000","₦300,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m10-q3', 2, '60 × 3,000 = ₦180,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m10-q4', 'dms-m10-check', 4, '60 customers with a 25% lead-to-customer rate need how many leads?', '["60","120","240","300"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m10-q4', 2, '60 ÷ 0.25 = 240.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-m10-q5', 'dms-m10-check', 5, 'What is a sensible rule for scaling a channel?', '["Scale after one good day","Scale when cost per customer stays below target over a set period","Never scale","Scale every channel equally"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-m10-q5', 1, 'Use a clear, pre-agreed rule.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Digital Marketing & Sales: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('digital-marketing-sales-final', 'digital-marketing-sales', 'final', null, 'Digital Marketing & Sales: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f01', 'digital-marketing-sales-final', 1, 'What is the best first step in digital marketing?', '["Buy ads","Understand your customer and set a clear goal","Open every social account","Design a logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f01', 1, 'Strategy starts with customer and goal.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f02', 'digital-marketing-sales-final', 2, '30 customers at ₦3,000 each means a budget of:', '["₦30,000","₦90,000","₦120,000","₦300,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f02', 1, '30 × 3,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f03', 'digital-marketing-sales-final', 3, 'Which is the best positioning statement?', '["We are the best","For busy professionals who have no time to cook, we deliver fresh lunch to the office; unlike canteens, we are on time or free","We sell food","Great food, great prices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f03', 1, 'It names customer, need, benefit and difference.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f04', 'digital-marketing-sales-final', 4, 'What does repurposing content mean?', '["Copying others","Turning one idea into several formats for different channels","Deleting posts","Buying content"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f04', 1, 'One idea, many pieces.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f05', 'digital-marketing-sales-final', 5, 'A post with 120 interactions on 4,000 followers has an engagement rate of:', '["1.2%","3%","12%","30%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f05', 1, '120 ÷ 4,000 = 3%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f06', 'digital-marketing-sales-final', 6, '₦50,000 spend, 15 sales of ₦12,000. What is the ROAS?', '["3.6","0.36","15","30"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f06', 0, '180,000 ÷ 50,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f07', 'digital-marketing-sales-final', 7, 'High CTR and few leads most likely points to:', '["The landing page or offer","The wrong currency","Too many followers","The logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f07', 0, 'The problem is after the click.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f08', 'digital-marketing-sales-final', 8, 'Which is an informational keyword?', '["book sofa cleaning Lekki","how to remove stains from a sofa","FreshClean Lagos","price of deep cleaning"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f08', 1, 'The searcher wants to learn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f09', 'digital-marketing-sales-final', 9, 'Which helps local search the most?', '["A complete Google Business Profile with reviews","Buying links","A longer title tag","More hashtags"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f09', 0, 'Complete profiles and reviews drive local results.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f10', 'digital-marketing-sales-final', 10, '1,000 sent, 960 delivered, 288 opened, 48 clicked. What is the click-through rate on delivered?', '["4.8%","5%","16.7%","30%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f10', 1, '48 ÷ 960 = 5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f11', 'digital-marketing-sales-final', 11, 'What is required before messaging people in bulk on WhatsApp or email?', '["Their consent and a way to opt out","Nothing","A discount","A new number"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f11', 0, 'Consent and opt-out are essential.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f12', 'digital-marketing-sales-final', 12, 'A: 4% conversion; B: 5.5%. B''s relative improvement is:', '["1.5%","15%","37.5%","55%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f12', 2, '1.5 ÷ 4 = 37.5%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f13', 'digital-marketing-sales-final', 13, 'Which tracks which campaign brought a visit?', '["UTM parameters","A logo","A hashtag only","A colour"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f13', 0, 'UTM labels carry source, medium and campaign.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f14', 'digital-marketing-sales-final', 14, 'A campaign costs ₦150,000 and brings ₦450,000. ROI is:', '["100%","200%","300%","450%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f14', 1, '(450,000 − 150,000) ÷ 150,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('dms-f15', 'digital-marketing-sales-final', 15, 'Which is the most useful monthly report format?', '["A long list of every metric","A short summary with the headline, key numbers, what worked, and next actions","A single chart","A verbal comment"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('dms-f15', 1, 'Summaries drive decisions.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -98254,6 +100219,16 @@ values ('bds-sales-plan-pitch', 'business-development-sales', 'Your sales plan a
 Use real prices and real customer information where you can, and state your assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **pitch** and your **target and funnel numbers** below, with a short note on where to find each part.
 
 Write for a sales manager or a business owner who must decide whether your plan is realistic.$md$, array['Product and market: what you sell, the problem it solves, the price, your ideal customer profile and main competitors.', 'Customer understanding: pains and gains, decision makers and the main objections with answers.', 'Lead generation: sources, at least one outreach message and your qualifying questions.', 'Sales process and tools: pipeline stages with probabilities, a CRM sheet design and a weekly routine.', 'Targets and forecast: a revenue target worked back through wins, proposals, meetings and contacts, with a weighted forecast.', 'A written pitch with a hook, problem, solution, proof, price and a clear ask with a date.', 'How you will measure and improve: the metrics you will track and your first improvement action.']::text[], '{}'::text[], array['The ideal customer and the problem are specific and credible.', 'Customer understanding reflects real pains, decision makers and likely objections, with honest answers.', 'Lead generation uses several sources, and messages are personal, brief and relevant.', 'The pipeline, CRM and routines are practical and used consistently.', 'The targets and funnel maths are correct and realistic.', 'The pitch is clear, honest, customer-focused and ends with a specific next step.', 'Measurement is tied to action, with sensible metrics and an improvement plan.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A complete marketing campaign
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('dms-full-campaign', 'digital-marketing-sales', 'A complete marketing campaign', 'Plan a full digital marketing campaign for a real or realistic business: goal, channels, assets, funnel, tracking and a report plan.', $md$Choose a business you know and a specific goal, such as launching a product, filling quiet days or winning new customers in a month. Plan the full campaign: strategy, channels and budget, the assets you would use, the funnel and offer, tracking and measurement, and a timeline.
+
+Use real prices and information where you can, and state your assumptions. Submit a link to your campaign plan (a shared document, PDF or folder) and paste your **goal and budget maths** and your **core message** below, with a short note on where to find each part.
+
+Write for the owner or client who must approve the budget: lead with a one-page summary, then show the evidence and the numbers.$md$, array['Goal, audience and strategy: a SMART goal worked back to leads, customers and budget, a customer persona and the core message.', 'Channels and budget: two or three channels with reasons, a budget split and expected results.', 'Creative assets: an ad (headline, text, call to action), a landing page plan and an email or WhatsApp message.', 'A four-week content calendar with channels, formats and calls to action.', 'Funnel and conversion: the customer journey, the offer and a planned A/B test.', 'Tracking and measurement: metrics, UTM links, pixels or codes, how leads and sales are recorded, and scale or stop rules.', 'Timeline, risks and the report you will deliver at the end.']::text[], '{}'::text[], array['The goal is specific and the budget and lead numbers are calculated correctly from it.', 'The audience, message and positioning are clear and consistent across all assets.', 'Channels are justified by where the customer is, and the budget split is realistic.', 'Creative assets are clear, benefit-led and ethical, with one call to action each.', 'The funnel and landing page plan remove friction and include a sensible test.', 'Tracking is set up so results can be traced to channels, with clear scale or stop rules.', 'The plan complies with consent and advertising rules, and risks are acknowledged honestly.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 

@@ -25,6 +25,7 @@ Airlines charge for the **greater of the actual weight and the volumetric weight
 *Volumetric weight (kg) = length × width × height (cm) ÷ 6,000*
 
 Example: one carton is 60 × 40 × 50 cm and weighs 15 kg.
+
 - Volumetric weight = 60 × 40 × 50 ÷ 6,000 = 120,000 ÷ 6,000 = **20 kg**.
 - Actual weight is 15 kg, so the **chargeable weight is 20 kg**.
 

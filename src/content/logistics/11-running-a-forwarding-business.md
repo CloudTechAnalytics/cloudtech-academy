@@ -43,6 +43,7 @@ Ask an experienced forwarder, an industry association and a lawyer or accountant
 A forwarder earns from the **margin** between what carriers and suppliers charge and what the customer pays, plus fees for services such as documentation and clearance.
 
 Example: for one shipment the carrier and local costs total **$1,050**. You quote the customer **$1,300**.
+
 - Profit = 1,300 − 1,050 = **$250**.
 - Margin on selling price = 250 ÷ 1,300 = **19.2%**.
 - Markup on cost = 250 ÷ 1,050 = **23.8%**.

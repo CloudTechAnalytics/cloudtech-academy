@@ -23,6 +23,7 @@ The first sourcing decision is whether to **make** something yourself or **buy**
 - You need flexibility to scale up or down.
 
 Compare costs honestly. Example: making a part costs **₦2,000,000 a year in fixed costs** (equipment, supervisor) plus **₦300 per unit**; buying costs **₦500 per unit**.
+
 - Break-even volume = fixed cost ÷ (buy price − variable make cost) = 2,000,000 ÷ (500 − 300) = **10,000 units a year**.
 - At 12,000 units: making costs 2,000,000 + 12,000 × 300 = ₦5,600,000; buying costs 12,000 × 500 = ₦6,000,000. **Make** is ₦400,000 cheaper.
 - At 8,000 units: making costs 2,000,000 + 2,400,000 = ₦4,400,000; buying costs ₦4,000,000. **Buy** is cheaper.

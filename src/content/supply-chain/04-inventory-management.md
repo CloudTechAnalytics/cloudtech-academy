@@ -29,6 +29,7 @@ When stock falls to the **reorder point (ROP)** you place an order, so that it a
 where **z** reflects the service level you want (about 1.28 for 90%, 1.65 for 95% and 2.33 for 99%).
 
 Example: average demand 40 units a day, daily standard deviation 10, lead time 9 days, 95% service level.
+
 - Safety stock = 1.65 × 10 × √9 = 1.65 × 10 × 3 = **49.5**, about **50 units**.
 - ROP = (40 × 9) + 50 = 360 + 50 = **410 units**.
 
@@ -43,6 +44,7 @@ The **economic order quantity** is the order size that minimises the total of or
 where **D** is annual demand, **S** is the cost of placing one order and **H** is the cost of holding one unit for a year.
 
 Example: D = 12,000 units a year, S = ₦5,000 per order, H = ₦120 per unit a year.
+
 - EOQ = √(2 × 12,000 × 5,000 ÷ 120) = √(120,000,000 ÷ 120) = √1,000,000 = **1,000 units**.
 - Orders per year = 12,000 ÷ 1,000 = **12**, about one a month.
 
@@ -57,6 +59,7 @@ Not all items deserve the same attention. **ABC analysis** ranks items by annual
 - **C items:** the many items that make up the last about **5%**. Simple rules and bulk ordering.
 
 Example: five items with annual usage value ₦60m (P), ₦20m (Q), ₦10m (R), ₦6m (S) and ₦4m (T), total ₦100m.
+
 - P = 60% cumulative, Q = 80% → **A**.
 - R = 90% → **B**.
 - S = 96%, T = 100% → **C**.
