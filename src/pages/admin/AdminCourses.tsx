@@ -1,5 +1,6 @@
 import { enrolmentState, isPaid, priceLabel } from "@/lib/commerce";
 import { useMemo, useState } from "react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { DIVISIONS, divisionOf } from "@/content/catalog";
 import { getBackend } from "@/lib/backend";
@@ -23,6 +24,8 @@ export default function AdminCourses() {
     else next.delete(k);
     setParams(next, { replace: true });
   };
+  const [draft, setDraft] = useState(get("q"));
+  const [showFilters, setShowFilters] = useState(false);
   const [creating, setCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -129,11 +132,46 @@ export default function AdminCourses() {
         </form>
       )}
 
-      <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        <label className="text-[0.8125rem] font-medium lg:col-span-1">
-          Search
-          <input type="search" className={filterCls} value={get("q")} onChange={(e) => set("q", e.target.value)} placeholder="Title or slug" />
-        </label>
+      <div className="sticky top-[4.5rem] z-30 -mx-1 mb-4 bg-ivory/95 px-1 py-3 backdrop-blur">
+        <form
+          role="search"
+          className="flex flex-wrap items-center gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            set("q", draft.trim());
+          }}
+        >
+          <div className="relative min-w-[14rem] flex-1">
+            <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" />
+            <input
+              type="search"
+              aria-label="Search courses"
+              className="block w-full rounded-lg border border-line-strong bg-paper py-2.5 pl-9 pr-9 text-[0.9375rem]"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="Search by title or slug, then press Search"
+            />
+            {draft && (
+              <button
+                type="button"
+                aria-label="Clear the search"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-subtle hover:text-ink"
+                onClick={() => {
+                  setDraft("");
+                  set("q", "");
+                }}
+              >
+                <X aria-hidden className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          <Button type="submit">Search</Button>
+          <Button type="button" variant="secondary" onClick={() => setShowFilters((x) => !x)} aria-expanded={showFilters}>
+            <SlidersHorizontal aria-hidden className="h-4 w-4" /> Filters{[...params.keys()].filter((k) => k !== "q").length ? ` (${[...params.keys()].filter((k) => k !== "q").length})` : ""}
+          </Button>
+        </form>
+        {showFilters && (
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <label className="text-[0.8125rem] font-medium">
           Area
           <select className={filterCls} value={get("area")} onChange={(e) => set("area", e.target.value)}>
@@ -172,14 +210,23 @@ export default function AdminCourses() {
             <option value="archived">Archived</option>
           </select>
         </label>
+          </div>
+        )}
       </div>
       <p className="mb-3 text-[0.875rem] text-muted" aria-live="polite">
         Showing {shown.length} of {courses.length} courses
         {params.size > 0 && (
           <>
             {" "}
-            <button type="button" className="font-semibold text-brass-dark" onClick={() => setParams({}, { replace: true })}>
-              Clear filters
+            <button
+              type="button"
+              className="font-semibold text-brass-dark"
+              onClick={() => {
+                setDraft("");
+                setParams({}, { replace: true });
+              }}
+            >
+              Clear search and filters
             </button>
           </>
         )}
