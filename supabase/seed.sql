@@ -92253,42 +92253,1181 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Customer Service & Client Management
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('customer-service-client-management', 'full', null, 'customer-service-client-management', 'CSCM', 'Customer Service & Client Management', 'Serve customers well in person, by phone and online: communication, complaints, relationships and keeping clients for the long term.', 'A practical beginner course for customer-facing staff, front desk teams and anyone who manages clients. You learn communication, service standards, handling complaints, difficult people, managing client relationships and measuring service quality.', 'professional-skills', 'beginner', 2, 'Beginner', null, false, 'coming_soon', true, array['Customer communication', 'Handling complaints', 'Client relationship management', 'Service standards', 'Phone and online service', 'Measuring satisfaction']::text[], array['No experience needed']::text[], 'A service improvement plan', true, true, true, true, false, 60, 59)
+values ('customer-service-client-management', 'short', 'Customer Service Professional', 'customer-service-client-management', 'CSCM', 'Customer Service & Client Management', 'Serve customers well in person, by phone and online: communication, complaints, relationships and keeping clients for the long term.', 'A practical beginner course for customer-facing staff, front desk teams and anyone who manages clients. You learn communication, service standards, handling complaints, difficult people, managing client relationships and measuring service quality.', 'professional-skills', 'beginner', 2, 'Beginner', 4, false, 'available', true, array['Customer communication', 'Handling complaints', 'Client relationship management', 'Service standards', 'Phone and online service', 'Measuring satisfaction']::text[], array['No experience needed']::text[], 'A service improvement plan', true, true, true, true, false, 60, 59)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 50000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'Customers remember how you made them feel. This course gives you the skills and scripts to serve customers well in every channel, handle problems calmly and build lasting client relationships, with a practical service improvement project to finish.', audience = array['Customer service and front desk staff', 'Sales and support teams', 'Small business owners who deal with clients', 'Anyone starting a customer-facing job']::text[], included = '{}'::text[], project_previews = '[{"title":"A service improvement plan","summary":"Review a real or realistic customer service operation and write a plan to improve it, with scripts and standards."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Communicate clearly and warmly with customers', 'Handle complaints and angry customers calmly', 'Serve well by phone, WhatsApp, email and in person', 'Manage client expectations and relationships', 'Keep clients and win repeat business', 'Measure and improve service quality']::text[], difficulty_max = null, duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No. The course starts from the beginning and assumes no experience."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'customer-service-client-management' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 50000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 months', overview = 'Customers remember how you made them feel. This course gives you the skills and scripts to serve customers well in every channel, handle problems calmly and build lasting client relationships, with a practical service improvement project to finish.', audience = array['Customer service and front desk staff', 'Sales and support teams', 'Small business owners who deal with clients', 'Anyone starting a customer-facing job']::text[], included = '{}'::text[], project_previews = '[{"title":"A service improvement plan","summary":"Review a real or realistic customer service operation and write a plan to improve it, with scripts and standards."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Communicate clearly and warmly with customers', 'Handle complaints and angry customers calmly', 'Serve well by phone, WhatsApp, email and in person', 'Manage client expectations and relationships', 'Keep clients and win repeat business', 'Measure and improve service quality']::text[], difficulty_max = null, duration_weeks = 8, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No. The course starts from the beginning and assumes no experience."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'customer-service-client-management' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m01', 'customer-service-client-management', 'What great customer service is', 1, null, null, '{}'::text[], array['Customers, clients and expectations', 'Why service matters to a business', 'Your role and attitude', 'Professional behaviour']::text[])
+values ('cscm-m01', 'customer-service-client-management', 'What great customer service is', 1, 'Service Basics', 'SERVBAS', array['Define customer service', 'Understand expectations', 'Show the right attitude', 'Behave professionally']::text[], array['Customers, clients and expectations', 'Why service matters to a business', 'Your role and attitude', 'Professional behaviour']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m02', 'customer-service-client-management', 'Communication skills', 2, null, null, '{}'::text[], array['Listening and questioning', 'Clear, polite writing', 'Tone and body language', 'Cultural awareness']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:what-great-customer-service-is', 'customer-service-client-management', 'cscm-m01', 'what-great-customer-service-is', 'What Great Customer Service Is', 'Understand customers, clients and expectations, why service matters to a business, your role and attitude and professional behaviour.', 25, $md$
+## Customers, clients and expectations
+
+A **customer** is someone who buys from you, often in quick transactions: a shopper, a diner, a person who pays a bill. A **client** is usually someone you serve over time, often with advice or a contract: a law firm's client, a consultant's client, a school's parent. Both deserve great service, but clients need a **relationship** as well as a transaction (module 5).
+
+Also remember **internal customers:** colleagues who depend on your work. Good internal service makes good external service possible.
+
+**Customer service** is everything you do before, during and after a sale to help customers get value and feel respected. It is not only the person at the desk or on the phone: it includes the website, the packaging, delivery, billing, the way problems are handled and how people are greeted.
+
+Customers judge service against their **expectations,** which come from:
+
+- **What you promised** (adverts, staff, the website).
+- **Past experience** with you and with similar businesses.
+- **What others say** (reviews, friends).
+- **Price:** higher price, higher expectations.
+- **Their needs and mood** at that moment.
+
+The key idea: **satisfaction = what they experience − what they expected.** If the experience beats the expectation, customers are delighted. If it falls short, they are disappointed, even if the service was objectively decent. So **promise what you can deliver, and then deliver it.**
+
+Most customers want the same basics: **to be treated with respect, to get help quickly, to be told the truth, to have problems fixed, and to deal with someone who knows their job.**
+
+## Why service matters to a business
+
+Good service is not a nice extra. It affects money.
+
+- **Retention:** keeping a customer costs far less than winning a new one.
+- **Repeat sales and bigger purchases.**
+- **Word of mouth and reviews:** happy customers recommend you; unhappy ones tell more people, and now do it online.
+- **Price tolerance:** customers pay more for businesses they trust.
+- **Fewer complaints and returns,** and lower stress for staff.
+- **A competitive edge:** in many markets, products are similar and service is the difference.
+
+Example: a customer spends **₦15,000 a month** for **12 months** with a **30% margin.** Lifetime profit = 15,000 × 12 × 0.30 = **₦54,000.** If poor service loses **20 customers** a year, the lost profit is 20 × 54,000 = **₦1,080,000,** a figure that dwarfs the cost of a training session or a better process.
+
+Great service also makes **work more rewarding.** People enjoy helping, and customers who are treated well are easier to deal with.
+
+## Your role and attitude
+
+Whatever your job, **you represent the business.** To the customer, you **are** the company at that moment.
+
+The right **attitude** is the foundation:
+
+- **Care:** genuinely want to help.
+- **Respect:** treat every person with dignity, whatever their background, mood or how much they spend.
+- **Patience:** especially with confused or upset customers.
+- **Ownership:** "I will find out and come back to you" instead of "That is not my department." If you cannot solve it, make sure the right person does.
+- **Positivity:** focus on what you can do, not only on what you cannot.
+- **Honesty:** do not make things up; admit when you do not know and find out.
+- **Resilience:** do not take rudeness personally; stay professional and look after yourself.
+- **Willingness to learn:** know your products, policies and systems, so you can help confidently.
+
+A useful habit is to put yourself in the customer's shoes: *If I were them, what would I want right now?*
+
+## Professional behaviour
+
+Professional behaviour builds trust and makes the business look good.
+
+- **Appearance:** neat, clean, appropriate dress for your workplace.
+- **Punctuality:** be ready when the doors open; answer promptly.
+- **Greeting:** greet warmly and quickly with a smile, eye contact (where culturally appropriate) and a clear greeting such as "Good morning, welcome to ... How may I help you?"
+- **Language:** polite, clear and respectful; use titles (Sir, Ma, Mr, Mrs, Dr) when appropriate, and avoid slang, shouting or arguing.
+- **Attention:** put your phone away when serving; do not chat with colleagues while a customer waits.
+- **Confidentiality:** do not discuss other customers or the business's private matters.
+- **Honesty and integrity:** never take bribes or favour friends unfairly; handle money and records carefully.
+- **Teamwork:** help colleagues and do not blame others in front of customers.
+- **Dealing with mistakes:** apologise, fix, learn.
+- **Safety and hygiene:** follow the rules.
+- **Social media:** do not post about customers or complain about the business online.
+
+> [!TIP]
+> The first 30 seconds set the tone. A warm greeting, undivided attention and a clear offer of help make customers feel welcome before any problem is solved.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m01-t1",
+  "prompt": "A customer spends **₦15,000 a month** for **12 months** and your margin is **30%**. Work out the **lifetime profit** of one customer, and the profit lost if poor service loses **20 customers**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Lifetime profit = ...",
+  "rules": [
+    { "label": "Lifetime profit of ₦54,000", "pattern": "54,?000" },
+    { "label": "Loss of ₦1,080,000", "pattern": "1,?080,?000" },
+    { "label": "Shows the calculation", "pattern": "15,?000\\s?[x×*]\\s?12" }
+  ],
+  "sample": "Lifetime profit = 15,000 x 12 x 0.30 = ₦54,000 per customer.\nLosing 20 customers = 20 x 54,000 = ₦1,080,000 of lost profit.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m01-t2",
+  "prompt": "Describe in 60 to 120 words **a time you received very good or very poor service**: what happened, what you expected, what you experienced and how it made you feel and act (return, recommend, complain).",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "I once ...",
+  "rules": [
+    { "label": "Describes what happened", "pattern": "i (went|called|visited|ordered|bought|waited|asked)|once|last|when i" },
+    { "label": "States what was expected", "pattern": "expect|hoped|thought|assumed" },
+    { "label": "States what was experienced", "pattern": "but|instead|however|staff|waiter|assistant|cashier|agent|manager" },
+    { "label": "States the effect on behaviour or feeling", "pattern": "feel|felt|never|again|recommend|complain|return|told|annoy|happy|angry|impress" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Last year I went to a phone shop to repair my screen. I expected a quick, polite answer about the price, but I waited ten minutes while two staff chatted, and then I was told to come back tomorrow without an explanation. The next shop greeted me immediately, explained the cost and time, and finished in an hour. I felt respected there, I paid gladly and I recommended them to three friends. I never went back to the first shop. It showed me that attitude and attention matter as much as the repair.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m01-t3",
+  "prompt": "Write a **personal service standard** of at least six lines for your role: how you greet customers, how fast you respond, how you speak, what you do when you do not know the answer, how you handle mistakes and how you protect confidentiality.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "I will greet every customer within ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Greeting", "pattern": "greet|welcome|smile" },
+    { "label": "Speed or response time", "pattern": "within \\d+|\\d+\\s*(seconds|minutes|hours)|quickly|promptly" },
+    { "label": "Polite language or titles", "pattern": "polite|respect|sir|ma\\b|mr|mrs|title" },
+    { "label": "Does not know the answer: find out and come back", "pattern": "find out|come back|do not know|don't know|ask a colleague|escalate" },
+    { "label": "Mistakes: apologise and fix", "pattern": "apolog|sorry|fix|put right|mistake" },
+    { "label": "Confidentiality", "pattern": "confidential|private|discuss" }
+  ],
+  "sample": "I will greet every customer within 10 seconds with a smile and a clear welcome.\nI will answer questions promptly and give my full attention, with my phone away.\nI will speak politely and use Sir or Ma and the customer's name when I know it.\nIf I do not know the answer, I will say so, find out and come back to the customer with a time.\nIf I make a mistake, I will apologise, fix it and tell my manager so it does not happen again.\nI will never discuss one customer's business with another, and I will keep records private.",
+  "required": false
+}
+```
+
+Next lesson: communication skills.
+$md$, true, true, 1, array['cscm-m01-t1', 'cscm-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m03', 'customer-service-client-management', 'Serving customers in every channel', 3, null, null, '{}'::text[], array['In person and at the front desk', 'Phone etiquette', 'WhatsApp, email and social media', 'Live chat and response times']::text[])
+values ('cscm-m02', 'customer-service-client-management', 'Communication skills', 2, 'Service Comms', 'SERVCOMM', array['Listen and question well', 'Write clearly and politely', 'Use tone and body language', 'Respect cultural differences']::text[], array['Listening and questioning', 'Clear, polite writing', 'Tone and body language', 'Cultural awareness']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m04', 'customer-service-client-management', 'Handling complaints and difficult people', 4, null, null, '{}'::text[], array['Why customers complain', 'A step by step complaint process', 'Staying calm with angry customers', 'Saying no well', 'Service recovery']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:communication-skills', 'customer-service-client-management', 'cscm-m02', 'communication-skills', 'Communication Skills', 'Listen and question well, write clearly and politely, use tone and body language and be aware of cultural differences.', 25, $md$
+## Listening and questioning
+
+Most service problems begin with misunderstanding. Good listening and good questions prevent it.
+
+**Active listening** means giving full attention and showing that you understand.
+
+- **Stop and focus.** Put down what you are doing; look at the person.
+- **Do not interrupt,** even if you think you know what they will say.
+- **Show you are listening:** nod, say "I see," "Go on."
+- **Listen for feelings and needs,** not just facts. "I have called three times" means frustration.
+- **Reflect and summarise:** "So the delivery was due yesterday and you have not received it. Is that right?"
+- **Take notes** for complex requests.
+- **Do not judge or argue** while listening.
+
+**Questioning** helps you understand.
+
+- **Open questions** (what, how, why, tell me about) get fuller answers: *"What happened when you tried to pay?"*
+- **Closed questions** (yes/no or one fact) confirm details: *"Is the order number 4821?"*
+- **Probing questions** go deeper: *"Can you tell me more about that?"*
+- **Clarifying questions** check meaning: *"When you say 'slow,' how long did you wait?"*
+- **Avoid leading or blaming questions:** "Did you read the instructions?" sounds accusing. Try "Let me check where it went wrong."
+
+A good pattern: **listen, ask, summarise, then act.** Do not suggest a solution before you understand the problem.
+
+## Clear, polite writing
+
+Much customer service is written: emails, WhatsApp messages, letters, forms and social media replies. Writing has no tone of voice, so clarity and courtesy matter even more.
+
+**Principles:**
+
+- **Start with a greeting and the person's name.**
+- **Thank them or acknowledge their message.**
+- **Answer the question in the first lines.**
+- **Be clear and concise:** short sentences, simple words, no jargon.
+- **Be specific:** dates, amounts, next steps.
+- **Be polite and positive:** say what you can do, not only what you cannot.
+- **Use a logical structure:** short paragraphs and bullets for steps.
+- **End with a next step or an offer of further help,** and a courteous closing.
+- **Check spelling, names and numbers** before sending. Mistakes look careless.
+- **Do not write in capitals** (it reads as shouting) or use too many exclamation marks.
+- **Avoid sarcasm and blame.** Do not write anything you would not say to the customer's face, since messages can be forwarded or posted online.
+
+**Rewrite example.**
+*Weak:* "Your payment didn't go through. Try again."
+*Better:* "Good afternoon Mrs Ade, thank you for your order. Unfortunately, your payment did not go through. This sometimes happens when a bank declines a card. You can try again with the same card, or pay by transfer to the account below. I will keep your order for 24 hours. Please let me know if I can help."
+
+## Tone and body language
+
+Many impressions come from **how** you say things, not only what you say.
+
+**Tone of voice:** warm, calm, steady and friendly. Smile when you speak on the phone; people can hear it. Avoid sounding bored, rushed or defensive. Speak clearly and at a moderate pace.
+
+**Body language (in person):**
+
+- **Posture:** upright, open, facing the person.
+- **Eye contact:** friendly and natural, remembering that norms differ and that, in some contexts, prolonged direct eye contact with elders or seniors may be seen as disrespectful.
+- **Facial expression:** a genuine smile and an attentive face.
+- **Gestures:** calm; avoid pointing, crossed arms, eye rolling or checking your phone.
+- **Space and touch:** respect personal space; be careful with touch, following local customs.
+- **Appearance:** neat and professional.
+
+When words and body language disagree, people believe the body language. Saying "I am happy to help" while looking at your phone does not work.
+
+**Words that help:** "Certainly," "I would be glad to," "Let me check that for you," "Thank you for your patience," "I understand," "I will make sure..." **Words to avoid:** "That's not my job," "You should have...," "I don't know" (without "but I will find out"), "Calm down," "It's company policy" (without explaining), and anything blaming.
+
+## Cultural awareness
+
+Nigeria is diverse: many ethnic groups, languages, religions and customs, and customers also come from abroad. Cultural awareness means respecting differences and avoiding assumptions.
+
+- **Greetings matter.** In many communities a proper greeting comes before business. A quick "Good morning, how are you?" is polite and warmly received.
+- **Respect for age and seniority:** use titles (Sir, Ma, Chief, Doctor, Alhaji, Alhaja, Mr, Mrs), and do not be over-familiar.
+- **Names:** learn to pronounce and spell names correctly; ask if unsure.
+- **Language:** use the language the customer is comfortable with, if you can, and speak clearly and without slang to those who are not fluent. Do not mock accents.
+- **Religion and customs:** respect prayer times, fasting periods, holidays and dress norms where relevant.
+- **Gender and fairness:** treat all customers with equal respect.
+- **Directness:** some people prefer indirect or gentler communication; others prefer directness. Watch and adapt.
+- **Time and patience:** attitudes to time and waiting differ; manage expectations clearly.
+- **Customers with disabilities or special needs:** offer help respectfully, ask what they need rather than assuming, speak directly to the person, and be patient.
+
+Avoid stereotypes. Treat each person as an individual, and if you make a mistake, apologise sincerely.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m02-t1",
+  "prompt": "Rewrite this weak reply into a clear, polite message of 50 to 100 words: *\"Your payment didn't go through. Try again.\"* Include a greeting with a name, thanks, the issue, an explanation or option, a next step and a courteous closing.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Good afternoon ...",
+  "rules": [
+    { "label": "Greets with a name", "pattern": "good (morning|afternoon|evening)|hello|dear|hi " },
+    { "label": "Thanks or acknowledges", "pattern": "thank|appreciate" },
+    { "label": "States the issue", "pattern": "payment" },
+    { "label": "Offers an option or explanation", "pattern": "try again|transfer|another|option|card|bank|you can" },
+    { "label": "States a next step or offer of help", "pattern": "let me know|please|i will|we will|help" },
+    { "label": "Courteous closing", "pattern": "regards|sincerely|thank you|best wishes|kind" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Good afternoon Mrs Ade, thank you for your order. Unfortunately, your payment did not go through. This sometimes happens when a bank declines a card. You can try again with the same card, or pay by transfer to the account below. I will keep your order for 24 hours so you do not lose it. Please let me know if you need any help or would like me to send a payment link. Kind regards, Chidi, Customer Care.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m02-t2",
+  "prompt": "A customer says: *\"My order is wrong and I am very upset.\"* Write **five questions** you would ask to understand the problem (open, probing and clarifying), without blaming. One per line, each ending with a question mark.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Can you tell me what you received?",
+  "rules": [
+    { "label": "Five questions", "minLines": 5 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Open question (what, how, tell me)", "pattern": "what|how|tell me|can you describe" },
+    { "label": "Clarifying question (order number, when)", "pattern": "order number|when|which|do you mean|exactly" },
+    { "label": "Does not blame (no 'did you read' or 'you should')", "pattern": "did you read|you should have|your fault", "absent": true }
+  ],
+  "sample": "I am sorry to hear that. Can you tell me what you received?\nWhat did you order, and what is different?\nCould you give me the order number so I can check it?\nWhen did the order arrive?\nHow would you like us to put it right?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m02-t3",
+  "prompt": "Write the **greeting and first three lines you would say** on the phone when answering a business call, and **three phrases** you will use to show respect and care. Use plain, warm language.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Good morning, ...",
+  "rules": [
+    { "label": "Greets and names the business", "pattern": "good (morning|afternoon|evening)|thank you for calling" },
+    { "label": "Gives own name and offers help", "pattern": "speaking|my name|this is|how (may|can) i help" },
+    { "label": "Shows respect or care phrases", "pattern": "certainly|glad to|let me check|thank you for your patience|i understand|sir|ma\\b" },
+    { "label": "At least four lines or sentences", "minLines": 4 }
+  ],
+  "sample": "Good morning, thank you for calling Fresh Mart. You are speaking with Ada. How may I help you today?\nCertainly, Sir, I would be glad to help you with that.\nLet me check that for you; it will take just a moment.\nThank you for your patience, Ma. I understand how important this is.",
+  "required": false
+}
+```
+
+Next lesson: serving customers in every channel.
+$md$, true, true, 2, array['cscm-m02-t1', 'cscm-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m05', 'customer-service-client-management', 'Client relationship management', 5, null, null, '{}'::text[], array['Understanding client needs', 'Setting and managing expectations', 'Regular contact and follow-up', 'Handling key clients']::text[])
+values ('cscm-m03', 'customer-service-client-management', 'Serving customers in every channel', 3, 'Every Channel', 'CHANNELS', array['Serve in person', 'Use phone etiquette', 'Serve on WhatsApp, email and social', 'Meet response times']::text[], array['In person and at the front desk', 'Phone etiquette', 'WhatsApp, email and social media', 'Live chat and response times']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m06', 'customer-service-client-management', 'Service standards and systems', 6, null, null, '{}'::text[], array['Service standards and scripts', 'Tickets, records and tools', 'Working in a team', 'Escalation']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:serving-customers-in-every-channel', 'customer-service-client-management', 'cscm-m03', 'serving-customers-in-every-channel', 'Serving Customers in Every Channel', 'Serve well in person, on the phone, on WhatsApp, email and social media and through live chat, and meet sensible response times.', 25, $md$
+## In person and at the front desk
+
+Face-to-face service is the most personal. Customers notice everything: your greeting, your attention and the state of the place.
+
+- **Prepare:** keep the area clean and tidy, with information and forms ready.
+- **Greet quickly,** within seconds, even if you are busy (a nod and "I will be with you shortly" shows you have seen them).
+- **Serve in order,** fairly. Be clear about queues.
+- **Listen, confirm what they need and act.** Give full attention to the person in front of you.
+- **Explain things simply,** and check they understand.
+- **Do not make customers wait without telling them why** and for how long.
+- **Handle money and documents carefully,** counting and confirming amounts aloud.
+- **Close well:** summarise what was done, ask if they need anything else, thank them.
+- **Manage queues and multitasking:** if the phone rings while you are serving someone, politely ask the customer to excuse you or let a colleague answer.
+- **Look after safety:** know the emergency procedures and report hazards.
+
+Front-desk staff also act as **gatekeepers and directors:** they welcome visitors, announce them, give directions and handle messages accurately.
+
+## Phone etiquette
+
+On the phone, the customer cannot see you, so voice and words carry everything.
+
+- **Answer promptly,** ideally within three rings.
+- **Use a standard greeting:** "Good morning, thank you for calling [Business], [Name] speaking. How may I help you?"
+- **Speak clearly, smile, and use a calm, friendly tone.**
+- **Get their name** and use it. Write down their number and details.
+- **Listen and take notes.** Repeat key details back.
+- **Do not leave callers on hold** without asking permission, and check back every 30 to 60 seconds. Offer to call back if the wait is long, and **always do it.**
+- **Transfer properly:** explain who you are transferring them to and why, and give the number in case the call drops. Brief the colleague so the customer does not repeat everything.
+- **Take accurate messages:** caller's name, number, the message, date, time and who took it, then pass it on promptly.
+- **Handle angry callers calmly** (module 4).
+- **End well:** summarise actions and times, ask "Is there anything else I can help you with?" and thank them. Let the customer hang up first.
+- **Keep background noise low,** and do not eat or chat while on a call.
+
+A short **phone script** for a common situation saves time and avoids errors, but keep your tone natural.
+
+## WhatsApp, email and social media
+
+Many Nigerian customers prefer messaging. It is fast and informal, but it still represents your business.
+
+**WhatsApp (and other messaging):**
+
+- Use a **business profile,** with a clear name, hours, address and catalogue.
+- Set a **greeting message** and an **away message.**
+- Use **quick replies** for common questions, and personalise them.
+- Keep messages **short and clear,** one idea at a time, with correct spelling.
+- **Reply within your stated time,** and say when you will respond fully if you need time.
+- Use **voice notes** sparingly; many people prefer text for details like prices and addresses.
+- **Confirm important details in writing** (order, price, delivery time).
+- **Ask permission** before sending promotional messages, and respect "stop."
+- **Protect privacy:** do not share customers' details or forward their messages.
+- **Keep a professional tone,** even when the customer is casual. Limit emojis to friendly, appropriate ones.
+
+**Email:**
+
+- Clear **subject lines,** and a professional signature (name, role, phone).
+- Follow the writing principles from module 2.
+- **Reply within a set time** (for example 24 hours, or sooner for urgent matters), even if only to acknowledge and say when you will reply fully.
+- Use "reply all" carefully, keep records, and attach the right files.
+
+**Social media (Instagram, Facebook, X, TikTok):**
+
+- **Monitor comments and messages** regularly.
+- **Respond publicly and politely** to questions and complaints; move detailed or private matters to direct messages or a phone call.
+- **Do not argue or delete** legitimate complaints; address them. Thank people for praise.
+- **Use a consistent, friendly brand voice.**
+- Never share customers' private information in public.
+
+## Live chat and response times
+
+**Live chat** on a website or app gives instant answers. Tips: greet within seconds, use a friendly human name, write short replies, avoid long silences ("let me check, one moment"), and offer to follow up by phone or email if the issue is complex. **Chatbots** can answer common questions at any hour, but always provide a clear way to reach a person.
+
+**Response time** is part of the service. Set clear **targets** for each channel and tell customers what to expect. Example targets:
+
+| Channel | First response | Resolution target |
+| :-- | :-- | :-- |
+| Walk-in | Greeting in 10 seconds | Same visit |
+| Phone | Answer within 3 rings | At first call where possible |
+| WhatsApp / chat | Within 15 minutes in hours | Same day |
+| Email | Within 4 working hours | 24 hours |
+| Social media | Within 1 hour | Same day |
+
+Track whether you meet them. Example: of **200 messages** in a week, **180** received a first response within the target. Compliance = 180 ÷ 200 = **90%.** If the target is 95%, you are below it, so find out when and why replies are slow (peak hours? one person on duty?).
+
+Match staffing to peak times, use quick replies and templates, route messages clearly and do not promise what you cannot do. **Silence is the worst response.**
+
+## Try it
+
+```task
+{
+  "id": "cscm-m03-t1",
+  "prompt": "Write a **phone script** for answering a call and taking a message for a colleague who is unavailable. At least eight lines, including the greeting, asking for the caller's details, repeating them back and closing.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Good morning, thank you for calling ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Standard greeting with business and name", "pattern": "thank you for calling|good (morning|afternoon)" },
+    { "label": "Says the colleague is unavailable politely", "pattern": "unavailable|not available|in a meeting|away from|cannot come to the phone|stepped out" },
+    { "label": "Asks for name and number", "pattern": "name[\\s\\S]*number|number[\\s\\S]*name" },
+    { "label": "Repeats details back", "pattern": "repeat|read (that )?back|confirm|let me (check|confirm)|so that is" },
+    { "label": "Promises to pass on the message", "pattern": "pass|give him|give her|will ensure|will make sure|message" },
+    { "label": "Closes by asking if anything else and thanking", "pattern": "anything else|thank you" }
+  ],
+  "sample": "Good morning, thank you for calling Fresh Mart. This is Ada speaking. How may I help you?\nI am sorry, Mr Bello is in a meeting at the moment. May I take a message for him?\nMay I have your name, please?\nAnd your phone number?\nWhat is the message you would like me to give him?\nLet me read that back to make sure I have it right: you are Mrs Eze, your number is 0803 000 0000, and you would like a call back about your order today.\nI will pass the message to Mr Bello as soon as he is free, and he should call you before 3 pm.\nIs there anything else I can help you with? Thank you for calling, Mrs Eze, have a lovely day.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m03-t2",
+  "prompt": "Of **200 messages** in a week, **180** got a first response within your target. Work out the **compliance rate**. If the target is **95%**, say whether it is met, and give **two actions** to improve.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Compliance = ...",
+  "rules": [
+    { "label": "Compliance of 90%", "pattern": "\\b90\\s?%" },
+    { "label": "Says the 95% target is not met", "pattern": "not met|below|miss|short of|under|fails|not reached" },
+    { "label": "Gives two actions (peak staffing, quick replies, routing, check delays)", "pattern": "peak|quick repl|template|route|staff|rota|more people|automat|delay" }
+  ],
+  "sample": "Compliance = 180 / 200 = 90%.\nThe 95% target is not met, because 90% is below it.\nI would check when the slow replies happen and add a second person at peak hours, and set up quick replies for common questions to speed up answers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m03-t3",
+  "prompt": "Write **three quick reply templates** for WhatsApp: a greeting, an away message and a reply to a price enquiry. Each should be friendly and clear. Label each.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Greeting: ...\nAway message: ...\nPrice reply: ...",
+  "rules": [
+    { "label": "Has all three labelled templates", "pattern": "greeting[\\s\\S]*away[\\s\\S]*price" },
+    { "label": "Greeting welcomes the customer", "pattern": "welcome|thank you for (contacting|messaging)|hello" },
+    { "label": "Away message gives hours or a time to reply", "pattern": "hours|back|reply (by|within)|monday|tomorrow|\\d+\\s*(am|pm)" },
+    { "label": "Price reply gives a price and a next step", "pattern": "₦\\s?\\d[\\s\\S]*(order|reply|send|visit|book)" },
+    { "label": "At least 50 words", "minWords": 50, "maxWords": 140 }
+  ],
+  "sample": "Greeting: Hello and welcome to Fresh Mart! Thank you for messaging us. How can we help you today?\nAway message: Thank you for your message. We are closed now and open again from 8 am tomorrow. We will reply as soon as we open. For urgent matters please call 0803 000 0000.\nPrice reply: Thank you for asking. The 5 kg bag of rice is ₦12,500 and we deliver within Ikeja for ₦1,500. Reply with your address and we will confirm your order today.",
+  "required": false
+}
+```
+
+Next lesson: handling complaints and difficult people.
+$md$, true, true, 3, array['cscm-m03-t1', 'cscm-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m07', 'customer-service-client-management', 'Measuring and improving service', 7, null, null, '{}'::text[], array['Satisfaction surveys and feedback', 'Service metrics', 'Learning from complaints', 'Building loyalty']::text[])
+values ('cscm-m04', 'customer-service-client-management', 'Handling complaints and difficult people', 4, 'Complaints', 'COMPLAIN', array['Follow a complaint process', 'Stay calm with angry customers', 'Say no well', 'Recover service']::text[], array['Why customers complain', 'A step by step complaint process', 'Staying calm with angry customers', 'Saying no well', 'Service recovery']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:handling-complaints-and-difficult-people', 'customer-service-client-management', 'cscm-m04', 'handling-complaints-and-difficult-people', 'Handling Complaints and Difficult People', 'Understand why customers complain, follow a step-by-step complaint process, stay calm with angry customers, say no well and recover the relationship.', 30, $md$
+## Why customers complain
+
+A complaint is a customer telling you **something went wrong** and **they still care enough to tell you.** Many unhappy customers never complain: they just leave and tell others. So a complaint is a gift: a chance to fix a problem and keep the customer.
+
+Common causes:
+
+- **The product or service did not work or was not as described.**
+- **Delays and waiting.**
+- **Staff behaviour:** rudeness, ignoring, poor knowledge.
+- **Mistakes:** wrong items, billing errors, lost orders.
+- **Broken promises.**
+- **Poor communication:** nobody told them what was happening.
+- **Unfair or unclear policies.**
+- **Value:** they feel they paid too much for what they got.
+
+Behind the complaint are **feelings:** frustration, embarrassment, worry about money, a sense of not being respected. Often the emotion matters more than the item. People want **acknowledgement, an explanation, a fix and assurance it will not happen again.**
+
+## A step-by-step complaint process
+
+A clear process makes you calmer and more effective. A simple one is **L.A.S.T.**: **L**isten, **A**pologise, **S**olve, **T**hank. Expand it into steps:
+
+1. **Listen fully.** Let the customer finish without interrupting or defending. Take notes.
+2. **Show you understand:** "I understand why you are upset. You waited an hour and nobody told you why." Reflect their words.
+3. **Apologise sincerely** for the experience, even if you are not sure who was at fault. "I am sorry that happened." Do not blame colleagues, the customer or "the system."
+4. **Take ownership:** "I will sort this out for you."
+5. **Get the facts:** ask questions, check records and confirm the details.
+6. **Offer a solution,** or options, within your authority: fix, replace, refund, discount, redo. Ask what would be fair: *"What would you like us to do?"*
+7. **Act quickly,** and tell them what will happen and by when.
+8. **Escalate** if you cannot solve it, handing over the whole story so the customer does not repeat it.
+9. **Follow up** to confirm it was resolved.
+10. **Thank the customer** for telling you, and **record it** and the cause so you can fix the root problem.
+
+**Resolve at first contact** where possible. If **28 of 40** complaints are solved at the first contact, the **first-contact resolution rate** is 28 ÷ 40 = **70%.** Higher is better for the customer and cheaper for you.
+
+## Staying calm with angry customers
+
+Angry customers are often not angry at you personally; you are the person in front of them. Your calm is a skill.
+
+- **Breathe and slow down.** Keep your voice lower and slower than theirs.
+- **Do not take it personally.**
+- **Let them vent** for a moment; interruption increases anger.
+- **Use the customer's name** and stay respectful.
+- **Show empathy,** not argument: "I can see how frustrating that is."
+- **Avoid phrases that inflame:** "Calm down," "That's our policy," "You should have...," "It's not my fault."
+- **Focus on the solution** and on what you **can** do.
+- **Move to a private place** if the customer is shouting in public, politely.
+- **Set boundaries** if abuse, threats or discrimination appear: "I want to help you, but I cannot continue if I am spoken to like this." Involve a manager. **Your safety comes first.**
+- **Look after yourself afterwards:** take a short break, talk to a colleague, and learn from the experience.
+
+## Saying no well
+
+Sometimes you must say no: refunds outside policy, requests you cannot meet, unreasonable demands. A good no keeps the relationship.
+
+**Method:**
+
+1. **Acknowledge** the request: "I understand you would like a full refund."
+2. **Explain the reason briefly and honestly,** without hiding behind "policy": "Because the item has been used, we cannot refund it, as we cannot resell it."
+3. **Offer what you can do:** an alternative, a partial solution, a different route. "I can offer you a repair, a replacement or store credit."
+4. **Be warm and firm.** Do not give in to pressure when the answer is genuinely no, and do not promise what you cannot deliver.
+5. **Offer to escalate** where appropriate: "I can ask my manager to review it."
+6. **Follow through** on what you offered.
+
+Avoid starting with "No" or "We can't." Start with what you can do. **Never lie** to avoid saying no.
+
+## Service recovery
+
+**Service recovery** is how you put things right and rebuild trust. Done well, customers can end up more loyal than if nothing had gone wrong.
+
+Elements:
+
+- **Fast response** to the problem.
+- **Genuine apology and empathy.**
+- **A fair, appropriate remedy:** fix the problem first, then add a goodwill gesture if suitable (a discount, a free item, priority treatment).
+- **Follow-up** to check the customer is satisfied.
+- **Learning:** fix the cause.
+
+Decide how much to offer by comparing the **cost of the gesture** with the **value of keeping the customer.** Example: a customer's order of **₦20,000** was delivered late. A **₦2,000** voucher costs less than the **₦54,000** lifetime profit of that customer (see module 1). Offering it is sensible. But **do not over-compensate** every complaint: set guidelines for what frontline staff may offer without approval, and make sure the gesture matches the problem.
+
+Also give staff the **authority and training** to solve problems on the spot. Customers hate hearing "I have to ask my manager" for small things.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m04-t1",
+  "prompt": "A customer shouts at the till: *\"Your delivery is two hours late and nobody called me! This is useless!\"* Write what you **say** in 60 to 120 words: listen and acknowledge, apologise, take ownership, offer a solution with a time and ask what would help.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "I am so sorry ...",
+  "rules": [
+    { "label": "Acknowledges the feeling or the problem", "pattern": "understand|frustrat|i can see|upset|two hours|late" },
+    { "label": "Apologises", "pattern": "sorry|apolog" },
+    { "label": "Takes ownership", "pattern": "i will|let me|i am going to|i'll|sort this out|take care of" },
+    { "label": "Offers a solution with a time", "pattern": "within|by \\d|minutes|today|call you|deliver" },
+    { "label": "Asks what would help or what they would like", "pattern": "what would|how would you like|what can i|would you like" },
+    { "label": "Does not blame or tell to calm down", "pattern": "calm down|your fault|policy|not my", "absent": true },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Sir, I am very sorry. I understand how frustrating it is to wait two hours without hearing from us, and you should have been called. Let me sort this out for you right now. I will phone the rider immediately and give you an exact arrival time within five minutes. If he cannot reach you within 30 minutes, I will arrange a replacement at no cost. What would you like us to do if the order comes later than that? Thank you for telling me, and I will make sure it does not happen again.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m04-t2",
+  "prompt": "A customer wants a **full refund** on a used item, which your policy does not allow. Write your reply in 50 to 100 words that **says no well**: acknowledge, explain honestly, offer alternatives and offer to escalate.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "I understand ...",
+  "rules": [
+    { "label": "Acknowledges the request", "pattern": "understand|i can see|thank you for|i appreciate" },
+    { "label": "Explains the reason", "pattern": "because|since|as the item|used|cannot resell|not able to" },
+    { "label": "Offers alternatives (repair, replacement, credit, exchange)", "pattern": "repair|replace|exchange|credit|voucher|discount|instead" },
+    { "label": "Offers to escalate or review", "pattern": "manager|review|escalate|supervisor|look at it" },
+    { "label": "Polite and does not start with a flat no", "pattern": "^\\s*no\\b", "absent": true },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I understand that you would like a full refund, and I am sorry the item has not worked out for you. Because it has been used, we are not able to refund it, as we cannot resell it. What I can offer is a free repair, a replacement of the faulty part, or store credit for the full amount. If you would prefer something different, I will ask my manager to review your case today and call you back by 4 pm.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m04-t3",
+  "prompt": "A customer's **₦20,000** order was delivered late. The customer's lifetime profit is **₦54,000**. A voucher costs **₦2,000**. Work out the voucher as a share of the order and of lifetime profit. Then say in a sentence what limit you would set for staff on goodwill gestures.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Voucher share of order = ...",
+  "rules": [
+    { "label": "10% of the order", "pattern": "\\b10\\s?%" },
+    { "label": "About 3.7% of lifetime profit", "pattern": "3\\.7|3\\.70|4\\s?%" },
+    { "label": "Sets a staff limit or guideline", "pattern": "limit|up to|without approval|authority|guideline|manager" }
+  ],
+  "sample": "Voucher share of the order = 2,000 / 20,000 = 10%.\nShare of lifetime profit = 2,000 / 54,000 = 3.7%.\nI would let frontline staff give goodwill gestures of up to ₦2,000 without approval, and ask a manager for anything higher.",
+  "required": false
+}
+```
+
+Next lesson: client relationship management.
+$md$, true, true, 4, array['cscm-m04-t1', 'cscm-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('cscm-m08', 'customer-service-client-management', 'Final project: a service improvement plan', 8, null, null, '{}'::text[], array['Choosing a service to review', 'Finding the problems', 'Writing the plan and scripts', 'Presenting it']::text[])
+values ('cscm-m05', 'customer-service-client-management', 'Client relationship management', 5, 'Client Care', 'CLIENTS', array['Understand client needs', 'Manage expectations', 'Keep regular contact', 'Look after key clients']::text[], array['Understanding client needs', 'Setting and managing expectations', 'Regular contact and follow-up', 'Handling key clients']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:client-relationship-management', 'customer-service-client-management', 'cscm-m05', 'client-relationship-management', 'Client Relationship Management', 'Understand client needs, set and manage expectations, keep regular contact and follow up and look after key clients.', 25, $md$
+## Understanding client needs
+
+A **client relationship** is built over time. Beyond solving single requests, you aim to understand your clients' **goals, problems and way of working,** so you can help them succeed. A client who feels understood stays, buys more and recommends you.
+
+How to understand a client:
+
+- **Ask good questions** at the start and regularly: *"What are you trying to achieve this year? What worries you most? How do you prefer to communicate?"*
+- **Learn their business:** products, customers, competitors, seasons, challenges.
+- **Know the people:** who decides, who uses your service, who influences, and their preferences and personalities.
+- **Keep records** in a simple client file or CRM: contact details, history, preferences, agreements, important dates and notes from conversations.
+- **Listen for unstated needs:** often the client asks for X when what they need is Y.
+- **Review regularly:** needs change.
+
+**Client profile example:** *Bright Schools Ltd: three schools, 600 pupils. Decision maker: the proprietor, Mrs Eze. Main contact: the bursar. Goal: reduce fees collection time. Prefers WhatsApp for quick things and email for invoices. Busy at term start. Pays in 30 days.*
+
+## Setting and managing expectations
+
+Many client problems come from **mismatched expectations.** Prevent them from the start.
+
+- **Be clear about what you will deliver, when and for how much.** Put it in writing (a proposal, contract or confirmation email).
+- **Be honest about limits, risks and what is not included.**
+- **Under-promise and over-deliver:** give a realistic date, not the fastest possible one. Delivering early delights; delivering late damages trust.
+- **Explain the process and what you need from them** (information, approvals, payment), and by when.
+- **Agree how you will communicate:** channels, frequency, who the contacts are and response times.
+- **Check understanding:** "Let me confirm what we agreed..."
+- **Tell them early when something changes,** with the reason and a new plan. Never let clients discover problems by themselves.
+- **Handle scope changes openly:** if a client asks for extra, explain the impact on time and cost and agree before proceeding.
+
+Example: a client asks for a report in two days. You know it needs four. Say: *"To do it properly, we need four working days, so I can deliver on Friday. If it is urgent, I can give you a one-page summary by Wednesday and the full report on Friday. Which would help most?"*
+
+## Regular contact and follow-up
+
+Out of sight, out of mind. Stay in touch **before** the client needs to chase you.
+
+- **Plan contact:** a schedule for each client (weekly for active projects, monthly or quarterly for others).
+- **Make each contact useful:** progress, results, ideas, relevant news, a helpful tip, not only "just checking in."
+- **Follow up after meetings** within a day with a short summary of what was agreed and the next steps.
+- **Follow up after delivery:** *"Has everything gone as you expected? Is there anything we should improve?"*
+- **Remember important dates:** contract renewals, birthdays of key contacts, festive seasons (a short message), anniversaries of working together.
+- **Respond quickly** to client messages, and keep promises about call-backs.
+- **Ask for feedback** regularly, and act on it.
+- **Reactivate quiet clients:** a friendly message, an update or a check on their needs.
+
+**Keep a contact log** (date, who, what was said, next step). It prevents things being dropped and helps colleagues cover for you.
+
+## Handling key clients
+
+Not all clients are equal in value. Often a small share of clients produce most of the revenue (the **Pareto principle**). Example: you have **50 clients** and **₦20,000,000** in annual revenue. Your top **10 clients** (20%) produce **₦16,000,000** (80%). Losing one of them would hurt far more than losing one of the smaller ones.
+
+For **key clients:**
+
+- **Know them deeply** and appoint a named **account manager.**
+- **Build several relationships** within the client's organisation (not only one contact).
+- **Meet regularly,** including periodic **reviews** (for example quarterly): what has been delivered, results, issues, upcoming needs, and how to improve.
+- **Write an account plan:** goals, opportunities, risks, key contacts and actions.
+- **Anticipate needs** and bring ideas before they ask.
+- **Respond first and fastest** to their problems.
+- **Protect the relationship:** act quickly on any sign of dissatisfaction.
+- **Do not take them for granted,** and do not become over-dependent: aim to keep any single client below a safe share of revenue.
+- **Reward loyalty** fairly, with recognition, priority service or special terms.
+
+Segment the rest: **mid-level clients** get regular, lighter attention; **small clients** get efficient, standard service and, where sensible, self-service options.
+
+Handle difficult clients professionally: stay calm, keep records, set boundaries and escalate where needed. Sometimes ending a relationship (politely) is the right decision for a client who is abusive, never pays or costs more than they bring.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m05-t1",
+  "prompt": "A client asks for a report in **two days** that you know needs **four**. Write your reply in 60 to 120 words that sets a realistic expectation and offers an option.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Thank you for ...",
+  "rules": [
+    { "label": "Thanks or acknowledges", "pattern": "thank|appreciate|understand" },
+    { "label": "Explains the real time needed", "pattern": "four|4 (working )?days|friday|properly" },
+    { "label": "Offers an option (summary first, prioritise)", "pattern": "option|summary|one-?page|first|if it is urgent|alternatively|which would" },
+    { "label": "Asks the client to choose or confirm", "pattern": "\\?|let me know|which|confirm" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Thank you for the request, Mrs Eze, I understand it is important. To do the report properly we need four working days, so I can deliver the full version on Friday. If it is urgent, I can give you a one-page summary of the key findings by Wednesday and send the complete report on Friday. Which would help you most? I would rather agree a realistic date now than promise two days and risk giving you something incomplete. Please let me know and I will confirm in writing.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m05-t2",
+  "prompt": "**50 clients** produce **₦20,000,000** a year. The top **10** produce **₦16,000,000**. Work out the top clients' share of clients and of revenue, and the average annual revenue per top client and per other client. What does this tell you about where to focus?",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Share of clients = ...",
+  "rules": [
+    { "label": "20% of clients", "pattern": "\\b20\\s?%" },
+    { "label": "80% of revenue", "pattern": "\\b80\\s?%" },
+    { "label": "₦1,600,000 per top client", "pattern": "1,?600,?000" },
+    { "label": "₦100,000 per other client", "pattern": "100,?000" },
+    { "label": "Says focus on key clients while serving others efficiently", "pattern": "focus|key clients|top|protect|attention|efficient" }
+  ],
+  "sample": "Top clients are 10 / 50 = 20% of clients and 16m / 20m = 80% of revenue.\nAverage per top client = 16,000,000 / 10 = ₦1,600,000. Average per other client = 4,000,000 / 40 = ₦100,000.\nI would focus the most attention on the key clients and protect those relationships, while serving the other clients efficiently.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m05-t3",
+  "prompt": "Write a **key client account plan** for one client in at least eight lines: the client and their main goal, key contacts and roles, how you will contact them (frequency and method), their likely needs, one risk and your action, and the date of the next review.",
+  "minutes": 15,
+  "rows": 10,
+  "placeholder": "Client: ...\nGoal: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Client and goal", "pattern": "client[\\s\\S]*goal|goal[\\s\\S]*client" },
+    { "label": "Key contacts with roles", "pattern": "contact|decision maker|bursar|manager|owner|director" },
+    { "label": "Contact frequency and method", "pattern": "weekly|monthly|quarterly|every[\\s\\S]*(call|email|whatsapp|meeting)" },
+    { "label": "Needs or opportunities", "pattern": "need|opportunit|could|upcoming" },
+    { "label": "Risk and action", "pattern": "risk[\\s\\S]*(action|will|plan)" },
+    { "label": "Next review date", "pattern": "review|next" }
+  ],
+  "sample": "Client: Bright Schools Ltd, three schools with 600 pupils\nGoal: collect school fees faster and reduce the bursar's workload\nKey contacts: the proprietor Mrs Eze (decision maker), the bursar Mr Ade (day-to-day), the head teacher (user)\nContact plan: weekly WhatsApp update during term start, a monthly call, and a quarterly review meeting\nLikely needs: online fee reminders, term-start reports and training for new staff\nOpportunity: add the fourth school opening next year\nRisk: the bursar leaves and the relationship weakens; action: build a relationship with the head teacher and the proprietor\nNext review: first week of the next term",
+  "required": false
+}
+```
+
+Next lesson: service standards and systems.
+$md$, true, true, 5, array['cscm-m05-t1', 'cscm-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('cscm-m06', 'customer-service-client-management', 'Service standards and systems', 6, 'Service Systems', 'SVCSYS', array['Set service standards', 'Write scripts', 'Run tickets and records', 'Escalate properly']::text[], array['Service standards and scripts', 'Tickets, records and tools', 'Working in a team', 'Escalation']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:service-standards-and-systems', 'customer-service-client-management', 'cscm-m06', 'service-standards-and-systems', 'Service Standards and Systems', 'Set service standards and scripts, keep tickets and records with simple tools, work well in a team and escalate properly.', 25, $md$
+## Service standards and scripts
+
+A **service standard** is a clear, measurable promise about how customers will be served. Without standards, service depends on who is on duty and what kind of day they are having. Standards make quality **consistent,** and they give staff clear targets and customers clear expectations.
+
+Good standards are **specific, measurable, realistic and communicated.** Examples:
+
+- Greet every customer within **10 seconds.**
+- Answer calls within **three rings.**
+- Reply to WhatsApp messages within **15 minutes** during opening hours.
+- Reply to emails within **4 working hours.**
+- Resolve **80%** of queries at first contact.
+- Deliver orders on the day promised **95%** of the time.
+- Return calls within **2 hours.**
+- Issue refunds within **3 working days** of approval.
+
+Write them down, explain **why** they matter, train staff, display them where useful, and measure performance (module 7).
+
+**Scripts and templates** save time and prevent mistakes, but should sound human. Use them for:
+
+- **Greetings and closings** (phone, chat, in person).
+- **Common questions** (opening hours, prices, delivery, returns).
+- **Difficult messages** (delays, declined requests, apologies).
+- **Complaint handling steps.**
+
+Guidelines for scripts: keep them **short and flexible** (a guide, not a robot recording), **personalise** with the customer's name and situation, **review and update** them, and let staff improve them. Do not read word for word in a flat voice.
+
+## Tickets, records and tools
+
+When many requests come in, you need a system so that **nothing is lost, everything is tracked and customers do not repeat themselves.**
+
+A **ticket** (or case) is a record of a customer request or problem. A good ticket records:
+
+- **Ticket number** (unique).
+- **Date and time received,** and channel.
+- **Customer name and contact details.**
+- **Description of the issue** or request.
+- **Category** (billing, delivery, product fault, general question).
+- **Priority** (urgent, normal, low).
+- **Owner:** who is responsible.
+- **Status:** new, in progress, waiting for customer, resolved, closed.
+- **Actions taken** and dates.
+- **Resolution** and the date.
+- **Customer feedback.**
+
+Tools range from simple to advanced:
+
+- **A shared spreadsheet or notebook:** enough for a small business, if it is updated consistently.
+- **WhatsApp Business** labels, notes and quick replies.
+- **A free or low-cost helpdesk or CRM:** ticketing, shared inboxes, templates, reporting.
+- **Call logs and shared email inboxes.**
+
+Principles: **record every contact,** use **consistent categories,** update promptly, **protect customer data** (limited access, no sharing, secure storage, in line with data protection law) and **review the records** to find patterns.
+
+Example of a simple ticket log row: *#0147 | 12 March 10:15 | WhatsApp | Mrs Ade | Wrong item delivered | Delivery | High | Chidi | In progress | Replacement ordered, rider assigned | Resolve by 14 March.*
+
+## Working in a team
+
+Good service is a team effort. A customer deals with the business, not an individual, so what one person does affects everyone.
+
+- **Share information:** log issues and handovers so the next person knows what happened.
+- **Support colleagues:** cover breaks and peaks, help with difficult customers and share knowledge.
+- **Communicate clearly:** brief handovers at shift change; team huddles at the start of the day.
+- **Know who does what:** roles, specialties and who to ask.
+- **Be consistent:** the customer should get the same answer from anyone.
+- **Do not blame colleagues or other departments in front of customers.** Say, "I will make sure this is fixed."
+- **Learn together:** share good examples and mistakes without blame.
+- **Give and receive feedback** respectfully.
+- **Recognise good service,** from customers and colleagues.
+
+Managers set the tone: they listen, equip and support their teams, and they model the behaviour they expect.
+
+## Escalation
+
+**Escalation** means passing a problem to someone with more authority, knowledge or time. It is **not a failure;** it is the right step when you cannot solve something.
+
+When to escalate:
+
+- The customer asks for a manager (and the issue is serious).
+- The solution is outside your authority (large refunds, exceptions).
+- The issue is complex, technical or legal.
+- Safety, security or serious complaints are involved (abuse, threats, injury).
+- A deadline or service level is about to be missed.
+- A problem keeps recurring.
+
+**Set up levels and time limits:**
+
+| Level | Who | Handles | Time limit |
+| :-- | :-- | :-- | :-- |
+| 1 | Front-line staff | Most queries and complaints | Try to resolve at first contact |
+| 2 | Supervisor / senior agent | Complex issues, small exceptions | 4 hours |
+| 3 | Manager | Serious complaints, larger refunds, policy exceptions | 1 working day |
+| 4 | Director / owner | Major incidents, legal and reputation risks | Same day |
+
+**How to escalate well:**
+
+1. **Tell the customer** what you are doing and why: "I am going to ask my manager, who can approve this. I will call you back by 3 pm."
+2. **Brief the next person fully:** facts, what has been tried, what the customer wants and the deadline, so the customer does not repeat the story.
+3. **Stay in touch** with the customer until it is resolved.
+4. **Follow up** and close the loop.
+5. **Learn** from why it needed escalating, and fix the process or train staff.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m06-t1",
+  "prompt": "Write **eight service standards** for a business of your choice, one per line. Each must be **specific and measurable** (a time, a percentage or a number).",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "Greet every customer within 10 seconds",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Every line contains a number", "pattern": "\\d+", "perLine": true },
+    { "label": "Includes a greeting or answering standard", "pattern": "greet|answer|welcome|rings" },
+    { "label": "Includes a response time", "pattern": "within|reply|respond|return" },
+    { "label": "Includes a resolution or delivery standard", "pattern": "resolve|resolution|deliver|refund|issue" }
+  ],
+  "sample": "Greet every customer within 10 seconds\nAnswer phone calls within 3 rings\nReply to WhatsApp messages within 15 minutes during opening hours\nReply to emails within 4 working hours\nReturn missed calls within 2 hours\nResolve 80% of queries at first contact\nIssue approved refunds within 3 working days\nDeliver 95% of orders on the day promised",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m06-t2",
+  "prompt": "Design a **ticket log** for your business: list at least **ten columns**, one per line, and then write **two example rows** as realistic entries.",
+  "minutes": 12,
+  "rows": 14,
+  "placeholder": "Ticket number\nDate and time\n...\nRow 1: ...",
+  "rules": [
+    { "label": "At least twelve lines", "minLines": 12 },
+    { "label": "Includes ticket number, date, customer, issue", "pattern": "ticket[\\s\\S]*date[\\s\\S]*customer[\\s\\S]*(issue|description)" },
+    { "label": "Includes priority, owner and status", "pattern": "priority[\\s\\S]*owner[\\s\\S]*status|owner[\\s\\S]*status[\\s\\S]*priority|status[\\s\\S]*priority" },
+    { "label": "Includes resolution", "pattern": "resolution|resolved" },
+    { "label": "Includes two example rows", "pattern": "row 1[\\s\\S]*row 2|#\\d+[\\s\\S]*#\\d+" }
+  ],
+  "sample": "Ticket number\nDate and time received\nChannel\nCustomer name\nContact details\nIssue description\nCategory\nPriority\nOwner\nStatus\nResolution and date\nRow 1: #0147 | 12 March 10:15 | WhatsApp | Mrs Ade | Wrong item delivered | Delivery | High | Chidi | In progress | Replacement booked, resolve by 14 March\nRow 2: #0148 | 12 March 11:40 | Phone | Mr Bello | Invoice shows a double charge | Billing | Normal | Ngozi | Resolved | Refunded ₦5,000 on 13 March",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m06-t3",
+  "prompt": "Write an **escalation matrix** with four levels (who, what they handle, time limit), one per line, and a short **handover note** (30 to 60 words) you would write when escalating a complaint to a manager.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Level 1 - ...",
+  "rules": [
+    { "label": "Four levels", "pattern": "level 1[\\s\\S]*level 2[\\s\\S]*level 3[\\s\\S]*level 4" },
+    { "label": "Time limits", "pattern": "\\d+\\s*(hours?|minutes|days?)|same day|working day", "min": 3 },
+    { "label": "Handover note with facts and what customer wants", "pattern": "handover|note[\\s\\S]*(customer|wants|asked)|customer wants" },
+    { "label": "Mentions what has been tried or the deadline", "pattern": "tried|already|deadline|by \\d|offered" },
+    { "label": "At least five lines", "minLines": 5 }
+  ],
+  "sample": "Level 1 - front-line staff - most queries and complaints - resolve at first contact\nLevel 2 - supervisor - complex issues and small exceptions - 4 hours\nLevel 3 - manager - serious complaints and larger refunds - 1 working day\nLevel 4 - director - major incidents and reputation risks - same day\nHandover note: Mrs Ade (0803 000 0000) received a wrong item on 12 March. We have already offered a replacement, but she wants a full refund and an apology. She needs a reply by 3 pm today. Please call her.",
+  "required": false
+}
+```
+
+Next lesson: measuring and improving service.
+$md$, true, true, 6, array['cscm-m06-t1', 'cscm-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('cscm-m07', 'customer-service-client-management', 'Measuring and improving service', 7, 'Service Metrics', 'SVCKPI', array['Collect feedback', 'Calculate CSAT, NPS and FCR', 'Learn from complaints', 'Build loyalty']::text[], array['Satisfaction surveys and feedback', 'Service metrics', 'Learning from complaints', 'Building loyalty']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:measuring-and-improving-service', 'customer-service-client-management', 'cscm-m07', 'measuring-and-improving-service', 'Measuring and Improving Service', 'Collect satisfaction feedback, use service metrics, learn from complaints and build loyalty.', 25, $md$
+## Satisfaction surveys and feedback
+
+You cannot improve what you do not measure, and you cannot measure what you do not ask. **Feedback** tells you what customers experience, which is often different from what you think.
+
+**Ways to collect feedback:**
+
+- **Short surveys** after a purchase, delivery or support interaction (by WhatsApp, SMS, email, a link or QR code, a paper card or a quick question at the till).
+- **Conversations:** ask "How was everything today?"
+- **Reviews and ratings** on Google, social media and marketplaces.
+- **Complaints and compliments,** logged properly.
+- **Suggestion boxes** and online forms.
+- **Mystery shopping:** someone pretends to be a customer and reports.
+- **Customer interviews or small groups,** for deeper understanding.
+- **Staff feedback,** since front-line people hear a lot.
+
+**Designing a good survey:**
+
+- **Keep it short:** 3 to 5 questions are better than 20.
+- **Ask at the right time,** soon after the experience.
+- **Use simple scales** (1 to 5, or "satisfied / neutral / dissatisfied").
+- **Include one open question:** "What could we do better?"
+- **Ask one thing per question,** with neutral wording.
+- **Make it easy and quick,** and tell people how their feedback is used.
+- **Close the loop:** thank them, act on it and tell them what changed.
+
+Two common headline measures:
+
+**CSAT (customer satisfaction score):** the share of customers who gave a satisfied rating (for example 4 or 5 out of 5). If **84 of 100** responses are satisfied, CSAT = 84 ÷ 100 = **84%.**
+
+**NPS (Net Promoter Score):** based on the question *"How likely are you to recommend us to a friend or colleague?"* (0 to 10). Scores of 9 to 10 are **promoters,** 7 to 8 are **passives,** and 0 to 6 are **detractors.** *NPS = % promoters − % detractors.* If **60%** are promoters, **25%** passives and **15%** detractors: NPS = 60 − 15 = **+45.**
+
+Do not chase scores. Their value is in the **comments and the trends,** and the actions they lead to.
+
+## Service metrics
+
+Combine feedback with operational data. Useful measures:
+
+| Metric | Formula | Shows |
+| :-- | :-- | :-- |
+| **First response time** | Time from contact to first reply | Speed |
+| **Response-time compliance** | Responses within target ÷ total | Reliability |
+| **First-contact resolution (FCR)** | Resolved at first contact ÷ total | Effectiveness |
+| **Average resolution time** | Total resolution time ÷ cases | Efficiency |
+| **Complaint rate** | Complaints ÷ transactions or customers | Quality problems |
+| **CSAT / NPS** | See above | Satisfaction and advocacy |
+| **Repeat purchase / retention rate** | Returning customers ÷ customers | Loyalty |
+| **Churn rate** | Customers lost ÷ customers at start | Losses |
+| **Abandoned calls / unanswered messages** | Not answered ÷ received | Missed opportunities |
+| **Cost per contact** | Service cost ÷ contacts | Efficiency |
+
+Set **targets,** review them monthly, and look at **trends** and **breakdowns** (by channel, product, shift, branch) to find where to act. Do not use metrics to blame individuals unfairly: look at the system first.
+
+Keep metrics **balanced:** speed alone can reduce quality (staff rushing customers off the phone), and satisfaction scores alone can hide cost. Use a small set that together give a fair picture.
+
+## Learning from complaints
+
+Complaints are free consultancy. **Analyse them** to find the root causes.
+
+1. **Log every complaint** with a category and cause.
+2. **Count and rank:** use a **Pareto** view to see which causes matter most.
+3. **Find root causes** with "five whys": *Late delivery → why? The rider left late → why? Orders were packed late → why? Stock was missing → why? Reordering was not tracked.*
+4. **Fix the system,** not only the individual case.
+5. **Assign owners and deadlines.**
+6. **Check** whether complaints in that category fall.
+7. **Share lessons** with the team.
+
+Example: in a month there were **40 complaints:** late delivery **18**, wrong item **10**, rude staff **8**, billing errors **4.** Late delivery = 18 ÷ 40 = **45%.** Late delivery plus wrong item = 28 ÷ 40 = **70%**, so the biggest gains come from fixing delivery and order accuracy. Fixing those two issues does more for customers than a poster about smiling.
+
+Also record and share **compliments;** they show what to keep doing and motivate staff.
+
+## Building loyalty
+
+**Loyalty** means customers keep coming back and recommend you, because they trust you and value the relationship.
+
+Ways to build it:
+
+- **Deliver reliably,** which is the heart of loyalty.
+- **Personalise:** know names, preferences and history.
+- **Make it easy:** simple processes, convenient channels, fast help.
+- **Reward loyalty:** points, discounts, early access, thank-you gestures, birthday offers. Make rewards **simple and genuine.**
+- **Surprise and delight** occasionally with a small unexpected gesture.
+- **Keep in touch** with useful, relevant updates, not just promotions.
+- **Recover well** from mistakes.
+- **Listen and visibly act on feedback.**
+- **Ask for referrals** and reward them.
+- **Create community:** events, groups, shared stories.
+
+Measure it: **repeat rate** and **retention.** Example: **200 customers** at the start of a year and **170** still buying at the end gives retention of 170 ÷ 200 = **85%** and churn of 15%. If a retained customer is worth ₦54,000 in lifetime profit, each percentage point of retention improvement (2 customers) is worth about ₦108,000, so even small gains matter.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m07-t1",
+  "prompt": "Calculate: (a) **CSAT** when **84 of 100** responses are satisfied; (b) **NPS** when **60%** are promoters, **25%** passives and **15%** detractors; (c) **retention** and **churn** when **170 of 200** customers remain.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "CSAT = ...",
+  "rules": [
+    { "label": "CSAT of 84%", "pattern": "\\b84\\s?%" },
+    { "label": "NPS of +45", "pattern": "\\+?\\s?45" },
+    { "label": "Retention of 85%", "pattern": "\\b85\\s?%" },
+    { "label": "Churn of 15%", "pattern": "\\b15\\s?%" }
+  ],
+  "sample": "(a) CSAT = 84 / 100 = 84%.\n(b) NPS = 60 - 15 = +45.\n(c) Retention = 170 / 200 = 85%, so churn = 15%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m07-t2",
+  "prompt": "In a month there were **40 complaints**: late delivery **18**, wrong item **10**, rude staff **8**, billing errors **4**. Work out each share, the share of the top two, and say what you would fix first and why.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Late delivery = ...",
+  "rules": [
+    { "label": "Late delivery 45%", "pattern": "\\b45\\s?%" },
+    { "label": "Wrong item 25%", "pattern": "\\b25\\s?%" },
+    { "label": "Top two 70%", "pattern": "\\b70\\s?%" },
+    { "label": "Says to fix delivery and accuracy first", "pattern": "late delivery[\\s\\S]*(first|priority)|first[\\s\\S]*(delivery|accuracy)|biggest" }
+  ],
+  "sample": "Late delivery = 18 / 40 = 45%. Wrong item = 10 / 40 = 25%. Rude staff = 8 / 40 = 20%. Billing = 4 / 40 = 10%.\nThe top two together are 70%.\nI would fix late delivery and order accuracy first, because they cause most complaints, so the biggest improvement comes from them.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m07-t3",
+  "prompt": "Design a **short customer survey** of five questions: a satisfaction rating, a recommend question (0 to 10), one about speed, one about the staff and one open question. One per line, with the scale where it applies.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "1. How satisfied are you with ... (1 to 5)?",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Satisfaction rating with a scale", "pattern": "satisfied[\\s\\S]*(1 to 5|1-5|1 \\(|out of 5)" },
+    { "label": "Recommend question with 0 to 10", "pattern": "recommend[\\s\\S]*(0 to 10|0-10|out of 10)" },
+    { "label": "Speed question", "pattern": "speed|quick|fast|wait" },
+    { "label": "Staff question", "pattern": "staff|team|helpful|friendly|service" },
+    { "label": "Open question", "pattern": "what could|how can we|any comments|improve|better" }
+  ],
+  "sample": "1. How satisfied are you with your experience today? (1 to 5, where 5 is very satisfied)\n2. How likely are you to recommend us to a friend or colleague? (0 to 10)\n3. How would you rate the speed of the service? (1 to 5)\n4. How helpful and friendly was our staff? (1 to 5)\n5. What could we do better?",
+  "required": false
+}
+```
+
+Next lesson: your service improvement plan.
+$md$, true, true, 7, array['cscm-m07-t1', 'cscm-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('cscm-m08', 'customer-service-client-management', 'Final project: a service improvement plan', 8, 'Service Plan', 'SVCPLAN', array['Diagnose a service', 'Write standards and scripts', 'Set metrics', 'Present an improvement plan']::text[], array['Choosing a service to review', 'Finding the problems', 'Writing the plan and scripts', 'Presenting it']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('customer-service-client-management:final-project-a-service-improvement-plan', 'customer-service-client-management', 'cscm-m08', 'final-project-a-service-improvement-plan', 'Final Project: A Service Improvement Plan', 'Choose a service to review, find the problems, write the plan and scripts and present it.', 55, $md$
+## What you are building
+
+You have covered what great service is, how to communicate, serve through every channel, handle complaints, manage client relationships, set standards and systems, and measure and improve. Now you apply it by creating **a service improvement plan** for a real or realistic service.
+
+Choose a **service you can examine:** the front desk of a business you know, a shop's customer care on WhatsApp, a school or clinic reception, a bank branch queue, a delivery company's support, a restaurant or a service you use as a customer. If you cannot get real data, create a **realistic scenario** with sensible numbers and say so.
+
+## Your plan has six parts
+
+1. **The service and its customers:** what the service is, who uses it, the channels, the current standards (if any) and what customers expect.
+2. **Evidence of the problems:** at least four sources: your own observation (a mystery visit or a test message), customer comments, complaint data, response times and a few figures (CSAT, response compliance, first-contact resolution, complaint categories).
+3. **Diagnosis:** the top three problems, ranked, with root causes (use the five whys) and the cost of leaving them (lost customers or lifetime profit).
+4. **The improvements:** specific actions for each problem, including **new service standards,** **scripts or templates** (greeting, a difficult message, a complaint reply), a **ticket and records** system and an **escalation matrix.**
+5. **Measurement:** the metrics and targets you will track (response time, FCR, CSAT, complaints, retention), how you will collect feedback and how often you will review.
+6. **Rollout and ownership:** who does what by when, any training needed, the cost and the expected benefit in naira.
+
+## Presenting the plan
+
+Write for the owner or manager who will approve it. Open with a **one-page summary:** the problems found, the main improvements, what it costs and what you expect to gain. Use tables for the metrics and the action plan. Show the evidence behind each claim and be honest about what you assumed. Prepare for questions: *How do you know this is the real problem? What does it cost? How will we know it worked? What if staff resist?*
+
+> [!TIP]
+> Try your scripts and standards on a colleague or friend before you submit. If they sound unnatural or are hard to follow, simplify them.
+
+## Try it
+
+```task
+{
+  "id": "cscm-m08-t1",
+  "prompt": "Describe **the service you chose** and its **customers and channels** in 60 to 130 words, including the current standards (or that there are none) and what customers expect.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "The service is ...",
+  "rules": [
+    { "label": "Describes the service", "pattern": "service|shop|desk|reception|support|branch|restaurant|clinic|school" },
+    { "label": "Describes the customers", "pattern": "customers?|clients?|patients|parents|students|users" },
+    { "label": "Lists channels", "pattern": "whatsapp|phone|in person|email|social|chat|walk-?in|instagram" },
+    { "label": "Mentions current standards or none", "pattern": "standards?|no (written )?standards|targets?|no targets" },
+    { "label": "States expectations", "pattern": "expect|want|need|quick|fast|polite|reply" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "The service is the customer care desk and WhatsApp line of a busy supermarket in Ikeja. Customers are shoppers and online buyers who ask about prices, stock, delivery and refunds. They reach us in person at the desk, by phone and on WhatsApp. At present there are no written service standards, and replies depend on who is on duty. Customers expect quick, polite answers, accurate information and for problems to be fixed the first time they raise them. The plan aims to give staff clear standards, scripts and a simple way to track requests.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m08-t2",
+  "prompt": "Present your **evidence and diagnosis**: at least **six lines** with figures (for example response compliance, first-contact resolution, CSAT, complaint categories), then your **top three problems** ranked, each with a root cause and the cost of leaving it. At least eight lines.",
+  "minutes": 15,
+  "rows": 13,
+  "placeholder": "Evidence: ...\nProblem 1: ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Figures with percentages", "pattern": "\\d+\\s?%", "min": 4 },
+    { "label": "Metrics named (response, resolution, CSAT, complaints)", "pattern": "response|first-contact|csat|complaint|nps|retention" },
+    { "label": "Three problems", "pattern": "problem 1[\\s\\S]*problem 2[\\s\\S]*problem 3" },
+    { "label": "Root cause", "pattern": "root cause|because|why" },
+    { "label": "Cost in naira", "pattern": "₦\\s?\\d" }
+  ],
+  "sample": "Evidence: a week of WhatsApp messages: 200 received, 130 answered within 15 minutes, which is 65%\nEvidence: first-contact resolution is 55%, so 45% of queries need repeat contact\nEvidence: CSAT on a short survey of 80 customers is 72%\nEvidence: 40 complaints last month: late delivery 18 (45%), wrong item 10 (25%), rude staff 8 (20%), billing 4 (10%)\nEvidence: a mystery visit found no greeting for 40 seconds at the desk\nProblem 1: slow WhatsApp replies at peak times - root cause: one person covers the phone and chat - cost: about 20 lost customers a year x ₦54,000 = ₦1,080,000\nProblem 2: late deliveries - root cause: orders packed late because stock is not checked - cost: 18 complaints a month and refunds of about ₦90,000\nProblem 3: inconsistent answers - root cause: no standards or scripts - cost: repeat contacts and a CSAT of 72%",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m08-t3",
+  "prompt": "Write your **new service standards and scripts**: at least **five standards** with numbers, then **two short scripts** (a greeting or phone opening, and a reply to an angry customer). Label each.",
+  "minutes": 15,
+  "rows": 13,
+  "placeholder": "Standard 1: ...\nScript - greeting: ...",
+  "rules": [
+    { "label": "At least five standards with numbers", "pattern": "standard[^\\n]*\\d", "min": 5 },
+    { "label": "Has a greeting script", "pattern": "script[^\\n]*(greeting|opening)|greeting script" },
+    { "label": "Has an angry customer reply script", "pattern": "script[^\\n]*(angry|complaint)|angry customer" },
+    { "label": "Script apologises and offers a solution", "pattern": "sorry|apolog[\\s\\S]*(will|solution|sort|fix|replace)" },
+    { "label": "At least seven lines", "minLines": 7 }
+  ],
+  "sample": "Standard 1: greet every customer within 10 seconds\nStandard 2: answer phone calls within 3 rings\nStandard 3: reply to WhatsApp within 15 minutes during opening hours, 95% of the time\nStandard 4: resolve 80% of queries at first contact\nStandard 5: issue approved refunds within 3 working days\nScript - greeting: Good morning, welcome to Fresh Mart. My name is Ada. How may I help you today?\nScript - angry customer: I am very sorry about this, Sir. I understand how frustrating it is. I will sort it out for you now: I will check your order, and within 10 minutes I will tell you exactly what we can do. What would you like us to do?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "cscm-m08-t4",
+  "prompt": "Write your **measurement and rollout plan** in at least eight lines: five metrics with targets, how you collect feedback, how often you review, who owns each action, the timeline, the cost and the expected benefit in naira.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Metric: ... target ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Metrics with targets", "pattern": "target|\\d+\\s?%", "min": 5 },
+    { "label": "Feedback collection", "pattern": "survey|feedback|review|ask" },
+    { "label": "Review frequency", "pattern": "weekly|monthly|quarterly|every" },
+    { "label": "Owner and timeline", "pattern": "owner|manager|supervisor|by (end|week|month|\\d)|within \\d+" },
+    { "label": "Cost and benefit in naira", "pattern": "cost[\\s\\S]*₦|₦[\\s\\S]*cost|benefit[\\s\\S]*₦" }
+  ],
+  "sample": "Metric: WhatsApp response within 15 minutes - target 95% (now 65%)\nMetric: first-contact resolution - target 80% (now 55%)\nMetric: CSAT - target 85% (now 72%)\nMetric: complaints per month - target below 20 (now 40)\nMetric: retention - target 88% (now 85%)\nFeedback: a five-question WhatsApp survey after each order and a monthly mystery visit\nReview: supervisor checks the figures weekly, and the manager reviews the plan monthly\nOwner and timeline: the supervisor introduces standards and scripts in week 1, training in week 2, ticket log in week 3 and the first review at the end of month 1\nCost: about ₦150,000 for training, a second phone and printing\nBenefit: keeping 10 more customers a year worth ₦54,000 each = ₦540,000, plus fewer refunds of about ₦90,000 a month",
+  "required": true
+}
+```
+
+When you are done, submit your complete service improvement plan as your final project.
+$md$, true, true, 8, array['cscm-m08-t1', 'cscm-m08-t2', 'cscm-m08-t3', 'cscm-m08-t4']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Professional Office Administration
@@ -106175,6 +107314,500 @@ values ('hrpm-f15', 1, 'Support new hires.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: What Great Customer Service Is: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m01-check', 'customer-service-client-management', 'module', 'cscm-m01', 'What Great Customer Service Is: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m01-q1', 'cscm-m01-check', 1, 'What decides whether a customer is satisfied?', '["Only the price","The experience compared with their expectations","The size of the shop","The logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m01-q1', 1, 'Satisfaction is experience minus expectation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m01-q2', 'cscm-m01-check', 2, 'A customer''s lifetime profit is ₦54,000. Losing 20 customers costs about:', '["₦540,000","₦1,080,000","₦2,160,000","₦54,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m01-q2', 1, '20 × 54,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m01-q3', 'cscm-m01-check', 3, 'Which attitude is best when you cannot solve a problem yourself?', '["That is not my department","I will find out and make sure the right person helps you","Come back later","Ignore it"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m01-q3', 1, 'Ownership keeps customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m01-q4', 'cscm-m01-check', 4, 'Who is a client, compared with a customer?', '["Someone who never pays","Someone served over time, often with advice or a contract","A competitor","A supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m01-q4', 1, 'Clients need a relationship.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m01-q5', 'cscm-m01-check', 5, 'Which behaviour is professional?', '["Chatting on the phone while serving","Greeting warmly and giving full attention","Complaining about the business online","Discussing other customers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m01-q5', 1, 'Attention and respect build trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Communication Skills: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m02-check', 'customer-service-client-management', 'module', 'cscm-m02', 'Communication Skills: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m02-q1', 'cscm-m02-check', 1, 'What is an open question?', '["Yes/no","One starting with what, how or tell me about","A shouted question","A rude question"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m02-q1', 1, 'Open questions get fuller answers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m02-q2', 'cscm-m02-check', 2, 'What does active listening include?', '["Interrupting early","Giving full attention, reflecting and summarising","Planning your reply only","Looking at your phone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m02-q2', 1, 'Listen to understand.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m02-q3', 'cscm-m02-check', 3, 'Which is better in writing to a customer?', '["All capitals","A greeting, thanks, the answer first, a next step and a courteous closing","Slang only","No greeting"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m02-q3', 1, 'Clarity and courtesy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m02-q4', 'cscm-m02-check', 4, 'Which phrase should you avoid?', '["Let me check that for you","Calm down","I understand","Thank you for your patience"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m02-q4', 1, '''Calm down'' inflames.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m02-q5', 'cscm-m02-check', 5, 'Cultural awareness in Nigeria includes:', '["Ignoring greetings","Proper greetings, respect for age and titles, and avoiding stereotypes","Using slang with elders","Assuming everyone is the same"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m02-q5', 1, 'Respect and individuality.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Serving Customers in Every Channel: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m03-check', 'customer-service-client-management', 'module', 'cscm-m03', 'Serving Customers in Every Channel: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m03-q1', 'cscm-m03-check', 1, 'How soon should a phone be answered ideally?', '["Within 3 rings","After 10 rings","Never","After a minute"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m03-q1', 0, 'Prompt answering matters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m03-q2', 'cscm-m03-check', 2, '180 of 200 messages got a first response within target. What is the compliance?', '["80%","85%","90%","95%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m03-q2', 2, '180 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m03-q3', 'cscm-m03-check', 3, 'Before promotional WhatsApp messages you should:', '["Send to everyone","Get permission and respect ''stop''","Hide the sender","Use all capitals"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m03-q3', 1, 'Permission and privacy.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m03-q4', 'cscm-m03-check', 4, 'What should you do when you put a caller on hold?', '["Leave them for ten minutes","Ask permission and check back every 30 to 60 seconds","Hang up","Transfer without telling"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m03-q4', 1, 'Do not abandon callers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m03-q5', 'cscm-m03-check', 5, 'The worst response to a customer message is:', '["A quick acknowledgement","Silence","A polite no","An apology"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m03-q5', 1, 'Silence loses customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Handling Complaints and Difficult People: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m04-check', 'customer-service-client-management', 'module', 'cscm-m04', 'Handling Complaints and Difficult People: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m04-q1', 'cscm-m04-check', 1, 'What does LAST stand for?', '["Listen, Apologise, Solve, Thank","Leave, Argue, Shout, Transfer","Look, Ask, Say, Tell","Learn, Act, Stop, Teach"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m04-q1', 0, 'A simple complaint process.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m04-q2', 'cscm-m04-check', 2, '28 of 40 complaints are resolved at first contact. What is the FCR?', '["60%","65%","70%","75%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m04-q2', 2, '28 ÷ 40.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m04-q3', 'cscm-m04-check', 3, 'How should you say no?', '["Start with ''We can''t''","Acknowledge, explain honestly, offer alternatives and offer to escalate","Lie","Ignore"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m04-q3', 1, 'A good no keeps the relationship.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m04-q4', 'cscm-m04-check', 4, 'A ₦2,000 voucher compared with ₦54,000 lifetime profit is about:', '["0.4%","3.7%","10%","37%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m04-q4', 1, '2 ÷ 54.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m04-q5', 'cscm-m04-check', 5, 'If a customer is abusive, you should:', '["Argue back","Set a polite boundary, involve a manager and put your safety first","Hang up silently","Give in"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m04-q5', 1, 'Boundaries and safety.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Client Relationship Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m05-check', 'customer-service-client-management', 'module', 'cscm-m05', 'Client Relationship Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m05-q1', 'cscm-m05-check', 1, 'A client asks for a report in 2 days; you need 4. What is best?', '["Promise 2 days","Explain the realistic time and offer an option such as a summary first","Ignore the request","Deliver late silently"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m05-q1', 1, 'Manage expectations.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m05-q2', 'cscm-m05-check', 2, '10 of 50 clients produce ₦16m of ₦20m. What share of revenue is that?', '["20%","50%","80%","90%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m05-q2', 2, '16 ÷ 20.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m05-q3', 'cscm-m05-check', 3, 'What should a good follow-up do?', '["Just say ''checking in''","Add value, such as progress, an idea or a useful tip","Pressure the client","Avoid contact"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m05-q3', 1, 'Make contact useful.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m05-q4', 'cscm-m05-check', 4, 'Why build relationships with several people at a key client?', '["To avoid work","So the relationship does not depend on one contact","To confuse them","It is a rule"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m05-q4', 1, 'Reduce dependence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m05-q5', 'cscm-m05-check', 5, 'What does under-promising and over-delivering mean?', '["Lie","Give a realistic date and deliver as promised or earlier","Deliver late","Promise everything"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m05-q5', 1, 'Realistic promises build trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Service Standards and Systems: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m06-check', 'customer-service-client-management', 'module', 'cscm-m06', 'Service Standards and Systems: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m06-q1', 'cscm-m06-check', 1, 'Which is a good service standard?', '["Be nice","Reply to WhatsApp messages within 15 minutes during opening hours","Do your best","Try hard"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m06-q1', 1, 'Specific and measurable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m06-q2', 'cscm-m06-check', 2, 'What does a ticket record?', '["Only the price","The request, owner, priority, status, actions and resolution","Only the customer''s name","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m06-q2', 1, 'Everything needed to track a case.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m06-q3', 'cscm-m06-check', 3, 'When should you escalate?', '["Never","When the issue is beyond your authority, serious, or a deadline is at risk","For every question","Only on Fridays"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m06-q3', 1, 'Escalation is the right step.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m06-q4', 'cscm-m06-check', 4, 'How should scripts be used?', '["Read in a flat voice","As flexible guides, personalised and updated","Never","Without thinking"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m06-q4', 1, 'Natural but consistent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m06-q5', 'cscm-m06-check', 5, 'When escalating a complaint you should:', '["Pass it on without details","Brief the next person fully so the customer does not repeat the story","Blame colleagues","Hide the issue"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m06-q5', 1, 'Brief fully.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Measuring and Improving Service: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m07-check', 'customer-service-client-management', 'module', 'cscm-m07', 'Measuring and Improving Service: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m07-q1', 'cscm-m07-check', 1, '84 of 100 responses are satisfied. What is CSAT?', '["74%","84%","94%","100%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m07-q1', 1, '84 ÷ 100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m07-q2', 'cscm-m07-check', 2, '60% promoters, 25% passives, 15% detractors. What is NPS?', '["+15","+25","+45","+60"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m07-q2', 2, '60 − 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m07-q3', 'cscm-m07-check', 3, '170 of 200 customers remain. What is retention?', '["70%","80%","85%","90%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m07-q3', 2, '170 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m07-q4', 'cscm-m07-check', 4, 'What is a Pareto view of complaints for?', '["Decoration","Seeing which causes matter most","Hiding data","Ranking staff"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m07-q4', 1, 'Find the vital few.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m07-q5', 'cscm-m07-check', 5, 'Why close the feedback loop?', '["To save time","Customers see that their feedback leads to change","To avoid surveys","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m07-q5', 1, 'Act and tell them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: A Service Improvement Plan: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('cscm-m08-check', 'customer-service-client-management', 'module', 'cscm-m08', 'Final Project: A Service Improvement Plan: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m08-q1', 'cscm-m08-check', 1, 'How should the plan open for the manager?', '["With every metric","With a one-page summary of problems, improvements, cost and expected gain","With scripts only","With a story"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m08-q1', 1, 'Summary first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m08-q2', 'cscm-m08-check', 2, 'Which is the best evidence for the diagnosis?', '["Opinion only","A mix of observation, customer comments, complaint data and response figures","One complaint","A guess"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m08-q2', 1, 'Multiple evidence sources.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m08-q3', 'cscm-m08-check', 3, 'WhatsApp response within 15 minutes is 65% against a 95% target. The gap is:', '["20 points","30 points","40 points","95 points"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m08-q3', 1, '95 − 65.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m08-q4', 'cscm-m08-check', 4, 'Why test scripts and standards on someone first?', '["It is a rule","To find unnatural or confusing parts before use","To avoid work","To impress"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m08-q4', 1, 'Test and simplify.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-m08-q5', 'cscm-m08-check', 5, 'What should the plan show about cost?', '["Nothing","The cost of the plan and the expected benefit in naira","Only the benefit","Only staff names"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-m08-q5', 1, 'Show cost and benefit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Customer Service & Client Management: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('customer-service-client-management-final', 'customer-service-client-management', 'final', null, 'Customer Service & Client Management: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f01', 'customer-service-client-management-final', 1, 'Satisfaction is best described as:', '["Price only","Experience compared with expectation","Staff numbers","Shop size"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f01', 1, 'Expectation matters.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f02', 'customer-service-client-management-final', 2, 'A customer spends ₦15,000 a month for 12 months at a 30% margin. Lifetime profit is:', '["₦18,000","₦54,000","₦180,000","₦540,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f02', 1, '15,000 × 12 × 0.30.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f03', 'customer-service-client-management-final', 3, 'Which question is a good open question?', '["Did you read the instructions?","What happened when you tried to pay?","Is it your fault?","Yes or no?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f03', 1, 'Open and non-blaming.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f04', 'customer-service-client-management-final', 4, '180 of 200 messages answered within target gives:', '["80%","85%","90%","95%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f04', 2, '180 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f05', 'customer-service-client-management-final', 5, 'What is the first step when a customer complains?', '["Defend","Listen fully","Offer a refund","Hang up"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f05', 1, 'Listen first.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f06', 'customer-service-client-management-final', 6, '28 of 40 complaints solved first time gives an FCR of:', '["60%","65%","70%","75%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f06', 2, '28 ÷ 40.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f07', 'customer-service-client-management-final', 7, 'A good way to say no is to:', '["Start with ''No''","Acknowledge, explain, offer alternatives and offer to escalate","Lie","Ignore"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f07', 1, 'Keep the relationship.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f08', 'customer-service-client-management-final', 8, '10 of 50 clients give ₦16m of ₦20m. Their share of revenue is:', '["20%","50%","80%","90%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f08', 2, '16 ÷ 20.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f09', 'customer-service-client-management-final', 9, 'Which is a measurable service standard?', '["Be friendly","Answer calls within 3 rings","Try your best","Be quick"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f09', 1, 'A number makes it measurable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f10', 'customer-service-client-management-final', 10, 'When should a case be escalated?', '["Never","When it is beyond your authority, serious or a deadline is at risk","Always","Only on request"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f10', 1, 'Escalate appropriately.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f11', 'customer-service-client-management-final', 11, '60% promoters and 15% detractors give an NPS of:', '["+15","+45","+60","+75"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f11', 1, '60 − 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f12', 'customer-service-client-management-final', 12, '40 complaints: 18 late delivery. What share is that?', '["18%","35%","45%","55%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f12', 2, '18 ÷ 40.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f13', 'customer-service-client-management-final', 13, '170 of 200 customers remain. Churn is:', '["10%","15%","17%","85%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f13', 1, '30 ÷ 200.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f14', 'customer-service-client-management-final', 14, 'Why record every customer contact?', '["To waste time","So nothing is lost and customers do not repeat themselves","To spy on staff","It is optional"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f14', 1, 'Records keep service consistent.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('cscm-f15', 'customer-service-client-management-final', 15, 'What belongs in a service improvement plan?', '["Opinions only","Evidence, root causes, standards, scripts, metrics, owners, cost and benefit","A logo","Staff gossip"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('cscm-f15', 1, 'Evidence-based plans win approval.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -106603,6 +108236,16 @@ values ('hrpm-starter-pack', 'human-resources-people-management', 'An HR starter
 Use realistic figures, and flag where laws and statutory rates must be confirmed. Submit a link to your pack (a shared document, PDF or folder) and paste your **one-page summary** and your **annual payroll cost** below, with a short note on where to find each part.
 
 Write for the owner or managing director who will approve it: lead with the summary, make the tools easy to use and show that the parts fit together.$md$, array['Company profile and the top three people problems the pack addresses.', 'Workforce plan: organisation chart, headcount by role and an annual payroll budget with employer pension.', 'Recruitment kit for one key role: job description, advert, structured interview questions and a scoring sheet.', 'Onboarding and probation: an induction checklist and a 30-60-90 day plan.', 'Performance and development: goals and appraisal approach, a feedback model and a costed training plan.', 'Reward and payroll: a pay grade table, a benefits summary and a payroll worksheet for one employee, with a note to confirm statutory rates.', 'Employee relations and policies: grievance and disciplinary outlines and two policies written in full.', 'Compliance, records and metrics: a compliance calendar, an employee register design and five HR metrics with targets.']::text[], '{}'::text[], array['The company profile and people priorities are specific and the pack addresses them.', 'The workforce plan and payroll budget are calculated correctly and include employer costs.', 'The recruitment kit is fair, structured and based on a clear job description.', 'Onboarding and probation plans are practical, with measurable objectives.', 'Performance, training and reward tools are consistent with each other and costed.', 'Procedures and policies follow fair process and are written clearly.', 'Compliance and metrics are specific, the legal points are flagged for confirmation, and the whole pack is consistent.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: A service improvement plan
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('cscm-service-improvement-plan', 'customer-service-client-management', 'A service improvement plan', 'Review a real or realistic service, find its problems with evidence and write a plan with standards, scripts, systems, metrics and a rollout.', $md$Choose a service you can examine, such as the front desk of a business you know, a shop's WhatsApp customer care, a reception, a delivery support line or a service you use as a customer. If you cannot get real data, create a realistic scenario with sensible numbers and say so.
+
+Submit a link to your plan (a shared document, PDF or folder) and paste your **diagnosis** (the top three problems with root causes) and your **new service standards** below, with a short note on where to find each part.
+
+Write for the owner or manager who must approve the plan: lead with a one-page summary, show the evidence and be honest about what you assumed.$md$, array['The service and its customers, channels, current standards and expectations.', 'Evidence of the problems from at least four sources, with figures.', 'Diagnosis: the top three problems ranked, with root causes and the cost of leaving them.', 'Improvements: new service standards, scripts or templates, a ticket and records system and an escalation matrix.', 'Measurement: metrics and targets, a feedback method and a review schedule.', 'Rollout: owners, timeline, training, cost and the expected benefit in naira.']::text[], '{}'::text[], array['The service, customers and channels are described clearly and specifically.', 'Evidence comes from several sources and includes figures; assumptions are stated honestly.', 'Problems are ranked sensibly and root causes are identified, not just symptoms.', 'Standards are measurable, scripts are natural and customer-focused and the ticket system and escalation matrix are workable.', 'Metrics and targets are tied to the problems and can actually be collected.', 'The rollout is realistic, with owners, dates, a cost and a credible benefit.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 

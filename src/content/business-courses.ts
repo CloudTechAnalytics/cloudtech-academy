@@ -597,6 +597,17 @@ const SPECS: Spec[] = [
     prerequisites: ["No experience needed"],
     audience: ["Customer service and front desk staff", "Sales and support teams", "Small business owners who deal with clients", "Anyone starting a customer-facing job"],
     outcomes: ["Communicate clearly and warmly with customers", "Handle complaints and angry customers calmly", "Serve well by phone, WhatsApp, email and in person", "Manage client expectations and relationships", "Keep clients and win repeat business", "Measure and improve service quality"],
+    opened: { completionBadge: "Customer Service Professional", estimatedHours: 4 },
+    built: {
+      "cscm-m01": { lesson: "what-great-customer-service-is", badge: "Service Basics", badgeCode: "SERVBAS", skills: ["Define customer service", "Understand expectations", "Show the right attitude", "Behave professionally"] },
+      "cscm-m02": { lesson: "communication-skills", badge: "Service Comms", badgeCode: "SERVCOMM", skills: ["Listen and question well", "Write clearly and politely", "Use tone and body language", "Respect cultural differences"] },
+      "cscm-m03": { lesson: "serving-customers-in-every-channel", badge: "Every Channel", badgeCode: "CHANNELS", skills: ["Serve in person", "Use phone etiquette", "Serve on WhatsApp, email and social", "Meet response times"] },
+      "cscm-m04": { lesson: "handling-complaints-and-difficult-people", badge: "Complaints", badgeCode: "COMPLAIN", skills: ["Follow a complaint process", "Stay calm with angry customers", "Say no well", "Recover service"] },
+      "cscm-m05": { lesson: "client-relationship-management", badge: "Client Care", badgeCode: "CLIENTS", skills: ["Understand client needs", "Manage expectations", "Keep regular contact", "Look after key clients"] },
+      "cscm-m06": { lesson: "service-standards-and-systems", badge: "Service Systems", badgeCode: "SVCSYS", skills: ["Set service standards", "Write scripts", "Run tickets and records", "Escalate properly"] },
+      "cscm-m07": { lesson: "measuring-and-improving-service", badge: "Service Metrics", badgeCode: "SVCKPI", skills: ["Collect feedback", "Calculate CSAT, NPS and FCR", "Learn from complaints", "Build loyalty"] },
+      "cscm-m08": { lesson: "final-project-a-service-improvement-plan", badge: "Service Plan", badgeCode: "SVCPLAN", skills: ["Diagnose a service", "Write standards and scripts", "Set metrics", "Present an improvement plan"] },
+    },
     projectTitle: "A service improvement plan",
     projectSummary: "Review a real or realistic customer service operation and write a plan to improve it, with scripts and standards.",
     modules: [
