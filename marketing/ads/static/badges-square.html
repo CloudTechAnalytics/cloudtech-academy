@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: PF; src: url('../fonts/playfair-700.woff2'); font-weight: 700; }
+@font-face { font-family: IN; src: url('../fonts/inter.woff2'); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1080px; overflow: hidden; }
+body { font-family: IN, 'Segoe UI', Arial, sans-serif; background: #C9A45C; color: #1E1D1B; position: relative; }
+.deco { position: absolute; inset: 0; background: radial-gradient(800px 600px at 10% 0%, rgba(255,255,255,.35), transparent 60%), radial-gradient(700px 600px at 100% 100%, rgba(30,29,27,.18), transparent 60%); }
+.pad { position: absolute; inset: 0; padding: 64px; display: flex; flex-direction: column; }
+.serif { font-family: PF, Georgia, serif; font-weight: 700; letter-spacing: -0.015em; font-variant-numeric: lining-nums; }
+.gold { color: #FFFFFF; }
+.logo { display: flex; align-items: center; gap: 14px; }
+.logo svg { width: 51px; height: 51px; }
+.logo .w { font-family: PF, serif; font-weight: 700; font-size: 30px; line-height: 1; color: #1E1D1B; }
+.logo .s { font-size: 12px; letter-spacing: 0.34em; font-weight: 600; margin-top: 6px; color: #1E1D1B; }
+.kick { font-size: 19px; letter-spacing: 0.3em; font-weight: 700; text-transform: uppercase; }
+.head { font-size: 88px; line-height: 1.02; margin-top: 26px; }
+.sub { font-size: 31px; line-height: 1.42; margin-top: 30px; max-width: 880px; }
+.pill { display: inline-block; border-radius: 999px; padding: 12px 26px; font-weight: 700; font-size: 26px; }
+.cta { padding: 21px 40px; font-size: 29px; }
+.url { font-weight: 700; font-size: 26px; letter-spacing: .01em; }
+.ctarow { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: auto; padding-top: 36px; }
+.vis { margin-top: 44px; display: flex; justify-content:center;   }
+.main { margin-top: 40px; display: flex; flex-direction: column; flex: 1; }
+.row { display: flex; gap: 40px; flex: 1; align-items: stretch; }
+.col { display: flex; flex-direction: column; flex: 1.1; }
+.row .vis { flex: 1; }
+.stack { flex: 1; display: flex; flex-direction: column; }
+.stack .vis { margin-bottom: 40px; }
+</style></head><body>
+<div class="deco"></div>
+<div class="pad">
+  <div class="logo"><svg viewBox="0 0 682 682" width="64" height="64"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w">CloudTech</div><div class="s">ACADEMY</div></div></div>
+  <div class="main"><div class="kick" style="color:#1E1D1B">Earn as you learn</div>
+    <div class="serif head" style="color:#1E1D1B">Every skill earns a badge.</div>
+    <div class="sub" style="color:#3A3328">Pass the module check and get a badge you can share on LinkedIn. Free with every course.</div><div class="vis"><div style="zoom:0.8"><div style="display:flex;gap:34px;justify-content:center;color:#1E1D1B"><div style="text-align:center;width:260px">
+  <svg viewBox="0 0 200 200" width="230" height="230"><circle cx="100" cy="100" r="92" fill="#1E1D1B"/><circle cx="100" cy="100" r="80" fill="#F3EBD8"/><circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="3 6"/><g fill="none" stroke="#1E1D1B" stroke-width="7" stroke-linecap="round"><ellipse cx="100" cy="76" rx="34" ry="13"/><path d="M66 76v48c0 7 15 13 34 13s34-6 34-13V76"/><path d="M66 100c0 7 15 13 34 13s34-6 34-13"/></g></svg>
+  <div class="serif" style="font-size:30px;margin-top:6px;line-height:1.15">SQL Querying</div><div style="font-size:21px;opacity:.7;margin-top:4px">Badge earned</div></div><div style="text-align:center;width:260px">
+  <svg viewBox="0 0 200 200" width="230" height="230"><circle cx="100" cy="100" r="92" fill="#1E1D1B"/><circle cx="100" cy="100" r="80" fill="#FBF8F2"/><circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="3 6"/><g fill="none" stroke="#1E1D1B" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><rect x="64" y="64" width="72" height="72" rx="8"/><path d="M64 88h72M64 112h72M88 64v72"/></g></svg>
+  <div class="serif" style="font-size:30px;margin-top:6px;line-height:1.15">Pivot Tables</div><div style="font-size:21px;opacity:.7;margin-top:4px">Badge earned</div></div><div style="text-align:center;width:260px">
+  <svg viewBox="0 0 200 200" width="230" height="230"><circle cx="100" cy="100" r="92" fill="#1E1D1B"/><circle cx="100" cy="100" r="80" fill="#EFE4CC"/><circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-dasharray="3 6"/><g fill="none" stroke="#1E1D1B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M82 74l-24 26 24 26M118 74l24 26-24 26"/></g></svg>
+  <div class="serif" style="font-size:30px;margin-top:6px;line-height:1.15">Python Basics</div><div style="font-size:21px;opacity:.7;margin-top:4px">Badge earned</div></div></div></div></div><div class="ctarow"><span class="pill cta" style="background:#1E1D1B;color:#F3EBD8">Start earning badges →</span><span class="url" style="color:#3A3328">academy.cloudtechanalytics.com</span></div></div>
+</div></body></html>

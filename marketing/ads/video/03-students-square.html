@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Student? Start here: 1:1 feed video, 12 seconds</title>
+<link rel="stylesheet" href="video.css">
+<style>
+html, body { width: 1080px; height: 1080px; }
+.logo { left: 72px; top: 64px; }
+.pad { position: absolute; inset: 0; padding: 0 72px; display: flex; flex-direction: column; justify-content: center; }
+.h1 { font-size: 190px; line-height: .98; }
+.h2 { font-size: 92px; line-height: 1.05; }
+.list { margin-top: 56px; display: flex; flex-direction: column; gap: 30px; }
+.it { display: flex; align-items: center; gap: 28px; opacity: 0; }
+.it .tick { width: 76px; height: 76px; transform: scale(0); }
+.it .t { font-size: 52px; font-weight: 700; }
+.it .d { font-size: 28px; color: var(--soft); margin-top: 2px; }
+.cta { font-size: 48px; padding: 32px 62px; background: var(--gold); color: var(--ink); }
+.url { font-size: 40px; font-weight: 700; margin-top: 40px; color: var(--soft); }
+</style></head>
+<body>
+<div class="glow"></div><div class="grid"></div>
+<div class="logo"><svg viewBox="0 0 682 682"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w1">CloudTech</div><div class="s1">ACADEMY</div></div></div>
+
+<div class="scene" id="s1"><div class="pad">
+  <div class="kick" id="k1">For students · Free</div>
+  <div class="serif h1" id="h1" style="margin-top:26px"><span class="w">Student?</span><br><span class="w gold">Start</span> <span class="w gold">here.</span></div>
+</div></div>
+
+<div class="scene" id="s2"><div class="pad">
+  <div class="serif h2" id="h2"><span class="w">Get</span> <span class="w">ahead</span> <span class="w gold">before</span> <span class="w gold">you</span> <span class="w gold">graduate.</span></div>
+  <div class="list">
+    <div class="it"><div class="tick"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div><div class="t">Study smarter with AI</div><div class="d">ChatGPT and research skills, used properly</div></div></div>
+    <div class="it"><div class="tick"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div><div class="t">A CV that gets read</div><div class="d">Plus a LinkedIn profile recruiters can find</div></div></div>
+    <div class="it"><div class="tick"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div><div class="t">A portfolio of real work</div><div class="d">One link that shows what you can do</div></div></div>
+    <div class="it"><div class="tick"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div><div class="t">Your first internship</div><div class="d">Find it, apply well, ace the interview</div></div></div>
+  </div>
+</div></div>
+
+<div class="scene" id="s3"><div class="pad">
+  <div class="kick">All free · No experience needed</div>
+  <div class="serif" id="h3" style="font-size:132px;line-height:1.02;margin-top:26px">Start learning <span class="gold">free.</span></div>
+  <div style="margin-top:56px"><span class="pill cta" id="cta">Start learning free →</span></div>
+  <div class="url" id="url">academy.cloudtechanalytics.com</div>
+</div></div>
+
+<div class="progress"><i></i></div>
+<script src="anim.js"></script>
+<script>
+window.DURATION = 12;
+window.render = (t) => {
+  ambient(t);
+  scene($("#s1"), t, 0, 2.9);
+  pop($("#k1"), t, 0.1, 0.5, { y: 20 });
+  words($("#h1"), t, 0.35, 0.22, 0.55);
+
+  scene($("#s2"), t, 2.6, 9.0);
+  words($("#h2"), t, 2.85, 0.13);
+  $$("#s2 .it").forEach((it, i) => {
+    const a = 3.9 + i * 1.15;
+    pop(it, t, a, 0.5, { x: -50, y: 0, s: 0.98 });
+    $(".tick", it).style.transform = `scale(${ease.back(P(t, a + 0.35, a + 0.8))})`;
+  });
+
+  scene($("#s3"), t, 8.7, 12.01, 0.4);
+  pop($("#h3"), t, 8.9, 0.6, { y: 50 });
+  pop($("#cta"), t, 9.4, 0.55, { y: 40, back: true });
+  $("#cta").style.boxShadow = `0 0 0 ${Math.abs(Math.sin((t - 10) * 3.2)) * 16}px rgba(201,164,92,.28)`;
+  pop($("#url"), t, 9.9, 0.5, { y: 20 });
+};
+window.render(0);
+</script>
+</body></html>
