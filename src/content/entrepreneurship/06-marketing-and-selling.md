@@ -41,6 +41,7 @@ Test two or three channels for a few weeks, **measure what each brings** (enquir
 A **brand** is how customers see and feel about your business. It includes your name, logo, colours, voice and, above all, **how you treat people.**
 
 On a small budget:
+
 - **Choose a clear, easy-to-remember name** and check it is free to use.
 - **Keep the look simple and consistent:** one logo, two or three colours, one or two fonts, used the same way everywhere.
 - **Take good photos** of your product and work, with a phone and natural light.

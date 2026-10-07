@@ -77099,6 +77099,7 @@ Good businesses solve real problems. Look for:
 - **Gaps between what exists and what people say they want.**
 
 A problem is **worth solving** when:
+
 1. **Many people** have it, or a few people have it badly.
 2. It happens **often** or costs a lot.
 3. People are **already trying to fix it**, and spending money or time.
@@ -77248,6 +77249,7 @@ Measure behaviour, not compliments. Example: you survey 50 people and 18 say the
 A **minimum viable product (MVP)** is the simplest version that lets you learn from real customers. It is not a bad product. It is a **focused** one: only the features that matter for the first test.
 
 Examples:
+
 - A restaurant concept starts as a pre-order lunch box service from a home kitchen.
 - An app idea starts as a WhatsApp group and a spreadsheet, run by hand.
 - A clothing line starts with ten pieces and one fabric.
@@ -77372,6 +77374,7 @@ A simple format:
 Example: *For busy office workers who have little time for lunch, our pre-ordered lunch boxes are a delivery service that brings fresh, hot meals to their desk by 12:30. Unlike queuing at the canteen, we save them 30 minutes and they never have to skip a meal.*
 
 A strong proposition is:
+
 - **Specific:** clear who and what.
 - **Focused on a real problem** you validated.
 - **Different** from alternatives, in a way customers care about.
@@ -77809,6 +77812,7 @@ Test two or three channels for a few weeks, **measure what each brings** (enquir
 A **brand** is how customers see and feel about your business. It includes your name, logo, colours, voice and, above all, **how you treat people.**
 
 On a small budget:
+
 - **Choose a clear, easy-to-remember name** and check it is free to use.
 - **Keep the look simple and consistent:** one logo, two or three colours, one or two fonts, used the same way everywhere.
 - **Take good photos** of your product and work, with a phone and natural light.
@@ -78217,6 +78221,7 @@ Follow the **employment laws** that apply, including pay, deductions, pension an
 You cannot do everything yourself. **Delegation** means giving someone the responsibility and the authority to do a task, while you remain accountable for the result.
 
 How to delegate well:
+
 - **Choose the task** (routine, time-consuming, or something someone else can do better).
 - **Explain the outcome you want,** the deadline, the standard and any limits (budget, approval).
 - **Make sure they have what they need:** information, tools, training.
@@ -78241,6 +78246,7 @@ Keep them **simple, clear and within the person's control**. Review weekly or mo
 Growth is attractive and dangerous. Growing too fast is a leading cause of failure: costs rise before income, quality slips and cash runs out.
 
 **Ready signs:**
+
 - Demand is steady and **customers are waiting.**
 - The process works without constant firefighting, and quality is consistent.
 - The business is **profitable** and generates cash.
@@ -78248,6 +78254,7 @@ Growth is attractive and dangerous. Growing too fast is a leading cause of failu
 - You can fund growth without risking the whole business.
 
 **Ways to grow:**
+
 - **Sell more to existing customers** (new products, bigger orders, subscriptions).
 - **Reach new customers** (new areas, channels or segments).
 - **Improve prices and margins** (cheaper supply, better pricing).
@@ -78437,50 +78444,1428 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Business Development & Sales
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('business-development-sales', 'full', null, 'business-development-sales', 'BDS', 'Business Development & Sales', 'Find customers, hold better sales conversations, handle objections and close deals, with a pipeline you can manage.', 'A practical sales course for people who need to bring in customers: salespeople, founders and business developers. You learn to find the right prospects, run a sales conversation, handle objections, negotiate and close, then manage a pipeline and measure results.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Prospecting and lead generation', 'Discovery and sales conversations', 'Objection handling', 'Negotiation and closing', 'Pipeline and CRM management', 'Sales metrics']::text[], array['No experience needed']::text[], 'Your sales plan and pitch', true, true, true, true, false, 60, 50)
+values ('business-development-sales', 'short', 'Sales Practitioner', 'business-development-sales', 'BDS', 'Business Development & Sales', 'Find customers, hold better sales conversations, handle objections and close deals, with a pipeline you can manage.', 'A practical sales course for people who need to bring in customers: salespeople, founders and business developers. You learn to find the right prospects, run a sales conversation, handle objections, negotiate and close, then manage a pipeline and measure results.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', 6, false, 'available', true, array['Prospecting and lead generation', 'Discovery and sales conversations', 'Objection handling', 'Negotiation and closing', 'Pipeline and CRM management', 'Sales metrics']::text[], array['No experience needed']::text[], 'Your sales plan and pitch', true, true, true, true, false, 60, 50)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 to 3 months', overview = 'Selling is a skill that can be learned. This course gives you a clear process, from finding the right prospects to closing and keeping them, with scripts, role plays and a sales plan of your own to finish.', audience = array['Sales representatives and new salespeople', 'Founders and business owners who sell themselves', 'Business development officers', 'Anyone moving into a sales or account role']::text[], included = '{}'::text[], project_previews = '[{"title":"Your sales plan and pitch","summary":"A target customer profile, a prospecting plan, a pitch and a pipeline for a real or realistic product."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Find and qualify the right prospects', 'Run a discovery conversation that uncovers real needs', 'Present and propose with confidence', 'Handle objections and negotiate', 'Close deals and keep customers', 'Track a pipeline and report on results']::text[], difficulty_max = 'intermediate', duration_weeks = 10, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 to 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'business-development-sales' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 60000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '2 to 3 months', overview = 'Selling is a skill that can be learned. This course gives you a clear process, from finding the right prospects to closing and keeping them, with scripts, role plays and a sales plan of your own to finish.', audience = array['Sales representatives and new salespeople', 'Founders and business owners who sell themselves', 'Business development officers', 'Anyone moving into a sales or account role']::text[], included = '{}'::text[], project_previews = '[{"title":"Your sales plan and pitch","summary":"A target customer profile, a prospecting plan, a pitch and a pipeline for a real or realistic product."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Find and qualify the right prospects', 'Run a discovery conversation that uncovers real needs', 'Present and propose with confidence', 'Handle objections and negotiate', 'Close deals and keep customers', 'Track a pipeline and report on results']::text[], difficulty_max = 'intermediate', duration_weeks = 10, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 2 to 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'business-development-sales' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m01', 'business-development-sales', 'Sales fundamentals', 1, null, null, '{}'::text[], array['What selling really is', 'The sales process from lead to loyal customer', 'Business development versus sales', 'Ethics and trust']::text[])
+values ('bds-m01', 'business-development-sales', 'Sales fundamentals', 1, 'Sales Basics', 'SALESBAS', array['Explain what selling is', 'Follow the sales process', 'Tell sales from business development', 'Sell ethically']::text[], array['What selling really is', 'The sales process from lead to loyal customer', 'Business development versus sales', 'Ethics and trust']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m02', 'business-development-sales', 'Understanding your customer', 2, null, null, '{}'::text[], array['Ideal customer profile', 'Customer needs, pains and gains', 'Buyers, users and decision makers', 'Competitor awareness']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:sales-fundamentals', 'business-development-sales', 'bds-m01', 'sales-fundamentals', 'Sales Fundamentals', 'Understand what selling really is, the sales process from lead to loyal customer, how business development differs from sales and why ethics and trust matter.', 25, $md$
+## What selling really is
+
+Selling is **helping someone solve a problem or reach a goal, in exchange for money.** It is not pushing, tricking or talking the most. The best salespeople ask good questions, listen, match the customer's need to what they offer, and are honest when it is not a fit.
+
+People often fear selling because they picture pressure. Real selling is closer to **advice**: a customer who has a problem meets someone who understands it and can help. When you believe your product genuinely helps, selling is simply making sure the right people know about it and can say yes easily.
+
+Every business needs sales. Without it, even a great product goes nowhere. The skills are learnable: preparing, asking, listening, explaining, answering concerns, agreeing terms and following up.
+
+## The sales process from lead to loyal customer
+
+Most sales follow stages. Naming them helps you know where each customer is and what to do next.
+
+1. **Prospecting:** find people or businesses who might need what you offer. A **lead** is a prospect who has shown some interest or fits your target.
+2. **Qualifying:** check whether the lead really has the need, the money, the authority to decide and a reason to act now. Not every lead deserves your time.
+3. **Discovery:** have a conversation to understand their situation, problems and goals in depth.
+4. **Presenting:** show how your solution solves their specific problem.
+5. **Handling objections:** listen to concerns, and answer honestly.
+6. **Proposal and negotiation:** put the offer and terms in writing and agree a fair deal.
+7. **Closing:** agree, confirm and take payment or a signed order.
+8. **Delivery and onboarding:** do what you promised.
+9. **Follow-up and growth:** keep in touch, solve problems, ask for referrals and sell more where it helps them.
+
+The sales process is **not a straight line**. Customers jump back and forth, and some stop. Track where each is, and move them on with the next sensible step.
+
+## Business development versus sales
+
+The terms overlap and companies use them differently, but a common distinction is:
+
+| | Sales | Business development |
+| :-- | :-- | :-- |
+| **Focus** | Turning identified prospects into customers now | Creating new opportunities, markets and relationships for the future |
+| **Time horizon** | Short to medium (weeks to months) | Medium to long (months to years) |
+| **Typical activities** | Meetings, proposals, negotiation, closing | Researching markets, building partnerships, networking, finding new channels and customer segments |
+| **Measure** | Revenue, deals closed | New relationships, partnerships, pipeline created, new markets entered |
+
+In a small business one person often does both. A good approach: **business development opens the door, sales walks through it, and account management keeps the customer.**
+
+## Ethics and trust
+
+Trust is the foundation of lasting sales. Customers buy from people they believe, so protect it.
+
+- **Be honest.** Do not exaggerate, hide costs or promise what you cannot deliver.
+- **Put the customer's interest alongside yours.** If your product is not right for them, say so. They will remember it and come back, or refer others.
+- **Respect their time and their decision,** including "no".
+- **Keep confidences,** and do not share a customer's or competitor's private information.
+- **Never bribe, or accept bribes,** and follow the law and your company's rules.
+- **Do not speak badly of competitors.** Compare fairly, with facts.
+- **Deliver on promises,** and own and fix mistakes quickly.
+
+> [!NOTE]
+> A sale won by misleading a customer is a debt you will repay in refunds, complaints and a damaged name.
+
+## Try it
+
+```task
+{
+  "id": "bds-m01-t1",
+  "prompt": "A solar company, **Sunbright Solar**, sells inverter systems to small shops in Lagos. Put the sales process in order for one shop owner. Write **eight steps**, one per line, each saying what Sunbright actually does at that stage.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1. Prospecting - ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes prospecting or finding leads", "pattern": "prospect|find|lead|identify" },
+    { "label": "Includes qualifying", "pattern": "qualif|budget|decision|need" },
+    { "label": "Includes discovery or asking questions", "pattern": "discover|question|ask|understand|visit" },
+    { "label": "Includes presenting or proposal", "pattern": "present|demo|proposal|quote" },
+    { "label": "Includes objections or negotiation", "pattern": "objection|concern|negotiat" },
+    { "label": "Includes closing", "pattern": "clos|agree|sign|order|payment" },
+    { "label": "Includes delivery or follow-up", "pattern": "install|deliver|follow|after" }
+  ],
+  "sample": "1. Prospecting - find shops on a busy market street that run generators all day.\n2. Qualifying - check the owner decides, can afford a system and has a reason to switch soon.\n3. Discovery - visit and ask how much they spend on fuel and what power cuts cost them.\n4. Presenting - show a system sized to their load and the monthly saving.\n5. Handling objections - listen to worries about price, reliability and maintenance and answer honestly.\n6. Proposal - send a written quote with price, installation and warranty terms.\n7. Closing - agree the deal, sign the order and take the deposit.\n8. Delivery and follow-up - install on time, check the system works and ask for referrals.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m01-t2",
+  "prompt": "In 40 to 90 words, explain the difference between **sales** and **business development** to a new colleague, with one example of each activity.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Sales is ...",
+  "rules": [
+    { "label": "Explains sales (closing current prospects, revenue, proposals)", "pattern": "sales[^.]*(clos|prospect|revenue|deal|proposal|now|customers)" },
+    { "label": "Explains business development (new opportunities, partnerships, markets, long-term)", "pattern": "business development[^.]*(new|partner|market|relationship|future|long|open)" },
+    { "label": "Gives an example", "pattern": "example|for instance|such as|e\\.g\\." },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "Sales turns identified prospects into paying customers now, through meetings, proposals, negotiation and closing deals, so its measure is revenue. Business development creates new opportunities for the future, such as finding new markets, building partnerships and opening new channels. For example, a salesperson might close a deal with a shop owner this month, while business development might build a partnership with a bank that offers loans to shops buying solar systems, creating many future customers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m01-t3",
+  "prompt": "A prospect asks if your product will work with a product it is **not designed for**. You know it will not. In 40 to 90 words, say what you would do and why it is good for the business even though it may lose this sale.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "I would tell them ...",
+  "rules": [
+    { "label": "Says to be honest and tell them the truth", "pattern": "honest|truth|tell them|be clear|not work|will not|won't" },
+    { "label": "Offers an alternative or a better fit", "pattern": "alternative|instead|better (fit|option)|recommend|suggest|another" },
+    { "label": "Links to trust, reputation or referrals", "pattern": "trust|reputation|referr|come back|long-?term|repeat|credib" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "I would be honest and tell them it will not work with that product, and explain why, then suggest a better option, either one of ours that is designed for it or another solution. I may lose this sale, but I will gain trust. A customer who knows I put their interest first is likely to come back for what does suit them, and to refer others, while a sale made on a false promise would lead to complaints and a damaged reputation.",
+  "required": false
+}
+```
+
+Next lesson: understanding your customer.
+$md$, true, true, 1, array['bds-m01-t1', 'bds-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m03', 'business-development-sales', 'Prospecting and lead generation', 3, null, null, '{}'::text[], array['Where leads come from', 'Cold outreach by call, message and email', 'Referrals and networking', 'Social selling on LinkedIn and WhatsApp', 'Qualifying leads']::text[])
+values ('bds-m02', 'business-development-sales', 'Understanding your customer', 2, 'Customer Insight', 'CUSTINS', array['Define an ideal customer profile', 'Map pains and gains', 'Identify decision makers', 'Know competitors']::text[], array['Ideal customer profile', 'Customer needs, pains and gains', 'Buyers, users and decision makers', 'Competitor awareness']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m04', 'business-development-sales', 'The sales conversation', 4, null, null, '{}'::text[], array['Preparing for a meeting', 'Opening and building rapport', 'Asking good discovery questions', 'Listening and note taking', 'Presenting your solution']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:understanding-your-customer', 'business-development-sales', 'bds-m02', 'understanding-your-customer', 'Understanding Your Customer', 'Define your ideal customer profile, map customer needs, pains and gains, identify buyers, users and decision makers and understand your competitors.', 25, $md$
+## Ideal customer profile
+
+You cannot sell to everyone. An **ideal customer profile (ICP)** describes the type of customer that gets the most value from you and brings the most value back: they buy readily, pay on time, stay and refer others.
+
+For a business customer (B2B), describe:
+
+- **Industry or type of business:** shops, schools, clinics, factories, restaurants.
+- **Size:** number of staff, branches or turnover.
+- **Location:** the areas you can serve.
+- **Situation or trigger:** what makes them need you now (power cuts, growth, a new rule, an expansion).
+- **Budget range** and how they usually buy.
+- **Who decides.**
+
+For an individual customer (B2C), describe age range, occupation, income, location, habits and motivation.
+
+Build the ICP from **your best existing customers**: who bought fastest, paid on time, stayed longest, referred others? Look for the shared traits. Then aim your effort at more people like them, and avoid spending time on poor fits.
+
+Example ICP for Sunbright Solar: *Retail shops and small clinics in Lagos with 3 to 20 staff, running a generator for more than six hours a day, spending at least ₦80,000 a month on fuel, with an owner who decides on purchases.*
+
+## Customer needs, pains and gains
+
+People buy to fix a **pain** or reach a **gain**.
+
+- **Pains:** problems, frustrations, risks and costs. *Fuel costs are rising, the generator is noisy and breaks down, customers leave when the power goes.*
+- **Gains:** results and benefits they want. *Lower monthly costs, reliable power for the freezer and lights, a quieter shop, a better image.*
+- **Needs** can be **stated** (what they say) and **underlying** (what really drives them). A shop owner may say "I want a cheaper generator," when the underlying need is "stop losing money to power cuts."
+
+A simple map for each customer type has three columns: **Pains**, **Gains** and **What they do now.** Fill it with real language from conversations, and use their words in your messages. The stronger the pain, the more urgent the sale.
+
+Rank pains by **how often they happen, how much they cost and how badly the customer wants them solved.** Lead with the biggest.
+
+## Buyers, users and decision makers
+
+In many sales there is more than one person involved. Identify each role:
+
+| Role | What they do |
+| :-- | :-- |
+| **Economic buyer** | Controls the budget and gives the final yes |
+| **User** | Uses the product day to day |
+| **Influencer / advisor** | Recommends or advises (an engineer, an accountant) |
+| **Gatekeeper** | Controls access to the decision maker (a receptionist, an assistant) |
+| **Champion** | Supports you inside the customer and helps you win |
+| **Blocker** | Opposes the change, or a competitor's friend |
+
+Example: selling a system to a clinic. The doctor-owner is the economic buyer, the nurse who uses the freezer is the user, the technician is the influencer and the receptionist is the gatekeeper. If you talk only to the receptionist, you may never reach the person who can say yes.
+
+Ask early: *"Besides you, who else will be involved in this decision?"* and *"How are decisions like this usually made here?"* Treat every person with respect, since any of them can support or block the sale.
+
+## Competitor awareness
+
+You are always competing, with other suppliers, with cheaper alternatives, with the customer's own workaround (like the generator) and with **doing nothing.**
+
+Know your competitors:
+
+- Who they are and who they serve.
+- Their prices, offers and terms.
+- Their strengths and weaknesses, as customers describe them.
+- How they sell and where they advertise.
+- How you are **different and better** for your ICP.
+
+Gather information honestly: public websites, social pages, reviews, price lists and what customers tell you. Do not obtain secrets by deceit.
+
+In conversations, **never attack** competitors. Ask what the customer values and show how you meet it. If a customer prefers a rival's strength, accept it and focus on where you win. Keep a simple **battlecard** for each main competitor: their strengths, weaknesses, common claims and your best response.
+
+## Try it
+
+```task
+{
+  "id": "bds-m02-t1",
+  "prompt": "Write the **ideal customer profile** for a business or product of your choice (or Sunbright Solar). One item per line: type of business or person, size, location, trigger (why they need it now), budget and who decides. At least six lines.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Type: ...\nSize: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States the type of customer", "pattern": "type|industry|business|customer" },
+    { "label": "States the size", "pattern": "size|staff|employees|\\d+\\s*(to|-)\\s*\\d+|turnover" },
+    { "label": "States the location", "pattern": "location|lagos|abuja|area|city|state|ikeja|lekki" },
+    { "label": "States the trigger", "pattern": "trigger|because|when|need now|reason|power cuts|growth" },
+    { "label": "States the budget", "pattern": "budget|₦\\s?\\d|spend" },
+    { "label": "States who decides", "pattern": "decid|owner|manager|buyer" }
+  ],
+  "sample": "Type: retail shops and small clinics that depend on refrigeration and lighting\nSize: 3 to 20 staff\nLocation: Lagos, mainly Ikeja, Yaba and Lekki\nTrigger: they run a generator more than six hours a day and fuel costs keep rising\nBudget: spending at least ₦80,000 a month on fuel and able to invest ₦800,000 to ₦1,500,000\nWho decides: the owner or general manager, with the shop's accountant advising",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m02-t2",
+  "prompt": "Build a **pains and gains map** for your ideal customer: three pains, three gains and what they do now. One item per line, labelled.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Pain 1: ...\nGain 1: ...",
+  "rules": [
+    { "label": "Three pains", "pattern": "pain 1[\\s\\S]*pain 2[\\s\\S]*pain 3" },
+    { "label": "Three gains", "pattern": "gain 1[\\s\\S]*gain 2[\\s\\S]*gain 3" },
+    { "label": "What they do now", "pattern": "do now|currently|at the moment|workaround|today" },
+    { "label": "At least seven lines", "minLines": 7 }
+  ],
+  "sample": "Pain 1: fuel for the generator costs ₦80,000 to ₦150,000 a month\nPain 2: the generator breaks down and the shop loses sales during outages\nPain 3: noise and fumes upset customers and neighbours\nGain 1: lower and predictable monthly energy costs\nGain 2: reliable power for the freezer, lights and card machine\nGain 3: a quieter, cleaner shop\nWhat they do now: run a petrol generator and pay for repairs and fuel every week",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m02-t3",
+  "prompt": "You are selling a system to a clinic. Name **four people** who may be involved in the decision, give their role (economic buyer, user, influencer, gatekeeper or champion) and say what each cares about. One per line.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Doctor-owner - economic buyer - cares about ...",
+  "rules": [
+    { "label": "Four lines", "minLines": 4 },
+    { "label": "Names the economic buyer", "pattern": "economic buyer|decision maker|owner|pays|budget" },
+    { "label": "Names a user", "pattern": "user|nurse|staff|pharmacist" },
+    { "label": "Names an influencer or gatekeeper", "pattern": "influencer|gatekeeper|technician|accountant|receptionist|advisor" },
+    { "label": "Says what each cares about", "pattern": "cares|wants|concerned|worried|focus|needs", "perLine": true }
+  ],
+  "sample": "Doctor-owner - economic buyer - cares about cost, payback and keeping the clinic running\nNurse in charge - user - cares about reliable power for the vaccine fridge\nBiomedical technician - influencer - cares about technical fit and safety\nReceptionist - gatekeeper - cares about her boss's time and not being embarrassed by interruptions",
+  "required": false
+}
+```
+
+Next lesson: prospecting and lead generation.
+$md$, true, true, 2, array['bds-m02-t1', 'bds-m02-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m05', 'business-development-sales', 'Objections and negotiation', 5, null, null, '{}'::text[], array['Why people object', 'Handling price, trust and timing objections', 'Negotiation principles', 'Discounts without losing value', 'Walking away well']::text[])
+values ('bds-m03', 'business-development-sales', 'Prospecting and lead generation', 3, 'Prospector', 'PROSPECT', array['Find leads from several sources', 'Write outreach messages', 'Use referrals and networking', 'Qualify with BANT']::text[], array['Where leads come from', 'Cold outreach by call, message and email', 'Referrals and networking', 'Social selling on LinkedIn and WhatsApp', 'Qualifying leads']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m06', 'business-development-sales', 'Proposals and closing', 6, null, null, '{}'::text[], array['Writing a proposal that gets read', 'Quotations and terms', 'Closing techniques that respect the customer', 'Follow-up that works', 'After the sale']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:prospecting-and-lead-generation', 'business-development-sales', 'bds-m03', 'prospecting-and-lead-generation', 'Prospecting and Lead Generation', 'Find leads from the right sources, reach out by call, message and email, use referrals, networking and social selling, and qualify leads so your time goes where it counts.', 25, $md$
+## Where leads come from
+
+A steady flow of good leads is the lifeblood of selling. Sources:
+
+| Source | Examples | Quality |
+| :-- | :-- | :-- |
+| **Referrals** | Happy customers, partners, friends | Highest: trust is built in |
+| **Inbound** | Website, social media, search, adverts, walk-ins, events | Good: they came to you |
+| **Outbound** | Cold calls, messages, emails, visits | Variable: you start the conversation |
+| **Networking** | Business associations, trade fairs, chambers of commerce, community groups | Good: relationships build over time |
+| **Partners** | Banks, suppliers, other businesses that serve your customers | Good: borrowed trust |
+| **Existing customers** | Repeat and new needs | Highest |
+
+Do not rely on only one source. A good mix keeps your **pipeline** (the leads moving toward a sale) full even when one source slows.
+
+## Cold outreach by call, message and email
+
+**Cold outreach** means contacting someone who does not yet know you. It works when you are **relevant, brief and respectful.**
+
+Principles:
+
+- **Research first.** Spend two minutes learning about the person and their business.
+- **Lead with them, not you.** Open with something that shows you understand their situation.
+- **Be brief and specific.** One idea, one question, one next step.
+- **Make it easy to answer:** a simple yes/no or a time slot.
+- **Follow up** politely two or three times, a few days apart. Many sales come after the third or fourth contact.
+- **Respect "no"** and do not spam. Follow privacy rules and honour opt-out requests.
+
+A structure for a first message (WhatsApp, LinkedIn or email):
+
+1. **Personal opening:** why you are contacting them.
+2. **A short value statement:** the problem you help with and a result.
+3. **Proof:** one similar customer or result, if you have it.
+4. **A small ask:** a quick call or a visit, with a suggested time.
+
+Example: *"Good morning Mr Ade. I noticed your pharmacy in Ikeja stays open late. We help shops like yours cut generator fuel costs by up to half with solar backup, and we recently did the same for a pharmacy in Yaba. Could I visit for 15 minutes on Thursday to see if it could work for you?"*
+
+**Phone calls** work best with a short script, a warm tone, a clear reason for calling and a request for a small next step. **Visits** can be powerful in local markets: bring a card, a short leaflet and something useful.
+
+## Referrals and networking
+
+**Referrals** are the best leads, and they come from asking.
+
+- **Ask at the right time:** after a good result or compliment.
+- **Be specific:** "Do you know another shop owner who runs a generator all day?"
+- **Make it easy:** offer to write the introduction or send a message they can forward.
+- **Thank them** and tell them what happened.
+- **Reward** where appropriate, openly and within the rules.
+
+**Networking** is building relationships before you need them. Join associations and events, be helpful (introduce people, share useful information), listen more than you talk, follow up after meeting someone and keep in touch. Networking pays slowly but steadily.
+
+## Social selling on LinkedIn and WhatsApp
+
+**Social selling** means using social platforms to build credibility and relationships.
+
+- **LinkedIn:** keep a clear profile (who you help and how), share useful posts, comment thoughtfully, connect with a short personal note and message people when you can help, not as a spam blast.
+- **WhatsApp:** good for customers who prefer it. Use a business profile with a catalogue, quick replies and labels. **Always have permission** before messaging or adding people to groups. Keep messages short and useful, and use status posts to show your work and results.
+- **Instagram, Facebook and TikTok:** show the product in use, customer stories and behind the scenes.
+
+Be a **helpful expert**, not a constant advertiser. A mix of useful content and occasional offers works better than endless promotion.
+
+## Qualifying leads
+
+Time is limited. **Qualifying** checks whether a lead is worth pursuing. A classic checklist is **BANT:**
+
+- **Budget:** can they afford it, or can they find the money?
+- **Authority:** are they, or are you speaking to, the decision maker?
+- **Need:** do they have a real, important problem you solve?
+- **Timeline:** will they act soon, or only "someday"?
+
+Ask naturally during conversation, for example: *"What are you spending on fuel at the moment?"* (need and budget), *"Who else would be involved in a decision like this?"* (authority), *"When would you like it working?"* (timeline). Mark leads as **hot, warm or cold** and give most effort to hot and warm.
+
+**Funnel maths.** Know how many contacts you need. Suppose from 200 contacts, 20 reply (10%), 8 agree to a meeting (40% of replies) and 2 become customers (25% of meetings). Overall, 2 ÷ 200 = **1%.** To win 10 customers you need about 10 ÷ 0.01 = **1,000 contacts.** If you improve any stage, you need fewer.
+
+## Try it
+
+```task
+{
+  "id": "bds-m03-t1",
+  "prompt": "Write a **first outreach message** (50 to 100 words) to a prospect in your ideal customer profile: a personal opening, the problem you solve, a bit of proof and a small ask with a suggested time.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Good morning ...",
+  "rules": [
+    { "label": "Greets and is personal (uses a name or a specific observation)", "pattern": "good (morning|afternoon)|hello|hi |dear|noticed|saw|i know" },
+    { "label": "States the problem or result", "pattern": "help|cut|save|reduce|improve|solve|problem" },
+    { "label": "Gives proof (a similar customer or result)", "pattern": "recently|similar|customer|clients?|for a|helped|result" },
+    { "label": "Makes a small ask with a time", "pattern": "could|can i|would you|\\d+ minutes|call|visit|meet|thursday|friday|monday|tuesday|wednesday|tomorrow|next week" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Good morning Mr Ade. I noticed your pharmacy in Ikeja stays open late, which means the generator must run long hours. We help shops like yours cut generator fuel costs by up to half with solar backup, and we recently did the same for a pharmacy in Yaba, saving them about ₦90,000 a month. Could I visit for 15 minutes on Thursday at 11 am to see whether it could work for you? If it is not a fit, I will tell you honestly.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m03-t2",
+  "prompt": "From **200 contacts**, **20 reply**, **8 agree to a meeting** and **2 become customers**. Work out the conversion at each stage and overall, and the number of contacts needed to win **10 customers**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Reply rate = ...",
+  "rules": [
+    { "label": "Reply rate of 10%", "pattern": "\\b10\\s?%" },
+    { "label": "Meeting rate of 40%", "pattern": "\\b40\\s?%" },
+    { "label": "Close rate of 25%", "pattern": "\\b25\\s?%" },
+    { "label": "Overall of 1%", "pattern": "\\b1\\s?%" },
+    { "label": "1,000 contacts needed", "pattern": "1,?000" }
+  ],
+  "sample": "Reply rate = 20 / 200 = 10%.\nMeeting rate = 8 / 20 = 40%.\nClose rate = 2 / 8 = 25%.\nOverall = 2 / 200 = 1%.\nTo win 10 customers I need 10 / 0.01 = 1,000 contacts.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m03-t3",
+  "prompt": "Write **four qualifying questions** (one each for budget, authority, need and timeline) that you can ask naturally in a conversation. One per line, each ending with a question mark.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "What are you spending on ... at the moment?",
+  "rules": [
+    { "label": "Four questions", "minLines": 4 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "A budget question", "pattern": "spend|budget|invest|afford|cost|pay" },
+    { "label": "An authority question", "pattern": "decid|involved|who else|approve|sign" },
+    { "label": "A need question", "pattern": "problem|challenge|hardest|issue|need|happens (to|when)" },
+    { "label": "A timeline question", "pattern": "when|how soon|by (what|which) date|timeline|deadline" }
+  ],
+  "sample": "What are you spending on generator fuel and repairs in a typical month?\nWho else would be involved in a decision like this?\nWhat happens to your shop when the power goes out during the day?\nWhen would you like to have a better solution working?",
+  "required": false
+}
+```
+
+Next lesson: the sales conversation.
+$md$, true, true, 3, array['bds-m03-t1', 'bds-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m07', 'business-development-sales', 'Pipeline, CRM and sales operations', 7, null, null, '{}'::text[], array['Pipeline stages', 'Using a CRM or a spreadsheet', 'Forecasting', 'Daily and weekly sales routines']::text[])
+values ('bds-m04', 'business-development-sales', 'The sales conversation', 4, 'Sales Conversation', 'CONVO', array['Prepare for meetings', 'Ask discovery questions', 'Listen and take notes', 'Present benefits']::text[], array['Preparing for a meeting', 'Opening and building rapport', 'Asking good discovery questions', 'Listening and note taking', 'Presenting your solution']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m08', 'business-development-sales', 'Partnerships and key accounts', 8, null, null, '{}'::text[], array['Finding and approaching partners', 'Account management', 'Upselling and cross-selling', 'Handling large customers']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:the-sales-conversation', 'business-development-sales', 'bds-m04', 'the-sales-conversation', 'The Sales Conversation', 'Prepare for a sales meeting, open and build rapport, ask strong discovery questions, listen and take notes and present your solution in terms of the customer''s needs.', 30, $md$
+## Preparing for a meeting
+
+Preparation separates confident salespeople from nervous ones. Before any meeting or call:
+
+1. **Know the customer.** Check their website, social media, news and what you already know. Know their business, size, products, customers and recent changes.
+2. **Know the person.** Their role, background, and what they are likely to care about.
+3. **Set your objective.** What is the outcome you want from this meeting? Usually a **next step**, such as a site visit, a quote request or a decision.
+4. **Plan your questions,** more than your talking points.
+5. **Prepare materials:** a short presentation, samples, proof (case studies, photos, references), a price guide and a notebook.
+6. **Anticipate objections** and prepare honest answers.
+7. **Check the logistics:** time, place, directions, link, charged phone, spare materials.
+
+A simple agenda helps: *Introductions, understand your situation, show how we might help, agree next steps.*
+
+## Opening and building rapport
+
+The first minutes set the tone.
+
+- **Be on time,** presentable and warm. Greet properly, with appropriate local courtesies.
+- **Be genuinely interested.** A brief, real comment about their business is better than forced small talk.
+- **State the purpose and agenda** and check it suits them: *"I'd like to understand how you run your power now, show you what might help, and see if a next step makes sense. Does that work?"*
+- **Show you respect their time.** Agree how long you have.
+- **Mind your body language and tone:** open posture, eye contact where appropriate, calm voice.
+
+Rapport is not about being everybody's friend. It is about being **trustworthy, interested and clear.**
+
+## Asking good discovery questions
+
+**Discovery** is where you uncover the real situation. Good questions get the customer talking about their problems and their goals, and help them see the value of fixing them.
+
+A useful framework is **SPIN:**
+
+| Type | Purpose | Example |
+| :-- | :-- | :-- |
+| **Situation** | Understand the current state (use sparingly; research first) | "How do you power the shop at the moment?" |
+| **Problem** | Uncover difficulties and dissatisfaction | "What problems do you have with the generator?" |
+| **Implication** | Explore the effect and cost of the problem | "How much sales do you lose when the power is out?" |
+| **Need-payoff** | Let them describe the value of a solution | "If you could cut fuel costs in half, what would that mean for the business?" |
+
+Tips:
+
+- **Use open questions** (how, what, why, tell me about) for depth, and closed ones to confirm.
+- **Dig deeper** with "Can you tell me more about that?" and "What happened then?"
+- **Ask about money, time and people** affected.
+- **Ask who else is involved** and how decisions are made.
+- **Do not interrogate.** Keep it a conversation, and explain why you are asking if needed.
+- **Do not jump to solutions** too early.
+
+## Listening and note taking
+
+Most salespeople talk too much. Aim to **listen at least as much as you speak.**
+
+- **Give full attention.** Put the phone away. Do not plan your reply while they talk.
+- **Pause** before answering. Silence invites more detail.
+- **Reflect and summarise:** "So the fuel costs about ₦120,000 a month, and the generator broke down twice last month. Is that right?"
+- **Notice emotion** and what matters most to them.
+- **Take notes** of facts, numbers, names, needs, concerns, deadlines and promises. Tell them you are doing it. Review them straight after and send a short summary.
+- **Write down the customer's own words;** they are useful in your proposal.
+
+## Presenting your solution
+
+Only after you understand the customer should you present. Then:
+
+1. **Recap their situation and priorities** in their words.
+2. **Link each feature to a benefit** that answers a need they described. A **feature** is what it is; a **benefit** is what it does for them. *"The system has a 5 kVA inverter (feature), so it can run your freezer and lights all day without the generator (benefit), cutting your fuel bill by about ₦90,000 a month (result)."*
+
+3. **Show proof:** a similar customer, numbers, a demo, a photo, a guarantee.
+4. **Keep it short and visual,** and focus on what matters to them, not everything you can do.
+5. **Check understanding:** "Does this match what you need?"
+6. **Ask for the next step.**
+
+A strong close to a meeting is a clear next step with a date: *"I'll send you a quote by Wednesday. Can we speak on Friday to go through it?"* Send a **follow-up summary** within a day.
+
+## Try it
+
+```task
+{
+  "id": "bds-m04-t1",
+  "prompt": "Write **eight discovery questions** for a prospect, covering situation, problem, implication and need-payoff (two of each). One per line, labelled with the type, each ending with a question mark.",
+  "minutes": 14,
+  "rows": 10,
+  "placeholder": "Situation: How do you ...?",
+  "rules": [
+    { "label": "Eight lines", "minLines": 8 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "Situation questions", "pattern": "situation", "min": 2 },
+    { "label": "Problem questions", "pattern": "problem", "min": 2 },
+    { "label": "Implication questions", "pattern": "implication", "min": 2 },
+    { "label": "Need-payoff questions", "pattern": "need-?payoff", "min": 2 }
+  ],
+  "sample": "Situation: How do you power the shop at the moment?\nSituation: How many hours a day does the generator run?\nProblem: What problems do you have with the generator?\nProblem: What frustrates you most about the cost of fuel?\nImplication: How much sales do you lose when the power goes out?\nImplication: What does that do to your profit each month?\nNeed-payoff: If you could cut fuel costs in half, what would that mean for the business?\nNeed-payoff: How would reliable power change how you serve customers?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m04-t2",
+  "prompt": "A customer says their generator costs **₦120,000** a month and broke down **twice** last month, losing sales. Write a short **presentation of your solution** (60 to 120 words) that recaps what they said, links a feature to a benefit and a result, gives a bit of proof and asks for a next step.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "You told me ...",
+  "rules": [
+    { "label": "Recaps the customer's words", "pattern": "you (told|said|mentioned)|so (your|the)|as you" },
+    { "label": "Links a feature to a benefit", "pattern": "so (that )?you|which means|that means|so it can" },
+    { "label": "States a result with a number", "pattern": "₦\\s?\\d|\\d+\\s?%|\\d+ hours" },
+    { "label": "Gives proof (another customer, demo, guarantee)", "pattern": "customer|similar|clients?|guarantee|warranty|demo|recently" },
+    { "label": "Asks for a next step", "pattern": "next step|could we|can we|would you|visit|quote|friday|monday|tuesday|wednesday|thursday|\\bby\\b" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "You told me the generator costs about ₦120,000 a month and broke down twice last month, costing you sales. A 5 kVA solar inverter system would run your freezer, lights and card machine all day, which means the generator would only be a backup, cutting your fuel bill by around ₦90,000 a month. A similar pharmacy in Yaba has used one for a year with no outages, and we give a two-year warranty. Could I prepare a quote this week and visit on Friday to go through it?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m04-t3",
+  "prompt": "Write a **meeting preparation checklist** with at least seven items, one per line, covering the customer, the person, your objective, questions, materials, objections and logistics.",
+  "minutes": 8,
+  "rows": 9,
+  "placeholder": "Research the customer's business ...",
+  "rules": [
+    { "label": "At least seven lines", "minLines": 7 },
+    { "label": "Researching the customer or person", "pattern": "research|website|social|background|know" },
+    { "label": "Setting an objective or next step", "pattern": "objective|goal|next step|outcome" },
+    { "label": "Preparing questions", "pattern": "question" },
+    { "label": "Preparing materials or proof", "pattern": "material|proof|case stud|sample|presentation|brochure|price" },
+    { "label": "Preparing for objections", "pattern": "objection" },
+    { "label": "Logistics (time, place, directions, link)", "pattern": "time|place|directions|link|travel|phone|charged" }
+  ],
+  "sample": "Research the customer's business, products and recent news.\nLearn about the person I am meeting and their role.\nSet my objective: agree a site visit or quote request as the next step.\nPlan my discovery questions.\nPrepare a short presentation and a similar customer's results as proof.\nBring a price guide, brochure and samples.\nThink of likely objections and my honest answers.\nCheck the time, place, directions and that my phone is charged.",
+  "required": false
+}
+```
+
+Next lesson: objections and negotiation.
+$md$, true, true, 4, array['bds-m04-t1', 'bds-m04-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m09', 'business-development-sales', 'Measuring sales', 9, null, null, '{}'::text[], array['Sales metrics that matter', 'Conversion rates and cycle length', 'Reports for managers', 'Improving what you measure']::text[])
+values ('bds-m05', 'business-development-sales', 'Objections and negotiation', 5, 'Negotiator', 'SALENEGO', array['Handle objections', 'Show value over price', 'Negotiate and trade', 'Discount without losing value']::text[], array['Why people object', 'Handling price, trust and timing objections', 'Negotiation principles', 'Discounts without losing value', 'Walking away well']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:objections-and-negotiation', 'business-development-sales', 'bds-m05', 'objections-and-negotiation', 'Objections and Negotiation', 'Understand why people object, handle price, trust and timing objections, apply negotiation principles, give discounts without losing value and walk away well.', 25, $md$
+## Why people object
+
+An **objection** is a customer's concern or hesitation. It is not a "no." It is a **request for more information or reassurance.** In fact, a customer who raises objections is engaged. The ones who say nothing and disappear are the real problem.
+
+Common reasons:
+
+- **They do not yet see enough value.**
+- **They do not trust** you, the product or the company yet.
+- **Fear of risk or change:** "What if it doesn't work?"
+- **Price or budget** concerns.
+- **Bad timing:** other priorities or cash constraints.
+- **They need to consult others.**
+- **Past bad experience** with similar products.
+
+Treat every objection with respect. Argue and you lose; **understand and answer** and you move forward.
+
+## Handling price, trust and timing objections
+
+A simple, reliable pattern is **Listen, Clarify, Respond, Check:**
+
+1. **Listen** fully, without interrupting.
+2. **Acknowledge:** "I understand, that's a fair concern."
+3. **Clarify** the real issue: "When you say it's expensive, is that compared with something, or is it more than you budgeted?"
+4. **Respond** with facts, proof or a solution.
+5. **Check:** "Does that answer your concern?"
+
+**Price objections** ("It's too expensive"). Often mean the customer does not yet see the value, or compares unlike things. Respond by moving from price to **value and total cost**:
+
+- Show what the problem costs them now.
+- Show the **payback**: Example: a system costs ₦900,000 and saves ₦60,000 a month in fuel. Payback = 900,000 ÷ 60,000 = **15 months.** After that, the saving is profit, and the system lasts for years.
+- Compare **total cost of ownership,** not just the purchase price.
+- Offer options: a smaller package, a phased installation, or payment in instalments.
+
+**Trust objections** ("I don't know your company"). Respond with **proof**: references, case studies, a visit to a similar customer, a warranty, a trial or a small first order, certificates and a clear contract.
+
+**Timing objections** ("Not now," "Call me next year"). Find out why: *"What would need to be true for this to become a priority?"* Show the **cost of waiting** (each month of delay costs ₦120,000 in fuel). Agree a specific follow-up date and a small next step. Some are genuine; respect that, and stay in touch usefully.
+
+**"I need to think about it."** Ask kindly: *"Of course. What parts would you like to think about?"* The real concern is often one you can answer now.
+
+## Negotiation principles
+
+Negotiation begins when the customer wants to buy but wants better terms. Principles:
+
+- **Prepare:** know your target, your lowest acceptable terms (walk-away point) and what else you can offer besides price.
+- **Know the customer's priorities,** and the alternatives they have.
+- **Do not negotiate against yourself.** After you state a price, wait. Do not offer a discount no one asked for.
+- **Trade, don't just give.** Every concession should get something back: a larger order, faster payment, a longer contract, a reference.
+- **Negotiate the whole package:** price, quantity, delivery, payment terms, warranty, installation, support.
+- **Stay calm and respectful.**
+- **Aim for a fair deal both sides can live with,** since a customer who feels cheated will not return.
+
+## Discounts without losing value
+
+Discounts cost more than they appear. Example: a product costs you ₦650,000 and sells at ₦900,000, a profit of ₦250,000 (27.8% margin). A 10% discount gives a price of ₦810,000 and a profit of ₦160,000 (19.8% margin). That is 36% less profit per sale. To earn the same total profit, you would need to sell **250,000 ÷ 160,000 = 1.5625 times as many**, 56% more units, just to stand still.
+
+So protect value:
+
+- **Hold your price when you can,** and justify it with value.
+- **Give small, conditional discounts** for something in return: "I can do ₦870,000 if you confirm today and pay the deposit now."
+- **Offer value-adds instead of cuts:** extra warranty, free installation, training, a service visit, faster delivery.
+- **Use volume or term discounts** with clear rules.
+- **Never discount to everyone.** Set rules for who can approve what.
+- **Avoid training customers to wait for discounts.**
+
+## Walking away well
+
+Sometimes the right answer is no. If terms would cost you money, damage your business or the customer is a poor fit, **walk away politely.** Be clear and professional: *"I'm sorry we couldn't find terms that work for both of us. If your situation changes, I would be glad to help."* Leave the door open. Customers often return, and a respectful exit protects your reputation. Walking away is easier if you have other prospects in your pipeline, which is another reason to keep prospecting.
+
+## Try it
+
+```task
+{
+  "id": "bds-m05-t1",
+  "prompt": "A customer says **\"₦900,000 is too expensive.\"** The system saves **₦60,000 a month** in fuel. Work out the **payback period** in months and write a short reply (40 to 90 words) that moves from price to value.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Payback = ...",
+  "rules": [
+    { "label": "Payback of 15 months", "pattern": "\\b15\\s*months" },
+    { "label": "Acknowledges the concern", "pattern": "understand|fair|appreciate|good question|i hear" },
+    { "label": "Moves to value or savings", "pattern": "save|saving|value|payback|pays for itself|after that|profit" },
+    { "label": "Checks or asks a question", "pattern": "\\?" },
+    { "label": "Between 40 and 100 words in total", "minWords": 40, "maxWords": 105 }
+  ],
+  "sample": "Payback = 900,000 / 60,000 = 15 months.\nI understand, ₦900,000 is a lot to invest. Compared with your fuel bill, though, the system pays for itself in 15 months, and after that the ₦60,000 a month saved is extra profit for years. Is the concern the total amount, or how to pay for it? If it is the amount, we could look at paying in instalments.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m05-t2",
+  "prompt": "A product costs you **₦650,000** and sells at **₦900,000**. The customer asks for **10% off**. Work out the profit and margin at full price and at the discount, and how many times more units you would need to sell to earn the same total profit.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Profit at full price = ...",
+  "rules": [
+    { "label": "Profit of ₦250,000 at full price", "pattern": "250,?000" },
+    { "label": "Discounted price of ₦810,000", "pattern": "810,?000" },
+    { "label": "Profit of ₦160,000 at the discount", "pattern": "160,?000" },
+    { "label": "Margin of about 19.8% at the discount", "pattern": "19\\.8|19\\.75|20 ?%" },
+    { "label": "About 56% more units (1.56 times)", "pattern": "1\\.56|56 ?%|1\\.5625" }
+  ],
+  "sample": "At full price: profit = 900,000 - 650,000 = ₦250,000, a margin of 27.8%.\nWith 10% off: price = ₦810,000, profit = 810,000 - 650,000 = ₦160,000, a margin of 19.8%.\nTo earn the same total profit I need 250,000 / 160,000 = 1.56 times as many sales, about 56% more units.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m05-t3",
+  "prompt": "A customer says: **\"If you give me 10% off I'll buy today.\"** Write your reply (50 to 100 words) that **trades** a smaller concession for something in return instead of just giving the 10%.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "Thank you for ...",
+  "rules": [
+    { "label": "Polite and positive", "pattern": "thank|appreciate|glad|happy|understand" },
+    { "label": "Offers a smaller concession or a value-add", "pattern": "\\b[1-5]\\s?%|free|extra|installation|warranty|training|instalment" },
+    { "label": "Asks for something in return", "pattern": "if you|in return|provided|when you|on condition|confirm|deposit|today|larger|refer" },
+    { "label": "Does not simply agree to 10%", "pattern": "i can give you 10|agree to 10|yes,? 10", "absent": true },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "Thank you, I appreciate that you are ready to buy today. A full 10% would take the price below what I can offer, but I can do 4% off, and add free installation worth ₦50,000, if you confirm the order today with the deposit. That brings your total benefit to around ₦86,000. I also hold the price for your next order if you refer a neighbouring shop. Does that work for you?",
+  "required": false
+}
+```
+
+Next lesson: proposals and closing.
+$md$, true, true, 5, array['bds-m05-t1', 'bds-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('bds-m10', 'business-development-sales', 'Final project: sales plan and pitch', 10, null, null, '{}'::text[], array['Choosing your product and market', 'Building the plan', 'Delivering the pitch', 'Review and next steps']::text[])
+values ('bds-m06', 'business-development-sales', 'Proposals and closing', 6, 'Proposals & Closing', 'CLOSING', array['Write a proposal', 'Prepare a quotation', 'Close respectfully', 'Follow up and serve after the sale']::text[], array['Writing a proposal that gets read', 'Quotations and terms', 'Closing techniques that respect the customer', 'Follow-up that works', 'After the sale']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:proposals-and-closing', 'business-development-sales', 'bds-m06', 'proposals-and-closing', 'Proposals and Closing', 'Write a proposal that gets read, prepare quotations and terms, use closing techniques that respect the customer, follow up effectively and look after customers after the sale.', 35, $md$
+## Writing a proposal that gets read
+
+A **proposal** puts your offer in writing so the customer can review it, share it and decide. Many proposals fail because they are long, generic and about the seller. A good one is **short, specific and about the customer.**
+
+A strong structure:
+
+1. **Summary:** the problem, your solution and the key result, in a few lines.
+2. **Their situation:** their needs and goals in their own words, from discovery.
+3. **Your solution:** what you will do or supply, in plain language, and how it meets each need.
+4. **Benefits and proof:** expected results, with numbers, and a similar customer or reference.
+5. **Price and what is included:** a clear table, with options if useful.
+6. **Timeline:** key dates for delivery or installation.
+7. **Terms:** payment, warranty, validity of the offer.
+8. **Next steps:** exactly what happens if they say yes, and how to accept.
+
+Tips:
+
+- **Use their name and language.** Do not send a template with someone else's details left in.
+- **Lead with the outcome,** not the technical details.
+- **Keep it to a few pages;** put long specifications in an appendix.
+- **Offer two or three options** (basic, standard, premium) so the question becomes "which one?" instead of "yes or no?"
+- **Proofread carefully.** Errors hurt trust.
+- **Send it soon after the meeting,** while interest is high, and **walk through it with them** by call or in person.
+
+## Quotations and terms
+
+A **quotation** states exactly what you will supply and for how much. Make it clear, complete and accurate.
+
+Example for Sunbright Solar:
+
+| Item | Amount |
+| :-- | :-- |
+| 3 inverter systems at ₦900,000 | ₦2,700,000 |
+| Installation | ₦150,000 |
+| **Subtotal** | **₦2,850,000** |
+| VAT at 7.5% | ₦213,750 |
+| **Total** | **₦3,063,750** |
+
+Check: 3 × 900,000 = 2,700,000; plus 150,000 = 2,850,000; VAT 7.5% of 2,850,000 = 213,750; total 3,063,750.
+
+State the **terms**:
+
+- **Validity:** how long the price holds (for example 14 days).
+- **Payment:** deposit, balance and due dates (for example 50% deposit and 50% on completion).
+- **Delivery or installation date.**
+- **Warranty and after-sales support.**
+- **What is not included,** so there are no surprises.
+- **Cancellation and change rules.**
+
+Be accurate: a wrong quote is expensive to correct. Where VAT applies, show it clearly, and make sure your business follows the tax rules.
+
+## Closing techniques that respect the customer
+
+**Closing** means asking for a decision. Many sales are lost because the salesperson never asked. Closing is not a trick; it is the natural last step of a helpful conversation.
+
+Respectful ways to close:
+
+- **The direct ask:** "Would you like to go ahead?"
+- **The summary close:** recap the agreed benefits and ask: "So we've agreed it solves the fuel cost and reliability, at ₦900,000 with a 2-year warranty. Shall we start?"
+- **The option close:** "Would you prefer the standard package or the premium?"
+- **The next-step close:** "Shall I book the installation for the 14th?"
+- **The deadline close (only if genuine):** "The current price holds until Friday because of a supplier increase."
+- **The trial or small-start close:** "Let's begin with one system and review it after a month."
+
+Avoid pressure tricks, fake scarcity or manipulation. If the customer hesitates, return to the concern: *"What is holding you back?"* Then address it honestly. If the answer is no, accept it graciously.
+
+After "yes," **confirm everything in writing,** get the deposit or signed order and tell them what happens next.
+
+## Follow-up that works
+
+Most deals need several follow-ups, and many salespeople give up too early. Make follow-up **useful**, not annoying.
+
+- **Send a summary within 24 hours** of every meeting.
+- **Agree the next step and date** before you leave.
+- **Each follow-up should add value:** an answer, a case study, a useful tip, a relevant update, not just "checking in."
+- **Use a pattern:** for example, a call or message after 2 days, again after a week, again after two weeks.
+- **Use the customer's preferred channel.**
+- **Know when to stop:** after several attempts, send a polite closing message: *"I'll assume the timing isn't right. If things change, I'm here."* Many replies come after this.
+
+Example follow-up email: *"Dear Mrs Bello, thank you for meeting me on Tuesday. As discussed, I've attached the quote for two systems at ₦1,800,000 including installation. Your fuel cost of ₦120,000 a month means the system pays for itself in about 15 months. Shall we speak on Friday at 10 am to answer any questions?"*
+
+## After the sale
+
+The sale is the start of the relationship.
+
+- **Deliver as promised,** on time, and communicate if anything changes.
+- **Check satisfaction** after delivery and a few weeks later.
+- **Fix problems quickly and fairly.**
+- **Ask for a review or testimonial and a referral** once they are happy.
+- **Keep in touch** with useful updates and reminders.
+- **Look for the next need:** an extension, an upgrade, maintenance, a related product.
+
+Happy customers buy again and bring others. It costs far less to keep and grow a customer than to win a new one.
+
+## Try it
+
+```task
+{
+  "id": "bds-m06-t1",
+  "prompt": "Prepare a quotation. **3 systems at ₦900,000**, **installation ₦150,000** and **VAT at 7.5%** on the subtotal. Work out the goods total, the subtotal, the VAT and the grand total.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Goods = ...",
+  "rules": [
+    { "label": "Goods of ₦2,700,000", "pattern": "2,?700,?000" },
+    { "label": "Subtotal of ₦2,850,000", "pattern": "2,?850,?000" },
+    { "label": "VAT of ₦213,750", "pattern": "213,?750" },
+    { "label": "Total of ₦3,063,750", "pattern": "3,?063,?750" }
+  ],
+  "sample": "Goods = 3 x 900,000 = ₦2,700,000.\nSubtotal = 2,700,000 + 150,000 = ₦2,850,000.\nVAT = 7.5% of 2,850,000 = ₦213,750.\nGrand total = 2,850,000 + 213,750 = ₦3,063,750.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m06-t2",
+  "prompt": "Write the **outline of a proposal** for a customer of your choice with at least eight section headings, one per line, each followed by a few words on what it contains.",
+  "minutes": 10,
+  "rows": 10,
+  "placeholder": "1. Summary - ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes a summary", "pattern": "summary" },
+    { "label": "Includes the customer's situation or needs", "pattern": "situation|needs|requirements" },
+    { "label": "Includes the solution", "pattern": "solution|offer|what we" },
+    { "label": "Includes price and options", "pattern": "price|pricing|options|investment" },
+    { "label": "Includes timeline", "pattern": "timeline|schedule|dates" },
+    { "label": "Includes terms", "pattern": "terms|payment|warranty" },
+    { "label": "Includes next steps", "pattern": "next steps?" }
+  ],
+  "sample": "1. Summary - the problem, our solution and the main result in a few lines\n2. Your situation - your needs and goals in your own words\n3. Our solution - what we will supply and how it meets each need\n4. Benefits and proof - expected savings with numbers and a similar customer\n5. Price and options - a table with basic, standard and premium packages\n6. Timeline - key dates for delivery and installation\n7. Terms - payment, warranty and how long the offer is valid\n8. Next steps - what happens when you say yes and how to accept",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m06-t3",
+  "prompt": "Write a **follow-up email** (60 to 120 words) after a meeting, which thanks the customer, summarises what was agreed, adds a piece of value (a number or a useful point) and asks for a specific next step with a date.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "Dear ...,",
+  "rules": [
+    { "label": "Greets and thanks", "pattern": "dear|hello|hi |thank" },
+    { "label": "Summarises what was discussed or agreed", "pattern": "discuss|agreed|as we|you mentioned|summary|as promised|attached" },
+    { "label": "Adds value (number, saving, case study, tip)", "pattern": "₦\\s?\\d|\\d+\\s?(%|months|hours)|saving|case study|customer" },
+    { "label": "Asks for a specific next step with a time", "pattern": "friday|monday|tuesday|wednesday|thursday|tomorrow|next week|\\d+\\s?(am|pm)|call|meet" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Dear Mrs Bello, thank you for meeting me on Tuesday. As we discussed, I have attached the quote for two systems at ₦1,800,000 including installation, with a two-year warranty. At your fuel cost of ₦120,000 a month, the system should pay for itself in about 15 months. I have also attached the case study of a pharmacy in Yaba that has used the same setup for a year. Could we speak on Friday at 10 am to answer any questions and agree a date for installation? Kind regards, Tunde Adebayo.",
+  "required": true
+}
+```
+
+Next lesson: pipeline, CRM and sales operations.
+$md$, true, true, 6, array['bds-m06-t1', 'bds-m06-t2', 'bds-m06-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bds-m07', 'business-development-sales', 'Pipeline, CRM and sales operations', 7, 'Pipeline & CRM', 'PIPELINE', array['Define pipeline stages', 'Use a CRM or spreadsheet', 'Forecast with weighting', 'Run daily and weekly routines']::text[], array['Pipeline stages', 'Using a CRM or a spreadsheet', 'Forecasting', 'Daily and weekly sales routines']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:pipeline-crm-and-sales-operations', 'business-development-sales', 'bds-m07', 'pipeline-crm-and-sales-operations', 'Pipeline, CRM and Sales Operations', 'Define pipeline stages, use a CRM or a simple spreadsheet, forecast sales from the pipeline and build daily and weekly routines that keep selling consistent.', 20, $md$
+## Pipeline stages
+
+A **sales pipeline** is a visual list of all your opportunities and where each is in the sales process. It tells you what to do next, what is stuck and how much you are likely to sell.
+
+Choose **clear stages**, each with a **definition** of when a deal enters it. Example:
+
+| Stage | Meaning | Typical chance of winning |
+| :-- | :-- | :-- |
+| **Lead** | Someone who might be interested | 5% |
+| **Qualified** | Has budget, authority, need and timing | 20% |
+| **Meeting / discovery done** | We understand their situation | 30% |
+| **Proposal sent** | A written offer is with them | 50% |
+| **Negotiation** | Discussing terms | 75% |
+| **Won** | Order or contract signed | 100% |
+| **Lost** | Decided against, or went silent | 0% |
+
+The percentages are estimates. Start with sensible guesses and **replace them with your real conversion rates** as you gather data.
+
+Good pipeline habits:
+
+- **Every deal has a next step and a date.** A deal with no next step is probably dead.
+- **Move deals forward or out.** Do not leave stale deals clogging the pipeline.
+- **Record why you won or lost.** That teaches you more than any training.
+- **Keep it honest.** An inflated pipeline leads to bad decisions.
+
+## Using a CRM or a spreadsheet
+
+A **CRM (customer relationship management)** tool stores contacts, conversations, deals and tasks in one place, so you do not rely on memory or scattered notes. It helps you not to forget a follow-up, shows the whole history of a customer, and lets managers see the pipeline.
+
+You do not need an expensive CRM to start. Many small businesses use a **spreadsheet** with one row per opportunity. Useful columns:
+
+1. Company or customer name
+2. Contact person and role
+3. Phone and email
+4. Source of the lead
+5. Product or service
+6. Deal value (₦)
+7. Stage
+8. Probability %
+9. Expected close date
+10. Next step
+11. Next step date
+12. Notes and last contact date
+13. Owner (who is responsible)
+
+Free or low-cost CRMs, and tools like WhatsApp Business labels, also work. The best system is **the one you will actually use every day.** Whatever you choose:
+
+- **Enter data the same day.**
+- **Use consistent names and stages.**
+- **Protect customer data:** control access, back it up and follow privacy rules.
+- **Review it weekly.**
+
+## Forecasting
+
+A **forecast** estimates the sales you expect in a period. A simple **weighted pipeline** forecast multiplies each deal's value by its probability and adds them up.
+
+Example:
+
+| Deal | Value | Probability | Weighted value |
+| :-- | :-- | :-- | :-- |
+| A | ₦2,000,000 | 80% | ₦1,600,000 |
+| B | ₦5,000,000 | 40% | ₦2,000,000 |
+| C | ₦1,000,000 | 20% | ₦200,000 |
+| **Total** | ₦8,000,000 | | **₦3,800,000** |
+
+The weighted forecast is **₦3,800,000**, not ₦8,000,000. It is an average over many deals: a single deal will be won or lost entirely, so the forecast is more reliable with many deals.
+
+To improve the forecast:
+
+- **Use real conversion rates** by stage from your own history.
+- **Include only deals with a next step and a realistic date.**
+- **Compare the forecast to what actually happened** each month and learn.
+- **Look at the coverage:** a common rule is to keep a pipeline of about three to four times your target, because only a fraction of deals will close.
+
+## Daily and weekly routines
+
+Selling is a habit. Routines keep the pipeline moving.
+
+**Daily:**
+
+- Review today's meetings, calls and follow-ups.
+- Spend protected time on **prospecting** (for example 60 to 90 minutes).
+- Update the CRM after each conversation.
+- Send follow-up messages.
+- Plan tomorrow's top three tasks.
+
+**Weekly:**
+
+- Review the whole pipeline: move, advance or close deals.
+- Check numbers: new leads, meetings, proposals, wins.
+- Plan next week's prospecting and meetings.
+- Reflect on what worked and what to change.
+
+**Monthly:** compare results with targets, review conversion rates, update the forecast and set priorities.
+
+Protect time for selling. Administration and reports are important, but they should not push out the conversations that earn the money.
+
+## Try it
+
+```task
+{
+  "id": "bds-m07-t1",
+  "prompt": "Work out the **weighted forecast**. Deal A ₦2,000,000 at 80%, Deal B ₦5,000,000 at 40%, Deal C ₦1,000,000 at 20%. Give each weighted value and the total, and say why the weighted total is lower than the sum of deal values.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "A = ...",
+  "rules": [
+    { "label": "A of ₦1,600,000", "pattern": "1,?600,?000" },
+    { "label": "B of ₦2,000,000", "pattern": "2,?000,?000" },
+    { "label": "C of ₦200,000", "pattern": "200,?000" },
+    { "label": "Total of ₦3,800,000", "pattern": "3,?800,?000" },
+    { "label": "Explains that not all deals will be won", "pattern": "not all|some (deals )?(will|won't)|probab|chance|lose|lost|won or lost|unlikely" }
+  ],
+  "sample": "A = 2,000,000 x 0.8 = ₦1,600,000.\nB = 5,000,000 x 0.4 = ₦2,000,000.\nC = 1,000,000 x 0.2 = ₦200,000.\nWeighted total = ₦3,800,000, compared with ₦8,000,000 of deal value.\nIt is lower because not all deals will be won; each has only a probability of closing.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m07-t2",
+  "prompt": "Design a **spreadsheet CRM** for your sales. List at least **ten column headings**, one per line, and mark the three that matter most for knowing what to do next.",
+  "minutes": 10,
+  "rows": 12,
+  "placeholder": "Company name\nContact person",
+  "rules": [
+    { "label": "At least ten lines", "minLines": 10 },
+    { "label": "Includes the company and contact", "pattern": "company|customer|contact" },
+    { "label": "Includes deal value", "pattern": "value|amount|₦" },
+    { "label": "Includes stage", "pattern": "stage" },
+    { "label": "Includes next step and date", "pattern": "next step[\\s\\S]*date|date[\\s\\S]*next step|next step" },
+    { "label": "Marks the most important columns", "pattern": "most important|key|priority|matter most|\\*" }
+  ],
+  "sample": "Company name\nContact person and role\nPhone and email\nLead source\nProduct or service\nDeal value (₦)\nStage *\nProbability %\nExpected close date\nNext step *\nNext step date *\nLast contact and notes\nOwner\nThe three that matter most are marked * (stage, next step, next step date): they show what to do next.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m07-t3",
+  "prompt": "Write your **weekly sales routine** with at least six items, one per line, each with a day or time and the activity: prospecting, follow-ups, pipeline review, CRM update and planning.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Monday 9 am - ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Includes prospecting", "pattern": "prospect|outreach|new leads|calls" },
+    { "label": "Includes follow-ups", "pattern": "follow-?up" },
+    { "label": "Includes a pipeline review", "pattern": "pipeline|review" },
+    { "label": "Includes CRM or record updating", "pattern": "crm|update|record|spreadsheet" },
+    { "label": "Includes planning", "pattern": "plan" },
+    { "label": "Gives days or times", "pattern": "monday|tuesday|wednesday|thursday|friday|daily|\\d+\\s?(am|pm)", "min": 4 }
+  ],
+  "sample": "Monday 9 am - review the pipeline and set the week's targets\nDaily 9 to 10:30 am - prospecting calls and messages\nDaily 4 pm - update the CRM after meetings\nTuesday and Thursday - customer meetings and follow-ups\nWednesday - send proposals and quotes\nFriday 3 pm - review results against targets and plan next week\nFriday 4 pm - move or close stale deals",
+  "required": false
+}
+```
+
+Next lesson: partnerships and key accounts.
+$md$, true, true, 7, array['bds-m07-t1', 'bds-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bds-m08', 'business-development-sales', 'Partnerships and key accounts', 8, 'Accounts & Partners', 'ACCOUNTS', array['Approach partners', 'Manage accounts', 'Upsell and cross-sell', 'Handle large customers']::text[], array['Finding and approaching partners', 'Account management', 'Upselling and cross-selling', 'Handling large customers']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:partnerships-and-key-accounts', 'business-development-sales', 'bds-m08', 'partnerships-and-key-accounts', 'Partnerships and Key Accounts', 'Find and approach partners, manage accounts, upsell and cross-sell sensibly and handle large customers well.', 25, $md$
+## Finding and approaching partners
+
+A **partner** is another organisation that helps you reach customers or deliver value, and that you help in return. Good partners multiply your reach without multiplying your costs.
+
+Types of partners:
+
+- **Referral partners:** businesses that serve the same customers but sell something different (a bank that finances equipment, an estate agent, an electrician).
+- **Resellers and agents:** sell your product for a commission or margin.
+- **Suppliers and manufacturers:** may promote or co-sell.
+- **Technology or service partners:** whose products work with yours.
+- **Associations and community groups:** whose members need what you offer.
+
+**Choosing partners:** look for a **shared customer**, a **fit of reputation and values**, **complementary** (not competing) offers and a partner who is **reliable and active.**
+
+**Approaching them:**
+
+1. **Research** who they serve and what they need.
+2. **Start with value for them,** not a request: *"Your customers buying new shops often struggle with power costs. We could offer them a free power audit, and you'd earn a referral fee for each install."*
+
+3. **Propose a small, clear pilot** with defined roles.
+4. **Agree the terms in writing:** who does what, commission or margin, how leads are shared, branding, support, confidentiality and how to end the arrangement.
+5. **Support the partner:** training, materials, quick responses.
+6. **Review results** regularly and fix problems early.
+
+A partnership works when **both sides win** and each knows what they must do.
+
+## Account management
+
+An **account** is an existing customer, and **account management** means looking after and growing that relationship. It is cheaper and more profitable to grow existing customers than to win new ones.
+
+Activities:
+
+- **Know the account:** their business, people, goals, projects, how they buy and what else they might need.
+- **Stay in regular contact,** with useful updates and scheduled check-ins, not only when you want to sell.
+- **Solve problems quickly,** and be the customer's champion inside your own company.
+- **Review the account** regularly: what they bought, what worked and what could improve.
+- **Map the relationships:** have contacts at more than one level, so the account does not depend on one person.
+- **Write an account plan** for important customers: goals, opportunities, risks, key contacts and next actions.
+
+Segment your customers: **key accounts** (the largest or most strategic) get the most attention; others get lighter, regular contact.
+
+## Upselling and cross-selling
+
+- **Upselling** means offering a higher-value version of what they are buying: a larger system, the premium package, a longer warranty.
+- **Cross-selling** means offering something related: a maintenance plan, accessories, a second product.
+
+Do it only when it **genuinely helps the customer,** and offer it at the right moment, such as when they are happy or when their needs change. A bad upsell damages trust; a good one is a service.
+
+Example: Sunbright Solar has 100 customers who bought systems averaging ₦200,000 each in accessories and service. A maintenance plan costs ₦50,000 and 20% of customers take it. Extra revenue = 100 × 0.20 × 50,000 = **₦1,000,000**, with no new customers to find.
+
+Tips:
+
+- **Understand their needs first.**
+- **Show the benefit and the return,** not just the price.
+- **Offer one clear option,** not a long list.
+- **Bundle** related items at a fair price.
+- **Check satisfaction** before asking for more.
+
+## Handling large customers
+
+Large customers bring big orders and big demands: formal procurement, several decision makers, long approval cycles, strict contracts, price pressure and payment terms of 30, 60 or 90 days.
+
+How to handle them:
+
+- **Understand their process:** who approves, what documents they need, how vendors are registered, and how long it takes.
+- **Be patient and organised.** Respond fast, keep records and meet every deadline.
+- **Meet requirements precisely:** compliance, certificates, insurance, references and formats.
+- **Protect your cash flow.** Large customers often pay late. Negotiate terms, get a purchase order before you start and invoice promptly.
+- **Watch dependence.** If one customer is **40%** of your sales, losing them would be a crisis. Keep growing other customers so no single account is more than about 20% to 30% of revenue, where possible.
+- **Deliver excellently,** because a large, satisfied customer is a powerful reference.
+- **Build several relationships** within the customer.
+- **Write contracts carefully,** and have a lawyer review large ones.
+
+## Try it
+
+```task
+{
+  "id": "bds-m08-t1",
+  "prompt": "Write a **message to a potential partner** (such as a bank, a property agent or an electrician) in 60 to 120 words: lead with value for them, propose a small pilot and say what you need.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Good morning ...",
+  "rules": [
+    { "label": "Opens politely", "pattern": "good (morning|afternoon)|hello|dear|hi " },
+    { "label": "Leads with value for them or their customers", "pattern": "your customers|your clients|your members|you could|benefit|earn|help your" },
+    { "label": "Proposes a small pilot or trial", "pattern": "pilot|trial|start with|first (five|10|ten|3|three)|small" },
+    { "label": "Says what each side does or what terms", "pattern": "commission|referral fee|we (will|would)|you (will|would)|in return|share" },
+    { "label": "Asks for a next step", "pattern": "meet|call|could we|can we|would you|chat" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "Good morning Mrs Okoro. Many of your customers who buy new shop premises struggle with high power costs in their first year. We could offer each of them a free power audit, and you would earn a 3% referral fee on every system they install. I would suggest we start with a small pilot: your team refers the first five shop owners, we handle the audit, quote and installation, and I send you a report on results. Could we meet for 20 minutes this week to agree how it would work?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m08-t2",
+  "prompt": "You have **100 customers**. A maintenance plan costs **₦50,000** and **20%** of customers would take it. Work out the **extra revenue**. Then give two things you would do **before** offering it so that it helps and does not annoy customers.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Extra revenue = ...",
+  "rules": [
+    { "label": "20 customers", "pattern": "\\b20\\b" },
+    { "label": "Extra revenue of ₦1,000,000", "pattern": "1,?000,?000" },
+    { "label": "Mentions understanding needs or satisfaction first", "pattern": "needs|satisf|happy|check|understand|ask|first" },
+    { "label": "Mentions showing benefit or value", "pattern": "benefit|value|return|saving|show|explain|downtime" }
+  ],
+  "sample": "Customers taking it = 100 x 0.20 = 20. Extra revenue = 20 x 50,000 = ₦1,000,000.\nBefore offering it I would check that each customer is satisfied with their system and understand how they use it, and I would show the benefit, for example fewer breakdowns and longer system life, not just the price.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m08-t3",
+  "prompt": "One customer makes up **40%** of your sales. In 50 to 100 words, explain the **risk** and give **three actions** to reduce it.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "The risk is ...",
+  "rules": [
+    { "label": "Explains the risk of dependence", "pattern": "risk|depend|lose|losing|crisis|vulnerab|if they" },
+    { "label": "Suggests finding new customers or diversifying", "pattern": "new customers|diversif|other customers|more customers|grow others|spread" },
+    { "label": "Suggests securing the large account (contract, relationships, service)", "pattern": "contract|relationship|service|deliver|multiple contacts|retain|renew" },
+    { "label": "Suggests managing cash or setting a limit", "pattern": "cash|limit|payment|deposit|20|30|percent|%" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "The risk is that if this customer leaves or pays late, I lose 40% of my sales and may face a cash crisis. I would reduce it by actively winning new customers to spread my sales, aiming for no single account above 30%. I would secure the large account with a longer contract and relationships with several people there, and deliver excellent service. I would also watch cash carefully, insisting on a purchase order and prompt invoicing.",
+  "required": false
+}
+```
+
+Next lesson: measuring sales.
+$md$, true, true, 8, array['bds-m08-t1', 'bds-m08-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bds-m09', 'business-development-sales', 'Measuring sales', 9, 'Sales Metrics', 'SALESKPI', array['Track key metrics', 'Read conversion rates', 'Report to managers', 'Improve what you measure']::text[], array['Sales metrics that matter', 'Conversion rates and cycle length', 'Reports for managers', 'Improving what you measure']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:measuring-sales', 'business-development-sales', 'bds-m09', 'measuring-sales', 'Measuring Sales', 'Track the sales metrics that matter, understand conversion rates and cycle length, write reports for managers and improve what you measure.', 20, $md$
+## Sales metrics that matter
+
+You cannot improve what you do not measure, but too many numbers confuse. Choose a handful that connect effort to results.
+
+**Activity metrics** (what you do): calls and messages made, meetings held, proposals sent.
+
+**Pipeline metrics:** number and value of opportunities in each stage, new leads per week, pipeline coverage.
+
+**Results metrics:** revenue, number of deals won, average deal size, profit or margin on sales, repeat sales.
+
+**Efficiency metrics:** conversion rates, win rate, sales cycle length, cost to acquire a customer.
+
+**Quota attainment** compares actual sales with target. If your target is ₦5,000,000 and you sold ₦4,200,000, attainment is 4,200,000 ÷ 5,000,000 = **84%.**
+
+Metrics should be **defined clearly** (what counts as a lead, a qualified lead, a won deal?) and measured **the same way every time.**
+
+## Conversion rates and cycle length
+
+**Conversion rate** is the share of opportunities that move from one stage to the next. Looking at each stage shows where deals are lost.
+
+Example funnel for a month:
+
+| Stage | Number | Conversion from previous |
+| :-- | :-- | :-- |
+| Leads | 400 | |
+| Qualified | 120 | 30% |
+| Proposals sent | 48 | 40% |
+| Won | 12 | 25% |
+
+Overall conversion from lead to win = 12 ÷ 400 = **3%.**
+
+**Win rate** is deals won ÷ deals closed (won plus lost). If you closed 40 deals and won 12, win rate = 12 ÷ 40 = **30%.**
+
+**Average deal size** = total revenue ÷ number of deals. **Sales cycle length** is the average time from first contact to signed deal. A shorter cycle means faster cash and more sales per year. If one month of leads takes an average of 45 days to close, your cash from today's leads arrives in about six weeks.
+
+Where to focus: find the **weakest stage** and the **biggest improvement per effort.** In the example, improving the proposal-to-win rate from 25% to 30% turns 48 proposals into 48 × 0.30 = 14.4 wins instead of 12, about **2 or 3 more deals** a month with no more leads.
+
+## Reports for managers
+
+Managers want to know **what happened, why and what to do.** A good sales report is short, clear and honest.
+
+Include:
+
+1. **Headline:** results against target in one or two lines.
+2. **Key numbers:** revenue, pipeline, conversion, win rate, with last month and trend.
+3. **A simple chart or table.**
+
+4. **What is working and what is not,** with reasons.
+5. **Risks and big opportunities:** large deals and what could stop them.
+6. **Actions:** what you will do next and what help you need.
+
+Example headline: *"October sales were ₦4.2m against a ₦5m target (84%). Pipeline coverage is 3.2 times next month's target. Proposal-to-win conversion fell to 25%, so we will review pricing and follow-up on the 12 open proposals."*
+
+Keep the same format every month so trends are easy to see. Do not hide bad news; explain it and show your plan.
+
+## Improving what you measure
+
+Measurement only matters if it leads to action.
+
+1. **Pick one metric** to improve (for example proposal-to-win rate).
+2. **Find the cause.** Review lost deals and talk to customers. Is it price, timing, trust, follow-up or poor targeting?
+3. **Try a change** (better qualification, faster follow-up, clearer proposals, a case study).
+4. **Measure the effect** for a set time.
+5. **Keep what works,** drop what does not, and pick the next metric.
+
+Beware of **bad incentives.** If you reward only calls made, people make many pointless calls. If you reward only revenue, people may discount heavily or oversell. Balance activity, quality and results, and keep ethics central.
+
+Also compare your numbers with your own history, not with unrealistic targets from elsewhere. Steady improvement beats sudden jumps.
+
+## Try it
+
+```task
+{
+  "id": "bds-m09-t1",
+  "prompt": "A month's funnel: **400 leads**, **120 qualified**, **48 proposals**, **12 won**. Work out the conversion at each stage, the overall conversion and which stage is the **weakest**. Closed deals were 40; calculate the **win rate**.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Qualified = ...",
+  "rules": [
+    { "label": "Qualification rate of 30%", "pattern": "\\b30\\s?%" },
+    { "label": "Proposal rate of 40%", "pattern": "\\b40\\s?%" },
+    { "label": "Win conversion of 25%", "pattern": "\\b25\\s?%" },
+    { "label": "Overall of 3%", "pattern": "\\b3\\s?%" },
+    { "label": "Win rate of 30%", "pattern": "win rate[^\\n]*30|12\\s*/\\s*40" }
+  ],
+  "sample": "Qualified = 120 / 400 = 30%. Proposals = 48 / 120 = 40%. Won = 12 / 48 = 25%.\nOverall = 12 / 400 = 3%.\nThe weakest stage is proposal to win at 25%, which has the most to gain.\nWin rate = 12 won / 40 closed = 30%.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m09-t2",
+  "prompt": "If you improve the proposal-to-win rate from **25% to 30%** with **48 proposals**, how many wins would you get, and how many more than now? Then name **two actions** that could raise the rate.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Wins at 30% = ...",
+  "rules": [
+    { "label": "14.4 wins (about 14)", "pattern": "14\\.4|\\b14\\b" },
+    { "label": "About 2 more wins", "pattern": "2\\.4|\\b2\\b|\\b3\\b|two|three" },
+    { "label": "Names actions (faster follow-up, better proposals, better qualification, case studies)", "pattern": "follow-?up|proposal|qualif|case stud|pricing|reference|call" }
+  ],
+  "sample": "Wins at 30% = 48 x 0.30 = 14.4, about 14, compared with 12 now, so about 2 more wins.\nI would follow up faster after sending each proposal and add a case study and clearer options to every proposal.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m09-t3",
+  "prompt": "Write a **monthly sales report summary** (60 to 120 words): the headline against target, two key numbers, what is working, one risk and the actions you will take. Sales were ₦4.2m against a ₦5m target.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "October sales were ...",
+  "rules": [
+    { "label": "States the result against target (84%)", "pattern": "84\\s?%|4\\.2|5m|5,000,000" },
+    { "label": "Gives key numbers (pipeline, conversion, win rate)", "pattern": "pipeline|conversion|win rate|deals|average" },
+    { "label": "Says what is working", "pattern": "working|improv|strong|good|grew|up" },
+    { "label": "Names a risk", "pattern": "risk|concern|slow|fell|drop|delay|stuck" },
+    { "label": "States actions", "pattern": "action|will|next|plan|review|follow" },
+    { "label": "Between 60 and 120 words", "minWords": 60, "maxWords": 125 }
+  ],
+  "sample": "October sales were ₦4.2m against a ₦5m target, which is 84% attainment. The pipeline now covers 3.2 times next month's target, and our win rate rose to 30%. What is working is referral leads, which closed at twice the rate of cold outreach. The main risk is that proposal-to-win conversion fell to 25% and three large deals have been stuck in negotiation for over a month. Next month we will follow up all 12 open proposals within 48 hours and review our pricing on the three stuck deals.",
+  "required": false
+}
+```
+
+Next lesson: your sales plan and pitch.
+$md$, true, true, 9, array['bds-m09-t1', 'bds-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('bds-m10', 'business-development-sales', 'Final project: sales plan and pitch', 10, 'Sales Plan', 'SALEPLAN', array['Build a sales plan', 'Work out the funnel', 'Write a pitch', 'Answer objections']::text[], array['Choosing your product and market', 'Building the plan', 'Delivering the pitch', 'Review and next steps']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('business-development-sales:final-project-sales-plan-and-pitch', 'business-development-sales', 'bds-m10', 'final-project-sales-plan-and-pitch', 'Final Project: Sales Plan and Pitch', 'Choose your product and market, build a sales plan with targets and routines, prepare and deliver a pitch and review your next steps.', 45, $md$
+## What you are building
+
+You have learned to find, qualify, talk to, propose to, negotiate with, close and keep customers, and to measure and improve the process. Now you bring it together in **a sales plan** and **a pitch** for a real or realistic product.
+
+Pick something you could really sell: a product or service from your own business, a job you are applying for, a freelance service, or a company you know. Be specific about who you sell to and what you offer. Use real prices and real customer information, and state any assumptions.
+
+## Your project has six parts
+
+1. **Product and market.** What you sell, the problem it solves, your price, your ideal customer profile and your main competitors.
+2. **Customer understanding.** Pains and gains, decision makers and the main objections you expect, with your answers.
+3. **Lead generation plan.** Your sources, the outreach messages you will use, and how you will qualify leads.
+4. **Sales process and tools.** Your pipeline stages and probabilities, a CRM sheet design and your weekly routine.
+5. **Targets and forecast.** A revenue target, the funnel (contacts, meetings, proposals, wins) needed to reach it, the average deal size and a weighted forecast.
+6. **The pitch.** A short pitch (3 to 5 minutes, or one page) with a clear opening, the customer's problem, your solution, proof, a price and a clear next step.
+
+## Writing and delivering the pitch
+
+A strong pitch follows a simple shape:
+
+1. **Hook:** a relevant question or fact about their problem.
+2. **Problem:** what it costs them now, in their words and numbers.
+3. **Solution:** what you offer and how it works, in plain language.
+4. **Proof:** a similar customer, result, demonstration or guarantee.
+5. **Offer:** price, what is included and terms.
+6. **Ask:** one clear next step with a date.
+
+Keep it short, use stories and numbers, and practise out loud until it sounds natural. Prepare for **three objections** and know your answers. After the pitch, **stop talking and listen.**
+
+> [!TIP]
+> Record yourself delivering the pitch, or practise it with a friend, then ask: Was it clear? Did you believe it? What was missing?
+
+## Try it
+
+```task
+{
+  "id": "bds-m10-t1",
+  "prompt": "Describe your **product and ideal customer** in 60 to 130 words: what you sell, the problem it solves, the price, who your ideal customer is and one main competitor.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "I sell ...",
+  "rules": [
+    { "label": "Says what is sold", "pattern": "sell|offer|product|service|provide" },
+    { "label": "Says the problem it solves", "pattern": "problem|solve|struggle|cost|lose|help" },
+    { "label": "States a price", "pattern": "₦\\s?\\d|price|per " },
+    { "label": "Describes the ideal customer", "pattern": "customer|shops?|clinics?|owners?|businesses|students|families|ideal" },
+    { "label": "Names a competitor or alternative", "pattern": "competitor|alternative|instead|currently use|generator|rival" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "I sell solar inverter systems that replace diesel and petrol generators for small shops and clinics in Lagos. They solve the problem of high fuel costs, noise and breakdowns, saving a typical shop about ₦60,000 to ₦90,000 a month. A standard 5 kVA system costs ₦900,000 including installation, with a two-year warranty. My ideal customer is a shop or clinic with 3 to 20 staff that runs a generator more than six hours a day and where the owner decides. My main competitor is the generator itself, plus two other solar installers who compete mainly on price.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m10-t2",
+  "prompt": "Write your **target and funnel**: a monthly revenue target, the average deal size, the number of wins needed, and the contacts, meetings and proposals needed using your conversion rates. Show the maths. At least six lines.",
+  "minutes": 15,
+  "rows": 9,
+  "placeholder": "Target: ₦...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "States a revenue target", "pattern": "target" },
+    { "label": "States the average deal size", "pattern": "average deal|deal size" },
+    { "label": "States the wins needed", "pattern": "wins?|deals" },
+    { "label": "Works back to contacts, meetings or proposals", "pattern": "contacts|meetings|proposals|leads" },
+    { "label": "Shows maths (division, equals or conversion %)", "pattern": "=|/|÷|\\d+\\s?%" }
+  ],
+  "sample": "Target: ₦3,600,000 revenue a month\nAverage deal size: ₦900,000\nWins needed: 3,600,000 / 900,000 = 4 deals a month\nProposal-to-win rate: 25%, so I need 4 / 0.25 = 16 proposals\nMeeting-to-proposal rate: 50%, so I need 16 / 0.5 = 32 meetings\nContact-to-meeting rate: 10%, so I need 32 / 0.1 = 320 contacts a month, about 15 a working day",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m10-t3",
+  "prompt": "Write your **pitch** in 120 to 220 words: a hook, the customer's problem, your solution, proof, the offer with a price and a clear ask with a date.",
+  "minutes": 15,
+  "rows": 12,
+  "placeholder": "Good morning ...",
+  "rules": [
+    { "label": "Opens with a hook (a question or a fact)", "pattern": "\\?|did you know|how much|what if|imagine" },
+    { "label": "States the problem and its cost", "pattern": "problem|cost|spend|lose|losing|fuel|waste" },
+    { "label": "States the solution", "pattern": "solution|system|we (offer|provide|install)|our (product|service)" },
+    { "label": "Gives proof", "pattern": "customer|similar|client|guarantee|warranty|result|recently|demo" },
+    { "label": "States the price", "pattern": "₦\\s?\\d" },
+    { "label": "Ends with an ask and a date", "pattern": "friday|monday|tuesday|wednesday|thursday|tomorrow|next week|by \\d|this week" },
+    { "label": "Between 120 and 220 words", "minWords": 120, "maxWords": 225 }
+  ],
+  "sample": "How much do you spend on generator fuel and repairs each month? Most shops like yours tell me between ₦80,000 and ₦150,000, and that is before the sales you lose when the generator breaks down or the noise drives customers away. That is the problem we solve. Our 5 kVA solar inverter system runs your freezer, lights and card machine all day, so the generator becomes only a backup, and you cut your fuel bill by around ₦60,000 to ₦90,000 a month. Last year we installed the same system for a pharmacy in Yaba. A year later they have had no outages and have saved over ₦900,000. The complete system with installation is ₦900,000, including a two-year warranty, and we can arrange payment in two instalments. If you would like to see it working, I can take you to visit the pharmacy this week. Can I book that for Friday at 11 am?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "bds-m10-t4",
+  "prompt": "List the **three objections** you expect in your pitch and write your **answer** to each, one per line in the form \"Objection: ... Answer: ...\".",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Objection: ... Answer: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line has an objection and an answer", "pattern": "objection:[^\\n]*answer:", "perLine": true },
+    { "label": "Includes a price or value answer", "pattern": "payback|save|saving|value|instalment|months" },
+    { "label": "Includes a trust or proof answer", "pattern": "warranty|reference|visit|customer|guarantee|proof|trial" }
+  ],
+  "sample": "Objection: it is too expensive. Answer: it pays for itself in about 15 months through fuel savings, and we can split payment into two instalments.\nObjection: I do not know your company. Answer: you can visit a pharmacy we installed a year ago, and we give a two-year warranty.\nObjection: not now. Answer: each month of delay costs you about ₦90,000 in fuel, so let us agree a date to review it next month.",
+  "required": false
+}
+```
+
+When you are done, submit your complete sales plan and pitch as your final project.
+$md$, true, true, 10, array['bds-m10-t1', 'bds-m10-t2', 'bds-m10-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Digital Marketing & Sales
@@ -95895,6 +97280,592 @@ values ('ent-f15', 1, 'Evidence and numbers make a plan believable.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: Sales Fundamentals: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m01-check', 'business-development-sales', 'module', 'bds-m01', 'Sales Fundamentals: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m01-q1', 'bds-m01-check', 1, 'Which best describes selling?', '["Pushing people to buy","Helping someone solve a problem or reach a goal in exchange for money","Talking the most","Giving discounts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m01-q1', 1, 'Real selling is helping through understanding and advice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m01-q2', 'bds-m01-check', 2, 'What is qualifying a lead?', '["Giving the lead a certificate","Checking they have the need, budget, authority and timing","Sending a brochure","Closing the deal"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m01-q2', 1, 'Qualifying keeps your time on leads worth pursuing.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m01-q3', 'bds-m01-check', 3, 'How does business development differ from sales?', '["It does not","It creates new opportunities and relationships for the future, while sales converts current prospects","It is only for large firms","It is only closing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m01-q3', 1, 'BD opens doors; sales walks through them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m01-q4', 'bds-m01-check', 4, 'A product is not right for a prospect. What should you do?', '["Sell it anyway","Say so honestly and suggest a better option","Lower the price","Stop replying"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m01-q4', 1, 'Honesty builds trust and repeat business.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m01-q5', 'bds-m01-check', 5, 'Which is an ethical sales habit?', '["Exaggerating benefits","Keeping customers'' confidences","Speaking badly of competitors","Hiding costs"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m01-q5', 1, 'Ethics protect trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Understanding Your Customer: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m02-check', 'business-development-sales', 'module', 'bds-m02', 'Understanding Your Customer: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m02-q1', 'bds-m02-check', 1, 'What is an ideal customer profile?', '["A list of all customers","A description of the customers who get and give the most value","A price list","A competitor list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m02-q1', 1, 'It focuses effort on the best-fit customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m02-q2', 'bds-m02-check', 2, 'Which role controls the budget and gives the final yes?', '["User","Gatekeeper","Economic buyer","Influencer"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m02-q2', 2, 'The economic buyer approves the spend.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m02-q3', 'bds-m02-check', 3, 'A shop owner says ''I want a cheaper generator''. The underlying need is likely:', '["A cheaper generator only","To stop losing money to power cuts and fuel costs","A nice colour","More noise"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m02-q3', 1, 'Dig beneath the stated request to the real driver.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m02-q4', 'bds-m02-check', 4, 'How should you treat competitors in a sales conversation?', '["Criticise them","Compare fairly with facts and focus on where you win","Ignore them","Copy their price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m02-q4', 1, 'Attacks reduce trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m02-q5', 'bds-m02-check', 5, 'Where do you build an ICP from?', '["Guesses","Your best existing customers","Competitors'' ads","A random list"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m02-q5', 1, 'Look for shared traits of your best customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Prospecting and Lead Generation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m03-check', 'business-development-sales', 'module', 'bds-m03', 'Prospecting and Lead Generation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m03-q1', 'bds-m03-check', 1, 'Which source usually gives the highest quality leads?', '["Cold lists","Referrals","Random flyers","Mass messages"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m03-q1', 1, 'Referrals bring built-in trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m03-q2', 'bds-m03-check', 2, 'What does BANT stand for?', '["Budget, Authority, Need, Timeline","Brand, Audience, Name, Tone","Buy, Ask, Negotiate, Tell","Build, Approve, Notify, Track"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m03-q2', 0, 'BANT is a standard qualifying checklist.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m03-q3', 'bds-m03-check', 3, '200 contacts give 2 customers. How many contacts are needed for 10 customers?', '["500","1,000","2,000","20"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m03-q3', 1, '2 ÷ 200 = 1%, so 10 ÷ 0.01 = 1,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m03-q4', 'bds-m03-check', 4, 'What makes a good cold message?', '["Long and about you","Personal, brief, relevant and with one small ask","Full of jargon","No ask"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m03-q4', 1, 'Relevance and a small ask get replies.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m03-q5', 'bds-m03-check', 5, 'Before adding people to a WhatsApp group you should:', '["Add everyone","Get their permission","Hide the group","Charge them"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m03-q5', 1, 'Permission and privacy matter.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: The Sales Conversation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m04-check', 'business-development-sales', 'module', 'bds-m04', 'The Sales Conversation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m04-q1', 'bds-m04-check', 1, 'In SPIN, what does the ''I'' stand for?', '["Interest","Implication","Information","Idea"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m04-q1', 1, 'Implication questions explore the effect of the problem.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m04-q2', 'bds-m04-check', 2, 'Which discovery question is best?', '["Would you buy my product?","What problems do you have with the generator?","Do you like solar?","Are you free?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m04-q2', 1, 'Open problem questions uncover real needs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m04-q3', 'bds-m04-check', 3, 'What is a benefit, compared with a feature?', '["What the product is","What it does for the customer","Its colour","Its price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m04-q3', 1, 'Benefits answer ''what''s in it for me''.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m04-q4', 'bds-m04-check', 4, 'How much should you listen compared with talk in discovery?', '["Much less","At least as much as you speak","Not at all","Only at the end"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m04-q4', 1, 'Listening reveals needs.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m04-q5', 'bds-m04-check', 5, 'How should a meeting end?', '["With goodbye only","With a clear next step and date","With a discount","With silence"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m04-q5', 1, 'Agree and confirm the next step.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Objections and Negotiation: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m05-check', 'business-development-sales', 'module', 'bds-m05', 'Objections and Negotiation: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m05-q1', 'bds-m05-check', 1, 'A customer raises an objection. What does it usually mean?', '["A firm no","A request for more information or reassurance","They hate you","A bad lead"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m05-q1', 1, 'Objections show engagement.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m05-q2', 'bds-m05-check', 2, 'A ₦900,000 system saves ₦60,000 a month. What is the payback?', '["9 months","12 months","15 months","18 months"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m05-q2', 2, '900,000 ÷ 60,000 = 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m05-q3', 'bds-m05-check', 3, 'Cost ₦650,000, price ₦900,000. A 10% discount gives a profit per sale of:', '["₦90,000","₦160,000","₦250,000","₦810,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m05-q3', 1, '810,000 − 650,000 = ₦160,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m05-q4', 'bds-m05-check', 4, 'What is the best way to give a concession?', '["Give it freely","Trade it for something in return","Never give any","Give it to all"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m05-q4', 1, 'Trade, don''t just give.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m05-q5', 'bds-m05-check', 5, 'When should you walk away?', '["Never","When terms would cost you money or damage the business, politely and leaving the door open","At the first objection","When the customer is rude only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m05-q5', 1, 'Walking away well protects value and reputation.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Proposals and Closing: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m06-check', 'business-development-sales', 'module', 'bds-m06', 'Proposals and Closing: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m06-q1', 'bds-m06-check', 1, '3 systems at ₦900,000 plus ₦150,000 installation and 7.5% VAT on the subtotal. What is the total?', '["₦2,850,000","₦3,000,000","₦3,063,750","₦3,150,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m06-q1', 2, 'Subtotal 2,850,000 plus VAT 213,750.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m06-q2', 'bds-m06-check', 2, 'Why offer two or three options in a proposal?', '["To confuse","The question becomes ''which one?'' instead of ''yes or no?''","It is required","To hide the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m06-q2', 1, 'Options frame the choice.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m06-q3', 'bds-m06-check', 3, 'What should a good follow-up do?', '["Just ask ''any news?''","Add value, such as an answer or useful information","Pressure the customer","Repeat the pitch"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m06-q3', 1, 'Useful follow-ups keep interest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m06-q4', 'bds-m06-check', 4, 'Which closing technique respects the customer?', '["Fake scarcity","A summary of agreed benefits followed by asking to proceed","Hiding the price","Pressure"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m06-q4', 1, 'Honest, clear closing builds trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m06-q5', 'bds-m06-check', 5, 'After the sale you should:', '["Forget the customer","Deliver, check satisfaction and ask for a referral","Only send invoices","Raise the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m06-q5', 1, 'The sale starts the relationship.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Pipeline, CRM and Sales Operations: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m07-check', 'business-development-sales', 'module', 'bds-m07', 'Pipeline, CRM and Sales Operations: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m07-q1', 'bds-m07-check', 1, 'What should every deal in the pipeline have?', '["A discount","A next step and a date","A logo","A nickname"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m07-q1', 1, 'No next step means the deal is probably dead.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m07-q2', 'bds-m07-check', 2, 'Deals: ₦2m at 80%, ₦5m at 40%, ₦1m at 20%. What is the weighted forecast?', '["₦3.8m","₦4.6m","₦8m","₦2.7m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m07-q2', 0, '1.6 + 2.0 + 0.2 = ₦3.8m.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m07-q3', 'bds-m07-check', 3, 'What is the best CRM?', '["The most expensive","The one you will use every day","None","A paper pile"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m07-q3', 1, 'Usage matters more than features.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m07-q4', 'bds-m07-check', 4, 'How much pipeline coverage is a common rule against a target?', '["Equal to the target","About three to four times the target","Half the target","None"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m07-q4', 1, 'Only a fraction of deals will close.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m07-q5', 'bds-m07-check', 5, 'When should you update the CRM?', '["At month end","The same day","Never","Once a year"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m07-q5', 1, 'Same-day entry keeps data accurate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Partnerships and Key Accounts: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m08-check', 'business-development-sales', 'module', 'bds-m08', 'Partnerships and Key Accounts: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m08-q1', 'bds-m08-check', 1, 'What makes a good partnership?', '["One side wins","Both sides win and know what they must do","No paperwork","Secrecy"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m08-q1', 1, 'Clear mutual value works.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m08-q2', 'bds-m08-check', 2, 'What is cross-selling?', '["Selling a higher version of the same item","Offering something related, such as a maintenance plan","Selling to rivals","Selling cross-border"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m08-q2', 1, 'Upselling is the higher version; cross-selling is related items.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m08-q3', 'bds-m08-check', 3, '100 customers, 20% buy a ₦50,000 plan. What is the extra revenue?', '["₦500,000","₦1,000,000","₦2,000,000","₦5,000,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m08-q3', 1, '20 × 50,000 = ₦1,000,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m08-q4', 'bds-m08-check', 4, 'A single customer is 40% of sales. What is the main risk?', '["None","Losing them or late payment would be a crisis","Too much profit","Too many invoices"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m08-q4', 1, 'Concentration risk is serious.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m08-q5', 'bds-m08-check', 5, 'When should you upsell?', '["Always","Only when it genuinely helps the customer","Never","When they are angry"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m08-q5', 1, 'A good upsell is a service.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Measuring Sales: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m09-check', 'business-development-sales', 'module', 'bds-m09', 'Measuring Sales: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m09-q1', 'bds-m09-check', 1, 'Target ₦5m, actual ₦4.2m. What is the attainment?', '["80%","84%","88%","92%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m09-q1', 1, '4.2 ÷ 5 = 84%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m09-q2', 'bds-m09-check', 2, '40 deals closed, 12 won. What is the win rate?', '["12%","25%","30%","40%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m09-q2', 2, '12 ÷ 40 = 30%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m09-q3', 'bds-m09-check', 3, '400 leads give 12 wins. What is the overall conversion?', '["1%","3%","12%","30%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m09-q3', 1, '12 ÷ 400 = 3%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m09-q4', 'bds-m09-check', 4, 'Where should you focus first to improve results?', '["Everywhere","The weakest stage with the biggest gain per effort","The strongest stage","Nowhere"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m09-q4', 1, 'Fix the biggest leak.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m09-q5', 'bds-m09-check', 5, 'Why beware of bad incentives?', '["They are legal","Rewarding one number alone can drive bad behaviour such as heavy discounting or pointless calls","They raise profit","They are free"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m09-q5', 1, 'Balance activity, quality and results.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: Sales Plan and Pitch: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('bds-m10-check', 'business-development-sales', 'module', 'bds-m10', 'Final Project: Sales Plan and Pitch: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m10-q1', 'bds-m10-check', 1, 'How should a pitch begin?', '["With your life story","With a hook about their problem","With your price","With a joke only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m10-q1', 1, 'Start with something relevant to them.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m10-q2', 'bds-m10-check', 2, 'Revenue target ₦3.6m and deal size ₦900,000. How many wins are needed?', '["2","3","4","5"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m10-q2', 2, '3,600,000 ÷ 900,000 = 4.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m10-q3', 'bds-m10-check', 3, '4 wins at a 25% proposal-to-win rate need how many proposals?', '["4","8","16","25"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m10-q3', 2, '4 ÷ 0.25 = 16.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m10-q4', 'bds-m10-check', 4, 'What should end your pitch?', '["Silence","A clear next step with a date","A new product","An apology"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m10-q4', 1, 'Ask for the next step.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-m10-q5', 'bds-m10-check', 5, 'How should you prepare for objections?', '["Ignore them","Know the likely ones and have honest answers","Argue","Avoid the topic"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-m10-q5', 1, 'Preparation builds confidence.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Business Development & Sales: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('business-development-sales-final', 'business-development-sales', 'final', null, 'Business Development & Sales: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f01', 'business-development-sales-final', 1, 'Which is the best description of selling?', '["Convincing people to buy","Helping solve a customer''s problem in exchange for money","Offering discounts","Talking about your product"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f01', 1, 'Selling is helping.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f02', 'business-development-sales-final', 2, 'A lead with need, budget, authority and a near deadline is:', '["Cold","Qualified","Lost","A competitor"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f02', 1, 'BANT is met.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f03', 'business-development-sales-final', 3, 'Which lead source is usually the highest quality?', '["Referrals","Mass messages","Random cold calls","Posters"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f03', 0, 'Referrals carry trust.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f04', 'business-development-sales-final', 4, '200 contacts → 20 replies → 8 meetings → 2 customers. Overall conversion?', '["1%","2%","10%","25%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f04', 0, '2 ÷ 200 = 1%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f05', 'business-development-sales-final', 5, 'Which question is a SPIN implication question?', '["How do you power the shop?","How much sales do you lose when the power is out?","Would you like solar?","Do you have a generator?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f05', 1, 'It explores the effect of the problem.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f06', 'business-development-sales-final', 6, 'A system costs ₦900,000 and saves ₦60,000 a month. What is the payback?', '["10 months","12 months","15 months","20 months"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f06', 2, '900,000 ÷ 60,000 = 15.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f07', 'business-development-sales-final', 7, 'Cost ₦650,000, price ₦900,000, 10% discount. Units needed for the same profit?', '["10% more","25% more","About 56% more","100% more"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f07', 2, '250,000 ÷ 160,000 = 1.56.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f08', 'business-development-sales-final', 8, 'What is the best response to ''give me 10% off or I walk''?', '["Give 10% at once","Trade a smaller concession or a value-add for something in return","Refuse and end the call","Raise the price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f08', 1, 'Trade, don''t just give.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f09', 'business-development-sales-final', 9, '3 × ₦900,000 + ₦150,000 + 7.5% VAT on the subtotal gives:', '["₦2,850,000","₦3,063,750","₦3,150,000","₦3,213,750"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f09', 1, '2,850,000 + 213,750.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f10', 'business-development-sales-final', 10, 'Deals: ₦2m at 80%, ₦5m at 40%, ₦1m at 20%. The weighted forecast is:', '["₦2.7m","₦3.8m","₦4.6m","₦8m"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f10', 1, '1.6 + 2.0 + 0.2.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f11', 'business-development-sales-final', 11, 'Which action best grows an existing account?', '["Ignoring them","Offering a related product that genuinely helps, such as a maintenance plan","Raising prices silently","Reducing service"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f11', 1, 'Helpful cross-selling grows accounts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f12', 'business-development-sales-final', 12, 'Win rate = deals won ÷ ?', '["Leads","Deals closed (won plus lost)","Proposals sent only","Meetings"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f12', 1, 'Win rate compares wins with all closed deals.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f13', 'business-development-sales-final', 13, '400 leads, 120 qualified, 48 proposals, 12 won. Which stage is weakest?', '["Lead to qualified (30%)","Qualified to proposal (40%)","Proposal to won (25%)","All equal"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f13', 2, '25% is the lowest conversion.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f14', 'business-development-sales-final', 14, 'Which is an ethical sales practice?', '["Fake scarcity","Honest statements and keeping promises","Hiding costs","Insulting competitors"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f14', 1, 'Honesty and reliability build lasting trade.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('bds-f15', 'business-development-sales-final', 15, 'What should every pitch end with?', '["A joke","One clear next step with a date","A long apology","A new price"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('bds-f15', 1, 'Clear next steps move deals forward.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -96273,6 +98244,16 @@ values ('ent-business-plan', 'entrepreneurship-business-management', 'Your busin
 Submit a link to your plan (a shared document, PDF or folder) and paste your **executive summary** and your **break-even point and funding needed** below, with a short note on where to find each part.
 
 Write for a reader who knows nothing about your business, such as a bank, a funder or a business partner: clear, specific and backed by evidence.$md$, array['Executive summary: the problem, solution, customers, model, funding needed and first-year goal.', 'The problem and opportunity, with evidence from customer interviews or tests.', 'Product and value proposition, including your minimum viable product.', 'Market and competition: target customer, at least three competitors and your positioning.', 'Marketing and sales plan: channels, brand, price and how you will win your first customers, with a CAC and CLV estimate.', 'Operations, legal set-up and team: process, suppliers, structure, registration and permits, and who does what.', 'Financial plan: start-up costs, price, variable and fixed costs, break-even, a six-month cash flow forecast and the funding needed.', 'Risks with responses, and a 90-day action plan with milestones.']::text[], '{}'::text[], array['The problem is real and supported by evidence from customers, not assumptions.', 'The value proposition and target customer are specific, and positioning against competitors is clear.', 'The marketing plan names realistic channels and shows how the first customers will be won.', 'Operations, legal set-up and the team are practical and correct for Nigeria, with current requirements flagged for checking.', 'The financial plan is complete and consistent: price, costs, break-even and cash flow agree with each other.', 'Risks are realistic and each has a response.', 'The 90-day plan has specific actions, owners and measurable milestones.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: Your sales plan and pitch
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('bds-sales-plan-pitch', 'business-development-sales', 'Your sales plan and pitch', 'A complete sales plan for a real or realistic product, with targets, a funnel, a pipeline and a written pitch ready to deliver.', $md$Choose a product or service you could really sell: from your own business, a freelance service, or a company you know. Build the sales plan and write the pitch you would deliver to a real prospect.
+
+Use real prices and real customer information where you can, and state your assumptions. Submit a link to your plan (a shared document, PDF or folder) and paste your **pitch** and your **target and funnel numbers** below, with a short note on where to find each part.
+
+Write for a sales manager or a business owner who must decide whether your plan is realistic.$md$, array['Product and market: what you sell, the problem it solves, the price, your ideal customer profile and main competitors.', 'Customer understanding: pains and gains, decision makers and the main objections with answers.', 'Lead generation: sources, at least one outreach message and your qualifying questions.', 'Sales process and tools: pipeline stages with probabilities, a CRM sheet design and a weekly routine.', 'Targets and forecast: a revenue target worked back through wins, proposals, meetings and contacts, with a weighted forecast.', 'A written pitch with a hook, problem, solution, proof, price and a clear ask with a date.', 'How you will measure and improve: the metrics you will track and your first improvement action.']::text[], '{}'::text[], array['The ideal customer and the problem are specific and credible.', 'Customer understanding reflects real pains, decision makers and likely objections, with honest answers.', 'Lead generation uses several sources, and messages are personal, brief and relevant.', 'The pipeline, CRM and routines are practical and used consistently.', 'The targets and funnel maths are correct and realistic.', 'The pitch is clear, honest, customer-focused and ends with a specific next step.', 'Measurement is tied to action, with sensible metrics and an improvement plan.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 

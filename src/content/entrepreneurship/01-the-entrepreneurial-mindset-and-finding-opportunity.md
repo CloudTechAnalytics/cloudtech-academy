@@ -31,6 +31,7 @@ Good businesses solve real problems. Look for:
 - **Gaps between what exists and what people say they want.**
 
 A problem is **worth solving** when:
+
 1. **Many people** have it, or a few people have it badly.
 2. It happens **often** or costs a lot.
 3. People are **already trying to fix it**, and spending money or time.

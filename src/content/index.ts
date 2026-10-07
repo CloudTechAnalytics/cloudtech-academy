@@ -33,6 +33,8 @@ import { PROC_ASSESSMENTS } from "./procurement/assessment";
 import { LFF_ASSESSMENTS } from "./logistics/assessment";
 import { SCM_ASSESSMENTS } from "./supply-chain/assessment";
 import { ENT_ASSESSMENTS } from "./entrepreneurship/assessment";
+import { BDS_ASSESSMENTS } from "./sales/assessment";
+import { BDS_PROJECT } from "./sales/project";
 import { ENT_PROJECT } from "./entrepreneurship/project";
 import { SCM_PROJECT } from "./supply-chain/project";
 import { LFF_PROJECT } from "./logistics/project";
@@ -158,6 +160,7 @@ const COURSE_DIRS: Record<string, string> = {
   logistics: "logistics-freight-forwarding",
   "supply-chain": "supply-chain-management",
   entrepreneurship: "entrepreneurship-business-management",
+  sales: "business-development-sales",
 };
 
 const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
@@ -263,7 +266,8 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...LFF_ASSESSMENTS,
   ...SCM_ASSESSMENTS,
   ...ENT_ASSESSMENTS,
+  ...BDS_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, PMC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT, IEMI_PROJECT, PROC_PROJECT, LFF_PROJECT, SCM_PROJECT, ENT_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, PMC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT, IEMI_PROJECT, PROC_PROJECT, LFF_PROJECT, SCM_PROJECT, ENT_PROJECT, BDS_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

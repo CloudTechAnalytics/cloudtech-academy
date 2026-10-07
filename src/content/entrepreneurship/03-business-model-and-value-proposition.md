@@ -39,6 +39,7 @@ A simple format:
 Example: *For busy office workers who have little time for lunch, our pre-ordered lunch boxes are a delivery service that brings fresh, hot meals to their desk by 12:30. Unlike queuing at the canteen, we save them 30 minutes and they never have to skip a meal.*
 
 A strong proposition is:
+
 - **Specific:** clear who and what.
 - **Focused on a real problem** you validated.
 - **Different** from alternatives, in a way customers care about.

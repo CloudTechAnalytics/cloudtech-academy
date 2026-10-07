@@ -50,6 +50,7 @@ Measure behaviour, not compliments. Example: you survey 50 people and 18 say the
 A **minimum viable product (MVP)** is the simplest version that lets you learn from real customers. It is not a bad product. It is a **focused** one: only the features that matter for the first test.
 
 Examples:
+
 - A restaurant concept starts as a pre-order lunch box service from a home kitchen.
 - An app idea starts as a WhatsApp group and a spreadsheet, run by hand.
 - A clothing line starts with ten pieces and one fabric.

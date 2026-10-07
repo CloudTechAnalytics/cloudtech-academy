@@ -38,6 +38,7 @@ Follow the **employment laws** that apply, including pay, deductions, pension an
 You cannot do everything yourself. **Delegation** means giving someone the responsibility and the authority to do a task, while you remain accountable for the result.
 
 How to delegate well:
+
 - **Choose the task** (routine, time-consuming, or something someone else can do better).
 - **Explain the outcome you want,** the deadline, the standard and any limits (budget, approval).
 - **Make sure they have what they need:** information, tools, training.
@@ -62,6 +63,7 @@ Keep them **simple, clear and within the person's control**. Review weekly or mo
 Growth is attractive and dangerous. Growing too fast is a leading cause of failure: costs rise before income, quality slips and cash runs out.
 
 **Ready signs:**
+
 - Demand is steady and **customers are waiting.**
 - The process works without constant firefighting, and quality is consistent.
 - The business is **profitable** and generates cash.
@@ -69,6 +71,7 @@ Growth is attractive and dangerous. Growing too fast is a leading cause of failu
 - You can fund growth without risking the whole business.
 
 **Ways to grow:**
+
 - **Sell more to existing customers** (new products, bigger orders, subscriptions).
 - **Reach new customers** (new areas, channels or segments).
 - **Improve prices and margins** (cheaper supply, better pricing).
