@@ -77061,50 +77061,1378 @@ on conflict (id) do update set course_id = excluded.course_id, module_id = exclu
 
 -- Course: Entrepreneurship & Business Management
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('entrepreneurship-business-management', 'full', null, 'entrepreneurship-business-management', 'ENT', 'Entrepreneurship & Business Management', 'Turn an idea into a real, running business: validate it, plan it, register it, fund it and manage it.', 'A practical course for people who want to start or run a business. You learn how to find and test an opportunity, build a business model, plan the money, handle registration and compliance in Nigeria, and manage operations and people. You finish with a complete business plan you can use.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', null, false, 'coming_soon', true, array['Idea validation', 'Business model design', 'Business planning', 'Pricing and cash flow', 'Business registration in Nigeria', 'Managing operations and people']::text[], array['No experience needed', 'A business idea, or the wish to find one']::text[], 'Your business plan', true, true, true, true, false, 60, 49)
+values ('entrepreneurship-business-management', 'short', 'Business Builder', 'entrepreneurship-business-management', 'ENT', 'Entrepreneurship & Business Management', 'Turn an idea into a real, running business: validate it, plan it, register it, fund it and manage it.', 'A practical course for people who want to start or run a business. You learn how to find and test an opportunity, build a business model, plan the money, handle registration and compliance in Nigeria, and manage operations and people. You finish with a complete business plan you can use.', 'business-entrepreneurship', 'beginner', 2, 'Beginner to Intermediate', 6, false, 'available', true, array['Idea validation', 'Business model design', 'Business planning', 'Pricing and cash flow', 'Business registration in Nigeria', 'Managing operations and people']::text[], array['No experience needed', 'A business idea, or the wish to find one']::text[], 'Your business plan', true, true, true, true, false, 60, 49)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
-update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'closed', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Most businesses fail from avoidable mistakes: building something nobody wants, mispricing it, or running out of cash. This course takes you through the whole journey in order, from the first idea to a business that is registered, priced, funded and managed, with a real business plan as your final project.', audience = array['Aspiring entrepreneurs', 'Small business owners who want more structure', 'Graduates and professionals planning a side business', 'Managers who want to understand how a business works end to end']::text[], included = '{}'::text[], project_previews = '[{"title":"Your business plan","summary":"A complete plan for a real or realistic business: the customer, the offer, the model, the money and the first 90 days."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Test an idea with real customers before spending money', 'Build a clear business model and value proposition', 'Write a business plan with a budget and cash flow', 'Register and set up a business properly in Nigeria', 'Price your product and track profit', 'Manage operations, a team and growth']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'entrepreneurship-business-management' and not commerce_seeded;
+update public.courses set access_type = 'paid', price = 75000, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = '3 months', overview = 'Most businesses fail from avoidable mistakes: building something nobody wants, mispricing it, or running out of cash. This course takes you through the whole journey in order, from the first idea to a business that is registered, priced, funded and managed, with a real business plan as your final project.', audience = array['Aspiring entrepreneurs', 'Small business owners who want more structure', 'Graduates and professionals planning a side business', 'Managers who want to understand how a business works end to end']::text[], included = '{}'::text[], project_previews = '[{"title":"Your business plan","summary":"A complete plan for a real or realistic business: the customer, the offer, the model, the money and the first 90 days."}]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'professional', outcomes = array['Test an idea with real customers before spending money', 'Build a clear business model and value proposition', 'Write a business plan with a budget and cash flow', 'Register and set up a business properly in Nigeria', 'Price your product and track profit', 'Manage operations, a team and growth']::text[], difficulty_max = 'intermediate', duration_weeks = 12, thumbnail = null, faqs = '[{"q":"How long does the course take?","a":"Plan for 3 months. It is self-paced, so you can study around work or school, and your progress is saved as you go."},{"q":"Do I need any experience?","a":"No experience is needed. It starts with the basics and builds up to more advanced practice."},{"q":"Will I get a certificate?","a":"Yes, when you complete the lessons, pass the assessments and submit the final project. Paying for the course does not award the certificate on its own."},{"q":"How do I pay?","a":"You pay once, by bank transfer to the Academy account, and send your receipt. The course opens as soon as the payment is confirmed."}]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'entrepreneurship-business-management' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m01', 'entrepreneurship-business-management', 'The entrepreneurial mindset and finding opportunity', 1, null, null, '{}'::text[], array['What entrepreneurs do differently', 'Spotting problems worth solving', 'Opportunity versus idea', 'Your strengths, resources and risks']::text[])
+values ('ent-m01', 'entrepreneurship-business-management', 'The entrepreneurial mindset and finding opportunity', 1, 'Opportunity Finder', 'OPPORT', array['Think like an entrepreneur', 'Spot problems worth solving', 'Tell an idea from an opportunity', 'Audit your strengths and risks']::text[], array['What entrepreneurs do differently', 'Spotting problems worth solving', 'Opportunity versus idea', 'Your strengths, resources and risks']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m02', 'entrepreneurship-business-management', 'Validating your idea', 2, null, null, '{}'::text[], array['Who your customer really is', 'Customer interviews and surveys', 'Testing demand cheaply', 'Minimum viable product', 'Deciding to go, change or stop']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:the-entrepreneurial-mindset-and-finding-opportunity', 'entrepreneurship-business-management', 'ent-m01', 'the-entrepreneurial-mindset-and-finding-opportunity', 'The Entrepreneurial Mindset and Finding Opportunity', 'Learn what entrepreneurs do differently, spot problems worth solving, tell an opportunity from an idea and assess your own strengths, resources and risks.', 25, $md$
+## What entrepreneurs do differently
+
+An **entrepreneur** starts and builds a business to meet a need, accepting risk in the hope of reward. You do not need a special personality, a big idea or a lot of money. You need to **notice problems, test solutions and keep learning.**
+
+Habits that successful entrepreneurs share:
+
+- **They start with a problem,** not a product. They ask who is struggling and why.
+- **They test before they build.** A cheap experiment beats a long debate.
+- **They treat failure as information.** A failed test tells them what to change.
+- **They take small, calculated risks** and protect what they cannot afford to lose.
+- **They sell.** Nothing happens until someone pays.
+- **They keep records and watch money.** Many good ideas die of poor cash management.
+- **They keep going when it is hard,** and change direction when the evidence says so.
+
+Entrepreneurship is also not only for people leaving jobs. You can start small beside a job or studies, and many do.
+
+## Spotting problems worth solving
+
+Good businesses solve real problems. Look for:
+
+- **Things that annoy you or people near you.** "I always have to travel to X to get Y."
+- **Things people already pay for, badly.** Unreliable, slow, overpriced or low-quality services.
+- **Changes** that create new needs: a new rule, technology, price rise, habit or population shift.
+- **Waste:** goods that spoil, time that is lost, money that leaks.
+- **Gaps between what exists and what people say they want.**
+
+A problem is **worth solving** when:
+1. **Many people** have it, or a few people have it badly.
+2. It happens **often** or costs a lot.
+3. People are **already trying to fix it**, and spending money or time.
+4. You can reach those people.
+5. You can solve it **at a price they will pay** that leaves you a profit.
+
+Weak example: "People in my area might like a nice café." Stronger example: "Office workers on my street have 30 minutes for lunch, queue for 15 minutes at the only canteen and often skip lunch."
+
+## Opportunity versus idea
+
+An **idea** is a thought. An **opportunity** is an idea that fits a real, reachable need, at a time when you can act on it, with a way to make money.
+
+| Idea | Opportunity |
+| :-- | :-- |
+| "I'll sell shoes." | "Students at my university buy fashionable shoes but cannot get good prices; I can source from a supplier and deliver to hostels." |
+| Based on what you like | Based on what customers need and will pay for |
+| Untested | Supported by evidence |
+
+Turn an idea into an opportunity by naming **who** the customer is, **what problem** they have, **how** you solve it, **why** they would choose you and **how** you earn. If you cannot fill those in, you still have only an idea.
+
+## Your strengths, resources and risks
+
+Before you commit, take stock:
+
+- **Skills and knowledge:** what are you good at that others value?
+- **Experience and contacts:** who can you reach, buy from and learn from?
+- **Money and assets:** what can you invest, and what can you afford to lose?
+- **Time:** how many hours a week can you really give?
+- **Weak points:** skills you lack, which you can learn, buy or partner for.
+- **Personal risk:** your obligations, your income and your tolerance for uncertainty.
+
+Then ask what could go wrong and **what is the worst you can accept?** Start in a way that limits that loss: test with a small budget, keep your job while you build, and avoid debt you cannot repay.
+
+## Try it
+
+```task
+{
+  "id": "ent-m01-t1",
+  "prompt": "List **five problems** you or people around you face that someone might pay to solve. One per line, in the form \"Who - problem - why it hurts\".",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Office workers - 15-minute queue for lunch - they skip meals",
+  "rules": [
+    { "label": "Five lines", "minLines": 5 },
+    { "label": "Each line names who has the problem and the problem (uses a dash)", "pattern": "-", "perLine": true },
+    { "label": "Mentions real people (students, workers, traders, parents, farmers...)", "pattern": "student|worker|trader|parent|farmer|shop|owner|customer|family|people|women|men|driver|resident" },
+    { "label": "Says why it hurts (time, money, stress, waste, risk)", "pattern": "time|money|cost|waste|stress|late|queue|expensive|unreliable|risk|lose|skip" }
+  ],
+  "sample": "Office workers on my street - queue 15 minutes for lunch at the only canteen - they skip meals or waste their break\nStudents in hostels - cannot find good-priced fashionable shoes nearby - they overpay or travel far\nSmall food sellers - cannot keep records of sales - they do not know if they make a profit\nParents - struggle to find reliable after-school lessons - their children fall behind\nMarket traders - lose stock to spoilage because of poor storage - they waste money",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m01-t2",
+  "prompt": "Choose **one** of your problems and turn it into an **opportunity statement** in 50 to 110 words: who the customer is, their problem, how you would solve it, why they would choose you and how you would earn money.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "My customers are ...",
+  "rules": [
+    { "label": "Names the customer", "pattern": "customer|student|worker|trader|parent|owner|people|buyers?" },
+    { "label": "Names the problem", "pattern": "problem|struggle|cannot|can't|difficult|lose|waste|slow|expensive" },
+    { "label": "Says how you solve it", "pattern": "solve|offer|provide|sell|deliver|supply|service|i would|we would|i will" },
+    { "label": "Says why they would choose you", "pattern": "because|cheaper|faster|better|closer|reliable|choose|different" },
+    { "label": "Says how you earn", "pattern": "earn|charge|price|fee|margin|sell|₦|revenue|per " },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "My customers are office workers on Allen Avenue who have only 30 minutes for lunch. Their problem is that the one canteen has a 15-minute queue, so many skip lunch or eat poorly. I would offer a pre-ordered lunch box service: they order by WhatsApp by 10 am and I deliver hot meals to their office at 12:30. They would choose me because it saves their break, the food is fresh and I deliver to their desk. I would earn ₦2,500 per meal, with a profit of about ₦700 on each, and a weekly subscription discount to encourage regular orders.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m01-t3",
+  "prompt": "Do a **personal audit**. One line each: two skills you have, two contacts or resources, how many hours a week you can give, the most money you can afford to lose and one weakness you must cover. At least six lines.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Skill 1: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Lists skills", "pattern": "skill" },
+    { "label": "Lists contacts or resources", "pattern": "contact|resource|network|equipment|space|savings|friend|supplier" },
+    { "label": "States hours per week", "pattern": "\\d+\\s*(hours|hrs)|hours" },
+    { "label": "States money you can afford to lose", "pattern": "₦\\s?\\d|afford|lose" },
+    { "label": "Names a weakness and how to cover it", "pattern": "weak|lack|learn|partner|hire|cover" }
+  ],
+  "sample": "Skill 1: cooking for large groups\nSkill 2: managing orders and customer chat on WhatsApp\nContact 1: a cousin who owns a delivery bike\nResource 2: my mother's kitchen on weekdays\nHours: I can give 25 hours a week alongside my job\nMoney I can afford to lose: ₦150,000 of savings\nWeakness: I know nothing about bookkeeping, so I will learn the basics in this course and use a simple spreadsheet",
+  "required": false
+}
+```
+
+Next lesson: how to test whether your idea will really work.
+$md$, true, true, 1, array['ent-m01-t1', 'ent-m01-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m03', 'entrepreneurship-business-management', 'Business model and value proposition', 3, null, null, '{}'::text[], array['The Business Model Canvas', 'Value proposition', 'Revenue models', 'Costs and key resources', 'Competitors and positioning']::text[])
+values ('ent-m02', 'entrepreneurship-business-management', 'Validating your idea', 2, 'Idea Validator', 'VALIDATE', array['Define a target customer', 'Run customer interviews', 'Test demand cheaply', 'Set go, change or stop rules']::text[], array['Who your customer really is', 'Customer interviews and surveys', 'Testing demand cheaply', 'Minimum viable product', 'Deciding to go, change or stop']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m04', 'entrepreneurship-business-management', 'Business planning and strategy', 4, null, null, '{}'::text[], array['Vision, mission and goals', 'Setting objectives and milestones', 'A one-page plan and a full plan', 'Strategy basics', 'Risks and how to plan for them']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:validating-your-idea', 'entrepreneurship-business-management', 'ent-m02', 'validating-your-idea', 'Validating Your Idea', 'Identify your real customer, interview and survey them well, test demand cheaply, build a minimum viable product and decide to go, change or stop.', 35, $md$
+## Who your customer really is
+
+"Everyone" is not a customer. The more clearly you describe **one** type of customer, the easier it is to find them, understand them and sell to them.
+
+Describe your **target customer** with:
+
+- **Who they are:** age range, job, location, income, life stage.
+- **What they need or struggle with** that your product addresses.
+- **What they do now** to solve the problem, and what it costs them.
+- **Where to find them:** which places, groups and platforms.
+- **What would make them buy:** price, convenience, trust, quality.
+
+It helps to distinguish the **user** (who uses the product), the **buyer** (who pays) and the **influencer** (who recommends). A school lunch service has pupils as users and parents as buyers; selling only to pupils would not work.
+
+## Customer interviews and surveys
+
+**Interviews** teach you the most, because you hear the story behind the answers. Aim for 10 to 20 short conversations with people who match your target customer.
+
+Rules for good interviews:
+
+- **Ask about the past and the present, not the future.** "Tell me about the last time you ordered lunch at work" is better than "Would you use a lunch delivery service?" People are polite and guess badly about what they will do.
+- **Ask open questions:** how, what, tell me about.
+- **Listen more than you talk,** and do not pitch your idea.
+- **Dig into the problem:** "What was hard about that? What did you try? What did it cost?"
+- **Look for real behaviour:** money or time they already spend.
+- **Take notes** and look for patterns across interviews.
+
+A **survey** reaches more people and gives numbers. Keep it short, with simple questions, and ask only what you need. Use it **after** interviews, so you know what to ask. Be careful: a friendly crowd will say "yes, great idea." Ask for **commitments** instead of opinions.
+
+## Testing demand cheaply
+
+Before you spend on stock, equipment or premises, test if people will pay:
+
+- **Pre-sell.** Offer the product and take orders or deposits before you make it.
+- **Landing page or a simple advert** describing the offer, with a way to sign up or order.
+- **Social media post or WhatsApp broadcast** to your target group.
+- **A pilot:** serve a few customers by hand.
+- **Smoke test:** show the product (with photos or a sample) and see who asks for the price.
+
+Measure behaviour, not compliments. Example: you survey 50 people and 18 say they would buy. That is 18 ÷ 50 = **36%**, but only if they actually pay. You then ask for a ₦5,000 deposit: **10** pay. Now you have a real signal: 10 deposits of ₦5,000 = **₦50,000**, and 10 ÷ 50 = **20%** conversion from your audience to paying customers.
+
+## Minimum viable product
+
+A **minimum viable product (MVP)** is the simplest version that lets you learn from real customers. It is not a bad product. It is a **focused** one: only the features that matter for the first test.
+
+Examples:
+- A restaurant concept starts as a pre-order lunch box service from a home kitchen.
+- An app idea starts as a WhatsApp group and a spreadsheet, run by hand.
+- A clothing line starts with ten pieces and one fabric.
+
+Build the MVP in days or weeks, not months. Decide in advance **what you want to learn** and **how you will know**.
+
+## Go, change or stop
+
+Set your decision rule **before** the test, so you are honest afterwards.
+
+Example: *"If at least 15 of 50 people pay a deposit in two weeks, we go. If 5 to 14, we change something (price, offer or audience) and test again. If fewer than 5, we stop or pick a new idea."*
+
+After the test:
+
+- **Go:** the evidence is strong. Move to the next stage (business model, planning, set up).
+- **Change (pivot):** customers show interest but not in the form you offered. Adjust the customer, the problem, the price or the solution, then test again.
+- **Stop:** the evidence says no. This is a success, not a failure: you saved money and time. Take what you learned to a better idea.
+
+## Try it
+
+```task
+{
+  "id": "ent-m02-t1",
+  "prompt": "Describe your **target customer** in 50 to 110 words: who they are, what they struggle with, what they do now and what it costs them, and where you can find them.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "My target customer is ...",
+  "rules": [
+    { "label": "Says who they are (age, job, place)", "pattern": "aged|age|work|student|owner|parent|live|based|in lagos|in abuja|trader|professional|years" },
+    { "label": "Says what they struggle with", "pattern": "struggle|problem|cannot|can't|difficult|hard|waste|lose" },
+    { "label": "Says what they do now or what it costs", "pattern": "now|currently|at the moment|spend|cost|pay|₦" },
+    { "label": "Says where to find them", "pattern": "find|reach|whatsapp|instagram|facebook|market|office|campus|group|church|street|online" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "My target customer is an office worker aged 25 to 40 who works on Allen Avenue in Ikeja and has only about 30 minutes for lunch. They struggle with a 15-minute queue at the one canteen nearby, so they skip lunch or eat snacks, and they currently spend ₦1,500 to ₦2,500 a day on a mixed bag of food. I can find them in their office WhatsApp groups, through office receptionists and by visiting offices at lunchtime with sample boxes.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m02-t2",
+  "prompt": "Write **six interview questions** for your target customer that ask about **past behaviour** and the **problem**, not about your idea. One per line, each ending in a question mark.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Tell me about the last time you ...?",
+  "rules": [
+    { "label": "Six questions", "minLines": 6 },
+    { "label": "Every line is a question", "pattern": "\\?\\s*$", "perLine": true },
+    { "label": "At least one asks about the last time or what happened", "pattern": "last time|what happened|tell me about|walk me through" },
+    { "label": "Asks about what they do now or have tried", "pattern": "do now|currently|tried|usually|how do you|what do you do" },
+    { "label": "Asks about cost, time or money", "pattern": "cost|spend|pay|time|money|how much|how long" },
+    { "label": "Does not ask 'would you buy / would you use'", "pattern": "would you (buy|use|pay)", "absent": true }
+  ],
+  "sample": "Tell me about the last time you bought lunch at work. What happened?\nHow do you usually get lunch on a working day?\nWhat is the hardest part of getting lunch?\nWhat have you tried to fix that, and how did it go?\nHow much do you spend on lunch in a week?\nHow long does it take you from leaving your desk to eating?",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m02-t3",
+  "prompt": "Design a **test of demand** for your idea. In 60 to 130 words, say what you will do, how many people you will reach, what you will count and your **go, change and stop rules** with numbers.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "I will test demand by ...",
+  "rules": [
+    { "label": "Describes the test (pre-sell, deposit, landing page, pilot)", "pattern": "pre-?sell|deposit|pilot|landing page|test|order|sign" },
+    { "label": "Gives the number of people to reach", "pattern": "\\d+\\s*(people|customers|workers|students|contacts)|\\b\\d{2,}\\b" },
+    { "label": "States a go rule", "pattern": "go|proceed|continue" },
+    { "label": "States a stop or change rule", "pattern": "stop|change|pivot|drop|rethink" },
+    { "label": "Uses numbers for the decision", "pattern": "at least \\d+|fewer than \\d+|\\d+ (or more|to \\d+)|if \\d+" },
+    { "label": "Between 60 and 130 words", "minWords": 60, "maxWords": 135 }
+  ],
+  "sample": "I will pre-sell lunch boxes to 50 office workers in three WhatsApp groups for two weeks, asking each interested person for a ₦5,000 deposit toward a week of meals. I will count deposits paid, not likes. If at least 15 people pay, I will go and start the pilot. If 5 to 14 pay, I will change something, such as the price or the menu, and test again. If fewer than 5 pay, I will stop and choose a different idea or customer.",
+  "required": true
+}
+```
+
+Next lesson: the business model and value proposition.
+$md$, true, true, 2, array['ent-m02-t1', 'ent-m02-t2', 'ent-m02-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m05', 'entrepreneurship-business-management', 'Setting up legally in Nigeria', 5, null, null, '{}'::text[], array['Business structures: sole proprietor, partnership, limited company', 'CAC registration', 'Tax identification and taxes', 'Licences, permits and contracts', 'Protecting your name and brand']::text[])
+values ('ent-m03', 'entrepreneurship-business-management', 'Business model and value proposition', 3, 'Business Model', 'BIZMODEL', array['Fill in the Business Model Canvas', 'Write a value proposition', 'Choose revenue models', 'Position against competitors']::text[], array['The Business Model Canvas', 'Value proposition', 'Revenue models', 'Costs and key resources', 'Competitors and positioning']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m06', 'entrepreneurship-business-management', 'Marketing and selling', 6, null, null, '{}'::text[], array['Marketing basics for a new business', 'Choosing channels', 'Branding on a small budget', 'Selling and customer service', 'Referrals and repeat customers']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:business-model-and-value-proposition', 'entrepreneurship-business-management', 'ent-m03', 'business-model-and-value-proposition', 'Business Model and Value Proposition', 'Use the Business Model Canvas, write a clear value proposition, choose revenue models, understand costs and key resources and position yourself against competitors.', 30, $md$
+## What a business model is
+
+A **business model** explains how a business creates value for customers and captures some of it as profit. It answers: who do we serve, what do we offer, how do we reach them, how do we earn, and what does it cost to run?
+
+You can test and change a business model on one page, long before you write a full plan.
+
+## The Business Model Canvas
+
+The **Business Model Canvas** is a one-page tool with nine blocks. Fill it in with short, specific notes and keep it updated as you learn.
+
+| Block | Question |
+| :-- | :-- |
+| **Customer segments** | Who are we serving? |
+| **Value proposition** | What problem do we solve, and what do we offer? |
+| **Channels** | How do we reach customers and deliver? |
+| **Customer relationships** | How do we win, keep and grow customers? |
+| **Revenue streams** | How and what do customers pay? |
+| **Key resources** | What do we need to deliver (people, equipment, stock, money)? |
+| **Key activities** | What must we do well (making, selling, delivering)? |
+| **Key partners** | Who helps us (suppliers, delivery partners)? |
+| **Cost structure** | What are our main costs? |
+
+Work from the **customer side first** (segments, value, channels, relationships, revenue), then the **business side** (resources, activities, partners, costs). Check that the revenue is more than the costs.
+
+## Value proposition
+
+A **value proposition** is the clear promise of why a customer should choose you. It is about **their** benefit, not your features.
+
+A simple format:
+
+*For [target customer] who [has this problem], our [product or service] is a [category] that [main benefit]. Unlike [alternative], we [key difference].*
+
+Example: *For busy office workers who have little time for lunch, our pre-ordered lunch boxes are a delivery service that brings fresh, hot meals to their desk by 12:30. Unlike queuing at the canteen, we save them 30 minutes and they never have to skip a meal.*
+
+A strong proposition is:
+- **Specific:** clear who and what.
+- **Focused on a real problem** you validated.
+- **Different** from alternatives, in a way customers care about.
+- **Believable:** you can deliver it.
+
+## Revenue models
+
+Decide **how you earn.** Common models:
+
+- **Sell a product:** one-time sale, profit per item.
+- **Charge for a service:** per job, per hour or per project.
+- **Subscription:** regular payment for continued access (a weekly meal plan, a monthly cleaning service).
+- **Commission:** a percentage of a sale you help make.
+- **Rental or leasing:** customers pay to use something.
+- **Advertising or sponsorship:** others pay to reach your audience.
+- **Freemium or tiered packages:** a basic level and paid upgrades.
+
+Choose a model that fits how customers like to pay and gives you **predictable income** where possible. Test different prices and packages.
+
+## Costs and key resources
+
+List what you must spend to deliver:
+
+- **Fixed costs** do not change with sales in the short term: rent, salaries, subscriptions, insurance, loan repayments.
+- **Variable costs** rise with each sale: ingredients, packaging, delivery, transaction fees, commission.
+- **Start-up costs** are one-off: equipment, registration, initial stock, branding, deposits.
+
+Then list **key resources**: people, skills, equipment, premises, stock, technology and cash. Find out what you can start without (borrow, rent, outsource), so you keep costs low while you learn.
+
+## Competitors and positioning
+
+You always have competitors, even if only the customer's current way of solving the problem (doing it themselves, or doing nothing).
+
+- **Direct competitors** offer the same thing to the same people.
+- **Indirect competitors** solve the same problem differently.
+- **Substitutes** are other things customers might spend on instead.
+
+Study them: who they serve, what they charge, what customers like and dislike, how they reach customers. Then **position** yourself: choose a clear place in customers' minds. Positioning is often explained with two axes, such as **price (low to high)** and **quality or convenience (low to high)**. You can be the cheapest, the most convenient, the best quality, or the best for one specific group. You cannot be all of them.
+
+> [!NOTE]
+> Customers read **reviews and complaints** about your competitors. These are free market research. Look for the same complaint repeated: that is your opening.
+
+## Try it
+
+```task
+{
+  "id": "ent-m03-t1",
+  "prompt": "Fill in a **Business Model Canvas** for your idea, one block per line in the form \"Block: answer\". Cover all nine blocks: customer segments, value proposition, channels, customer relationships, revenue streams, key resources, key activities, key partners and cost structure.",
+  "minutes": 18,
+  "rows": 12,
+  "placeholder": "Customer segments: ...\nValue proposition: ...",
+  "rules": [
+    { "label": "Nine lines", "minLines": 9 },
+    { "label": "Customer segments", "pattern": "customer segments?" },
+    { "label": "Value proposition", "pattern": "value proposition" },
+    { "label": "Channels", "pattern": "channels?" },
+    { "label": "Customer relationships", "pattern": "relationships?" },
+    { "label": "Revenue streams", "pattern": "revenue" },
+    { "label": "Key resources, activities and partners", "pattern": "resources?[\\s\\S]*activities[\\s\\S]*partners?" },
+    { "label": "Cost structure", "pattern": "cost structure|costs?" }
+  ],
+  "sample": "Customer segments: office workers aged 25 to 40 in Ikeja with a 30-minute lunch break\nValue proposition: fresh hot lunch delivered to the desk by 12:30, saving them the 15-minute queue\nChannels: WhatsApp ordering and delivery by bike to offices\nCustomer relationships: personal WhatsApp service, weekly menu, loyalty discount after 10 meals\nRevenue streams: ₦2,500 per meal and a ₦11,000 weekly subscription\nKey resources: a clean kitchen, two cooks, a delivery rider, insulated food boxes, working capital of ₦300,000\nKey activities: buying ingredients, cooking, packing, delivering, taking orders\nKey partners: a market supplier for ingredients and a dispatch rider\nCost structure: ingredients, packaging, rider pay, gas, phone data, rent share",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m03-t2",
+  "prompt": "Write your **value proposition** in one or two sentences using the format: *For [customer] who [problem], our [product] is a [category] that [benefit]. Unlike [alternative], we [difference].*",
+  "minutes": 8,
+  "rows": 5,
+  "placeholder": "For ... who ..., our ... is a ... that ... Unlike ..., we ...",
+  "rules": [
+    { "label": "Starts with 'For' and names a customer", "pattern": "for [a-z]" },
+    { "label": "Names the problem with 'who'", "pattern": "who " },
+    { "label": "Says 'our ... is a ... that'", "pattern": "our [^.]* is an? [^.]* that" },
+    { "label": "Contrasts with an alternative using 'Unlike'", "pattern": "unlike" },
+    { "label": "Between 25 and 80 words", "minWords": 25, "maxWords": 85 }
+  ],
+  "sample": "For busy office workers in Ikeja who have little time for lunch, our pre-ordered lunch box service is a delivery business that brings a fresh, hot meal to their desk by 12:30 every working day. Unlike queuing at the canteen or eating snacks, we save them 30 minutes and make sure they never skip a proper meal.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m03-t3",
+  "prompt": "List **three competitors** (direct, indirect or the customer's own workaround). For each, one line: who they are, what they charge and one weakness you could exploit.",
+  "minutes": 12,
+  "rows": 6,
+  "placeholder": "Competitor 1 - ... - ₦... - weakness ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line gives a price or cost", "pattern": "₦\\s?\\d|\\d{3,}|free|cost", "perLine": true },
+    { "label": "Each line names a weakness", "pattern": "weak|slow|queue|expensive|unreliable|poor|limited|inconsistent|late|cannot|no ", "perLine": true },
+    { "label": "Includes a direct competitor and a workaround or indirect competitor", "pattern": "canteen|restaurant|cook|bring|home|snack|street|indirect|workaround|themselves" }
+  ],
+  "sample": "Office canteen (direct) - ₦1,800 a plate - weakness: 15-minute queue and limited menu\nStreet food vendors (indirect) - ₦1,000 to ₦1,500 - weakness: inconsistent hygiene and quality\nBringing food from home (workaround) - about ₦1,000 in ingredients - weakness: workers lack time to cook and the food goes cold",
+  "required": false
+}
+```
+
+Next lesson: planning and strategy.
+$md$, true, true, 3, array['ent-m03-t1', 'ent-m03-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m07', 'entrepreneurship-business-management', 'Operations and management', 7, null, null, '{}'::text[], array['Turning an offer into a repeatable process', 'Suppliers and quality', 'Inventory and delivery', 'Tools that save time', 'Systems and record keeping']::text[])
+values ('ent-m04', 'entrepreneurship-business-management', 'Business planning and strategy', 4, 'Business Planner', 'BIZPLAN', array['Set SMART goals and milestones', 'Write a one-page plan', 'Run a SWOT', 'Score and plan for risk']::text[], array['Vision, mission and goals', 'Setting objectives and milestones', 'A one-page plan and a full plan', 'Strategy basics', 'Risks and how to plan for them']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m08', 'entrepreneurship-business-management', 'Money: pricing, budgeting, cash flow and funding', 8, null, null, '{}'::text[], array['Pricing for profit', 'Costs, margins and break-even', 'Budgets and cash flow forecasts', 'Separating business and personal money', 'Funding options: savings, loans, grants, investors']::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:business-planning-and-strategy', 'entrepreneurship-business-management', 'ent-m04', 'business-planning-and-strategy', 'Business Planning and Strategy', 'Set vision, mission and goals, turn objectives into milestones, write a one-page and a full plan, use basic strategy tools and plan for risk.', 40, $md$
+## Vision, mission and goals
+
+Planning gives direction. Three levels:
+
+- **Vision:** the future you want to help create. It inspires. *"Every office worker in Lagos eats a good lunch every day."*
+- **Mission:** what the business does, for whom and how, today. *"We deliver fresh, affordable lunch boxes to office workers, on time, every working day."*
+- **Goals:** what you want to achieve in a set time, in numbers.
+
+Keep vision and mission short and honest. They help you decide what to do and what to refuse.
+
+## Objectives and milestones
+
+A good goal is **SMART**:
+
+- **Specific:** clear about what.
+- **Measurable:** you can count it.
+- **Achievable:** realistic with your resources.
+- **Relevant:** it matters to the business.
+- **Time-bound:** it has a deadline.
+
+Weak: "Grow the business." SMART: "Reach ₦600,000 monthly sales by the end of month 6."
+
+**Milestones** break a goal into steps, with dates. Example: current monthly sales ₦200,000; target ₦600,000 in six months. The increase needed is ₦400,000, or about ₦400,000 ÷ 6 = **₦66,667 more each month** on average. A plan might be: month 1 ₦267,000, month 2 ₦333,000, month 3 ₦400,000 and so on. Each milestone then tells you whether you are on track.
+
+Set **three to five** goals at a time. More than that and nothing gets done. Review monthly.
+
+## A one-page plan and a full plan
+
+A **one-page plan** forces clarity and is often enough to start. Include:
+
+1. The problem and your solution.
+2. Target customer.
+3. How you reach and sell to them.
+4. How you earn: price and main costs.
+5. Start-up needs: money and resources.
+6. Goals for the first year.
+7. Biggest risks and your plan for them.
+8. The next 90 days.
+
+A **full business plan** adds detail and evidence, and is useful when you need to raise money, apply for a grant, or guide a team. Typical sections:
+
+- **Executive summary:** the whole plan in one page, written last.
+- **Business description and mission.**
+- **Market analysis:** customers, size, trends, competitors.
+- **Products and services.**
+- **Marketing and sales plan.**
+- **Operations plan:** how you make and deliver; location, suppliers, equipment.
+- **Management and organisation:** who runs it, and their strengths.
+- **Financial plan:** start-up costs, budget, break-even, cash flow forecast and funding needed.
+- **Risks.**
+- **Appendices:** evidence, quotes, interview findings.
+
+A plan is a **working document.** It is a way to think, not a school essay. Update it as you learn.
+
+## Strategy basics
+
+**Strategy** is the set of choices about where to compete and how to win. A simple way to think about it is a **SWOT analysis**:
+
+| | Helpful | Harmful |
+| :-- | :-- | :-- |
+| **Internal** | **Strengths:** what you do well | **Weaknesses:** where you are limited |
+| **External** | **Opportunities:** trends and gaps you can use | **Threats:** competitors, rules, price rises |
+
+Use the result to choose actions: build on strengths, fix or work around weaknesses, grab opportunities and prepare for threats.
+
+Three basic strategies from competition theory:
+
+1. **Low cost:** be the cheapest, with efficient operations. Needs volume.
+2. **Differentiation:** offer something distinctive customers value and will pay more for.
+3. **Focus (niche):** serve one segment extremely well.
+
+A small business usually does best by **focusing** on a niche it can serve better than larger competitors. Strategy also means **saying no** to things that do not fit.
+
+## Risks and how to plan for them
+
+Every plan has risks: customers do not come, costs rise, a supplier fails, a key person leaves, rules change, money runs out. For each major risk, score how **likely** it is and how **bad** it would be, from 1 (low) to 5 (high); multiply to get a score out of 25.
+
+| Risk | Likelihood | Impact | Score | Response |
+| :-- | :-- | :-- | :-- | :-- |
+| Sales slower than planned | 4 | 4 | 16 | Test before spending; keep costs flexible |
+| Main supplier fails | 2 | 4 | 8 | Qualify a second supplier |
+| Running out of cash | 3 | 5 | 15 | Weekly cash check; keep a reserve |
+
+Focus on the highest scores. Respond by avoiding, reducing, transferring (insurance, contracts) or accepting the risk. Write the response down, name an owner and review it.
+
+## Try it
+
+```task
+{
+  "id": "ent-m04-t1",
+  "prompt": "Write your **vision**, **mission** and **three SMART goals** for your first year. One item per line, labelled. Each goal must have a number and a date.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Vision: ...\nMission: ...\nGoal 1: ...",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Has a vision", "pattern": "vision" },
+    { "label": "Has a mission", "pattern": "mission" },
+    { "label": "Has three goals", "pattern": "goal 1[\\s\\S]*goal 2[\\s\\S]*goal 3" },
+    { "label": "Goals contain numbers", "pattern": "goal[^\\n]*\\d", "min": 3 },
+    { "label": "Goals contain a time frame", "pattern": "goal[^\\n]*(month|week|year|by |q[1-4])", "min": 3 }
+  ],
+  "sample": "Vision: every office worker in Lagos eats a good lunch every working day.\nMission: we deliver fresh, affordable lunch boxes to office workers on time, every working day.\nGoal 1: reach ₦600,000 monthly sales by the end of month 6.\nGoal 2: serve 100 regular subscribers within 9 months.\nGoal 3: keep on-time delivery at 95% or better every month from month 3.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m04-t2",
+  "prompt": "Current monthly sales are **₦200,000** and your target is **₦600,000** in **six months**. Work out the total increase needed and the average increase per month, then write a **milestone for months 1, 3 and 6**.",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Increase needed = ...",
+  "rules": [
+    { "label": "Total increase of ₦400,000", "pattern": "400,?000" },
+    { "label": "About ₦66,667 per month", "pattern": "66,?66[67]|66,?667|66\\.7" },
+    { "label": "Gives milestones for month 1, 3 and 6", "pattern": "month 1[\\s\\S]*month 3[\\s\\S]*month 6" }
+  ],
+  "sample": "Increase needed = 600,000 - 200,000 = ₦400,000.\nAverage increase = 400,000 / 6 = about ₦66,667 per month.\nMilestones: month 1 ₦267,000; month 3 ₦400,000; month 6 ₦600,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m04-t3",
+  "prompt": "Write a **SWOT analysis** and a **risk table** for your idea. Give two items for each of strengths, weaknesses, opportunities and threats (labelled), then three risks, each with likelihood, impact, score and response. At least eleven lines.",
+  "minutes": 15,
+  "rows": 14,
+  "placeholder": "Strength 1: ...\nRisk: ... - likelihood 4 x impact 4 = 16 - response ...",
+  "rules": [
+    { "label": "At least eleven lines", "minLines": 11 },
+    { "label": "Has strengths and weaknesses", "pattern": "strength[\\s\\S]*weakness" },
+    { "label": "Has opportunities and threats", "pattern": "opportunit[\\s\\S]*threat" },
+    { "label": "Has risks with a likelihood x impact score", "pattern": "risk[^\\n]*\\d\\s?[x×*]\\s?(impact\\s?)?\\d\\s?=\\s?\\d+", "min": 3 },
+    { "label": "Has responses", "pattern": "response" }
+  ],
+  "sample": "Strength 1: I cook well and know what office workers like.\nStrength 2: my cousin has a delivery bike, so start-up cost is low.\nWeakness 1: I have no bookkeeping experience.\nWeakness 2: only one kitchen, so capacity is limited.\nOpportunity 1: many offices nearby with no good lunch option.\nOpportunity 2: companies want to offer staff lunch subscriptions.\nThreat 1: the canteen could cut its prices.\nThreat 2: ingredient prices keep rising.\nRisk: sales slower than planned - likelihood 4 x impact 4 = 16 - response: pre-sell, keep costs flexible.\nRisk: running out of cash - likelihood 3 x impact 5 = 15 - response: weekly cash check and a reserve.\nRisk: key supplier fails - likelihood 2 x impact 4 = 8 - response: qualify a second supplier.",
+  "required": true
+}
+```
+
+Next lesson: setting up legally in Nigeria.
+$md$, true, true, 4, array['ent-m04-t1', 'ent-m04-t2', 'ent-m04-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m09', 'entrepreneurship-business-management', 'Leadership, people and growth', 9, null, null, '{}'::text[], array['Leading yourself and others', 'Hiring your first people', 'Delegation and accountability', 'Measuring performance', 'When and how to grow']::text[])
+values ('ent-m05', 'entrepreneurship-business-management', 'Setting up legally in Nigeria', 5, 'Legal Set-up', 'LEGAL', array['Choose a business structure', 'Understand CAC registration', 'Know the main taxes', 'Protect your brand']::text[], array['Business structures: sole proprietor, partnership, limited company', 'CAC registration', 'Tax identification and taxes', 'Licences, permits and contracts', 'Protecting your name and brand']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:setting-up-legally-in-nigeria', 'entrepreneurship-business-management', 'ent-m05', 'setting-up-legally-in-nigeria', 'Setting Up Legally in Nigeria', 'Choose a business structure, understand CAC registration, tax identification and taxes, licences, permits and contracts, and protect your name and brand.', 25, $md$
+> [!NOTE]
+> Laws, fees, thresholds and procedures change, and the tax rules in particular have been under reform. This lesson explains the structure and the right questions. **Confirm current requirements with the Corporate Affairs Commission (CAC), the tax authority, the relevant regulator, or a qualified lawyer or accountant before you act.**
+
+## Why register
+
+An unregistered business can sell, but it is limited: many banks, customers and large companies will not deal with it, you cannot easily open a business account, apply for loans, grants or contracts, and you may be personally exposed. Registration makes the business **real, credible and easier to grow.**
+
+## Business structures
+
+| Structure | What it is | Pros | Cons |
+| :-- | :-- | :-- | :-- |
+| **Sole proprietorship (business name)** | One owner; the business is the owner in law | Simple, cheap, quick to start | Owner is personally liable for all debts |
+| **Partnership (business name)** | Two or more owners share the business | Shared skills and capital | Partners are personally liable; disputes if not agreed in writing |
+| **Private limited company (Ltd)** | A separate legal entity owned by shareholders | Separate from owners; limited liability; more credible; easier to raise funds | More paperwork, ongoing filings and compliance |
+| **Public limited company (Plc)** | A company that can offer shares to the public | Can raise large capital | Heavy regulation; not for startups |
+| **Incorporated trustees** | For non-profits, churches and associations | Suited to charitable and religious purposes | Not for making profit for owners |
+
+Under the Companies and Allied Matters Act (CAMA) 2020, a company can now be formed by **a single person**, which makes a limited company possible for a solo founder. Choose by weighing **liability** (do you want your personal assets protected?), **cost and effort**, **credibility** (will customers and funders expect a company?) and **growth plans** (will you take on partners or investors?).
+
+## CAC registration
+
+In outline, to register:
+
+1. **Choose a name** and check that it is available and acceptable (not misleading or already taken).
+2. **Prepare your details:** the proprietor's or directors' full details, identification, address, business activities, and for a company the share capital and shareholders.
+3. **Submit the application** through the CAC's online registration portal, pay the fees and upload the documents.
+4. **Receive the certificate** and, for companies, the incorporation documents (certificate, memorandum and articles).
+5. **After registration:** file annual returns as required, and update the CAC when details change.
+
+Many people use an accredited agent (lawyer, chartered secretary or accountant) to handle it. If you do, check they are accredited and keep copies of everything.
+
+## Tax identification and taxes
+
+Once registered you should get a **Tax Identification Number (TIN)** from the tax authority. Taxes a small business commonly meets (rates and thresholds change, so check):
+
+- **Company income tax** on a company's profits, with relief or exemption for small companies below certain turnover thresholds, and **personal income tax** on a sole proprietor's or partner's profits.
+- **Value Added Tax (VAT)** at 7.5% on taxable goods and services. Businesses above a threshold must register, collect VAT from customers and pay it over, and file returns. Some items are exempt.
+- **PAYE:** tax you deduct from employees' pay and remit.
+- **Withholding tax** on certain payments.
+- **Pension, NSITF and other employer contributions** that apply when you have employees, depending on staff numbers.
+- **Local and state levies** (business premises, signage, and so on).
+
+Keep **clear records of sales, costs and invoices,** file returns on time and ask an accountant to set up the basics. Penalties for late filing and unpaid tax add up quickly.
+
+## Licences, permits and contracts
+
+Besides registration, many businesses need approvals for what they do:
+
+- **Food, drinks, drugs and cosmetics:** NAFDAC registration or approval.
+- **Manufactured and imported goods:** standards approval by the Standards Organisation of Nigeria (SON) where applicable.
+- **Health, education, finance, transport, telecoms, real estate and others:** a sector regulator may issue a licence.
+- **Premises:** local government and state permits, fire and safety approvals.
+- **Special rules:** for example, businesses in some sectors register with the body that monitors money-laundering controls.
+
+Use **written contracts** for important dealings: with customers, suppliers, partners, employees and landlords. A good contract states who does what, the price and payment, delivery, quality, how problems are handled and how it ends. Do not rely only on handshakes, and have a lawyer review contracts that matter.
+
+## Protecting your name and brand
+
+- **Business name or company name:** registration protects the name against identical registrations at the CAC.
+- **Trademark:** registering your name, logo or slogan at the Trademarks Registry gives you legal rights over its use in your category. It is separate from CAC registration.
+- **Domain name and social media handles:** claim them early and keep the login details secure.
+- **Copyright** arises automatically for original creative work (designs, writing, photos), but keep records of who created what and get **written agreements** with freelancers about who owns the work.
+- **Confidentiality:** use agreements with staff and partners who learn your methods or customer lists.
+
+## Try it
+
+```task
+{
+  "id": "ent-m05-t1",
+  "prompt": "Ada is starting a lunch delivery business alone, wants to protect her personal savings and plans to supply offices and later bring in an investor. Recommend a **business structure** in 50 to 110 words, with at least two reasons and one drawback.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I recommend ...",
+  "rules": [
+    { "label": "Recommends a limited company", "pattern": "limited company|\\bltd\\b|private limited|company" },
+    { "label": "Mentions limited liability or protecting personal assets", "pattern": "liab|personal|protect|separate" },
+    { "label": "Mentions credibility or investors or growth", "pattern": "credib|invest|grow|offices|trust|corporate" },
+    { "label": "Mentions a drawback (cost, paperwork, filings, compliance)", "pattern": "cost|paperwork|filing|compliance|returns|more work|complex" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "I recommend a private limited company, which under CAMA 2020 can be formed by a single person. First, it is a separate legal entity with limited liability, so Ada's personal savings are protected if the business has debts. Second, offices and a future investor will find a registered company more credible and easier to deal with. The drawback is more paperwork and ongoing compliance, such as annual returns and tax filings, and higher set-up cost than a business name, but for her plans it is worth it.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m05-t2",
+  "prompt": "Write a **set-up checklist** for registering your business, at least eight steps in order, one per line: name, structure, CAC, TIN, bank account, licences, contracts and brand protection.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "1. Choose and check the name ...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Includes choosing a name or structure", "pattern": "name|structure" },
+    { "label": "Includes CAC registration", "pattern": "cac|corporate affairs" },
+    { "label": "Includes TIN or tax registration", "pattern": "tin|tax" },
+    { "label": "Includes a business bank account", "pattern": "bank account|bank" },
+    { "label": "Includes licences or permits (NAFDAC, SON, local)", "pattern": "licen[cs]e|permit|nafdac|son\\b|approval" },
+    { "label": "Includes contracts or trademark", "pattern": "contract|trademark|brand|agreement" }
+  ],
+  "sample": "1. Decide the structure: a private limited company.\n2. Choose a name and check availability.\n3. Prepare identification and details of directors and shareholders.\n4. Register with the CAC through the online portal and pay the fees.\n5. Obtain the certificate of incorporation.\n6. Get a Tax Identification Number and register for the taxes that apply.\n7. Open a business bank account in the company name.\n8. Apply for NAFDAC and local government permits for food.\n9. Write contracts for customers and suppliers.\n10. Register the trademark and secure the domain and social handles.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m05-t3",
+  "prompt": "Explain in 40 to 90 words **why a freelance designer should have a written agreement** about who owns the logo they create for you, and one thing the agreement should say.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "A written agreement matters because ...",
+  "rules": [
+    { "label": "Mentions ownership or copyright", "pattern": "owner|own|copyright|rights" },
+    { "label": "Mentions the risk of disputes or later problems", "pattern": "dispute|later|misunderstand|claim|problem|clear" },
+    { "label": "States what the agreement should say (transfer of rights, payment, scope)", "pattern": "transfer|assign|payment|scope|revision|deliver|exclusive|rights" },
+    { "label": "Between 40 and 90 words", "minWords": 40, "maxWords": 95 }
+  ],
+  "sample": "A written agreement matters because copyright in a logo normally starts with the person who created it, not the person who paid, so without paperwork the designer could later claim ownership or reuse it, and you would have a dispute. The agreement should say that all rights in the finished logo are transferred to the business once it is paid for, and state the price, scope and number of revisions.",
+  "required": false
+}
+```
+
+Next lesson: marketing and selling.
+$md$, true, true, 5, array['ent-m05-t1', 'ent-m05-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('ent-m10', 'entrepreneurship-business-management', 'Final project: your business plan', 10, null, null, '{}'::text[], array['Pulling your work together', 'Writing the plan', 'Presenting and defending it', 'Your first 90 days']::text[])
+values ('ent-m06', 'entrepreneurship-business-management', 'Marketing and selling', 6, 'Marketing & Sales', 'MKTSELL', array['Choose channels', 'Build a brand cheaply', 'Sell and serve well', 'Calculate CAC and CLV']::text[], array['Marketing basics for a new business', 'Choosing channels', 'Branding on a small budget', 'Selling and customer service', 'Referrals and repeat customers']::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:marketing-and-selling', 'entrepreneurship-business-management', 'ent-m06', 'marketing-and-selling', 'Marketing and Selling', 'Apply marketing basics to a new business, choose channels, build a brand on a small budget, sell and serve customers well and win referrals and repeat business.', 25, $md$
+## Marketing basics for a new business
+
+**Marketing** is everything you do to understand customers, tell them about your offer and make buying easy. **Selling** is the conversation that turns interest into a purchase. A new business needs both, and both start with a clear customer and a clear promise (modules 2 and 3).
+
+The classic **4 Ps** give a checklist:
+
+| P | Question |
+| :-- | :-- |
+| **Product** | What exactly are we selling, and what makes it good? |
+| **Price** | What do we charge, and why? |
+| **Place** | Where and how do customers buy and receive it? |
+| **Promotion** | How do customers hear about us and decide to try us? |
+
+Start small and focused. A new business does not need a big campaign; it needs **its first 10, then 50 customers**, and a way to learn from each.
+
+## Choosing channels
+
+A **channel** is how you reach customers. Pick the few where **your customers already are** and you can show up consistently.
+
+| Channel | Good for | Notes |
+| :-- | :-- | :-- |
+| **WhatsApp (status, groups, broadcasts)** | Local and repeat customers | Free; personal; ask permission before adding people |
+| **Instagram, Facebook, TikTok** | Visual products, building a brand | Needs regular posts and quick replies |
+| **Word of mouth and referrals** | Trust-based services | Cheapest and strongest |
+| **Marketplaces (Jumia, Jiji and others)** | People ready to buy now | Fees and competition |
+| **Flyers, posters, signs, events** | Local, physical businesses | Low cost, targeted places |
+| **Partnerships** | Reaching someone else's audience | A shop, school or office that recommends you |
+| **Google search and maps** | People searching for a service nearby | Set up a free business profile |
+| **Paid adverts** | Testing offers quickly | Start with a small budget and measure |
+
+Test two or three channels for a few weeks, **measure what each brings** (enquiries, sales, cost) and put more effort where results are best.
+
+## Branding on a small budget
+
+A **brand** is how customers see and feel about your business. It includes your name, logo, colours, voice and, above all, **how you treat people.**
+
+On a small budget:
+- **Choose a clear, easy-to-remember name** and check it is free to use.
+- **Keep the look simple and consistent:** one logo, two or three colours, one or two fonts, used the same way everywhere.
+- **Take good photos** of your product and work, with a phone and natural light.
+- **Write in a consistent, friendly voice.**
+- **Show proof:** customer photos, reviews and short testimonials.
+- **Be reliable.** Reliability is the brand. A beautiful logo cannot rescue late, poor delivery.
+
+## Selling and customer service
+
+Selling well is mostly **listening and being helpful**.
+
+1. **Understand the need:** ask what they want and why.
+2. **Explain the benefit,** not just the features.
+3. **Handle questions and doubts** honestly.
+4. **State the price clearly** and make it easy to say yes.
+5. **Ask for the order.** Many sales are lost because nobody asked.
+6. **Deliver what you promised,** on time.
+7. **Follow up** to make sure the customer is happy.
+
+**Customer service** keeps customers. Reply quickly, be polite, admit mistakes and fix them. A complaint handled well often creates a more loyal customer than no problem at all.
+
+## Referrals and repeat customers
+
+It costs much less to keep a customer than to win a new one.
+
+- **Ask happy customers for referrals** and make it easy: a link, a code or a card.
+- **Reward referrals** with a small discount or free item, for both sides.
+- **Stay in touch:** a message on their birthday, a reminder when they usually reorder, news of new items.
+- **Offer a loyalty reward:** the tenth meal free.
+- **Collect reviews and testimonials** and share them.
+
+Know your numbers. **Customer acquisition cost (CAC)** is what you spend to win a customer: if you spend ₦50,000 on advertising and win 25 customers, CAC = 50,000 ÷ 25 = **₦2,000** per customer. **Customer lifetime value (CLV)** is the profit a customer brings over time. If each customer gives ₦3,500 profit per order and orders about three times, CLV = 3,500 × 3 = **₦10,500.** CLV (₦10,500) is well above CAC (₦2,000), so the marketing is paying for itself. If CAC were higher than CLV, you would lose money on every new customer.
+
+## Try it
+
+```task
+{
+  "id": "ent-m06-t1",
+  "prompt": "You spend **₦50,000** on adverts and win **25 customers**. Each brings **₦3,500 profit** per order and orders **three times**. Calculate the **cost to acquire a customer (CAC)** and the **customer lifetime value (CLV)**, and say whether the marketing is worth it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "CAC = ...",
+  "rules": [
+    { "label": "CAC of ₦2,000", "pattern": "2,?000" },
+    { "label": "CLV of ₦10,500", "pattern": "10,?500" },
+    { "label": "Says it is worth it because CLV is higher than CAC", "pattern": "worth|profitable|pays|higher than|greater|more than|good" }
+  ],
+  "sample": "CAC = 50,000 / 25 = ₦2,000 per customer.\nCLV = 3,500 x 3 = ₦10,500 profit per customer.\nIt is worth it, because the lifetime value of ₦10,500 is much higher than the ₦2,000 it costs to win each customer.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m06-t2",
+  "prompt": "Write a **WhatsApp or Instagram message** (50 to 110 words) introducing your product to your first customers: say who it is for, the benefit, the price, how to order and a small first-order offer.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Hello! ...",
+  "rules": [
+    { "label": "Says who it is for", "pattern": "for (busy|office|students|parents|anyone|you|workers|families)|if you" },
+    { "label": "Says the benefit", "pattern": "save|fresh|fast|never|no more|enjoy|easy|healthy|convenient|delivered" },
+    { "label": "States a price in naira", "pattern": "₦\\s?\\d" },
+    { "label": "Says how to order", "pattern": "order|reply|message|whatsapp|call|dm|send" },
+    { "label": "Offers something to start (discount, free, first order)", "pattern": "first|free|discount|off|bonus|try" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "Hello! Are you tired of queuing for lunch or skipping it? Our fresh lunch boxes are made for busy office workers and delivered hot to your desk by 12:30, so you save your break and enjoy a proper meal. Each box is ₦2,500, with jollof rice, chicken and plantain. To order, reply to this message by 10 am with your name, office address and meal choice. For your first order this week, you get a free drink on us. Try us once and see the difference!",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m06-t3",
+  "prompt": "A customer messages: **\"My order came 40 minutes late and the food was cold.\"** Write your reply in 50 to 100 words: apologise, take responsibility, fix it and say how you will prevent it.",
+  "minutes": 10,
+  "rows": 7,
+  "placeholder": "I am sorry ...",
+  "rules": [
+    { "label": "Apologises", "pattern": "sorry|apolog" },
+    { "label": "Takes responsibility", "pattern": "our (mistake|fault|error)|we (made|should have)|my (mistake|fault)|responsib|that is not (the|our)" },
+    { "label": "Offers a fix (refund, replacement, discount, free)", "pattern": "refund|replace|discount|free|credit|make it right|redeliver" },
+    { "label": "Says how it will be prevented", "pattern": "prevent|again|from now|going forward|change|will (leave|start|check|assign)" },
+    { "label": "Between 50 and 100 words", "minWords": 50, "maxWords": 105 }
+  ],
+  "sample": "I am so sorry. Your order should have reached you by 12:30 with hot food, and that was our mistake. I have refunded today's meal and will send you a free lunch tomorrow to make it right. The delay happened because we had too many orders for one rider, so from now on we will assign a second rider on busy days and call you if anything runs late. Thank you for telling us, and I hope you will give us another chance.",
+  "required": false
+}
+```
+
+Next lesson: operations and management.
+$md$, true, true, 6, array['ent-m06-t1', 'ent-m06-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ent-m07', 'entrepreneurship-business-management', 'Operations and management', 7, 'Operations', 'BIZOPS', array['Map a repeatable process', 'Manage suppliers and quality', 'Handle stock and delivery', 'Keep simple records']::text[], array['Turning an offer into a repeatable process', 'Suppliers and quality', 'Inventory and delivery', 'Tools that save time', 'Systems and record keeping']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:operations-and-management', 'entrepreneurship-business-management', 'ent-m07', 'operations-and-management', 'Operations and Management', 'Turn an offer into a repeatable process, manage suppliers and quality, handle inventory and delivery, use tools that save time and keep simple systems and records.', 25, $md$
+## A repeatable process
+
+At the start you do everything by hand and by memory. To grow, the work must become **repeatable**: done the same way, to the same standard, by you or by someone else.
+
+**Map your process** from the customer's order to the money in your account. Write each step, who does it and how long it takes. Example for a lunch delivery business:
+
+1. Customer orders by WhatsApp (by 10 am).
+2. Order is recorded in the order sheet.
+3. Ingredients are bought or checked.
+4. Meals are cooked and packed (11:00 to 12:00).
+5. Rider delivers (12:00 to 12:45).
+6. Payment is confirmed and recorded.
+7. Customer receives a follow-up message.
+
+Then write a short **standard operating procedure (SOP)** for each important step: what to do, in what order, to what standard. A checklist is enough. SOPs reduce mistakes, make training quick and let the business run when you are not there.
+
+**Capacity** matters. If one person can cook 20 meals an hour and you need 60 meals in two hours, you can just meet demand. At 30 meals an hour of demand over two hours (60) you cannot with one cook, so you would need a second person or longer cooking time. Check your capacity against orders before you promise delivery times.
+
+## Suppliers and quality
+
+Your suppliers are part of your business. A late or poor supplier makes you late and poor.
+
+- **Choose suppliers** on quality, price, reliability, payment terms and how they treat you. Visit them if you can.
+- **Keep two options** for important items so you are not stuck.
+- **Agree the specification and the price** in writing, with delivery times.
+- **Check every delivery** for quantity and quality before you pay.
+- **Build relationships:** pay on time, give clear forecasts, give feedback. Good suppliers prioritise good customers.
+
+**Quality** means doing what you promised, consistently. Set simple standards (size, taste, finish, timing), **check against them** before the product reaches the customer, record problems and fix the cause. Ask customers for feedback.
+
+## Inventory and delivery
+
+If you keep stock, money sits on your shelf, so manage it:
+
+- **Know what you have.** Count regularly and record what comes in and goes out.
+- **Order based on sales,** not guesswork. Keep a small buffer for your best sellers.
+- **Use older stock first,** especially food and anything that spoils.
+- **Avoid over-buying** for a discount if you cannot sell it.
+- **Store safely:** dry, clean, secure.
+
+For **delivery**: promise realistic times, pack so goods arrive in good condition, give customers a way to track or contact you, and measure on-time delivery. Plan routes to group nearby orders and keep delivery costs under control. Decide whether you do it yourself, use your own rider or use a courier.
+
+## Tools that save time
+
+You do not need expensive software. Useful, cheap tools:
+
+- **WhatsApp Business:** catalogue, quick replies, labels, order messages.
+- **A spreadsheet or Google Sheets:** orders, stock, sales, expenses.
+- **A simple accounting or invoicing app:** invoices, receipts and reports.
+- **Payment tools:** bank transfers, payment links and POS, with a clear way of confirming payments.
+- **A calendar and task list:** deadlines and reminders.
+- **Cloud storage:** to keep documents safe and shareable.
+
+Pick a few, use them consistently, and **write down where things are kept**. A tool nobody uses is a waste.
+
+## Systems and record keeping
+
+Records are how you know whether you are making money, and they are required for tax and for loans. At minimum, keep:
+
+- **Sales record:** date, customer, item, quantity, price, payment method.
+- **Expense record:** date, item, amount, supplier, receipt kept.
+- **Stock record:** items in, items out, balance.
+- **Customer list** with contacts and order history (respecting privacy).
+- **Banking record:** all business money through a business account.
+- **Invoices and receipts** issued and received, filed by date.
+
+Update records **daily** or at least weekly, never leave them for the end of the year. Back up digital records. A basic weekly review of sales, expenses and cash tells you almost everything you need to run a small business well.
+
+## Try it
+
+```task
+{
+  "id": "ent-m07-t1",
+  "prompt": "Map your process from order to payment. Write **at least six steps** in order, one per line, with who does each and roughly how long it takes.",
+  "minutes": 12,
+  "rows": 9,
+  "placeholder": "1. Customer orders by WhatsApp by 10 am - me - 2 minutes",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Starts with an order or enquiry", "pattern": "order|enquir|request" },
+    { "label": "Includes making or preparing", "pattern": "make|cook|prepare|produce|pack|assemble|buy" },
+    { "label": "Includes delivery or handover", "pattern": "deliver|hand|collect|dispatch|send" },
+    { "label": "Includes payment", "pattern": "pay|invoice|receipt|confirm" },
+    { "label": "Gives who and time on lines", "pattern": "\\d+\\s*(min|hour|hr|day|am|pm)|by \\d", "min": 4 }
+  ],
+  "sample": "1. Customer orders by WhatsApp by 10 am - me - 2 minutes\n2. Record the order in the order sheet - me - 1 minute\n3. Check ingredients and buy what is missing - me - 30 minutes\n4. Cook and pack the meals - two cooks - 11:00 to 12:00\n5. Deliver to the offices - rider - 12:00 to 12:45\n6. Confirm payment and record it - me - 5 minutes\n7. Send a follow-up message - me - 2 minutes",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m07-t2",
+  "prompt": "One person makes **20 items a day** and you receive **30 orders a day**. Work out the **shortfall** and give **three options** to solve it, with one drawback for each.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Shortfall = ...",
+  "rules": [
+    { "label": "Shortfall of 10 items a day", "pattern": "\\b10\\b" },
+    { "label": "Option to hire or add a person", "pattern": "hire|add|second|another (person|worker|cook)|help|employ" },
+    { "label": "Option about time, equipment or limiting orders", "pattern": "overtime|longer|equipment|machine|limit|cap|waiting list|raise (the )?price|outsourc|batch" },
+    { "label": "Mentions drawbacks", "pattern": "drawback|cost|but|however|risk|expens|tired|quality|lose" }
+  ],
+  "sample": "Shortfall = 30 - 20 = 10 items a day.\nOption 1: hire a second person - drawback: extra wages before sales grow.\nOption 2: work longer hours or batch the work - drawback: tiredness and a risk of lower quality.\nOption 3: limit orders or raise the price slightly to reduce demand - drawback: some customers may go elsewhere.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m07-t3",
+  "prompt": "Design your **record-keeping system**. List the records you will keep, how often you update each and the tool you will use. At least five lines.",
+  "minutes": 10,
+  "rows": 8,
+  "placeholder": "Sales record - daily - spreadsheet",
+  "rules": [
+    { "label": "At least five lines", "minLines": 5 },
+    { "label": "Includes sales and expenses", "pattern": "sales[\\s\\S]*expense|expense[\\s\\S]*sales" },
+    { "label": "Includes stock or inventory", "pattern": "stock|inventory" },
+    { "label": "States how often (daily, weekly)", "pattern": "daily|weekly|every|monthly" },
+    { "label": "Names a tool (spreadsheet, app, notebook, WhatsApp)", "pattern": "spreadsheet|app|notebook|sheets|excel|whatsapp|software|bank" }
+  ],
+  "sample": "Sales record - updated daily - Google Sheet\nExpense record with receipts - updated daily - Google Sheet and a receipt folder\nStock record - updated weekly after a count - spreadsheet\nCustomer list and order history - updated after each order - WhatsApp Business labels and a sheet\nBank record - checked weekly - business bank app\nWeekly review of sales, expenses and cash - every Sunday evening",
+  "required": false
+}
+```
+
+Next lesson: money, pricing, budgeting and funding.
+$md$, true, true, 7, array['ent-m07-t1', 'ent-m07-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ent-m08', 'entrepreneurship-business-management', 'Money: pricing, budgeting, cash flow and funding', 8, 'Business Finance', 'BIZFIN', array['Price for profit', 'Calculate break-even', 'Forecast cash flow', 'Choose funding']::text[], array['Pricing for profit', 'Costs, margins and break-even', 'Budgets and cash flow forecasts', 'Separating business and personal money', 'Funding options: savings, loans, grants, investors']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:money-pricing-budgeting-cash-flow-and-funding', 'entrepreneurship-business-management', 'ent-m08', 'money-pricing-budgeting-cash-flow-and-funding', 'Money: Pricing, Budgeting, Cash Flow and Funding', 'Price for profit, work out costs, margins and break-even, build a budget and cash flow forecast, separate business and personal money and choose sensible funding.', 30, $md$
+## Pricing for profit
+
+Price is the most powerful number in your business. Too low and you work hard for nothing; too high and nobody buys. A sound price covers **costs**, delivers a **profit**, and matches the **value** customers see.
+
+**Cost-plus pricing** adds a margin to your cost. If a meal costs **₦2,800** (ingredients, packaging, delivery share) and you add a **40% markup**, the price is 2,800 × 1.40 = **₦3,920**. Profit = ₦1,120. Be careful: a 40% **markup** on cost is a **margin** of 1,120 ÷ 3,920 = **28.6%** of the price. Markup is on cost; margin is on price.
+
+**Value-based pricing** starts from what customers will pay and what competitors charge. If office canteens charge ₦1,800 a plate and customers will pay ₦2,500 for desk delivery, your price can be near ₦2,500 if your costs allow.
+
+Check both: your cost-plus price shows your **minimum**; the market shows your **maximum**. If the market price is below your cost, change the offer or the costs, not just the price.
+
+## Costs, margins and break-even
+
+- **Fixed costs** stay the same however much you sell this month (rent, salaries, subscriptions, loan repayments).
+- **Variable costs** rise with each sale (ingredients, packaging, delivery, fees).
+- **Contribution per unit** = price − variable cost per unit. It is what each sale contributes toward fixed costs and profit.
+- **Gross margin** = (price − direct cost) ÷ price.
+
+**Break-even** is the sales volume where you make no profit and no loss:
+
+*Break-even units = fixed costs ÷ contribution per unit*
+
+Example: fixed costs ₦150,000 a month; price ₦3,500; variable cost ₦2,000 per unit. Contribution = 3,500 − 2,000 = ₦1,500. Break-even = 150,000 ÷ 1,500 = **100 units** a month. Selling 160 units earns (160 − 100) × 1,500 = **₦90,000** profit.
+
+Break-even tells you if your plan is realistic: can you honestly sell 100 units a month?
+
+## Budgets and cash flow forecasts
+
+A **budget** is a plan for income and spending. A **cash flow forecast** shows the **timing** of money in and out, month by month. Profit and cash are **not the same**: you can be profitable and still run out of cash, because you pay suppliers before customers pay you, or you buy stock that has not sold.
+
+A simple monthly cash flow:
+
+| | Month 1 | Month 2 |
+| :-- | :-- | :-- |
+| Opening cash | ₦100,000 | ₦60,000 |
+| Cash received from sales | ₦300,000 | ₦380,000 |
+| Cash paid out (stock, rent, wages, other) | ₦340,000 | ₦350,000 |
+| **Closing cash** | **₦60,000** | **₦90,000** |
+
+Month 1 closing = 100,000 + 300,000 − 340,000 = ₦60,000, which becomes the opening cash for Month 2. If a month's closing cash goes below zero, you need to act in advance: delay a purchase, collect faster, cut spending or arrange funding.
+
+Update your forecast with real figures each month, and keep a **cash reserve** that covers at least a month or two of fixed costs.
+
+## Separating business and personal money
+
+Mixing the two is one of the biggest causes of small business failure.
+
+- **Open a separate business bank account.**
+- **Pay yourself a set amount** (a salary or drawing) at regular times; do not take cash from the till at random.
+- **Keep all business income and expenses in the business account.**
+- **Record every transaction** and keep receipts.
+- **Do not pay personal bills from business money** or vice versa.
+
+You will then know your true profit, and banks, investors and tax officials will take you seriously.
+
+## Funding options
+
+Think about how much you need and when, and choose the cheapest, safest source that fits.
+
+| Source | Notes |
+| :-- | :-- |
+| **Your own savings** | No interest or outside pressure, but your own risk |
+| **Family and friends** | Agree amount and terms in writing |
+| **Reinvested profit** | Slow, but cheap and under your control |
+| **Pre-sales and customer deposits** | Customers fund the start |
+| **Cooperatives and thrift groups (esusu / ajo)** | Community saving and lending |
+| **Microfinance banks and commercial banks** | Loans need repayment with interest; need records and sometimes collateral |
+| **Development finance institutions and government schemes** | For example the Bank of Industry and various SME programmes; check current eligibility |
+| **Grants and business competitions** | Free money, but competitive, with conditions |
+| **Angel investors and venture capital** | Give up part of the ownership; suited to businesses that can grow fast |
+
+Before borrowing, test whether the loan is **affordable**: can the business repay it from cash flow even if sales are 20% lower than planned? Never borrow for things that do not produce income, and read every term, including interest and penalties. Beware of "too good to be true" offers and advance fees.
+
+## Try it
+
+```task
+{
+  "id": "ent-m08-t1",
+  "prompt": "A meal costs **₦2,800**. (a) Add a **40% markup** to get the price. (b) Calculate the profit per meal. (c) Calculate the **margin as a percentage of the price**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Price = ...",
+  "rules": [
+    { "label": "Price of ₦3,920", "pattern": "3,?920" },
+    { "label": "Profit of ₦1,120", "pattern": "1,?120" },
+    { "label": "Margin of about 28.6%", "pattern": "28\\.6|28\\.57|29 ?%" }
+  ],
+  "sample": "(a) Price = 2,800 x 1.40 = ₦3,920.\n(b) Profit = 3,920 - 2,800 = ₦1,120 per meal.\n(c) Margin = 1,120 / 3,920 = 28.6% of the price.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m08-t2",
+  "prompt": "Fixed costs are **₦150,000** a month, the price is **₦3,500** and the variable cost is **₦2,000** a unit. Work out the **contribution per unit**, the **break-even units** and the **profit if you sell 160 units**.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Contribution = ...",
+  "rules": [
+    { "label": "Contribution of ₦1,500", "pattern": "1,?500" },
+    { "label": "Break-even of 100 units", "pattern": "\\b100\\b" },
+    { "label": "Profit of ₦90,000", "pattern": "90,?000" }
+  ],
+  "sample": "Contribution per unit = 3,500 - 2,000 = ₦1,500.\nBreak-even = 150,000 / 1,500 = 100 units a month.\nProfit at 160 units = (160 - 100) x 1,500 = ₦90,000.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m08-t3",
+  "prompt": "Complete a **two-month cash flow forecast**. Month 1: opening ₦100,000, cash in ₦300,000, cash out ₦340,000. Month 2: cash in ₦380,000, cash out ₦350,000. Work out each closing balance, then say what you would do if Month 1 closing cash had been **negative**.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Month 1 closing = ...",
+  "rules": [
+    { "label": "Month 1 closing of ₦60,000", "pattern": "60,?000" },
+    { "label": "Month 2 closing of ₦90,000", "pattern": "90,?000" },
+    { "label": "Month 2 opening equals Month 1 closing", "pattern": "opening[^\\n]*60,?000|60,?000 (becomes|carr|is the opening)" },
+    { "label": "Suggests an action for negative cash (delay, collect, cut, borrow, reserve)", "pattern": "delay|collect|cut|reduce|borrow|fund|reserve|defer|negotiate|sell" }
+  ],
+  "sample": "Month 1 closing = 100,000 + 300,000 - 340,000 = ₦60,000.\nMonth 2 opening = ₦60,000, so closing = 60,000 + 380,000 - 350,000 = ₦90,000.\nIf Month 1 closing had been negative, I would act in advance: delay or reduce purchases, collect payments faster, negotiate longer supplier terms or arrange a small short-term funding before the shortfall happened.",
+  "required": true
+}
+```
+
+Next lesson: leadership, people and growth.
+$md$, true, true, 8, array['ent-m08-t1', 'ent-m08-t2', 'ent-m08-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ent-m09', 'entrepreneurship-business-management', 'Leadership, people and growth', 9, 'Leadership', 'LEAD', array['Hire and onboard', 'Delegate with accountability', 'Measure performance', 'Decide when to grow']::text[], array['Leading yourself and others', 'Hiring your first people', 'Delegation and accountability', 'Measuring performance', 'When and how to grow']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:leadership-people-and-growth', 'entrepreneurship-business-management', 'ent-m09', 'leadership-people-and-growth', 'Leadership, People and Growth', 'Lead yourself and others, hire your first people, delegate with accountability, measure performance and decide when and how to grow.', 25, $md$
+## Leading yourself and others
+
+Leadership in a small business starts with **self-management**: your time, energy and habits set the pace for everyone.
+
+- **Plan your week.** Decide the most important three things and do them first.
+- **Protect your focus:** limit interruptions during key work.
+- **Keep learning:** read, ask, join groups, find a mentor.
+- **Look after your health,** since you are the business's most valuable asset.
+- **Stay honest and consistent.** People copy what you do more than what you say.
+
+Leading others means giving **direction** (where we are going and why), **support** (what they need to do the job) and **feedback** (how they are doing). A good leader is clear, fair, calm under pressure and willing to listen. They admit mistakes and thank people for good work.
+
+## Hiring your first people
+
+Hire when the work **needs** it, and you can afford it, not because it feels like growth. Before you hire:
+
+1. **Define the job.** What exactly will this person do, and what results do you expect?
+2. **Work out the cost.** Salary plus other costs (equipment, training, pension and other statutory costs, supervision time). A rule of thumb is to add 10% to 30% to the salary.
+3. **Check the benefit.** Will the new person free your time, increase sales or improve quality enough to pay for themselves?
+4. **Decide the form:** employee, part-time, contract worker, intern or outsourced service.
+
+Example: a helper costs ₦80,000 a month including extras. They will allow you to make and sell 400 extra items a month, each giving ₦1,500 contribution. Extra contribution = 400 × 1,500 = **₦600,000** a month, far above the ₦80,000 cost. The hire is clearly worthwhile, **if** you can really sell those 400 items.
+
+**Finding and choosing:** write a clear job description, use your network and trusted platforms, interview with the same questions for each candidate, give a short practical test, check references, and look for **attitude and reliability** as well as skill. Hire carefully: a wrong hire is costly.
+
+**Onboarding:** agree the terms in writing (a written employment contract, pay, duties, hours, probation), explain how things are done, introduce them to the team, and give them a first week plan.
+
+Follow the **employment laws** that apply, including pay, deductions, pension and other statutory obligations, and keep proper records.
+
+## Delegation and accountability
+
+You cannot do everything yourself. **Delegation** means giving someone the responsibility and the authority to do a task, while you remain accountable for the result.
+
+How to delegate well:
+- **Choose the task** (routine, time-consuming, or something someone else can do better).
+- **Explain the outcome you want,** the deadline, the standard and any limits (budget, approval).
+- **Make sure they have what they need:** information, tools, training.
+- **Agree check-in points** and how they will report.
+- **Let them do it their way,** within the standard.
+- **Give feedback** and recognise good work.
+
+**Accountability** means each task and result has a **named owner**. Write it down: who does what, by when, and how we will know it is done. Avoid "someone should". Use a simple weekly meeting: what was done, what is planned, what is blocked.
+
+## Measuring performance
+
+What gets measured gets managed. Choose **a few key performance indicators (KPIs)** for the business and for each role.
+
+Business KPIs: sales, gross margin, profit, cash balance, number of customers, repeat rate, on-time delivery, customer satisfaction.
+
+Role KPIs: for a cook, meals made on time and waste; for a rider, on-time deliveries and complaints; for a sales person, calls made, quotes sent and orders won.
+
+Keep them **simple, clear and within the person's control**. Review weekly or monthly with the person, celebrate progress and talk honestly about gaps. Avoid measuring too much, which creates confusion, or only one thing, which can distort behaviour (rushing and cutting quality to hit a speed target).
+
+## When and how to grow
+
+Growth is attractive and dangerous. Growing too fast is a leading cause of failure: costs rise before income, quality slips and cash runs out.
+
+**Ready signs:**
+- Demand is steady and **customers are waiting.**
+- The process works without constant firefighting, and quality is consistent.
+- The business is **profitable** and generates cash.
+- You have **systems and people** who can handle more.
+- You can fund growth without risking the whole business.
+
+**Ways to grow:**
+- **Sell more to existing customers** (new products, bigger orders, subscriptions).
+- **Reach new customers** (new areas, channels or segments).
+- **Improve prices and margins** (cheaper supply, better pricing).
+- **Add locations or partners.**
+- **Franchise or license** the model.
+
+Grow in **steps**, test each step, check the numbers (can we still deliver good service and profit?), and keep a cash reserve. A small, profitable, well-run business is better than a large, shaky one.
+
+## Try it
+
+```task
+{
+  "id": "ent-m09-t1",
+  "prompt": "A helper costs **₦80,000** a month all in and would let you make and sell **400 extra items** a month at **₦1,500 contribution** each. Work out the **extra contribution**, the **net gain** and say what must be true for the hire to be worth it.",
+  "minutes": 8,
+  "rows": 6,
+  "placeholder": "Extra contribution = ...",
+  "rules": [
+    { "label": "Extra contribution of ₦600,000", "pattern": "600,?000" },
+    { "label": "Net gain of ₦520,000", "pattern": "520,?000" },
+    { "label": "States the condition (you can actually sell those items, demand)", "pattern": "sell|demand|customers|orders|if|must" }
+  ],
+  "sample": "Extra contribution = 400 x 1,500 = ₦600,000 a month.\nNet gain = 600,000 - 80,000 = ₦520,000 a month.\nThe hire is only worth it if I can really sell the extra 400 items, so there must be enough customer demand to use the extra capacity.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m09-t2",
+  "prompt": "Write a **delegation brief** (50 to 110 words) for giving a helper the job of handling daily orders: the outcome, the deadline or timing, the standard, any limits, and when you will check in.",
+  "minutes": 12,
+  "rows": 8,
+  "placeholder": "Your task is ...",
+  "rules": [
+    { "label": "States the outcome or task", "pattern": "task|outcome|responsib|you will|your job" },
+    { "label": "States timing or deadline", "pattern": "by \\d|every day|daily|deadline|before|each morning|\\d+\\s*(am|pm)" },
+    { "label": "States a standard", "pattern": "standard|accurate|correct|within|reply|no mistakes|check" },
+    { "label": "States a limit or approval rule", "pattern": "limit|approv|ask me|above ₦|if .* more than|not more than|only" },
+    { "label": "States when you will check in", "pattern": "check in|meet|review|friday|end of|weekly|report" },
+    { "label": "Between 50 and 110 words", "minWords": 50, "maxWords": 115 }
+  ],
+  "sample": "Your task is to handle all daily orders from WhatsApp. Every order must be recorded in the order sheet and confirmed to the customer by 10:30 am, with the correct item, address and price, and no mistakes. You can offer the standard first-order discount yourself, but ask me before giving any other discount or refund above ₦3,000. We will check in for ten minutes every Friday at 5 pm to review the week's orders, complaints and any problems you need help with.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m09-t3",
+  "prompt": "List **five signs** that your business is ready to grow and **two risks** of growing too fast. One per line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Sign: ...\nRisk: ...",
+  "rules": [
+    { "label": "Seven lines", "minLines": 7 },
+    { "label": "Includes signs about demand or customers waiting", "pattern": "demand|waiting|customers" },
+    { "label": "Includes profit or cash", "pattern": "profit|cash" },
+    { "label": "Includes systems, people or quality", "pattern": "system|people|team|process|quality|consistent" },
+    { "label": "Includes risks (costs before income, quality drops, cash runs out)", "pattern": "risk[^\\n]*(cost|quality|cash|debt|overstretch|slip)" }
+  ],
+  "sample": "Sign: demand is steady and customers are waiting for stock.\nSign: the business is profitable every month.\nSign: we generate positive cash after paying ourselves.\nSign: our processes work without constant firefighting.\nSign: we have trained people who can handle more.\nRisk: costs rise before income, so the business runs out of cash.\nRisk: quality slips and customers leave because we cannot keep up.",
+  "required": false
+}
+```
+
+Next lesson: your business plan.
+$md$, true, true, 9, array['ent-m09-t1', 'ent-m09-t2']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
+values ('ent-m10', 'entrepreneurship-business-management', 'Final project: your business plan', 10, 'Business Plan', 'BPLAN', array['Write a full business plan', 'Build the financials', 'Plan the first 90 days', 'Defend it to a funder']::text[], array['Pulling your work together', 'Writing the plan', 'Presenting and defending it', 'Your first 90 days']::text[])
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('entrepreneurship-business-management:final-project-your-business-plan', 'entrepreneurship-business-management', 'ent-m10', 'final-project-your-business-plan', 'Final Project: Your Business Plan', 'Pull your work together into a business plan, write it clearly, prepare to present and defend it and set out your first 90 days.', 40, $md$
+## What you are building
+
+Over the last nine modules you have found a problem, tested an idea, built a model, planned, set up, thought through marketing, operations, money and people. This project pulls it into **one business plan** you could use to start, show a bank or a funder, or guide a team.
+
+Your plan should describe a **real business you could start**, or one you are already running. Use your own research, interviews and real prices. Where you must assume, say so.
+
+## Your plan has eight parts
+
+1. **Executive summary.** One page: the problem, solution, customers, model, money needed and what you will achieve. Write this last.
+2. **The problem and the opportunity.** Who has the problem, evidence from your interviews and tests, and the size of the opportunity.
+3. **Product and value proposition.** What you offer and why customers choose it, with your MVP.
+4. **Market and competition.** Your target customer, competitors and how you position yourself.
+5. **Marketing and sales.** Channels, brand, pricing and your plan for the first customers.
+6. **Operations, legal and team.** How the work gets done, suppliers, structure and registration, permits, people and who does what.
+7. **Financial plan.** Start-up costs, pricing, break-even, a 6-month cash flow forecast, funding needed and sources.
+8. **Risks and the first 90 days.** Your top risks with responses, and a week-by-week or month-by-month action plan with milestones.
+
+## Writing and presenting it
+
+Write for a reader who knows nothing about your business. Use plain language, short paragraphs and tables for numbers. Support claims with evidence, such as interview quotes, test results and price lists. Show your workings so figures can be checked.
+
+Prepare to **present and defend** it in five minutes: the problem, your solution, the proof customers want it, how you make money, what you need and what you will do first. Expect questions such as: *Why will customers choose you? What if sales are half of what you expect? What happens if a key supplier fails? How did you work out these costs?* Have honest answers ready.
+
+> [!TIP]
+> A plan that says "we expect to sell 100 a month because 10 of 50 people paid deposits" is far stronger than one that says "everyone will love it."
+
+## Try it
+
+```task
+{
+  "id": "ent-m10-t1",
+  "prompt": "Write your **executive summary** in 80 to 160 words: the problem, your solution, your customers, how you earn, the money you need and the result you aim for in the first year.",
+  "minutes": 12,
+  "rows": 10,
+  "placeholder": "Our business solves ...",
+  "rules": [
+    { "label": "States the problem", "pattern": "problem|struggle|cannot|lose|waste|difficult" },
+    { "label": "States the solution", "pattern": "solution|solves?|we (offer|provide|sell|deliver)|our (product|service)" },
+    { "label": "Names the customers", "pattern": "customers?|workers|students|parents|businesses|owners" },
+    { "label": "Says how it earns", "pattern": "earn|charge|price|revenue|₦\\s?\\d" },
+    { "label": "States money needed", "pattern": "need|require|funding|capital|start-?up" },
+    { "label": "States a first-year goal", "pattern": "year|month|goal|target|aim" },
+    { "label": "Between 80 and 160 words", "minWords": 80, "maxWords": 165 }
+  ],
+  "sample": "Office workers in Ikeja have only 30 minutes for lunch and lose half of it queuing at the one canteen, so many skip meals. Our business, Desk Lunch, solves this by delivering fresh, hot lunch boxes to their desks by 12:30, ordered by WhatsApp. Our customers are workers aged 25 to 40 in offices on Allen Avenue. We charge ₦2,500 a meal and ₦11,000 for a weekly subscription, earning about ₦700 profit a meal. In a two-week test, 10 of 50 people paid a ₦5,000 deposit. We need ₦600,000 to start, mainly for equipment, packaging and working capital, funded from savings and a small family loan. In the first year we aim to reach ₦600,000 in monthly sales and 100 regular subscribers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m10-t2",
+  "prompt": "Write your **financial plan summary**, one item per line: start-up costs, selling price, variable cost per unit, fixed costs per month, contribution per unit, break-even units, funding needed and its sources. Show the figures. At least eight lines.",
+  "minutes": 15,
+  "rows": 11,
+  "placeholder": "Start-up costs: ₦...",
+  "rules": [
+    { "label": "At least eight lines", "minLines": 8 },
+    { "label": "Start-up costs", "pattern": "start-?up" },
+    { "label": "Selling price and variable cost", "pattern": "price[\\s\\S]*variable|variable[\\s\\S]*price" },
+    { "label": "Fixed costs", "pattern": "fixed" },
+    { "label": "Contribution per unit", "pattern": "contribution" },
+    { "label": "Break-even units", "pattern": "break-?even" },
+    { "label": "Funding and sources", "pattern": "funding[\\s\\S]*(savings|loan|family|grant|investor|source)|(savings|loan|family|grant|investor)[\\s\\S]*funding" },
+    { "label": "Uses naira figures", "pattern": "₦\\s?\\d", "min": 6 }
+  ],
+  "sample": "Start-up costs: ₦450,000 (equipment ₦200,000, packaging ₦50,000, registration ₦50,000, stock and working capital ₦150,000)\nSelling price: ₦2,500 per meal\nVariable cost: ₦1,800 per meal (ingredients, packaging, delivery)\nFixed costs: ₦140,000 per month (rider, rent share, data, gas)\nContribution per unit: 2,500 - 1,800 = ₦700\nBreak-even: 140,000 / 700 = 200 meals a month\nFunding needed: ₦600,000 including a ₦150,000 reserve\nSources: ₦350,000 savings and ₦250,000 family loan repaid over 12 months",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m10-t3",
+  "prompt": "Write your **first 90 days**: month 1, month 2 and month 3, each with two or three specific actions and a milestone with a number. At least six lines.",
+  "minutes": 10,
+  "rows": 9,
+  "placeholder": "Month 1: ...",
+  "rules": [
+    { "label": "At least six lines", "minLines": 6 },
+    { "label": "Has month 1, 2 and 3", "pattern": "month 1[\\s\\S]*month 2[\\s\\S]*month 3" },
+    { "label": "Includes specific actions (register, buy, launch, pre-sell, hire)", "pattern": "register|buy|launch|pre-?sell|hire|open|set up|test|post|visit|order" },
+    { "label": "Includes milestones with numbers", "pattern": "milestone[^\\n]*\\d|\\d+\\s*(customers|orders|meals|sales|subscribers|₦)", "min": 3 }
+  ],
+  "sample": "Month 1: register the business, buy equipment and packaging, and pre-sell to 30 customers.\nMonth 1 milestone: 30 paid pre-orders and the business account open.\nMonth 2: launch deliveries to three offices and collect feedback from every customer.\nMonth 2 milestone: 60 orders a week with 95% on-time delivery.\nMonth 3: introduce weekly subscriptions and ask for referrals.\nMonth 3 milestone: 40 subscribers and break-even at 200 meals a month.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "ent-m10-t4",
+  "prompt": "Prepare for questions. Write **three tough questions** an investor might ask and your **honest answer** to each, one per line in the form \"Q: ... A: ...\".",
+  "minutes": 8,
+  "rows": 7,
+  "placeholder": "Q: ... A: ...",
+  "rules": [
+    { "label": "Three lines", "minLines": 3 },
+    { "label": "Each line has a question and an answer", "pattern": "q:[^\\n]*a:", "perLine": true },
+    { "label": "Includes numbers or evidence in the answers", "pattern": "a:[^\\n]*(\\d|test|interview|deposit|evidence)", "min": 3 }
+  ],
+  "sample": "Q: Why will customers choose you over the canteen? A: In our test, 10 of 50 workers paid a deposit because we save them 30 minutes and deliver to the desk.\nQ: What if sales are half what you expect? A: At 100 meals a month we lose about ₦70,000, so we keep fixed costs flexible and have a ₦150,000 cash reserve for three months.\nQ: What if your supplier fails? A: We already buy from 2 market suppliers and hold 3 days of stock of staples.",
+  "required": false
+}
+```
+
+When you are done, submit your complete business plan as your final project.
+$md$, true, true, 10, array['ent-m10-t1', 'ent-m10-t2', 'ent-m10-t3']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
 -- Course: Business Development & Sales
@@ -93981,6 +95309,592 @@ values ('scm-f15', 1, 'Local is ₦550 cheaper.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
+-- Assessment: The Entrepreneurial Mindset and Finding Opportunity: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m01-check', 'entrepreneurship-business-management', 'module', 'ent-m01', 'The Entrepreneurial Mindset and Finding Opportunity: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m01-q1', 'ent-m01-check', 1, 'Where should a business idea start?', '["With a product you like","With a real problem people have","With a logo","With a loan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m01-q1', 1, 'Good businesses solve real problems for reachable customers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m01-q2', 'ent-m01-check', 2, 'Which is a sign a problem is worth solving?', '["Only you have it, and rarely","Many people have it, often, and already spend money trying to fix it","Nobody has tried to solve it","It is easy to explain"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m01-q2', 1, 'Frequency, pain and existing spending signal a real need.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m01-q3', 'ent-m01-check', 3, 'What turns an idea into an opportunity?', '["Telling friends","A real, reachable customer need with a way to earn","A business name","A website"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m01-q3', 1, 'Opportunity needs customer, problem, solution, reason to choose you and a way to earn.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m01-q4', 'ent-m01-check', 4, 'How should entrepreneurs treat failed tests?', '["Hide them","As information about what to change","As proof they should quit","As bad luck only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m01-q4', 1, 'Failure in a cheap test teaches you cheaply.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m01-q5', 'ent-m01-check', 5, 'What is a sensible way to limit personal risk when starting?', '["Borrow as much as possible","Start small, test cheaply and avoid debt you cannot repay","Quit your job at once","Skip planning"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m01-q5', 1, 'Limit the worst case you can afford.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Validating Your Idea: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m02-check', 'entrepreneurship-business-management', 'module', 'ent-m02', 'Validating Your Idea: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m02-q1', 'ent-m02-check', 1, 'Which interview question is best?', '["Would you buy my lunch service?","Tell me about the last time you bought lunch at work","Do you like my idea?","How much would you pay in future?"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m02-q1', 1, 'Past behaviour is a better guide than polite opinions about the future.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m02-q2', 'ent-m02-check', 2, '50 people are surveyed and 18 say they would buy. What percentage is that?', '["18%","28%","36%","50%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m02-q2', 2, '18 ÷ 50 = 36%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m02-q3', 'ent-m02-check', 3, 'Which is the strongest evidence of demand?', '["Compliments","Likes on a post","People paying a deposit","A long survey reply"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m02-q3', 2, 'Money paid is the best signal.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m02-q4', 'ent-m02-check', 4, 'What is an MVP?', '["A finished, perfect product","The simplest version that lets you learn from real customers","A prize","A brand name"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m02-q4', 1, 'A minimum viable product tests the key assumptions quickly.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m02-q5', 'ent-m02-check', 5, 'When should you set your go, change or stop rule?', '["After the test","Before the test","Never","When you are tired"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m02-q5', 1, 'Deciding in advance keeps you honest.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Business Model and Value Proposition: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m03-check', 'entrepreneurship-business-management', 'module', 'ent-m03', 'Business Model and Value Proposition: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m03-q1', 'ent-m03-check', 1, 'How many blocks does the Business Model Canvas have?', '["Five","Seven","Nine","Twelve"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m03-q1', 2, 'It has nine blocks.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m03-q2', 'ent-m03-check', 2, 'A good value proposition focuses on:', '["Your features","The customer''s problem and benefit","Your history","Your logo"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m03-q2', 1, 'It says why the customer should choose you.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m03-q3', 'ent-m03-check', 3, 'Which is a variable cost?', '["Rent","Ingredients for each meal","Annual insurance","A salary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m03-q3', 1, 'Variable costs rise with each sale.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m03-q4', 'ent-m03-check', 4, 'Which is a subscription revenue model?', '["A one-time sale","A weekly meal plan paid regularly","A commission","A fine"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m03-q4', 1, 'Subscriptions bring regular, predictable payments.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m03-q5', 'ent-m03-check', 5, 'What is a competitor''s repeated customer complaint?', '["Noise","A free market research clue for your opening","A legal problem","Irrelevant"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m03-q5', 1, 'Repeated complaints show gaps you can fill.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Business Planning and Strategy: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m04-check', 'entrepreneurship-business-management', 'module', 'ent-m04', 'Business Planning and Strategy: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m04-q1', 'ent-m04-check', 1, 'Which goal is SMART?', '["Grow the business","Reach ₦600,000 monthly sales by the end of month 6","Be successful","Sell more"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m04-q1', 1, 'It is specific, measurable and time-bound.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m04-q2', 'ent-m04-check', 2, 'From ₦200,000 to ₦600,000 in six months needs about how much more each month?', '["₦40,000","₦66,667","₦100,000","₦400,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m04-q2', 1, '400,000 ÷ 6 = 66,667.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m04-q3', 'ent-m04-check', 3, 'In a SWOT, which is an external, harmful factor?', '["Strength","Weakness","Opportunity","Threat"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m04-q3', 3, 'Threats are external and harmful.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m04-q4', 'ent-m04-check', 4, 'A risk with likelihood 4 and impact 4 scores:', '["8","12","16","20"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m04-q4', 2, '4 × 4 = 16.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m04-q5', 'ent-m04-check', 5, 'What is usually the best strategy for a new small business?', '["Compete on every product","Focus on a niche it can serve better than larger rivals","Copy the biggest rival","Avoid planning"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m04-q5', 1, 'Focus lets a small business win a segment.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Setting Up Legally in Nigeria: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m05-check', 'entrepreneurship-business-management', 'module', 'ent-m05', 'Setting Up Legally in Nigeria: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m05-q1', 'ent-m05-check', 1, 'Why register a limited company rather than operate as a sole proprietor?', '["It is cheaper","It gives a separate legal entity and limited liability","It removes taxes","It needs no records"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m05-q1', 1, 'A company separates the owner from the business''s debts.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m05-q2', 'ent-m05-check', 2, 'Which body registers companies and business names in Nigeria?', '["NAFDAC","The CAC","SON","The Central Bank"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m05-q2', 1, 'The Corporate Affairs Commission handles registration.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m05-q3', 'ent-m05-check', 3, 'Selling packaged food generally also requires:', '["Nothing","NAFDAC registration or approval","A passport","A taxi licence"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m05-q3', 1, 'Food products are regulated by NAFDAC.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m05-q4', 'ent-m05-check', 4, 'What does trademark registration add to CAC name registration?', '["Nothing","Legal rights over a name, logo or slogan in a category","A tax break","A bank loan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m05-q4', 1, 'A trademark is separate and protects the brand.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m05-q5', 'ent-m05-check', 5, 'Why use written contracts?', '["To impress","To state who does what, price, delivery and how problems are handled","To avoid tax","They are optional decoration"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m05-q5', 1, 'Clear terms prevent disputes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Marketing and Selling: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m06-check', 'entrepreneurship-business-management', 'module', 'ent-m06', 'Marketing and Selling: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m06-q1', 'ent-m06-check', 1, '₦50,000 on adverts wins 25 customers. What is the CAC?', '["₦500","₦2,000","₦25,000","₦50,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m06-q1', 1, '50,000 ÷ 25 = ₦2,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m06-q2', 'ent-m06-check', 2, 'Profit per order ₦3,500 and three orders per customer gives a CLV of:', '["₦3,500","₦7,000","₦10,500","₦35,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m06-q2', 2, '3,500 × 3 = ₦10,500.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m06-q3', 'ent-m06-check', 3, 'What is usually the cheapest and strongest marketing for a small service?', '["Billboards","Word of mouth and referrals","TV adverts","Random flyers"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m06-q3', 1, 'Trust-based referrals cost little and convert well.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m06-q4', 'ent-m06-check', 4, 'A customer complains of a late delivery. What is the best reply?', '["Defend yourself","Apologise, take responsibility, fix it and say how you will prevent it","Ignore them","Blame the rider"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m06-q4', 1, 'A well-handled complaint can build loyalty.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m06-q5', 'ent-m06-check', 5, 'What is the brand of a small business, above all?', '["Its logo","Reliability and how it treats people","Its colours","Its slogan"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m06-q5', 1, 'A logo cannot rescue poor service.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Operations and Management: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m07-check', 'entrepreneurship-business-management', 'module', 'ent-m07', 'Operations and Management: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m07-q1', 'ent-m07-check', 1, 'What is an SOP?', '["A sales order","A short written procedure for how to do an important step","A tax form","A supplier"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m07-q1', 1, 'SOPs make work repeatable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m07-q2', 'ent-m07-check', 2, 'One person makes 20 items a day and you get 30 orders. What is the shortfall?', '["5","10","20","30"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m07-q2', 1, '30 − 20 = 10.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m07-q3', 'ent-m07-check', 3, 'What should you do when a supplier delivers?', '["Pay without looking","Check quantity and quality before paying","Throw away the invoice","Store it unchecked"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m07-q3', 1, 'Check deliveries against the order.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m07-q4', 'ent-m07-check', 4, 'How often should you update sales and expense records?', '["Once a year","Daily or at least weekly","Only for tax","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m07-q4', 1, 'Regular updates keep records accurate.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m07-q5', 'ent-m07-check', 5, 'What is a good rule for tools?', '["Buy the most expensive","Pick a few cheap ones and use them consistently","Use none","Change them weekly"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m07-q5', 1, 'A tool nobody uses is a waste.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Money: Pricing, Budgeting, Cash Flow and Funding: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m08-check', 'entrepreneurship-business-management', 'module', 'ent-m08', 'Money: Pricing, Budgeting, Cash Flow and Funding: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m08-q1', 'ent-m08-check', 1, 'A meal costs ₦2,800 and you add a 40% markup. What is the price?', '["₦3,200","₦3,920","₦4,000","₦4,200"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m08-q1', 1, '2,800 × 1.4 = ₦3,920.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m08-q2', 'ent-m08-check', 2, 'Fixed costs ₦150,000, price ₦3,500, variable cost ₦2,000. What is break-even?', '["50 units","75 units","100 units","150 units"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m08-q2', 2, '150,000 ÷ 1,500 = 100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m08-q3', 'ent-m08-check', 3, 'Opening cash ₦100,000, cash in ₦300,000, cash out ₦340,000. What is the closing cash?', '["₦40,000","₦60,000","₦100,000","₦140,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m08-q3', 1, '100,000 + 300,000 − 340,000 = ₦60,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m08-q4', 'ent-m08-check', 4, 'Why separate business and personal money?', '["To show off","To know your true profit and be taken seriously by banks and tax officials","It is optional","To avoid receipts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m08-q4', 1, 'Mixing the two hides the real numbers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m08-q5', 'ent-m08-check', 5, 'Before borrowing, you should test whether:', '["The loan is large","The business can repay it even if sales are 20% lower than planned","A friend approves","The bank has a nice office"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m08-q5', 1, 'Plan for a weaker case.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Leadership, People and Growth: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m09-check', 'entrepreneurship-business-management', 'module', 'ent-m09', 'Leadership, People and Growth: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m09-q1', 'ent-m09-check', 1, 'A helper costs ₦80,000 and adds 400 sales at ₦1,500 contribution each. What is the net gain?', '["₦80,000","₦520,000","₦600,000","₦680,000"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m09-q1', 1, '600,000 − 80,000 = ₦520,000.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m09-q2', 'ent-m09-check', 2, 'What does good delegation include?', '["Giving no information","Clear outcome, deadline, standard, limits and check-in points","Doing it yourself later","Avoiding feedback"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m09-q2', 1, 'Clarity makes delegation work.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m09-q3', 'ent-m09-check', 3, 'What is a sign the business is ready to grow?', '["You feel bored","Steady demand, profit and systems that work without constant firefighting","A competitor grows","You have spare cash only"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m09-q3', 1, 'Growth needs demand, profit and capable systems.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m09-q4', 'ent-m09-check', 4, 'What is a risk of growing too fast?', '["Too much sleep","Costs rise before income and cash runs out","Fewer customers always","Lower tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m09-q4', 1, 'Fast growth strains cash and quality.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m09-q5', 'ent-m09-check', 5, 'Good KPIs for a person are:', '["Many and vague","Few, clear and within their control","Secret","Only about speed"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m09-q5', 1, 'Simple, controllable measures drive behaviour well.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Final Project: Your Business Plan: module check
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('ent-m10-check', 'entrepreneurship-business-management', 'module', 'ent-m10', 'Final Project: Your Business Plan: module check', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m10-q1', 'ent-m10-check', 1, 'Which part of the plan should you write last?', '["The problem","The executive summary","The risks","The cash flow"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m10-q1', 1, 'The summary condenses everything, so write it last.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m10-q2', 'ent-m10-check', 2, 'Which statement is strongest in a plan?', '["Everyone will love it","10 of 50 people paid a deposit, so we expect about 100 sales a month","It cannot fail","We will go viral"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m10-q2', 1, 'Evidence beats hope.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m10-q3', 'ent-m10-check', 3, 'What should the financial plan show?', '["Only the dream income","Start-up costs, pricing, break-even, cash flow and funding","Only the logo cost","Nothing"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m10-q3', 1, 'Funders want to see the numbers and how you worked them out.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m10-q4', 'ent-m10-check', 4, 'What is the purpose of the 90-day plan?', '["To fill pages","To turn the plan into specific actions with milestones","To impress friends","To avoid tax"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m10-q4', 1, 'Action with milestones starts the business.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-m10-q5', 'ent-m10-check', 5, 'How should you prepare for investor questions?', '["Avoid them","Have honest, evidence-based answers ready","Make up numbers","Change the subject"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-m10-q5', 1, 'Credibility comes from honest, supported answers.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
+-- Assessment: Entrepreneurship & Business Management: final assessment
+insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
+values ('entrepreneurship-business-management-final', 'entrepreneurship-business-management', 'final', null, 'Entrepreneurship & Business Management: final assessment', 60, true)
+on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f01', 'entrepreneurship-business-management-final', 1, 'What do entrepreneurs do first?', '["Build the product","Find and understand a real problem","Register a company","Buy stock"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f01', 1, 'Start with a problem worth solving.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f02', 'entrepreneurship-business-management-final', 2, 'Which is the best sign of demand?', '["Positive comments","Deposits from real customers","Many followers","A friend''s approval"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f02', 1, 'People paying is the real test.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f03', 'entrepreneurship-business-management-final', 3, 'A survey of 50 people finds 18 would buy; 10 then pay a deposit. What is the paying conversion?', '["10%","20%","36%","55%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f03', 1, '10 ÷ 50 = 20%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f04', 'entrepreneurship-business-management-final', 4, 'Which block of the Business Model Canvas says why customers choose you?', '["Channels","Value proposition","Cost structure","Key partners"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f04', 1, 'The value proposition is the promise of benefit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f05', 'entrepreneurship-business-management-final', 5, 'Which goal is SMART?', '["Be popular","Serve 100 subscribers within 9 months","Grow","Do better"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f05', 1, 'It has a number and a time.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f06', 'entrepreneurship-business-management-final', 6, 'Under CAMA 2020, can a company be formed by one person?', '["Yes","No, always two","Only for churches","Only for public companies"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f06', 0, 'A single-person company is allowed.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f07', 'entrepreneurship-business-management-final', 7, 'Which regulator generally registers packaged food products?', '["NAFDAC","NCC","FRSC","CBN"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f07', 0, 'NAFDAC regulates food, drugs and cosmetics.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f08', 'entrepreneurship-business-management-final', 8, '₦50,000 of adverts wins 25 customers worth ₦10,500 profit each over time. Is it worth it?', '["No, CAC is ₦2,000 but lifetime value is only ₦500","Yes, CAC ₦2,000 is far below the ₦10,500 value","It cannot be known","Only if it goes viral"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f08', 1, 'CLV far exceeds CAC.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f09', 'entrepreneurship-business-management-final', 9, 'A meal costs ₦2,800 and sells at ₦3,920. What is the margin on price?', '["20%","28.6%","40%","56%"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f09', 1, '1,120 ÷ 3,920 = 28.6%.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f10', 'entrepreneurship-business-management-final', 10, 'Fixed costs ₦150,000, contribution ₦1,500 a unit. How many units to break even?', '["50","100","150","1,500"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f10', 1, '150,000 ÷ 1,500 = 100.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f11', 'entrepreneurship-business-management-final', 11, 'A negative closing cash balance forecast means you should:', '["Ignore it","Act in advance: delay spending, collect faster or arrange funding","Hide it","Raise your salary"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f11', 1, 'Forecasts let you act before the shortfall.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f12', 'entrepreneurship-business-management-final', 12, 'Which is the best way to handle personal and business money?', '["Mix them","Use a separate business account and pay yourself a set amount","Use cash only","Use your friend''s account"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f12', 1, 'Separation shows true profit.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f13', 'entrepreneurship-business-management-final', 13, 'When is hiring justified?', '["When it feels like growth","When the work needs it and the extra contribution exceeds the cost","When a friend needs a job","Never"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f13', 1, 'Compare the benefit with the all-in cost.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f14', 'entrepreneurship-business-management-final', 14, 'What is the main risk of growing too fast?', '["Too many customers is never a problem","Costs rise before income, quality slips and cash runs out","Tax disappears","Competitors vanish"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f14', 1, 'Growth strains cash and quality.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('ent-f15', 'entrepreneurship-business-management-final', 15, 'What belongs in a credible business plan?', '["Hopes only","Evidence from customers, a verified model, costs, break-even, cash flow, risks and a 90-day plan","A logo only","A long history"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('ent-f15', 1, 'Evidence and numbers make a plan believable.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+
 -- Project: Harbourline Freight operations review
 insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
 values ('sql-harbourline-review', 'sql-for-data-analysis', 'Harbourline Freight operations review', 'Analyse the operations of a fictional logistics company and report what you find to its leadership team.', $md$Harbourline Freight's leadership team is planning 2027 and has asked for an operations review built from the company database.
@@ -94349,6 +96263,16 @@ values ('scm-analyse-improve', 'supply-chain-management', 'Analyse and improve a
 Use real data where you can and state your assumptions where you cannot. Submit a link to your project (a shared document, PDF or folder) and paste your **summary** (the main problems, your recommendations and the expected benefit in naira) below, with a short note on where to find each part.
 
 Write for the owner or manager who will decide whether to act: open with the summary, show your workings and rank problems by size of benefit.$md$, array['A map of the chain showing links and the flows of goods, information and money, with the strategy (efficient or responsive) and why.', 'The data you used and where each figure came from, with assumptions labelled.', 'At least four calculated KPIs (for example fill rate, on-time delivery, inventory turns, days of inventory, cost per delivery, cash-to-cash, forecast error).', 'The three biggest problems, each with evidence.', 'A recommendation for each problem, with the calculation behind it (forecast, reorder point or EOQ, supplier, transport, warehouse or risk).', 'A business case: expected benefit in naira, cost and effort, and the main risks.', 'An action plan with owners and dates, and the KPIs you will use to measure success.']::text[], '{}'::text[], array['The map is clear and shows all three flows, and the strategy fits the product and customers.', 'Data sources are stated and assumptions are labelled honestly.', 'KPIs are defined and calculated correctly and show real problems.', 'The three main problems are supported by evidence and ranked sensibly.', 'Each recommendation is specific and backed by a correct calculation.', 'The business case weighs benefit, cost and risk fairly.', 'The action plan is realistic, with owners, dates and KPIs to check the result.']::text[], true)
+on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
+
+
+-- Project: Your business plan
+insert into public.projects (id, course_id, title, summary, brief_md, tasks, datasets, rubric, required)
+values ('ent-business-plan', 'entrepreneurship-business-management', 'Your business plan', 'A complete business plan for a real business you could start: problem, customers, model, marketing, operations, finances, risks and your first 90 days.', $md$Write the business plan for a business you could start, or one you already run. Use your own customer research and real prices, and state your assumptions where you must guess.
+
+Submit a link to your plan (a shared document, PDF or folder) and paste your **executive summary** and your **break-even point and funding needed** below, with a short note on where to find each part.
+
+Write for a reader who knows nothing about your business, such as a bank, a funder or a business partner: clear, specific and backed by evidence.$md$, array['Executive summary: the problem, solution, customers, model, funding needed and first-year goal.', 'The problem and opportunity, with evidence from customer interviews or tests.', 'Product and value proposition, including your minimum viable product.', 'Market and competition: target customer, at least three competitors and your positioning.', 'Marketing and sales plan: channels, brand, price and how you will win your first customers, with a CAC and CLV estimate.', 'Operations, legal set-up and team: process, suppliers, structure, registration and permits, and who does what.', 'Financial plan: start-up costs, price, variable and fixed costs, break-even, a six-month cash flow forecast and the funding needed.', 'Risks with responses, and a 90-day action plan with milestones.']::text[], '{}'::text[], array['The problem is real and supported by evidence from customers, not assumptions.', 'The value proposition and target customer are specific, and positioning against competitors is clear.', 'The marketing plan names realistic channels and shows how the first customers will be won.', 'Operations, legal set-up and the team are practical and correct for Nigeria, with current requirements flagged for checking.', 'The financial plan is complete and consistent: price, costs, break-even and cash flow agree with each other.', 'Risks are realistic and each has a response.', 'The 90-day plan has specific actions, owners and measurable milestones.']::text[], true)
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, summary = excluded.summary, brief_md = excluded.brief_md, tasks = excluded.tasks, datasets = excluded.datasets, rubric = excluded.rubric, required = excluded.required;
 
 
