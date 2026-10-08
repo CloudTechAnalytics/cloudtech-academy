@@ -20,7 +20,7 @@ for v in VIDEOS:
     cards.append(
         f'<article><video controls preload="metadata" playsinline src="out/{f.name}"></video>'
         f'<h3>{html.escape(v["id"][:2])}. {html.escape(v["title"])}</h3>'
-        f'<p class="m">{v["fmt"].replace("x", ":")} · {"Ezinne (female)" if "Ezinne" in v["voice"] else "Abeo (male)"} · {mb:.1f} MB</p>'
+        f'<p class="m">{v["fmt"].replace("x", ":")} · {v["voice"].split("-")[2].replace("Neural", "")} ({"female" if v["voice"] in ("en-US-AvaNeural", "en-NG-EzinneNeural") else "male"}) · {mb:.1f} MB</p>'
         f'<p class="u">{html.escape(v["use"])}</p><details><summary>Voice-over script</summary><p>{html.escape(vo)}</p></details>'
         f'<a download href="out/{f.name}">Download</a></article>'
     )

@@ -8,8 +8,13 @@ Rules for this copy: free courses are promoted as free; paid courses show no pri
 guaranteed result.
 """
 
-FEMALE = "en-NG-EzinneNeural"
-MALE = "en-NG-AbeoNeural"
+import os
+
+# American English by default (smooth, neutral). Set VOICE_SET=ng for the Nigerian English voices (Ezinne and Abeo).
+if os.environ.get("VOICE_SET", "us") == "ng":
+    FEMALE, MALE = "en-NG-EzinneNeural", "en-NG-AbeoNeural"
+else:
+    FEMALE, MALE = "en-US-AvaNeural", "en-US-AndrewNeural"
 
 SQL = "SELECT customer, SUM(total)\nFROM orders\nWHERE status = 'paid'\nGROUP BY customer;"
 

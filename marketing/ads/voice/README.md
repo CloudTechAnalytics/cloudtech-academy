@@ -6,16 +6,16 @@ Ten videos with a voice-over, built from the same brand system as the silent ads
 
 | File | Format and length | Voice | Use for | Promotes |
 |---|---|---|---|---|
-| `out/01-start-free-9x16.mp4` | 9:16 | Ezinne (female) | Cold audiences. | Free courses |
-| `out/02-excel-free-9x16.mp4` | 9:16 | Abeo (male) | People who use Excel at work or school. | Free courses |
-| `out/03-sql-in-browser-1x1.mp4` | 1:1 | Abeo (male) | Feed ads for people curious about tech and data. | Free courses |
-| `out/04-students-start-here-1x1.mp4` | 1:1 | Ezinne (female) | University students and graduates. | Free courses |
-| `out/05-cv-that-gets-read-9x16.mp4` | 9:16 | Ezinne (female) | Job seekers and final-year students. | Free courses |
-| `out/06-ai-at-work-16x9.mp4` | 16:9 | Abeo (male) | YouTube in-stream and landscape feed. | Free courses |
-| `out/07-import-export-9x16.mp4` | 9:16 | Abeo (male) | People who want to import or trade. | Paid courses (no price shown) |
-| `out/08-logistics-supply-chain-16x9.mp4` | 16:9 | Ezinne (female) | YouTube and landscape feed. | Paid courses (no price shown) |
-| `out/09-sell-online-9x16.mp4` | 9:16 | Ezinne (female) | Small sellers and Instagram vendors. | Paid courses (no price shown) |
-| `out/10-know-your-numbers-1x1.mp4` | 1:1 | Abeo (male) | Small business owners. | Paid courses (no price shown) |
+| `out/01-start-free-9x16.mp4` | 9:16 | Ava (female) | Cold audiences. | Free courses |
+| `out/02-excel-free-9x16.mp4` | 9:16 | Andrew (male) | People who use Excel at work or school. | Free courses |
+| `out/03-sql-in-browser-1x1.mp4` | 1:1 | Andrew (male) | Feed ads for people curious about tech and data. | Free courses |
+| `out/04-students-start-here-1x1.mp4` | 1:1 | Ava (female) | University students and graduates. | Free courses |
+| `out/05-cv-that-gets-read-9x16.mp4` | 9:16 | Ava (female) | Job seekers and final-year students. | Free courses |
+| `out/06-ai-at-work-16x9.mp4` | 16:9 | Andrew (male) | YouTube in-stream and landscape feed. | Free courses |
+| `out/07-import-export-9x16.mp4` | 9:16 | Andrew (male) | People who want to import or trade. | Paid courses (no price shown) |
+| `out/08-logistics-supply-chain-16x9.mp4` | 16:9 | Ava (female) | YouTube and landscape feed. | Paid courses (no price shown) |
+| `out/09-sell-online-9x16.mp4` | 9:16 | Ava (female) | Small sellers and Instagram vendors. | Paid courses (no price shown) |
+| `out/10-know-your-numbers-1x1.mp4` | 1:1 | Andrew (male) | Small business owners. | Paid courses (no price shown) |
 
 Formats: `9x16` is 1080 × 1920 (Reels, Stories, Shorts), `1x1` is 1080 × 1080 (feed), `16x9` is 1920 × 1080 (YouTube, landscape feed). H.264 video, AAC audio, 30 fps.
 

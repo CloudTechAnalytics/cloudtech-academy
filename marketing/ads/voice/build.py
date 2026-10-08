@@ -3,7 +3,7 @@
     python marketing/ads/voice/build.py all            # every video
     python marketing/ads/voice/build.py 03-sql-in-browser 04-students-start-here
 
-For each video: the voice (Microsoft neural text to speech, Nigerian English, through the edge-tts package) is generated
+For each video: the voice (Microsoft neural text to speech, American English by default; Nigerian English with VOICE_SET=ng, through the edge-tts package) is generated
 scene by scene, the scene lengths follow the speech, the page in template.html is stepped frame by frame in Chrome
 (through marketing/ads/video/render-video.cjs), and ffmpeg adds the voice. Output goes to marketing/ads/voice/out/.
 
