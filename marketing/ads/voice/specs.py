@@ -181,3 +181,8 @@ VIDEOS = [
         ],
     ),
 ]
+
+
+from specs_more import MORE  # noqa: E402
+
+VIDEOS += MORE

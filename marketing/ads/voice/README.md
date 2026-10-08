@@ -198,3 +198,9 @@ python marketing/ads/voice/build.py 03-sql-in-browser        # one
 ```
 
 It needs Chrome and Playwright (set `CHROME` and `PLAYWRIGHT_PATH` if they are not found). The script text is sent to Microsoft's online voice service to be turned into speech, so it needs an internet connection. Scene lengths follow the length of the speech, so changing the words changes the timing automatically.
+
+## Videos 11 to 30 (TikTok, Reels and Shorts, all 9:16)
+
+Twenty more, written in `specs_more.py` (value first, soft call to action): scattered business data, SELECT *, dashboard questions, starting as an analyst, reports that never match, XLOOKUP, AI at work, CV achievements, watching vs learning, five shop-owner questions, SQL in the browser, weekly automation, Python in three lines, mean vs median, landed cost (paid course), verifiable badges, Excel duplicates, AI for students, selling online (paid courses) and a short "start today".
+
+**To watch them all, open `marketing/ads/voice/index.html`** (double-click; players, scripts and download links). Rebuild the page with `python marketing/ads/voice/make_gallery.py`. Build one video with `python marketing/ads/voice/build.py 12-stop-select-star`.

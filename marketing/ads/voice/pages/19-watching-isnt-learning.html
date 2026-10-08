@@ -1,0 +1,149 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Watching isn't learning</title>
+<link rel="stylesheet" href="../../video/video.css">
+<style>
+:root { --W: 1080px; --H: 1920px; --u: 1.0; --padx: 84px; --padt: 330px; --padb: 560px; --maxw: 912px; --capb: 360px; }
+html, body { width: var(--W); height: var(--H); }
+.logo { left: var(--padx); top: 210px; transform: scale(var(--u)); transform-origin: left top; }
+.pad { position: absolute; left: 0; right: 0; top: var(--padt); bottom: var(--padb); padding: 0 var(--padx); display: flex; flex-direction: column; justify-content: center; }
+.pad > * { max-width: var(--maxw); }
+.kick { font-size: calc(var(--u) * 26px); }
+.h1 { font-size: calc(var(--u) * 150px); line-height: 1.04; }
+.h2 { font-size: calc(var(--u) * 112px); line-height: 1.06; }
+.sub { font-size: calc(var(--u) * 44px); line-height: 1.4; color: var(--soft); margin-top: calc(var(--u) * 36px); }
+.chips { margin-top: calc(var(--u) * 50px); }
+.chip { font-size: calc(var(--u) * 42px); padding: calc(var(--u) * 20px) calc(var(--u) * 40px); margin: 0 calc(var(--u) * 16px) calc(var(--u) * 18px) 0; }
+.tickrow { display: flex; align-items: center; gap: calc(var(--u) * 28px); opacity: 0; margin-bottom: calc(var(--u) * 34px); }
+.tickrow .tick { width: calc(var(--u) * 78px); height: calc(var(--u) * 78px); font-size: calc(var(--u) * 44px); font-weight: 800; }
+.tickrow .t { font-size: calc(var(--u) * 58px); font-weight: 700; line-height: 1.12; }
+.step { margin-bottom: calc(var(--u) * 40px); gap: calc(var(--u) * 28px); }
+.step .n { width: calc(var(--u) * 110px); height: calc(var(--u) * 110px); font-size: calc(var(--u) * 54px); }
+.step .t { font-size: calc(var(--u) * 70px); line-height: 1.08; }
+.step .d { font-size: calc(var(--u) * 34px); color: var(--soft); margin-top: 4px; }
+.big { font-size: calc(var(--u) * 330px); line-height: 0.95; color: var(--gold); }
+.editor .bar { padding: calc(var(--u) * 22px) calc(var(--u) * 30px); font-size: calc(var(--u) * 28px); }
+.editor .bar b { padding: calc(var(--u) * 10px) calc(var(--u) * 22px); font-size: calc(var(--u) * 24px); }
+.editor pre { padding: calc(var(--u) * 40px) calc(var(--u) * 36px); font-size: calc(var(--u) * 38px); min-height: calc(var(--u) * 280px); }
+.editor .ok { padding: calc(var(--u) * 28px) calc(var(--u) * 36px); font-size: calc(var(--u) * 34px); }
+.cta { font-size: calc(var(--u) * 56px); padding: calc(var(--u) * 38px) calc(var(--u) * 72px); background: var(--gold); color: var(--ink); }
+.url { font-size: calc(var(--u) * 44px); font-weight: 700; margin-top: calc(var(--u) * 44px); color: var(--soft); }
+.under { height: 10px; background: var(--gold); width: 0; margin-top: calc(var(--u) * 30px); border-radius: 6px; }
+.cap { position: absolute; left: var(--padx); right: var(--padx); bottom: var(--capb); text-align: center; z-index: 5; }
+.cap span { display: inline-block; background: rgba(21,20,19,.82); border: 2px solid rgba(201,164,92,.35); border-radius: calc(var(--u) * 26px); padding: calc(var(--u) * 16px) calc(var(--u) * 34px); font-size: calc(var(--u) * 46px); font-weight: 700; line-height: 1.25; color: #fff; opacity: 0; max-width: 100%; }
+</style></head>
+<body>
+<div class="glow"></div><div class="grid"></div>
+<div class="logo"><svg viewBox="0 0 682 682"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w1">CloudTech</div><div class="s1">ACADEMY</div></div></div>
+<div id="scenes"></div>
+<div class="cap"><span id="capt"></span></div>
+<div class="progress"><i></i></div>
+<script src="../../video/anim.js"></script>
+<script>
+window.SPEC = {"duration": 24.48, "scenes": [{"type": "hook", "kicker": "Learning tip", "headline": "40 tutorials. Still can't *do it?*", "vo": "Forty tutorials watched, and you still cannot do it. Here is why.", "start": 0.0, "end": 6.08, "audio": 5.28, "last": false, "chunks": ["Forty tutorials watched,", "and you still cannot do it.", "Here is why."]}, {"type": "ticks", "size": "h2", "headline": "Watching feels like *learning*", "items": ["Close the video", "Do it yourself from scratch", "Get it wrong", "Fix it"], "vo": "Watching feels like learning, but it is not. Close the video. Do it yourself from scratch. Get it wrong. Fix it. That is the work.", "start": 6.08, "end": 18.93, "audio": 12.05, "last": false, "chunks": ["Watching feels like learning,", "but it is not.", "Close the video.", "Do it yourself from scratch.", "Get it wrong. Fix it.", "That is the work."]}, {"type": "cta", "kicker": "Free courses", "headline": "Practise with *instant feedback.*", "button": "Start learning free →", "vo": "It is free. Tap the link, and start today.", "start": 18.93, "end": 24.48, "audio": 4.15, "last": true, "chunks": ["It is free.", "Tap the link,", "and start today."]}]};
+const S = window.SPEC;
+window.DURATION = S.duration;
+const esc = (x) => x.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+/** "Learn *data*" -> word spans, with the starred words in gold. "\n" breaks the line. */
+function wordsHTML(text) {
+  let gold = false, out = "";
+  text.split("*").forEach((part, i) => {
+    if (i > 0) gold = !gold;
+    part.split(/(\s+)/).forEach((tok) => {
+      if (!tok) return;
+      if (/^\s+$/.test(tok)) out += tok.includes("\n") ? "<br>" : " ";
+      else out += `<span class="w${gold ? " gold" : ""}">${esc(tok)}</span>`;
+    });
+  });
+  return out;
+}
+const TICK = '<svg viewBox="0 0 24 24" width="60%" height="60%" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const host = document.getElementById("scenes");
+S.scenes.forEach((sc, i) => {
+  const el = document.createElement("div");
+  el.className = "scene";
+  let h = '<div class="pad">';
+  if (sc.kicker) h += `<div class="kick k">${esc(sc.kicker)}</div>`;
+  const hs = sc.size === "h2" ? "h2" : "h1";
+  if (sc.type === "stat") h += `<div class="serif big" style="margin-top:10px"><span class="w">${esc(sc.big)}</span></div>`;
+  if (sc.headline) h += `<div class="serif ${hs} hl" style="margin-top:${sc.kicker ? 28 : 0}px">${wordsHTML(sc.headline)}</div>`;
+  if (sc.type === "hook") h += '<div class="under"></div>';
+  if (sc.sub) h += `<div class="sub sb">${esc(sc.sub)}</div>`;
+  if (sc.type === "chips") h += '<div class="chips">' + sc.items.map((x, j) => `<span class="chip${j % 2 === 0 ? " g" : ""}">${esc(x)}</span>`).join("") + "</div>";
+  if (sc.type === "ticks") h += '<div style="margin-top:50px">' + sc.items.map((x) => `<div class="tickrow"><div class="tick">${TICK}</div><div class="t">${esc(x)}</div></div>`).join("") + "</div>";
+  if (sc.type === "steps") h += '<div style="margin-top:44px">' + sc.items.map((x, j) => `<div class="step"><div class="n">${j + 1}</div><div><div class="t serif">${esc(x[0])}</div><div class="d">${esc(x[1] || "")}</div></div></div>`).join("") + "</div>";
+  if (sc.type === "code") {
+    h += `<div class="editor" style="margin-top:36px"><div class="bar"><span>${esc(sc.lang || "Practice")}</span><b>Run and check</b></div><pre class="code"></pre><div class="ok"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Correct. Your result matches.</div></div>`;
+    if (sc.badge) h += `<div class="bdg" style="margin-top:60px;display:flex;align-items:center;gap:34px;opacity:0"><div style="position:relative;width:170px;height:170px;flex:none"><div class="badge" style="inset:0"><svg viewBox="0 0 200 200" width="170" height="170"><g fill="none" stroke="#1E1D1B" stroke-width="7" stroke-linecap="round"><ellipse cx="100" cy="76" rx="34" ry="13"/><path d="M66 76v48c0 7 15 13 34 13s34-6 34-13V76"/><path d="M66 100c0 7 15 13 34 13s34-6 34-13"/></g></svg></div></div><div><div class="kick">Badge earned</div><div class="serif" style="font-size:calc(var(--u)*72px);line-height:1.05;margin-top:10px">${esc(sc.badge)}</div></div></div>`;
+  }
+  if (sc.type === "cta") {
+    h += `<div style="margin-top:60px"><span class="pill cta">${esc(sc.button)}</span></div><div class="url">${esc(sc.url || "academy.cloudtechanalytics.com")}</div>`;
+  }
+  h += "</div>";
+  el.innerHTML = h;
+  host.appendChild(el);
+  sc.el = el;
+});
+
+const cap = document.getElementById("capt");
+window.render = (t) => {
+  ambient(t);
+  S.scenes.forEach((sc) => {
+    const a = sc.start, b = sc.end, el = sc.el, lt = t - a, d = sc.audio; // d: seconds of narration, which starts at a + 0.25
+    scene(el, t, a, b, sc.last ? 0.4 : 0.3);
+    if (t < a - 0.01 || t > b + 0.01) return;
+    const k = $(".k", el);
+    if (k) pop(k, t, a + 0.1, 0.5, { y: 20 });
+    const hl = $(".hl", el);
+    if (hl) words(hl, t, a + 0.3, Math.min(0.14, (d * 0.55) / Math.max(1, $$(".w", hl).length)));
+    const sb = $(".sb", el);
+    if (sb) pop(sb, t, a + 0.3 + d * 0.3, 0.5, { y: 24 });
+    const un = $(".under", el);
+    if (un) un.style.width = ease.inout(P(t, a + 0.9, a + 1.9)) * 100 + "%";
+    const big = $(".big .w", el);
+    if (big) pop(big, t, a + 0.25, 0.6, { y: 50, s: 0.8, back: true });
+    const items = $$(".chip, .tickrow, .step", el);
+    items.forEach((x, i) => {
+      const at = a + 0.5 + (i * (d * 0.62)) / Math.max(1, items.length);
+      if (x.classList.contains("step")) pop(x, t, at, 0.5, { x: -60, y: 0, s: 0.97 });
+      else if (x.classList.contains("tickrow")) pop(x, t, at, 0.5, { x: -40, y: 0, s: 0.98 });
+      else pop(x, t, at, 0.45, { y: 40, s: 0.9, back: true });
+    });
+    const code = $(".code", el);
+    if (code) {
+      type(code, sc.code, t, a + 0.5, Math.max(14, sc.code.length / (d * 0.5)));
+      const ok = $(".ok", el);
+      ok.style.opacity = ease.out(P(t, a + 0.5 + d * 0.55, a + 0.8 + d * 0.55));
+      const bd = $(".bdg", el);
+      if (bd) pop(bd, t, a + 0.6 + d * 0.7, 0.6, { y: 60, s: 0.8, back: true });
+    }
+    const cta = $(".cta", el);
+    if (cta) {
+      pop(cta, t, a + 0.7, 0.55, { y: 40, back: true });
+      cta.style.boxShadow = `0 0 0 ${Math.abs(Math.sin((t - a) * 3.2)) * 18}px rgba(201,164,92,.28)`;
+      pop($(".url", el), t, a + 1.1, 0.5, { y: 20 });
+    }
+  });
+  // captions: the narration in short chunks, timed across each scene's speech
+  let text = "", op = 0;
+  for (const sc of S.scenes) {
+    const s0 = sc.start + 0.25, s1 = s0 + sc.audio;
+    if (t >= s0 - 0.05 && t <= s1 + 0.25) {
+      const total = sc.chunks.reduce((n, c) => n + c.length, 0);
+      let acc = 0;
+      for (const c of sc.chunks) {
+        const c0 = s0 + (acc / total) * sc.audio, c1 = s0 + ((acc + c.length) / total) * sc.audio;
+        acc += c.length;
+        if (t >= c0 && t < c1 + (c === sc.chunks[sc.chunks.length - 1] ? 0.25 : 0)) {
+          text = c;
+          op = Math.min(P(t, c0, c0 + 0.12), 1 - P(t, c1 - 0.06, c1 + 0.06));
+          if (c === sc.chunks[sc.chunks.length - 1]) op = Math.min(P(t, c0, c0 + 0.12), 1 - P(t, c1 + 0.1, c1 + 0.25));
+        }
+      }
+    }
+  }
+  cap.textContent = text;
+  cap.style.opacity = text ? Math.max(0, Math.min(1, op)) : 0;
+};
+window.render(0);
+</script>
+</body></html>
