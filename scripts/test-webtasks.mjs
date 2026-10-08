@@ -49,13 +49,17 @@ async function renderAt(files, bootstrap, rules, width) {
   const printed = [];
   const errors = [];
   page.on("console", (m) => {
-    if (m.type() === "error" || m.type() === "warning") errors.push(m.text());
-    else printed.push(m.text());
+    if ((m.type() === "error" || m.type() === "warning") && !/document\.write/.test(m.text())) errors.push(m.text());
   });
   page.on("pageerror", (e) => errors.push(String(e.message)));
-  await page.setContent(buildDoc(files, { bootstrap, assetBase: base }), { waitUntil: "load" });
+  // The page's shim reports console lines (with objects written as JSON) by postMessage to its parent; here the
+  // page is its own parent, so listen for them, exactly what the editor's check page does.
+  const listener = `<script>window.__lines=[];window.addEventListener('message',function(e){if(e.data&&e.data.__ct===1&&e.data.type==='console')window.__lines.push(String(e.data.text))})</script>`;
+  const doc = buildDoc(files, { bootstrap, assetBase: base }).replace(/<head[^>]*>/i, (m) => m + listener);
+  await page.setContent(doc, { waitUntil: "load" });
   await page.waitForTimeout(450);
-  const probe = await page.evaluate(({ rs }) => ({ results: window.__ctProbe(rs), page: document.body.innerText }), { rs: rules });
+  const probe = await page.evaluate(({ rs }) => ({ results: window.__ctProbe(rs), page: document.body.innerText, lines: window.__lines }), { rs: rules });
+  printed.push(...probe.lines);
   await page.close();
   return { results: probe.results, page: probe.page, output: printed.join("\n"), errors };
 }
@@ -66,13 +70,18 @@ async function render(files, bootstrap, rules) {
   const errors = [];
   let pageText = "";
   let output = "";
-  const widths = new Set([DEFAULT_WIDTH, ...rules.filter((r) => r.selector !== undefined).map((r) => r.at ?? DEFAULT_WIDTH)]);
-  for (const w of widths) {
-    const idx = rules.flatMap((r, i) => (r.selector !== undefined && (r.at ?? DEFAULT_WIDTH) === w ? [i] : []));
-    const res = await renderAt(files, bootstrap, idx.map((i) => rules[i]), w);
-    idx.forEach((ri, k) => (selector[ri] = res.results[k] === true));
+  const key = (r) => `${r.at ?? DEFAULT_WIDTH}|${JSON.stringify(r.act ?? [])}`;
+  const groups = new Map();
+  rules.forEach((r, i) => {
+    if (r.selector !== undefined) groups.set(key(r), [...(groups.get(key(r)) ?? []), i]);
+  });
+  const base = key({});
+  if (!groups.has(base)) groups.set(base, []);
+  for (const [k, idx] of groups) {
+    const res = await renderAt(files, bootstrap, idx.map((i) => rules[i]), Number(k.split("|")[0]));
+    idx.forEach((ri, n) => (selector[ri] = res.results[n] === true));
     errors.push(...res.errors);
-    if (w === DEFAULT_WIDTH) {
+    if (k === base) {
       pageText = res.page;
       output = res.output;
     }

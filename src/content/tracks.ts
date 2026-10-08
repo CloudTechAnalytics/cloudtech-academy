@@ -494,7 +494,7 @@ export const TRACKS: Track[] = [
         items: [
           { kind: "course", courseId: "python-for-beginners", why: "Python from the first line: variables, lists, loops and functions." },
           { kind: "course", courseId: "git-and-github-for-beginners", why: "Version control and GitHub, so your work is saved, shared and visible." },
-          { kind: "course", courseId: "web-development-for-beginners", why: "HTML, CSS and a first website published with GitHub Pages." },
+          { kind: "course", courseId: "web-development-for-beginners", why: "HTML, CSS, JavaScript and Bootstrap in a live editor, and a first website published with GitHub Pages." },
           { kind: "course", courseId: "linux-networking-basics", why: "The command line, files, processes and HTTP that every server runs on.", required: false },
         ],
       },

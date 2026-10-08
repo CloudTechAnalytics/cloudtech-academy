@@ -188,13 +188,19 @@ function CodeLab({
         const selector: Record<number, boolean> = {};
         let page = "";
         let output = "";
-        const widths = new Set<number>(rules.flatMap((r) => (r.selector !== undefined ? [r.at ?? DEFAULT_CHECK_WIDTH] : [])));
-        widths.add(DEFAULT_CHECK_WIDTH);
-        for (const w of widths) {
-          const idx = rules.flatMap((r, i) => (r.selector !== undefined && (r.at ?? DEFAULT_CHECK_WIDTH) === w ? [i] : []));
-          const res = await probeAt(doc, w, idx.map((i) => rules[i]));
-          idx.forEach((ruleIndex, k) => (selector[ruleIndex] = res.results[k] === true));
-          if (w === DEFAULT_CHECK_WIDTH) {
+        // Rules that share a width and the same page actions are answered by one fresh copy of the page.
+        const key = (r: TaskRule) => `${r.at ?? DEFAULT_CHECK_WIDTH}|${JSON.stringify(r.act ?? [])}`;
+        const groups = new Map<string, number[]>();
+        rules.forEach((r, i) => {
+          if (r.selector !== undefined) groups.set(key(r), [...(groups.get(key(r)) ?? []), i]);
+        });
+        const base = key({ label: "" });
+        if (!groups.has(base)) groups.set(base, []);
+        for (const [k, idx] of groups) {
+          const width = Number(k.split("|")[0]);
+          const res = await probeAt(doc, width, idx.map((i) => rules[i]));
+          idx.forEach((ruleIndex, n) => (selector[ruleIndex] = res.results[n] === true));
+          if (k === base) {
             page = res.page;
             output = res.output;
           }

@@ -148,6 +148,8 @@ export type TaskRule = {
   in?: "html" | "css" | "js" | "all";
   /** Web tasks only, checked on the rendered page: a CSS selector that must match min (default 1) elements. */
   selector?: string;
+  /** With selector: things to do to the page first, in order, before the selector is checked. Rules with the same actions share one fresh page. */
+  act?: PageAction[];
   /** With selector: check at this screen width in pixels (default 1000), to test responsive rules. */
   at?: number;
   /** With selector: at most this many elements may match. */
@@ -163,6 +165,9 @@ export type TaskRule = {
   /** Web tasks only: a pattern the visible text of the page must match. */
   page?: string;
 };
+
+/** A scripted action on the page, used by rules to test behaviour: click an element, type into a field, submit a form, press a key, tick a box. */
+export type PageAction = { click?: string; type?: [string, string]; submit?: string; key?: [string, string]; check?: string };
 
 /** The three files of a web page the learner edits in a live editor. */
 export type WebFiles = { html?: string; css?: string; js?: string };
