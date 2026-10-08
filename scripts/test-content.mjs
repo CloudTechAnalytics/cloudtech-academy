@@ -18,7 +18,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
 import { parseCsv } from "./lib/csv-parse.mjs";
-import { checkTask } from "../src/lib/task-check.ts";
+import { checkTask, checkWebCode, isRenderRule } from "../src/lib/task-check.ts";
+import { parseLive, parseWebTask } from "../src/lib/lesson-format.ts";
 import { lessonTime, roundMinutes, timingOk } from "./lib/lesson-time.mjs";
 
 const SQL = await initSqlJs();
@@ -163,6 +164,53 @@ for (const course of COURSES) {
       if (t.sample) {
         const r = checkTask(t, t.sample.replace(/^```\w*\n|\n```$/g, ""));
         if (!r.passed) fail(`${t.id}: the model answer fails "${r.results.find((x) => !x.passed).label}"`);
+      }
+    }
+
+    // Web tasks: an editor and live preview, checked on the code and on the rendered page. Here we check
+    // the code rules (and that the starting code does not already pass); scripts/test-webtasks.mjs
+    // runs the model answers in a real browser to check the rendered-page rules too.
+    for (const block of fence(body, "webtask")) {
+      let t;
+      try {
+        t = parseWebTask(block);
+      } catch (e) {
+        fail(`webtask: ${e.message}`);
+        continue;
+      }
+      if (!t.minutes) fail(`${t.id}: needs minutes`);
+      if (ids.has(t.id)) fail(`duplicate id ${t.id}`);
+      ids.add(t.id);
+      let compiled = true;
+      try {
+        for (const r of t.rules) {
+          if (r.pattern) new RegExp(r.pattern, "im");
+          if (r.output) new RegExp(r.output, "im");
+          if (r.page) new RegExp(r.page, "im");
+          if (r.contains) new RegExp(r.contains, "i");
+          for (const v of Object.values(r.style ?? {})) new RegExp(v, "i");
+        }
+      } catch (e) {
+        fail(`${t.id}: a rule pattern doesn't compile: ${e.message}`);
+        compiled = false;
+      }
+      if (!compiled) continue;
+      if (t.rules.some((r) => !r.label)) fail(`${t.id}: every rule needs a label`);
+      const code = checkWebCode(t.rules, t.sample);
+      const bad = t.rules.findIndex((r, i) => code[i] === false);
+      if (bad >= 0) fail(`${t.id}: the model answer fails "${t.rules[bad].label}"`);
+      if (!t.rules.some((r) => !isRenderRule(r)) && !t.rules.some(isRenderRule)) fail(`${t.id}: no rules`);
+      // The starting code must not already pass every rule it can be checked against here.
+      const start = checkWebCode(t.rules, t.files);
+      if (start.every((x) => x === true || x === null) && !t.rules.some(isRenderRule)) fail(`${t.id}: the starting code already passes; the learner has nothing to do`);
+      for (const k of ["html", "css", "js"]) if (t.tabs && !t.tabs.includes(k) && t.sample[k]) fail(`${t.id}: the model answer changes ${k}, which is not an editable tab`);
+    }
+    for (const block of fence(body, "live")) {
+      try {
+        const l = parseLive(block);
+        if (!Object.keys(l.files).length) fail("a live example has no code");
+      } catch (e) {
+        fail(`live example: ${e.message}`);
       }
     }
 

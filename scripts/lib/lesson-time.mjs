@@ -29,7 +29,7 @@ const requiredPart = (body) => body.replace(/\n## More practice\n[\s\S]*?(?=\n##
 
 export function lessonTime(body, handsOn = 0) {
   const main = requiredPart(body);
-  const prose = main.replace(/```(exercise|answer|task|quiz|dataset)\s*\n[\s\S]*?\n```/g, "");
+  const prose = main.replace(/```(exercise|answer|task|webtask|live|quiz|dataset)\s*\n[\s\S]*?\n```/g, "");
   const reading = prose.split(/\s+/).filter(Boolean).length / READING_WPM;
 
   let tasks = 0;
@@ -40,9 +40,15 @@ export function lessonTime(body, handsOn = 0) {
       requiredTasks++;
       tasks += t.minutes ?? DEFAULT_TASK_MINUTES[lang] ?? 0;
     }
+  // A web task's JSON header is the text before its first === line.
+  for (const t of fence(main, "webtask").map((b) => parse(b.split(/\n===/)[0]))) {
+    if (!t?.required) continue;
+    requiredTasks++;
+    tasks += t.minutes ?? 0;
+  }
   const quiz = fence(main, "quiz").reduce((n, q) => n + (parse(q)?.length ?? 0) * 0.5, 0);
 
-  const examples = fence(main, "sql run").length + fence(main, "python").length;
+  const examples = fence(main, "sql run").length + fence(main, "python").length + fence(main, "live").length;
   const walkthrough = main.match(/\n## Walkthrough\n([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
   const steps = (walkthrough.match(/^\d+\.\s/gm) ?? []).length;
 

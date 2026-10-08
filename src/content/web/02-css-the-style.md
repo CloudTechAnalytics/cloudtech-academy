@@ -1,6 +1,6 @@
 ---
 title: "CSS: The Style"
-minutes: 25
+minutes: 30
 summary: Style your page with colours, fonts, spacing and a simple layout, and make it look good on a phone.
 ---
 

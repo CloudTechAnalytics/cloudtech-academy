@@ -1,7 +1,7 @@
 import { Fragment, useMemo, type ReactNode } from "react";
 import { marked, type Token, type Tokens } from "marked";
 import { AlertTriangle, Briefcase, Info, Lightbulb } from "lucide-react";
-import { parseAnswer, parseDataset, parseExercise, parseQuiz, parseTask } from "@/lib/lesson-format";
+import { parseAnswer, parseDataset, parseExercise, parseLive, parseQuiz, parseTask, parseWebTask } from "@/lib/lesson-format";
 import { RunnableSql } from "./sql/RunnableSql";
 import { RunnablePython } from "./RunnablePython";
 import { SqlExercise } from "./sql/SqlExercise";
@@ -9,6 +9,7 @@ import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
 import { AnswerExercise } from "./AnswerExercise";
 import { WrittenTask } from "./WrittenTask";
+import { LiveCode, WebTask } from "./LiveCode";
 import { DatasetCard } from "./DatasetCard";
 import IMAGE_SIZES from "@/content/image-sizes.json";
 
@@ -25,7 +26,7 @@ const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 
 /** Labels for formula code blocks, e.g. ```excel or ```dax. */
-const CODE_LABELS: Record<string, string> = { text: "Output", excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
+const CODE_LABELS: Record<string, string> = { text: "Output", excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML", css: "CSS", json: "JSON" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
@@ -283,6 +284,21 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
               spec={spec}
               prompt={md(spec.prompt)}
               sample={spec.sample ? md(spec.sample) : null}
+              note={spec.note ? md(spec.note) : undefined}
+              label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current}
+              completed={ctx.completedExercises.includes(spec.id)}
+              onSolved={ctx.onExerciseSolved}
+            />
+          );
+        }
+        if (lang === "live") return <LiveCode spec={parseLive(c.text)} />;
+        if (lang === "webtask") {
+          const spec = parseWebTask(c.text);
+          const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
+          return (
+            <WebTask
+              spec={spec}
+              prompt={md(spec.prompt)}
               note={spec.note ? md(spec.note) : undefined}
               label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current}
               completed={ctx.completedExercises.includes(spec.id)}

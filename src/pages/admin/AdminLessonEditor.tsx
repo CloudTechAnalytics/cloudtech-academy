@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { getBackend, type LessonInput } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
-import { extractAnswers, extractExercises, extractQuizzes, extractTasks } from "@/lib/lesson-format";
+import { extractAnswers, extractExercises, extractQuizzes, extractTasks, extractWebTasks } from "@/lib/lesson-format";
 import { LessonContent } from "@/components/LessonContent";
 import { Button } from "@/components/Button";
 import { Alert, TextArea, TextField } from "@/components/Form";
@@ -43,7 +43,7 @@ LIMIT 5;
 /** Checks that exercise and quiz blocks are valid JSON before saving. */
 function validateBody(body: string): string | null {
   try {
-    const ex = [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body)];
+    const ex = [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body), ...extractWebTasks(body)];
     const ids = new Set<string>();
     for (const e of ex) {
       if (!e.id) return "Every exercise needs an id.";
