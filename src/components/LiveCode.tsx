@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useImperativeHandle, useMemo, useRef, useState, type KeyboardEvent, type ReactNode, type Ref } from "react";
-import { CheckCircle2, Circle, Clock, Lightbulb, Monitor, RotateCcw, Smartphone, Terminal, XCircle } from "lucide-react";
+import { CheckCircle2, Circle, Clock, Lightbulb, Monitor, MonitorSmartphone, RotateCcw, Smartphone, Terminal, XCircle } from "lucide-react";
 import type { LiveSpec, TaskRule, WebFiles, WebTaskSpec } from "@/content/types";
 import { buildDoc } from "@/lib/web-doc";
 import { checkWebTask, isRenderRule, type RenderReport } from "@/lib/task-check";
@@ -8,6 +8,43 @@ import { CopyButton } from "./sql/SqlParts";
 type Tab = "html" | "css" | "js";
 const TAB_NAMES: Record<Tab, string> = { html: "index.html", css: "style.css", js: "script.js" };
 const ALL_TABS: Tab[] = ["html", "css", "js"];
+/** The width the "Desktop" preview pretends the screen has. */
+const DESKTOP_WIDTH = 1100;
+/** The width a task's rendered-page checks use unless a rule says `at`. */
+const DEFAULT_CHECK_WIDTH = 1000;
+
+/** Loads the page in a hidden iframe `width` pixels wide and asks it about the rules; resolves when it answers. */
+function probeAt(doc: string, width: number, rules: TaskRule[]): Promise<{ results: boolean[]; page: string; output: string }> {
+  return new Promise((resolve) => {
+    const f = document.createElement("iframe");
+    f.setAttribute("sandbox", "allow-scripts allow-modals allow-forms");
+    f.setAttribute("aria-hidden", "true");
+    f.tabIndex = -1;
+    f.style.cssText = `position:fixed;left:-10000px;top:0;width:${width}px;height:800px;border:0;opacity:0;pointer-events:none`;
+    const lines: string[] = [];
+    const id = Math.random().toString(36).slice(2);
+    let done = false;
+    const finish = (r: { results: boolean[]; page: string; output: string }) => {
+      if (done) return;
+      done = true;
+      window.removeEventListener("message", on);
+      f.remove();
+      resolve(r);
+    };
+    const on = (e: MessageEvent) => {
+      if (e.source !== f.contentWindow) return;
+      const d = e.data as { __ct?: number; type?: string; text?: string; id?: string; results?: boolean[]; page?: string };
+      if (!d || d.__ct !== 1) return;
+      if (d.type === "console") lines.push(String(d.text ?? ""));
+      else if (d.type === "ready") f.contentWindow?.postMessage({ __ct: "probe", id, rules }, "*");
+      else if (d.type === "probe" && d.id === id) finish({ results: d.results ?? [], page: d.page ?? "", output: lines.join("\n") });
+    };
+    window.addEventListener("message", on);
+    setTimeout(() => finish({ results: [], page: "", output: lines.join("\n") }), 6000);
+    f.srcdoc = doc;
+    document.body.appendChild(f);
+  });
+}
 
 export type LabHandle = {
   getFiles: () => WebFiles;
@@ -30,6 +67,7 @@ function CodeLab({
   height = 340,
   tabs,
   title,
+  stack,
   storageKey,
   handle,
 }: {
@@ -38,6 +76,8 @@ function CodeLab({
   height?: number;
   tabs?: Tab[];
   title: string;
+  /** Preview under the editor at full width. */
+  stack?: boolean;
   /** Where to keep the learner's work in this browser. */
   storageKey?: string;
   handle?: Ref<LabHandle>;
@@ -57,7 +97,9 @@ function CodeLab({
   });
   const [tab, setTab] = useState<Tab>(visible[0] ?? "html");
   const [doc, setDoc] = useState(() => buildDoc(files, { bootstrap, assetBase: window.location.origin }));
-  const [phone, setPhone] = useState(false);
+  const [mode, setMode] = useState<"fit" | "phone" | "desktop">("fit");
+  const [paneWidth, setPaneWidth] = useState(0);
+  const pane = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<Line[]>([]);
   const [note, setNote] = useState("");
   const frame = useRef<HTMLIFrameElement>(null);
@@ -66,7 +108,6 @@ function CodeLab({
   const readyRef = useRef(false);
   const linesRef = useRef<Line[]>([]);
   const waiters = useRef<(() => void)[]>([]);
-  const probes = useRef(new Map<string, (r: { results: boolean[]; page: string }) => void>());
   const skipTab = useRef(false);
   filesRef.current = files;
 
@@ -101,9 +142,18 @@ function CodeLab({
   }, [files, render, storageKey]);
 
   useEffect(() => {
+    const el = pane.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => setPaneWidth(el.clientWidth));
+    ro.observe(el);
+    setPaneWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
     const onMessage = (e: MessageEvent) => {
       if (e.source !== frame.current?.contentWindow) return;
-      const d = e.data as { __ct?: number; type?: string; level?: string; text?: string; id?: string; results?: boolean[]; page?: string };
+      const d = e.data as { __ct?: number; type?: string; level?: string; text?: string };
       if (!d || d.__ct !== 1) return;
       if (d.type === "console") {
         const line = { level: d.level ?? "log", text: String(d.text ?? "") };
@@ -113,9 +163,6 @@ function CodeLab({
       else if (d.type === "ready") {
         readyRef.current = true;
         waiters.current.splice(0).forEach((w) => w());
-      } else if (d.type === "probe" && d.id) {
-        probes.current.get(d.id)?.({ results: d.results ?? [], page: d.page ?? "" });
-        probes.current.delete(d.id);
       }
     };
     window.addEventListener("message", onMessage);
@@ -134,23 +181,28 @@ function CodeLab({
           waiters.current.push(resolve);
           setTimeout(resolve, 4000);
         }),
-      probe: (rules) =>
-        new Promise<RenderReport>((resolve) => {
-          const idx = rules.flatMap((r, i) => (r.selector !== undefined ? [i] : []));
-          const id = `${uid}-${Math.random()}`;
-          const finish = (res: { results: boolean[]; page: string }) => {
-            const selector: Record<number, boolean> = {};
-            idx.forEach((ruleIndex, k) => (selector[ruleIndex] = res.results[k] === true));
-            resolve({ selector, output: linesRef.current.map((l) => l.text).join("\n"), page: res.page });
-          };
-          probes.current.set(id, finish);
-          frame.current?.contentWindow?.postMessage({ __ct: "probe", id, rules: idx.map((i) => rules[i]) }, "*");
-          setTimeout(() => {
-            if (probes.current.delete(id)) finish({ results: [], page: "" });
-          }, 3000);
-        }),
+      probe: async (rules) => {
+        // The checks run in a hidden copy of the page at fixed widths, so the result does not depend on the
+        // preview size or on which Phone, Fit or Desktop button is pressed.
+        const doc = buildDoc(filesRef.current, { bootstrap, assetBase: window.location.origin });
+        const selector: Record<number, boolean> = {};
+        let page = "";
+        let output = "";
+        const widths = new Set<number>(rules.flatMap((r) => (r.selector !== undefined ? [r.at ?? DEFAULT_CHECK_WIDTH] : [])));
+        widths.add(DEFAULT_CHECK_WIDTH);
+        for (const w of widths) {
+          const idx = rules.flatMap((r, i) => (r.selector !== undefined && (r.at ?? DEFAULT_CHECK_WIDTH) === w ? [i] : []));
+          const res = await probeAt(doc, w, idx.map((i) => rules[i]));
+          idx.forEach((ruleIndex, k) => (selector[ruleIndex] = res.results[k] === true));
+          if (w === DEFAULT_CHECK_WIDTH) {
+            page = res.page;
+            output = res.output;
+          }
+        }
+        return { selector, output, page };
+      },
     }),
-    [render, uid],
+    [render, bootstrap],
   );
 
   const edit = (ta: HTMLTextAreaElement, value: string, caret: number) => {
@@ -204,7 +256,7 @@ function CodeLab({
           </button>
         </div>
       </div>
-      <div className="grid lg:grid-cols-2">
+      <div className={`grid ${stack ? "" : "lg:grid-cols-2"}`}>
         <div className="min-w-0" style={{ background: "var(--color-code-bg)" }}>
           {visible.length > 1 && (
             <div role="tablist" aria-label="Files" className="flex gap-1 border-b border-cream/10 px-2">
@@ -238,27 +290,49 @@ function CodeLab({
             className="block w-full resize-y whitespace-pre-wrap break-words bg-transparent px-3.5 py-3 font-mono text-[0.84rem] leading-relaxed text-cream focus:outline-2 focus:-outline-offset-2 focus:outline-brass-light"
           />
         </div>
-        <div className="min-w-0 border-t border-line-strong bg-white lg:border-l lg:border-t-0">
+        <div className={`min-w-0 border-t border-line-strong bg-white ${stack ? "" : "lg:border-l lg:border-t-0"}`}>
           <div className="flex items-center justify-between border-b border-line px-3 py-1.5 text-[0.75rem] text-muted">
             <span className="font-semibold">Preview</span>
             <span className="flex gap-1">
-              <button type="button" onClick={() => setPhone(true)} aria-pressed={phone} className={`inline-flex items-center gap-1 rounded px-2 py-1 ${phone ? "bg-sand text-ink" : "hover:bg-sand"}`}>
-                <Smartphone aria-hidden className="h-3.5 w-3.5" /> Phone
-              </button>
-              <button type="button" onClick={() => setPhone(false)} aria-pressed={!phone} className={`inline-flex items-center gap-1 rounded px-2 py-1 ${!phone ? "bg-sand text-ink" : "hover:bg-sand"}`}>
-                <Monitor aria-hidden className="h-3.5 w-3.5" /> Full
-              </button>
+              {(
+                [
+                  ["phone", "Phone", Smartphone],
+                  ["fit", "Fit", Monitor],
+                  ["desktop", "Desktop", MonitorSmartphone],
+                ] as const
+              ).map(([m, name, Icon]) => (
+                <button key={m} type="button" onClick={() => {
+                    setMode(m);
+                    linesRef.current = [];
+                    setLines([]);
+                  }} aria-pressed={mode === m} className={`inline-flex items-center gap-1 rounded px-2 py-1 ${mode === m ? "bg-sand text-ink" : "hover:bg-sand"}`}>
+                  <Icon aria-hidden className="h-3.5 w-3.5" /> {name}
+                </button>
+              ))}
             </span>
           </div>
-          <div className="flex justify-center bg-[#eceae4]" style={{ height }}>
-            <iframe
-              ref={frame}
-              title="Live preview of your page"
-              sandbox="allow-scripts allow-modals allow-forms"
-              srcDoc={doc}
-              className="h-full border-0 bg-white"
-              style={{ width: phone ? 390 : "100%", maxWidth: "100%", boxShadow: phone ? "0 0 0 1px rgba(0,0,0,.12)" : undefined }}
-            />
+          <div ref={pane} className="flex justify-center overflow-hidden bg-[#eceae4]" style={{ height }}>
+            {mode === "desktop" && paneWidth > 0 ? (
+              <div style={{ width: DESKTOP_WIDTH * Math.min(1, paneWidth / DESKTOP_WIDTH), height }}>
+                <iframe
+                  ref={frame}
+                  title="Live preview of your page"
+                  sandbox="allow-scripts allow-modals allow-forms"
+                  srcDoc={doc}
+                  className="border-0 bg-white"
+                  style={{ width: DESKTOP_WIDTH, height: height / Math.min(1, paneWidth / DESKTOP_WIDTH), transform: `scale(${Math.min(1, paneWidth / DESKTOP_WIDTH)})`, transformOrigin: "top left" }}
+                />
+              </div>
+            ) : (
+              <iframe
+                ref={frame}
+                title="Live preview of your page"
+                sandbox="allow-scripts allow-modals allow-forms"
+                srcDoc={doc}
+                className="h-full border-0 bg-white"
+                style={{ width: mode === "phone" ? 390 : "100%", maxWidth: "100%", boxShadow: mode === "phone" ? "0 0 0 1px rgba(0,0,0,.12)" : undefined }}
+              />
+            )}
           </div>
           {note && <p className="border-t border-line px-3 py-1.5 text-[0.75rem] text-muted">{note}</p>}
         </div>
@@ -283,7 +357,7 @@ function CodeLab({
 
 /** A live example: the learner edits the code and watches the page change. Not checked, not required. */
 export function LiveCode({ spec }: { spec: LiveSpec }) {
-  return <CodeLab files={spec.files} bootstrap={spec.bootstrap} height={spec.height} tabs={spec.tabs} title={spec.title ?? "Try it yourself: edit the code and watch the page change"} />;
+  return <CodeLab files={spec.files} bootstrap={spec.bootstrap} height={spec.height} tabs={spec.tabs} title={spec.title ?? "Try it yourself: edit the code and watch the page change"} stack={spec.stack} />;
 }
 
 const readOnlyName = (t: Tab) => TAB_NAMES[t];
@@ -382,7 +456,7 @@ export function WebTask({
       </div>
 
       <div className="mt-4">
-        <CodeLab handle={lab} files={spec.files} bootstrap={spec.bootstrap} height={spec.height} tabs={spec.tabs} title="Your editor and live preview" storageKey={`cta-web:${spec.id}`} />
+        <CodeLab handle={lab} files={spec.files} bootstrap={spec.bootstrap} height={spec.height} tabs={spec.tabs} stack={spec.stack} title="Your editor and live preview" storageKey={`cta-web:${spec.id}`} />
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">

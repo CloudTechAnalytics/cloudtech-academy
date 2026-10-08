@@ -188,7 +188,7 @@ for (const course of COURSES) {
           if (r.output) new RegExp(r.output, "im");
           if (r.page) new RegExp(r.page, "im");
           if (r.contains) new RegExp(r.contains, "i");
-          for (const v of Object.values(r.style ?? {})) new RegExp(v, "i");
+          for (const v of [...Object.values(r.style ?? {}), ...Object.values(r.attr ?? {})]) new RegExp(v, "i");
         }
       } catch (e) {
         fail(`${t.id}: a rule pattern doesn't compile: ${e.message}`);
@@ -196,7 +196,7 @@ for (const course of COURSES) {
       }
       if (!compiled) continue;
       if (t.rules.some((r) => !r.label)) fail(`${t.id}: every rule needs a label`);
-      const code = checkWebCode(t.rules, t.sample);
+      const code = checkWebCode(t.rules, { ...t.files, ...t.sample });
       const bad = t.rules.findIndex((r, i) => code[i] === false);
       if (bad >= 0) fail(`${t.id}: the model answer fails "${t.rules[bad].label}"`);
       if (!t.rules.some((r) => !isRenderRule(r)) && !t.rules.some(isRenderRule)) fail(`${t.id}: no rules`);

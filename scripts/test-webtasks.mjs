@@ -41,9 +41,11 @@ const fail = (m) => {
   console.log("  FAIL " + m);
 };
 
-/** Loads files in a page like the editor's preview and reports what the checks need. */
-async function render(files, bootstrap, rules) {
-  const page = await browser.newPage({ viewport: { width: 800, height: 600 } });
+const DEFAULT_WIDTH = 1000;
+
+/** Loads the files at one screen width like the editor's hidden check page, and reports what the checks need. */
+async function renderAt(files, bootstrap, rules, width) {
+  const page = await browser.newPage({ viewport: { width, height: 800 } });
   const printed = [];
   const errors = [];
   page.on("console", (m) => {
@@ -51,15 +53,31 @@ async function render(files, bootstrap, rules) {
     else printed.push(m.text());
   });
   page.on("pageerror", (e) => errors.push(String(e.message)));
-  // The shim also reports console lines to the parent; here the page is the top window, so collect them ourselves.
   await page.setContent(buildDoc(files, { bootstrap, assetBase: base }), { waitUntil: "load" });
   await page.waitForTimeout(450);
-  const idx = rules.flatMap((r, i) => (r.selector !== undefined ? [i] : []));
-  const probe = await page.evaluate(({ rs }) => ({ results: window.__ctProbe(rs), page: document.body.innerText }), { rs: idx.map((i) => rules[i]) });
-  const selector = {};
-  idx.forEach((ri, k) => (selector[ri] = probe.results[k] === true));
+  const probe = await page.evaluate(({ rs }) => ({ results: window.__ctProbe(rs), page: document.body.innerText }), { rs: rules });
   await page.close();
-  return { report: { selector, output: printed.join("\n"), page: probe.page }, errors };
+  return { results: probe.results, page: probe.page, output: printed.join("\n"), errors };
+}
+
+/** The editor checks selector rules at each rule's own width (default 1000px); page text and console output come from the default. */
+async function render(files, bootstrap, rules) {
+  const selector = {};
+  const errors = [];
+  let pageText = "";
+  let output = "";
+  const widths = new Set([DEFAULT_WIDTH, ...rules.filter((r) => r.selector !== undefined).map((r) => r.at ?? DEFAULT_WIDTH)]);
+  for (const w of widths) {
+    const idx = rules.flatMap((r, i) => (r.selector !== undefined && (r.at ?? DEFAULT_WIDTH) === w ? [i] : []));
+    const res = await renderAt(files, bootstrap, idx.map((i) => rules[i]), w);
+    idx.forEach((ri, k) => (selector[ri] = res.results[k] === true));
+    errors.push(...res.errors);
+    if (w === DEFAULT_WIDTH) {
+      pageText = res.page;
+      output = res.output;
+    }
+  }
+  return { report: { selector, output, page: pageText }, errors };
 }
 
 for (const folder of folders) {
@@ -79,8 +97,10 @@ for (const folder of folders) {
         continue;
       }
       tasks++;
-      const { report, errors } = await render(t.sample, t.bootstrap, t.rules);
-      const r = checkWebTask(t.rules, t.sample, report);
+      // The model answer replaces the files it gives; the others stay as the starting code.
+      const answer = { ...t.files, ...t.sample };
+      const { report, errors } = await render(answer, t.bootstrap, t.rules);
+      const r = checkWebTask(t.rules, answer, report);
       const bad = r.results.find((x) => !x.passed);
       if (bad) fail(`${t.id}: the model answer fails "${bad.label}" in the browser`);
       const realErrors = errors.filter((e) => !/favicon|Failed to load resource/i.test(e));

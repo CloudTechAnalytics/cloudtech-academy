@@ -148,10 +148,14 @@ export type TaskRule = {
   in?: "html" | "css" | "js" | "all";
   /** Web tasks only, checked on the rendered page: a CSS selector that must match min (default 1) elements. */
   selector?: string;
+  /** With selector: check at this screen width in pixels (default 1000), to test responsive rules. */
+  at?: number;
   /** With selector: at most this many elements may match. */
   max?: number;
   /** With selector: computed styles, e.g. { "display": "flex" }. Each value is a pattern; at least one element must match them all. */
   style?: Record<string, string>;
+  /** With selector: attribute values, each a pattern, that at least one matched element must have, e.g. { "alt": ".{8,}" }. */
+  attr?: Record<string, string>;
   /** With selector: a pattern the text of at least one matched element must match. */
   contains?: string;
   /** Web tasks only: a pattern the lines printed with console.log must match. */
@@ -186,10 +190,12 @@ export type WebTaskSpec = {
   height?: number;
   /** Which editor tabs to show. Default: the files that are present. */
   tabs?: ("html" | "css" | "js")[];
+  /** Put the preview under the editor, full width, instead of beside it. */
+  stack?: boolean;
 };
 
 /** A free editor with a live preview (```live): the learner changes the code and watches the page change. */
-export type LiveSpec = { files: WebFiles; bootstrap?: boolean; height?: number; tabs?: ("html" | "css" | "js")[]; title?: string };
+export type LiveSpec = { files: WebFiles; bootstrap?: boolean; height?: number; tabs?: ("html" | "css" | "js")[]; title?: string; stack?: boolean };
 
 /**
  * A practice task where the learner writes or pastes real work (a CV bullet, a prompt,
