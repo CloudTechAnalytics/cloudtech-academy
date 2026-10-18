@@ -19,7 +19,8 @@ import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
 import { parseCsv } from "./lib/csv-parse.mjs";
 import { checkTask, checkWebCode, isRenderRule } from "../src/lib/task-check.ts";
-import { parseLive, parseWebTask } from "../src/lib/lesson-format.ts";
+import { parseGitTask, parseLive, parseWebTask } from "../src/lib/lesson-format.ts";
+import { checkGitTask, prepare, run as gitRun } from "../src/lib/git-sim.ts";
 import { lessonTime, roundMinutes, timingOk } from "./lib/lesson-time.mjs";
 
 const SQL = await initSqlJs();
@@ -204,6 +205,37 @@ for (const course of COURSES) {
       const start = checkWebCode(t.rules, t.files);
       if (start.every((x) => x === true || x === null) && !t.rules.some(isRenderRule)) fail(`${t.id}: the starting code already passes; the learner has nothing to do`);
       for (const k of ["html", "css", "js"]) if (t.tabs && !t.tabs.includes(k) && t.sample[k]) fail(`${t.id}: the model answer changes ${k}, which is not an editable tab`);
+    }
+    // Git tasks: run the model answer in the simulator, and check that it passes every rule while the starting repository does not.
+    for (const block of fence(body, "gittask")) {
+      let t;
+      try {
+        t = parseGitTask(block);
+      } catch (e) {
+        fail(`gittask: ${e.message}`);
+        continue;
+      }
+      if (!t.minutes) fail(`${t.id}: needs minutes`);
+      if (ids.has(t.id)) fail(`duplicate id ${t.id}`);
+      ids.add(t.id);
+      try {
+        for (const r of t.rules) {
+          if (!r.label) fail(`${t.id}: every rule needs a label`);
+          for (const k of ["contains", "log", "ran"]) if (r[k]) new RegExp(r[k], "i");
+        }
+      } catch (e) {
+        fail(`${t.id}: a rule pattern doesn't compile: ${e.message}`);
+        continue;
+      }
+      const start = prepare({ files: t.files, setup: t.setup, identity: t.identity });
+      if (checkGitTask(start, t.rules).passed) fail(`${t.id}: the starting repository already passes every rule`);
+      const repo = prepare({ files: t.files, setup: t.setup, identity: t.identity });
+      for (const line of t.sample) {
+        const out = gitRun(repo, line);
+        if (out.error && !/^git (merge|commit)\b/.test(line)) fail(`${t.id}: the model answer's command "${line}" fails: ${out.out.split("\n")[0]}`);
+      }
+      const res = checkGitTask(repo, t.rules);
+      if (!res.passed) fail(`${t.id}: the model answer fails "${res.results.find((x) => !x.passed).label}"`);
     }
     for (const block of fence(body, "live")) {
       try {

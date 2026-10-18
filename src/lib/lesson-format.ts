@@ -8,12 +8,14 @@
  *   ```task         JSON: written work checked against rules, with a model answer (TaskSpec)
  *   ```dataset      JSON: { dataset, files?, note? } download card for a practice dataset
  *   ```live         a live HTML/CSS/JS editor with a preview: optional JSON header, then === html / === css / === js sections
+ *   ```gittask      a Git practice task checked on the repository the learner ends up with (GitTaskSpec): JSON header, then === sections
+ *   ```gitterm      a free Git practice terminal: optional JSON header, === file <name> and === setup sections
  *   ```webtask      a web task checked on the code and the rendered page (WebTaskSpec): JSON header, then === sections
  *
  * Callouts use blockquotes starting with [!TIP], [!NOTE], [!WARNING] or [!BUSINESS].
  * These helpers are dependency-free so the same logic can be mirrored by build scripts.
  */
-import type { AnswerSpec, DatasetBlock, ExerciseSpec, LiveSpec, QuizQuestion, TaskSpec, WebFiles, WebTaskSpec } from "@/content/types";
+import type { AnswerSpec, DatasetBlock, ExerciseSpec, GitTaskSpec, GitTermSpec, LiveSpec, QuizQuestion, TaskSpec, WebFiles, WebTaskSpec } from "@/content/types";
 
 export function parseFrontmatter(raw: string): { meta: Record<string, string>; body: string } {
   const text = raw.replace(/\r\n/g, "\n");
@@ -92,7 +94,8 @@ function webSections(text: string): { header: string; sections: Record<string, s
   for (const line of lines) {
     const m = line.match(/^===\s*(.+?)\s*$/);
     if (m) {
-      current = sections[m[1].toLowerCase()] = [];
+      const name = /^file\s+/i.test(m[1]) ? "file " + m[1].replace(/^file\s+/i, "").trim() : m[1].toLowerCase();
+      current = sections[name] = [];
     } else if (current) current.push(line);
     else head.push(line);
   }
@@ -123,11 +126,39 @@ export function parseLive(text: string): LiveSpec {
   return { ...meta, files };
 }
 
+const commandLines = (text: string | undefined) =>
+  (text ?? "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith("#"));
+
+const fileSections = (sections: Record<string, string>) =>
+  Object.fromEntries(Object.entries(sections).filter(([k]) => k.startsWith("file ")).map(([k, v]) => [k.slice(5), v === "" ? "" : v + "\n"]));
+
+export function parseGitTask(text: string): GitTaskSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<GitTaskSpec>;
+  const t = { ...meta, prompt: sections.prompt ?? "", note: sections.note, files: fileSections(sections), setup: commandLines(sections.setup), sample: commandLines(sections.sample) } as GitTaskSpec;
+  if (!t.id || !t.prompt || !Array.isArray(t.rules) || !t.rules.length) throw new Error("A Git task needs id, prompt and rules");
+  if (!t.sample.length) throw new Error(`${t.id}: a Git task needs a model answer (=== sample, one command per line)`);
+  return t;
+}
+
+export function parseGitTerm(text: string): GitTermSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<GitTermSpec>;
+  return { ...meta, files: fileSections(sections), setup: commandLines(sections.setup) };
+}
+
+export function extractGitTasks(body: string): GitTaskSpec[] {
+  return fences(body, "gittask").map(parseGitTask);
+}
+
 export function extractWebTasks(body: string): WebTaskSpec[] {
   return fences(body, "webtask").map(parseWebTask);
 }
 
 /** IDs of every required practice task in a lesson: SQL exercises, answer tasks, written tasks and web tasks. */
 export function requiredExerciseIds(body: string): string[] {
-  return [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body), ...extractWebTasks(body)].filter((e) => e.required).map((e) => e.id);
+  return [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body), ...extractWebTasks(body), ...extractGitTasks(body)].filter((e) => e.required).map((e) => e.id);
 }

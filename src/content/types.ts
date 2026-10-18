@@ -134,6 +134,8 @@ export type AnswerSpec = {
  * the text must match at least `min` times, or with `absent` must not match at all; with
  * `perLine` every non-empty line must match instead. The length rules count words or lines.
  */
+import type { GitRule } from "@/lib/git-sim";
+
 export type TaskRule = {
   /** What the learner sees in the checklist, e.g. "Each bullet includes a number". */
   label: string;
@@ -198,6 +200,34 @@ export type WebTaskSpec = {
   /** Put the preview under the editor, full width, instead of beside it. */
   stack?: boolean;
 };
+
+/**
+ * A Git practice task: the learner types real Git commands in a terminal built into the page (a simulator), and
+ * the repository they end up with is checked against rules. Written as ```gittask: a JSON header, then === sections
+ * (prompt, setup, sample, file <name>).
+ */
+export type GitTaskSpec = {
+  id: string;
+  prompt: string;
+  minutes: number;
+  rules: GitRule[];
+  required?: boolean;
+  hint?: string;
+  note?: string;
+  /** The files in the folder at the start. */
+  files: Record<string, string>;
+  /** Commands run before the learner starts (not counted as theirs). */
+  setup: string[];
+  /** A model answer: the commands to type. It must pass the task's own rules. */
+  sample: string[];
+  /** Terminal height in pixels. Default 300. */
+  height?: number;
+  /** false: the learner starts with no Git name and email set. */
+  identity?: boolean;
+};
+
+/** A free practice terminal (```gitterm): the same terminal, with no rules. */
+export type GitTermSpec = { files: Record<string, string>; setup: string[]; height?: number; title?: string; identity?: boolean };
 
 /** A free editor with a live preview (```live): the learner changes the code and watches the page change. */
 export type LiveSpec = { files: WebFiles; bootstrap?: boolean; height?: number; tabs?: ("html" | "css" | "js")[]; title?: string; stack?: boolean };

@@ -1,103 +1,240 @@
 ---
-title: Your First Repository
-minutes: 25
-summary: Create a repository on GitHub, add and edit files, and write good commit messages, all in your browser with nothing to install.
+title: "Your First Repository: init, add and commit"
+minutes: 30
+summary: Turn a folder into a Git repository, then use the core loop every developer repeats all day: edit, check the status, stage, commit and read the history. Practise each command in the terminal built into the page.
 ---
 
-## Start in the browser
+## The core loop
 
-You don't need to install anything to start. GitHub lets you create repositories and commit changes on the website. (Later you can install **GitHub Desktop** or use Git on the command line.)
+Almost everything you do in Git is one loop:
 
-## Create a repository
+1. **Edit** your files as normal.
+2. **Check** what changed: `git status`.
+3. **Stage** the changes you want to save: `git add`.
+4. **Commit** them with a message: `git commit -m "..."`.
+5. **Read** the history: `git log`.
 
-1. On GitHub, click **+** (top right) → **New repository**.
-2. **Repository name:** short and clear, with hyphens, such as `sales-analysis` or `my-first-website`.
-3. **Description:** one sentence on what it is.
-4. Choose **Public** (anyone can see it, which is good for a portfolio) or **Private**.
-5. Tick **Add a README file**.
-6. Click **Create repository**.
+This lesson builds that loop into your fingers. You will work in the practice terminal. On the left are the project's files, and on the right is the terminal. When you see a command, type it and press Enter.
 
-## Add and edit files
+Our project is a small recipe notebook. Start by looking around. Type `ls` to list the files, and `cat recipes.md` to read one.
 
-- **Add a file:** click **Add file → Create new file**, type a name such as `notes.md`, write something, then scroll down.
-- **Upload files:** click **Add file → Upload files** and drag in your work, for example a spreadsheet, a notebook or images.
-- **Edit a file:** open it and click the pencil icon.
+```gitterm
+=== file recipes.md
+# My Recipe Notebook
 
-Each time, GitHub asks you to **commit changes**. That's your save point.
+## Jollof rice
+Rice, tomatoes, peppers, onions, oil, thyme.
+=== file shopping.txt
+Rice
+Tomatoes
+Onions
+```
 
-## Write good commit messages
+## Step 1: git init
 
-A commit message says **what changed**. Future you (and anyone reviewing your work) will read these.
+A folder becomes a repository when you run `git init` inside it. Try it in the terminal above:
+
+```bash
+git init
+```
+
+Git replies `Initialized empty Git repository`. It created a hidden folder called `.git` (try `ls -a` to see it) that holds the whole history. **Never edit or delete `.git`.** Delete it, and you delete the history, and the folder is a normal folder again.
+
+You run `git init` once per project. Everything else happens inside that same folder.
+
+## Step 2: git status, your best friend
+
+`git status` tells you what is going on. Use it constantly, before and after every other command.
+
+```bash
+git status
+```
+
+Right now it says:
+
+```text
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    recipes.md
+    shopping.txt
+```
+
+**Untracked** means Git can see the files but is not tracking them yet. Notice in the file list on the left, too: a `?` badge appears beside untracked files. (`A` means staged, `M` means changed, and `U` means a conflict, which you meet in lesson 6.)
+
+## Step 3: git add, staging a change
+
+`git add` moves changes into the staging area: the waiting room for the next commit.
+
+```bash
+git add recipes.md       # stage one file
+git add .                # stage everything in this folder
+```
+
+Stage only `recipes.md` first, then run `git status` again. It now shows `recipes.md` under **Changes to be committed** (staged) and `shopping.txt` still untracked. You can see the `A` badge appear beside `recipes.md`.
+
+## Step 4: git commit, saving a snapshot
+
+```bash
+git commit -m "Add jollof rice recipe"
+```
+
+The `-m` flag gives the commit **message**, in quotes. Git replies with the short ID of your new commit. Run `git status` once more: it now says `nothing added to commit` and lists `shopping.txt` as still untracked, because you never staged it.
+
+That is the staging area at work. You chose what went into the commit. Now add and commit the shopping list as a **separate** commit, with its own message:
+
+```bash
+git add shopping.txt
+git commit -m "Add shopping list"
+```
+
+## Step 5: git log, reading the history
+
+```bash
+git log
+git log --oneline
+```
+
+`git log` shows each commit with its ID, author and message, newest first. `git log --oneline` squeezes each to one line, which is easier to scan. Try both. You should see your two commits, with `HEAD -> main` marking where you are now.
+
+## Editing a tracked file
+
+Most of the time you change a file that Git already knows. Click `shopping.txt` in the file list and add a line, such as `Garri`, then **Save file**. (You can also use the terminal: `echo "Garri" >> shopping.txt` adds a line.) Now run:
+
+```bash
+git status
+git diff
+```
+
+`git status` now shows `shopping.txt` as **modified**, and `git diff` shows exactly what changed: lines starting with `-` were removed and lines with `+` were added.
+
+Then stage and commit it, with a message that says what you did.
+
+## A shortcut, and a warning
+
+For files Git already tracks, `git commit -am "message"` stages **and** commits all changed tracked files in one step. It does not include new, untracked files. It is handy, but for beginners, staging explicitly with `git add` keeps you in control and teaches the model. Be careful with `git add .`: it stages everything, including files you did not mean to include. Check `git status` first.
+
+## Good commit messages
+
+A commit message says **what changed** and **why it matters**. Future you, and your team, will read these.
 
 | Weak | Strong |
 | :-- | :-- |
 | update | Add revenue by region chart |
 | stuff | Fix date format in orders data |
 | final | Write README with project summary |
+| fixed it | Fix crash when the cart is empty |
 
-Start with a verb (Add, Fix, Update, Remove) and keep it under about 60 characters.
+Start with a verb (Add, Fix, Update, Remove) and keep it under about 60 characters. Lesson 3 goes deeper.
 
-## See the history
+## The browser way (for later)
 
-Click **Commits** (near the top of the file list, with a clock icon) to see every change, who made it and when. Click any commit to see exactly what changed: removed lines in red, added lines in green.
-
-![Edit a file, commit with a message, then see the history; a commit view shows a removed line in red and an added line in green, with a warning never to commit passwords or API keys](/images/courses/git/commit-diff.svg "Edit, commit with a message, and the history shows exactly what changed.")
+You can also create a repository on the GitHub website: **+, New repository**, name it, tick **Add a README file**, and **Create repository**. You can then add and edit files in the browser and commit from there. It is the same idea with buttons instead of commands, and it is how you start a repository that lives on GitHub. In lesson 7 you will connect your own computer to a GitHub repository.
 
 > [!NOTE]
-> Never upload passwords, API keys or other people's personal data to a repository, even a private one. If you do by mistake, deleting the file isn't enough, because it stays in the history. Change the password or key straight away.
+> Never commit passwords, API keys or other people's personal data, even in a private repository. If you do by mistake, deleting the file is not enough, because it stays in the history. Lesson 3 shows how to keep secrets out, and lesson 9 shows what to do if one gets in.
 
 ## Try it
 
-```task
+First, create your first repository. The folder has two files and no Git yet.
+
+```gittask
 {
   "id": "git-m02-t1",
-  "prompt": "Rewrite these four weak commit messages as strong ones, one per line, in the same order. Each should start with a verb (Add, Fix, Update, Remove, Write…) and say what changed in under 60 characters.\n\n1. `update` (you added a chart of revenue by month)\n2. `stuff` (you fixed dates that were in the wrong format)\n3. `final` (you wrote the project summary in the README)\n4. `changes` (you deleted an old test file you don't need)",
-  "minutes": 5,
-  "rows": 5,
-  "placeholder": "Add ...\nFix ...\nWrite ...\nRemove ...",
+  "minutes": 8,
+  "required": true,
   "rules": [
-    { "label": "Four messages, one per line", "minLines": 4 },
-    { "label": "Every line starts with a verb (Add, Fix, Update, Remove, Write, Delete, Create…)", "pattern": "^\\s*(\\d+[.)]\\s*)?(add|fix|update|remove|write|delete|create|rename|improve|correct|clean|change|move|replace|format|convert)\\b", "perLine": true },
-    { "label": "Every message is under 60 characters", "pattern": "^[^\\n]{61,}$", "absent": true },
-    { "label": "None of the weak words on their own", "pattern": "^\\s*(\\d+[.)]\\s*)?(update|stuff|final|changes)\\s*$", "absent": true },
-    { "label": "Mentions what changed (chart, date, README, file…)", "pattern": "chart|date|readme|file|test|summary", "min": 3 }
+    { "label": "The folder is a Git repository (git init)", "ran": "^git init" },
+    { "label": "Both files are tracked in a commit", "tracked": "recipes.md" },
+    { "label": "shopping.txt is committed too", "tracked": "shopping.txt" },
+    { "label": "Your commit has a clear message of at least 8 characters", "log": "\\S.{7,}" },
+    { "label": "Nothing is left uncommitted (git status is clean)", "clean": true }
   ],
-  "sample": "Add revenue by month chart\nFix date format in orders data\nWrite project summary in README\nRemove unused test file",
-  "required": true
+  "hint": "git init, then git add . (or add each file), then git commit -m \"Add recipes and shopping list\". Check with git status and git log --oneline.",
+  "height": 280
 }
+=== prompt
+Turn this folder into a repository and make a commit that includes **both** files, with a clear message. Finish with `git status` showing a clean working tree.
+=== file recipes.md
+# My Recipe Notebook
+
+## Jollof rice
+Rice, tomatoes, peppers, onions, oil, thyme.
+=== file shopping.txt
+Rice
+Tomatoes
+Onions
+=== sample
+git init
+git add .
+git commit -m "Add recipes and shopping list"
+=== note
+You can do the same with two commits, one per file. Either way, the rule is that every commit has a message that explains it.
 ```
 
-```task
+Now make a second commit. The repository already has one commit. Add a new item to the shopping list and save the change.
+
+```gittask
 {
   "id": "git-m02-t2",
-  "prompt": "Create the public `learning-log` repository with a README, add `week-1.md` with three things you learned this week, and commit with a clear message. Then edit the README and commit again. Paste the **repository link** on the first line and your **two commit messages** on the next lines.",
-  "minutes": 12,
-  "rows": 4,
-  "placeholder": "https://github.com/your-username/learning-log\nAdd week 1 learning notes\nUpdate README with ...",
+  "minutes": 8,
+  "required": true,
   "rules": [
-    { "label": "A link to your learning-log repository", "pattern": "https?://(www\\.)?github\\.com/[A-Za-z0-9-]+/learning-log\\b" },
-    { "label": "Two commit messages, one per line, starting with verbs", "pattern": "^\\s*(add|fix|update|remove|write|create|edit|describe|explain)\\b[^\\n]*$", "min": 2 }
+    { "label": "There are now at least two commits", "commits": 2 },
+    { "label": "shopping.txt includes Garri", "file": "shopping.txt", "contains": "garri" },
+    { "label": "The change is committed (working tree clean)", "clean": true },
+    { "label": "You wrote a commit message that starts with a verb (Add, Update, Fix ...)", "log": "^(Add|Update|Fix|Change|Include)\\b" },
+    { "label": "You checked what changed with git diff or git status before committing", "ran": "^git (diff|status)" }
   ],
-  "sample": "https://github.com/adaeze-okafor/learning-log\nAdd week 1 learning notes\nUpdate README to explain what this log is for",
-  "required": true
+  "hint": "Edit shopping.txt in the file editor and click Save file (or use echo \"Garri\" >> shopping.txt). Then git status, git diff, git add shopping.txt, and git commit -m \"Add garri to shopping list\".",
+  "height": 280
 }
+=== prompt
+Add `Garri` as a new line in `shopping.txt`, look at the change with `git diff`, and commit it with a message that starts with a verb.
+=== file recipes.md
+# My Recipe Notebook
+
+## Jollof rice
+Rice, tomatoes, peppers, onions, oil, thyme.
+=== file shopping.txt
+Rice
+Tomatoes
+Onions
+=== setup
+git init
+git add .
+git commit -m "Add recipes and shopping list"
+=== sample
+echo "Garri" >> shopping.txt
+git status
+git diff
+git add shopping.txt
+git commit -m "Add garri to shopping list"
 ```
-
-You realise you committed a file containing a password to a **public** repository an hour ago. What's the most important thing to do?
-
-- **A.** Delete the file and commit; that removes it.
-- **B.** Change the password (or revoke the key) straight away, then remove the file.
-- **C.** Make the repository private and leave the file.
-- **D.** Nothing; nobody will have seen it.
 
 ```answer
 {
   "id": "git-m02-a1",
-  "prompt": "Type the letter.",
-  "answer": "B",
+  "prompt": "Which command shows you what has changed, what is staged and what is untracked? Type the full command.",
+  "answer": "git status",
   "format": "text",
-  "accept": ["b.", "(b)"],
-  "explanation": "The password stays in the repository's history even after you delete the file, and public repos are scanned by bots within minutes. Treat it as leaked: change it first, then clean up.",
+  "accept": ["git status "],
+  "explanation": "git status is the command to run before and after almost everything else.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "git-m02-a2",
+  "prompt": "You edited `index.html` and `style.css`, but you only want `index.html` in your next commit. Which command stages just that one file? Type the full command.",
+  "answer": "git add index.html",
+  "format": "text",
+  "accept": ["git add ./index.html"],
+  "explanation": "Naming the file stages only that file. git add . would stage both.",
   "required": true
 }
 ```
