@@ -18,7 +18,7 @@ const check = (n: string, title: string, questions: Q[]): AssessmentDef => ({
  * Web Development: a check for each module (it awards the module badge, and unlocks only after the
  * module's tasks are done) and a final assessment. Questions are scenarios with plausible wrong answers.
  */
-export const WEB_ASSESSMENTS: AssessmentDef[] = [
+const LESSON_CHECKS: AssessmentDef[] = [
   check("m01", "How the Web Works and Your First Page", [
     q("web-m01-q1", "You type a web address and press Enter. What does the server send back to your browser?", ["A finished picture of the page", "Files (HTML, CSS and JavaScript) that the browser turns into the page", "Only the page's text", "An email with a link"], 1, "The browser draws the page from the files the server sends."),
     q("web-m01-q2", "A friend says: \"My page has the right words but looks plain, with no colours or layout.\" Which language is missing or not connected?", ["HTML", "CSS", "JavaScript", "SQL"], 1, "HTML gives structure and content; CSS controls colour, fonts and layout."),
@@ -198,4 +198,16 @@ export const WEB_ASSESSMENTS: AssessmentDef[] = [
       q("web-f16", "Which is the best order to add resources to a page with Bootstrap and your own CSS?", ["Your CSS, then Bootstrap's CSS", "Bootstrap's CSS, then your CSS, with scripts at the end of the body", "Scripts in the head only", "It does not matter"], 1, "Later rules win, so your CSS must come after Bootstrap's."),
     ],
   },
+];
+
+const FINAL = LESSON_CHECKS.find((a) => a.kind === "final")!;
+/** The first `per` questions of each listed lesson check, so a stage check covers all of its lessons. */
+const pick = (moduleIds: string[], per: number): Q[] => LESSON_CHECKS.filter((a) => a.moduleId && moduleIds.includes(a.moduleId)).flatMap((a) => a.questions.slice(0, per));
+
+export const WEB_ASSESSMENTS: AssessmentDef[] = [
+  check("m01", "HTML: Build the Structure", pick(["web-m01", "web-m02", "web-m03", "web-m04", "web-m05"], 3)),
+  check("m02", "CSS: Style and Layout", pick(["web-m06", "web-m07", "web-m08", "web-m09", "web-m10", "web-m11", "web-m12"], 2)),
+  check("m03", "JavaScript: Make It Interactive", pick(["web-m13", "web-m14", "web-m15", "web-m16", "web-m17", "web-m18"], 2)),
+  check("m04", "Bootstrap, Building and Launching", pick(["web-m19", "web-m20", "web-m21", "web-m22"], 3)),
+  FINAL,
 ];

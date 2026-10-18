@@ -3347,7 +3347,7 @@ on conflict (id) do update set format = excluded.format, completion_badge = excl
 update public.courses set access_type = 'free', price = null, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = null, overview = null, audience = '{}'::text[], included = '{}'::text[], project_previews = '[]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'free', outcomes = '{}'::text[], difficulty_max = null, duration_weeks = null, thumbnail = null, faqs = '[]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'git-and-github-for-beginners' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m01', 'git-and-github-for-beginners', 'What Git and GitHub Are, and Getting Set Up', 1, 'Git Basics', 'GITBASIC', array['Explain version control and how Git thinks', 'Tell Git and GitHub apart', 'Use the key words: repo, commit, push, pull', 'Set up Git and a secure GitHub account']::text[], '{}'::text[])
+values ('git-m01', 'git-and-github-for-beginners', 'Git Fundamentals', 1, 'Git Basics', 'GITBASIC', array['Explain version control and how Git thinks', 'Use init, status, add, commit and log', 'Compare changes and keep secrets out with .gitignore', 'Undo mistakes with restore, amend, reset, revert and stash']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
@@ -3555,12 +3555,8 @@ On your own computer you do this once, and Git remembers it for every project. T
 $md$, true, true, 1, array['git-m01-a1', 'git-m01-a2', 'git-m01-t2', 'git-m01-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m02', 'git-and-github-for-beginners', 'Your First Repository', 2, 'First Repository', 'FIRSTREP', array['Create a repository with git init', 'Use status, add and commit', 'Read the history with git log', 'Write clear commit messages']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:your-first-repository', 'git-and-github-for-beginners', 'git-m02', 'your-first-repository', 'Your First Repository: init, add and commit', 'Turn a folder into a Git repository, then use the core loop every developer repeats all day: edit, check the status, stage, commit and read the history. Practise each command in the terminal built into the page.', 30, $md$
+values ('git-and-github-for-beginners:your-first-repository', 'git-and-github-for-beginners', 'git-m01', 'your-first-repository', 'Your First Repository: init, add and commit', 'Turn a folder into a Git repository, then use the core loop every developer repeats all day: edit, check the status, stage, commit and read the history. Practise each command in the terminal built into the page.', 30, $md$
 ## The core loop
 
 Almost everything you do in Git is one loop:
@@ -3798,12 +3794,8 @@ git commit -m "Add garri to shopping list"
 $md$, true, true, 2, array['git-m02-a1', 'git-m02-a2', 'git-m02-t1', 'git-m02-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m03', 'git-and-github-for-beginners', 'Staging, Diffs, History and .gitignore', 3, 'Clean Commits', 'CLEANCMT', array['Compare changes with git diff', 'Commit one idea at a time', 'Explore history with log and show', 'Keep secrets and junk out with .gitignore']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:staging-history-gitignore', 'git-and-github-for-beginners', 'git-m03', 'staging-history-gitignore', 'Staging, Diffs, History and .gitignore', 'Go beyond the basics. Compare changes with git diff, commit in clean logical pieces, write messages teams will thank you for, explore history with log and show, and keep secrets and junk out of your repository with .gitignore.', 30, $md$
+values ('git-and-github-for-beginners:staging-history-gitignore', 'git-and-github-for-beginners', 'git-m01', 'staging-history-gitignore', 'Staging, Diffs, History and .gitignore', 'Go beyond the basics. Compare changes with git diff, commit in clean logical pieces, write messages teams will thank you for, explore history with log and show, and keep secrets and junk out of your repository with .gitignore.', 30, $md$
 ## Looking before you commit
 
 Professionals never commit blindly. Before every commit they check **what exactly is about to be saved**. Git gives you two views, and the difference between them is the staging area.
@@ -4048,12 +4040,8 @@ git commit -m "Update the footer year"
 $md$, true, true, 3, array['git-m03-a1', 'git-m03-a2', 'git-m03-t1', 'git-m03-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m04', 'git-and-github-for-beginners', 'Undoing Mistakes Safely', 4, 'Git Undo', 'GITUNDO', array['Restore files and unstage changes', 'Amend and reset your own commits', 'Revert shared commits safely', 'Park work with git stash']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:undoing-mistakes', 'git-and-github-for-beginners', 'git-m04', 'undoing-mistakes', 'Undoing Mistakes Safely: restore, amend, reset, revert and stash', 'Everyone makes mistakes, and Git is built so you can fix them. Learn which command undoes which mistake, from a bad edit to a bad commit, and which ones are safe on shared work.', 25, $md$
+values ('git-and-github-for-beginners:undoing-mistakes', 'git-and-github-for-beginners', 'git-m01', 'undoing-mistakes', 'Undoing Mistakes Safely: restore, amend, reset, revert and stash', 'Everyone makes mistakes, and Git is built so you can fix them. Learn which command undoes which mistake, from a bad edit to a bad commit, and which ones are safe on shared work.', 25, $md$
 ## Git is a safety net
 
 The best thing about Git is not saving your work. It is that you can **undo almost anything**. That makes you braver: you can try a risky change, knowing you can get back.
@@ -4309,11 +4297,11 @@ $md$, true, true, 4, array['git-m04-a1', 'git-m04-t1', 'git-m04-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m05', 'git-and-github-for-beginners', 'Branches', 5, 'Git Branching', 'BRANCHES', array['Understand what a branch is', 'Create, switch, merge and delete branches', 'Name branches well', 'Keep main always working']::text[], '{}'::text[])
+values ('git-m02', 'git-and-github-for-beginners', 'Branching and Merging', 2, 'Git Branching', 'BRANCHES', array['Create, switch, merge and delete branches', 'Keep main always working', 'Read conflict markers and resolve conflicts', 'Abort a merge and avoid conflicts']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:branches', 'git-and-github-for-beginners', 'git-m05', 'branches', 'Branches: Work Without Fear', 'Learn the idea that makes Git powerful, the branch. Create a separate line of work, switch between branches, merge finished work back, and tidy up, with a workflow every team uses.', 30, $md$
+values ('git-and-github-for-beginners:branches', 'git-and-github-for-beginners', 'git-m02', 'branches', 'Branches: Work Without Fear', 'Learn the idea that makes Git powerful, the branch. Create a separate line of work, switch between branches, merge finished work back, and tidy up, with a workflow every team uses.', 30, $md$
 ## The problem branches solve
 
 You are building a website that people use. You want to add a new contact page. It will take three days, and half-finished code will break things in the meantime. Meanwhile, a visitor reports a typo that needs fixing today.
@@ -4521,12 +4509,8 @@ git switch main
 $md$, true, true, 5, array['git-m05-a1', 'git-m05-t1', 'git-m05-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m06', 'git-and-github-for-beginners', 'Merge Conflicts', 6, 'Conflict Resolver', 'CONFLICT', array['Explain why conflicts happen', 'Read conflict markers', 'Resolve a conflict and finish the merge', 'Abort a merge and avoid conflicts']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:merge-conflicts', 'git-and-github-for-beginners', 'git-m06', 'merge-conflicts', 'Merge Conflicts: Don''t Panic', 'Merge conflicts scare every beginner and are routine for every professional. Learn why they happen, how to read the markers Git writes, how to resolve one step by step, how to abort, and how teams avoid most of them.', 25, $md$
+values ('git-and-github-for-beginners:merge-conflicts', 'git-and-github-for-beginners', 'git-m02', 'merge-conflicts', 'Merge Conflicts: Don''t Panic', 'Merge conflicts scare every beginner and are routine for every professional. Learn why they happen, how to read the markers Git writes, how to resolve one step by step, how to abort, and how teams avoid most of them.', 25, $md$
 ## Conflicts are normal
 
 You merge a branch and Git says:
@@ -4742,11 +4726,11 @@ $md$, true, true, 6, array['git-m06-a1', 'git-m06-t1', 'git-m06-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m07', 'git-and-github-for-beginners', 'GitHub and Remotes', 7, 'GitHub Remotes', 'REMOTES', array['Connect a local repository to GitHub', 'Push, pull, fetch and clone', 'Sign in safely with tokens or SSH', 'Fork a repository']::text[], '{}'::text[])
+values ('git-m03', 'git-and-github-for-beginners', 'GitHub and Collaboration', 3, 'GitHub Collaboration', 'GITTEAM', array['Connect to GitHub with push, pull and clone', 'Open and review pull requests', 'Write issues and professional project files', 'Handle secrets and access safely']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:github-remotes', 'git-and-github-for-beginners', 'git-m07', 'github-remotes', 'GitHub and Remotes: Push, Pull and Clone', 'Connect the repository on your computer to GitHub. Learn what a remote is, how to sign in safely, and the everyday rhythm of clone, pull, commit and push, with the commands practised in the terminal and the real thing on GitHub.', 45, $md$
+values ('git-and-github-for-beginners:github-remotes', 'git-and-github-for-beginners', 'git-m03', 'github-remotes', 'GitHub and Remotes: Push, Pull and Clone', 'Connect the repository on your computer to GitHub. Learn what a remote is, how to sign in safely, and the everyday rhythm of clone, pull, commit and push, with the commands practised in the terminal and the real thing on GitHub.', 45, $md$
 ## One repository, many copies
 
 So far everything has lived on your own computer. **GitHub** gives your repository a second home on the internet. Your project then exists in (at least) two places:
@@ -4961,12 +4945,8 @@ Finally, do the real thing. Put a project of yours on GitHub, from your own comp
 $md$, true, true, 7, array['git-m07-a1', 'git-m07-t3', 'git-m07-t1', 'git-m07-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m08', 'git-and-github-for-beginners', 'Pull Requests and Code Review', 8, 'Pull Requests', 'PULLREQ', array['Follow the branch, push and pull request workflow', 'Write a clear pull request description', 'Review code kindly and respond to reviews', 'Choose a merge strategy']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:pull-requests', 'git-and-github-for-beginners', 'git-m08', 'pull-requests', 'Pull Requests and Code Review', 'Learn the workflow almost every software team uses. Work on a branch, push it, open a pull request, get a review, and merge. Practise the branch-and-push part in the terminal, and write a pull request description a reviewer will thank you for.', 30, $md$
+values ('git-and-github-for-beginners:pull-requests', 'git-and-github-for-beginners', 'git-m03', 'pull-requests', 'Pull Requests and Code Review', 'Learn the workflow almost every software team uses. Work on a branch, push it, open a pull request, get a review, and merge. Practise the branch-and-push part in the terminal, and write a pull request description a reviewer will thank you for.', 30, $md$
 ## Why teams do not push straight to main
 
 On a real team, nobody commits directly to `main`. `main` is the version that is live, or about to be, so every change to it is **proposed first**, **read by another person**, and **checked automatically** before it goes in. The tool for that is the **pull request**, or **PR**.
@@ -5174,12 +5154,8 @@ Now write the pull request itself. This is the thing reviewers read first.
 $md$, true, true, 8, array['git-m08-a1', 'git-m08-t2', 'git-m08-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m09', 'git-and-github-for-beginners', 'Teamwork and Keeping Secrets Safe', 9, 'Safe Collaboration', 'GITSAFE', array['Write useful issues and bug reports', 'Add README, licence and contributing files', 'Protect branches and manage access', 'Handle a leaked secret correctly']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:collaboration-security', 'git-and-github-for-beginners', 'git-m09', 'collaboration-security', 'Working With a Team: Issues, Project Files and Keeping Secrets Safe', 'Use the rest of GitHub like a professional. Track work with issues, give a repository the files that make it look and feel professional, manage who can do what, and keep passwords and keys out of your history, including what to do when one gets in.', 25, $md$
+values ('git-and-github-for-beginners:collaboration-security', 'git-and-github-for-beginners', 'git-m03', 'collaboration-security', 'Working With a Team: Issues, Project Files and Keeping Secrets Safe', 'Use the rest of GitHub like a professional. Track work with issues, give a repository the files that make it look and feel professional, manage who can do what, and keep passwords and keys out of your history, including what to do when one gets in.', 25, $md$
 ## Repositories are also workplaces
 
 GitHub is more than storage. Teams use it to plan work, discuss it, review it and release it. This lesson covers the tools around the code that make a repository **professional**.
@@ -5359,11 +5335,11 @@ $md$, true, true, 9, array['git-m09-a1', 'git-m09-t2', 'git-m09-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m10', 'git-and-github-for-beginners', 'GitHub Pages and Actions', 10, 'Pages and Actions', 'ACTIONS', array['Publish a site with GitHub Pages', 'Read and write a GitHub Actions workflow', 'Understand CI and CD', 'Keep secrets in Actions safely']::text[], '{}'::text[])
+values ('git-m04', 'git-and-github-for-beginners', 'Automation, Portfolio and Workflow', 4, 'GitHub Portfolio', 'GITHUB', array['Publish with GitHub Pages and automate with Actions', 'Present projects with READMEs and a profile', 'Handle an urgent bug, a conflict and a release', 'Follow a professional Git workflow']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:github-pages-actions', 'git-and-github-for-beginners', 'git-m10', 'github-pages-actions', 'GitHub Pages and GitHub Actions: Publish and Automate', 'Publish a website straight from a repository with GitHub Pages, and meet GitHub Actions, the automation that runs checks and deployments every time you push. Write and read a real workflow file.', 25, $md$
+values ('git-and-github-for-beginners:github-pages-actions', 'git-and-github-for-beginners', 'git-m04', 'github-pages-actions', 'GitHub Pages and GitHub Actions: Publish and Automate', 'Publish a website straight from a repository with GitHub Pages, and meet GitHub Actions, the automation that runs checks and deployments every time you push. Write and read a real workflow file.', 25, $md$
 ## Your repository can do work for you
 
 A repository is more than a folder of files. GitHub can **host** a website straight from it, and it can **run commands automatically** whenever something happens, such as a push or a pull request. This lesson covers both.
@@ -5528,12 +5504,8 @@ Now write a workflow for a Python project. This is the shape of what many real r
 $md$, true, true, 10, array['git-m10-a1', 'git-m10-t2', 'git-m10-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m11', 'git-and-github-for-beginners', 'Show Your Projects on GitHub', 11, 'GitHub Portfolio', 'GITHUB', array['Work from VS Code, Desktop or the command line', 'Write a README that sells a project', 'Pin repositories and write a profile README', 'Present your work to recruiters']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:show-projects-on-github', 'git-and-github-for-beginners', 'git-m11', 'show-projects-on-github', 'Show Your Projects on GitHub: README, Profile and Portfolio', 'Turn your GitHub account into a portfolio employers can check. Write a README that sells a project, set up your profile README and pinned repositories, keep your repositories tidy, and link them from your CV and LinkedIn.', 35, $md$
+values ('git-and-github-for-beginners:show-projects-on-github', 'git-and-github-for-beginners', 'git-m04', 'show-projects-on-github', 'Show Your Projects on GitHub: README, Profile and Portfolio', 'Turn your GitHub account into a portfolio employers can check. Write a README that sells a project, set up your profile README and pinned repositories, keep your repositories tidy, and link them from your CV and LinkedIn.', 35, $md$
 ## Your GitHub is a portfolio
 
 Recruiters and hiring managers for data, software and web roles open your GitHub profile. In a few seconds they decide: **does this person build real things, and can they explain them?** You cannot control the first look, but you can design it.
@@ -5676,12 +5648,8 @@ Finally, add your GitHub profile link to your CV and your LinkedIn profile.
 $md$, true, true, 11, array['git-m11-a1', 'git-m11-t1', 'git-m11-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('git-m12', 'git-and-github-for-beginners', 'A Day on a Team', 12, 'Git Workflow', 'GITFLOW', array['Handle an urgent bug with stash and a fix branch', 'Resolve a conflict with a teammate''s change', 'Tag a release', 'Follow a professional Git checklist']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('git-and-github-for-beginners:team-workflow-capstone', 'git-and-github-for-beginners', 'git-m12', 'team-workflow-capstone', 'A Day on a Team: Putting It All Together', 'Practise the real workflow end to end. Handle an urgent bug while mid-task, resolve a conflict with a teammate''s change, tag a release, and build the habits and checklists that make a Git user professional.', 30, $md$
+values ('git-and-github-for-beginners:team-workflow-capstone', 'git-and-github-for-beginners', 'git-m04', 'team-workflow-capstone', 'A Day on a Team: Putting It All Together', 'Practise the real workflow end to end. Handle an urgent bug while mid-task, resolve a conflict with a teammate''s change, tag a release, and build the habits and checklists that make a Git user professional.', 30, $md$
 ## One day, many situations
 
 You now know the pieces: commits, branches, merges, conflicts, undoing, remotes and pull requests. A real day on a team mixes them, and the work is rarely tidy. This lesson walks through a realistic day, and you practise each situation in the terminal.
@@ -5878,7 +5846,7 @@ on conflict (id) do update set format = excluded.format, completion_badge = excl
 update public.courses set access_type = 'free', price = null, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = null, overview = null, audience = '{}'::text[], included = '{}'::text[], project_previews = '[]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'free', outcomes = '{}'::text[], difficulty_max = null, duration_weeks = null, thumbnail = null, faqs = '[]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'web-development-for-beginners' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m01', 'web-development-for-beginners', 'How the Web Works and Your First Page', 1, 'HTML Basics', 'HTML', array['Explain how browsers, servers, HTML, CSS and JavaScript work together', 'Write the skeleton of a valid HTML page', 'Use headings, paragraphs and comments', 'Inspect any website with DevTools']::text[], '{}'::text[])
+values ('web-m01', 'web-development-for-beginners', 'HTML: Build the Structure', 1, 'HTML', 'HTML', array['Write a valid, semantic HTML page', 'Use headings, text, lists, links and images', 'Build forms and tables', 'Make pages accessible and search friendly']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
@@ -6164,12 +6132,8 @@ There is no single correct answer. What matters is that the structure is clean: 
 $md$, true, true, 1, array['web-m01-a1', 'web-m01-t1', 'web-m01-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m02', 'web-development-for-beginners', 'Text, Lists, Links and Images', 2, 'HTML Content', 'HTMLTEXT', array['Format text with meaningful elements', 'Build ordered, unordered and nested lists', 'Write absolute, relative, anchor, email and phone links', 'Add images with useful alt text']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:html-text-links-images', 'web-development-for-beginners', 'web-m02', 'html-text-links-images', 'Text, Lists, Links and Images', 'Learn the HTML elements you will use on every page: text emphasis, quotes and code, lists, links of every kind, and images with proper alt text. Build a small recipe page as you go.', 30, $md$
+values ('web-development-for-beginners:html-text-links-images', 'web-development-for-beginners', 'web-m01', 'html-text-links-images', 'Text, Lists, Links and Images', 'Learn the HTML elements you will use on every page: text emphasis, quotes and code, lists, links of every kind, and images with proper alt text. Build a small recipe page as you go.', 30, $md$
 ## Shaping text
 
 You already know headings and paragraphs. HTML has a few more elements to say **what a piece of text means**. The browser gives each a default look, but the point is meaning: a screen reader, or Google, understands your page better.
@@ -6504,12 +6468,8 @@ Anchor links are how long pages, like documentation and terms and conditions, le
 $md$, true, true, 2, array['web-m02-a1', 'web-m02-t1', 'web-m02-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m03', 'web-development-for-beginners', 'Page Structure: Semantic HTML', 3, 'Semantic HTML', 'SEMANTIC', array['Structure a page with header, nav, main, section, article, aside and footer', 'Choose between semantic elements and div', 'Use classes and ids', 'Create a clear heading outline']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:html-semantic-layout', 'web-development-for-beginners', 'web-m03', 'html-semantic-layout', 'Page Structure: Semantic HTML and Layout Elements', 'Learn to build a page the way professionals do, with header, nav, main, section, article, aside and footer, and when to use div and span. Lay out a complete school website homepage.', 30, $md$
+values ('web-development-for-beginners:html-semantic-layout', 'web-development-for-beginners', 'web-m01', 'html-semantic-layout', 'Page Structure: Semantic HTML and Layout Elements', 'Learn to build a page the way professionals do, with header, nav, main, section, article, aside and footer, and when to use div and span. Lay out a complete school website homepage.', 30, $md$
 ## Why structure matters
 
 Look at any website, such as a news site or a school page. You can point out the parts without reading a word: the **top** with the logo and menu, the **main** content, a **sidebar**, and the **bottom** with contact details.
@@ -6817,12 +6777,8 @@ Rewrite this page using semantic elements: `<header>`, `<nav>`, `<main>`, `<asid
 $md$, true, true, 3, array['web-m03-a1', 'web-m03-t1', 'web-m03-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m04', 'web-development-for-beginners', 'Forms and Tables', 4, 'Forms and Tables', 'FORMS', array['Build forms with labels and every input type', 'Use built-in validation attributes', 'Group controls with fieldset and legend', 'Build accessible data tables']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:html-forms-tables', 'web-development-for-beginners', 'web-m04', 'html-forms-tables', 'Forms and Tables', 'Collect information with forms (every input type, labels, built-in validation) and show data with tables. Build a sign-up form for a real event and a class timetable.', 35, $md$
+values ('web-development-for-beginners:html-forms-tables', 'web-development-for-beginners', 'web-m01', 'html-forms-tables', 'Forms and Tables', 'Collect information with forms (every input type, labels, built-in validation) and show data with tables. Build a sign-up form for a real event and a class timetable.', 35, $md$
 ## Forms: how websites listen
 
 Almost every useful website collects something from you: a login, a search, an order, a message. All of that starts with an HTML **form**.
@@ -7163,12 +7119,8 @@ Build a price list for a small business (for example a salon, a printing shop or
 $md$, true, true, 4, array['web-m04-a1', 'web-m04-t1', 'web-m04-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m05', 'web-development-for-beginners', 'Media, SEO and Accessibility', 5, 'Accessible Web', 'A11Y', array['Embed video, audio and other content', 'Write page information for search engines and link sharing', 'Fix common accessibility problems', 'Audit a page with Lighthouse']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:html-media-seo-accessibility', 'web-development-for-beginners', 'web-m05', 'html-media-seo-accessibility', 'Media, Page Information, Search and Accessibility', 'Add audio, video and embeds, write the hidden page information that search engines and WhatsApp read, and build pages that everyone can use, including people who use a keyboard or a screen reader.', 30, $md$
+values ('web-development-for-beginners:html-media-seo-accessibility', 'web-development-for-beginners', 'web-m01', 'html-media-seo-accessibility', 'Media, Page Information, Search and Accessibility', 'Add audio, video and embeds, write the hidden page information that search engines and WhatsApp read, and build pages that everyone can use, including people who use a keyboard or a screen reader.', 30, $md$
 ## Audio, video and embeds
 
 HTML can play sound and video with no extra software.
@@ -7469,11 +7421,11 @@ $md$, true, true, 5, array['web-m05-a1', 'web-m05-t1', 'web-m05-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m06', 'web-development-for-beginners', 'CSS Fundamentals: Selectors and the Cascade', 6, 'CSS Basics', 'CSS', array['Add CSS with an external stylesheet', 'Use element, class, id, descendant and pseudo-class selectors', 'Predict which rule wins with specificity', 'Use inheritance']::text[], '{}'::text[])
+values ('web-m02', 'web-development-for-beginners', 'CSS: Style and Layout', 2, 'CSS', 'CSS', array['Style with selectors and the cascade', 'Control spacing with the box model', 'Lay out pages with flexbox and grid', 'Make responsive, animated designs']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-the-style', 'web-development-for-beginners', 'web-m06', 'css-the-style', 'CSS Fundamentals: Selectors and the Cascade', 'Learn how CSS works, the three ways to add it, every kind of selector, and the rules that decide which style wins. Style a page from plain HTML to something you are proud of.', 35, $md$
+values ('web-development-for-beginners:css-the-style', 'web-development-for-beginners', 'web-m02', 'css-the-style', 'CSS Fundamentals: Selectors and the Cascade', 'Learn how CSS works, the three ways to add it, every kind of selector, and the rules that decide which style wins. Style a page from plain HTML to something you are proud of.', 35, $md$
 ## What CSS does
 
 HTML gives a page its structure, but on its own it looks like a plain document. **CSS** (Cascading Style Sheets) is the language that controls how it looks: colours, fonts, spacing, layout, even animation.
@@ -7870,12 +7822,8 @@ An id selector is more specific than a class, so it wins. That is why most devel
 $md$, true, true, 6, array['web-m06-a1', 'web-m06-t1', 'web-m06-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m07', 'web-development-for-beginners', 'The Box Model, Units, Display and Position', 7, 'Box Model', 'BOXMODEL', array['Control padding, borders and margins', 'Use border-box, rem, percentages and viewport units', 'Choose block, inline and inline-block', 'Place elements with sticky, relative and absolute']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-box-model-units', 'web-development-for-beginners', 'web-m07', 'css-box-model-units', 'The Box Model, Units, Display and Position', 'Understand the idea behind all CSS layout, that every element is a box. Control size, spacing, borders and units, choose how elements flow, and place things exactly with position.', 35, $md$
+values ('web-development-for-beginners:css-box-model-units', 'web-development-for-beginners', 'web-m02', 'css-box-model-units', 'The Box Model, Units, Display and Position', 'Understand the idea behind all CSS layout, that every element is a box. Control size, spacing, borders and units, choose how elements flow, and place things exactly with position.', 35, $md$
 ## Everything is a box
 
 This is the most important idea in CSS. Every element on a page, a heading, a paragraph, a button, an image, is a rectangular **box**. The box has four layers, from the inside out:
@@ -8294,12 +8242,8 @@ header {
 $md$, true, true, 7, array['web-m07-a1', 'web-m07-t1', 'web-m07-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m08', 'web-development-for-beginners', 'Colour, Fonts, Backgrounds and Effects', 8, 'CSS Styling', 'STYLING', array['Build a colour palette and check contrast', 'Set readable typography', 'Use gradients, shadows and rounded corners', 'Organise a design with CSS variables']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-colour-fonts-effects', 'web-development-for-beginners', 'web-m08', 'css-colour-fonts-effects', 'Colour, Fonts, Backgrounds and Visual Effects', 'Make pages look professional. Pick a colour palette, check contrast, style text so it is easy to read, use gradients and backgrounds, add shadows and rounded corners, and organise your design with CSS variables.', 35, $md$
+values ('web-development-for-beginners:css-colour-fonts-effects', 'web-development-for-beginners', 'web-m02', 'css-colour-fonts-effects', 'Colour, Fonts, Backgrounds and Visual Effects', 'Make pages look professional. Pick a colour palette, check contrast, style text so it is easy to read, use gradients and backgrounds, add shadows and rounded corners, and organise your design with CSS variables.', 35, $md$
 ## Colour
 
 You have already used colour names and hex codes. There are four ways to write a colour, and they are all the same thing underneath: a mix of red, green and blue light.
@@ -8749,12 +8693,8 @@ p {
 $md$, true, true, 8, array['web-m08-a1', 'web-m08-t1', 'web-m08-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m09', 'web-development-for-beginners', 'Flexbox', 9, 'Flexbox', 'FLEXBOX', array['Use the main and cross axes', 'Build navbars, centred layouts and wrapping card rows', 'Control item growth with flex', 'Keep a footer at the bottom']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-flexbox', 'web-development-for-beginners', 'web-m09', 'css-flexbox', 'Flexbox: Layout in One Direction', 'Master flexbox, the tool behind most navigation bars, card rows and centred layouts. Learn the container and item properties one at a time, then build a real navbar and a card row that adapts to any screen.', 40, $md$
+values ('web-development-for-beginners:css-flexbox', 'web-development-for-beginners', 'web-m02', 'css-flexbox', 'Flexbox: Layout in One Direction', 'Master flexbox, the tool behind most navigation bars, card rows and centred layouts. Learn the container and item properties one at a time, then build a real navbar and a card row that adapts to any screen.', 40, $md$
 ## The layout problem
 
 Until now elements stacked down the page, one under another. Real pages put things **side by side**: a logo on the left and a menu on the right, three cards in a row, a button centred in a box. **Flexbox** (the Flexible Box Layout) is the CSS tool for this.
@@ -9160,12 +9100,8 @@ Press the **Phone** button in the preview and watch the cards stack. The buttons
 $md$, true, true, 9, array['web-m09-a1', 'web-m09-t1', 'web-m09-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m10', 'web-development-for-beginners', 'CSS Grid', 10, 'CSS Grid', 'CSSGRID', array['Define columns and rows with fr and repeat', 'Build a gallery that adapts with auto-fit', 'Span items across tracks', 'Lay out a page with named grid areas']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-grid', 'web-development-for-beginners', 'web-m10', 'css-grid', 'CSS Grid: Layout in Rows and Columns', 'Learn CSS Grid, the most powerful layout tool in CSS. Build a photo gallery that adapts to any screen with no media queries, and a complete page layout with named areas.', 35, $md$
+values ('web-development-for-beginners:css-grid', 'web-development-for-beginners', 'web-m02', 'css-grid', 'CSS Grid: Layout in Rows and Columns', 'Learn CSS Grid, the most powerful layout tool in CSS. Build a photo gallery that adapts to any screen with no media queries, and a complete page layout with named areas.', 35, $md$
 ## Why grid?
 
 Flexbox lays out items in **one direction**. But a lot of design is **two-dimensional**: a gallery with rows and columns, a dashboard, a whole page with a header, a sidebar, the main content and a footer. **CSS Grid** is made for this.
@@ -9510,12 +9446,8 @@ header, footer {
 $md$, true, true, 10, array['web-m10-a1', 'web-m10-t1', 'web-m10-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m11', 'web-development-for-beginners', 'Responsive Design', 11, 'Responsive Design', 'RESPONSV', array['Write mobile-first media queries', 'Make images and text flexible', 'Add dark mode with variables', 'Test on different screen sizes']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-responsive-design', 'web-development-for-beginners', 'web-m11', 'css-responsive-design', 'Responsive Design: One Site for Every Screen', 'Make pages that work on a phone, a tablet and a desktop. Learn mobile-first CSS, media queries, flexible images, fluid text and dark mode, and how to test on every screen size.', 35, $md$
+values ('web-development-for-beginners:css-responsive-design', 'web-development-for-beginners', 'web-m02', 'css-responsive-design', 'Responsive Design: One Site for Every Screen', 'Make pages that work on a phone, a tablet and a desktop. Learn mobile-first CSS, media queries, flexible images, fluid text and dark mode, and how to test on every screen size.', 35, $md$
 ## Why responsive?
 
 In Nigeria, and most of the world, **most people visit websites on a phone**. A page designed only for a big laptop screen forces them to pinch and scroll sideways, and they leave. A **responsive** website adapts its layout to the screen it is shown on, from a small phone to a wide monitor, with a single set of HTML and CSS.
@@ -9894,12 +9826,8 @@ h1 {
 $md$, true, true, 11, array['web-m11-a1', 'web-m11-t1', 'web-m11-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m12', 'web-development-for-beginners', 'Transitions and Animation', 12, 'CSS Motion', 'MOTION', array['Add smooth transitions and transforms', 'Write keyframe animations', 'Decorate with pseudo-elements', 'Respect reduced-motion preferences']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:css-transitions-animation', 'web-development-for-beginners', 'web-m12', 'css-transitions-animation', 'Transitions, Transforms, Animation and Pseudo-elements', 'Bring pages to life with smooth hover effects, transforms and keyframe animations, add decorative touches with ::before and ::after, and do it all in a way that is fast and kind to users.', 35, $md$
+values ('web-development-for-beginners:css-transitions-animation', 'web-development-for-beginners', 'web-m02', 'css-transitions-animation', 'Transitions, Transforms, Animation and Pseudo-elements', 'Bring pages to life with smooth hover effects, transforms and keyframe animations, add decorative touches with ::before and ::after, and do it all in a way that is fast and kind to users.', 35, $md$
 ## Motion with a purpose
 
 Small amounts of motion make a site feel alive and tell people what is clickable: a button that lifts when you hover, a menu that slides open, a spinner that shows something is loading. Too much motion is annoying and slows pages down. The rule is: **motion should help the user**, not just decorate.
@@ -10337,11 +10265,11 @@ $md$, true, true, 12, array['web-m12-a1', 'web-m12-t1', 'web-m12-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m13', 'web-development-for-beginners', 'JavaScript Basics: Variables, Types and the Console', 13, 'JavaScript Basics', 'JS', array['Print and debug with console.log', 'Use let, const and the basic data types', 'Work with strings, numbers and template literals', 'Read error messages']::text[], '{}'::text[])
+values ('web-m03', 'web-development-for-beginners', 'JavaScript: Make It Interactive', 3, 'JavaScript', 'JS', array['Program with variables, logic and functions', 'Work with arrays, objects and JSON', 'Change the page with the DOM and events', 'Fetch data and save it in the browser']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:javascript-the-behaviour', 'web-development-for-beginners', 'web-m13', 'javascript-the-behaviour', 'JavaScript Basics: Variables, Types and the Console', 'Meet JavaScript, the language that makes pages react. Learn variables, data types, operators, strings and numbers, print results to the console, and read error messages like a developer.', 35, $md$
+values ('web-development-for-beginners:javascript-the-behaviour', 'web-development-for-beginners', 'web-m03', 'javascript-the-behaviour', 'JavaScript Basics: Variables, Types and the Console', 'Meet JavaScript, the language that makes pages react. Learn variables, data types, operators, strings and numbers, print results to the console, and read error messages like a developer.', 35, $md$
 ## What JavaScript does
 
 HTML gives a page its structure and CSS gives it its look. **JavaScript** gives it a **brain**. With it a page can react when you click, check a form before it is sent, show and hide things, calculate a total, fetch fresh data, remember your settings, and much more. Everything you do on sites like Jumia, Twitter or Google Maps that is not just reading is JavaScript.
@@ -10633,12 +10561,8 @@ console.log(clean.includes("@"));
 $md$, true, true, 13, array['web-m13-a1', 'web-m13-t1', 'web-m13-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m14', 'web-development-for-beginners', 'Decisions, Loops and Functions', 14, 'JS Logic', 'JSLOGIC', array['Make decisions with if, else and switch', 'Repeat work with for and while loops', 'Write and call functions with parameters and return values', 'Use arrow functions and understand scope']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:js-logic-functions', 'web-development-for-beginners', 'web-m14', 'js-logic-functions', 'Decisions, Loops and Functions', 'Teach your code to make decisions with if and switch, repeat work with loops, and package logic into reusable functions. Build a grade calculator, a discount function and a times table.', 35, $md$
+values ('web-development-for-beginners:js-logic-functions', 'web-development-for-beginners', 'web-m03', 'js-logic-functions', 'Decisions, Loops and Functions', 'Teach your code to make decisions with if and switch, repeat work with loops, and package logic into reusable functions. Build a grade calculator, a discount function and a times table.', 35, $md$
 ## Making decisions with if
 
 Programs become useful when they can **choose**. The `if` statement runs a block of code only when a condition is true.
@@ -10961,12 +10885,8 @@ console.log(`Sum of 1 to 100: ${sum}`);
 $md$, true, true, 14, array['web-m14-a1', 'web-m14-t1', 'web-m14-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m15', 'web-development-for-beginners', 'Arrays, Objects and JSON', 15, 'JS Data', 'JSDATA', array['Store lists in arrays and records in objects', 'Transform data with map, filter and reduce', 'Work with arrays of objects', 'Convert data with JSON.stringify and JSON.parse']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:js-arrays-objects', 'web-development-for-beginners', 'web-m15', 'js-arrays-objects', 'Arrays, Objects and JSON', 'Work with real data. Store lists in arrays and records in objects, transform them with map, filter and reduce, and exchange data with the rest of the web using JSON.', 40, $md$
+values ('web-development-for-beginners:js-arrays-objects', 'web-development-for-beginners', 'web-m03', 'js-arrays-objects', 'Arrays, Objects and JSON', 'Work with real data. Store lists in arrays and records in objects, transform them with map, filter and reduce, and exchange data with the rest of the web using JSON.', 40, $md$
 ## Why we need collections
 
 So far each variable held one value. Real applications hold **many**: a list of products, a set of customers, the lessons in a course. JavaScript has two structures for this, and nearly everything you build will use them:
@@ -11309,12 +11229,8 @@ console.log(task.title);
 $md$, true, true, 15, array['web-m15-a1', 'web-m15-t1', 'web-m15-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m16', 'web-development-for-beginners', 'The DOM: Changing a Page with JavaScript', 16, 'The DOM', 'DOM', array['Find elements with querySelector', 'Change text, classes and attributes', 'Create and remove elements', 'Build a page from data']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:js-the-dom', 'web-development-for-beginners', 'web-m16', 'js-the-dom', 'The DOM: Changing a Page with JavaScript', 'Learn how JavaScript sees a page as a tree of elements, and how to find elements, change their text, styles and classes, and create new ones. Build a live product list from data.', 35, $md$
+values ('web-development-for-beginners:js-the-dom', 'web-development-for-beginners', 'web-m03', 'js-the-dom', 'The DOM: Changing a Page with JavaScript', 'Learn how JavaScript sees a page as a tree of elements, and how to find elements, change their text, styles and classes, and create new ones. Build a live product list from data.', 35, $md$
 ## The page as a tree
 
 When the browser loads your HTML, it builds a living model of the page in memory, called the **DOM** (Document Object Model). Each element becomes an **object** in a tree: `<html>` at the top, `<head>` and `<body>` below it, and so on down to every paragraph and link.
@@ -11641,12 +11557,8 @@ document.body.append(notice);
 $md$, true, true, 16, array['web-m16-a1', 'web-m16-t1', 'web-m16-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m17', 'web-development-for-beginners', 'Events and Forms', 17, 'JS Events', 'EVENTS', array['Listen for clicks, input and submit events', 'Read form values and validate with clear messages', 'Use event delegation', 'Build a counter, a toggle and a to-do list']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:js-events-forms', 'web-development-for-beginners', 'web-m17', 'js-events-forms', 'Events and Forms: Making Pages Interactive', 'Respond to clicks, typing and form submissions. Read what users enter, validate it with friendly messages, build a counter, a dark mode switch, a menu toggle and a to-do list, and keep the page accessible.', 40, $md$
+values ('web-development-for-beginners:js-events-forms', 'web-development-for-beginners', 'web-m03', 'js-events-forms', 'Events and Forms: Making Pages Interactive', 'Respond to clicks, typing and form submissions. Read what users enter, validate it with friendly messages, build a counter, a dark mode switch, a menu toggle and a to-do list, and keep the page accessible.', 40, $md$
 ## Events: things that happen on a page
 
 A page is full of **events**: a click, a key press, text typed in a box, a form submitted, the mouse moving over something, the page finishing loading. JavaScript lets you **listen** for an event on an element and run a function when it happens.
@@ -12133,12 +12045,8 @@ form.addEventListener("submit", (event) => {
 $md$, true, true, 17, array['web-m17-a1', 'web-m17-t1', 'web-m17-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m18', 'web-development-for-beginners', 'Fetch, Async Code and Local Storage', 18, 'Fetch and Storage', 'FETCHAPI', array['Use promises with async and await', 'Fetch JSON and check response.ok', 'Handle loading, error and empty states', 'Save data with localStorage']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:js-fetch-storage', 'web-development-for-beginners', 'web-m18', 'js-fetch-storage', 'Fetch, Async Code and Local Storage', 'Get live data from the internet with fetch, understand promises and async/await, handle loading, empty and error states properly, and remember things in the browser with localStorage.', 35, $md$
+values ('web-development-for-beginners:js-fetch-storage', 'web-development-for-beginners', 'web-m03', 'js-fetch-storage', 'Fetch, Async Code and Local Storage', 'Get live data from the internet with fetch, understand promises and async/await, handle loading, empty and error states properly, and remember things in the browser with localStorage.', 35, $md$
 ## Code that has to wait
 
 Some things take time: downloading data from a server, waiting for a timer, reading a file. If JavaScript froze while waiting, the whole page would hang. So JavaScript starts these jobs, carries on with other work, and comes back when the result is ready. This is called **asynchronous** code.
@@ -12487,11 +12395,11 @@ $md$, true, true, 18, array['web-m18-a1', 'web-m18-t1', 'web-m18-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m19', 'web-development-for-beginners', 'Bootstrap: Setup, the Grid and Utilities', 19, 'Bootstrap Grid', 'BSGRID', array['Add Bootstrap to a page', 'Build responsive layouts with the 12-column grid', 'Style with spacing, colour, text and flex utilities', 'Customise Bootstrap with CSS variables']::text[], '{}'::text[])
+values ('web-m04', 'web-development-for-beginners', 'Bootstrap, Building and Launching', 4, 'Website Builder', 'WEBSITE', array['Build responsive pages with Bootstrap', 'Create a complete landing page', 'Run a launch checklist', 'Publish a website with GitHub Pages']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:bootstrap-grid-utilities', 'web-development-for-beginners', 'web-m19', 'bootstrap-grid-utilities', 'Bootstrap 5: Setup, the Grid and Utilities', 'Meet Bootstrap, the world''s most popular CSS framework. Add it to a page, lay out content with its 12-column responsive grid, and style quickly with utility classes for spacing, colour, text and flexbox.', 35, $md$
+values ('web-development-for-beginners:bootstrap-grid-utilities', 'web-development-for-beginners', 'web-m04', 'bootstrap-grid-utilities', 'Bootstrap 5: Setup, the Grid and Utilities', 'Meet Bootstrap, the world''s most popular CSS framework. Add it to a page, lay out content with its 12-column responsive grid, and style quickly with utility classes for spacing, colour, text and flexbox.', 35, $md$
 ## What is Bootstrap?
 
 Writing every piece of CSS yourself gives total control, but it takes time. **Bootstrap** is a free, ready-made collection of CSS and JavaScript that solves the common jobs for you: a responsive grid, navigation bars, buttons, cards, forms, modals and much more. You do not write the CSS. You add **class names** to your HTML, and the styles are already there.
@@ -12829,12 +12737,8 @@ Style this pricing box using **only Bootstrap utility classes** (no custom CSS a
 $md$, true, true, 19, array['web-m19-a1', 'web-m19-t1', 'web-m19-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m20', 'web-development-for-beginners', 'Bootstrap Components', 20, 'Bootstrap Components', 'BSCOMP', array['Build a responsive navbar', 'Use cards, alerts, buttons and forms', 'Add modals and accordions with data attributes', 'Read the Bootstrap documentation']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:bootstrap-components', 'web-development-for-beginners', 'web-m20', 'bootstrap-components', 'Bootstrap Components: Navbar, Cards, Forms, Modals and More', 'Use Bootstrap''s ready-made components to build real interfaces fast. Build a responsive navbar, cards, alerts, forms with validation, an accordion and a modal, and learn to read the Bootstrap documentation.', 40, $md$
+values ('web-development-for-beginners:bootstrap-components', 'web-development-for-beginners', 'web-m04', 'bootstrap-components', 'Bootstrap Components: Navbar, Cards, Forms, Modals and More', 'Use Bootstrap''s ready-made components to build real interfaces fast. Build a responsive navbar, cards, alerts, forms with validation, an accordion and a modal, and learn to read the Bootstrap documentation.', 40, $md$
 ## Components: pre-built pieces
 
 In the last lesson you used Bootstrap's grid and utilities. Its **components** are bigger pre-built pieces of interface: a navigation bar, a card, a modal dialog, an accordion. Each is a pattern of HTML with the right class names. You do not need to memorise them. Professional developers keep the **documentation** open at **getbootstrap.com/docs** and copy the example for the component they need, then change the words.
@@ -13209,12 +13113,8 @@ Build a **course card** (`.card` with `.shadow-sm`, a `.card-body`, `.card-title
 $md$, true, true, 20, array['web-m20-a1', 'web-m20-t1', 'web-m20-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m21', 'web-development-for-beginners', 'Build a Complete Website with Bootstrap', 21, 'Landing Page', 'BSSITE', array['Plan the sections of a landing page', 'Build a hero, service cards, form and footer', 'Add custom CSS and JavaScript on top of Bootstrap', 'Make the page accessible and mobile friendly']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:bootstrap-landing-page', 'web-development-for-beginners', 'web-m21', 'bootstrap-landing-page', 'Build a Complete Website with Bootstrap', 'Put everything together. Plan and build a full, responsive, accessible landing page for a business, section by section, with Bootstrap and a little custom CSS and JavaScript, ready to publish.', 40, $md$
+values ('web-development-for-beginners:bootstrap-landing-page', 'web-development-for-beginners', 'web-m04', 'bootstrap-landing-page', 'Build a Complete Website with Bootstrap', 'Put everything together. Plan and build a full, responsive, accessible landing page for a business, section by section, with Bootstrap and a little custom CSS and JavaScript, ready to publish.', 40, $md$
 ## What you are going to build
 
 Time to combine HTML, CSS, JavaScript and Bootstrap into one real project. You will build the **landing page of a small business**: a single page that makes a good first impression and gets visitors to act, whether that is to call, order or sign up. Sites like this are what small businesses in Lagos, Abuja and everywhere pay developers to build, and it is a strong piece for your portfolio.
@@ -13680,12 +13580,8 @@ This is a full, publishable landing page. In the last lesson you will put it onl
 $md$, true, true, 21, array['web-m21-a1', 'web-m21-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
-insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('web-m22', 'web-development-for-beginners', 'Publish, Test and Polish Your Website', 22, 'First Website', 'WEBSITE', array['Run a launch checklist', 'Name files safely for the web', 'Publish with GitHub Pages', 'Test a live site on a phone and with Lighthouse']::text[], '{}'::text[])
-on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
-
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('web-development-for-beginners:publish-your-first-website', 'web-development-for-beginners', 'web-m22', 'publish-your-first-website', 'Publish, Test and Polish Your Website', 'Run a launch checklist, then put your website online for free with GitHub Pages so anyone can open it at a real web address. Learn how to test on real devices, keep it updated and what to do next.', 45, $md$
+values ('web-development-for-beginners:publish-your-first-website', 'web-development-for-beginners', 'web-m04', 'publish-your-first-website', 'Publish, Test and Polish Your Website', 'Run a launch checklist, then put your website online for free with GitHub Pages so anyone can open it at a real web address. Learn how to test on real devices, keep it updated and what to do next.', 45, $md$
 ## What you are building
 
 By the end of this lesson your website will be live at an address like `https://your-username.github.io`. You can put it on your CV, LinkedIn and portfolio, and send it to anyone. For a developer, a live site that you built and can show is worth more than any certificate.
@@ -111415,9 +111311,9 @@ values ('portf-f08', 1, 'A link lets anyone verify it.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
--- Assessment: What Git and GitHub Are, and Getting Set Up: module check
+-- Assessment: Git Fundamentals: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m01-check', 'git-and-github-for-beginners', 'module', 'git-m01', 'What Git and GitHub Are, and Getting Set Up: module check', 60, true)
+values ('git-m01-check', 'git-and-github-for-beginners', 'module', 'git-m01', 'Git Fundamentals: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -111445,29 +111341,7 @@ values ('git-m01-q3', 1, 'git config --global user.name and user.email tell Git 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m01-q4', 'git-m01-check', 4, 'Which is the best GitHub username for a student''s professional portfolio?', '["cooldude2005","adaeze-okafor","xXgamerXx","ada123456789"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m01-q4', 1, 'A name-based username looks professional and appears in every link you share.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m01-q5', 'git-m01-check', 5, 'What is a commit?', '["A copy of GitHub","A saved snapshot of the project with a message, an author and a link to its parent","A kind of branch","A password for GitHub"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m01-q5', 1, 'Commits are the links in the chain that make up the history.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Your First Repository: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m02-check', 'git-and-github-for-beginners', 'module', 'git-m02', 'Your First Repository: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m02-q1', 'git-m02-check', 1, 'You created a new folder with two files. What does git init do?', '["Uploads the files to GitHub","Turns the folder into a Git repository by creating the hidden .git folder","Commits the files","Deletes the files"]'::jsonb)
+values ('git-m02-q1', 'git-m01-check', 4, 'You created a new folder with two files. What does git init do?', '["Uploads the files to GitHub","Turns the folder into a Git repository by creating the hidden .git folder","Commits the files","Deletes the files"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111475,7 +111349,7 @@ values ('git-m02-q1', 1, 'git init starts tracking. It does not commit or upload
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m02-q2', 'git-m02-check', 2, 'git status lists a file under "Untracked files". What does it mean?', '["The file is broken","Git can see the file but is not tracking it yet","The file was deleted","The file is already committed"]'::jsonb)
+values ('git-m02-q2', 'git-m01-check', 5, 'git status lists a file under "Untracked files". What does it mean?', '["The file is broken","Git can see the file but is not tracking it yet","The file was deleted","The file is already committed"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111483,7 +111357,7 @@ values ('git-m02-q2', 1, 'You need git add before the file can be committed.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m02-q3', 'git-m02-check', 3, 'You staged one file but git commit -m made a commit that did not include the other changed file. Why?', '["Git has a bug","Only staged changes go into a commit","Commits can only hold one file","The message was too short"]'::jsonb)
+values ('git-m02-q3', 'git-m01-check', 6, 'You staged one file but git commit -m made a commit that did not include the other changed file. Why?', '["Git has a bug","Only staged changes go into a commit","Commits can only hold one file","The message was too short"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111491,29 +111365,7 @@ values ('git-m02-q3', 1, 'The staging area decides what is in the commit.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m02-q4', 'git-m02-check', 4, 'Which commit message is best?', '["update","stuff","Add revenue by region chart","final"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m02-q4', 2, 'A good message says what changed, starting with a verb.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m02-q5', 'git-m02-check', 5, 'Which command shows the history in a compact one-line-per-commit view?', '["git status","git log --oneline","git add .","git init --short"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m02-q5', 1, 'git log --oneline is the quick way to scan history.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Staging, Diffs, History and .gitignore: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m03-check', 'git-and-github-for-beginners', 'module', 'git-m03', 'Staging, Diffs, History and .gitignore: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m03-q1', 'git-m03-check', 1, 'You ran git add on a file, and now git diff shows nothing. Where can you see the staged change?', '["git diff --staged","git log","git init","You cannot"]'::jsonb)
+values ('git-m03-q1', 'git-m01-check', 7, 'You ran git add on a file, and now git diff shows nothing. Where can you see the staged change?', '["git diff --staged","git log","git init","You cannot"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111521,7 +111373,7 @@ values ('git-m03-q1', 0, 'git diff shows unstaged changes. --staged compares the
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m03-q2', 'git-m03-check', 2, 'You changed a typo in one file and added a new page in another. What is the best way to commit?', '["One commit with the message \"changes\"","Two commits, one for each idea, each with its own message","Wait a week and commit everything","Do not commit the typo"]'::jsonb)
+values ('git-m03-q2', 'git-m01-check', 8, 'You changed a typo in one file and added a new page in another. What is the best way to commit?', '["One commit with the message \"changes\"","Two commits, one for each idea, each with its own message","Wait a week and commit everything","Do not commit the typo"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111529,7 +111381,7 @@ values ('git-m03-q2', 1, 'One commit, one idea, makes history easy to read and t
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m03-q3', 'git-m03-check', 3, 'Which commit message follows good practice?', '["Fixed stuff.","Fix crash when the cart is empty","BUG!!!","changed some files today"]'::jsonb)
+values ('git-m03-q3', 'git-m01-check', 9, 'Which commit message follows good practice?', '["Fixed stuff.","Fix crash when the cart is empty","BUG!!!","changed some files today"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111537,29 +111389,7 @@ values ('git-m03-q3', 1, 'Start with a verb, be specific, and keep the first lin
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m03-q4', 'git-m03-check', 4, 'You want Git to ignore every file ending in .log. What goes in .gitignore?', '["log","*.log","/log","ignore .log"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m03-q4', 1, 'The * is a wildcard, so *.log matches debug.log, error.log and more.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m03-q5', 'git-m03-check', 5, 'Which should never be committed to a repository?', '["README.md","A .env file with an API key","A .gitignore file","Your source code"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m03-q5', 1, 'Secrets in Git stay in the history, so keep them out from the start.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Undoing Mistakes Safely: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m04-check', 'git-and-github-for-beginners', 'module', 'git-m04', 'Undoing Mistakes Safely: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m04-q1', 'git-m04-check', 1, 'You edited a file badly and want the last committed version back. Which command does that?', '["git restore <file>","git revert","git stash pop","git init"]'::jsonb)
+values ('git-m04-q1', 'git-m01-check', 10, 'You edited a file badly and want the last committed version back. Which command does that?', '["git restore <file>","git revert","git stash pop","git init"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111567,7 +111397,7 @@ values ('git-m04-q1', 0, 'git restore discards uncommitted changes to the file.'
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m04-q2', 'git-m04-check', 2, 'You ran git add . and staged a file with a password. What is the safe fix before committing?', '["Commit anyway","git restore --staged <file>","Delete the repository","git push"]'::jsonb)
+values ('git-m04-q2', 'git-m01-check', 11, 'You ran git add . and staged a file with a password. What is the safe fix before committing?', '["Commit anyway","git restore --staged <file>","Delete the repository","git push"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111575,37 +111405,21 @@ values ('git-m04-q2', 1, 'It unstages the file without deleting it.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m04-q3', 'git-m04-check', 3, 'A bad commit was already pushed, and teammates have pulled it. Which is the safe way to undo it?', '["git reset --hard","git revert <commit>","git commit --amend","Delete the branch"]'::jsonb)
+values ('git-m04-q3', 'git-m01-check', 12, 'A bad commit was already pushed, and teammates have pulled it. Which is the safe way to undo it?', '["git reset --hard","git revert <commit>","git commit --amend","Delete the branch"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('git-m04-q3', 1, 'revert adds a new commit that undoes the old one without rewriting shared history.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m04-q4', 'git-m04-check', 4, 'Which command undoes your last commit but keeps all its changes staged, so you can recommit?', '["git reset --hard HEAD~1","git reset --soft HEAD~1","git restore .","git revert HEAD"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m04-q4', 1, '--soft moves the branch back and leaves your work staged.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m04-q5', 'git-m04-check', 5, 'You are halfway through a change when an urgent bug arrives. What lets you set your work aside and get a clean folder?', '["git stash","git reset --hard","git init","git merge"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m04-q5', 0, 'git stash saves uncommitted changes in a drawer. git stash pop brings them back.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Branches: module check
+-- Assessment: Branching and Merging: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m05-check', 'git-and-github-for-beginners', 'module', 'git-m05', 'Branches: module check', 60, true)
+values ('git-m02-check', 'git-and-github-for-beginners', 'module', 'git-m02', 'Branching and Merging: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m05-q1', 'git-m05-check', 1, 'What is a Git branch, really?', '["A full copy of all your files","A movable label that points to a commit","A kind of remote","A backup on GitHub"]'::jsonb)
+values ('git-m05-q1', 'git-m02-check', 1, 'What is a Git branch, really?', '["A full copy of all your files","A movable label that points to a commit","A kind of remote","A backup on GitHub"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111613,7 +111427,7 @@ values ('git-m05-q1', 1, 'That is why branches are instant and cheap.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m05-q2', 'git-m05-check', 2, 'Which single command creates a branch called fix/typo and switches to it?', '["git branch fix/typo","git switch -c fix/typo","git merge fix/typo","git new fix/typo"]'::jsonb)
+values ('git-m05-q2', 'git-m02-check', 2, 'Which single command creates a branch called fix/typo and switches to it?', '["git branch fix/typo","git switch -c fix/typo","git merge fix/typo","git new fix/typo"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111621,7 +111435,7 @@ values ('git-m05-q2', 1, '-c means create. git checkout -b does the same in the 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m05-q3', 'git-m05-check', 3, 'You switch from your feature branch to main, and the new file you made has disappeared from your folder. What happened?', '["Git deleted it for good","It is not part of main, and it is safe on the feature branch","A bug in Git","You must run git init again"]'::jsonb)
+values ('git-m05-q3', 'git-m02-check', 3, 'You switch from your feature branch to main, and the new file you made has disappeared from your folder. What happened?', '["Git deleted it for good","It is not part of main, and it is safe on the feature branch","A bug in Git","You must run git init again"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111629,7 +111443,7 @@ values ('git-m05-q3', 1, 'Switching branches changes your files to match the bra
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m05-q4', 'git-m05-check', 4, 'You are on feature/contact. Which commands bring that work into main?', '["git switch main, then git merge feature/contact","git merge main, then git switch feature/contact","git branch -d main","git push main"]'::jsonb)
+values ('git-m05-q4', 'git-m02-check', 4, 'You are on feature/contact. Which commands bring that work into main?', '["git switch main, then git merge feature/contact","git merge main, then git switch feature/contact","git branch -d main","git push main"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111637,21 +111451,15 @@ values ('git-m05-q4', 0, 'Go to the branch that should receive the work, and mer
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m05-q5', 'git-m05-check', 5, 'Why is it good practice to keep main always working?', '["Because Git requires it","So you can publish or release from it at any time","Because it saves disk space","Because branches are expensive"]'::jsonb)
+values ('git-m05-q5', 'git-m02-check', 5, 'Why is it good practice to keep main always working?', '["Because Git requires it","So you can publish or release from it at any time","Because it saves disk space","Because branches are expensive"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('git-m05-q5', 1, 'Professional teams keep main stable and do risky work on branches.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-
--- Assessment: Merge Conflicts: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m06-check', 'git-and-github-for-beginners', 'module', 'git-m06', 'Merge Conflicts: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m06-q1', 'git-m06-check', 1, 'When does a merge conflict happen?', '["Whenever you merge","When both branches changed the same lines in different ways","When a branch is deleted","When the internet is down"]'::jsonb)
+values ('git-m06-q1', 'git-m02-check', 6, 'When does a merge conflict happen?', '["Whenever you merge","When both branches changed the same lines in different ways","When a branch is deleted","When the internet is down"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111659,7 +111467,7 @@ values ('git-m06-q1', 1, 'Git merges automatically unless it cannot tell which c
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m06-q2', 'git-m06-check', 2, 'In a conflicted file, the text between <<<<<<< HEAD and ======= is which version?', '["The incoming branch","The version on the branch you are on","The oldest version","A backup"]'::jsonb)
+values ('git-m06-q2', 'git-m02-check', 7, 'In a conflicted file, the text between <<<<<<< HEAD and ======= is which version?', '["The incoming branch","The version on the branch you are on","The oldest version","A backup"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111667,7 +111475,7 @@ values ('git-m06-q2', 1, 'HEAD is where you are. The part after ======= is the b
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m06-q3', 'git-m06-check', 3, 'You have edited a conflicted file to the version you want. What next?', '["git add the file, then git commit","git init","git branch -d","Delete the file"]'::jsonb)
+values ('git-m06-q3', 'git-m02-check', 8, 'You have edited a conflicted file to the version you want. What next?', '["git add the file, then git commit","git init","git branch -d","Delete the file"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111675,7 +111483,7 @@ values ('git-m06-q3', 0, 'Staging marks the file as resolved, and the commit com
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m06-q4', 'git-m06-check', 4, 'You start a merge, panic, and want everything back as it was. Which command helps?', '["git merge --abort","git reset --hard origin","git clone","git stash pop"]'::jsonb)
+values ('git-m06-q4', 'git-m02-check', 9, 'You start a merge, panic, and want everything back as it was. Which command helps?', '["git merge --abort","git reset --hard origin","git clone","git stash pop"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111683,7 +111491,7 @@ values ('git-m06-q4', 0, '--abort undoes the merge attempt cleanly.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m06-q5', 'git-m06-check', 5, 'Which habit prevents the most conflicts on a team?', '["Never talking to teammates","Pull often, keep branches short-lived and communicate","Working on one huge branch for months","Reformatting entire files in every commit"]'::jsonb)
+values ('git-m06-q5', 'git-m02-check', 10, 'Which habit prevents the most conflicts on a team?', '["Never talking to teammates","Pull often, keep branches short-lived and communicate","Working on one huge branch for months","Reformatting entire files in every commit"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111691,13 +111499,13 @@ values ('git-m06-q5', 1, 'Small, frequent integration means less drift.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
--- Assessment: GitHub and Remotes: module check
+-- Assessment: GitHub and Collaboration: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m07-check', 'git-and-github-for-beginners', 'module', 'git-m07', 'GitHub and Remotes: module check', 60, true)
+values ('git-m03-check', 'git-and-github-for-beginners', 'module', 'git-m03', 'GitHub and Collaboration: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m07-q1', 'git-m07-check', 1, 'What does git push -u origin main do the first time?', '["Deletes main","Sends main to origin and remembers the link so later you can just git push","Downloads main","Creates a pull request"]'::jsonb)
+values ('git-m07-q1', 'git-m03-check', 1, 'What does git push -u origin main do the first time?', '["Deletes main","Sends main to origin and remembers the link so later you can just git push","Downloads main","Creates a pull request"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111705,7 +111513,7 @@ values ('git-m07-q1', 1, '-u sets the upstream, linking your branch with origin/
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m07-q2', 'git-m07-check', 2, 'When you try to push for the first time, Git asks for a password and your GitHub password is rejected. What should you use?', '["The same password again, slowly","A personal access token, SSH key or a sign-in through GitHub Desktop or VS Code","Your email password","Nothing, push cannot work"]'::jsonb)
+values ('git-m07-q2', 'git-m03-check', 2, 'When you try to push for the first time, Git asks for a password and your GitHub password is rejected. What should you use?', '["The same password again, slowly","A personal access token, SSH key or a sign-in through GitHub Desktop or VS Code","Your email password","Nothing, push cannot work"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111713,7 +111521,7 @@ values ('git-m07-q2', 1, 'GitHub does not accept account passwords for Git opera
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m07-q3', 'git-m07-check', 3, 'Your push is rejected with "fetch first". What does it mean and what do you do?', '["The remote has commits you do not have. Run git pull, then push again","Your repo is corrupt","Delete your branch","Make a new repository"]'::jsonb)
+values ('git-m07-q3', 'git-m03-check', 3, 'Your push is rejected with "fetch first". What does it mean and what do you do?', '["The remote has commits you do not have. Run git pull, then push again","Your repo is corrupt","Delete your branch","Make a new repository"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111721,7 +111529,7 @@ values ('git-m07-q3', 0, 'Integrate the remote''s new work first, resolving any 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m07-q4', 'git-m07-check', 4, 'Which command downloads a whole repository from GitHub to your computer for the first time?', '["git pull","git push","git clone","git fetch"]'::jsonb)
+values ('git-m07-q4', 'git-m03-check', 4, 'Which command downloads a whole repository from GitHub to your computer for the first time?', '["git pull","git push","git clone","git fetch"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111729,21 +111537,7 @@ values ('git-m07-q4', 2, 'clone copies the repository and sets up origin for you
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m07-q5', 'git-m07-check', 5, 'You want to contribute to a project you do not own. What is your first step?', '["Push straight to the project","Fork it to your own account","Delete it","Email the owner a zip"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m07-q5', 1, 'A fork is your own copy, which you can push to and offer back through a pull request.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Pull Requests and Code Review: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m08-check', 'git-and-github-for-beginners', 'module', 'git-m08', 'Pull Requests and Code Review: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m08-q1', 'git-m08-check', 1, 'What is a pull request?', '["A command that downloads code","A proposal to merge your branch into another, with a space to review and discuss it","A way to delete branches","A type of commit"]'::jsonb)
+values ('git-m08-q1', 'git-m03-check', 5, 'What is a pull request?', '["A command that downloads code","A proposal to merge your branch into another, with a space to review and discuss it","A way to delete branches","A type of commit"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111751,7 +111545,7 @@ values ('git-m08-q1', 1, 'A pull request is a conversation and a quality gate be
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m08-q2', 'git-m08-check', 2, 'Which pull request title is best?', '["Update","Fix typo in the jollof rice name","My changes","Please merge"]'::jsonb)
+values ('git-m08-q2', 'git-m03-check', 6, 'Which pull request title is best?', '["Update","Fix typo in the jollof rice name","My changes","Please merge"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111759,7 +111553,7 @@ values ('git-m08-q2', 1, 'A specific title tells reviewers what to expect.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m08-q3', 'git-m08-check', 3, 'A reviewer asks you to change a line. What do you do?', '["Open a new pull request","Commit the change to the same branch and push; the pull request updates","Delete the pull request","Ignore it"]'::jsonb)
+values ('git-m08-q3', 'git-m03-check', 7, 'A reviewer asks you to change a line. What do you do?', '["Open a new pull request","Commit the change to the same branch and push; the pull request updates","Delete the pull request","Ignore it"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111767,7 +111561,7 @@ values ('git-m08-q3', 1, 'The pull request follows the branch.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m08-q4', 'git-m08-check', 4, 'Your pull request description says Fixes #12. What happens when it is merged?', '["Nothing","Issue number 12 is closed automatically","A new branch #12 is made","The pull request is deleted"]'::jsonb)
+values ('git-m08-q4', 'git-m03-check', 8, 'Your pull request description says Fixes #12. What happens when it is merged?', '["Nothing","Issue number 12 is closed automatically","A new branch #12 is made","The pull request is deleted"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111775,21 +111569,7 @@ values ('git-m08-q4', 1, 'Keywords like Fixes link the work to the issue.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m08-q5', 'git-m08-check', 5, 'Which merge option combines all the pull request''s commits into one commit on main?', '["Create a merge commit","Squash and merge","Rebase and merge","Delete the branch"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m08-q5', 1, 'Squash gives main one tidy commit per pull request.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Teamwork and Keeping Secrets Safe: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m09-check', 'git-and-github-for-beginners', 'module', 'git-m09', 'Teamwork and Keeping Secrets Safe: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m09-q1', 'git-m09-check', 1, 'Which file tells others what they may legally do with your code?', '["README.md",".gitignore","LICENSE","CONTRIBUTING.md"]'::jsonb)
+values ('git-m09-q1', 'git-m03-check', 9, 'Which file tells others what they may legally do with your code?', '["README.md",".gitignore","LICENSE","CONTRIBUTING.md"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111797,7 +111577,7 @@ values ('git-m09-q1', 2, 'Without a licence, nobody is allowed to reuse your cod
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m09-q2', 'git-m09-check', 2, 'You committed an API key and pushed it to a public repository. What is the first thing to do?', '["Delete the file and carry on","Revoke or rotate the key immediately","Make the repository private and forget it","Tell nobody"]'::jsonb)
+values ('git-m09-q2', 'git-m03-check', 10, 'You committed an API key and pushed it to a public repository. What is the first thing to do?', '["Delete the file and carry on","Revoke or rotate the key immediately","Make the repository private and forget it","Tell nobody"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111805,7 +111585,7 @@ values ('git-m09-q2', 1, 'The key is in the history and may be copied already. O
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m09-q3', 'git-m09-check', 3, 'Which command stops Git tracking .env but keeps the file on your computer?', '["git rm .env","git rm --cached .env","git delete .env","git restore .env"]'::jsonb)
+values ('git-m09-q3', 'git-m03-check', 11, 'Which command stops Git tracking .env but keeps the file on your computer?', '["git rm .env","git rm --cached .env","git delete .env","git restore .env"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111813,29 +111593,21 @@ values ('git-m09-q3', 1, '--cached removes it from the index only.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m09-q4', 'git-m09-check', 4, 'Which makes the best bug report?', '["It does not work","A title, what happened, what you expected, numbered steps to reproduce and your environment","A screenshot with no text","A long complaint"]'::jsonb)
+values ('git-m09-q4', 'git-m03-check', 12, 'Which makes the best bug report?', '["It does not work","A title, what happened, what you expected, numbered steps to reproduce and your environment","A screenshot with no text","A long complaint"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('git-m09-q4', 1, 'Someone else must be able to reproduce the problem.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m09-q5', 'git-m09-check', 5, 'What does branch protection on main let a team require?', '["Nothing","Pull requests, approvals and passing checks before merging","That everyone commits at night","A larger repository"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m09-q5', 1, 'It makes it impossible to push untested work straight to main.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: GitHub Pages and Actions: module check
+-- Assessment: Automation, Portfolio and Workflow: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m10-check', 'git-and-github-for-beginners', 'module', 'git-m10', 'GitHub Pages and Actions: module check', 60, true)
+values ('git-m04-check', 'git-and-github-for-beginners', 'module', 'git-m04', 'Automation, Portfolio and Workflow: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m10-q1', 'git-m10-check', 1, 'Where do GitHub Actions workflow files live?', '[".github/workflows","workflows/ in the root","src/actions","docs/ci"]'::jsonb)
+values ('git-m10-q1', 'git-m04-check', 1, 'Where do GitHub Actions workflow files live?', '[".github/workflows","workflows/ in the root","src/actions","docs/ci"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111843,7 +111615,7 @@ values ('git-m10-q1', 0, 'Anywhere else, GitHub does not run them.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m10-q2', 'git-m10-check', 2, 'In a workflow, what does uses: actions/checkout@v4 do?', '["Deletes the repository","Downloads your repository''s code onto the machine running the job","Checks your spelling","Publishes the site"]'::jsonb)
+values ('git-m10-q2', 'git-m04-check', 2, 'In a workflow, what does uses: actions/checkout@v4 do?', '["Deletes the repository","Downloads your repository''s code onto the machine running the job","Checks your spelling","Publishes the site"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111851,7 +111623,7 @@ values ('git-m10-q2', 1, 'Almost every workflow starts by checking out the code.
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m10-q3', 'git-m10-check', 3, 'A workflow needs a deployment password. Where should it be kept?', '["Written in the YAML file","In the repository''s Actions secrets","In the README","In a commit message"]'::jsonb)
+values ('git-m10-q3', 'git-m04-check', 3, 'A workflow needs a deployment password. Where should it be kept?', '["Written in the YAML file","In the repository''s Actions secrets","In the README","In a commit message"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111859,7 +111631,7 @@ values ('git-m10-q3', 1, 'Secrets are stored in Settings and used as ${{ secrets
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m10-q4', 'git-m10-check', 4, 'You publish a project site from a repository called kitchen-site on the account ada-okafor. What is the address?', '["https://github.com/kitchen-site","https://ada-okafor.github.io/kitchen-site","https://kitchen-site.com","https://ada-okafor.github.io"]'::jsonb)
+values ('git-m10-q4', 'git-m04-check', 4, 'You publish a project site from a repository called kitchen-site on the account ada-okafor. What is the address?', '["https://github.com/kitchen-site","https://ada-okafor.github.io/kitchen-site","https://kitchen-site.com","https://ada-okafor.github.io"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111867,21 +111639,7 @@ values ('git-m10-q4', 1, 'Project sites live under your username''s github.io ad
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m10-q5', 'git-m10-check', 5, 'YAML is fussy about which thing?', '["Colours","Indentation, which must use spaces and not tabs","File size","Capital letters in comments"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m10-q5', 1, 'Wrong indentation changes the meaning or breaks the file.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Show Your Projects on GitHub: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m11-check', 'git-and-github-for-beginners', 'module', 'git-m11', 'Show Your Projects on GitHub: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m11-q1', 'git-m11-check', 1, 'Your GitHub username is tolu-adeyemi. Which repository makes a README appear at the top of your profile?', '["profile","tolu-adeyemi","readme","tolu-adeyemi.github.io"]'::jsonb)
+values ('git-m11-q1', 'git-m04-check', 5, 'Your GitHub username is tolu-adeyemi. Which repository makes a README appear at the top of your profile?', '["profile","tolu-adeyemi","readme","tolu-adeyemi.github.io"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111889,7 +111647,7 @@ values ('git-m11-q1', 1, 'A public repository named exactly your username become
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m11-q2', 'git-m11-check', 2, 'Which README opening is strongest for a recruiter?', '["A blank file","One sentence on what the project is and why it matters, then what you did and the results with numbers","A copy of a tutorial","Only a title"]'::jsonb)
+values ('git-m11-q2', 'git-m04-check', 6, 'Which README opening is strongest for a recruiter?', '["A blank file","One sentence on what the project is and why it matters, then what you did and the results with numbers","A copy of a tutorial","Only a title"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111897,7 +111655,7 @@ values ('git-m11-q2', 1, 'Lead with the point and show results.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m11-q3', 'git-m11-check', 3, 'You can pin how many repositories to your profile?', '["One","Up to six","Twenty","As many as you like"]'::jsonb)
+values ('git-m11-q3', 'git-m04-check', 7, 'You can pin how many repositories to your profile?', '["One","Up to six","Twenty","As many as you like"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111905,7 +111663,7 @@ values ('git-m11-q3', 1, 'Choose your best six, strongest first.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m11-q4', 'git-m11-check', 4, 'Which is a good habit for your commit history as a portfolio?', '["Make hundreds of empty commits to fill the green squares","Steady, real work with clear messages","Only commit once a year","Use the same message every time"]'::jsonb)
+values ('git-m11-q4', 'git-m04-check', 8, 'Which is a good habit for your commit history as a portfolio?', '["Make hundreds of empty commits to fill the green squares","Steady, real work with clear messages","Only commit once a year","Use the same message every time"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111913,21 +111671,7 @@ values ('git-m11-q4', 1, 'Recruiters read commits. Honest, steady work speaks fo
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m11-q5', 'git-m11-check', 5, 'What should you add to each public repository so visitors understand it quickly?', '["A README and a description","Nothing","Only a licence","A larger file"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m11-q5', 0, 'The README is the front page, and the description and topics help people find it.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: A Day on a Team: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('git-m12-check', 'git-and-github-for-beginners', 'module', 'git-m12', 'A Day on a Team: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m12-q1', 'git-m12-check', 1, 'What should you do first when you start your working day on a shared project?', '["Push everything","git switch main and git pull, then branch for your task","Delete old branches","Rewrite history"]'::jsonb)
+values ('git-m12-q1', 'git-m04-check', 9, 'What should you do first when you start your working day on a shared project?', '["Push everything","git switch main and git pull, then branch for your task","Delete old branches","Rewrite history"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111935,7 +111679,7 @@ values ('git-m12-q1', 1, 'Start from the latest work, and never work directly on
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m12-q2', 'git-m12-check', 2, 'You are mid-task with uncommitted changes and must fix an urgent bug on main. What is the cleanest sequence?', '["git stash, switch to main and fix on a branch, merge, then switch back and git stash pop","Commit half-finished work with the message wip","Copy the folder and start again","git reset --hard"]'::jsonb)
+values ('git-m12-q2', 'git-m04-check', 10, 'You are mid-task with uncommitted changes and must fix an urgent bug on main. What is the cleanest sequence?', '["git stash, switch to main and fix on a branch, merge, then switch back and git stash pop","Commit half-finished work with the message wip","Copy the folder and start again","git reset --hard"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111943,7 +111687,7 @@ values ('git-m12-q2', 0, 'Stash keeps your work safe and gives you a clean folde
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m12-q3', 'git-m12-check', 3, 'What does git tag v1.0 do?', '["Deletes version 1","Puts a permanent named label on a commit, marking a release","Creates a branch","Pushes to GitHub"]'::jsonb)
+values ('git-m12-q3', 'git-m04-check', 11, 'What does git tag v1.0 do?', '["Deletes version 1","Puts a permanent named label on a commit, marking a release","Creates a branch","Pushes to GitHub"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -111951,19 +111695,11 @@ values ('git-m12-q3', 1, 'Tags mark moments like releases that you may want to r
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m12-q4', 'git-m12-check', 4, 'Before you commit, which two checks do professionals make?', '["git status and git diff --staged","git init and git clone","git reset and git push","None, they just commit"]'::jsonb)
+values ('git-m12-q4', 'git-m04-check', 12, 'Before you commit, which two checks do professionals make?', '["git status and git diff --staged","git init and git clone","git reset and git push","None, they just commit"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('git-m12-q4', 0, 'They check what is about to be saved.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('git-m12-q5', 'git-m12-check', 5, 'Two teammates changed the same line. What is the best way to resolve the conflict?', '["Whoever merges last wins","Talk to each other, decide what is right, edit the file, add and commit","Delete the file","Force push"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('git-m12-q5', 1, 'A conflict is a signal that people should talk.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -112101,9 +111837,9 @@ values ('git-f16', 0, 'git status keeps you oriented.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
--- Assessment: How the Web Works and Your First Page: module check
+-- Assessment: HTML: Build the Structure: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m01-check', 'web-development-for-beginners', 'module', 'web-m01', 'How the Web Works and Your First Page: module check', 60, true)
+values ('web-m01-check', 'web-development-for-beginners', 'module', 'web-m01', 'HTML: Build the Structure: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -112131,29 +111867,7 @@ values ('web-m01-q3', 1, '<head> holds information about the page; <body> holds 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m01-q4', 'web-m01-check', 4, 'Which line is the correct way to write a link to Google?', '["<a>https://www.google.com</a>","<link href=\"https://www.google.com\">Google</link>","<a href=\"https://www.google.com\">Google</a>","<href=\"https://www.google.com\">Google</href>"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m01-q4', 2, 'A link is an <a> element, and its address goes in the href attribute.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m01-q5', 'web-m01-check', 5, 'A page has a heading, and the next paragraph is not closed with </p>. What is the best fix?', '["Ignore it, browsers always guess right","Add the closing </p> tag","Delete the heading","Replace the paragraph with <br>"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m01-q5', 1, 'Close every tag you open. Guessing browsers can render the rest of the page wrongly.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Text, Lists, Links and Images: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m02-check', 'web-development-for-beginners', 'module', 'web-m02', 'Text, Lists, Links and Images: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m02-q1', 'web-m02-check', 1, 'Which element should you use for an ordered list of steps in a recipe?', '["<ul>","<ol>","<dl>","<li> on its own"]'::jsonb)
+values ('web-m02-q1', 'web-m01-check', 4, 'Which element should you use for an ordered list of steps in a recipe?', '["<ul>","<ol>","<dl>","<li> on its own"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112161,7 +111875,7 @@ values ('web-m02-q1', 1, '<ol> numbers the items, which matters when order matte
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m02-q2', 'web-m02-check', 2, 'You want a link that jumps to the section <h2 id="prices"> on the same page. What is the href?', '["href=\"prices\"","href=\"#prices\"","href=\".prices\"","href=\"/prices.html\""]'::jsonb)
+values ('web-m02-q2', 'web-m01-check', 5, 'You want a link that jumps to the section <h2 id="prices"> on the same page. What is the href?', '["href=\"prices\"","href=\"#prices\"","href=\".prices\"","href=\"/prices.html\""]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112169,7 +111883,7 @@ values ('web-m02-q2', 1, 'A # followed by the id jumps to that element on the sa
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m02-q3', 'web-m02-check', 3, 'Which image tag follows good practice?', '["<img src=\"cake.jpg\">","<img src=\"cake.jpg\" alt=\"image\">","<img src=\"cake.jpg\" alt=\"A three-tier birthday cake with white icing\" width=\"600\" height=\"400\">","<img alt=\"A cake\">"]'::jsonb)
+values ('web-m02-q3', 'web-m01-check', 6, 'Which image tag follows good practice?', '["<img src=\"cake.jpg\">","<img src=\"cake.jpg\" alt=\"image\">","<img src=\"cake.jpg\" alt=\"A three-tier birthday cake with white icing\" width=\"600\" height=\"400\">","<img alt=\"A cake\">"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112177,29 +111891,7 @@ values ('web-m02-q3', 2, 'Useful alt text, plus width and height so the page doe
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m02-q4', 'web-m02-check', 4, 'A link opens a page on another website in a new tab. Which attribute should you add for safety?', '["rel=\"noopener noreferrer\"","alt=\"external\"","download","id=\"external\""]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m02-q4', 0, 'target="_blank" should be paired with rel="noopener noreferrer".')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m02-q5', 'web-m02-check', 5, 'Which link text is best for someone using a screen reader to jump from link to link?', '["Click here","Read more","Download the 2026 price list (PDF)","Link"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m02-q5', 2, 'Link text should make sense on its own.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Page Structure: Semantic HTML and Layout Elements: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m03-check', 'web-development-for-beginners', 'module', 'web-m03', 'Page Structure: Semantic HTML and Layout Elements: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m03-q1', 'web-m03-check', 1, 'Why use <nav> and <footer> instead of <div> for every part of a page?', '["Divs are not allowed any more","They tell browsers, search engines and screen readers what each part is","They load faster","They add colour automatically"]'::jsonb)
+values ('web-m03-q1', 'web-m01-check', 7, 'Why use <nav> and <footer> instead of <div> for every part of a page?', '["Divs are not allowed any more","They tell browsers, search engines and screen readers what each part is","They load faster","They add colour automatically"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112207,7 +111899,7 @@ values ('web-m03-q1', 1, 'Semantic elements carry meaning that helps accessibili
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m03-q2', 'web-m03-check', 2, 'A page has the site menu, a news story and a copyright line. Which elements fit best, in that order?', '["<div>, <div>, <div>","<nav>, <article>, <footer>","<header>, <aside>, <main>","<section>, <nav>, <article>"]'::jsonb)
+values ('web-m03-q2', 'web-m01-check', 8, 'A page has the site menu, a news story and a copyright line. Which elements fit best, in that order?', '["<div>, <div>, <div>","<nav>, <article>, <footer>","<header>, <aside>, <main>","<section>, <nav>, <article>"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112215,7 +111907,7 @@ values ('web-m03-q2', 1, 'Navigation, a standalone story and the footer.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m03-q3', 'web-m03-check', 3, 'How many <main> elements should one page have?', '["One","As many as there are sections","Zero","Two, one per column"]'::jsonb)
+values ('web-m03-q3', 'web-m01-check', 9, 'How many <main> elements should one page have?', '["One","As many as there are sections","Zero","Two, one per column"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112223,29 +111915,7 @@ values ('web-m03-q3', 0, '<main> marks the single main content of the page.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m03-q4', 'web-m03-check', 4, 'Which sentence about class and id is true?', '["Many elements can share an id, but a class must be unique","Many elements can share a class, but an id must be unique on the page","They are the same","Only ids can be used in CSS"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m03-q4', 1, 'Classes are for groups, ids for one-off elements.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m03-q5', 'web-m03-check', 5, 'You need a plain box just to group some elements so CSS can style them, and nothing else fits. What do you use?', '["<section>","<article>","<div>","<aside>"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m03-q5', 2, '<div> is the generic block box with no meaning, for when no meaningful element fits.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Forms and Tables: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m04-check', 'web-development-for-beginners', 'module', 'web-m04', 'Forms and Tables: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m04-q1', 'web-m04-check', 1, 'Clicking the label "Email" should put the cursor in the email box. What makes that work?', '["Putting the label above the input","A matching for on the <label> and id on the <input>","Using placeholder text","Giving the input a class"]'::jsonb)
+values ('web-m04-q1', 'web-m01-check', 10, 'Clicking the label "Email" should put the cursor in the email box. What makes that work?', '["Putting the label above the input","A matching for on the <label> and id on the <input>","Using placeholder text","Giving the input a class"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112253,7 +111923,7 @@ values ('web-m04-q1', 1, '<label for="email"> goes with <input id="email">.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m04-q2', 'web-m04-check', 2, 'Which input type gives you a calendar picker?', '["type=\"text\"","type=\"date\"","type=\"number\"","type=\"calendar\""]'::jsonb)
+values ('web-m04-q2', 'web-m01-check', 11, 'Which input type gives you a calendar picker?', '["type=\"text\"","type=\"date\"","type=\"number\"","type=\"calendar\""]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112261,7 +111931,7 @@ values ('web-m04-q2', 1, 'type="date" shows a date picker. There is no calendar 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m04-q3', 'web-m04-check', 3, 'A form has three radio buttons for "How will you attend?" but the visitor can tick all three. What is wrong?', '["They need different ids","They need the same name","They need the required attribute","Radios cannot be in a form"]'::jsonb)
+values ('web-m04-q3', 'web-m01-check', 12, 'A form has three radio buttons for "How will you attend?" but the visitor can tick all three. What is wrong?', '["They need different ids","They need the same name","They need the required attribute","Radios cannot be in a form"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112269,29 +111939,7 @@ values ('web-m04-q3', 1, 'Radio buttons with the same name form a group where on
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m04-q4', 'web-m04-check', 4, 'A signup form accepts "ada" in the email box. Which change gets the browser to check it for an @?', '["Use type=\"text\"","Use type=\"email\"","Use a longer placeholder","Remove the label"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m04-q4', 1, 'type="email" checks the format before submission.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m04-q5', 'web-m04-check', 5, 'In a timetable table, which element is used for the header cell at the top of a column?', '["<td scope=\"col\">","<th scope=\"col\">","<tr scope=\"col\">","<caption>"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m04-q5', 1, '<th> is a header cell, and scope says whether it heads a column or a row.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Media, Page Information, Search and Accessibility: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m05-check', 'web-development-for-beginners', 'module', 'web-m05', 'Media, Page Information, Search and Accessibility: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m05-q1', 'web-m05-check', 1, 'When someone shares your link on WhatsApp, which tags control the title and picture shown in the preview?', '["<h1> and <img>","Open Graph meta tags such as og:title and og:image","The favicon","The viewport tag"]'::jsonb)
+values ('web-m05-q1', 'web-m01-check', 13, 'When someone shares your link on WhatsApp, which tags control the title and picture shown in the preview?', '["<h1> and <img>","Open Graph meta tags such as og:title and og:image","The favicon","The viewport tag"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112299,7 +111947,7 @@ values ('web-m05-q1', 1, 'Open Graph tags describe the page for sharing.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m05-q2', 'web-m05-check', 2, 'Which is the best meta description for a school''s homepage?', '["School","A small, friendly school in Ibadan for ages 6 to 17, with WAEC preparation and a coding club.","Welcome to our website, which is the best website for the best school, best school, best school","Click here"]'::jsonb)
+values ('web-m05-q2', 'web-m01-check', 14, 'Which is the best meta description for a school''s homepage?', '["School","A small, friendly school in Ibadan for ages 6 to 17, with WAEC preparation and a coding club.","Welcome to our website, which is the best website for the best school, best school, best school","Click here"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112307,37 +111955,21 @@ values ('web-m05-q2', 1, 'A clear sentence of about 150 characters that makes pe
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m05-q3', 'web-m05-check', 3, 'A button shows only a magnifying-glass icon. What should you add so a screen reader user knows what it does?', '["A bigger icon","aria-label=\"Search\"","A red border","alt=\"Search\" on the button"]'::jsonb)
+values ('web-m05-q3', 'web-m01-check', 15, 'A button shows only a magnifying-glass icon. What should you add so a screen reader user knows what it does?', '["A bigger icon","aria-label=\"Search\"","A red border","alt=\"Search\" on the button"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('web-m05-q3', 1, 'aria-label gives an accessible name to an icon-only control.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m05-q4', 'web-m05-check', 4, 'Which step helps a keyboard-only visitor most?', '["Making every control reachable and usable with Tab and Enter","Adding more images","Using smaller text","Hiding the focus outline"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m05-q4', 0, 'Everything a mouse can do must also work with the keyboard.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m05-q5', 'web-m05-check', 5, 'Lighthouse in Chrome DevTools reports an accessibility score of 62. What is the best next step?', '["Ignore it, scores do not matter","Read the list of issues it gives and fix them, like missing alt text and labels","Delete the page","Add more colour"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m05-q5', 1, 'Lighthouse lists concrete fixes.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: CSS Fundamentals: Selectors and the Cascade: module check
+-- Assessment: CSS: Style and Layout: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m06-check', 'web-development-for-beginners', 'module', 'web-m06', 'CSS Fundamentals: Selectors and the Cascade: module check', 60, true)
+values ('web-m02-check', 'web-development-for-beginners', 'module', 'web-m02', 'CSS: Style and Layout: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m06-q1', 'web-m06-check', 1, 'You wrote style.css, but the page looks unstyled. What is the most likely cause?', '["CSS does not work offline","The <link rel=\"stylesheet\" href=\"style.css\"> line is missing or the file name does not match","The browser is too old","JavaScript is needed first"]'::jsonb)
+values ('web-m06-q1', 'web-m02-check', 1, 'You wrote style.css, but the page looks unstyled. What is the most likely cause?', '["CSS does not work offline","The <link rel=\"stylesheet\" href=\"style.css\"> line is missing or the file name does not match","The browser is too old","JavaScript is needed first"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112345,7 +111977,7 @@ values ('web-m06-q1', 1, 'The HTML must link the stylesheet with the exact file 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m06-q2', 'web-m06-check', 2, 'Which selector targets the one element with id="contact"?', '[".contact","#contact","contact","*contact"]'::jsonb)
+values ('web-m06-q2', 'web-m02-check', 2, 'Which selector targets the one element with id="contact"?', '[".contact","#contact","contact","*contact"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112353,37 +111985,7 @@ values ('web-m06-q2', 1, '# is for ids and . is for classes.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m06-q3', 'web-m06-check', 3, 'A paragraph has class="note". Your CSS has p { color: black; } above .note { color: crimson; }. What colour is it?', '["Black, because it was written first","Crimson, because a class is more specific than an element","Crimson only if you add !important","Neither, they cancel out"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m06-q3', 1, 'Specificity: a class beats an element selector.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m06-q4', 'web-m06-check', 4, 'Which rule styles every link inside the <nav> and nothing else?', '["nav, a { }","nav a { }","nav > p { }","a.nav { }"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m06-q4', 1, 'A descendant selector: an <a> anywhere inside <nav>.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m06-q5', 'web-m06-check', 5, 'Why is body { font-family: system-ui, sans-serif; } enough to set the font for the whole page?', '["Because body is the biggest element","Because font-family is inherited by child elements","Because CSS always applies to everything","It is not enough"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m06-q5', 1, 'Some properties, like font-family and color, are inherited.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: The Box Model, Units, Display and Position: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m07-check', 'web-development-for-beginners', 'module', 'web-m07', 'The Box Model, Units, Display and Position: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m07-q1', 'web-m07-check', 1, 'A box has width: 300px, padding: 20px and a 5px border with the default box-sizing. How wide is it on the page?', '["300px","340px","350px","320px"]'::jsonb)
+values ('web-m07-q1', 'web-m02-check', 3, 'A box has width: 300px, padding: 20px and a 5px border with the default box-sizing. How wide is it on the page?', '["300px","340px","350px","320px"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112391,7 +111993,7 @@ values ('web-m07-q1', 2, '300 + 20 + 20 + 5 + 5 = 350px. With box-sizing: border
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m07-q2', 'web-m07-check', 2, 'Which two lines centre a box with a set width in its parent?', '["text-align: center;","margin: 0 auto;","padding: auto;","display: center;"]'::jsonb)
+values ('web-m07-q2', 'web-m02-check', 4, 'Which two lines centre a box with a set width in its parent?', '["text-align: center;","margin: 0 auto;","padding: auto;","display: center;"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112399,37 +112001,7 @@ values ('web-m07-q2', 1, 'Left and right margins of auto split the free space eq
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m07-q3', 'web-m07-check', 3, 'Your link has padding: 12px 24px but the vertical padding does not push other lines away. What fixes it?', '["display: inline-block;","position: static;","float: none;","display: inline;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m07-q3', 0, 'Inline elements ignore vertical sizing. inline-block respects it.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m07-q4', 'web-m07-check', 4, 'You want a menu bar that stays at the top of the screen while the page scrolls. Which is the best choice?', '["position: sticky; top: 0;","position: static;","display: none;","overflow: hidden;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m07-q4', 0, 'sticky flows normally, then sticks to the top when you scroll past it.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m07-q5', 'web-m07-check', 5, 'Which unit is best for text size, so it respects the user''s own text-size settings?', '["px","rem","vh","cm"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m07-q5', 1, 'rem scales with the base font size the user has chosen.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Colour, Fonts, Backgrounds and Visual Effects: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m08-check', 'web-development-for-beginners', 'module', 'web-m08', 'Colour, Fonts, Backgrounds and Visual Effects: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m08-q1', 'web-m08-check', 1, 'Your light grey text on white is stylish but hard to read. What should you check?', '["The colour contrast ratio, aiming for at least 4.5 to 1","The font file size","The image sizes","The page title"]'::jsonb)
+values ('web-m08-q1', 'web-m02-check', 5, 'Your light grey text on white is stylish but hard to read. What should you check?', '["The colour contrast ratio, aiming for at least 4.5 to 1","The font file size","The image sizes","The page title"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112437,7 +112009,7 @@ values ('web-m08-q1', 0, 'WCAG asks for at least 4.5 to 1 for normal text.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m08-q2', 'web-m08-check', 2, 'Which gives comfortable, readable body text?', '["font-size: 12px; line-height: 1;","font-size: 1rem; line-height: 1.6;","font-size: 10px; line-height: 3;","font-size: 2rem; line-height: 0.8;"]'::jsonb)
+values ('web-m08-q2', 'web-m02-check', 6, 'Which gives comfortable, readable body text?', '["font-size: 12px; line-height: 1;","font-size: 1rem; line-height: 1.6;","font-size: 10px; line-height: 3;","font-size: 2rem; line-height: 0.8;"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112445,37 +112017,7 @@ values ('web-m08-q2', 1, 'About 16px with a line height of 1.5 to 1.7.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m08-q3', 'web-m08-check', 3, 'Your brand colour is used in forty rules and the client wants a new colour. What would have made this a one-line change?', '["Using color names","CSS custom properties, like --brand set on :root and used with var(--brand)","Using inline styles","Using !important"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m08-q3', 1, 'Variables let you change a value in one place.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m08-q4', 'web-m08-check', 4, 'How do you draw a diagonal two-colour background with no image file?', '["background: url(gradient)","background: linear-gradient(135deg, #0f766e, #134e4a);","background: two-colours;","background-image: diagonal;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m08-q4', 1, 'CSS gradients are drawn by the browser, so they load instantly.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m08-q5', 'web-m08-check', 5, 'Why should a page use at most two fonts?', '["Browsers only allow two","Every font file makes the page slower, and too many fonts look messy","Fonts cost money","More than two cannot be centred"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m08-q5', 1, 'Speed and visual consistency.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Flexbox: Layout in One Direction: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m09-check', 'web-development-for-beginners', 'module', 'web-m09', 'Flexbox: Layout in One Direction: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m09-q1', 'web-m09-check', 1, 'Which property, set on the flex container, spreads items along the main axis with the first at one end and the last at the other?', '["align-items: center","justify-content: space-between","flex-wrap: wrap","gap: 1rem"]'::jsonb)
+values ('web-m09-q1', 'web-m02-check', 7, 'Which property, set on the flex container, spreads items along the main axis with the first at one end and the last at the other?', '["align-items: center","justify-content: space-between","flex-wrap: wrap","gap: 1rem"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112483,7 +112025,7 @@ values ('web-m09-q1', 1, 'space-between puts the free space between items.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m09-q2', 'web-m09-check', 2, 'You want to centre one item both horizontally and vertically inside a tall box. Which works?', '["display: flex; justify-content: center; align-items: center;","text-align: center;","margin: auto;","position: center;"]'::jsonb)
+values ('web-m09-q2', 'web-m02-check', 8, 'You want to centre one item both horizontally and vertically inside a tall box. Which works?', '["display: flex; justify-content: center; align-items: center;","text-align: center;","margin: auto;","position: center;"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112491,37 +112033,7 @@ values ('web-m09-q2', 0, 'Flexbox centres on both axes with those two properties
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m09-q3', 'web-m09-check', 3, 'Cards in a flex row shrink to tiny widths on a phone. Which change lets them drop onto new lines?', '["flex-wrap: wrap;","display: block;","overflow: hidden;","flex-direction: row;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m09-q3', 0, 'flex-wrap: wrap allows items to move to a new line.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m09-q4', 'web-m09-check', 4, 'What does flex: 1 1 200px mean for an item?', '["Always exactly 200px","It can grow, can shrink, and starts at 200px","It is hidden below 200px","It must have 200 items"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m09-q4', 1, 'grow 1, shrink 1, basis 200px.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m09-q5', 'web-m09-check', 5, 'A navbar has a logo and links, and you want the logo on the left and links on the right. Which is the best approach?', '["Make the header display: flex; justify-content: space-between;","Float the logo","Use a table","Use text-align: justify"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m09-q5', 0, 'A classic flexbox pattern.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: CSS Grid: Layout in Rows and Columns: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m10-check', 'web-development-for-beginners', 'module', 'web-m10', 'CSS Grid: Layout in Rows and Columns: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m10-q1', 'web-m10-check', 1, 'What does grid-template-columns: 1fr 2fr create?', '["Two equal columns","Two columns where the second is twice as wide as the first","One column of 3px","Two rows"]'::jsonb)
+values ('web-m10-q1', 'web-m02-check', 9, 'What does grid-template-columns: 1fr 2fr create?', '["Two equal columns","Two columns where the second is twice as wide as the first","One column of 3px","Two rows"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112529,7 +112041,7 @@ values ('web-m10-q1', 1, 'fr divides the free space in proportion.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m10-q2', 'web-m10-check', 2, 'Which line makes as many columns of at least 220px as will fit, sharing the leftover space?', '["grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));","grid-template-columns: 220px;","display: columns;","grid-columns: auto;"]'::jsonb)
+values ('web-m10-q2', 'web-m02-check', 10, 'Which line makes as many columns of at least 220px as will fit, sharing the leftover space?', '["grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));","grid-template-columns: 220px;","display: columns;","grid-columns: auto;"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112537,37 +112049,7 @@ values ('web-m10-q2', 0, 'A responsive gallery with no media queries.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m10-q3', 'web-m10-check', 3, 'You want one featured card to be twice as wide as the others in a grid. What do you give it?', '["grid-column: span 2;","width: 200%;","flex: 2;","display: wide;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m10-q3', 0, 'Items can span multiple tracks.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m10-q4', 'web-m10-check', 4, 'When is grid a better choice than flexbox?', '["When laying out items in a single row","When you need rows and columns together, such as a gallery or a whole page layout","Never, flexbox does everything","Only for text"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m10-q4', 1, 'Flexbox is one-dimensional, grid is two-dimensional.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m10-q5', 'web-m10-check', 5, 'In grid-template-areas, what is the picture of strings used for?', '["Setting font sizes","Drawing the page layout, then giving each element a name with grid-area","Adding images","Choosing colours"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m10-q5', 1, 'The drawing is the layout.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Responsive Design: One Site for Every Screen: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m11-check', 'web-development-for-beginners', 'module', 'web-m11', 'Responsive Design: One Site for Every Screen: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m11-q1', 'web-m11-check', 1, 'Which is the mobile-first way to write a three-column layout?', '["Write three columns first, then remove them with max-width queries","Write one column first, then add columns with @media (min-width: ...)","Make two separate websites","Use fixed pixel widths"]'::jsonb)
+values ('web-m11-q1', 'web-m02-check', 11, 'Which is the mobile-first way to write a three-column layout?', '["Write three columns first, then remove them with max-width queries","Write one column first, then add columns with @media (min-width: ...)","Make two separate websites","Use fixed pixel widths"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112575,7 +112057,7 @@ values ('web-m11-q1', 1, 'Start small and add layout as the screen grows.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m11-q2', 'web-m11-check', 2, 'A wide photo overflows a narrow phone screen. Which rule is the standard fix?', '["img { width: 2000px; }","img { max-width: 100%; height: auto; }","img { display: none; }","img { position: fixed; }"]'::jsonb)
+values ('web-m11-q2', 'web-m02-check', 12, 'A wide photo overflows a narrow phone screen. Which rule is the standard fix?', '["img { width: 2000px; }","img { max-width: 100%; height: auto; }","img { display: none; }","img { position: fixed; }"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112583,37 +112065,7 @@ values ('web-m11-q2', 1, 'The image shrinks to fit its container and keeps its p
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m11-q3', 'web-m11-check', 3, 'What does font-size: clamp(1.8rem, 4vw + 1rem, 3rem) do?', '["Fixes the size at 3rem","Scales with the screen but never below 1.8rem or above 3rem","Makes text blink","Applies only on phones"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m11-q3', 1, 'clamp(min, ideal, max).')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m11-q4', 'web-m11-check', 4, 'Where do you decide your breakpoints?', '["At the sizes of the latest iPhone","Where your own layout starts to look stretched or crowded","At 1000px always","You cannot choose them"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m11-q4', 1, 'Let the content decide.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m11-q5', 'web-m11-check', 5, 'What does @media (prefers-reduced-motion: reduce) let you do?', '["Make the page smaller","Switch off animations for people who asked their device for less motion","Reduce the image sizes","Hide the menu"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m11-q5', 1, 'It respects an accessibility setting on the user''s device.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Transitions, Transforms, Animation and Pseudo-elements: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m12-check', 'web-development-for-beginners', 'module', 'web-m12', 'Transitions, Transforms, Animation and Pseudo-elements: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m12-q1', 'web-m12-check', 1, 'You want a button to change colour smoothly over a third of a second on hover. What do you add?', '["transition: background 0.3s ease; on the button","animation: hover;","display: smooth;","delay: 0.3s"]'::jsonb)
+values ('web-m12-q1', 'web-m02-check', 13, 'You want a button to change colour smoothly over a third of a second on hover. What do you add?', '["transition: background 0.3s ease; on the button","animation: hover;","display: smooth;","delay: 0.3s"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112621,45 +112073,21 @@ values ('web-m12-q1', 0, 'A transition makes a change gradual.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m12-q2', 'web-m12-check', 2, 'Which two properties are the best to animate for smooth, fast motion?', '["width and height","transform and opacity","margin and top","padding and border"]'::jsonb)
+values ('web-m12-q2', 'web-m02-check', 14, 'Which two properties are the best to animate for smooth, fast motion?', '["width and height","transform and opacity","margin and top","padding and border"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('web-m12-q2', 1, 'They do not force the browser to recalculate the page layout.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m12-q3', 'web-m12-check', 3, 'What must you write inside ::before or ::after for the pseudo-element to appear?', '["content: \"\";","display: pseudo;","visible: true;","text: before;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m12-q3', 0, 'Without a content property, the pseudo-element is not generated.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m12-q4', 'web-m12-check', 4, 'A spinner should turn forever. Which animation shorthand does this?', '["animation: spin 0.9s linear infinite;","animation: spin once;","transition: spin 0.9s;","transform: spin;"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m12-q4', 0, 'infinite repeats the keyframes forever.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m12-q5', 'web-m12-check', 5, 'Why add @media (prefers-reduced-motion: reduce) to your CSS?', '["To make animations faster","Some people feel unwell with lots of motion, and it lets them turn it off","It is required by browsers","It improves SEO"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m12-q5', 1, 'It is about accessibility and kindness.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: JavaScript Basics: Variables, Types and the Console: module check
+-- Assessment: JavaScript: Make It Interactive: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m13-check', 'web-development-for-beginners', 'module', 'web-m13', 'JavaScript Basics: Variables, Types and the Console: module check', 60, true)
+values ('web-m03-check', 'web-development-for-beginners', 'module', 'web-m03', 'JavaScript: Make It Interactive: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m13-q1', 'web-m13-check', 1, 'Your code says const price = 1200; and later price = 1500;. What happens?', '["The price becomes 1500","A TypeError: you cannot reassign a const","Nothing, JavaScript ignores it","The page reloads"]'::jsonb)
+values ('web-m13-q1', 'web-m03-check', 1, 'Your code says const price = 1200; and later price = 1500;. What happens?', '["The price becomes 1500","A TypeError: you cannot reassign a const","Nothing, JavaScript ignores it","The page reloads"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112667,7 +112095,7 @@ values ('web-m13-q1', 1, 'const values cannot be reassigned. Use let for values 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m13-q2', 'web-m13-check', 2, 'What does console.log("5" + 3) print?', '["8","53","NaN","An error"]'::jsonb)
+values ('web-m13-q2', 'web-m03-check', 2, 'What does console.log("5" + 3) print?', '["8","53","NaN","An error"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112675,37 +112103,7 @@ values ('web-m13-q2', 1, 'With a string on one side, + joins text, so the result
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m13-q3', 'web-m13-check', 3, 'Which is the safest way to compare two values in JavaScript?', '["a = b","a == b","a === b","a equals b"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m13-q3', 2, '=== compares value and type, avoiding surprises from type conversion.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m13-q4', 'web-m13-check', 4, 'Which line builds the text Hello Ada using a template literal and a variable called name?', '["\"Hello ${name}\"","`Hello ${name}`","''Hello'' + name + ''''","Hello {name}"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m13-q4', 1, 'Template literals use backticks and ${...} for values.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m13-q5', 'web-m13-check', 5, 'The Console says: ReferenceError: totl is not defined. The variable is called total. What is the most likely cause?', '["A typo in the name","JavaScript is broken","The page has no CSS","You need var"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m13-q5', 0, 'A ReferenceError means a name that does not exist, often a spelling mistake.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Decisions, Loops and Functions: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m14-check', 'web-development-for-beginners', 'module', 'web-m14', 'Decisions, Loops and Functions: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m14-q1', 'web-m14-check', 1, 'score is 65. The code is: if (score >= 70) A; else if (score >= 60) B; else C. What is the result?', '["A","B","C","Nothing"]'::jsonb)
+values ('web-m14-q1', 'web-m03-check', 3, 'score is 65. The code is: if (score >= 70) A; else if (score >= 60) B; else C. What is the result?', '["A","B","C","Nothing"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112713,7 +112111,7 @@ values ('web-m14-q1', 1, 'JavaScript runs the first condition that is true, whic
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m14-q2', 'web-m14-check', 2, 'How many times does for (let i = 1; i <= 5; i++) { ... } run its body?', '["4","5","6","It never stops"]'::jsonb)
+values ('web-m14-q2', 'web-m03-check', 4, 'How many times does for (let i = 1; i <= 5; i++) { ... } run its body?', '["4","5","6","It never stops"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112721,37 +112119,7 @@ values ('web-m14-q2', 1, 'i takes the values 1, 2, 3, 4 and 5.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m14-q3', 'web-m14-check', 3, 'What does a function return if it has no return statement?', '["0","An empty string","undefined","null"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m14-q3', 2, 'Without return, the call gives undefined.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m14-q4', 'web-m14-check', 4, 'Why is it better to write a function once than to copy the same code in five places?', '["Functions run faster","You fix and change it in one place, and the code is shorter and clearer","Copying is not allowed","Functions use less memory always"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m14-q4', 1, 'Reuse means fewer bugs and easier changes.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m14-q5', 'web-m14-check', 5, 'A while loop never ends and freezes the page. What is the likely mistake?', '["The condition never becomes false","The loop has too few lines","You used let","The function is async"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m14-q5', 0, 'Something inside the loop must move it towards finishing.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Arrays, Objects and JSON: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m15-check', 'web-development-for-beginners', 'module', 'web-m15', 'Arrays, Objects and JSON: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m15-q1', 'web-m15-check', 1, 'What is the index of "Yam" in ["Rice", "Beans", "Yam"]?', '["1","2","3","0"]'::jsonb)
+values ('web-m15-q1', 'web-m03-check', 5, 'What is the index of "Yam" in ["Rice", "Beans", "Yam"]?', '["1","2","3","0"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112759,7 +112127,7 @@ values ('web-m15-q1', 1, 'Indexes start at 0, so Yam is at 2.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m15-q2', 'web-m15-check', 2, 'You have an array of products with prices and want only those under ₦5,000. Which method do you use?', '["map","filter","reduce","push"]'::jsonb)
+values ('web-m15-q2', 'web-m03-check', 6, 'You have an array of products with prices and want only those under ₦5,000. Which method do you use?', '["map","filter","reduce","push"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112767,37 +112135,7 @@ values ('web-m15-q2', 1, 'filter keeps the items for which the function returns 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m15-q3', 'web-m15-check', 3, 'Which gives the total of all numbers in the prices array?', '["prices.reduce((sum, p) => sum + p, 0)","prices.filter((p) => p)","prices.map((p) => p + 1)","prices.length"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m15-q3', 0, 'reduce carries a running value through the list.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m15-q4', 'web-m15-check', 4, 'How do you turn the object task into JSON text to save it?', '["JSON.parse(task)","JSON.stringify(task)","task.toJSON","String.task(task)"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m15-q4', 1, 'stringify converts a value to text. parse converts text back to a value.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m15-q5', 'web-m15-check', 5, '[10, 9, 1].sort() gives [1, 10, 9]. Why, and what is the fix?', '["A bug in JavaScript, use sortNumbers","It sorts as text by default. Pass (a, b) => a - b","Arrays cannot be sorted","Use reverse()"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m15-q5', 1, 'Without a comparison function, sort compares items as strings.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: The DOM: Changing a Page with JavaScript: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m16-check', 'web-development-for-beginners', 'module', 'web-m16', 'The DOM: Changing a Page with JavaScript: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m16-q1', 'web-m16-check', 1, 'Which line finds the first element with class "card"?', '["document.getElement(\".card\")","document.querySelector(\".card\")","document.card","find(\".card\")"]'::jsonb)
+values ('web-m16-q1', 'web-m03-check', 7, 'Which line finds the first element with class "card"?', '["document.getElement(\".card\")","document.querySelector(\".card\")","document.card","find(\".card\")"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112805,7 +112143,7 @@ values ('web-m16-q1', 1, 'querySelector takes a CSS selector.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m16-q2', 'web-m16-check', 2, 'A form field''s text comes from a visitor. How should you put it into the page safely?', '["element.innerHTML = text","element.textContent = text","document.write(text)","eval(text)"]'::jsonb)
+values ('web-m16-q2', 'web-m03-check', 8, 'A form field''s text comes from a visitor. How should you put it into the page safely?', '["element.innerHTML = text","element.textContent = text","document.write(text)","eval(text)"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112813,37 +112151,7 @@ values ('web-m16-q2', 1, 'textContent treats it as plain text, avoiding injected
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m16-q3', 'web-m16-check', 3, 'The Console says: Cannot read properties of null. Which is the most likely cause?', '["querySelector found nothing, perhaps a wrong selector or the script ran before the element existed","The CSS is broken","A loop is too long","You used const"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m16-q3', 0, 'querySelector returns null when nothing matches.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m16-q4', 'web-m16-check', 4, 'What are the three steps to add a new list item to the page?', '["Find, read, delete","Create the element, fill it, append it","Save, reload, check","Copy, paste, refresh"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m16-q4', 1, 'createElement, set its text, then append it to a parent.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m16-q5', 'web-m16-check', 5, 'Why is toggling a CSS class often better than setting many styles in JavaScript?', '["Classes are faster to type only","The look stays in CSS, and JavaScript only decides when it applies","Styles cannot be set in JavaScript","Classes work without HTML"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m16-q5', 1, 'Keeping design in CSS makes code easier to maintain.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Events and Forms: Making Pages Interactive: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m17-check', 'web-development-for-beginners', 'module', 'web-m17', 'Events and Forms: Making Pages Interactive: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m17-q1', 'web-m17-check', 1, 'Which call runs a function every time a button is clicked?', '["button.onclick()","button.addEventListener(\"click\", handler)","button.click = handler()","button.run(handler)"]'::jsonb)
+values ('web-m17-q1', 'web-m03-check', 9, 'Which call runs a function every time a button is clicked?', '["button.onclick()","button.addEventListener(\"click\", handler)","button.click = handler()","button.run(handler)"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112851,7 +112159,7 @@ values ('web-m17-q1', 1, 'addEventListener registers a callback for an event.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m17-q2', 'web-m17-check', 2, 'A form reloads the page when submitted, and your JavaScript never shows its message. What do you add to the submit handler?', '["event.preventDefault()","event.stop()","form.reload()","return true"]'::jsonb)
+values ('web-m17-q2', 'web-m03-check', 10, 'A form reloads the page when submitted, and your JavaScript never shows its message. What do you add to the submit handler?', '["event.preventDefault()","event.stop()","form.reload()","return true"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112859,37 +112167,7 @@ values ('web-m17-q2', 0, 'preventDefault stops the browser''s default reload so 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m17-q3', 'web-m17-check', 3, 'A list gets new items added later by JavaScript. How do you handle clicks on all items, old and new, with one listener?', '["Add a listener to every item when you create it and hope","Listen on the parent list and use event.target (event delegation)","Use setInterval","It is impossible"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m17-q3', 1, 'Clicks bubble up to the parent, so one listener handles any number of children.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m17-q4', 'web-m17-check', 4, 'Why must a real server validate a form again, even if your JavaScript already did?', '["JavaScript is slow","Visitors can bypass browser code, so the server cannot trust it","Servers cannot read forms","Validation only works on servers"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m17-q4', 1, 'Client-side validation is for convenience, not security.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m17-q5', 'web-m17-check', 5, 'Where should the validation message appear so a screen reader announces it?', '["In the console","In an element with role=\"alert\" or aria-live","In the title","In a comment"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m17-q5', 1, 'role="alert" announces the text when it changes.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Fetch, Async Code and Local Storage: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m18-check', 'web-development-for-beginners', 'module', 'web-m18', 'Fetch, Async Code and Local Storage: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m18-q1', 'web-m18-check', 1, 'fetch(url) gets a 404 Not Found response. What happens?', '["fetch throws an error","fetch gives a response whose ok is false, so you must check it","The page reloads","Nothing"]'::jsonb)
+values ('web-m18-q1', 'web-m03-check', 11, 'fetch(url) gets a 404 Not Found response. What happens?', '["fetch throws an error","fetch gives a response whose ok is false, so you must check it","The page reloads","Nothing"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112897,45 +112175,21 @@ values ('web-m18-q1', 1, 'fetch only throws on network failure. HTTP errors are 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m18-q2', 'web-m18-check', 2, 'What does await do inside an async function?', '["Stops the whole page","Pauses that function until the promise has a result, while the page stays responsive","Repeats the code","Deletes the promise"]'::jsonb)
+values ('web-m18-q2', 'web-m03-check', 12, 'What does await do inside an async function?', '["Stops the whole page","Pauses that function until the promise has a result, while the page stays responsive","Repeats the code","Deletes the promise"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('web-m18-q2', 1, 'await waits for a promise without freezing the browser.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m18-q3', 'web-m18-check', 3, 'A data screen should have three states. Which is the right set?', '["Loading, error, and success or empty","Red, green, blue","Header, body, footer","Start, middle, end"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m18-q3', 0, 'Always plan for waiting, failure and results.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m18-q4', 'web-m18-check', 4, 'You want to save the array cart in localStorage. What do you write?', '["localStorage.setItem(\"cart\", cart)","localStorage.setItem(\"cart\", JSON.stringify(cart))","localStorage.cart = cart","localStorage.save(cart)"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m18-q4', 1, 'localStorage stores strings only, so convert with JSON.stringify.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m18-q5', 'web-m18-check', 5, 'Which is not a good thing to store in localStorage?', '["A theme preference","A draft message","A user''s password","A cart"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m18-q5', 2, 'Any script on the page can read localStorage, so never store secrets.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Bootstrap 5: Setup, the Grid and Utilities: module check
+-- Assessment: Bootstrap, Building and Launching: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m19-check', 'web-development-for-beginners', 'module', 'web-m19', 'Bootstrap 5: Setup, the Grid and Utilities: module check', 60, true)
+values ('web-m04-check', 'web-development-for-beginners', 'module', 'web-m04', 'Bootstrap, Building and Launching: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m19-q1', 'web-m19-check', 1, 'A page has Bootstrap''s grid but looks wrong on phones. Which tag is probably missing?', '["The viewport meta tag","A <footer>","A second stylesheet","A favicon"]'::jsonb)
+values ('web-m19-q1', 'web-m04-check', 1, 'A page has Bootstrap''s grid but looks wrong on phones. Which tag is probably missing?', '["The viewport meta tag","A <footer>","A second stylesheet","A favicon"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112943,7 +112197,7 @@ values ('web-m19-q1', 0, 'Without the viewport meta tag, phones show a zoomed-ou
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m19-q2', 'web-m19-check', 2, 'What does class="col-12 col-md-4" do?', '["Full width on phones, one third of the row from the md breakpoint up","One third on phones and full width on tablets","Hides the column on phones","Gives the column 12 pixels"]'::jsonb)
+values ('web-m19-q2', 'web-m04-check', 2, 'What does class="col-12 col-md-4" do?', '["Full width on phones, one third of the row from the md breakpoint up","One third on phones and full width on tablets","Hides the column on phones","Gives the column 12 pixels"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112951,7 +112205,7 @@ values ('web-m19-q2', 0, 'Columns apply from their breakpoint upwards, and below
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m19-q3', 'web-m19-check', 3, 'Which classes give an element 1.5rem of margin at the top and 1rem of padding on every side?', '["mt-4 p-3","m-4 pt-3","margin-top p-all","mt-1 p-1"]'::jsonb)
+values ('web-m19-q3', 'web-m04-check', 3, 'Which classes give an element 1.5rem of margin at the top and 1rem of padding on every side?', '["mt-4 p-3","m-4 pt-3","margin-top p-all","mt-1 p-1"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112959,29 +112213,7 @@ values ('web-m19-q3', 0, 'mt-4 is 1.5rem top margin, p-3 is 1rem padding all rou
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m19-q4', 'web-m19-check', 4, 'In which order should the stylesheets be linked so your own CSS can override Bootstrap?', '["Your CSS first, then Bootstrap","Bootstrap first, then your CSS","Order never matters","Only one stylesheet is allowed"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m19-q4', 1, 'The later rule wins when specificity is equal.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m19-q5', 'web-m19-check', 5, 'Which classes centre a block horizontally and make its text centred?', '["mx-auto text-center","center-all","d-center","align-self-center only"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m19-q5', 0, 'mx-auto sets auto side margins and text-center centres the text.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Bootstrap Components: Navbar, Cards, Forms, Modals and More: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m20-check', 'web-development-for-beginners', 'module', 'web-m20', 'Bootstrap Components: Navbar, Cards, Forms, Modals and More: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m20-q1', 'web-m20-check', 1, 'The hamburger button of your navbar does nothing. What is the most common cause?', '["The data-bs-target does not match the id of the collapsing part, or Bootstrap''s JavaScript is missing","The brand is too long","The cards are wrong","You used a footer"]'::jsonb)
+values ('web-m20-q1', 'web-m04-check', 4, 'The hamburger button of your navbar does nothing. What is the most common cause?', '["The data-bs-target does not match the id of the collapsing part, or Bootstrap''s JavaScript is missing","The brand is too long","The cards are wrong","You used a footer"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112989,7 +112221,7 @@ values ('web-m20-q1', 0, 'The toggler finds its target by id, and the JS bundle 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m20-q2', 'web-m20-check', 2, 'What does navbar-expand-lg mean?', '["The menu is always collapsed","The full menu shows from the lg breakpoint up, and collapses below it","The navbar is large only","The menu has a gradient"]'::jsonb)
+values ('web-m20-q2', 'web-m04-check', 5, 'What does navbar-expand-lg mean?', '["The menu is always collapsed","The full menu shows from the lg breakpoint up, and collapses below it","The navbar is large only","The menu has a gradient"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -112997,7 +112229,7 @@ values ('web-m20-q2', 1, 'Below lg the links collapse behind the toggler.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m20-q3', 'web-m20-check', 3, 'You want cards in one row to be equal height. Which class do you add to each card?', '["h-100","w-100","d-flex","p-5"]'::jsonb)
+values ('web-m20-q3', 'web-m04-check', 6, 'You want cards in one row to be equal height. Which class do you add to each card?', '["h-100","w-100","d-flex","p-5"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113005,29 +112237,7 @@ values ('web-m20-q3', 0, 'h-100 makes each card fill its column''s full height.'
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m20-q4', 'web-m20-check', 4, 'A button should open a modal with id="orderModal". Which attributes does the button need?', '["data-bs-toggle=\"modal\" data-bs-target=\"#orderModal\"","href=\"orderModal\"","onclick=\"modal\"","class=\"modal\""]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m20-q4', 0, 'The trigger names the target with a # selector.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m20-q5', 'web-m20-check', 5, 'When is writing your own CSS better than using Bootstrap?', '["Never","When you need a unique brand look, or must avoid loading unused CSS","When you have a navbar","When using a grid"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m20-q5', 1, 'Bootstrap is fast and consistent, but custom CSS gives uniqueness and can be lighter.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Build a Complete Website with Bootstrap: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m21-check', 'web-development-for-beginners', 'module', 'web-m21', 'Build a Complete Website with Bootstrap: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m21-q1', 'web-m21-check', 1, 'Why do professionals plan the sections of a landing page before coding?', '["It is a rule of HTML","Each section should help one clear goal for a specific visitor","Plans make pages load faster","Bootstrap requires it"]'::jsonb)
+values ('web-m21-q1', 'web-m04-check', 7, 'Why do professionals plan the sections of a landing page before coding?', '["It is a rule of HTML","Each section should help one clear goal for a specific visitor","Plans make pages load faster","Bootstrap requires it"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113035,7 +112245,7 @@ values ('web-m21-q1', 1, 'A page works when every part supports the visitor and 
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m21-q2', 'web-m21-check', 2, 'A hero heading uses class="display-4" on an <h1>. What is the benefit of keeping it an <h1>?', '["It is bigger","The heading level gives the page its outline for screen readers and search, and the class only controls size","h1 loads faster","There is no benefit"]'::jsonb)
+values ('web-m21-q2', 'web-m04-check', 8, 'A hero heading uses class="display-4" on an <h1>. What is the benefit of keeping it an <h1>?', '["It is bigger","The heading level gives the page its outline for screen readers and search, and the class only controls size","h1 loads faster","There is no benefit"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113043,7 +112253,7 @@ values ('web-m21-q2', 1, 'Meaning (h1) and looks (display-4) are separate concer
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m21-q3', 'web-m21-check', 3, 'A 5 MB hero photo makes your page slow on mobile data. What is the best fix?', '["Resize and compress it, and use img-fluid","Make it larger","Remove the alt text","Use position: fixed"]'::jsonb)
+values ('web-m21-q3', 'web-m04-check', 9, 'A 5 MB hero photo makes your page slow on mobile data. What is the best fix?', '["Resize and compress it, and use img-fluid","Make it larger","Remove the alt text","Use position: fixed"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113051,29 +112261,7 @@ values ('web-m21-q3', 0, 'Smaller images load faster, and images should scale to
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m21-q4', 'web-m21-check', 4, 'A form on your landing page has inputs with no labels. What is the problem?', '["None, placeholders are enough","Screen readers cannot tell what each field is for, and tapping the label does not help","It will not submit","Bootstrap hides it"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m21-q4', 1, 'Every input needs a connected label.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m21-q5', 'web-m21-check', 5, 'Which testing step is the most important before sharing your site?', '["Opening it on a real phone and clicking everything","Changing the colours","Adding more sections","Checking it only on your laptop"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m21-q5', 0, 'Real devices reveal problems that desktop previews can hide.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-
--- Assessment: Publish, Test and Polish Your Website: module check
-insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('web-m22-check', 'web-development-for-beginners', 'module', 'web-m22', 'Publish, Test and Polish Your Website: module check', 60, true)
-on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m22-q1', 'web-m22-check', 1, 'Your GitHub username is tobi-dev. Which repository name publishes to https://tobi-dev.github.io?', '["website","tobi-dev.github.io","tobi-dev","github.io"]'::jsonb)
+values ('web-m22-q1', 'web-m04-check', 10, 'Your GitHub username is tobi-dev. Which repository name publishes to https://tobi-dev.github.io?', '["website","tobi-dev.github.io","tobi-dev","github.io"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113081,7 +112269,7 @@ values ('web-m22-q1', 1, 'The repository must be named exactly username.github.i
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m22-q2', 'web-m22-check', 2, 'An image works on your laptop but is broken online. The HTML says me.jpg and the file is Me.JPG. Why?', '["GitHub does not host images","Web servers treat capital letters as different, so the names do not match","The image is too large","HTML is case sensitive for tags only"]'::jsonb)
+values ('web-m22-q2', 'web-m04-check', 11, 'An image works on your laptop but is broken online. The HTML says me.jpg and the file is Me.JPG. Why?', '["GitHub does not host images","Web servers treat capital letters as different, so the names do not match","The image is too large","HTML is case sensitive for tags only"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
@@ -113089,27 +112277,11 @@ values ('web-m22-q2', 1, 'Names must match exactly. Use lowercase with no spaces
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m22-q3', 'web-m22-check', 3, 'You share github.com/tobi-dev/tobi-dev.github.io as your website. What is the problem?', '["Nothing","That is the code page, not the live site; share https://tobi-dev.github.io","It is too long","GitHub links cannot be shared"]'::jsonb)
+values ('web-m22-q3', 'web-m04-check', 12, 'You share github.com/tobi-dev/tobi-dev.github.io as your website. What is the problem?', '["Nothing","That is the code page, not the live site; share https://tobi-dev.github.io","It is too long","GitHub links cannot be shared"]'::jsonb)
 on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('web-m22-q3', 1, 'The live site has its own address.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m22-q4', 'web-m22-check', 4, 'A link in your page points to a file on the author''s own computer, like C:\Users\Ada\Desktop\cv.pdf. What happens online?', '["It works for everyone","It only exists on Ada''s computer, so it is broken for visitors","It opens a PDF viewer","GitHub fixes it"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m22-q4', 1, 'Use a relative path to a file inside the site, like cv.pdf.')
-on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
-
-insert into public.assessment_questions (id, assessment_id, position, prompt, options)
-values ('web-m22-q5', 'web-m22-check', 5, 'What does Lighthouse give you?', '["A score for performance, accessibility, best practices and SEO, with a list of fixes","A free domain","A new design","Hosting"]'::jsonb)
-on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
-
-insert into public.assessment_answer_keys (question_id, correct_index, explanation)
-values ('web-m22-q5', 0, 'It audits the page and tells you what to improve.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 

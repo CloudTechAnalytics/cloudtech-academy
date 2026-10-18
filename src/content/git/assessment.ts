@@ -18,7 +18,7 @@ const check = (n: string, title: string, questions: Q[]): AssessmentDef => ({
  * Git and GitHub: a check for each module (it awards the module badge, and unlocks only after the module's
  * tasks are done) and a final assessment. Questions are scenarios with plausible wrong answers.
  */
-export const GIT_ASSESSMENTS: AssessmentDef[] = [
+const LESSON_CHECKS: AssessmentDef[] = [
   check("m01", "What Git and GitHub Are, and Getting Set Up", [
     q("git-m01-q1", "Your laptop is stolen, but you pushed your project to GitHub last night. What does that show about Git and GitHub?", ["GitHub is just another name for Git", "GitHub stores a copy of your Git repository online, so your work survives", "Git works only online", "Nothing, the work is lost"], 1, "Git tracks history on your computer. GitHub keeps an online copy for backup, sharing and teamwork."),
     q("git-m01-q2", "In Git's three places, where do you choose exactly what goes into the next commit?", ["The working folder", "The staging area", "The remote", "The README"], 1, "git add puts changes in the staging area, and git commit saves what is staged."),
@@ -128,4 +128,16 @@ export const GIT_ASSESSMENTS: AssessmentDef[] = [
       q("git-f16", "Which command should you run before and after almost everything, to see what is going on?", ["git status", "git init", "git rm", "git gc"], 0, "git status keeps you oriented."),
     ],
   },
+];
+
+const FINAL = LESSON_CHECKS.find((a) => a.kind === "final")!;
+/** The first `per` questions of each listed lesson check, so a stage check covers all of its lessons. */
+const pick = (moduleIds: string[], per: number): Q[] => LESSON_CHECKS.filter((a) => a.moduleId && moduleIds.includes(a.moduleId)).flatMap((a) => a.questions.slice(0, per));
+
+export const GIT_ASSESSMENTS: AssessmentDef[] = [
+  check("m01", "Git Fundamentals", pick(["git-m01", "git-m02", "git-m03", "git-m04"], 3)),
+  check("m02", "Branching and Merging", pick(["git-m05", "git-m06"], 5)),
+  check("m03", "GitHub and Collaboration", pick(["git-m07", "git-m08", "git-m09"], 4)),
+  check("m04", "Automation, Portfolio and Workflow", pick(["git-m10", "git-m11", "git-m12"], 4)),
+  FINAL,
 ];
