@@ -7,6 +7,7 @@ import type { CourseSalesFields } from "@/content/catalog";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificatePayload, matchesCertificate } from "../certificates";
+import { DEFAULT_VIDEO_MAX_MB, MAX_VIDEO_MB_CEILING, parseVideoUrl, storageKey, thumbnailProblem, videoFileProblem } from "../video";
 import {
   BackendError,
   type AttemptResult,
@@ -30,6 +31,10 @@ import {
   type CertificateOrder,
   type CertificatePrice,
   type CommunitySettings,
+  type CourseVideoAdmin,
+  type CourseVideoInput,
+  type CourseVideoPublic,
+  type VideoStatus,
   type EventInput,
   type EventRegistration,
   type Credential,
@@ -454,6 +459,48 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
   });
 
+  // ---- course overview videos: private storage, read through short-lived signed links ----
+  const VIDEO_BUCKET = "course-videos";
+  async function signedUrl(path: string | null | undefined, seconds = 6 * 3600): Promise<string | null> {
+    if (!path) return null;
+    const { data, error } = await sb.storage.from(VIDEO_BUCKET).createSignedUrl(path, seconds);
+    return error ? null : data.signedUrl;
+  }
+  async function toAdminVideo(row: Row): Promise<CourseVideoAdmin> {
+    return {
+      courseId: row.course_id,
+      title: row.title,
+      description: row.description ?? "",
+      source: row.source,
+      videoUrl: row.video_url ?? null,
+      storagePath: row.storage_path ?? null,
+      thumbnailPath: row.thumbnail_path ?? null,
+      mimeType: row.mime_type ?? null,
+      sizeBytes: row.size_bytes ?? null,
+      status: row.status,
+      updatedAt: row.updated_at,
+      publishedAt: row.published_at ?? null,
+      previewUrl: row.source === "upload" ? await signedUrl(row.storage_path, 3600) : null,
+      thumbnailUrl: await signedUrl(row.thumbnail_path, 3600),
+    };
+  }
+  /** Why a video cannot be saved or published yet, or null when it is fine. */
+  function videoProblem(v: Pick<CourseVideoInput, "title" | "description" | "source" | "videoUrl" | "storagePath" | "status">): string | null {
+    if (v.title.trim().length < 3 || v.title.trim().length > 140) return "Give the video a title of 3 to 140 characters.";
+    if (v.description.length > 2000) return "The description is over 2,000 characters.";
+    if (v.source === "url") {
+      if (v.videoUrl || v.status === "published") {
+        const parsed = parseVideoUrl(v.videoUrl ?? "");
+        if (!parsed.ok) return parsed.error;
+      }
+    } else if (v.status === "published" && !v.storagePath) return "Upload a video file before publishing.";
+    return null;
+  }
+  async function videoMaxMb(): Promise<number> {
+    const { data } = await sb.from("site_settings").select("course_video_max_mb").eq("id", 1).maybeSingle();
+    return Number((data as Row | null)?.course_video_max_mb) || DEFAULT_VIDEO_MAX_MB;
+  }
+
   let cached: { id: string; user: User } | null = null;
   async function toUser(u: SbUser | null | undefined): Promise<User | null> {
     if (!u) return (cached = null);
@@ -562,6 +609,22 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const bodies = await loadBodies(course.id);
       for (const m of course.modules) for (const l of m.lessons) l.body = bodies.get(l.id) ?? "";
       return course;
+    },
+    async getCourseVideo(courseId) {
+      // A video problem must never break the course page, so any failure just means "no video".
+      const { data, error } = await sb.from("course_videos").select("*").eq("course_id", courseId).eq("status", "published").maybeSingle();
+      if (error || !data) return null;
+      const row = data as Row;
+      const poster = await signedUrl(row.thumbnail_path);
+      let video: Omit<CourseVideoPublic, "poster"> | null = null;
+      if (row.source === "url") {
+        const parsed = parseVideoUrl(String(row.video_url ?? ""));
+        if (parsed.ok) video = { title: row.title, description: row.description ?? "", kind: parsed.value.kind, src: parsed.value.src };
+      } else {
+        const src = await signedUrl(row.storage_path);
+        if (src) video = { title: row.title, description: row.description ?? "", kind: "file", src };
+      }
+      return video ? { ...video, poster } : null;
     },
     async getAssessment(courseId, moduleId) {
       let q = sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId);
@@ -965,6 +1028,110 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         const up = await sb.storage.from("event-images").upload(path, file, { contentType: file.type, cacheControl: "31536000" });
         if (up.error) throw new BackendError(up.error.message);
         return sb.storage.from("event-images").getPublicUrl(path).data.publicUrl;
+      },
+      async getCourseVideo(courseId) {
+        const row = check(await sb.from("course_videos").select("*").eq("course_id", courseId).maybeSingle()) as Row | null;
+        return row ? toAdminVideo(row) : null;
+      },
+      async saveCourseVideo(input) {
+        const problem = videoProblem(input);
+        if (problem) throw new BackendError(problem);
+        const { data: auth } = await sb.auth.getUser();
+        const row = check(
+          await sb
+            .from("course_videos")
+            .upsert(
+              {
+                course_id: input.courseId,
+                title: input.title.trim(),
+                description: input.description.trim(),
+                source: input.source,
+                video_url: input.source === "url" ? input.videoUrl?.trim() || null : null,
+                storage_path: input.source === "upload" ? input.storagePath : null,
+                thumbnail_path: input.thumbnailPath,
+                mime_type: input.source === "upload" ? input.mimeType : null,
+                size_bytes: input.source === "upload" ? input.sizeBytes : null,
+                status: input.status,
+                updated_by: auth.user?.id ?? null,
+              },
+              { onConflict: "course_id" },
+            )
+            .select("*")
+            .single(),
+        ) as Row;
+        return toAdminVideo(row);
+      },
+      async uploadCourseVideoFile(courseId, file, onProgress) {
+        const problem = videoFileProblem(file, await videoMaxMb());
+        if (problem) throw new BackendError(problem);
+        const { data: sess } = await sb.auth.getSession();
+        if (!sess.session) throw new BackendError("Sign in again to upload.");
+        const token = sess.session.access_token;
+        const path = storageKey(courseId, "video", file.type, crypto.randomUUID());
+        // supabase-js reports no upload progress, so the file goes to the storage endpoint with the same request it would use.
+        await new Promise<void>((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", `${url}/storage/v1/object/${VIDEO_BUCKET}/${path.split("/").map(encodeURIComponent).join("/")}`);
+          xhr.setRequestHeader("authorization", `Bearer ${token}`);
+          xhr.setRequestHeader("apikey", anonKey);
+          xhr.setRequestHeader("x-upsert", "false");
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+          };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) return resolve();
+            let message = "The upload failed.";
+            try {
+              message = (JSON.parse(xhr.responseText) as { message?: string }).message ?? message;
+            } catch {
+              /* keep the default message */
+            }
+            reject(new BackendError(xhr.status === 413 ? "That video is larger than the storage service allows. Compress it and try again." : message));
+          };
+          xhr.onerror = () => reject(new BackendError("The upload was interrupted. Check your connection and try again."));
+          xhr.onabort = () => reject(new BackendError("The upload was cancelled."));
+          const body = new FormData();
+          body.append("cacheControl", "3600");
+          body.append("", file);
+          xhr.send(body);
+        });
+        onProgress(100);
+        return { path, mimeType: file.type, sizeBytes: file.size };
+      },
+      async uploadCourseVideoThumbnail(courseId, file) {
+        const problem = thumbnailProblem(file);
+        if (problem) throw new BackendError(problem);
+        const path = storageKey(courseId, "thumb", file.type, crypto.randomUUID());
+        const up = await sb.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, cacheControl: "3600" });
+        if (up.error) throw new BackendError(up.error.message);
+        return path;
+      },
+      async deleteCourseVideoFiles(paths) {
+        const list = paths.filter(Boolean);
+        if (!list.length) return;
+        const res = await sb.storage.from(VIDEO_BUCKET).remove(list);
+        if (res.error) throw new BackendError(res.error.message);
+      },
+      async setCourseVideoStatus(courseId, status: VideoStatus) {
+        const existing = check(await sb.from("course_videos").select("*").eq("course_id", courseId).maybeSingle()) as Row | null;
+        if (!existing) throw new BackendError("This course has no video yet.");
+        const problem = videoProblem({ title: existing.title, description: existing.description ?? "", source: existing.source, videoUrl: existing.video_url, storagePath: existing.storage_path, status });
+        if (problem) throw new BackendError(problem);
+        const row = check(await sb.from("course_videos").update({ status }).eq("course_id", courseId).select("*").single()) as Row;
+        return toAdminVideo(row);
+      },
+      async removeCourseVideo(courseId) {
+        const existing = check(await sb.from("course_videos").select("storage_path, thumbnail_path").eq("course_id", courseId).maybeSingle()) as Row | null;
+        check(await sb.from("course_videos").delete().eq("course_id", courseId));
+        const files = [existing?.storage_path, existing?.thumbnail_path].filter(Boolean) as string[];
+        if (files.length) await sb.storage.from(VIDEO_BUCKET).remove(files); // the record is gone, so a leftover file is only untidy
+      },
+      async getCourseVideoMaxMb() {
+        return videoMaxMb();
+      },
+      async saveCourseVideoMaxMb(mb) {
+        if (!Number.isInteger(mb) || mb < 1 || mb > MAX_VIDEO_MB_CEILING) throw new BackendError(`Enter a whole number of megabytes from 1 to ${MAX_VIDEO_MB_CEILING}.`);
+        check(await sb.from("site_settings").update({ course_video_max_mb: mb, updated_at: new Date().toISOString() }).eq("id", 1));
       },
       async saveCourse(c) {
         check(

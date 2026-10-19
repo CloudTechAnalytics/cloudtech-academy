@@ -112,6 +112,33 @@ export type EmailSetup = {
 };
 
 /** The ids used to measure visits and ads. Any of them can be empty. */
+/* ---------- course overview videos ---------- */
+
+export type VideoStatus = "draft" | "published" | "unpublished";
+export type VideoSource = "upload" | "url";
+
+/** What an admin saves for a course's overview video. */
+export type CourseVideoInput = {
+  courseId: string;
+  title: string;
+  description: string;
+  source: VideoSource;
+  /** For a link: the address pasted by the admin (YouTube, Vimeo or a direct file). */
+  videoUrl: string | null;
+  /** For an upload: where the file is in the private course-videos bucket. */
+  storagePath: string | null;
+  thumbnailPath: string | null;
+  mimeType: string | null;
+  sizeBytes: number | null;
+  status: VideoStatus;
+};
+
+/** A course video as the admin sees it, in any status, with short-lived links to preview the files. */
+export type CourseVideoAdmin = CourseVideoInput & { updatedAt: string; publishedAt: string | null; previewUrl: string | null; thumbnailUrl: string | null };
+
+/** A published video, ready to play. */
+export type CourseVideoPublic = { title: string; description: string; kind: "file" | "youtube" | "vimeo"; src: string; poster: string | null };
+
 export type TrackingSettings = { ga4Id: string | null; googleAdsId: string | null; metaPixelId: string | null };
 
 export type ManualOrder = { order: CourseOrder; payments: OrderPayment[] };
@@ -608,6 +635,8 @@ export interface Backend {
   /* ---------- content ---------- */
   listCourses(opts?: { includeUnpublished?: boolean }): Promise<Course[]>;
   getCourse(slug: string, opts?: { includeUnpublished?: boolean }): Promise<Course | null>;
+  /** The course's overview video, only while it is published (and its course is). Null when there is none. */
+  getCourseVideo(courseId: string): Promise<CourseVideoPublic | null>;
   /** The course's final assessment, or a module's check when moduleId is given. */
   getAssessment(courseId: string, moduleId?: string): Promise<AssessmentPublic | null>;
   getProject(courseId: string): Promise<ProjectDef | null>;
@@ -740,6 +769,22 @@ export interface Backend {
     /** Uploads a cover or speaker image (PNG, JPEG or WebP, up to 2 MB) and returns its public URL. */
     uploadEventImage(file: File): Promise<string>;
     saveCourse(course: CourseInput): Promise<void>;
+    /** The course's video in any status, or null when it has none. */
+    getCourseVideo(courseId: string): Promise<CourseVideoAdmin | null>;
+    /** Creates or updates the video's details and returns the saved video. */
+    saveCourseVideo(input: CourseVideoInput): Promise<CourseVideoAdmin>;
+    /** Uploads a video file to private storage, reporting progress from 0 to 100, and returns where it was stored. */
+    uploadCourseVideoFile(courseId: string, file: File, onProgress: (percent: number) => void): Promise<{ path: string; mimeType: string; sizeBytes: number }>;
+    /** Uploads a thumbnail (PNG, JPEG or WebP, up to 2 MB) and returns where it was stored. */
+    uploadCourseVideoThumbnail(courseId: string, file: File): Promise<string>;
+    /** Deletes files from private storage. Used when a file is replaced or a video removed. */
+    deleteCourseVideoFiles(paths: string[]): Promise<void>;
+    setCourseVideoStatus(courseId: string, status: VideoStatus): Promise<CourseVideoAdmin>;
+    /** Deletes the video's record and its files. The course itself is untouched. */
+    removeCourseVideo(courseId: string): Promise<void>;
+    /** The largest video file, in megabytes, that may be uploaded. */
+    getCourseVideoMaxMb(): Promise<number>;
+    saveCourseVideoMaxMb(mb: number): Promise<void>;
     /** One row per course: enrolments by source, completions, revenue and conversion. */
     listCourseStats(): Promise<CourseStats[]>;
     saveProgramme(trackId: string, sales: CourseSalesFields): Promise<void>;

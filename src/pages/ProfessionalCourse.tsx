@@ -1,3 +1,4 @@
+import { CourseVideoSection } from "@/components/CourseVideo";
 import { Link } from "react-router";
 import { Award, BookOpen, HelpCircle, CheckCircle2, Clock, FolderKanban, GraduationCap, Lock, MessageCircle, Target, Users, UserCheck } from "lucide-react";
 import type { Course } from "@/content/types";
@@ -198,6 +199,8 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
 
       <div className="container-page grid gap-14 py-14 sm:py-16 lg:grid-cols-12">
         <div className="space-y-14 lg:col-span-7">
+          <CourseVideoSection courseId={course.id} />
+
           <section aria-labelledby="overview-title">
             <Heading id="overview-title">{standalone ? "Course overview" : "Programme overview"}</Heading>
             <p className="mt-4 whitespace-pre-line text-[1.0625rem] leading-relaxed text-ink/85">{overview}</p>

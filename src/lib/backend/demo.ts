@@ -9,6 +9,7 @@ import type { AssessmentDef, Course } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
 import { certificateNumber, eligibility, matchesCertificate, moduleTaskIds, newCredentialId } from "../certificates";
 import { isStale } from "../inactivity";
+import { DEFAULT_VIDEO_MAX_MB, MAX_VIDEO_MB_CEILING, parseVideoUrl, storageKey, thumbnailProblem, videoFileProblem } from "../video";
 import { coursePrice, enrolmentState as enrolmentOf, isPaid, programmeCourseIds, salesOf, withSales } from "../commerce";
 import type { CourseSalesFields } from "@/content/catalog";
 import { programmeCertificateAvailable, requiredCourses, TRACKS } from "@/content/tracks";
@@ -23,6 +24,8 @@ import {
   type AcademyEvent,
   type AttendanceStatus,
   type CommunitySettings,
+  type CourseVideoAdmin,
+  type CourseVideoInput,
   type CommunitySource,
   type EventInput,
   type EventRegistration,
@@ -402,6 +405,38 @@ function adminCertificate(s: Store, c: Certificate): AdminCertificate {
   };
 }
 
+// ---- course overview videos (demo): details live in localStorage; an uploaded file lives only until the page is reloaded ----
+const VIDEO_KEY = "cta-demo-course-videos";
+const VIDEO_LIMIT_KEY = "cta-demo-video-max-mb";
+const demoFiles = new Map<string, string>();
+type DemoVideo = CourseVideoInput & { updatedAt: string; publishedAt: string | null };
+function readVideos(): Record<string, DemoVideo> {
+  try {
+    return JSON.parse(localStorage.getItem(VIDEO_KEY) ?? "{}") as Record<string, DemoVideo>;
+  } catch {
+    return {};
+  }
+}
+function writeVideos(v: Record<string, DemoVideo>) {
+  try {
+    localStorage.setItem(VIDEO_KEY, JSON.stringify(v));
+  } catch {
+    throw new BackendError("Your browser blocked storage, so the demo can't save the video.");
+  }
+}
+function demoVideoProblem(v: Pick<CourseVideoInput, "title" | "description" | "source" | "videoUrl" | "storagePath" | "status">): string | null {
+  if (v.title.trim().length < 3 || v.title.trim().length > 140) return "Give the video a title of 3 to 140 characters.";
+  if (v.description.length > 2000) return "The description is over 2,000 characters.";
+  if (v.source === "url") {
+    if (v.videoUrl || v.status === "published") {
+      const parsed = parseVideoUrl(v.videoUrl ?? "");
+      if (!parsed.ok) return parsed.error;
+    }
+  } else if (v.status === "published" && !v.storagePath) return "Upload a video file before publishing.";
+  return null;
+}
+const toDemoAdminVideo = (v: DemoVideo): CourseVideoAdmin => ({ ...v, previewUrl: v.storagePath ? (demoFiles.get(v.storagePath) ?? null) : null, thumbnailUrl: v.thumbnailPath ? (demoFiles.get(v.thumbnailPath) ?? null) : null });
+
 export function createDemoBackend(): Backend {
   const listeners = new Set<(u: User | null) => void>();
   const current = () => {
@@ -671,6 +706,17 @@ export function createDemoBackend(): Backend {
       // Like the database, hand out lesson text only to people who have access.
       if (accessTo(s, current()?.id ?? null, c.id)) return c;
       return { ...c, modules: c.modules.map((m) => ({ ...m, lessons: m.lessons.map((l) => ({ ...l, body: "" })) })) };
+    },
+    async getCourseVideo(courseId) {
+      const v = readVideos()[courseId];
+      if (!v || v.status !== "published") return null;
+      const poster = v.thumbnailPath ? (demoFiles.get(v.thumbnailPath) ?? null) : null;
+      if (v.source === "url") {
+        const parsed = parseVideoUrl(v.videoUrl ?? "");
+        return parsed.ok ? { title: v.title, description: v.description, kind: parsed.value.kind, src: parsed.value.src, poster } : null;
+      }
+      const src = v.storagePath ? demoFiles.get(v.storagePath) : undefined;
+      return src ? { title: v.title, description: v.description, kind: "file", src, poster } : null;
     },
     async getAssessment(courseId, moduleId) {
       const a = findAssessment(courseId, moduleId);
@@ -1431,6 +1477,80 @@ export function createDemoBackend(): Backend {
           r.onerror = () => reject(new BackendError("Couldn't read that image."));
           r.readAsDataURL(file);
         });
+      },
+      async getCourseVideo(courseId) {
+        const v = readVideos()[courseId];
+        return v ? toDemoAdminVideo(v) : null;
+      },
+      async saveCourseVideo(input) {
+        const problem = demoVideoProblem(input);
+        if (problem) throw new BackendError(problem);
+        const all = readVideos();
+        const old = all[input.courseId];
+        const saved: DemoVideo = {
+          ...input,
+          title: input.title.trim(),
+          description: input.description.trim(),
+          videoUrl: input.source === "url" ? input.videoUrl?.trim() || null : null,
+          storagePath: input.source === "upload" ? input.storagePath : null,
+          mimeType: input.source === "upload" ? input.mimeType : null,
+          sizeBytes: input.source === "upload" ? input.sizeBytes : null,
+          updatedAt: now(),
+          publishedAt: input.status === "published" ? (old?.status === "published" ? (old.publishedAt ?? now()) : now()) : (old?.publishedAt ?? null),
+        };
+        all[input.courseId] = saved;
+        writeVideos(all);
+        return toDemoAdminVideo(saved);
+      },
+      async uploadCourseVideoFile(courseId, file, onProgress) {
+        const mb = Number(localStorage.getItem(VIDEO_LIMIT_KEY)) || DEFAULT_VIDEO_MAX_MB;
+        const problem = videoFileProblem(file, mb);
+        if (problem) throw new BackendError(problem);
+        const path = storageKey(courseId, "video", file.type, uid());
+        for (const p of [25, 60, 100]) {
+          onProgress(p);
+          await new Promise((r) => setTimeout(r, 120));
+        }
+        demoFiles.set(path, URL.createObjectURL(file));
+        return { path, mimeType: file.type, sizeBytes: file.size };
+      },
+      async uploadCourseVideoThumbnail(courseId, file) {
+        const problem = thumbnailProblem(file);
+        if (problem) throw new BackendError(problem);
+        const path = storageKey(courseId, "thumb", file.type, uid());
+        demoFiles.set(path, URL.createObjectURL(file));
+        return path;
+      },
+      async deleteCourseVideoFiles(paths) {
+        for (const p of paths) {
+          const u = demoFiles.get(p);
+          if (u) URL.revokeObjectURL(u);
+          demoFiles.delete(p);
+        }
+      },
+      async setCourseVideoStatus(courseId, status) {
+        const all = readVideos();
+        const v = all[courseId];
+        if (!v) throw new BackendError("This course has no video yet.");
+        const problem = demoVideoProblem({ ...v, status });
+        if (problem) throw new BackendError(problem);
+        all[courseId] = { ...v, status, updatedAt: now(), publishedAt: status === "published" && v.status !== "published" ? now() : v.publishedAt };
+        writeVideos(all);
+        return toDemoAdminVideo(all[courseId]);
+      },
+      async removeCourseVideo(courseId) {
+        const all = readVideos();
+        const v = all[courseId];
+        delete all[courseId];
+        writeVideos(all);
+        for (const p of [v?.storagePath, v?.thumbnailPath]) if (p) demoFiles.delete(p);
+      },
+      async getCourseVideoMaxMb() {
+        return Number(localStorage.getItem(VIDEO_LIMIT_KEY)) || DEFAULT_VIDEO_MAX_MB;
+      },
+      async saveCourseVideoMaxMb(mb) {
+        if (!Number.isInteger(mb) || mb < 1 || mb > MAX_VIDEO_MB_CEILING) throw new BackendError(`Enter a whole number of megabytes from 1 to ${MAX_VIDEO_MB_CEILING}.`);
+        localStorage.setItem(VIDEO_LIMIT_KEY, String(mb));
       },
       async saveCourse(input) {
         requireAdmin();

@@ -11,6 +11,7 @@ import { Alert, TextArea, TextField } from "@/components/Form";
 import NotFound from "../NotFound";
 import { AdminHeading } from "./AdminLayout";
 import { courseInput, randomId, useAdminCourse } from "./useAdmin";
+import { AdminCourseVideo } from "./AdminCourseVideo";
 import { LEVELS, type Level } from "@/content/tracks";
 import { BUNDLED_COURSES } from "@/content";
 
@@ -574,6 +575,9 @@ export default function AdminCourseEditor() {
       <div className="grid gap-8 xl:grid-cols-2">
         <Details course={course} onSaved={reload} />
         <Curriculum course={course} reload={reload} />
+      </div>
+      <div className="mt-8">
+        <AdminCourseVideo course={course} />
       </div>
     </>
   );

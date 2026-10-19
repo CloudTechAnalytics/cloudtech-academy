@@ -18,6 +18,7 @@ import { isPaid } from "@/lib/commerce";
 import { ProfessionalCourseView } from "./ProfessionalCourse";
 import { RecommendedNext } from "@/components/RecommendedNext";
 import { EnrolDialog } from "@/components/EnrolDialog";
+import { CourseVideoSection } from "@/components/CourseVideo";
 
 export default function CourseDetail() {
   const { slug } = useParams();
@@ -184,6 +185,8 @@ export default function CourseDetail() {
           </aside>
         </div>
       </section>
+
+      <CourseVideoSection courseId={course.id} wrap />
 
       <div className="container-page grid gap-12 py-14 sm:py-16 lg:grid-cols-12">
         <section aria-labelledby="curriculum-title" className="lg:col-span-7">
