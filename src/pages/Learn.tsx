@@ -9,6 +9,7 @@ import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { LessonContent, lessonSections } from "@/components/LessonContent";
+import { LessonVideoSection } from "@/components/CourseVideo";
 import { LessonSidebar } from "@/components/LessonSidebar";
 import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -244,6 +245,8 @@ export default function Learn() {
             </p>
           )}
         </header>
+
+        <LessonVideoSection lessonId={lesson.id} />
 
         <div className="max-w-[46rem] pt-8">
           <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} lessonKey={lesson.id} />

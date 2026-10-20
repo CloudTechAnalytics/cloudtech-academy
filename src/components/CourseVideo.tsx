@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from "react";
-import { PlayCircle } from "lucide-react";
+import { Clock, PlayCircle } from "lucide-react";
 import { getBackend, type CourseVideoPublic } from "@/lib/backend";
 
 /**
@@ -7,7 +7,7 @@ import { getBackend, type CourseVideoPublic } from "@/lib/backend";
  * a YouTube or Vimeo link plays in an embedded player. If the video can't load, the box says so and the page carries on.
  * Used by the admin preview too, so what an admin previews is what learners get.
  */
-export function CourseVideoPlayer({ video }: { video: Pick<CourseVideoPublic, "title" | "kind" | "src" | "poster"> }) {
+export function CourseVideoPlayer({ video, errorHint }: { video: Pick<CourseVideoPublic, "title" | "kind" | "src" | "poster">; /** Shown under the error when the video can't load. */ errorHint?: string }) {
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => setFailed(false), [video.src]);
@@ -18,7 +18,7 @@ export function CourseVideoPlayer({ video }: { video: Pick<CourseVideoPublic, "t
         <div role="alert" className="absolute inset-0 grid place-items-center p-6 text-center text-ivory">
           <div>
             <p className="font-semibold">This video couldn't be loaded.</p>
-            <p className="mt-1 text-[0.875rem] text-ivory/70">Check your connection and try again.</p>
+            <p className="mt-1 text-[0.875rem] text-ivory/70">{errorHint ?? "Check your connection and try again."}</p>
             <button
               type="button"
               onClick={() => {
@@ -89,4 +89,56 @@ export function CourseVideoSection({ courseId, wrap }: { courseId: string; /** W
     </section>
   );
   return wrap ? <div className="container-page pt-12 sm:pt-14">{section}</div> : section;
+}
+
+const length = (seconds: number) => (seconds < 90 ? `${Math.max(1, Math.round(seconds))} second video` : `${Math.round(seconds / 60)} minute video`);
+
+/**
+ * The instructional video of a lesson, shown above its written text: Watch, then read, practise and check. It appears
+ * only when a published video exists and the learner may read the lesson (the database decides); otherwise it renders
+ * nothing, so lessons without a video look exactly as before. A video that can't load says so and points to the written
+ * lesson. Watching it never marks the lesson complete: completion follows the Academy's usual rules.
+ */
+export function LessonVideoSection({ lessonId }: { lessonId: string }) {
+  const [video, setVideo] = useState<CourseVideoPublic | null>(null);
+  const id = useId();
+  useEffect(() => {
+    let alive = true;
+    setVideo(null);
+    (async () => {
+      try {
+        const v = await (await getBackend()).getLessonVideo(lessonId);
+        if (alive) setVideo(v);
+      } catch {
+        if (alive) setVideo(null); // a video problem must never hold up the written lesson
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [lessonId]);
+
+  if (!video) return null;
+  return (
+    <section aria-labelledby={`${id}-title`} className="max-w-[46rem] pt-8">
+      <p className="flex items-center gap-2 text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-brass-dark">
+        <PlayCircle aria-hidden className="h-4 w-4" /> Watch
+      </p>
+      <h2 id={`${id}-title`} className="mt-1.5 font-serif text-[1.45rem] leading-snug">
+        {video.title}
+      </h2>
+      <div className="mt-4">
+        <CourseVideoPlayer video={video} errorHint="You can keep reading the written lesson below." />
+      </div>
+      <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8125rem] text-muted">
+        {video.durationSeconds ? (
+          <span className="flex items-center gap-1.5">
+            <Clock aria-hidden className="h-3.5 w-3.5" /> {length(video.durationSeconds)}
+          </span>
+        ) : null}
+        <span>Prefer reading, or short of data? The full written lesson is just below.</span>
+      </p>
+      {video.description && <p className="mt-2 whitespace-pre-line text-[0.9375rem] leading-relaxed text-muted">{video.description}</p>}
+    </section>
+  );
 }

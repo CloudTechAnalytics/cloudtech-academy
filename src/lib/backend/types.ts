@@ -130,14 +130,20 @@ export type CourseVideoInput = {
   thumbnailPath: string | null;
   mimeType: string | null;
   sizeBytes: number | null;
+  /** The video's length, read from an uploaded file when the browser can. Shown to learners. */
+  durationSeconds?: number | null;
   status: VideoStatus;
 };
+
+/** A lesson's (section's) instructional video: the same details as a course video, filed under a lesson. */
+export type LessonVideoInput = CourseVideoInput & { lessonId: string };
+export type LessonVideoAdmin = CourseVideoAdmin & { lessonId: string };
 
 /** A course video as the admin sees it, in any status, with short-lived links to preview the files. */
 export type CourseVideoAdmin = CourseVideoInput & { updatedAt: string; publishedAt: string | null; previewUrl: string | null; thumbnailUrl: string | null };
 
 /** A published video, ready to play. */
-export type CourseVideoPublic = { title: string; description: string; kind: "file" | "youtube" | "vimeo"; src: string; poster: string | null };
+export type CourseVideoPublic = { title: string; description: string; kind: "file" | "youtube" | "vimeo"; src: string; poster: string | null; durationSeconds?: number | null };
 
 export type TrackingSettings = { ga4Id: string | null; googleAdsId: string | null; metaPixelId: string | null };
 
@@ -637,6 +643,8 @@ export interface Backend {
   getCourse(slug: string, opts?: { includeUnpublished?: boolean }): Promise<Course | null>;
   /** The course's overview video, only while it is published (and its course is). Null when there is none. */
   getCourseVideo(courseId: string): Promise<CourseVideoPublic | null>;
+  /** A lesson's video, only while it is published and the learner may read the lesson. Null when there is none. */
+  getLessonVideo(lessonId: string): Promise<CourseVideoPublic | null>;
   /** The course's final assessment, or a module's check when moduleId is given. */
   getAssessment(courseId: string, moduleId?: string): Promise<AssessmentPublic | null>;
   getProject(courseId: string): Promise<ProjectDef | null>;
@@ -773,6 +781,14 @@ export interface Backend {
     getCourseVideo(courseId: string): Promise<CourseVideoAdmin | null>;
     /** Creates or updates the video's details and returns the saved video. */
     saveCourseVideo(input: CourseVideoInput): Promise<CourseVideoAdmin>;
+    /** A lesson's video in any status, or null when it has none. */
+    getLessonVideo(lessonId: string): Promise<LessonVideoAdmin | null>;
+    saveLessonVideo(input: LessonVideoInput): Promise<LessonVideoAdmin>;
+    setLessonVideoStatus(lessonId: string, status: VideoStatus): Promise<LessonVideoAdmin>;
+    /** Deletes the lesson video's record and files. The lesson text and learners' progress are untouched. */
+    removeLessonVideo(lessonId: string): Promise<void>;
+    /** The video status of each lesson of a course that has one, by lesson id. */
+    listLessonVideoStatuses(courseId: string): Promise<Record<string, VideoStatus>>;
     /** Uploads a video file to private storage, reporting progress from 0 to 100, and returns where it was stored. */
     uploadCourseVideoFile(courseId: string, file: File, onProgress: (percent: number) => void): Promise<{ path: string; mimeType: string; sizeBytes: number }>;
     /** Uploads a thumbnail (PNG, JPEG or WebP, up to 2 MB) and returns where it was stored. */

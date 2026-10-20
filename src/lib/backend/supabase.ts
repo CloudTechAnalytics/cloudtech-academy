@@ -477,6 +477,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       thumbnailPath: row.thumbnail_path ?? null,
       mimeType: row.mime_type ?? null,
       sizeBytes: row.size_bytes ?? null,
+      durationSeconds: row.duration_seconds ?? null,
       status: row.status,
       updatedAt: row.updated_at,
       publishedAt: row.published_at ?? null,
@@ -499,6 +500,18 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
   async function videoMaxMb(): Promise<number> {
     const { data } = await sb.from("site_settings").select("course_video_max_mb").eq("id", 1).maybeSingle();
     return Number((data as Row | null)?.course_video_max_mb) || DEFAULT_VIDEO_MAX_MB;
+  }
+
+  /** A published video row as something a page can play, or null when its link or file can't be used. */
+  async function playable(row: Row): Promise<CourseVideoPublic | null> {
+    const poster = await signedUrl(row.thumbnail_path);
+    const durationSeconds = row.duration_seconds ?? null;
+    if (row.source === "url") {
+      const parsed = parseVideoUrl(String(row.video_url ?? ""));
+      return parsed.ok ? { title: row.title, description: row.description ?? "", kind: parsed.value.kind, src: parsed.value.src, poster, durationSeconds } : null;
+    }
+    const src = await signedUrl(row.storage_path);
+    return src ? { title: row.title, description: row.description ?? "", kind: "file", src, poster, durationSeconds } : null;
   }
 
   let cached: { id: string; user: User } | null = null;
@@ -625,6 +638,13 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         if (src) video = { title: row.title, description: row.description ?? "", kind: "file", src };
       }
       return video ? { ...video, poster } : null;
+    },
+    async getLessonVideo(lessonId) {
+      // Row-level security returns the video only while it is published and this learner may read the lesson.
+      // Any failure just means "no video", so the written lesson is never held up.
+      const { data, error } = await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).eq("status", "published").maybeSingle();
+      if (error || !data) return null;
+      return playable(data as Row);
     },
     async getAssessment(courseId, moduleId) {
       let q = sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId);
@@ -1132,6 +1152,58 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       async saveCourseVideoMaxMb(mb) {
         if (!Number.isInteger(mb) || mb < 1 || mb > MAX_VIDEO_MB_CEILING) throw new BackendError(`Enter a whole number of megabytes from 1 to ${MAX_VIDEO_MB_CEILING}.`);
         check(await sb.from("site_settings").update({ course_video_max_mb: mb, updated_at: new Date().toISOString() }).eq("id", 1));
+      },
+      async getLessonVideo(lessonId) {
+        const row = check(await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        return row ? { ...(await toAdminVideo(row)), lessonId } : null;
+      },
+      async saveLessonVideo(input) {
+        const problem = videoProblem(input);
+        if (problem) throw new BackendError(problem);
+        const { data: auth } = await sb.auth.getUser();
+        const row = check(
+          await sb
+            .from("lesson_videos")
+            .upsert(
+              {
+                lesson_id: input.lessonId,
+                course_id: input.courseId,
+                title: input.title.trim(),
+                description: input.description.trim(),
+                source: input.source,
+                video_url: input.source === "url" ? input.videoUrl?.trim() || null : null,
+                storage_path: input.source === "upload" ? input.storagePath : null,
+                thumbnail_path: input.thumbnailPath,
+                mime_type: input.source === "upload" ? input.mimeType : null,
+                size_bytes: input.source === "upload" ? input.sizeBytes : null,
+                duration_seconds: input.source === "upload" && input.durationSeconds ? Math.round(input.durationSeconds) : null,
+                status: input.status,
+                updated_by: auth.user?.id ?? null,
+              },
+              { onConflict: "lesson_id" },
+            )
+            .select("*")
+            .single(),
+        ) as Row;
+        return { ...(await toAdminVideo(row)), lessonId: input.lessonId };
+      },
+      async setLessonVideoStatus(lessonId, status: VideoStatus) {
+        const existing = check(await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        if (!existing) throw new BackendError("This lesson has no video yet.");
+        const problem = videoProblem({ title: existing.title, description: existing.description ?? "", source: existing.source, videoUrl: existing.video_url, storagePath: existing.storage_path, status });
+        if (problem) throw new BackendError(problem);
+        const row = check(await sb.from("lesson_videos").update({ status }).eq("lesson_id", lessonId).select("*").single()) as Row;
+        return { ...(await toAdminVideo(row)), lessonId };
+      },
+      async removeLessonVideo(lessonId) {
+        const existing = check(await sb.from("lesson_videos").select("storage_path, thumbnail_path").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        check(await sb.from("lesson_videos").delete().eq("lesson_id", lessonId));
+        const files = [existing?.storage_path, existing?.thumbnail_path].filter(Boolean) as string[];
+        if (files.length) await sb.storage.from(VIDEO_BUCKET).remove(files); // the record is gone, so a leftover file is only untidy
+      },
+      async listLessonVideoStatuses(courseId) {
+        const rows = check(await sb.from("lesson_videos").select("lesson_id, status").eq("course_id", courseId)) as Row[];
+        return Object.fromEntries(rows.map((r) => [r.lesson_id as string, r.status as VideoStatus]));
       },
       async saveCourse(c) {
         check(

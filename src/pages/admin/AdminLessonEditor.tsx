@@ -1,3 +1,4 @@
+import { AdminLessonVideo } from "./AdminLessonVideo";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { getBackend, type LessonInput } from "@/lib/backend";
@@ -221,6 +222,11 @@ export default function AdminLessonEditor() {
           )}
         </div>
       </form>
+      {!isNew && (
+        <div className="mt-8">
+          <AdminLessonVideo courseId={course.id} lessonId={lesson.id} lessonTitle={lesson.title} />
+        </div>
+      )}
     </>
   );
 }

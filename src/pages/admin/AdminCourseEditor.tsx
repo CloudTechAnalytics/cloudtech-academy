@@ -415,9 +415,27 @@ function ModuleBadge({ course, module: m, onSave }: { course: Course; module: Mo
   );
 }
 
+const VIDEO_TAG = { draft: "Video: draft", published: "Video", unpublished: "Video: unpublished" } as const;
+
 function Curriculum({ course, reload }: { course: Course; reload: () => Promise<unknown> }) {
   const [newModule, setNewModule] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // Which lessons have a video, and in what state, so the list shows it at a glance.
+  const [videos, setVideos] = useState<Record<string, keyof typeof VIDEO_TAG>>({});
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const v = await (await getBackend()).admin.listLessonVideoStatuses(course.id);
+        if (alive) setVideos(v);
+      } catch {
+        if (alive) setVideos({}); // the list is a convenience; the curriculum works without it
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [course.id]);
 
   const run = async (fn: () => Promise<void>) => {
     setError(null);
@@ -522,7 +540,10 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
                   <Link to={`/admin/courses/${course.slug}/lessons/${encodeURIComponent(l.id)}`} className="min-w-0 truncate hover:text-brass-dark">
                     {l.title}
                   </Link>
-                  <span className="shrink-0 text-[0.75rem] text-muted">{l.published ? "Published" : "Draft"}</span>
+                  <span className="flex shrink-0 items-center gap-2 text-[0.75rem] text-muted">
+                    {videos[l.id] && <span className={`rounded-full px-2 py-0.5 font-medium ${videos[l.id] === "published" ? "bg-success-bg text-success" : "bg-sand text-ink"}`}>{VIDEO_TAG[videos[l.id]]}</span>}
+                    {l.published ? "Published" : "Draft"}
+                  </span>
                 </li>
               ))}
             </ul>
