@@ -10,6 +10,18 @@ Three months after go-live, Ashgrove's managing partner asks: "Is it working?" T
 
 Nobody ever wrote down what "collection rate" meant. Reporting is the part of a change that's most often left vague, and it's the part that decides whether anyone can prove the change worked. A BA specifies it as carefully as any other requirement.
 
+## A story from the field: five reports, five different sales
+
+The owner of a chain of four pharmacies in Enugu asked her analyst, Chioma, for "one dashboard that shows sales". Chioma collected the reports the managers already used and put them next to each other. Five reports claimed to show last month's sales. They showed five different numbers.
+
+She spent a day finding out why. One report counted money received, including deposits on orders not yet collected. Another counted goods handed over. A third ignored returns, a fourth included them, and the fifth was in a different currency format that had been rounded. Each report was *correct* under its own definition. Nobody had ever agreed on what a "sale" was.
+
+Before writing a single requirement for the dashboard, Chioma gathered the owner and the four managers for an hour and asked one question: *"What counts as a sale?"* They settled on one definition: *a sale is money received for goods handed to the customer, minus refunds, in the month the goods were handed over.* She wrote it into a **data dictionary**, a one-page list of every measure, its definition, where the data comes from, and who owns it.
+
+Then, and only then, did she write the dashboard requirements. The dashboard showed one number that everyone trusted, and the monthly argument about whose figure was right stopped.
+
+Reporting requirements are not about charts. They are about agreeing, in writing, what each number *means*.
+
 ## The concept
 
 ### A KPI definition card
@@ -48,6 +60,32 @@ Two collection-rate definitions on Ashgrove's data:
 | Value paid ÷ value invoiced, **invoices more than 90 days old** (so clients have had time to pay) | you'll calculate it below |
 
 Neither is wrong. They answer different questions. The KPI card must say which one Ashgrove will track, and why. A sensible choice is to measure invoices once they're at least 90 days old, so recent invoices don't drag the rate down just because they're recent.
+
+## A real-world scenario: defining a report
+
+A school wants a weekly report on attendance. The analyst does not start with "a chart". She follows a short sequence.
+
+**Step 1: Who uses it and what decision does it support?**
+The head teacher wants to find students who are often absent so that staff can follow up.
+
+**Step 2: Define each measure.**
+
+| Measure | Definition | Source | Owner |
+| :-- | :-- | :-- | :-- |
+| Attendance rate | Days present ÷ days in session, for the week | Class registers | Class teacher |
+| Persistent absentee | A student absent on 3 or more days in the last 10 school days | Class registers | Head teacher |
+| Excused absence | Absent with a note or a call from a parent | Office log | Secretary |
+
+**Step 3: Check the maths with a small example.**
+A class has 30 students and the week has 5 school days, so there are 30 × 5 = 150 student-days. If 12 student-days were absences, attendance = (150 − 12) ÷ 150 = 138 ÷ 150 = **92%**.
+
+**Step 4: Write the requirement.**
+
+*"The system shall produce, every Monday by 8 am, a list of persistent absentees (3 or more absences in the last 10 school days), showing the student's name, class, number of absences and whether each was excused. The head teacher and class teachers shall be able to view it."*
+
+**Step 5: Ask the awkward questions.** What if a register is missing? What happens on public holidays? Who may see a child's name? (Privacy matters.)
+
+**The practical rule:** a good reporting requirement names the decision, defines every number, says where the data comes from and who may see it.
 
 ## Walkthrough
 

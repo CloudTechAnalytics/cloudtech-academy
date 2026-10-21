@@ -1,6 +1,6 @@
 ---
 title: Stakeholders
-minutes: 20
+minutes: 25
 summary: Find everyone affected by a change, map their power and interest, decide how to involve each one, and agree who does what with a RACI chart.
 ---
 
@@ -9,6 +9,20 @@ summary: Find everyone affected by a change, map their power and interest, decid
 Six months ago, a Lagos firm bought a billing system its partners loved in a demo. The accounts officer, who would use it every day, was never asked. It couldn't print the paper invoices two of the firm's largest clients insisted on, so she kept the old spreadsheet running alongside it. Within three months the new system was abandoned.
 
 Projects rarely fail because the analysis was too technical. They fail because someone who mattered was missed: a user who couldn't do their job, a manager who blocked it, a client who refused the new invoice format. **Stakeholder analysis** is how a BA makes sure everyone who matters is found and heard.
+
+## A story from the field: the parent who could not pay
+
+A private secondary school in Abuja launched an online fees portal. The project team included the principal, the bursar and an IT contractor. They tested the portal carefully with the people in that room, and it worked beautifully.
+
+On launch day, collections did not rise. They fell. Within a week the principal was receiving angry calls.
+
+What had gone wrong? The analyst brought in to investigate drew a list of everyone the portal touched. The team had thought about three groups: the principal, the bursar and the contractor. The list now had eleven. Two of the forgotten groups mattered most. The first was the **parents**, many of whom did not have smartphones or card payments and used to pay cash at the school gate to a clerk they knew. The second was that **clerk**, whose job the portal quietly removed, and who had been telling parents the portal "does not work".
+
+Nobody had asked the parents or the clerk a single question. Because they had no say in the design, they had every reason to resist it.
+
+The fix was not technical. The school added a way to pay in cash and have it entered in the portal by the clerk. The clerk became the portal's champion, and collections rose above where they had started.
+
+The lesson: people who are affected but not asked will find a way to be heard, usually at the worst moment. A good analyst makes the list of stakeholders *before* designing anything.
 
 ## The concept
 
@@ -56,6 +70,30 @@ Part of Ashgrove's stakeholder register:
 | IT contractor | supports the current spreadsheets | low | medium | consult on data migration |
 
 And a RACI row: *Approve the new invoice process*: Responsible, BA; Accountable, managing partner; Consulted, accounts officer and two senior lawyers; Informed, all staff.
+
+## A real-world scenario: the traders' cooperative
+
+A market traders' cooperative in Onitsha wants a simple system for collecting monthly dues and giving members receipts. You are the analyst. Before talking about software, you map the stakeholders.
+
+First, brainstorm everyone affected. Then sort them by **power** (can they stop or change the project?) and **interest** (do they care about the result?).
+
+| Stakeholder | Power | Interest | How to involve them |
+| :-- | :-- | :-- | :-- |
+| Chairman of the cooperative | High | High | Manage closely: decisions, sign-off |
+| Treasurer | Medium | High | Work with daily: the process owner |
+| Ordinary members (traders) | Low | High | Keep informed and consult by short interviews |
+| Market union leaders | High | Low | Keep satisfied: short briefings, no surprises |
+| Bank handling the account | Medium | Low | Consult on what is possible |
+| Older traders who do not use phones | Low | High | Interview in person, design for them |
+
+Notice the last row. It is the group a rushed team forgets, and it is the group that breaks a launch (as in the school story).
+
+**Practical steps for any project:**
+
+1. List stakeholders by name and role, not just "the business".
+2. Place each on the power and interest grid.
+3. Decide how you will engage each one, and how often.
+4. Ask each of the high-power people: "What would make this a success for you?" Write their answers down. They often conflict, and it is much cheaper to find that out on day one.
 
 ## Walkthrough
 

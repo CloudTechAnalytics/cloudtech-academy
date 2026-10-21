@@ -14,6 +14,18 @@ A junior analyst starts comparing software. An experienced business analyst asks
 
 That question is the heart of business analysis, and this course teaches you to answer it properly, using Ashgrove as the case throughout.
 
+## A story from the field: the app nobody needed
+
+Kemi had been a business analyst at a Lagos bank for three weeks when the head of retail banking walked into her meeting and said, "Customers hate our branches. Build us a mobile app so they never need to come in."
+
+Everyone else in the room nodded. An app sounded modern, and the bank had a budget. Kemi nearly nodded too. But she remembered the first thing her mentor had told her: *when someone hands you a solution, find out what problem it is meant to solve.*
+
+So she asked, "What do customers hate most about the branches?" Nobody knew. She spent the next two days standing near the queues with a notebook and talking to people in the line. She counted what they were waiting for. Almost half were not making a payment or a transfer, which the bank's app already did. They were opening new accounts, and the form took 25 minutes because three different staff members each typed the same details into three different screens.
+
+The real problem was not "customers need to avoid branches". It was "account opening takes too long because the same information is entered three times." A new app would not have touched it. Fixing the account-opening process cost a fraction of the app and cut the average wait from 25 minutes to 9.
+
+Kemi did not refuse the app. She wrote one clear sentence, showed the queue counts, and let the head of retail banking see that the problem he wanted solved was a different one. That is the heart of the job.
+
 ## The concept
 
 ### What a business analyst does
@@ -51,6 +63,25 @@ The managing partner's request, turned into a problem statement after a few conv
 > "Ashgrove's clients take an average of 45 days to pay their invoices, and ₦188m is currently overdue, much of it for more than six months. Partners spend hours each month chasing payments by phone, and nobody can see at a glance what's owed or by whom. We want to collect faster and know where we stand, measured by average days to pay and the value of overdue invoices."
 
 Notice what's missing: the word "system". A new system might be the answer. So might automatic email reminders, a weekly overdue report, or clearer payment terms on the invoice. The problem statement leaves those options open, and gives you a way to measure whichever one is chosen.
+
+## A real-world scenario: the barcode scanner
+
+A hospital pharmacy manager says, "We need barcode scanners for our drug shelves." This is a **solution**. A business analyst does not say yes or no. She asks questions until the problem appears.
+
+Here is how the conversation goes in practice.
+
+| Question the analyst asks | What the manager says | What it reveals |
+| :-- | :-- | :-- |
+| "What goes wrong today?" | "Patients get the wrong strength of a drug about once a week." | The real pain: dispensing errors |
+| "Where do the errors happen?" | "Mostly when two boxes look alike on the shelf." | A look-alike storage problem |
+| "How do you know it is once a week?" | "I do not. It is what the nurses tell me." | No baseline: the claim needs measuring |
+| "What would success look like?" | "No wrong-strength dispensing." | A measurable goal |
+
+Now the analyst can write a **problem statement**: *"Patients at the hospital pharmacy sometimes receive the wrong strength of a medicine, apparently about once a week, usually when look-alike boxes are stored together. We need to measure how often this happens and reduce it."*
+
+Notice what changed. The barcode scanner may still be part of the answer, but so might separating look-alike drugs, a second check at the counter, or clearer labels. The analyst has turned "buy a scanner" into a problem the whole team can solve in the cheapest effective way. If she had simply ordered scanners and the real cause was look-alike boxes, the hospital would have spent the money and still had the errors.
+
+**The practical habit:** every time you hear a solution, ask three questions: *What goes wrong today? How do we know? What would success look like?*
 
 ## Walkthrough
 

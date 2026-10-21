@@ -1,6 +1,6 @@
 ---
 title: Eliciting requirements
-minutes: 20
+minutes: 25
 summary: Draw out what people really need with interviews, workshops, observation and documents, ask questions that get facts rather than opinions, and dig to the root cause.
 ---
 
@@ -9,6 +9,18 @@ summary: Draw out what people really need with interviews, workshops, observatio
 Ask Ashgrove's managing partner what she needs and she'll say "a better system". Ask the accounts officer and she'll say "the lawyers send their time sheets late". Ask a lawyer and they'll say "accounts send invoices with the wrong rates". Everyone is partly right, and nobody has the whole picture.
 
 Requirements aren't sitting in people's heads waiting to be collected. They have to be **elicited**: drawn out, checked against each other and against the evidence. People describe symptoms, propose solutions and forget the workarounds they've done for years. A BA's skill is to get past all three to what's actually happening and what's actually needed.
+
+## A story from the field: what the dispatcher never said
+
+An e-commerce company in Port Harcourt wanted a system to assign delivery riders to orders. The analyst, Ibrahim, interviewed the head dispatcher, Mr Okon, for an hour. Mr Okon described a tidy process: orders arrive, he picks the nearest rider, he sends the address by phone.
+
+Ibrahim wrote it all down and felt ready. But before leaving, he asked, "Could I sit next to you for the afternoon and watch?"
+
+Within twenty minutes he saw something Mr Okon had not mentioned. Every few orders, Mr Okon did not pick the nearest rider. He glanced at a handwritten board on the wall and chose someone else. Ibrahim asked why. "Oh, that is the board of who is reliable. Some riders lose parcels. I do not give them the expensive orders."
+
+That board was a **hidden requirement**. The system Ibrahim had been about to specify would have assigned the nearest rider every time and taken away the one piece of judgement keeping expensive parcels safe. Mr Okon had not hidden it on purpose. It was so natural to him that he never thought of it as part of the process.
+
+This is why one technique is never enough. People tell you what they *think* they do, in a meeting, in the neat version. **Observation** shows what they actually do. A good analyst combines interviews, observation, documents and questions to several people, and then checks what each one said against the others.
 
 ## The concept
 
@@ -57,6 +69,38 @@ Interview notes, organised the way a BA records them, from the accounts officer:
 | Idea (hers) | "If the invoice said 'due in 30 days', clients would take it more seriously." |
 
 Separating facts, pain points, workarounds and ideas keeps you honest. The notebook of slow payers is gold: it's a requirement (see who pays late) that nobody would ever have written down.
+
+## A real-world scenario: an interview that digs
+
+Imagine you are interviewing the manager of a small clinic who says, "Patients wait too long." That is a complaint, not a requirement. Here is how a skilled analyst turns it into usable information, using **open questions** and **probing follow-ups**.
+
+```text
+Analyst:  Walk me through what happens when a patient arrives.
+Manager:  They sign in, wait, see the nurse, wait, see the doctor.
+Analyst:  Where is the longest wait?
+Manager:  Between the nurse and the doctor.
+Analyst:  What is the doctor usually doing during that time?
+Manager:  Often waiting for the patient's folder.
+Analyst:  Where is the folder at that point?
+Manager:  With the nurse, until she finishes writing.
+Analyst:  How long does that take, roughly?
+Manager:  Ten, maybe fifteen minutes. I never timed it.
+Analyst:  Can I time a few this week?
+```
+
+Look at what happened in eleven lines:
+
+- The vague complaint became a **specific wait** (nurse to doctor).
+- A **cause** appeared (the paper folder is stuck with the nurse).
+- A **number** appeared (10 to 15 minutes), flagged as a guess to be measured.
+- The analyst asked to **observe and time**, instead of trusting the guess.
+
+**Practical tips for interviews:**
+
+1. Prepare five to eight open questions (How, What, Tell me about...) rather than yes or no questions.
+2. Ask "why?" and "can you give me an example?" when an answer is vague.
+3. Write down the person's own words and numbers, and mark which numbers are guesses.
+4. End with: "Who else should I talk to?" and "What have I not asked that I should have?"
 
 ## Walkthrough
 

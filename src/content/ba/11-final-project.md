@@ -1,6 +1,6 @@
 ---
 title: "Final project: Harbourline's tracking request"
-minutes: 20
+minutes: 25
 summary: Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.
 ---
 
@@ -11,6 +11,18 @@ Your final project moves to a new organisation. Harbourline Freight moves contai
 > "Customers keep complaining that they don't know where their shipments are. We need a tracking app with GPS, like the courier companies have. Can you write the requirements so we can get quotes?"
 
 You've seen this shape of request before: a solution, arriving first. Your job is to produce the business analysis pack that should come before any quotes: the real problem and its size, who's involved, how the process works now, what should change, what the solution must do, how you'll know it worked, and whether it's worth the money.
+
+## A story from the field: the ten-minute presentation
+
+Eight weeks into her project at a Lagos hospital, an analyst named Ngozi had pages and pages of notes: interviews, process maps, baselines, options and a business case. The chief executive gave her ten minutes at the board meeting.
+
+She nearly panicked. Her first instinct was to show everything she had done. A colleague stopped her: "The board does not want to know how hard you worked. They want to know what to decide."
+
+So Ngozi rebuilt the presentation around one question: *what do we want the board to do?* She opened with the problem in one sentence and one number: patients waited an average of 74 minutes for a discharge letter, causing about 11 bed-days lost each week. Then she showed the three options in one table with cost, benefit and payback, her recommendation, the main risk and how she would measure success after three months.
+
+The whole pack, with maps, requirements and test plans, went into an appendix for anyone who wanted detail. The board asked four questions, all of which she could answer from the appendix, and approved the recommendation in under fifteen minutes.
+
+Everything you have learned in this course comes together here. An analyst earns trust by understanding the real problem, listening to everyone affected, measuring before changing, being specific, and presenting a clear choice. The final project is your chance to show you can do all of it.
 
 ## The concept
 
@@ -44,6 +56,34 @@ A first look at Harbourline's delivery data, for delivered shipments:
 | 16 days or more | 1,456 | 77.2% |
 
 About a quarter of deliveries are late on every kind of route, and the one-day routes are the worst. A tracking app would show customers their shipment is late; it wouldn't make it on time. The pack you write may well recommend something different from what Mr Nwosu asked for, such as proactive delay notifications, realistic targets or fixing the causes of lateness, and that's exactly what a BA is for.
+
+## A real-world scenario: structuring your final pack
+
+Imagine you have been asked to improve how a small clinic books appointments. Here is how a strong final pack is organised, and what each part must achieve.
+
+| Part | What it contains | The question it answers |
+| :-- | :-- | :-- |
+| 1. Problem statement | One paragraph and one number | What is wrong, and how much does it matter? |
+| 2. Stakeholders | The power and interest grid, who you spoke to | Who is affected and who decides? |
+| 3. Current state | Baseline measures and the as-is map | How bad is it today, and where does it go wrong? |
+| 4. Requirements | Testable requirements and user stories with acceptance criteria | What must the solution do? |
+| 5. Options and case | Two or three options with costs, benefits and payback | What should we do and why? |
+| 6. Plan | Testing, training, rollout and how success will be measured | How will we make it work? |
+
+**A ten-minute presentation outline:**
+
+1. **Minute 1:** the problem and the number.
+2. **Minutes 2 to 3:** what you found (the map and the baseline in one picture each).
+3. **Minutes 4 to 6:** the options in one table, and your recommendation.
+4. **Minutes 7 to 8:** the main risks and how you will measure success.
+5. **Minutes 9 to 10:** the decision you need, and questions.
+
+**Practical advice:**
+
+- Put the recommendation early. Do not make the audience wait for it.
+- Use one picture per idea. Keep the detail in an appendix.
+- Rehearse out loud with a timer. Cutting a slide is easier than apologising for running over.
+- Expect the question "what if we do nothing?" and have a number ready.
 
 ## Walkthrough
 

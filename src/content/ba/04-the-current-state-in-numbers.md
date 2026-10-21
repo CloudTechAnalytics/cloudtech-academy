@@ -1,6 +1,6 @@
 ---
 title: The current state in numbers
-minutes: 25
+minutes: 30
 summary: Measure how things work today before changing them, set the baseline every improvement will be judged against, and find out whether a problem is everywhere or concentrated.
 ---
 
@@ -9,6 +9,18 @@ summary: Measure how things work today before changing them, set the baseline ev
 Everyone at Ashgrove agrees that "clients pay late". But how late? Is it getting worse? Is it a few difficult clients, or everyone? Without numbers, a new process could be launched, declared a success at the Christmas party, and nobody would ever know whether it worked.
 
 Before you change anything, measure it. The **baseline** you set now is the yardstick for every claim made about the change later. It also stops the project solving the wrong problem: if late payment turned out to be three clients, the answer would be three phone calls, not a new system.
+
+## A story from the field: the slow kitchen
+
+The owner of a busy restaurant in Ibadan told her analyst, Dayo, "Orders are always late. The kitchen is useless." She was ready to replace the head chef.
+
+Dayo asked for something unusual: a stopwatch and one week. He logged every order for five days, noting when it was placed, when each part of the meal was ready, and when it reached the table.
+
+The numbers were not what the owner expected. Of 320 orders, 96 were late, which is 30 per cent. The owner had imagined it was nearly all of them. But the more surprising finding was where the delay sat. 78 of the 96 late orders included a grilled item, and the **grill station** took a median of 22 minutes while every other station took under 12. The chef was not the problem. One overloaded station was.
+
+Without the numbers, the owner would have changed the wrong thing. With them, a small fix (a second griller on Friday and Saturday evenings, the busiest times) was obvious, cheap and measurable. Three weeks later, Dayo measured again: late orders were down from 30 per cent to 11 per cent.
+
+That is why we measure the **baseline** before changing anything. The numbers did not just solve the problem. They also proved it, which kept the head chef in his job.
 
 ## The concept
 
@@ -46,6 +58,35 @@ Average days to pay, by the year the invoice was issued:
 It's getting slowly worse, by about 2 to 3 days a year. And the overdue money isn't concentrated in a few bad payers: it's spread across 32 of Ashgrove's 50 clients, companies and individuals alike. That points to a **process** problem (no terms, no reminders, no routine chasing), not a problem with particular clients.
 
 ![Bars for average days to pay by year issued: 42.4 in 2024, 45.5 in 2025, 47.1 in 2026 to August, all above a dashed line at 30 days.](/images/courses/ba/days-to-pay-trend.svg "The baseline: days to pay is rising, and well above a 30-day term.")
+
+## A real-world scenario: building a baseline
+
+A small courier business says "deliveries are often late". Before suggesting any change, the analyst gathers one month of data and works out a few simple measures.
+
+Suppose the month contains **400 deliveries**, of which **88 arrived after the promised time**, and the total of the delays across those late deliveries was **66 hours**.
+
+1. **Late rate** = late deliveries ÷ all deliveries = 88 ÷ 400 = **22%**.
+2. **Average delay of a late delivery** = total delay ÷ late deliveries = 66 hours ÷ 88 = **0.75 hours, which is 45 minutes**.
+
+Now the analyst splits the 88 late deliveries by cause, from the riders' notes:
+
+| Cause | Late deliveries | Share of the 88 |
+| :-- | :-- | :-- |
+| Wrong or incomplete address | 40 | 45% |
+| Rider waited for the sender | 22 | 25% |
+| Traffic | 18 | 20% |
+| Other | 8 | 9% |
+
+(The shares add to 99% because of rounding.)
+
+**What the numbers tell you:** nearly half of all late deliveries come from bad addresses, a problem the business can fix at the point of booking by asking for a landmark and a phone number. Traffic, which everyone blamed, is only a fifth.
+
+**The practical rules:**
+
+1. Pick two or three measures that match the complaint (how often, how long, how much it costs).
+2. Use a real period of data, not a memory.
+3. Split the problem by cause. The biggest slice is where you start.
+4. Write the baseline down with the date range. After the change, measure the same way and compare.
 
 ## Walkthrough
 

@@ -15,6 +15,18 @@ The first requirements list for Ashgrove's billing change came back from a works
 
 Every line sounds reasonable, and none of them can be built or tested. How quick is "quickly"? What's "everything"? A supplier could deliver almost anything and claim to meet them, and the firm would have no way to object. Vague requirements are how projects end in arguments.
 
+## A story from the field: "the system should be fast"
+
+A fintech startup in Lagos hired a contractor to build a loan-repayment dashboard. The requirements document said: *"The system should be fast and user-friendly."* Everyone signed it.
+
+Three months later the contractor delivered. The finance lead opened the dashboard, waited eleven seconds for the first screen to load, and said, "This is not fast." The contractor said it loaded in under twelve seconds, which on his test server was very quick, and it was exactly what had been asked for. Neither of them was lying. The word "fast" meant different things to each of them.
+
+The argument took six weeks, a second payment and a damaged relationship. It all came from a single sentence nobody had made specific.
+
+A better requirement would have read: *"The dashboard shall show the repayment summary within 3 seconds of login, for up to 500 concurrent users, on a standard office connection."* That sentence is different in an important way: anyone can **test** it. Either the summary appears in 3 seconds or it does not.
+
+The analyst's rule is simple. **If you cannot test a requirement, it is not a requirement yet.** Words like fast, easy, flexible, secure and user-friendly are wishes. The analyst's job is to turn each wish into something with a number, a condition or an example.
+
 ## The concept
 
 ### Types of requirement
@@ -61,6 +73,31 @@ The workshop's vague lines, rewritten:
 | Reports should be good. | A report shall list every unpaid invoice past its due date, with client, amount and days overdue, sortable by each column. |
 
 Each rewrite can be tested: time it, count it, or check the report against the data.
+
+## A real-world scenario: rewriting vague requirements
+
+A project team for an online pharmacy hands you four requirements. Your job is to make each one clear and testable.
+
+| Vague requirement | Why it fails | Rewritten requirement |
+| :-- | :-- | :-- |
+| "The website should be fast." | Fast for whom? Measured how? | "The product page shall load in under 3 seconds on a 4G connection." |
+| "Customers can easily find drugs." | Easy is a feeling | "A customer shall be able to find a drug by typing any part of its name and see results within 2 seconds." |
+| "The system must be secure." | Secure against what? | "Customer passwords shall be stored encrypted, and accounts shall lock for 15 minutes after 5 wrong attempts." |
+| "Orders should be processed quickly." | How quickly, from when? | "An order shall be shown to the pharmacist within 1 minute of payment confirmation." |
+
+Notice the pattern. Each rewrite has three parts:
+
+1. **Who or what** is doing something (the page, the customer, the system).
+2. **A measurable condition** (under 3 seconds, within 1 minute, after 5 attempts).
+3. **A context** (on 4G, after payment confirmation).
+
+**A quick test for any requirement:** could a tester, who has never met you, decide pass or fail from the sentence alone? If not, rewrite it.
+
+Also watch for these traps:
+
+- **Two requirements in one sentence** ("must be fast and secure") should be split so each can be tested.
+- **Solutions disguised as requirements** ("use a database called X") should be rewritten as the need behind them.
+- **Missing exceptions**: what should happen when something goes wrong?
 
 ## Walkthrough
 

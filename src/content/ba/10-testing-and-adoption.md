@@ -1,6 +1,6 @@
 ---
 title: Testing and adoption
-minutes: 25
+minutes: 30
 summary: Check the delivered change against the requirements with user acceptance testing and a traceability matrix, then help people actually adopt it and measure whether it worked.
 ---
 
@@ -9,6 +9,18 @@ summary: Check the delivered change against the requirements with user acceptanc
 The new process is ready. Reminders are set up, the invoice template has a due date, and the overdue report runs every Monday. The supplier says it's done. Is it?
 
 "Done" means two different things. **Does it do what was specified?** That's testing. **Do people use it, and is the problem getting smaller?** That's adoption. Plenty of changes pass every test and still fail, because lawyers keep sending time by WhatsApp, or the accounts officer quietly keeps her notebook. The BA's job doesn't end at go-live.
+
+## A story from the field: the payroll system nobody used
+
+A manufacturing company in Ikeja spent ₦14 million on a new payroll system. It passed every test. It went live on the first of the month. By the fifteenth, the payroll team had quietly gone back to their old spreadsheets.
+
+The analyst, Tolani, was asked to find out why. She sat with the payroll officers and watched. The system was correct, but it needed twelve clicks to enter overtime for one worker, and the officers entered overtime for 300 workers every month. Nobody had shown them shortcuts, and the one-hour training had covered the screens, not their working day. The old spreadsheet took them four minutes a worker. The new system took six.
+
+The technology had been tested. The **adoption** had not. Tolani did three things. She ran a user acceptance session where officers processed real overtime from last month and wrote down every place they got stuck. She asked the vendor to add a bulk-entry screen for overtime. And she paired each officer with a "super-user" colleague for the first two pay cycles.
+
+By the next cycle, the team was entering overtime in under two minutes a worker, and the spreadsheets were retired.
+
+A system that works but is not used has failed. Testing proves the system does what it was specified to do. Adoption proves that people will actually use it. A good analyst plans for both.
 
 ## The concept
 
@@ -57,6 +69,31 @@ Part of Ashgrove's traceability matrix:
 | FR-07 No reminders on payment plans | (exception in the reminder story) | UAT-06 | |
 
 FR-07 came from an acceptance criterion, not from the original requirements list, and the matrix makes sure it's tested anyway.
+
+## A real-world scenario: a go-live plan for a new booking system
+
+A physiotherapy clinic is replacing its paper diary with an online booking system. The analyst prepares a plan with three parts: **testing**, **training** and **rollout**.
+
+**Part 1: User acceptance testing (UAT).** The people who will really use the system run real tasks, using scripts written from the acceptance criteria.
+
+| Test | Steps | Expected result | Pass or fail |
+| :-- | :-- | :-- | :-- |
+| Book a new patient | Enter name and phone, pick a 30-minute slot | Slot is reserved and a confirmation SMS is sent | |
+| Double booking | Book the same slot for two patients | The second is refused with a message | |
+| Cancel an appointment | Cancel a booking 2 hours before | Slot becomes available again | |
+| Receptionist off sick | Another staff member logs in and views the day's list | List appears with all bookings | |
+
+Every failure is logged with who found it, what they did and what happened. The team decides which must be fixed before go-live.
+
+**Part 2: Training.** Short (45 minutes), by role, using real examples from the clinic, with a one-page quick guide at each desk.
+
+**Part 3: Rollout.** Do not switch off the paper diary on day one.
+
+1. **Week 1:** run both, new bookings in the system and the paper diary as a backup.
+2. **Week 2:** system only, with a super-user available each morning.
+3. **Week 4:** review. Count bookings, missed appointments and staff comments. Compare with the baseline.
+
+**Practical checklist before go-live:** acceptance tests passed, known issues agreed, staff trained, support person named, backup plan ready and a date to review the results.
 
 ## Walkthrough
 
