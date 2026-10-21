@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Six boxes: predicting, such as fraud alerts and weather forecasts; recognising, such as face unlock and reading text from photos; recommending, such as the videos and products you are shown; understanding speech and language, such as voice typing and translation; generating, such as ChatGPT writing and image makers; and acting, AI agents that carry out steps for you.">
+<title>Six kinds of AI by the job they do, with everyday examples.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="16" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What is the AI doing?</text>
+<rect x="16" y="46" width="232" height="166" rx="10" fill="#E3EAF4" stroke="#2F4F7F" stroke-width="1.5"/>
+<text x="30" y="72.0" font-size="13.5" fill="#2F4F7F" font-weight="700" text-anchor="start">Predicting</text>
+<text x="30" y="112.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Uses past data to guess what</text>
+<text x="30" y="127.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">comes next.</text>
+<line x1="30" y1="158" x2="234" y2="158" stroke="#2F4F7F" stroke-width="1"/>
+<text x="30" y="176.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">Fraud alerts, delivery time</text>
+<text x="30" y="190.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">estimates, forecasts</text>
+<rect x="264" y="46" width="232" height="166" rx="10" fill="#E1F0E7" stroke="#1F6F43" stroke-width="1.5"/>
+<text x="278" y="72.0" font-size="13.5" fill="#1F6F43" font-weight="700" text-anchor="start">Recognising</text>
+<text x="278" y="112.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Finds things in pictures, sound</text>
+<text x="278" y="127.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">and video.</text>
+<line x1="278" y1="158" x2="482" y2="158" stroke="#1F6F43" stroke-width="1"/>
+<text x="278" y="176.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">Face unlock, reading text from a</text>
+<text x="278" y="190.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">photo, spotting damage</text>
+<rect x="512" y="46" width="232" height="166" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text x="526" y="72.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Recommending</text>
+<text x="526" y="112.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Chooses what to show you next.</text>
+<line x1="526" y1="158" x2="730" y2="158" stroke="#8A6A1F" stroke-width="1"/>
+<text x="526" y="176.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">Videos you see, products suggested,</text>
+<text x="526" y="190.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">music playlists</text>
+<rect x="16" y="228" width="232" height="166" rx="10" fill="#E3EAF4" stroke="#2F4F7F" stroke-width="1.5"/>
+<text x="30" y="254.0" font-size="13.5" fill="#2F4F7F" font-weight="700" text-anchor="start">Understanding speech and</text>
+<text x="30" y="270.0" font-size="13.5" fill="#2F4F7F" font-weight="700" text-anchor="start">language</text>
+<text x="30" y="294.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Turns speech and text into</text>
+<text x="30" y="309.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">meaning, and back.</text>
+<line x1="30" y1="340" x2="234" y2="340" stroke="#2F4F7F" stroke-width="1"/>
+<text x="30" y="358.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">Voice typing, translation, subtitles</text>
+<rect x="264" y="228" width="232" height="166" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text x="278" y="254.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Generating</text>
+<text x="278" y="294.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Creates new text, images, audio,</text>
+<text x="278" y="309.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">video or code.</text>
+<line x1="278" y1="340" x2="482" y2="340" stroke="#9B2C1F" stroke-width="1"/>
+<text x="278" y="358.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">ChatGPT, Claude, Gemini, image</text>
+<text x="278" y="372.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">generators</text>
+<rect x="512" y="228" width="232" height="166" rx="10" fill="#E1F0E7" stroke="#1F6F43" stroke-width="1.5"/>
+<text x="526" y="254.0" font-size="13.5" fill="#1F6F43" font-weight="700" text-anchor="start">Acting</text>
+<text x="526" y="294.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Plans and carries out steps</text>
+<text x="526" y="309.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">toward a goal, with tools.</text>
+<line x1="526" y1="340" x2="730" y2="340" stroke="#1F6F43" stroke-width="1"/>
+<text x="526" y="358.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">AI agents that search, fill forms or</text>
+<text x="526" y="372.0" font-size="11" fill="#2A2926" font-weight="600" text-anchor="start">book for you</text>
+<text x="16" y="412.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">One product can do several jobs. A phone assistant recognises speech, understands it and then generates a reply.</text>
+</g>
+</svg>

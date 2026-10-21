@@ -119,6 +119,18 @@
   760,
   456
  ],
+ "/images/courses/ai-productivity/ai-nested.svg": [
+  760,
+  470
+ ],
+ "/images/courses/ai-productivity/ai-timeline.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-productivity/ai-types.svg": [
+  760,
+  420
+ ],
  "/images/courses/ai-productivity/check-before-use.svg": [
   760,
   416
@@ -131,9 +143,17 @@
   760,
   380
  ],
+ "/images/courses/ai-productivity/llm-next-word.svg": [
+  760,
+  400
+ ],
  "/images/courses/ai-productivity/presentation-plan.svg": [
   760,
   400
+ ],
+ "/images/courses/ai-productivity/prompt-framework.svg": [
+  760,
+  520
  ],
  "/images/courses/ai-productivity/prompt-parts.svg": [
   760,
@@ -154,6 +174,10 @@
  "/images/courses/ai-productivity/verify.svg": [
   760,
   430
+ ],
+ "/images/courses/ai-productivity/worked-example-steps.svg": [
+  760,
+  330
  ],
  "/images/courses/ai-students/coach-not-ghostwriter.svg": [
   760,
@@ -1498,5 +1522,9 @@
  "/images/courses/webjs/testing.svg": [
   760,
   380
+ ],
+ "/images/hero-learners.jpg": [
+  1100,
+  733
  ]
 }

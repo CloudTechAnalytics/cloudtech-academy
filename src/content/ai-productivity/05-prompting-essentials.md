@@ -1,6 +1,6 @@
 ---
 title: Prompting Essentials
-minutes: 30
+minutes: 25
 summary: Write prompts that get useful answers from any AI assistant (ChatGPT, Claude, Gemini or Copilot), improve a draft in a few follow-ups, and catch the mistakes AI makes before they reach anyone else.
 ---
 

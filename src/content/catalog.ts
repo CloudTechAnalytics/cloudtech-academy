@@ -188,9 +188,9 @@ const ALL_COURSES: CourseDef[] = [
     code: "AIPF",
     title: "AI Productivity Fundamentals",
     completionBadge: "AI Productivity Fundamentals",
-    summary: "Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.",
+    summary: "Use AI tools to research, write and create faster: what AI is and how it works, a prompt framework with a full worked example, then Claude, ChatGPT and presentations.",
     description:
-      "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
+      "Learn practical ways to use AI assistants at work, at school and in your business, starting from what AI really is. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "ai-productivity",
     difficulty: "beginner",
     level: 1,
@@ -201,7 +201,7 @@ const ALL_COURSES: CourseDef[] = [
     prerequisites: ["No experience needed", "A free account with any AI assistant, such as ChatGPT or Claude"],
     certificate: shortRules,
     modules: [
-      { id: "aipf-m01", title: "Prompting Essentials", lessons: ["prompting-essentials"], badge: "Prompting Essentials", badgeCode: "PROMPT", skills: ["Write a prompt with context, task and format", "Give examples so the AI matches your style", "Improve a weak answer instead of starting again", "Check AI answers before you use them"] },
+      { id: "aipf-m01", title: "AI Foundations and Prompting", lessons: ["what-is-ai", "how-ai-works", "the-prompt-framework", "worked-example", "prompting-essentials"], badge: "Prompting Essentials", badgeCode: "PROMPT", skills: ["Explain what AI is, its main types and how a chat assistant works", "Write a prompt with role, context, task, rules and format", "Work a real task through from goal to checked result", "Check AI answers before you use them"] },
       { id: "aipf-m02", title: "Using Claude", lessons: ["using-claude"], badge: "Claude AI Essentials", badgeCode: "CLAUDE", skills: ["Start a conversation and follow up well", "Summarise and question a document you upload", "Rewrite text for a different reader or tone", "Keep ongoing work organised in a project"] },
       { id: "aipf-m03", title: "Using ChatGPT", lessons: ["using-chatgpt"], badge: "ChatGPT Essentials", badgeCode: "CHATGPT", skills: ["Ask focused questions and refine the answer", "Use files and images in a chat", "Research with sources you can check", "Save your preferences so every chat starts better"] },
       { id: "aipf-m04", title: "Presentations with AI", lessons: ["presentations-with-ai"], badge: "AI Presentations", badgeCode: "SLIDES", skills: ["Get a slide-by-slide outline from an AI assistant", "Write short, clear slide text and speaker notes", "Build the deck quickly in PowerPoint, Google Slides or Canva", "Check the facts and make it sound like you"] },

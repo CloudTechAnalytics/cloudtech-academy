@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" width="760" height="520" role="img" aria-label="A seven-step checklist. 1 Role: who the AI should act as. 2 Context: the situation, the audience, the facts. 3 Task: the one thing you want done. 4 Rules: what must and must not happen, such as length, tone and things to avoid. 5 Format: how the answer should look, such as a table, a list or a number of words. 6 Example: show what good looks like. 7 Check: ask it to ask questions, point out gaps, and then you verify.">
+<title>The seven steps of a strong prompt: role, context, task, rules, format, example and check.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="520" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="16" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Seven steps to a strong prompt</text>
+<circle cx="40" cy="70" r="20" fill="#8A6A1F"/>
+<text x="40" y="76.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<rect x="72" y="46" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.2"/>
+<text x="88" y="68.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Role</text>
+<text x="88" y="88.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Who should the AI act as?</text>
+<text x="300" y="77.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“Act as a friendly small-business marketing coach.”</text>
+<circle cx="40" cy="133" r="20" fill="#1F6F43"/>
+<text x="40" y="139.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<rect x="72" y="109" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#1F6F43" stroke-width="1.2"/>
+<text x="88" y="131.0" font-size="14" fill="#1F6F43" font-weight="700" text-anchor="start">Context</text>
+<text x="88" y="151.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">What is the situation, and who is it for?</text>
+<text x="300" y="140.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“I run a juice shop in Ibadan. Customers are students.”</text>
+<circle cx="40" cy="196" r="20" fill="#8A6A1F"/>
+<text x="40" y="202.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<rect x="72" y="172" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.2"/>
+<text x="88" y="194.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Task</text>
+<text x="88" y="214.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The one thing you want done.</text>
+<text x="300" y="203.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“Write three WhatsApp messages announcing weekend</text>
+<text x="300" y="218.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">delivery.”</text>
+<circle cx="40" cy="259" r="20" fill="#1F6F43"/>
+<text x="40" y="265.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<rect x="72" y="235" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#1F6F43" stroke-width="1.2"/>
+<text x="88" y="257.0" font-size="14" fill="#1F6F43" font-weight="700" text-anchor="start">Rules</text>
+<text x="88" y="277.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">What must, and must not, happen.</text>
+<text x="300" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“Under 40 words each. No emojis. Do not promise delivery</text>
+<text x="300" y="281.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">times.”</text>
+<circle cx="40" cy="322" r="20" fill="#8A6A1F"/>
+<text x="40" y="328.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<rect x="72" y="298" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.2"/>
+<text x="88" y="320.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Format</text>
+<text x="88" y="340.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">How should the answer look?</text>
+<text x="300" y="329.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“A table: message, best time to send, why.”</text>
+<circle cx="40" cy="385" r="20" fill="#1F6F43"/>
+<text x="40" y="391.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<rect x="72" y="361" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#1F6F43" stroke-width="1.2"/>
+<text x="88" y="383.0" font-size="14" fill="#1F6F43" font-weight="700" text-anchor="start">Example</text>
+<text x="88" y="403.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Show what good looks like.</text>
+<text x="300" y="392.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“Here is a message our customers liked: …”</text>
+<circle cx="40" cy="448" r="20" fill="#8A6A1F"/>
+<text x="40" y="454.0" font-size="17" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<rect x="72" y="424" width="672" height="54" rx="8" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.2"/>
+<text x="88" y="446.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Check</text>
+<text x="88" y="466.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Make it safer and better.</text>
+<text x="300" y="455.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">“Ask me any questions first. List what you are unsure</text>
+<text x="300" y="470.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">about.”</text>
+<text x="16" y="504.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Not every prompt needs all seven. Use the ones that matter for the job, and always add a check for work that counts.</text>
+</g>
+</svg>
