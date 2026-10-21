@@ -1,8 +1,38 @@
 ---
 title: Import and Export Fundamentals
-minutes: 25
+minutes: 30
 summary: Understand what importing and exporting are, how mini importation differs from full trade, who is involved in a shipment, what the main trade terms mean and which risks to plan for.
 ---
+
+## A story to start: Tunde's first import
+
+Tunde sells phone accessories from a stall in Computer Village, Ikeja. He buys from wholesalers in Lagos, and every month he pays more than the month before. One evening a customer tells him, "My cousin buys power banks directly from China. He sells them cheaper than you and still makes a profit."
+
+Tunde is curious and a little worried. He opens a supplier website, sees a power bank for $3.00, and thinks: "I pay ₦9,500 for the same thing. I should order 300 tomorrow." If he does, he will find out the hard way what this course teaches: the price on the page is never the real cost, and a first import goes wrong in a handful of predictable places.
+
+Instead, Tunde slows down and follows the steps below, one at a time. By the end of the course, you will have followed the same ten steps, with real numbers, for a product of your own.
+
+## The whole journey in ten steps
+
+Here is the entire path of a mini importation on one page. Each step has its own lesson, and you can return to this map at any point.
+
+![The ten steps of a mini importation in two rows, from choosing a product to selling and reordering, each linked to the lesson that teaches it](/images/courses/import-export/journey-ten-steps.svg "The whole journey. Every step in this course is one of these ten.")
+
+Here is each step in plain words: what you do, and what usually goes wrong.
+
+1. **Choose a product.** Pick something small, light, durable and already selling in your area. Do not pick what you love; pick what people already buy. *Common mistake:* choosing a product because it looks exciting online.
+2. **Check the market.** Find out who sells it, at what price, and how fast it moves. Work out a rough profit before you contact anyone. *Common mistake:* assuming demand without asking a single customer.
+3. **Find suppliers.** Search a platform such as Alibaba, or use an agent. Shortlist three to five suppliers and send each the same clear enquiry. *Common mistake:* messaging one supplier and accepting the first price.
+4. **Verify the supplier.** Check the company profile, ask for business documents and real photos, and use protected payment. *Common mistake:* paying a stranger by bank transfer because the price was very low.
+5. **Negotiate and sample.** Agree the price, the minimum order and the terms, and order a sample before the main order. *Common mistake:* skipping the sample to save a week.
+6. **Ship it.** Choose air or sea, pick a freight forwarder, and insure the goods. *Common mistake:* comparing freight quotes that are not built the same way.
+7. **Documents and customs.** Make sure the invoice, packing list and bill of lading or air waybill agree, use the right HS code and clear the goods through a licensed agent. *Common mistake:* an invoice that does not match the goods.
+8. **Count the real cost.** Add product, freight, insurance, duty, VAT, clearing, transport and bank charges to find the landed cost per unit. *Common mistake:* pricing from the supplier's price alone.
+9. **Price it.** Set a selling price that leaves your target margin after everything. *Common mistake:* copying a competitor's price without checking your own cost.
+10. **Sell and reorder.** Choose channels, keep cash for the next order, track what sells and reorder what moves. *Common mistake:* putting all the profit back into one slow product.
+
+> [!TIP]
+> Keep one notebook or spreadsheet for the whole course. Write your own product at step 1, and fill in one line for each step as you complete each lesson. By lesson 12 you will have a finished business plan, not just notes.
 
 ## What importing and exporting are
 
@@ -125,6 +155,26 @@ A safe habit: **start small, test, then grow.** The first order is tuition.
   "sample": "Risk: the supplier takes the money and never ships - Fix: verify the company and pay through a protected method.\nRisk: the cases arrive damaged or poor quality - Fix: order a sample first and pack in strong cartons with insurance.\nRisk: duty and charges at the port are higher than planned - Fix: work out the landed cost before ordering.",
   "required": false
 }
+```
+
+```task
+{
+  "id": "iemi-m01-t4",
+  "prompt": "Start your own journey. Name **one product** you could imagine importing (small, light and already selling where you live). Then, for **steps 1 to 5** of the ten-step map, write one line saying what you would do for *your* product. One step per line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Product: ...\n1. Choose: ...\n2. Check the market: ...",
+  "rules": [
+    { "label": "Names a product", "pattern": "product|phone|bag|shoe|cable|case|charger|cloth|wig|hair|light|bottle|watch|earbud|power bank|cosmetic|toy|tool" },
+    { "label": "At least five lines (one per step)", "minLines": 5 },
+    { "label": "Mentions checking the market or demand (customers, price, competition, ask)", "pattern": "market|demand|customer|competit|price|ask|sell" },
+    { "label": "Mentions a supplier step (supplier, alibaba, verify, sample)", "pattern": "supplier|alibaba|verify|sample|agent" }
+  ],
+  "sample": "Product: phone ring lights for content creators.\n1. Choose: small, light, and many creators near me ask where to buy one.\n2. Check the market: see what three Lagos sellers charge and ask five creators what they would pay.\n3. Find suppliers: shortlist four on Alibaba and send each the same enquiry.\n4. Verify: check each profile, ask for real photos and pay through protected payment.\n5. Negotiate and sample: agree the minimum order and order one sample before the bulk order.",
+  "note": "This is the start of your own business plan. You will come back to the same product in every lesson and finish with a complete plan in lesson 12.",
+  "required": false
+}
+
 ```
 
 Next lesson: how to choose a product that will really sell.

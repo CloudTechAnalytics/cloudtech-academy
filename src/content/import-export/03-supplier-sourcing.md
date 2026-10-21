@@ -22,6 +22,10 @@ For a first mini import, **Alibaba plus a small sample order** is the usual star
 
 ## Reading a supplier profile
 
+Before you read the rules below, look at the picture. This is what a typical supplier listing contains and the six parts worth checking before you send a single message.
+
+![An example supplier listing with six numbered parts to check: product photos, price tiers, minimum order, who is selling, samples and payment protection](/images/courses/import-export/listing-anatomy.svg "Six parts of a listing to check before you message a supplier.")
+
 Open the supplier's company profile, not just the product page. Look for:
 
 - **Business type.** "Manufacturer" or "Trading company"? A factory usually offers lower prices and customisation. A trading company can still be a good choice for mixed small orders, but price it knowing there is a margin inside.

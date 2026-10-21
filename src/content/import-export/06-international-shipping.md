@@ -16,6 +16,10 @@ The two main ways to bring goods to Nigeria are **air freight** and **sea freigh
 | **Charged by** | Weight (kilograms) | Volume (cubic metres) for shared loads, or per container |
 | **Risks** | Fewer handling steps, lower damage risk | Longer exposure, more handling, port delays |
 
+![A large container ship loaded with stacked containers at a port, with tall cranes alongside](/images/courses/import-export/sea-freight-ship.jpg "Sea freight: a container ship being loaded at a port. Photo: Downtowngal, CC BY-SA 4.0, via Wikimedia Commons.")
+
+![A cargo aircraft with its nose door open and a lift platform loading a pallet of wrapped cargo](/images/courses/import-export/air-freight-loading.jpg "Air freight: loading a cargo aircraft. Photo: Aleksandr Markin, CC BY-SA 2.0, via Wikimedia Commons.")
+
 For a first mini import of light goods, **air cargo** is often practical. As volumes grow, **sea freight** brings the cost per unit down. Times and prices change often, so always get a current quote.
 
 ## How air freight is charged

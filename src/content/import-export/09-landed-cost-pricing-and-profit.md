@@ -60,6 +60,8 @@ Tunde orders 300 power banks.
 
 The supplier's price was $3.00, about ₦4,500 at ₦1,500. The real cost to Tunde is ₦7,420, about **65% higher.** That gap is why this lesson exists.
 
+![A bar chart of the landed cost items for 300 power banks, with the product at the top and duty, VAT, clearing and local costs below](/images/courses/import-export/landed-cost-bars.svg "Where the money goes: the product is only part of the cost.")
+
 ## Setting a selling price and margin
 
 Start from the cost and the profit you need, then check the market.

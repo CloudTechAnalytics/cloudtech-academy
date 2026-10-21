@@ -21,6 +21,8 @@ Customs does not clear goods on trust. It clears them on documents that agree wi
 
 **All the documents must match.** Name, address, quantities, weights, descriptions and values should agree. A mismatch is the most common cause of delay and fines.
 
+![The five parties a shipment passes through, from supplier to importer, with the documents each one handles](/images/courses/import-export/shipment-documents.svg "Documents follow the goods through five hands, and they must all agree.")
+
 > [!WARNING]
 > Never agree to understate the value or change the description on an invoice to reduce duty. Under-declaring is an offence. It can bring seizure, penalties and a record that makes every future shipment harder.
 
