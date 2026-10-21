@@ -77,17 +77,697 @@ on conflict (id) do update set name = excluded.name, description = excluded.desc
 
 -- Course: AI Productivity Fundamentals
 insert into public.courses (id, format, completion_badge, slug, code, title, summary, description, category_id, difficulty, level, level_label, estimated_hours, is_free, status, published, skills, prerequisites, project_title, certificate_enabled, require_all_lessons, require_exercises, require_project, require_module_badges, passing_score, position)
-values ('ai-productivity-fundamentals', 'short', 'AI Productivity Fundamentals', 'ai-productivity-fundamentals', 'AIPF', 'AI Productivity Fundamentals', 'Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.', 'Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.', 'ai-productivity', 'beginner', 1, 'Beginner', null, true, 'available', true, array['Writing clear prompts', 'Working with documents in Claude', 'Researching with ChatGPT', 'Building presentations with AI', 'Checking AI answers before you use them']::text[], array['No experience needed', 'A free account with any AI assistant, such as ChatGPT or Claude']::text[], null, true, false, false, false, true, 60, 0)
+values ('ai-productivity-fundamentals', 'short', 'AI Productivity Fundamentals', 'ai-productivity-fundamentals', 'AIPF', 'AI Productivity Fundamentals', 'Use AI tools to research, write and create faster: what AI is and how it works, a prompt framework with a full worked example, then Claude, ChatGPT and presentations.', 'Learn practical ways to use AI assistants at work, at school and in your business, starting from what AI really is. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.', 'ai-productivity', 'beginner', 1, 'Beginner', null, true, 'available', true, array['Writing clear prompts', 'Working with documents in Claude', 'Researching with ChatGPT', 'Building presentations with AI', 'Checking AI answers before you use them']::text[], array['No experience needed', 'A free account with any AI assistant, such as ChatGPT or Claude']::text[], null, true, false, false, false, true, 60, 0)
 on conflict (id) do update set format = excluded.format, completion_badge = excluded.completion_badge, slug = excluded.slug, code = excluded.code, title = excluded.title, summary = excluded.summary, description = excluded.description, category_id = excluded.category_id, difficulty = excluded.difficulty, level = excluded.level, level_label = excluded.level_label, estimated_hours = excluded.estimated_hours, is_free = excluded.is_free, status = excluded.status, published = excluded.published, skills = excluded.skills, prerequisites = excluded.prerequisites, project_title = excluded.project_title, certificate_enabled = excluded.certificate_enabled, require_all_lessons = excluded.require_all_lessons, require_exercises = excluded.require_exercises, require_project = excluded.require_project, require_module_badges = excluded.require_module_badges, passing_score = excluded.passing_score, position = excluded.position;
 
 update public.courses set access_type = 'free', price = null, currency = 'NGN', discount_price = null, discount_active = false, payment_status = 'active', delivery_type = 'self_paced', enrollment_status = 'open', enrollment_start = null, enrollment_end = null, community_access = false, instructor_support = false, duration_label = null, overview = null, audience = '{}'::text[], included = '{}'::text[], project_previews = '[]'::jsonb, instructor_name = null, instructor_title = null, instructor_bio = null, professional_outcome = null, commerce_seeded = true, course_type = 'free', outcomes = '{}'::text[], difficulty_max = null, duration_weeks = null, thumbnail = null, faqs = '[]'::jsonb, discount_label = null, discount_start = null, discount_end = null where id = 'ai-productivity-fundamentals' and not commerce_seeded;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
-values ('aipf-m01', 'ai-productivity-fundamentals', 'Prompting Essentials', 1, 'Prompting Essentials', 'PROMPT', array['Write a prompt with context, task and format', 'Give examples so the AI matches your style', 'Improve a weak answer instead of starting again', 'Check AI answers before you use them']::text[], '{}'::text[])
+values ('aipf-m01', 'ai-productivity-fundamentals', 'AI Foundations and Prompting', 1, 'Prompting Essentials', 'PROMPT', array['Explain what AI is, its main types and how a chat assistant works', 'Write a prompt with role, context, task, rules and format', 'Work a real task through from goal to checked result', 'Check AI answers before you use them']::text[], '{}'::text[])
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('ai-productivity-fundamentals:prompting-essentials', 'ai-productivity-fundamentals', 'aipf-m01', 'prompting-essentials', 'Prompting Essentials', 'Write prompts that get useful answers from any AI assistant (ChatGPT, Claude, Gemini or Copilot), improve a draft in a few follow-ups, and catch the mistakes AI makes before they reach anyone else.', 30, $md$
+values ('ai-productivity-fundamentals:what-is-ai', 'ai-productivity-fundamentals', 'aipf-m01', 'what-is-ai', 'What Is AI? A Plain-English Start', 'Understand what artificial intelligence really is, where it came from, how it differs from machine learning and generative AI, and the six kinds of jobs it does, so the rest of the course makes sense even if you have never used it.', 15, $md$
+## A story to start: two shops, one morning
+
+Tolu runs a small phone-accessories shop in Ikeja. Every Monday she spends two hours going through last week's WhatsApp orders, working out what to restock, and writing a message to her suppliers. Her friend Chidi runs a similar shop two streets away. On the same Monday, Chidi pastes his week's orders into an AI assistant, types one paragraph describing what he needs, and has a restock list and a supplier message in four minutes. He spends the other hour and fifty-six minutes talking to customers.
+
+Chidi is not cleverer than Tolu. He did not study computer science. He learned a few simple habits about **what AI is, what it is good at, and how to ask it for things**. That is exactly what this course teaches, starting here.
+
+Before you can use any tool well, it helps to know what it actually is. Most people only ever hear AI described in headlines, either as a miracle or as a threat. Neither helps you do your job. By the end of this lesson you will be able to explain AI in your own words, name its main types, and know which of them you will use at work.
+
+## The definition, in plain words
+
+**Artificial intelligence (AI)** is computer software that does tasks which normally need human intelligence: recognising a face, understanding a sentence, translating a language, spotting a fraudulent payment, writing a paragraph.
+
+Notice what that definition does **not** say. It does not say the software is alive, that it understands like you do, or that it is always right. It says it can do a *task* that we used to think only a person could do.
+
+Here is a useful way to feel the difference. A normal program follows **rules a person wrote**:
+
+```text
+IF the customer's order is over ₦50,000 THEN offer free delivery.
+```
+
+Every decision is written out by a programmer. If a situation was not thought of, the program does nothing sensible. AI, in the way we use the word today, is different: nobody writes the rules. The software is shown a very large number of examples, finds the patterns itself, and then uses those patterns on things it has never seen. Nobody wrote a rule for what a cat looks like; the software was shown millions of pictures labelled "cat" and learned it.
+
+> [!NOTE]
+> You will hear "AI" used for everything from a calculator app to a robot in a film. In this course, AI means software that **learned patterns from examples** and uses them to produce a prediction, a decision or a piece of content.
+
+## AI, machine learning, deep learning and generative AI
+
+These four terms are used as if they were the same. They are not. Think of four circles, each inside the one before.
+
+![Four nested circles: artificial intelligence contains machine learning, which contains deep learning, which contains generative AI, with a plain-English meaning and example for each](/images/courses/ai-productivity/ai-nested.svg "Each circle sits inside the one before it.")
+
+- **Artificial intelligence** is the biggest circle: any software that does a task needing human-like intelligence. Even a chess program from the 1990s counts.
+- **Machine learning** is the part of AI where the software **learns from examples** instead of following only fixed rules. Your bank's fraud alerts and the "recommended for you" rows in a shopping app are machine learning.
+- **Deep learning** is machine learning that uses **neural networks with many layers**, loosely inspired by how brain cells connect. It is what made face unlock, voice typing and phone translation work so well.
+- **Generative AI** is deep learning that **creates new things**: text, images, audio, video, code. ChatGPT, Claude, Gemini and image makers are generative AI. This is the kind that suddenly became everyone's business in 2022, and it is the main focus of this course.
+
+So when someone says "I use AI at work", they almost always mean generative AI: an assistant you talk to in plain language.
+
+## A short history: why now?
+
+AI is not new. The idea is about seventy years old. What changed recently is that it became **good enough and easy enough** for anyone to use.
+
+![A timeline from 1950 to 2022: Turing's question, the name artificial intelligence, Deep Blue beats the chess champion, deep learning takes off, the transformer design, and ChatGPT reaches everyone](/images/courses/ai-productivity/ai-timeline.svg "Seventy years, six steps.")
+
+Three things came together:
+
+1. **Data.** The internet produced an enormous amount of writing, pictures and code to learn from.
+2. **Computing power.** Graphics chips, originally built for video games, turned out to be perfect for training these systems.
+3. **Better designs.** In 2017 researchers published the *transformer*, a design that reads a whole sentence at once and works out which words matter to which. Modern chat assistants are built on it.
+
+The result: in late 2022, a chat box that anyone could type into and get a useful, fluent answer. For the first time you did not need to be a programmer to use AI.
+
+## The six jobs AI does
+
+Instead of memorising names, ask: **what is the AI actually doing?** Almost every AI product does one or more of six jobs.
+
+![Six kinds of AI job: predicting, recognising, recommending, understanding speech and language, generating, and acting, each with everyday examples](/images/courses/ai-productivity/ai-types.svg "Ask what job the AI is doing.")
+
+| Job | What it means | Where you meet it |
+| :-- | :-- | :-- |
+| **Predicting** | Uses past data to guess what comes next | Fraud alerts, delivery-time estimates, sales forecasts |
+| **Recognising** | Finds things in pictures, sound and video | Face unlock, reading text from a photo, spotting damaged goods |
+| **Recommending** | Chooses what to show you next | The videos you see, "customers also bought", music playlists |
+| **Understanding language** | Turns speech and text into meaning, and back | Voice typing, translation, subtitles |
+| **Generating** | Creates new text, images, audio, video or code | ChatGPT, Claude, Gemini, image generators |
+| **Acting** | Plans and carries out steps toward a goal, using tools | AI "agents" that search, fill in forms or book for you |
+
+One product can do several jobs. When you speak to a phone assistant it **recognises** your speech, **understands** the request and **generates** a reply. In this course you will mostly use the **generating** and **understanding language** jobs: you type or paste something, and the assistant writes, summarises, explains or rewrites.
+
+## What AI is good at, and what it is not
+
+Knowing the limits is what separates people who get value from AI from people who get embarrassed by it.
+
+**AI is good at:**
+
+- Producing a **first draft** of almost any text in seconds.
+- **Summarising** long documents and pulling out the key points.
+- **Rewriting** for a different reader, tone or length.
+- **Brainstorming** a list of options when you are stuck.
+- **Explaining** a hard idea at the level you ask for.
+- **Spotting patterns** in a table you paste in.
+
+**AI is not good at:**
+
+- **Being right about facts you cannot check.** It can state something false with complete confidence.
+- **Exact arithmetic**, current prices, laws and fees that change.
+- **Knowing your situation.** It does not know your customers, your budget or your deadline unless you tell it.
+- **Taking responsibility.** If a wrong figure goes to a client, "the AI said so" is not an answer. You are accountable for anything you send.
+
+The golden rule of the whole course: **AI drafts, you decide.**
+
+## Try it
+
+Do these two short tasks. You do not need an AI account for the first one.
+
+```task
+{
+  "id": "aipf-m01-t4",
+  "prompt": "In your own words, explain to a friend who has never heard of it **what AI is**, and give **two examples** of AI you have already used or seen (for example a phone feature, a shopping app or a chatbot). Write 3-5 sentences.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "AI is software that ... For example, ...",
+  "rules": [
+    { "label": "Says what AI is (software, computer, program, machine, learns, tasks, humans, intelligence…)", "pattern": "software|computer|program|machine|learn|task|human|intelligen|pattern|example" },
+    { "label": "Gives at least two examples (for example, such as, like, e.g.…)", "pattern": "for example|for instance|such as|e\\.g\\.|like |another" },
+    { "label": "Mentions something familiar (phone, face, voice, translate, recommend, chatbot, ChatGPT, fraud, maps, Netflix, YouTube…)", "pattern": "phone|face|voice|translat|recommend|chatbot|chatgpt|claude|gemini|fraud|map|netflix|youtube|tiktok|siri|alexa|spam|search" },
+    { "label": "Long enough to explain properly (at least 35 words)", "minWords": 35 }
+  ],
+  "sample": "AI is computer software that does tasks which normally need a human, like understanding speech or spotting a pattern. It does this by learning from lots of examples instead of following only rules a programmer wrote. For example, my phone unlocks when it recognises my face, and YouTube recommends videos it thinks I will like. Another example is ChatGPT, which writes text when I type a request.",
+  "note": "A good answer says AI is software that learned patterns from examples, and gives concrete everyday examples. If your examples were a face unlock and a recommendation, you have already met two of the six jobs.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aipf-m01-t5",
+  "prompt": "Pick **three** products or features you use (an app, a website, a device). For each one, write which of the **six jobs** the AI does (predicting, recognising, recommending, understanding language, generating, acting). One per line.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "Google Maps: predicting (it estimates how long the trip will take)\n...",
+  "rules": [
+    { "label": "Three separate lines, one per product", "minLines": 3 },
+    { "label": "Uses the names of the jobs (predict, recogni, recommend, understand, generat, act)", "pattern": "predict|recogni|recommend|understand|generat|act", "min": 3 },
+    { "label": "Names real products or features", "pattern": "[A-Z][a-z]+|app|phone|camera|search" }
+  ],
+  "sample": "Google Maps: predicting (it estimates travel time from past traffic)\nPhone face unlock: recognising (it finds my face)\nChatGPT: generating (it writes new text when I ask)",
+  "note": "There is no single right answer: many products do more than one job. The skill is asking \"what is the AI actually doing here?\" rather than treating AI as one magic thing.",
+  "required": true
+}
+```
+$md$, true, true, 1, array['aipf-m01-t4', 'aipf-m01-t5']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:how-ai-works', 'ai-productivity-fundamentals', 'aipf-m01', 'how-ai-works', 'How AI Assistants Work (and Why They Get Things Wrong)', 'Learn, without any maths, how a chat assistant is trained and what it does when you press Enter, so you can predict when it will be brilliant, when it will make things up, and what to do about it.', 20, $md$
+## A story to start: the confident wrong answer
+
+Ngozi manages a small logistics office in Port Harcourt. She asked an AI assistant, "What is the maximum weight a motorcycle courier can legally carry in Nigeria?" It answered instantly, in a calm and professional tone, with a specific figure and even a regulation number.
+
+She almost put it in a client contract. Something made her pause, and she searched for the regulation. It did not exist.
+
+The assistant had not lied on purpose. It had done exactly what it was built to do, and that is the key to using AI safely. This lesson explains what that is, in plain language, so that you are never caught out the way Ngozi nearly was.
+
+## Step 1: it learned from a huge amount of writing
+
+A chat assistant is powered by a **large language model (LLM)**. "Large" means it was trained on an enormous amount of text: books, websites, articles, forum discussions, computer code. "Language model" means its whole skill is **working with words**.
+
+Training is like this: the model is shown a piece of text with the next word hidden, and it guesses. When it guesses wrong, it is adjusted slightly. This happens billions of times. Over time it becomes extremely good at one thing: **given some words, what word is likely to come next?**
+
+You can feel this yourself. Finish these:
+
+- "Happy birthday to ..."
+- "Good morning, how are ..."
+- "The capital of Nigeria is ..."
+
+You did not look anything up. You completed a pattern you have seen many times. An LLM does the same, at a scale no person could match, across every subject in its training text.
+
+## Step 2: it plays one game, over and over
+
+When you press Enter, the assistant does not "think about" your question the way you would. It plays one game: **what word should come next?** It picks a likely word, adds it to the reply, then asks the same question again with the new word included, and repeats until the answer is complete.
+
+![A bar chart of the likely next words after "Lagos traffic is very", with bad at the top, and an explanation that the model picks a likely word and repeats](/images/courses/ai-productivity/llm-next-word.svg "One word at a time, from likely options.")
+
+Two important consequences follow:
+
+1. **It writes fluently.** Fluency is the thing it practised the most. Its sentences usually sound natural and confident.
+2. **It does not look things up while it writes.** By default it is not searching a database of true facts. It is producing the most plausible continuation. Plausible and true are often the same, but not always.
+
+This is why Ngozi's assistant produced a regulation number. A real-sounding regulation number is the kind of thing that *tends to come next* in a sentence like that. Nothing in the process asked "does this exist?"
+
+> [!WARNING]
+> The more confident and specific an AI answer sounds, the more tempting it is to trust it. Specific numbers, names, dates, laws, quotes and links are exactly the things it can invent. Always check them.
+
+## Step 3: the words that matter, in plain English
+
+You will see these terms in every AI tool. Here is what they mean without the jargon.
+
+| Term | Plain meaning | Why you care |
+| :-- | :-- | :-- |
+| **Model** | The trained system itself (for example GPT or Claude) | Different models have different strengths; newer ones are usually better |
+| **Prompt** | The message you give it | Better prompts, better answers: the next lesson is all about this |
+| **Token** | A small chunk of text, roughly three-quarters of a word | Limits and prices are counted in tokens |
+| **Context window** | How much text the model can hold in mind at once: your prompt, the chat so far, files you added | If a chat gets very long, the model can lose track of early details |
+| **Training data** | The text the model learned from | It stops at a **cutoff date**, so it may not know recent events |
+| **Hallucination** | A confident answer that is false or invented | The main risk to manage |
+| **Temperature** | How adventurous the word choice is | The same prompt can give a different answer each time |
+
+Two of these deserve a closer look.
+
+**The knowledge cutoff.** The model learned from text up to a certain date. It may not know about last month's price change, a new law or this week's news, unless the tool has a search feature switched on. When recent facts matter, say so and check.
+
+**The context window.** Think of it as the model's desk. Everything on the desk it can use: your instructions, the document you pasted, the earlier conversation. Things that are not on the desk, it does not know. That includes *your* business, *your* customers and *your* deadline. This is why giving context in a prompt makes such a difference.
+
+## Step 4: what this means in practice
+
+Put the pieces together and the rules for using AI follow naturally.
+
+| Because the AI... | You should... |
+| :-- | :-- |
+| predicts likely words, not true ones | **Check** facts, numbers, names, laws and links before you use them |
+| only knows what is on its desk | **Give it context**: who you are, who it is for, the facts it needs |
+| is trained up to a cutoff date | **Provide current facts yourself**, or use a tool with search and check its sources |
+| can answer differently each time | **Ask again, or ask for several options**, and choose the best |
+| writes confidently even when unsure | **Ask it to say when it is not sure**, and never treat tone as proof |
+| does not know your private data | **Never paste** passwords, bank details or confidential documents unless your organisation has approved the tool |
+
+Notice that none of these rules say "do not use AI". They say "use it like a very fast, very well-read assistant who has never met you and sometimes bluffs". You would not stop using such an assistant. You would brief them well and check their work.
+
+## Things AI is surprisingly good at because of how it works
+
+The same word-by-word skill that creates the risk also creates the strengths:
+
+- **Patterns in language.** Summaries, rewrites, tone changes, translations and structure are all "what words fit here", which it does very well.
+- **Following a format.** Ask for a table, a checklist or three bullet points and it can produce the shape instantly.
+- **Imitating a style.** Show it one example and it continues in that style.
+- **Explaining at any level.** It has seen explanations written for children, experts and everyone in between.
+
+When your task is mostly about **language and structure**, AI is strong. When your task depends on a **fact that must be exactly right**, AI is a starting point, not the final word.
+
+## Try it
+
+```task
+{
+  "id": "aipf-m01-t6",
+  "prompt": "Ngozi's assistant invented a regulation. In your own words, explain **why it happened** (what the AI is actually doing when it answers) and describe **two things you would do** before using a fact like that in a contract.",
+  "minutes": 6,
+  "rows": 7,
+  "placeholder": "It happened because the AI ... Before using a fact like that I would ...",
+  "rules": [
+    { "label": "Explains that it predicts likely words / patterns rather than looking up truth", "pattern": "predict|likely|pattern|next word|plausible|sounds|guess|does not (know|look)|doesn't (know|look)" },
+    { "label": "Mentions checking or verifying", "pattern": "check|verify|confirm|source|official|look it up|search" },
+    { "label": "Names two actions (first/second, and, also, then, or a list)", "pattern": "first|second|also|then|\\band\\b|1\\.|2\\.|-" },
+    { "label": "Long enough (at least 40 words)", "minWords": 40 }
+  ],
+  "sample": "It happened because an AI assistant does not look up facts: it predicts the most likely next word, over and over. A real-sounding regulation number is the kind of thing that tends to appear in a sentence like that, so it produced one, with no step that asked whether it exists. Before using a fact like that in a contract I would first search for the regulation on the official government or regulator website, and second ask the AI for its source and open it to check that it really says that. If I cannot find it myself, I would leave it out.",
+  "note": "The core idea: fluent and confident does not mean true. Verify anything specific (numbers, laws, names, links) in a source you can open yourself.",
+  "required": true
+}
+```
+
+```answer
+{
+  "id": "aipf-m01-a2",
+  "prompt": "An AI assistant is asked how many tokens are in a text and answers *\"about 1,200 tokens\"* for a document of **900 words**. A token is roughly **three-quarters of a word**. How many tokens is 900 words, to the nearest whole number?",
+  "answer": 1200,
+  "format": "number",
+  "hint": "900 ÷ 0.75",
+  "explanation": "900 ÷ 0.75 = 1,200. This time the AI was right, but you can see how a quick check lets you confirm figures instead of trusting them.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aipf-m01-t7",
+  "prompt": "Write **three personal rules** you will follow when using AI at work or study, each tied to something you learned in this lesson (for example, about checking facts, giving context or protecting private information). One rule per line.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "1. I will always ...\n2. ...",
+  "rules": [
+    { "label": "Three separate lines", "minLines": 3 },
+    { "label": "Includes a rule about checking facts, numbers or sources", "pattern": "check|verify|confirm|source|double-check|fact" },
+    { "label": "Includes a rule about context or private information", "pattern": "context|detail|background|tell it|private|confidential|password|bank|personal|never paste|not paste" },
+    { "label": "Written as commitments (I will, always, never, before…)", "pattern": "I will|always|never|before|must|won't|will not" }
+  ],
+  "sample": "1. I will always check any figure, law, name or link in a real source before I use it.\n2. I will always give the AI context: who I am, who the reader is and the facts it needs.\n3. I will never paste passwords, bank details or confidential documents into an AI tool unless my organisation has approved it.",
+  "required": true
+}
+```
+$md$, true, true, 2, array['aipf-m01-a2', 'aipf-m01-t6', 'aipf-m01-t7']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:the-prompt-framework', 'ai-productivity-fundamentals', 'aipf-m01', 'the-prompt-framework', 'The Prompt Framework: Role, Context, Task, Rules, Format', 'Learn the seven building blocks of a strong prompt (role, context, task, rules, format, example and check), what to follow for each, a ready-to-copy template, and the common mistakes that give weak answers.', 20, $md$
+## A story to start: same tool, two results
+
+Two assistants at a travel agency in Abuja were asked to write a reply to a customer whose flight was cancelled. They used the same AI tool on the same day.
+
+Amaka typed: *"Write an email about a cancelled flight."* She got a generic apology with no names, no next steps and a sentence that began "We hope this message finds you well." She spent twenty minutes rewriting it.
+
+Bayo typed a paragraph that described the situation, the customer, what the agency could offer, the tone, and the exact shape of the reply. The first answer was nearly ready to send.
+
+The difference was not the tool and not luck. Bayo followed a **framework**: a short checklist of things a good prompt contains. In this lesson you will learn it, and you will be able to use it on almost any task.
+
+## Why a framework helps
+
+A prompt is a **brief**. If you hired a skilled freelancer and said only "write something about a cancelled flight", you would get a poor result, and it would be your fault, not theirs. A good brief answers the questions the freelancer would otherwise have to guess.
+
+The framework is those questions, in an order that is easy to remember:
+
+![Seven steps to a strong prompt: role, context, task, rules, format, example, check, each with a one-line question and a sample sentence](/images/courses/ai-productivity/prompt-framework.svg "Seven steps, each answering a question the AI cannot guess.")
+
+You do not need all seven every time. A simple request needs two or three. Work that others will see needs most of them. Let us go through each, with what to follow and a sample sentence.
+
+## 1. Role: who should the AI act as?
+
+A role sets the **voice and the level of expertise**. Compare "explain a loan" with "act as a patient bank customer-service officer explaining a loan to someone who has never borrowed". The second answer will use simpler words and a more helpful tone.
+
+**What to follow:** pick a real, specific job, and add the audience if it helps.
+
+- Weak: "You are an expert."
+- Strong: "Act as a friendly small-business marketing coach."
+
+## 2. Context: what is the situation?
+
+Context is the most important part and the one people skip. The AI knows nothing about you. Tell it:
+
+- **Who you are** and what your business or role is.
+- **Who the output is for** (customer, boss, class, the public).
+- **What has happened** so far, and any facts it cannot guess.
+
+**What to follow:** include the names, places, amounts and dates that matter.
+
+- Weak: "I have a shop."
+- Strong: "I run a juice shop near the University of Ibadan. Most customers are students, and Friday is our busiest day."
+
+## 3. Task: what exactly should it do?
+
+The task is **one clear job**, stated with a strong verb: write, summarise, compare, list, rewrite, explain, plan, draft.
+
+**What to follow:** one task per prompt where possible. If you have three jobs, do them one after another.
+
+- Weak: "Help me with marketing."
+- Strong: "Write three WhatsApp messages announcing that we now deliver on weekends."
+
+## 4. Rules: what must and must not happen?
+
+Rules are the **boundaries**: length, things to include, things to avoid, facts it must not invent.
+
+**What to follow:** make rules specific and checkable. Numbers work well.
+
+- "Under 40 words each."
+- "No emojis."
+- "Do not promise a delivery time."
+- "Use only the price list I pasted; if a price is missing, say so."
+
+That last style of rule, telling the AI to stick to your facts and admit gaps, is one of the best protections against made-up answers.
+
+## 5. Format: how should the answer look?
+
+If you do not say, you get a default wall of text. Ask for the **shape** you will actually use.
+
+**What to follow:** name the format (table, numbered list, email, three bullets, one paragraph), the length, and the tone.
+
+- "A table with three columns: message, best time to send, reason."
+- "A short email with a clear subject line."
+- "Plain language a 15-year-old could follow."
+
+## 6. Example: what does good look like?
+
+An example is the fastest way to get a **style** right. Paste a sample you like and say "match this style and length".
+
+**What to follow:** include one good example, clearly separated from your instructions, and say what to copy from it (tone, length, structure).
+
+> "Here is a message our customers liked: 'Weekend special! Fresh zobo, 50cl, ₦500 until 6pm. Come early.' Write three more in the same style."
+
+## 7. Check: how do we make it safer and better?
+
+The last step asks the AI to **help you catch its mistakes** before you do.
+
+**What to follow:** pick one or more of these lines.
+
+- "Ask me any questions you need answered before you start."
+- "List any assumptions you made."
+- "Tell me which parts you are not sure about."
+- "After you write it, check it against my rules and fix anything that breaks them."
+
+Asking for questions first is especially strong for longer pieces such as proposals and reports, because it makes the AI collect the facts instead of guessing them.
+
+## Putting it together: a template you can copy
+
+Here is the framework as a fill-in template. Delete lines you do not need.
+
+```text
+ROLE: Act as [a specific job].
+CONTEXT: I am [who you are]. This is for [audience]. Background: [facts, names, numbers, dates].
+TASK: [One clear job: write / summarise / compare / plan ...]
+RULES: [Length, must include, must avoid, use only the facts above].
+FORMAT: [Table / email / list], [tone], [length].
+EXAMPLE: [A sample you like, if you have one].
+CHECK: Ask me questions first if anything is unclear, and list your assumptions.
+```
+
+And here is that template filled in, for the travel agency's cancelled flight:
+
+```text
+ROLE: Act as a calm, helpful customer-service officer at a travel agency.
+CONTEXT: I work at a travel agency in Abuja. A customer, Mr Danjuma, booked
+a flight to London on 14 June. The airline cancelled it today. We can offer
+a free rebooking on 15 or 17 June, or a full refund within 7 days.
+TASK: Write a reply email to Mr Danjuma.
+RULES: Apologise once, sincerely. Do not blame the airline. Offer both
+options clearly. Under 120 words. Do not promise compensation.
+FORMAT: A short email with a subject line, plain friendly English.
+CHECK: Before you write, ask me if any detail is missing.
+```
+
+Compare that to "Write an email about a cancelled flight", and you can see why Bayo's first draft was nearly ready.
+
+## Common mistakes and quick fixes
+
+| Mistake | What happens | Fix |
+| :-- | :-- | :-- |
+| Too vague ("make it good") | Bland, average output | Say what good means: length, tone, reader |
+| No context | Generic text with no real facts | Add who, what, numbers, dates |
+| Several tasks in one prompt | Some get ignored or muddled | One task at a time |
+| Hidden rules in your head | It breaks them | Write each rule down |
+| Pasting private data | Privacy risk | Remove names, numbers and passwords first |
+| Accepting the first answer | Missed improvements | Reply with specific changes in the same chat |
+| Trusting facts and figures | Wrong numbers, invented sources | Check anything that matters |
+
+## Try it
+
+```task
+{
+  "id": "aipf-m01-t8",
+  "prompt": "Turn this weak prompt into a strong one using the framework. Include at least a **role**, **context**, a clear **task**, **rules** and a **format**. Invent realistic details.\n\n> Write something for my business.",
+  "minutes": 8,
+  "rows": 9,
+  "placeholder": "ROLE: Act as ...\nCONTEXT: I ...\nTASK: ...\nRULES: ...\nFORMAT: ...",
+  "rules": [
+    { "label": "Sets a role (act as, you are…)", "pattern": "act as|you are|role|pretend|as a " },
+    { "label": "Gives context (I run, my business, customers, audience…)", "pattern": "context|I run|I own|I work|my (shop|business|company|team|class)|our (shop|business|customers)|customers|audience" },
+    { "label": "States a clear task with a verb (write, draft, create, list, summarise…)", "pattern": "write|draft|create|list|summari[sz]e|plan|compare|rewrite|explain" },
+    { "label": "Includes rules or limits (under N words, do not, must, no …)", "pattern": "under \\d+|do not|don't|must|never|no [a-z]+|at most|only|avoid" },
+    { "label": "Sets a format (table, email, list, bullets, paragraphs, tone…)", "pattern": "table|email|list|bullet|paragraph|format|tone|message|subject|columns|steps" },
+    { "label": "Long enough to be a real brief (at least 50 words)", "minWords": 50 }
+  ],
+  "sample": "ROLE: Act as a friendly small-business marketing coach.\nCONTEXT: I run a tailoring shop in Aba. Most customers are office workers who need suits and native wear altered quickly. We are quietest on Mondays and Tuesdays.\nTASK: Write three short WhatsApp status messages that bring in customers on slow days.\nRULES: Under 35 words each. No emojis. Do not promise discounts I have not approved. Use a real benefit such as same-day alterations.\nFORMAT: A table with three columns: message, best time to post, reason.\nCHECK: Ask me any questions you need before you start.",
+  "note": "Try your prompt in an AI assistant. Then try \"Write something for my business\" and compare. The difference is the point of the lesson.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aipf-m01-t9",
+  "prompt": "Here is a prompt that breaks several rules: *\"Make a post about our sale and also write a contract and tell me about marketing, make it good.\"* List **three problems** with it and say how you would fix each. One per line.",
+  "minutes": 5,
+  "rows": 6,
+  "placeholder": "1. Problem: ... Fix: ...",
+  "rules": [
+    { "label": "Three separate lines", "minLines": 3 },
+    { "label": "Spots the several tasks in one prompt (too many tasks, one at a time, separate)", "pattern": "several|many|multiple|too much|three tasks|one task|one at a time|separate|split" },
+    { "label": "Spots the vague wording (make it good, vague, unclear, what good means)", "pattern": "vague|good|unclear|specific|define|what.*mean" },
+    { "label": "Spots missing context or details (no context, who, details, facts, audience…)", "pattern": "context|detail|who|audience|facts|background|missing|nothing about" },
+    { "label": "Says how to fix (should, add, split, tell, give…)", "pattern": "should|add|split|tell|give|include|fix|instead" }
+  ],
+  "sample": "1. Problem: it asks for three different jobs at once (a post, a contract and marketing advice). Fix: do them one at a time, each as its own prompt.\n2. Problem: \"make it good\" is vague. Fix: say what good means, such as length, tone and who will read it.\n3. Problem: it gives no context or details about the sale (what, when, price, audience). Fix: add the facts the AI cannot guess.",
+  "required": true
+}
+```
+$md$, true, true, 3, array['aipf-m01-t8', 'aipf-m01-t9']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:worked-example', 'ai-productivity-fundamentals', 'aipf-m01', 'worked-example', 'A Complete Worked Example: Planning a Promotion with AI', 'Follow one real task from start to finish: a juice-shop owner plans a Friday promotion with an AI assistant, using the prompt framework, follow-ups, a hand check of the numbers and a critique step, so you can copy the whole pattern for your own work.', 25, $md$
+## A story to start: Funmi's slow Fridays
+
+Funmi sells fresh zobo, kunu and chapman from a small shop near the University of Ibadan. Friday should be her best day, because students are paid or have just received allowances. But last month her Fridays were only average, and a new shop had opened down the road.
+
+She has a free hour on Thursday evening and a goal: **bring in more customers on Friday without losing money.** She has never used AI for business. In this lesson you will watch her do it, step by step, and then do the same on your own task. Every part of this example is something you can copy.
+
+![Eight steps: you decide the goal, you and the AI brief and clarify, the AI offers options, you choose and shape one, you check the numbers by hand, the AI criticises it, you fix what only you know, you decide and learn](/images/courses/ai-productivity/worked-example-steps.svg "You make the decisions. The AI drafts, lists and criticises.")
+
+The pattern to notice: **you** decide the goal and make the final call; **the AI** drafts, lists options and criticises. You are the manager, the AI is a fast assistant.
+
+## Step 1: Funmi decides the goal (no AI yet)
+
+Before opening any tool, Funmi writes down what she wants, in numbers if possible. This is the step most people skip, and it is why their AI results feel random.
+
+```text
+Goal: more customers on Fridays, without losing money.
+Normal Friday: about 60 bottles of zobo (50cl) at ₦500 each.
+Cost to make one bottle: ₦300. So I earn ₦200 on each.
+Budget for promoting: ₦5,000 at most.
+```
+
+Notice she already knows something the AI cannot: her own prices, costs and budget. That is her contribution.
+
+## Step 2: She briefs the AI and lets it ask questions
+
+Funmi uses the framework from the last lesson. She also uses the "check" step: asking the AI to question her first.
+
+```text
+ROLE: Act as a friendly small-business marketing coach.
+CONTEXT: I run a juice shop near the University of Ibadan. Customers are
+mostly students. On a normal Friday I sell about 60 bottles of zobo (50cl)
+at ₦500 each. Each bottle costs me ₦300 to make. A new juice shop opened
+down the road last month.
+TASK: Help me plan a promotion for Fridays to bring in more customers.
+RULES: My promotion budget is ₦5,000 at most. I must not lose money on
+the promotion. Do not suggest anything that needs an app or a website.
+CHECK: Before you suggest anything, ask me up to 4 questions.
+```
+
+A typical reply:
+
+```text
+Happy to help! A few questions first:
+1. Do customers usually come alone or in groups?
+2. Do you already have a WhatsApp group or status audience?
+3. Is zobo your best-selling drink, or could another drink anchor the offer?
+4. What time of day on Friday is your quietest?
+```
+
+The AI did not guess. It asked for the facts it was missing. Funmi answers in one message:
+
+```text
+1. Mostly small groups of friends. 2. Yes, about 220 contacts on
+WhatsApp status. 3. Zobo is the best seller. 4. Quietest 2pm to 5pm.
+```
+
+## Step 3: The AI gives options, not a single answer
+
+Now Funmi asks for a range to choose from.
+
+```text
+Thanks. Give me 4 different promotion ideas for Friday. For each one:
+the offer, why it fits my situation, the cost to me, and one risk. Put
+them in a table.
+```
+
+A typical reply (shortened):
+
+| Idea | Offer | Why it fits | Cost to you | Risk |
+| :-- | :-- | :-- | :-- | :-- |
+| 1. Group bundle | Buy 3 zobo for ₦1,200 instead of ₦1,500 | Customers come in groups | You earn ₦100 less per bottle | Margin drops sharply |
+| 2. Quiet-hours deal | Free small kunu with any zobo between 2pm and 5pm | Fills your quiet window | Cost of the small kunu | Customers may only come for the free item |
+| 3. Loyalty card | Buy 5 zobo, get the 6th free | Brings people back each week | One free bottle per 6 | Slow to pay off |
+| 4. Status countdown | Post a Friday status with a "first 20 customers" bonus | Uses your 220 contacts, free | Almost nothing | Needs you to post on time |
+
+Look at how useful this is. Funmi would have thought of one or two of these alone. Now she has four, with trade-offs.
+
+## Step 4: She chooses one and shapes it
+
+Funmi likes idea 1 (the group bundle) combined with idea 4 (the status post). She now tells the AI her decision, because *choosing is her job*.
+
+```text
+I like idea 1 combined with idea 4. Draft the exact offer: buy 3 zobo for
+₦1,200, for the first 20 groups on Friday, between 2pm and 5pm only.
+Then write the WhatsApp status message to announce it. Under 35 words,
+friendly, no emojis, and do not promise anything beyond the offer.
+```
+
+A typical reply:
+
+```text
+OFFER: Buy 3 zobo (50cl) for ₦1,200 on Friday, 2pm-5pm. First 20 groups only.
+
+STATUS MESSAGE:
+This Friday, 2pm-5pm: any 3 zobo for ₦1,200 instead of ₦1,500. First 20
+groups only. Bring your friends and come early.
+```
+
+## Step 5: She checks the numbers by hand
+
+This is the step that protects Funmi. The AI never calculated whether the offer makes money; it only wrote words. So she does the maths herself.
+
+- A bundle of 3 costs her 3 × ₦300 = **₦900** to make, and sells for ₦1,200.
+- Profit per bundle = ₦1,200 − ₦900 = **₦300**.
+- Normally, 3 bottles at ₦500 give ₦1,500, a profit of ₦600.
+- So per bottle, the bundle earns ₦100 instead of ₦200: **half as much profit.**
+
+A normal Friday gives about 60 × ₦200 = ₦12,000 profit on zobo. At ₦100 per bottle, she would need to sell **120 bottles** just to earn the same ₦12,000. The offer is only worth it if it brings a lot of new customers.
+
+If Funmi had trusted a vague "this will boost sales" from the AI, she might have given away her profit without noticing.
+
+## Step 6: She asks the AI to criticise the plan
+
+Now she uses the AI differently: as a critic.
+
+```text
+Act as a cautious business advisor. Here is my plan: [the offer and the
+numbers above]. Find the three biggest weaknesses and suggest a fix for
+each. Be direct.
+```
+
+A typical reply:
+
+```text
+1. Margin is halved. Fix: limit the offer to 2pm-5pm (already done) and
+   cap it at 20 groups so total discount cost is limited.
+2. Customers may buy the bundle instead of buying at full price later in
+   the day. Fix: make it a "quiet hours only" offer and say so clearly.
+3. No way to measure whether it worked. Fix: count bundles sold and
+   compare Friday sales to your last three Fridays.
+```
+
+These are useful. She would not have thought of number 3.
+
+## Step 7: She fixes what only she knows
+
+The AI's advice is generic in one place: it suggested capping at 20 groups. Funmi knows her shop. At 2pm to 5pm she has one person serving and 20 bundles of 3 bottles means 60 bottles, which is too much for one person in three hours. She changes it to **12 groups**.
+
+Then 12 bundles × ₦300 profit = ₦3,600 profit from the offer. And she wants to count how many of those buyers are new customers, so she decides to **ask each group, "Is this your first time here?"** and note it.
+
+This is the "human in the loop" part. The AI could not know about her one-person counter. She did.
+
+## Step 8: She decides, uses it, and learns
+
+On Thursday evening she posts the status, set to go out Friday at 1:30pm. On Friday she sells 11 bundles, and six of the groups say it is their first time. On Saturday she asks the AI:
+
+```text
+Here is what happened: 11 bundles sold, 6 groups were new customers.
+Normal Friday profit is ₦12,000 on zobo. Offer profit was ₦3,300. Help me
+decide whether to repeat it, change it, or drop it. Ask me questions first.
+```
+
+She now has real data to decide with, which is the best use of any tool: it helps her learn, not just write.
+
+## What to copy from this example
+
+1. **Decide the goal and know your numbers** before opening the AI.
+2. **Brief it with the framework** and let it ask questions.
+3. **Ask for options**, not one answer.
+4. **You choose**, then shape the choice.
+5. **Check the maths by hand.**
+6. **Ask the AI to criticise** the plan.
+7. **Fix what only you know.**
+8. **Decide, act, and learn from the result.**
+
+## Try it
+
+```answer
+{
+  "id": "aipf-m01-a3",
+  "prompt": "Funmi earns **₦100 profit per bottle** on the group bundle, and normally earns **₦12,000** on a Friday from zobo. If she only sold bundles, how many **bottles** would she need to sell to earn that same ₦12,000?",
+  "answer": 120,
+  "format": "number",
+  "hint": "₦12,000 ÷ ₦100",
+  "explanation": "120 bottles, double her normal 60. That is why Funmi checked the numbers before launching: the offer only works if it brings many new customers.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aipf-m01-t10",
+  "prompt": "Now do it for your own situation. Pick a real goal (a promotion, a study plan, a work report, a job application, a trip) and write the **first prompt** you would give an AI, using the framework. It must state your goal, give context with at least one real number or date, set a rule, and ask the AI to **ask you questions first**.",
+  "minutes": 8,
+  "rows": 9,
+  "placeholder": "ROLE: ...\nCONTEXT: ...\nTASK: ...\nRULES: ...\nCHECK: Ask me questions first.",
+  "rules": [
+    { "label": "Sets a role (act as, you are…)", "pattern": "act as|you are|role|as a " },
+    { "label": "Gives context (I, my, our…) with at least one number or date", "pattern": "\\d" },
+    { "label": "States a task with a verb (plan, write, draft, help, list…)", "pattern": "plan|write|draft|help|list|create|compare|summari[sz]e|suggest|give me" },
+    { "label": "Sets at least one rule or limit (budget, under N words, must not…)", "pattern": "budget|under \\d+|at most|must not|do not|don't|limit|no more than|only" },
+    { "label": "Asks the AI to ask questions first", "pattern": "ask me|questions|clarif|before you (start|write|suggest)" },
+    { "label": "Long enough to be a real brief (at least 55 words)", "minWords": 55 }
+  ],
+  "sample": "ROLE: Act as a friendly career coach.\nCONTEXT: I am a final-year accounting student in Enugu. I want to start applying for graduate jobs in Lagos. My exams end on 20 June and I want to have applied to at least 10 companies by 31 July.\nTASK: Help me plan the next six weeks, with weekly goals.\nRULES: I can only spend 8 hours a week on this. My data budget is small, so do not suggest anything that needs long video calls. Do not invent job vacancies.\nCHECK: Before you suggest anything, ask me up to 4 questions.",
+  "note": "Try it in a real assistant. Then follow the same eight steps: let it ask questions, ask for options, check the numbers yourself, and ask it to criticise your plan.",
+  "required": true
+}
+```
+
+```task
+{
+  "id": "aipf-m01-t11",
+  "prompt": "In the example, Funmi did two things the AI **could not** do for her. Name **two** of them and explain why each mattered.",
+  "minutes": 5,
+  "rows": 5,
+  "placeholder": "1. She ... because ...\n2. ...",
+  "rules": [
+    { "label": "Two separate points", "minLines": 2 },
+    { "label": "Mentions checking or calculating the numbers by hand", "pattern": "number|calculat|maths|math|profit|margin|check|120|bottles" },
+    { "label": "Mentions her own knowledge or decision (one person, her shop, decided, chose, knew…)", "pattern": "one person|her shop|knew|decid|chose|only she|counter|knowledge|capacity|12" },
+    { "label": "Explains why it mattered (because, so, otherwise, which meant…)", "pattern": "because|so |otherwise|which meant|that is why|protect" }
+  ],
+  "sample": "1. She checked the numbers by hand, because the AI only wrote words and never calculated that the bundle halves her profit per bottle. Without it she could have lost money.\n2. She used her own knowledge of her shop (only one person at the counter) to cut the cap from 20 groups to 12, because the AI could not know that. The AI drafts, but she decided.",
+  "required": true
+}
+```
+$md$, true, true, 4, array['aipf-m01-a3', 'aipf-m01-t10', 'aipf-m01-t11']::text[])
+on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
+
+insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
+values ('ai-productivity-fundamentals:prompting-essentials', 'ai-productivity-fundamentals', 'aipf-m01', 'prompting-essentials', 'Prompting Essentials', 'Write prompts that get useful answers from any AI assistant (ChatGPT, Claude, Gemini or Copilot), improve a draft in a few follow-ups, and catch the mistakes AI makes before they reach anyone else.', 25, $md$
 ## Why the same tool gives different results
 
 A **prompt** is the message you type to an AI assistant. The assistant can't see your screen, your files, your customers or your situation. It only knows what's in the conversation. When the prompt is vague, it fills the gaps with the most average guess it can make, and you get an average answer.
@@ -302,7 +982,7 @@ Visit us today to experience this delightful new addition to our menu!
   "required": true
 }
 ```
-$md$, true, true, 1, array['aipf-m01-a1', 'aipf-m01-t1', 'aipf-m01-t2', 'aipf-m01-t3']::text[])
+$md$, true, true, 5, array['aipf-m01-a1', 'aipf-m01-t1', 'aipf-m01-t2', 'aipf-m01-t3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
@@ -500,7 +1180,7 @@ Use Claude (or any AI assistant) on the supply agreement above, then check its a
 ```
 
 To finish, set up a real project in Claude with instructions like yours, add one file to it, and start a chat inside it to see the difference.
-$md$, true, true, 2, array['aipf-m02-a1', 'aipf-m02-a2', 'aipf-m02-a3', 'aipf-m02-t1']::text[])
+$md$, true, true, 6, array['aipf-m02-a1', 'aipf-m02-a2', 'aipf-m02-a3', 'aipf-m02-t1']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
@@ -689,7 +1369,7 @@ Use ChatGPT (or another assistant) for the first one, then **check the answer yo
 ```
 
 Then open your own research answer's sources and check one claim against the official page.
-$md$, true, true, 3, array['aipf-m03-a1', 'aipf-m03-a2', 'aipf-m03-a3', 'aipf-m03-t1', 'aipf-m03-t2']::text[])
+$md$, true, true, 7, array['aipf-m03-a1', 'aipf-m03-a2', 'aipf-m03-a3', 'aipf-m03-t1', 'aipf-m03-t2']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 insert into public.course_modules (id, course_id, title, position, badge_name, badge_code, skills, topics)
@@ -868,7 +1548,7 @@ Before you present:
 ```
 
 Finally, build three real slides in PowerPoint, Google Slides or Canva: a title slide, your rewritten training slide with its notes, and a closing slide with a clear ask.
-$md$, true, true, 4, array['aipf-m04-t1', 'aipf-m04-t2', 'aipf-m04-t3']::text[])
+$md$, true, true, 8, array['aipf-m04-t1', 'aipf-m04-t2', 'aipf-m04-t3']::text[])
 on conflict (id) do update set course_id = excluded.course_id, module_id = excluded.module_id, slug = excluded.slug, title = excluded.title, summary = excluded.summary, minutes = excluded.minutes, body_md = excluded.body_md, required = excluded.required, published = excluded.published, position = excluded.position, required_exercises = excluded.required_exercises;
 
 
@@ -43689,6 +44369,18 @@ A junior analyst starts comparing software. An experienced business analyst asks
 
 That question is the heart of business analysis, and this course teaches you to answer it properly, using Ashgrove as the case throughout.
 
+## A story from the field: the app nobody needed
+
+Kemi had been a business analyst at a Lagos bank for three weeks when the head of retail banking walked into her meeting and said, "Customers hate our branches. Build us a mobile app so they never need to come in."
+
+Everyone else in the room nodded. An app sounded modern, and the bank had a budget. Kemi nearly nodded too. But she remembered the first thing her mentor had told her: *when someone hands you a solution, find out what problem it is meant to solve.*
+
+So she asked, "What do customers hate most about the branches?" Nobody knew. She spent the next two days standing near the queues with a notebook and talking to people in the line. She counted what they were waiting for. Almost half were not making a payment or a transfer, which the bank's app already did. They were opening new accounts, and the form took 25 minutes because three different staff members each typed the same details into three different screens.
+
+The real problem was not "customers need to avoid branches". It was "account opening takes too long because the same information is entered three times." A new app would not have touched it. Fixing the account-opening process cost a fraction of the app and cut the average wait from 25 minutes to 9.
+
+Kemi did not refuse the app. She wrote one clear sentence, showed the queue counts, and let the head of retail banking see that the problem he wanted solved was a different one. That is the heart of the job.
+
 ## The concept
 
 ### What a business analyst does
@@ -43726,6 +44418,25 @@ The managing partner's request, turned into a problem statement after a few conv
 > "Ashgrove's clients take an average of 45 days to pay their invoices, and ₦188m is currently overdue, much of it for more than six months. Partners spend hours each month chasing payments by phone, and nobody can see at a glance what's owed or by whom. We want to collect faster and know where we stand, measured by average days to pay and the value of overdue invoices."
 
 Notice what's missing: the word "system". A new system might be the answer. So might automatic email reminders, a weekly overdue report, or clearer payment terms on the invoice. The problem statement leaves those options open, and gives you a way to measure whichever one is chosen.
+
+## A real-world scenario: the barcode scanner
+
+A hospital pharmacy manager says, "We need barcode scanners for our drug shelves." This is a **solution**. A business analyst does not say yes or no. She asks questions until the problem appears.
+
+Here is how the conversation goes in practice.
+
+| Question the analyst asks | What the manager says | What it reveals |
+| :-- | :-- | :-- |
+| "What goes wrong today?" | "Patients get the wrong strength of a drug about once a week." | The real pain: dispensing errors |
+| "Where do the errors happen?" | "Mostly when two boxes look alike on the shelf." | A look-alike storage problem |
+| "How do you know it is once a week?" | "I do not. It is what the nurses tell me." | No baseline: the claim needs measuring |
+| "What would success look like?" | "No wrong-strength dispensing." | A measurable goal |
+
+Now the analyst can write a **problem statement**: *"Patients at the hospital pharmacy sometimes receive the wrong strength of a medicine, apparently about once a week, usually when look-alike boxes are stored together. We need to measure how often this happens and reduce it."*
+
+Notice what changed. The barcode scanner may still be part of the answer, but so might separating look-alike drugs, a second check at the counter, or clearer labels. The analyst has turned "buy a scanner" into a problem the whole team can solve in the cheapest effective way. If she had simply ordered scanners and the real cause was look-alike boxes, the hospital would have spent the money and still had the errors.
+
+**The practical habit:** every time you hear a solution, ask three questions: *What goes wrong today? How do we know? What would success look like?*
 
 ## Walkthrough
 
@@ -43806,12 +44517,26 @@ values ('ba-m02', 'business-analysis-fundamentals', 'Stakeholders', 2, null, nul
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:stakeholders', 'business-analysis-fundamentals', 'ba-m02', 'stakeholders', 'Stakeholders', 'Find everyone affected by a change, map their power and interest, decide how to involve each one, and agree who does what with a RACI chart.', 20, $md$
+values ('business-analysis-fundamentals:stakeholders', 'business-analysis-fundamentals', 'ba-m02', 'stakeholders', 'Stakeholders', 'Find everyone affected by a change, map their power and interest, decide how to involve each one, and agree who does what with a RACI chart.', 25, $md$
 ## The problem
 
 Six months ago, a Lagos firm bought a billing system its partners loved in a demo. The accounts officer, who would use it every day, was never asked. It couldn't print the paper invoices two of the firm's largest clients insisted on, so she kept the old spreadsheet running alongside it. Within three months the new system was abandoned.
 
 Projects rarely fail because the analysis was too technical. They fail because someone who mattered was missed: a user who couldn't do their job, a manager who blocked it, a client who refused the new invoice format. **Stakeholder analysis** is how a BA makes sure everyone who matters is found and heard.
+
+## A story from the field: the parent who could not pay
+
+A private secondary school in Abuja launched an online fees portal. The project team included the principal, the bursar and an IT contractor. They tested the portal carefully with the people in that room, and it worked beautifully.
+
+On launch day, collections did not rise. They fell. Within a week the principal was receiving angry calls.
+
+What had gone wrong? The analyst brought in to investigate drew a list of everyone the portal touched. The team had thought about three groups: the principal, the bursar and the contractor. The list now had eleven. Two of the forgotten groups mattered most. The first was the **parents**, many of whom did not have smartphones or card payments and used to pay cash at the school gate to a clerk they knew. The second was that **clerk**, whose job the portal quietly removed, and who had been telling parents the portal "does not work".
+
+Nobody had asked the parents or the clerk a single question. Because they had no say in the design, they had every reason to resist it.
+
+The fix was not technical. The school added a way to pay in cash and have it entered in the portal by the clerk. The clerk became the portal's champion, and collections rose above where they had started.
+
+The lesson: people who are affected but not asked will find a way to be heard, usually at the worst moment. A good analyst makes the list of stakeholders *before* designing anything.
 
 ## The concept
 
@@ -43859,6 +44584,30 @@ Part of Ashgrove's stakeholder register:
 | IT contractor | supports the current spreadsheets | low | medium | consult on data migration |
 
 And a RACI row: *Approve the new invoice process*: Responsible, BA; Accountable, managing partner; Consulted, accounts officer and two senior lawyers; Informed, all staff.
+
+## A real-world scenario: the traders' cooperative
+
+A market traders' cooperative in Onitsha wants a simple system for collecting monthly dues and giving members receipts. You are the analyst. Before talking about software, you map the stakeholders.
+
+First, brainstorm everyone affected. Then sort them by **power** (can they stop or change the project?) and **interest** (do they care about the result?).
+
+| Stakeholder | Power | Interest | How to involve them |
+| :-- | :-- | :-- | :-- |
+| Chairman of the cooperative | High | High | Manage closely: decisions, sign-off |
+| Treasurer | Medium | High | Work with daily: the process owner |
+| Ordinary members (traders) | Low | High | Keep informed and consult by short interviews |
+| Market union leaders | High | Low | Keep satisfied: short briefings, no surprises |
+| Bank handling the account | Medium | Low | Consult on what is possible |
+| Older traders who do not use phones | Low | High | Interview in person, design for them |
+
+Notice the last row. It is the group a rushed team forgets, and it is the group that breaks a launch (as in the school story).
+
+**Practical steps for any project:**
+
+1. List stakeholders by name and role, not just "the business".
+2. Place each on the power and interest grid.
+3. Decide how you will engage each one, and how often.
+4. Ask each of the high-power people: "What would make this a success for you?" Write their answers down. They often conflict, and it is much cheaper to find that out on day one.
 
 ## Walkthrough
 
@@ -43937,12 +44686,24 @@ values ('ba-m03', 'business-analysis-fundamentals', 'Eliciting Requirements', 3,
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:eliciting-requirements', 'business-analysis-fundamentals', 'ba-m03', 'eliciting-requirements', 'Eliciting requirements', 'Draw out what people really need with interviews, workshops, observation and documents, ask questions that get facts rather than opinions, and dig to the root cause.', 20, $md$
+values ('business-analysis-fundamentals:eliciting-requirements', 'business-analysis-fundamentals', 'ba-m03', 'eliciting-requirements', 'Eliciting requirements', 'Draw out what people really need with interviews, workshops, observation and documents, ask questions that get facts rather than opinions, and dig to the root cause.', 25, $md$
 ## The problem
 
 Ask Ashgrove's managing partner what she needs and she'll say "a better system". Ask the accounts officer and she'll say "the lawyers send their time sheets late". Ask a lawyer and they'll say "accounts send invoices with the wrong rates". Everyone is partly right, and nobody has the whole picture.
 
 Requirements aren't sitting in people's heads waiting to be collected. They have to be **elicited**: drawn out, checked against each other and against the evidence. People describe symptoms, propose solutions and forget the workarounds they've done for years. A BA's skill is to get past all three to what's actually happening and what's actually needed.
+
+## A story from the field: what the dispatcher never said
+
+An e-commerce company in Port Harcourt wanted a system to assign delivery riders to orders. The analyst, Ibrahim, interviewed the head dispatcher, Mr Okon, for an hour. Mr Okon described a tidy process: orders arrive, he picks the nearest rider, he sends the address by phone.
+
+Ibrahim wrote it all down and felt ready. But before leaving, he asked, "Could I sit next to you for the afternoon and watch?"
+
+Within twenty minutes he saw something Mr Okon had not mentioned. Every few orders, Mr Okon did not pick the nearest rider. He glanced at a handwritten board on the wall and chose someone else. Ibrahim asked why. "Oh, that is the board of who is reliable. Some riders lose parcels. I do not give them the expensive orders."
+
+That board was a **hidden requirement**. The system Ibrahim had been about to specify would have assigned the nearest rider every time and taken away the one piece of judgement keeping expensive parcels safe. Mr Okon had not hidden it on purpose. It was so natural to him that he never thought of it as part of the process.
+
+This is why one technique is never enough. People tell you what they *think* they do, in a meeting, in the neat version. **Observation** shows what they actually do. A good analyst combines interviews, observation, documents and questions to several people, and then checks what each one said against the others.
 
 ## The concept
 
@@ -43991,6 +44752,38 @@ Interview notes, organised the way a BA records them, from the accounts officer:
 | Idea (hers) | "If the invoice said 'due in 30 days', clients would take it more seriously." |
 
 Separating facts, pain points, workarounds and ideas keeps you honest. The notebook of slow payers is gold: it's a requirement (see who pays late) that nobody would ever have written down.
+
+## A real-world scenario: an interview that digs
+
+Imagine you are interviewing the manager of a small clinic who says, "Patients wait too long." That is a complaint, not a requirement. Here is how a skilled analyst turns it into usable information, using **open questions** and **probing follow-ups**.
+
+```text
+Analyst:  Walk me through what happens when a patient arrives.
+Manager:  They sign in, wait, see the nurse, wait, see the doctor.
+Analyst:  Where is the longest wait?
+Manager:  Between the nurse and the doctor.
+Analyst:  What is the doctor usually doing during that time?
+Manager:  Often waiting for the patient's folder.
+Analyst:  Where is the folder at that point?
+Manager:  With the nurse, until she finishes writing.
+Analyst:  How long does that take, roughly?
+Manager:  Ten, maybe fifteen minutes. I never timed it.
+Analyst:  Can I time a few this week?
+```
+
+Look at what happened in eleven lines:
+
+- The vague complaint became a **specific wait** (nurse to doctor).
+- A **cause** appeared (the paper folder is stuck with the nurse).
+- A **number** appeared (10 to 15 minutes), flagged as a guess to be measured.
+- The analyst asked to **observe and time**, instead of trusting the guess.
+
+**Practical tips for interviews:**
+
+1. Prepare five to eight open questions (How, What, Tell me about...) rather than yes or no questions.
+2. Ask "why?" and "can you give me an example?" when an answer is vague.
+3. Write down the person's own words and numbers, and mark which numbers are guesses.
+4. End with: "Who else should I talk to?" and "What have I not asked that I should have?"
 
 ## Walkthrough
 
@@ -44068,12 +44861,24 @@ values ('ba-m04', 'business-analysis-fundamentals', 'The Current State in Number
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:the-current-state-in-numbers', 'business-analysis-fundamentals', 'ba-m04', 'the-current-state-in-numbers', 'The current state in numbers', 'Measure how things work today before changing them, set the baseline every improvement will be judged against, and find out whether a problem is everywhere or concentrated.', 25, $md$
+values ('business-analysis-fundamentals:the-current-state-in-numbers', 'business-analysis-fundamentals', 'ba-m04', 'the-current-state-in-numbers', 'The current state in numbers', 'Measure how things work today before changing them, set the baseline every improvement will be judged against, and find out whether a problem is everywhere or concentrated.', 30, $md$
 ## The problem
 
 Everyone at Ashgrove agrees that "clients pay late". But how late? Is it getting worse? Is it a few difficult clients, or everyone? Without numbers, a new process could be launched, declared a success at the Christmas party, and nobody would ever know whether it worked.
 
 Before you change anything, measure it. The **baseline** you set now is the yardstick for every claim made about the change later. It also stops the project solving the wrong problem: if late payment turned out to be three clients, the answer would be three phone calls, not a new system.
+
+## A story from the field: the slow kitchen
+
+The owner of a busy restaurant in Ibadan told her analyst, Dayo, "Orders are always late. The kitchen is useless." She was ready to replace the head chef.
+
+Dayo asked for something unusual: a stopwatch and one week. He logged every order for five days, noting when it was placed, when each part of the meal was ready, and when it reached the table.
+
+The numbers were not what the owner expected. Of 320 orders, 96 were late, which is 30 per cent. The owner had imagined it was nearly all of them. But the more surprising finding was where the delay sat. 78 of the 96 late orders included a grilled item, and the **grill station** took a median of 22 minutes while every other station took under 12. The chef was not the problem. One overloaded station was.
+
+Without the numbers, the owner would have changed the wrong thing. With them, a small fix (a second griller on Friday and Saturday evenings, the busiest times) was obvious, cheap and measurable. Three weeks later, Dayo measured again: late orders were down from 30 per cent to 11 per cent.
+
+That is why we measure the **baseline** before changing anything. The numbers did not just solve the problem. They also proved it, which kept the head chef in his job.
 
 ## The concept
 
@@ -44111,6 +44916,35 @@ Average days to pay, by the year the invoice was issued:
 It's getting slowly worse, by about 2 to 3 days a year. And the overdue money isn't concentrated in a few bad payers: it's spread across 32 of Ashgrove's 50 clients, companies and individuals alike. That points to a **process** problem (no terms, no reminders, no routine chasing), not a problem with particular clients.
 
 ![Bars for average days to pay by year issued: 42.4 in 2024, 45.5 in 2025, 47.1 in 2026 to August, all above a dashed line at 30 days.](/images/courses/ba/days-to-pay-trend.svg "The baseline: days to pay is rising, and well above a 30-day term.")
+
+## A real-world scenario: building a baseline
+
+A small courier business says "deliveries are often late". Before suggesting any change, the analyst gathers one month of data and works out a few simple measures.
+
+Suppose the month contains **400 deliveries**, of which **88 arrived after the promised time**, and the total of the delays across those late deliveries was **66 hours**.
+
+1. **Late rate** = late deliveries ÷ all deliveries = 88 ÷ 400 = **22%**.
+2. **Average delay of a late delivery** = total delay ÷ late deliveries = 66 hours ÷ 88 = **0.75 hours, which is 45 minutes**.
+
+Now the analyst splits the 88 late deliveries by cause, from the riders' notes:
+
+| Cause | Late deliveries | Share of the 88 |
+| :-- | :-- | :-- |
+| Wrong or incomplete address | 40 | 45% |
+| Rider waited for the sender | 22 | 25% |
+| Traffic | 18 | 20% |
+| Other | 8 | 9% |
+
+(The shares add to 99% because of rounding.)
+
+**What the numbers tell you:** nearly half of all late deliveries come from bad addresses, a problem the business can fix at the point of booking by asking for a landmark and a phone number. Traffic, which everyone blamed, is only a fifth.
+
+**The practical rules:**
+
+1. Pick two or three measures that match the complaint (how often, how long, how much it costs).
+2. Use a real period of data, not a memory.
+3. Split the problem by cause. The biggest slice is where you start.
+4. Write the baseline down with the date range. After the change, measure the same way and compare.
 
 ## Walkthrough
 
@@ -44221,12 +45055,26 @@ values ('ba-m05', 'business-analysis-fundamentals', 'Process Mapping', 5, null, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:process-mapping', 'business-analysis-fundamentals', 'ba-m05', 'process-mapping', 'Process mapping', 'Draw how work really flows today with swimlanes, find the delays, handoffs and rework that cause the problem, and design a better future process.', 25, $md$
+values ('business-analysis-fundamentals:process-mapping', 'business-analysis-fundamentals', 'ba-m05', 'process-mapping', 'Process mapping', 'Draw how work really flows today with swimlanes, find the delays, handoffs and rework that cause the problem, and design a better future process.', 30, $md$
 ## The problem
 
 Ask five people at Ashgrove how a bill gets from finished work to money in the bank and you'll get five different descriptions, each covering the part that person sees. Nobody sees the whole journey, which is exactly why nobody can fix it.
 
 A **process map** puts the whole journey on one page: every step, who does it, and where it waits. It's one of the most powerful tools a BA has, because the moment people see their own process drawn out, the problems become obvious to everyone, usually in the gaps **between** people, not in anyone's own work.
+
+## A story from the field: the clinic that drew a map
+
+A community clinic in Kano was proud of its doctors but ashamed of its waiting room. Patients regularly waited three hours. The manager, Hajiya Amina, hired an analyst, Sani, who did not start with a diagnosis. He started with a roll of paper.
+
+For two days he followed individual patients through the clinic, marking every step and every wait. When he hung the finished map on the wall, the staff gathered around it in silence.
+
+The patient had to **queue at five different desks**: registration, payment, the nurse, the doctor, and then the pharmacy. At two of those desks, the only thing that happened was a clerk copying details from one form onto another. Between the payment desk and the nurse, patients waited 50 minutes for a folder to be carried across the building. The doctors were busy only about half the time, waiting for patients who were waiting for paper.
+
+Nobody on the staff had seen the whole journey before. Each person saw only their own desk, and each believed the delay was somewhere else. The map made the invisible visible.
+
+The fix was practical: merge registration and payment, give each patient a single card with a number instead of a folder to be carried, and put the nurse and doctor in adjacent rooms. Average time in the clinic fell from about three hours to just under ninety minutes.
+
+A process map does not solve problems. It lets everyone finally *see* them, which is the step that comes before every solution.
 
 ## The concept
 
@@ -44275,6 +45123,38 @@ Ashgrove's billing process **as is**, written lane by lane:
 Three problems jump out: steps 2 and 8 have **no trigger**, so they happen late or not at all; step 5 has a **rework loop**; and step 6 sends an invoice with **no due date**, so step 7 has no deadline. The data agrees: the first invoice on a matter goes out an average of 18 days after the matter opens, and two-thirds of payments arrive after 30 days.
 
 ![A swimlane diagram with lanes Lawyer, Accounts, Partner and Client and nine numbered steps. Step 2 (lawyer sends time when they remember) and step 8 (accounts chases when a partner asks) are marked T for no trigger; step 5 (partner review) is marked R with a dashed loop back to step 4; step 6 (invoice with no due date) is marked with an exclamation mark; step 7 (client pays when they choose) is marked W for waiting.](/images/courses/ba/billing-as-is.svg "The as-is process as a swimlane diagram. Every problem sits at a handoff between lanes.")
+
+## A real-world scenario: a loan application, as-is and to-be
+
+A microfinance bank takes **six days** to approve a small loan. The analyst maps the **as-is** process first, step by step, and notes who does each step and how long it waits.
+
+| Step | Who | Time | Problem |
+| :-- | :-- | :-- | :-- |
+| 1. Customer fills a paper form | Customer | 30 min | Forms often incomplete |
+| 2. Officer checks the form | Loan officer | 1 day waiting | Waits in a pile |
+| 3. Officer visits the customer's business | Loan officer | 1 day | Needs a trip |
+| 4. Officer writes a report | Loan officer | 1 day | Handwritten |
+| 5. Manager reviews | Branch manager | 2 days waiting | Only reviews on Thursdays |
+| 6. Cash is released | Cashier | 1 day | Waits for cash allocation |
+
+Reading the table, the analyst sees that of the six days, almost five are **waiting**, not work. The two biggest waits are step 2 (the pile) and step 5 (Thursday-only reviews).
+
+Now she designs the **to-be** process:
+
+1. Customer completes a short form with the officer at the desk, so incomplete forms are caught immediately.
+2. The officer visits the business on the same or next day.
+3. The report is entered on a template on the same visit.
+4. The manager reviews daily, with a rule that loans under ₦200,000 can be approved by the officer.
+5. Cash is released the day of approval.
+
+Estimated result: **two to three days** instead of six.
+
+**Practical rules for process maps:**
+
+1. Map what really happens, not what the manual says.
+2. For every step, note who does it and how long it takes, including waiting.
+3. Mark rework loops, handoffs and steps with no trigger. Those are where problems hide.
+4. Design the to-be process by removing waits first, then steps.
 
 ## Walkthrough
 
@@ -44365,6 +45245,18 @@ The first requirements list for Ashgrove's billing change came back from a works
 
 Every line sounds reasonable, and none of them can be built or tested. How quick is "quickly"? What's "everything"? A supplier could deliver almost anything and claim to meet them, and the firm would have no way to object. Vague requirements are how projects end in arguments.
 
+## A story from the field: "the system should be fast"
+
+A fintech startup in Lagos hired a contractor to build a loan-repayment dashboard. The requirements document said: *"The system should be fast and user-friendly."* Everyone signed it.
+
+Three months later the contractor delivered. The finance lead opened the dashboard, waited eleven seconds for the first screen to load, and said, "This is not fast." The contractor said it loaded in under twelve seconds, which on his test server was very quick, and it was exactly what had been asked for. Neither of them was lying. The word "fast" meant different things to each of them.
+
+The argument took six weeks, a second payment and a damaged relationship. It all came from a single sentence nobody had made specific.
+
+A better requirement would have read: *"The dashboard shall show the repayment summary within 3 seconds of login, for up to 500 concurrent users, on a standard office connection."* That sentence is different in an important way: anyone can **test** it. Either the summary appears in 3 seconds or it does not.
+
+The analyst's rule is simple. **If you cannot test a requirement, it is not a requirement yet.** Words like fast, easy, flexible, secure and user-friendly are wishes. The analyst's job is to turn each wish into something with a number, a condition or an example.
+
 ## The concept
 
 ### Types of requirement
@@ -44411,6 +45303,31 @@ The workshop's vague lines, rewritten:
 | Reports should be good. | A report shall list every unpaid invoice past its due date, with client, amount and days overdue, sortable by each column. |
 
 Each rewrite can be tested: time it, count it, or check the report against the data.
+
+## A real-world scenario: rewriting vague requirements
+
+A project team for an online pharmacy hands you four requirements. Your job is to make each one clear and testable.
+
+| Vague requirement | Why it fails | Rewritten requirement |
+| :-- | :-- | :-- |
+| "The website should be fast." | Fast for whom? Measured how? | "The product page shall load in under 3 seconds on a 4G connection." |
+| "Customers can easily find drugs." | Easy is a feeling | "A customer shall be able to find a drug by typing any part of its name and see results within 2 seconds." |
+| "The system must be secure." | Secure against what? | "Customer passwords shall be stored encrypted, and accounts shall lock for 15 minutes after 5 wrong attempts." |
+| "Orders should be processed quickly." | How quickly, from when? | "An order shall be shown to the pharmacist within 1 minute of payment confirmation." |
+
+Notice the pattern. Each rewrite has three parts:
+
+1. **Who or what** is doing something (the page, the customer, the system).
+2. **A measurable condition** (under 3 seconds, within 1 minute, after 5 attempts).
+3. **A context** (on 4G, after payment confirmation).
+
+**A quick test for any requirement:** could a tester, who has never met you, decide pass or fail from the sentence alone? If not, rewrite it.
+
+Also watch for these traps:
+
+- **Two requirements in one sentence** ("must be fast and secure") should be split so each can be tested.
+- **Solutions disguised as requirements** ("use a database called X") should be rewritten as the need behind them.
+- **Missing exceptions**: what should happen when something goes wrong?
 
 ## Walkthrough
 
@@ -44492,12 +45409,38 @@ values ('ba-m07', 'business-analysis-fundamentals', 'User Stories and Acceptance
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:user-stories-and-acceptance-criteria', 'business-analysis-fundamentals', 'ba-m07', 'user-stories-and-acceptance-criteria', 'User stories and acceptance criteria', 'Express requirements as user stories that keep the user and the reason in view, split them to a buildable size, and pin down "done" with Given/When/Then acceptance criteria.', 25, $md$
+values ('business-analysis-fundamentals:user-stories-and-acceptance-criteria', 'business-analysis-fundamentals', 'ba-m07', 'user-stories-and-acceptance-criteria', 'User stories and acceptance criteria', 'Express requirements as user stories that keep the user and the reason in view, split them to a buildable size, and pin down "done" with Given/When/Then acceptance criteria.', 30, $md$
 ## The problem
 
 Ashgrove has chosen a supplier who works in two-week **sprints**, the agile way of building software in small, usable pieces. The supplier's developer looks at your requirements list and asks: "Which of these do I build first? And how will you decide it's finished?"
 
 Agile teams don't work from long specifications. They work from a **backlog** of small items, each describing something a user needs and why, and each with a clear test of "done". The standard format for those items is the **user story**, and writing good ones is now a core BA skill in almost every job advert.
+
+## A story from the field: the story with a missing ending
+
+A logistics startup in Lagos wrote this user story for its mobile app: *"As a customer, I want to track my parcel so that I know when it will arrive."* The developers built a map with a moving dot, demoed it, and everyone applauded.
+
+Two weeks after launch, support was flooded. A customer in Ikorodu opened the app, saw a spinning wheel and phoned to say the app was broken. Another saw the dot jump across the map. A third saw "Delivered" while her parcel was still on the road.
+
+The story was fine. What was missing was the **acceptance criteria**, the list of conditions that must be true for the story to count as done. Nobody had asked: *what happens when the phone has no network? What if the rider's GPS is off? When exactly does "Delivered" appear, and who confirms it?*
+
+The analyst rewrote the story with criteria:
+
+```text
+Given the customer has an active order
+When they open the tracking screen
+Then they see the rider's position, updated every 30 seconds.
+
+Given the phone has no network
+When the customer opens the tracking screen
+Then they see the last known position and the message "Last updated at [time]".
+
+Given the rider has not confirmed delivery
+When the parcel is near the address
+Then the status stays "On the way" and never shows "Delivered".
+```
+
+With these three short examples, the developers knew the edge cases, the testers knew what to check, and the support team knew what to tell customers. A user story starts the conversation. Acceptance criteria finish it.
 
 ## The concept
 
@@ -44545,6 +45488,43 @@ Write one for the normal case and one for each important exception. They become 
 Criterion 2 catches the embarrassing bug (reminding someone who has paid). Criterion 3 comes straight from a business rule found in lesson 6. Good criteria are where the BA's knowledge of the edge cases pays off.
 
 ![A user story card reading As an accounts officer, I want clients to get an automatic reminder before the due date, so that fewer invoices go overdue without me phoning anyone; below it three numbered acceptance criteria: normal case, already paid, and payment-plan exception.](/images/courses/ba/user-story.svg "A story says who, what and why; its acceptance criteria say when it's done.")
+
+## A real-world scenario: writing stories for a ticket-booking app
+
+A small bus company wants customers to book seats from their phones. The analyst breaks the need into stories using the standard shape: **As a [who], I want [what], so that [why].**
+
+**Story 1:** As a traveller, I want to choose my seat, so that I can sit with my family.
+
+**Acceptance criteria (Given / When / Then):**
+
+```text
+Given a bus with seats 1 to 40 and seats 5, 6 and 12 already booked
+When I open the seat map
+Then seats 5, 6 and 12 appear greyed out and cannot be selected.
+
+Given I have selected seat 7
+When I press "Continue"
+Then seat 7 is held for me for 10 minutes while I pay.
+
+Given I did not pay within 10 minutes
+When the time runs out
+Then seat 7 becomes available to other travellers again.
+
+Given two travellers pick seat 7 at the same moment
+When both press "Continue"
+Then only the first receives the seat and the second sees "Seat just taken, please choose another".
+```
+
+Notice what the criteria are doing: they answer the questions a developer would otherwise have to guess, including the awkward cases (the seat is taken, the time runs out).
+
+**Practical checks for a good story:**
+
+1. **Independent**: it can be built without waiting for another story.
+2. **Small**: it can be finished within one iteration of work.
+3. **Testable**: each criterion has a clear pass or fail.
+4. **Valuable**: the "so that" gives a real reason. If you cannot write one, the story may not be needed.
+
+**Common mistakes:** writing stories for the system ("As the database, I want...") instead of for a person, hiding several features in one story, and leaving out the failure cases.
 
 ## Walkthrough
 
@@ -44633,6 +45613,18 @@ Three months after go-live, Ashgrove's managing partner asks: "Is it working?" T
 
 Nobody ever wrote down what "collection rate" meant. Reporting is the part of a change that's most often left vague, and it's the part that decides whether anyone can prove the change worked. A BA specifies it as carefully as any other requirement.
 
+## A story from the field: five reports, five different sales
+
+The owner of a chain of four pharmacies in Enugu asked her analyst, Chioma, for "one dashboard that shows sales". Chioma collected the reports the managers already used and put them next to each other. Five reports claimed to show last month's sales. They showed five different numbers.
+
+She spent a day finding out why. One report counted money received, including deposits on orders not yet collected. Another counted goods handed over. A third ignored returns, a fourth included them, and the fifth was in a different currency format that had been rounded. Each report was *correct* under its own definition. Nobody had ever agreed on what a "sale" was.
+
+Before writing a single requirement for the dashboard, Chioma gathered the owner and the four managers for an hour and asked one question: *"What counts as a sale?"* They settled on one definition: *a sale is money received for goods handed to the customer, minus refunds, in the month the goods were handed over.* She wrote it into a **data dictionary**, a one-page list of every measure, its definition, where the data comes from, and who owns it.
+
+Then, and only then, did she write the dashboard requirements. The dashboard showed one number that everyone trusted, and the monthly argument about whose figure was right stopped.
+
+Reporting requirements are not about charts. They are about agreeing, in writing, what each number *means*.
+
 ## The concept
 
 ### A KPI definition card
@@ -44671,6 +45663,32 @@ Two collection-rate definitions on Ashgrove's data:
 | Value paid ÷ value invoiced, **invoices more than 90 days old** (so clients have had time to pay) | you'll calculate it below |
 
 Neither is wrong. They answer different questions. The KPI card must say which one Ashgrove will track, and why. A sensible choice is to measure invoices once they're at least 90 days old, so recent invoices don't drag the rate down just because they're recent.
+
+## A real-world scenario: defining a report
+
+A school wants a weekly report on attendance. The analyst does not start with "a chart". She follows a short sequence.
+
+**Step 1: Who uses it and what decision does it support?**
+The head teacher wants to find students who are often absent so that staff can follow up.
+
+**Step 2: Define each measure.**
+
+| Measure | Definition | Source | Owner |
+| :-- | :-- | :-- | :-- |
+| Attendance rate | Days present ÷ days in session, for the week | Class registers | Class teacher |
+| Persistent absentee | A student absent on 3 or more days in the last 10 school days | Class registers | Head teacher |
+| Excused absence | Absent with a note or a call from a parent | Office log | Secretary |
+
+**Step 3: Check the maths with a small example.**
+A class has 30 students and the week has 5 school days, so there are 30 × 5 = 150 student-days. If 12 student-days were absences, attendance = (150 − 12) ÷ 150 = 138 ÷ 150 = **92%**.
+
+**Step 4: Write the requirement.**
+
+*"The system shall produce, every Monday by 8 am, a list of persistent absentees (3 or more absences in the last 10 school days), showing the student's name, class, number of absences and whether each was excused. The head teacher and class teachers shall be able to view it."*
+
+**Step 5: Ask the awkward questions.** What if a register is missing? What happens on public holidays? Who may see a child's name? (Privacy matters.)
+
+**The practical rule:** a good reporting requirement names the decision, defines every number, says where the data comes from and who may see it.
 
 ## Walkthrough
 
@@ -44763,12 +45781,26 @@ values ('ba-m09', 'business-analysis-fundamentals', 'The Business Case', 9, null
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:the-business-case', 'business-analysis-fundamentals', 'ba-m09', 'the-business-case', 'The business case', 'Compare options, including doing nothing, on costs, benefits, payback and risk, and recommend one in a way a decision-maker can trust.', 25, $md$
+values ('business-analysis-fundamentals:the-business-case', 'business-analysis-fundamentals', 'ba-m09', 'the-business-case', 'The business case', 'Compare options, including doing nothing, on costs, benefits, payback and risk, and recommend one in a way a decision-maker can trust.', 30, $md$
 ## The problem
 
 The managing partner has two quotes on her desk: a practice-management system at ₦9m to set up plus ₦3.6m a year, and a proposal from you to fix the process first, with payment terms, reminders and a weekly report, for about ₦1.5m. She asks the question every sponsor asks: **"Which one, and why?"**
 
 "The system is better" isn't an answer. "The system has more features" isn't either. A decision-maker needs to see what each option costs, what it returns, how soon, and what could go wrong, set side by side with the option of doing nothing. That's a **business case**.
+
+## A story from the field: the kiosk that would not pay back
+
+A telecom company's agent network manager in Kaduna wanted to fund a new bank-style kiosk for a busy market. He was sure it was a good idea. His analyst, Bola, was asked to write the business case.
+
+She did not start by agreeing. She started with three options: **Option A**, do nothing; **Option B**, a small kiosk at ₦1.8 million; **Option C**, a larger kiosk at ₦3.6 million with an extra staff member.
+
+She collected the figures from agents already working in similar markets. A small kiosk would earn about ₦90,000 a month more than the current setup, and the large kiosk about ₦150,000 a month. When she divided cost by monthly gain, the **payback period** was 20 months for Option B and 24 months for Option C.
+
+At this point the manager was disappointed. He had pictured a quick win. But the numbers also showed something more useful: the larger kiosk earned only ₦60,000 more per month than the small one for an extra ₦1.8 million, which would take 30 months to repay on its own. The big kiosk was a worse deal than the small one.
+
+Bola recommended Option B, with a three-month trial and a clear stop condition: "If the kiosk earns less than ₦60,000 a month after three months, stop." The manager approved, because the case was honest. It showed what he would gain, what he could lose and how he would know early.
+
+A business case is not a sales pitch. It is a fair comparison of choices, with the numbers, risks and a way to check later.
 
 ## The concept
 
@@ -44813,6 +45845,37 @@ For option B: the cash released is ₦600m × 10 ÷ 365 = ₦16.4m, worth ₦3.3
 ![A waterfall chart for option B: released cash adds ₦3.3m, fewer write-offs add ₦3.0m, running cost takes away ₦0.6m, leaving a net benefit of ₦5.7m a year.](/images/courses/ba/option-b-benefit.svg "Option B's annual net benefit, built up from its assumptions.")
 
 You'll work out option C in the practice tasks. The comparison is closer than the sales demo suggested.
+
+## A real-world scenario: choosing between two options
+
+A growing bakery in Abeokuta has a problem: orders written on paper get lost. The analyst compares two options.
+
+| | Option A: shared WhatsApp order log | Option B: paid order software |
+| :-- | :-- | :-- |
+| One-off cost | ₦20,000 (training) | ₦300,000 (setup) |
+| Monthly cost | ₦0 | ₦15,000 |
+| Expected monthly gain (fewer lost orders, less rework) | ₦60,000 | ₦110,000 |
+
+**Step 1: Work out the net monthly benefit.**
+
+- Option A: ₦60,000 − ₦0 = **₦60,000 a month**.
+- Option B: ₦110,000 − ₦15,000 = **₦95,000 a month**.
+
+**Step 2: Work out the payback period** (one-off cost ÷ net monthly benefit).
+
+- Option A: ₦20,000 ÷ ₦60,000 = about **0.3 months**, so roughly 10 days.
+- Option B: ₦300,000 ÷ ₦95,000 = about **3.2 months**.
+
+**Step 3: Compare over 12 months.**
+
+- Option A: 12 × ₦60,000 − ₦20,000 = ₦720,000 − ₦20,000 = **₦700,000**.
+- Option B: 12 × ₦95,000 − ₦300,000 = ₦1,140,000 − ₦300,000 = **₦840,000**.
+
+**Step 4: Add what the numbers miss.** Option B costs more up front and is better over a year, but it has a risk: staff may not adopt it. Option A is almost free and can start tomorrow.
+
+A sensible recommendation might be: *start with Option A now, review after three months, and move to Option B if order volume has grown.* That protects cash while still keeping the larger gain within reach.
+
+**The practical rules for any business case:** state the problem, list at least two real options (including doing nothing), use numbers from real sources, show payback and a total over a fixed period, name the risks, and say how you will check it worked.
 
 ## Walkthrough
 
@@ -44912,12 +45975,24 @@ values ('ba-m10', 'business-analysis-fundamentals', 'Testing and Adoption', 10, 
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:testing-and-adoption', 'business-analysis-fundamentals', 'ba-m10', 'testing-and-adoption', 'Testing and adoption', 'Check the delivered change against the requirements with user acceptance testing and a traceability matrix, then help people actually adopt it and measure whether it worked.', 25, $md$
+values ('business-analysis-fundamentals:testing-and-adoption', 'business-analysis-fundamentals', 'ba-m10', 'testing-and-adoption', 'Testing and adoption', 'Check the delivered change against the requirements with user acceptance testing and a traceability matrix, then help people actually adopt it and measure whether it worked.', 30, $md$
 ## The problem
 
 The new process is ready. Reminders are set up, the invoice template has a due date, and the overdue report runs every Monday. The supplier says it's done. Is it?
 
 "Done" means two different things. **Does it do what was specified?** That's testing. **Do people use it, and is the problem getting smaller?** That's adoption. Plenty of changes pass every test and still fail, because lawyers keep sending time by WhatsApp, or the accounts officer quietly keeps her notebook. The BA's job doesn't end at go-live.
+
+## A story from the field: the payroll system nobody used
+
+A manufacturing company in Ikeja spent ₦14 million on a new payroll system. It passed every test. It went live on the first of the month. By the fifteenth, the payroll team had quietly gone back to their old spreadsheets.
+
+The analyst, Tolani, was asked to find out why. She sat with the payroll officers and watched. The system was correct, but it needed twelve clicks to enter overtime for one worker, and the officers entered overtime for 300 workers every month. Nobody had shown them shortcuts, and the one-hour training had covered the screens, not their working day. The old spreadsheet took them four minutes a worker. The new system took six.
+
+The technology had been tested. The **adoption** had not. Tolani did three things. She ran a user acceptance session where officers processed real overtime from last month and wrote down every place they got stuck. She asked the vendor to add a bulk-entry screen for overtime. And she paired each officer with a "super-user" colleague for the first two pay cycles.
+
+By the next cycle, the team was entering overtime in under two minutes a worker, and the spreadsheets were retired.
+
+A system that works but is not used has failed. Testing proves the system does what it was specified to do. Adoption proves that people will actually use it. A good analyst plans for both.
 
 ## The concept
 
@@ -44966,6 +46041,31 @@ Part of Ashgrove's traceability matrix:
 | FR-07 No reminders on payment plans | (exception in the reminder story) | UAT-06 | |
 
 FR-07 came from an acceptance criterion, not from the original requirements list, and the matrix makes sure it's tested anyway.
+
+## A real-world scenario: a go-live plan for a new booking system
+
+A physiotherapy clinic is replacing its paper diary with an online booking system. The analyst prepares a plan with three parts: **testing**, **training** and **rollout**.
+
+**Part 1: User acceptance testing (UAT).** The people who will really use the system run real tasks, using scripts written from the acceptance criteria.
+
+| Test | Steps | Expected result | Pass or fail |
+| :-- | :-- | :-- | :-- |
+| Book a new patient | Enter name and phone, pick a 30-minute slot | Slot is reserved and a confirmation SMS is sent | |
+| Double booking | Book the same slot for two patients | The second is refused with a message | |
+| Cancel an appointment | Cancel a booking 2 hours before | Slot becomes available again | |
+| Receptionist off sick | Another staff member logs in and views the day's list | List appears with all bookings | |
+
+Every failure is logged with who found it, what they did and what happened. The team decides which must be fixed before go-live.
+
+**Part 2: Training.** Short (45 minutes), by role, using real examples from the clinic, with a one-page quick guide at each desk.
+
+**Part 3: Rollout.** Do not switch off the paper diary on day one.
+
+1. **Week 1:** run both, new bookings in the system and the paper diary as a backup.
+2. **Week 2:** system only, with a super-user available each morning.
+3. **Week 4:** review. Count bookings, missed appointments and staff comments. Compare with the baseline.
+
+**Practical checklist before go-live:** acceptance tests passed, known issues agreed, staff trained, support person named, backup plan ready and a date to review the results.
 
 ## Walkthrough
 
@@ -45048,7 +46148,7 @@ values ('ba-m11', 'business-analysis-fundamentals', 'Final Project', 11, null, n
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('business-analysis-fundamentals:final-project', 'business-analysis-fundamentals', 'ba-m11', 'final-project', 'Final project: Harbourline''s tracking request', 'Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.', 20, $md$
+values ('business-analysis-fundamentals:final-project', 'business-analysis-fundamentals', 'ba-m11', 'final-project', 'Final project: Harbourline''s tracking request', 'Plan your final project, a complete business analysis pack for a freight company whose operations director wants a customer tracking app, and start with the data.', 25, $md$
 ## The problem
 
 Your final project moves to a new organisation. Harbourline Freight moves containers and air cargo into West Africa. Its operations director, Mr Emeka Nwosu, sends this:
@@ -45056,6 +46156,18 @@ Your final project moves to a new organisation. Harbourline Freight moves contai
 > "Customers keep complaining that they don't know where their shipments are. We need a tracking app with GPS, like the courier companies have. Can you write the requirements so we can get quotes?"
 
 You've seen this shape of request before: a solution, arriving first. Your job is to produce the business analysis pack that should come before any quotes: the real problem and its size, who's involved, how the process works now, what should change, what the solution must do, how you'll know it worked, and whether it's worth the money.
+
+## A story from the field: the ten-minute presentation
+
+Eight weeks into her project at a Lagos hospital, an analyst named Ngozi had pages and pages of notes: interviews, process maps, baselines, options and a business case. The chief executive gave her ten minutes at the board meeting.
+
+She nearly panicked. Her first instinct was to show everything she had done. A colleague stopped her: "The board does not want to know how hard you worked. They want to know what to decide."
+
+So Ngozi rebuilt the presentation around one question: *what do we want the board to do?* She opened with the problem in one sentence and one number: patients waited an average of 74 minutes for a discharge letter, causing about 11 bed-days lost each week. Then she showed the three options in one table with cost, benefit and payback, her recommendation, the main risk and how she would measure success after three months.
+
+The whole pack, with maps, requirements and test plans, went into an appendix for anyone who wanted detail. The board asked four questions, all of which she could answer from the appendix, and approved the recommendation in under fifteen minutes.
+
+Everything you have learned in this course comes together here. An analyst earns trust by understanding the real problem, listening to everyone affected, measuring before changing, being specific, and presenting a clear choice. The final project is your chance to show you can do all of it.
 
 ## The concept
 
@@ -45089,6 +46201,34 @@ A first look at Harbourline's delivery data, for delivered shipments:
 | 16 days or more | 1,456 | 77.2% |
 
 About a quarter of deliveries are late on every kind of route, and the one-day routes are the worst. A tracking app would show customers their shipment is late; it wouldn't make it on time. The pack you write may well recommend something different from what Mr Nwosu asked for, such as proactive delay notifications, realistic targets or fixing the causes of lateness, and that's exactly what a BA is for.
+
+## A real-world scenario: structuring your final pack
+
+Imagine you have been asked to improve how a small clinic books appointments. Here is how a strong final pack is organised, and what each part must achieve.
+
+| Part | What it contains | The question it answers |
+| :-- | :-- | :-- |
+| 1. Problem statement | One paragraph and one number | What is wrong, and how much does it matter? |
+| 2. Stakeholders | The power and interest grid, who you spoke to | Who is affected and who decides? |
+| 3. Current state | Baseline measures and the as-is map | How bad is it today, and where does it go wrong? |
+| 4. Requirements | Testable requirements and user stories with acceptance criteria | What must the solution do? |
+| 5. Options and case | Two or three options with costs, benefits and payback | What should we do and why? |
+| 6. Plan | Testing, training, rollout and how success will be measured | How will we make it work? |
+
+**A ten-minute presentation outline:**
+
+1. **Minute 1:** the problem and the number.
+2. **Minutes 2 to 3:** what you found (the map and the baseline in one picture each).
+3. **Minutes 4 to 6:** the options in one table, and your recommendation.
+4. **Minutes 7 to 8:** the main risks and how you will measure success.
+5. **Minutes 9 to 10:** the decision you need, and questions.
+
+**Practical advice:**
+
+- Put the recommendation early. Do not make the audience wait for it.
+- Use one picture per idea. Keep the detail in an appendix.
+- Rehearse out loud with a timer. Cutting a slide is easier than apologising for running over.
+- Expect the question "what if we do nothing?" and have a number ready.
 
 ## Walkthrough
 
@@ -92039,7 +93179,37 @@ values ('iemi-m01', 'import-export-mini-importation', 'Import and export fundame
 on conflict (id) do update set course_id = excluded.course_id, title = excluded.title, position = excluded.position, badge_name = excluded.badge_name, badge_code = excluded.badge_code, skills = excluded.skills, topics = excluded.topics;
 
 insert into public.lessons (id, course_id, module_id, slug, title, summary, minutes, body_md, required, published, position, required_exercises)
-values ('import-export-mini-importation:import-and-export-fundamentals', 'import-export-mini-importation', 'iemi-m01', 'import-and-export-fundamentals', 'Import and Export Fundamentals', 'Understand what importing and exporting are, how mini importation differs from full trade, who is involved in a shipment, what the main trade terms mean and which risks to plan for.', 25, $md$
+values ('import-export-mini-importation:import-and-export-fundamentals', 'import-export-mini-importation', 'iemi-m01', 'import-and-export-fundamentals', 'Import and Export Fundamentals', 'Understand what importing and exporting are, how mini importation differs from full trade, who is involved in a shipment, what the main trade terms mean and which risks to plan for.', 30, $md$
+## A story to start: Tunde's first import
+
+Tunde sells phone accessories from a stall in Computer Village, Ikeja. He buys from wholesalers in Lagos, and every month he pays more than the month before. One evening a customer tells him, "My cousin buys power banks directly from China. He sells them cheaper than you and still makes a profit."
+
+Tunde is curious and a little worried. He opens a supplier website, sees a power bank for $3.00, and thinks: "I pay ₦9,500 for the same thing. I should order 300 tomorrow." If he does, he will find out the hard way what this course teaches: the price on the page is never the real cost, and a first import goes wrong in a handful of predictable places.
+
+Instead, Tunde slows down and follows the steps below, one at a time. By the end of the course, you will have followed the same ten steps, with real numbers, for a product of your own.
+
+## The whole journey in ten steps
+
+Here is the entire path of a mini importation on one page. Each step has its own lesson, and you can return to this map at any point.
+
+![The ten steps of a mini importation in two rows, from choosing a product to selling and reordering, each linked to the lesson that teaches it](/images/courses/import-export/journey-ten-steps.svg "The whole journey. Every step in this course is one of these ten.")
+
+Here is each step in plain words: what you do, and what usually goes wrong.
+
+1. **Choose a product.** Pick something small, light, durable and already selling in your area. Do not pick what you love; pick what people already buy. *Common mistake:* choosing a product because it looks exciting online.
+2. **Check the market.** Find out who sells it, at what price, and how fast it moves. Work out a rough profit before you contact anyone. *Common mistake:* assuming demand without asking a single customer.
+3. **Find suppliers.** Search a platform such as Alibaba, or use an agent. Shortlist three to five suppliers and send each the same clear enquiry. *Common mistake:* messaging one supplier and accepting the first price.
+4. **Verify the supplier.** Check the company profile, ask for business documents and real photos, and use protected payment. *Common mistake:* paying a stranger by bank transfer because the price was very low.
+5. **Negotiate and sample.** Agree the price, the minimum order and the terms, and order a sample before the main order. *Common mistake:* skipping the sample to save a week.
+6. **Ship it.** Choose air or sea, pick a freight forwarder, and insure the goods. *Common mistake:* comparing freight quotes that are not built the same way.
+7. **Documents and customs.** Make sure the invoice, packing list and bill of lading or air waybill agree, use the right HS code and clear the goods through a licensed agent. *Common mistake:* an invoice that does not match the goods.
+8. **Count the real cost.** Add product, freight, insurance, duty, VAT, clearing, transport and bank charges to find the landed cost per unit. *Common mistake:* pricing from the supplier's price alone.
+9. **Price it.** Set a selling price that leaves your target margin after everything. *Common mistake:* copying a competitor's price without checking your own cost.
+10. **Sell and reorder.** Choose channels, keep cash for the next order, track what sells and reorder what moves. *Common mistake:* putting all the profit back into one slow product.
+
+> [!TIP]
+> Keep one notebook or spreadsheet for the whole course. Write your own product at step 1, and fill in one line for each step as you complete each lesson. By lesson 12 you will have a finished business plan, not just notes.
+
 ## What importing and exporting are
 
 **Importing** means buying goods from another country and bringing them in. **Exporting** means selling goods you make or buy locally to a buyer in another country. Every international sale is an import for one side and an export for the other: when a supplier in Guangzhou sells phone cases to a trader in Lagos, it is an export for China and an import for Nigeria.
@@ -92161,6 +93331,26 @@ A safe habit: **start small, test, then grow.** The first order is tuition.
   "sample": "Risk: the supplier takes the money and never ships - Fix: verify the company and pay through a protected method.\nRisk: the cases arrive damaged or poor quality - Fix: order a sample first and pack in strong cartons with insurance.\nRisk: duty and charges at the port are higher than planned - Fix: work out the landed cost before ordering.",
   "required": false
 }
+```
+
+```task
+{
+  "id": "iemi-m01-t4",
+  "prompt": "Start your own journey. Name **one product** you could imagine importing (small, light and already selling where you live). Then, for **steps 1 to 5** of the ten-step map, write one line saying what you would do for *your* product. One step per line.",
+  "minutes": 8,
+  "rows": 8,
+  "placeholder": "Product: ...\n1. Choose: ...\n2. Check the market: ...",
+  "rules": [
+    { "label": "Names a product", "pattern": "product|phone|bag|shoe|cable|case|charger|cloth|wig|hair|light|bottle|watch|earbud|power bank|cosmetic|toy|tool" },
+    { "label": "At least five lines (one per step)", "minLines": 5 },
+    { "label": "Mentions checking the market or demand (customers, price, competition, ask)", "pattern": "market|demand|customer|competit|price|ask|sell" },
+    { "label": "Mentions a supplier step (supplier, alibaba, verify, sample)", "pattern": "supplier|alibaba|verify|sample|agent" }
+  ],
+  "sample": "Product: phone ring lights for content creators.\n1. Choose: small, light, and many creators near me ask where to buy one.\n2. Check the market: see what three Lagos sellers charge and ask five creators what they would pay.\n3. Find suppliers: shortlist four on Alibaba and send each the same enquiry.\n4. Verify: check each profile, ask for real photos and pay through protected payment.\n5. Negotiate and sample: agree the minimum order and order one sample before the bulk order.",
+  "note": "This is the start of your own business plan. You will come back to the same product in every lesson and finish with a complete plan in lesson 12.",
+  "required": false
+}
+
 ```
 
 Next lesson: how to choose a product that will really sell.
@@ -92324,6 +93514,10 @@ You can find suppliers in several places. Each suits a different situation:
 For a first mini import, **Alibaba plus a small sample order** is the usual starting point. Treat it as a directory, not a guarantee: the platform lists suppliers, but it does not make every one honest or good.
 
 ## Reading a supplier profile
+
+Before you read the rules below, look at the picture. This is what a typical supplier listing contains and the six parts worth checking before you send a single message.
+
+![An example supplier listing with six numbered parts to check: product photos, price tiers, minimum order, who is selling, samples and payment protection](/images/courses/import-export/listing-anatomy.svg "Six parts of a listing to check before you message a supplier.")
 
 Open the supplier's company profile, not just the product page. Look for:
 
@@ -92737,6 +93931,10 @@ The two main ways to bring goods to Nigeria are **air freight** and **sea freigh
 | **Charged by** | Weight (kilograms) | Volume (cubic metres) for shared loads, or per container |
 | **Risks** | Fewer handling steps, lower damage risk | Longer exposure, more handling, port delays |
 
+![A large container ship loaded with stacked containers at a port, with tall cranes alongside](/images/courses/import-export/sea-freight-ship.jpg "Sea freight: a container ship being loaded at a port. Photo: Downtowngal, CC BY-SA 4.0, via Wikimedia Commons.")
+
+![A cargo aircraft with its nose door open and a lift platform loading a pallet of wrapped cargo](/images/courses/import-export/air-freight-loading.jpg "Air freight: loading a cargo aircraft. Photo: Aleksandr Markin, CC BY-SA 2.0, via Wikimedia Commons.")
+
 For a first mini import of light goods, **air cargo** is often practical. As volumes grow, **sea freight** brings the cost per unit down. Times and prices change often, so always get a current quote.
 
 ## How air freight is charged
@@ -92877,6 +94075,8 @@ Customs does not clear goods on trust. It clears them on documents that agree wi
 | **Form M** (Nigeria) | The import declaration made before shipment, through your bank | You, through an authorised bank |
 
 **All the documents must match.** Name, address, quantities, weights, descriptions and values should agree. A mismatch is the most common cause of delay and fines.
+
+![The five parties a shipment passes through, from supplier to importer, with the documents each one handles](/images/courses/import-export/shipment-documents.svg "Documents follow the goods through five hands, and they must all agree.")
 
 > [!WARNING]
 > Never agree to understate the value or change the description on an invoice to reduce duty. Under-declaring is an offence. It can bring seizure, penalties and a record that makes every future shipment harder.
@@ -93203,6 +94403,8 @@ Tunde orders 300 power banks.
 | **Per unit (÷ 300)** | **₦7,420** |
 
 The supplier's price was $3.00, about ₦4,500 at ₦1,500. The real cost to Tunde is ₦7,420, about **65% higher.** That gap is why this lesson exists.
+
+![A bar chart of the landed cost items for 300 power banks, with the product at the top and duty, VAT, clearing and local costs below](/images/courses/import-export/landed-cost-bars.svg "Where the money goes: the product is only part of the cost.")
 
 ## Setting a selling price and margin
 
@@ -109853,9 +111055,9 @@ values ('pdmq12', 1, 'Measure first, then aim.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
--- Assessment: Prompting Essentials: module check
+-- Assessment: AI Foundations and Prompting: module check
 insert into public.assessments (id, course_id, kind, module_id, title, passing_score, published)
-values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'Prompting Essentials: module check', 60, true)
+values ('aipf-m01-check', 'ai-productivity-fundamentals', 'module', 'aipf-m01', 'AI Foundations and Prompting: module check', 60, true)
 on conflict (id) do update set course_id = excluded.course_id, kind = excluded.kind, module_id = excluded.module_id, title = excluded.title, passing_score = excluded.passing_score, published = excluded.published;
 
 insert into public.assessment_questions (id, assessment_id, position, prompt, options)
@@ -109904,6 +111106,54 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('aipf-m01-q6', 1, 'Made-up references look convincing. Only use what you''ve found yourself.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q7', 'aipf-m01-check', 7, 'Which statement best describes generative AI?', '["Software that follows only rules a programmer wrote","Deep learning that creates new text, images, audio or code","Any program that runs on a phone","A database of verified facts"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q7', 1, 'Generative AI is the circle that creates new content; ChatGPT and Claude are examples.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q8', 'aipf-m01-check', 8, 'A chat assistant gives a specific law number that turns out not to exist. Why did it happen?', '["It looked the law up in a faulty database","It predicts likely words, and a real-sounding number is a likely continuation, with no step that checks it exists","The user typed the question wrongly","It was trying to trick the user"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q8', 1, 'Assistants produce plausible text; plausible is not the same as true.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q9', 'aipf-m01-check', 9, 'What is a context window?', '["The settings screen of the app","How much text the model can hold in mind at once: your prompt, the chat and files","A pop-up showing sources","The time a chat stays open"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q9', 1, 'Anything not in the window, including your business details, is unknown to the model.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q10', 'aipf-m01-check', 10, 'In the prompt framework, which part says ''Under 40 words. No emojis. Do not promise delivery times.''?', '["Role","Context","Rules","Check"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q10', 2, 'Rules set the boundaries: length, what to include and what to avoid.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q11', 'aipf-m01-check', 11, 'Funmi''s group bundle earns ₦100 profit a bottle instead of ₦200. Normal Friday profit is ₦12,000. What did she learn by checking the maths herself?', '["The offer was risk-free","She would need about double the bottles (120) to match normal profit, so it must bring many new customers","Zobo should cost more to make","The AI''s plan was perfect"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q11', 1, 'The AI only wrote words; the profit check was her job.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-m01-q12', 'aipf-m01-check', 12, 'What is the best use of the ''check'' step in a prompt?', '["Ask the AI to agree with you","Ask it to put any questions to you first and list its assumptions","Ask it to make the answer longer","Ask it to hide its uncertainty"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-m01-q12', 1, 'It makes the AI collect missing facts and show what it guessed.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
@@ -110136,6 +111386,30 @@ on conflict (id) do update set assessment_id = excluded.assessment_id, position 
 
 insert into public.assessment_answer_keys (question_id, correct_index, explanation)
 values ('aipf-f08', 1, 'A point-stating headline, few words, detail in your notes.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f09', 'ai-productivity-fundamentals-final', 9, 'You are the manager and the AI is the assistant. Which job belongs to you?', '["Drafting a first version","Listing options","Making the final decision and checking the numbers","Rewriting in a friendlier tone"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f09', 2, 'AI drafts, you decide.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f10', 'ai-productivity-fundamentals-final', 10, 'Which prompt follows the framework best?', '["Write a post.","Act as a marketing coach. I run a bakery in Enugu selling coconut bread at ₦4,500. Write three Instagram captions under 30 words each, no emojis, as a table. Ask me questions first.","Make a good post about my business, any style.","Post please."]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f10', 1, 'It has role, context, task, rules, format and a check.')
+on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
+
+insert into public.assessment_questions (id, assessment_id, position, prompt, options)
+values ('aipf-f11', 'ai-productivity-fundamentals-final', 11, 'Why can the same prompt give a different answer each time?', '["The AI is broken","Word choice has some randomness, so ask for several options and choose","Because you typed it twice","Because the AI forgets the question"]'::jsonb)
+on conflict (id) do update set assessment_id = excluded.assessment_id, position = excluded.position, prompt = excluded.prompt, options = excluded.options;
+
+insert into public.assessment_answer_keys (question_id, correct_index, explanation)
+values ('aipf-f11', 1, 'Variation is normal, which is why asking for options works well.')
 on conflict (question_id) do update set correct_index = excluded.correct_index, explanation = excluded.explanation;
 
 
