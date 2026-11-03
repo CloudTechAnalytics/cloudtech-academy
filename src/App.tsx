@@ -1,7 +1,7 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { Layout } from "@/components/Layout";
-import { AuthProvider } from "@/lib/auth";
+import { AuthProvider, PageLoading } from "@/lib/auth";
 import Home from "@/pages/Home";
 
 const Courses = lazy(() => import("@/pages/Courses"));
@@ -10,6 +10,7 @@ const Learn = lazy(() => import("@/pages/Learn"));
 const Assessment = lazy(() => import("@/pages/Assessment"));
 const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
+const CourseDownload = lazy(() => import("@/pages/CourseDownload"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const CredentialView = lazy(() => import("@/pages/CredentialView"));
 const TracksList = lazy(() => import("@/pages/Tracks").then((m) => ({ default: m.TracksList })));
@@ -48,6 +49,15 @@ export function AppRoutes() {
   return (
     <AuthProvider>
       <Routes>
+        {/* The printable course has no site navigation, so it sits outside the Layout. */}
+        <Route
+          path="courses/:slug/download"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <CourseDownload />
+            </Suspense>
+          }
+        />
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="courses" element={<Courses />} />

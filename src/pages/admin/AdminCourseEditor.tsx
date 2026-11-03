@@ -149,6 +149,14 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
         </div>
       </fieldset>
 
+      <fieldset className="space-y-2 rounded-xl border border-line p-4">
+        <legend className="px-1 text-[0.875rem] font-semibold">Downloads</legend>
+        <Check label="Allow enrolled learners to download the course as a PDF" checked={!!c.downloadsEnabled} onChange={(v) => set("downloadsEnabled", v)} />
+        <p className="text-[0.8125rem] text-muted">
+          Every page carries the CloudTech Academy logo as a watermark and the learner's name and email. Quiz answers, model answers and solutions are left out.
+        </p>
+      </fieldset>
+
       <div aria-live="polite">{msg && <Alert tone={msg.tone}>{msg.text}</Alert>}</div>
       <Button type="submit" loading={busy}>
         Save details
@@ -332,6 +340,9 @@ export default function AdminCourseEditor() {
       <AdminHeading title={course.title}>
         <ButtonLink to={`/admin/courses/${course.slug}/assessment`} variant="secondary">
           Assessment
+        </ButtonLink>
+        <ButtonLink to={`/courses/${course.slug}/download`} variant="secondary">
+          Preview PDF
         </ButtonLink>
         <ButtonLink to={`/courses/${course.slug}`} variant="ghost">
           View course

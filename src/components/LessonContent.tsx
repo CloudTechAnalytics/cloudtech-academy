@@ -34,6 +34,9 @@ export const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
+/** Images load straight away when printing: lazy images below the fold would be missing from the PDF. */
+let eagerImages = false;
+
 function Inline({ tokens }: { tokens?: Token[] }): ReactNode {
   if (!tokens) return null;
   return tokens.map((t, i) => {
@@ -71,7 +74,7 @@ function Inline({ tokens }: { tokens?: Token[] }): ReactNode {
       }
       case "image": {
         const img = t as Tokens.Image;
-        return <img key={i} src={safeHref(img.href)} alt={img.text} className="rounded-lg border border-line" loading="lazy" />;
+        return <img key={i} src={safeHref(img.href)} alt={img.text} className="rounded-lg border border-line" loading={eagerImages ? "eager" : "lazy"} />;
       }
       case "br":
         return <br key={i} />;
@@ -94,11 +97,11 @@ function Figure({ image }: { image: Tokens.Image }) {
   return (
     <figure className="not-prose my-8">
       <a href={src} target="_blank" rel="noopener" className="block overflow-hidden rounded-xl border border-line-strong bg-paper shadow-[0_18px_40px_-30px_rgba(23,23,23,0.45)]">
-        <img src={src} alt={decode(image.text)} width={size?.[0]} height={size?.[1]} loading="lazy" decoding="async" className="h-auto w-full" />
+        <img src={src} alt={decode(image.text)} width={size?.[0]} height={size?.[1]} loading={eagerImages ? "eager" : "lazy"} decoding="async" className="h-auto w-full" />
       </a>
       <figcaption className="mt-2.5 text-[0.875rem] leading-relaxed text-muted">
         {image.title && decode(image.title)}
-        <span className="block text-[0.8125rem] text-subtle sm:hidden">Tap the image to see it full size.</span>
+        <span className="block text-[0.8125rem] text-subtle sm:hidden print:hidden">Tap the image to see it full size.</span>
       </figcaption>
     </figure>
   );
@@ -116,7 +119,50 @@ type Ctx = {
   onExerciseSolved: (id: string) => void;
   sectionIndex: { n: number };
   exerciseLabel: { current: string };
+  /** Static version for the course PDF: practice shows its question only, never the answer. */
+  print: boolean;
 };
+
+/** A practice block in the course PDF: the question, and where to check the answer. */
+function PrintedPractice({ label, prompt, starter, note }: { label: string; prompt: ReactNode; starter?: string; note: string }) {
+  return (
+    <aside className="not-prose break-inside-avoid rounded-xl border border-line-strong bg-paper px-4 py-4">
+      <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">{label}</p>
+      <div className="lesson mt-1.5 text-[0.9688rem]">{prompt}</div>
+      {starter && (
+        <pre className="code-block mt-3">
+          <code>{starter}</code>
+        </pre>
+      )}
+      <p className="mt-3 text-[0.8125rem] italic text-muted">{note}</p>
+    </aside>
+  );
+}
+
+function PrintedQuiz({ questions }: { questions: ReturnType<typeof parseQuiz> }) {
+  return (
+    <aside className="not-prose rounded-xl border border-line-strong bg-paper px-4 py-4">
+      <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">Quick check</p>
+      <ol className="mt-2 space-y-3">
+        {questions.map((q, i) => (
+          <li key={i} className="break-inside-avoid text-[0.9688rem]">
+            <p className="font-medium">
+              {i + 1}. {q.prompt}
+            </p>
+            <ul className="mt-1 space-y-0.5 pl-5 text-ink/85">
+              {q.options.map((o, j) => (
+                <li key={j}>
+                  {String.fromCharCode(65 + j)}. {o}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-3 text-[0.8125rem] italic text-muted">Answers are on the lesson page online.</p>
+    </aside>
+  );
+}
 
 function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
   switch (token.type) {
@@ -235,7 +281,21 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
     case "code": {
       const c = token as Tokens.Code;
       const lang = (c.lang ?? "").trim();
+      const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
       try {
+        if (ctx.print && ["exercise", "answer", "task", "quiz"].includes(lang)) {
+          if (lang === "quiz") return <PrintedQuiz questions={parseQuiz(c.text)} />;
+          if (lang === "exercise") {
+            const spec = parseExercise(c.text);
+            return <PrintedPractice label={ctx.exerciseLabel.current} prompt={md(spec.prompt)} starter={spec.starter} note="Write and check your query in the lesson online." />;
+          }
+          if (lang === "answer") {
+            const spec = parseAnswer(c.text);
+            return <PrintedPractice label={ctx.exerciseLabel.current} prompt={md(spec.prompt)} note="Work it out, then check your answer in the lesson online." />;
+          }
+          const spec = parseTask(c.text);
+          return <PrintedPractice label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current} prompt={md(spec.prompt)} note="Write your answer, then check it in the lesson online." />;
+        }
         if (lang === "exercise") {
           const spec = parseExercise(c.text);
           return (
@@ -267,7 +327,6 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
         }
         if (lang === "task") {
           const spec = parseTask(c.text);
-          const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
           return (
             <WrittenTask
               spec={spec}
@@ -284,17 +343,19 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       } catch (e) {
         return <p className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-[0.875rem]">This block couldn't be read: {e instanceof Error ? e.message : String(e)}</p>;
       }
-      if (/^sql\b/.test(lang) && /\brun\b/.test(lang)) return <RunnableSql sql={c.text} />;
+      if (/^sql\b/.test(lang) && /\brun\b/.test(lang) && !ctx.print) return <RunnableSql sql={c.text} />;
       const codeLabel = CODE_LABELS[lang.split(/\s+/)[0]];
       return (
         <div className="not-prose relative">
           {codeLabel && <p className="mb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">{codeLabel}</p>}
-          <pre className="code-block pr-20">
+          <pre className={`code-block ${ctx.print ? "whitespace-pre-wrap wrap-break-word" : "pr-20"}`}>
             <code>{c.text}</code>
           </pre>
-          <div className={`absolute right-2 ${codeLabel ? "top-7" : "top-2"}`}>
-            <CopyButton text={c.text} />
-          </div>
+          {!ctx.print && (
+            <div className={`absolute right-2 ${codeLabel ? "top-7" : "top-2"}`}>
+              <CopyButton text={c.text} />
+            </div>
+          )}
         </div>
       );
     }
@@ -313,13 +374,17 @@ export function LessonContent({
   body,
   completedExercises = [],
   onExerciseSolved = () => {},
+  print = false,
 }: {
   body: string;
   completedExercises?: string[];
   onExerciseSolved?: (id: string) => void;
+  /** Render the static, answer-free version used in the course PDF. */
+  print?: boolean;
 }) {
   const tokens = useMemo(() => marked.lexer(body), [body]);
-  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" } };
+  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" }, print };
+  eagerImages = print;
   return (
     <div className="lesson">
       {tokens.map((t, i) => (

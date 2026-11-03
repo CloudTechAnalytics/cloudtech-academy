@@ -79,6 +79,8 @@ export type CourseDef = {
   skills: string[];
   prerequisites: string[];
   projectTitle?: string;
+  /** Enrolled learners can download the course as a PDF. An admin setting, off unless switched on. */
+  downloadsEnabled?: boolean;
   certificate: CertificateRules;
   /** Module titles in order; `lessons` lists lesson slugs (files in src/content/<course>/). */
   modules: ModuleDef[];

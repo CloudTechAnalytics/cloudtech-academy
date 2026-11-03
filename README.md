@@ -103,7 +103,7 @@ Without Supabase keys the Academy runs in **demo mode**:
 ## Connecting Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql), [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql) and [`0005_tracks_and_levels.sql`](supabase/migrations/0005_tracks_and_levels.sql), then [`0006_project_badges.sql`](supabase/migrations/0006_project_badges.sql).
+2. In **SQL Editor**, run [`supabase/migrations/0001_academy.sql`](supabase/migrations/0001_academy.sql), then [`0002_public_profiles.sql`](supabase/migrations/0002_public_profiles.sql), [`0003_module_tasks.sql`](supabase/migrations/0003_module_tasks.sql), [`0004_inactivity_and_remove.sql`](supabase/migrations/0004_inactivity_and_remove.sql) and [`0005_tracks_and_levels.sql`](supabase/migrations/0005_tracks_and_levels.sql), then [`0006_project_badges.sql`](supabase/migrations/0006_project_badges.sql) and [`0007_course_downloads.sql`](supabase/migrations/0007_course_downloads.sql).
 3. Then run [`supabase/seed.sql`](supabase/seed.sql). It loads the courses, lessons, assessment and project.
 4. In **Authentication → URL Configuration**:
    - Set the Site URL to the Academy's address.

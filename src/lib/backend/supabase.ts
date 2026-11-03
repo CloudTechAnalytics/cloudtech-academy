@@ -76,6 +76,7 @@ const toCourse = (r: Row): Course => ({
   skills: r.skills ?? [],
   prerequisites: r.prerequisites ?? [],
   projectTitle: r.project_title ?? undefined,
+  downloadsEnabled: r.downloads_enabled ?? false,
   certificate: {
     enabled: r.certificate_enabled,
     requireAllLessons: r.require_all_lessons,
@@ -522,6 +523,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             skills: c.skills,
             prerequisites: c.prerequisites,
             project_title: c.projectTitle ?? null,
+            downloads_enabled: c.downloadsEnabled ?? false,
             certificate_enabled: c.certificate.enabled,
             require_all_lessons: c.certificate.requireAllLessons,
             require_exercises: c.certificate.requireExercises,

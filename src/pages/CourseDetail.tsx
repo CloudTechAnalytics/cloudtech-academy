@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router";
 import { useState } from "react";
-import { Award, BookOpen, CheckCircle2, Circle, Clock, FolderKanban, GraduationCap, Lock, Trophy } from "lucide-react";
+import { Award, BookOpen, CheckCircle2, Circle, Clock, Download, FolderKanban, GraduationCap, Lock, Trophy } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { categoryName } from "@/content";
@@ -112,13 +112,18 @@ export default function CourseDetail() {
                       {enrolled ? "Continue learning" : "Start learning — Free"}
                     </Button>
                   )}
+                  {course.downloadsEnabled && learner.signedIn && (
+                    <ButtonLink to={`/courses/${course.slug}/download`} variant="ghost" className="mt-2 w-full">
+                      <Download aria-hidden className="h-4 w-4" /> Download course (PDF)
+                    </ButtonLink>
+                  )}
                   {!learner.signedIn && (
                     <p className="mt-3 text-center text-[0.8125rem] text-muted">
                       Free to read.{" "}
                       <Link to={`/sign-up?next=/courses/${course.slug}`} className="font-semibold text-brass-dark">
                         Create a free account
                       </Link>{" "}
-                      to save progress and earn your badges.
+                      {course.downloadsEnabled ? "to save progress, earn your badges and download the course as a PDF." : "to save progress and earn your badges."}
                     </p>
                   )}
                   {learner.eligibility && learner.signedIn && !learner.completion && (
