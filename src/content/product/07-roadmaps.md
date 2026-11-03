@@ -10,11 +10,11 @@ Paystream's last roadmap was a list of features with dates, promised to everyone
 
 ## The concept
 
-**Capacity**
+### Capacity
 
 A team has a fixed number of person-weeks in a quarter, minus holidays, support and the unexpected (keep about 20% free). The roadmap can't hold more than that.
 
-**Now, next, later**
+### Now, next, later
 
 | Column | Meaning | Detail |
 | :-- | :-- | :-- |
@@ -24,13 +24,15 @@ A team has a fixed number of person-weeks in a quarter, minus holidays, support 
 
 No exact dates beyond "now": the further out, the less anyone can know.
 
-**Outcome-based items**
+### Outcome-based items
 
 Each item names the outcome and how it's measured: "Help traders get verified at agents, so trader BVN verification rises from 57% to 70%", not just "Agent BVN feature".
 
-**Saying no**
+### Saying no
 
 A roadmap is as much about what's left out. Record why, so the decision can be revisited when evidence changes.
+
+![A capacity bar showing 27 of 32 usable person-weeks planned, then Now, Next and Later columns with outcome-based items, and a Won't do list with a reason](/images/courses/product/roadmap.svg "Now, next, later: committed, shaped, rough; and a roadmap can't exceed capacity.")
 
 ## Example
 

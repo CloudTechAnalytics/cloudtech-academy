@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The machine learning workflow in seven steps: frame the question, prepare the data, split it, start with a baseline, train and compare models, evaluate honestly, then explain, deploy and monitor. A loop returns from monitoring to framing.">
+<title>The seven steps of a machine learning project.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="170.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="42.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="51.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Frame</text>
+<text xml:space="preserve" x="32.0" y="86.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">What will be</text>
+<text xml:space="preserve" x="32.0" y="104.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">predicted, and what</text>
+<text xml:space="preserve" x="32.0" y="123.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">decision changes?</text>
+<rect x="200.0" y="16.0" width="170.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="226.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="226.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="246.0" y="51.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Prepare</text>
+<text xml:space="preserve" x="216.0" y="86.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Clean, fill gaps,</text>
+<text xml:space="preserve" x="216.0" y="104.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">encode categories.</text>
+<rect x="384.0" y="16.0" width="170.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="410.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="410.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="430.0" y="51.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Split</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Train on some rows;</text>
+<text xml:space="preserve" x="400.0" y="104.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">keep a test set</text>
+<text xml:space="preserve" x="400.0" y="123.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">aside.</text>
+<rect x="568.0" y="16.0" width="170.0" height="140.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="594.0" cy="46.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="594.0" y="50.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="614.0" y="51.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Baseline</text>
+<text xml:space="preserve" x="584.0" y="86.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">The simplest</text>
+<text xml:space="preserve" x="584.0" y="104.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">prediction to beat.</text>
+<rect x="108.0" y="186.0" width="170.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="134.0" cy="216.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="134.0" y="220.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="154.0" y="221.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Train</text>
+<text xml:space="preserve" x="124.0" y="256.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Fit and compare</text>
+<text xml:space="preserve" x="124.0" y="274.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">several models.</text>
+<rect x="292.0" y="186.0" width="170.0" height="140.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="318.0" cy="216.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="318.0" y="220.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="338.0" y="221.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Evaluate</text>
+<text xml:space="preserve" x="308.0" y="256.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">The right measure for</text>
+<text xml:space="preserve" x="308.0" y="274.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">the decision.</text>
+<rect x="476.0" y="186.0" width="170.0" height="140.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="502.0" cy="216.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="502.0" y="220.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<text xml:space="preserve" x="522.0" y="221.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Deploy</text>
+<text xml:space="preserve" x="492.0" y="256.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Explain, release, and</text>
+<text xml:space="preserve" x="492.0" y="274.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">keep monitoring.</text>
+<path d="M186.0,86.0 L200.0,86.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M370.0,86.0 L384.0,86.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M554.0,86.0 L568.0,86.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M694,156 C694,176 200,166 192,184" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M278.0,256.0 L292.0,256.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M462.0,256.0 L476.0,256.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M646,326 L646,362 L40,362 L40,160" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="380.0" y="386.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">monitoring raises the next question</text>
+</g></svg>

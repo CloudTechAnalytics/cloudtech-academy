@@ -12,11 +12,11 @@ Finding the real cause of a problem in a running system, quickly, is what **obse
 
 ## The concept
 
-**Monitoring and observability**
+### Monitoring and observability
 
 **Monitoring** answers questions you thought of in advance ("is CPU above 80%?"). **Observability** is being able to answer questions you didn't think of, from the data a system already produces ("why are only invoice-sending requests slow, and only since 09:40?").
 
-**Three kinds of telemetry**
+### Three kinds of telemetry
 
 | Signal | What it is | Good for |
 | :-- | :-- | :-- |
@@ -24,9 +24,11 @@ Finding the real cause of a problem in a running system, quickly, is what **obse
 | **Logs** | timestamped records of events, ideally structured (JSON) | details of what happened to specific requests |
 | **Traces** | the path of one request through every service, with timings | seeing where time is spent, across services |
 
-**The four golden signals**
+### The four golden signals
 
 For any service: **latency** (how long requests take), **traffic** (how many), **errors** (how many fail), and **saturation** (how full the most constrained resource is).
+
+![Three panels for the same incident: a metrics chart where errors jump at 09:40, log lines showing the bulk send job starting and pool errors, and a trace where acquiring a connection takes most of the time; below, the four golden signals: latency, traffic, errors, saturation](/images/courses/observability/three-signals.svg "Metrics say when, logs say what, traces say where.")
 
 ## Example
 

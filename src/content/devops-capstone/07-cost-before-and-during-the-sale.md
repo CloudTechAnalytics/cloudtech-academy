@@ -10,18 +10,20 @@ The finance director has noticed the cloud bill creeping up and worries the sale
 
 ## The concept
 
-**Waste first**
+### Waste first
 
 - **Idle resources**: machines that do nearly nothing, especially with no owner. Confirm with the team, snapshot if in doubt, then delete.
 - **Always-on non-production**: staging used during working hours but paid for around the clock. Schedule it to run only when needed.
 
-**Don't cut resilience**
+### Don't cut resilience
 
 A standby replica at 12% CPU isn't waste. It's there for the bad day. Low use isn't the same as no value.
 
-**Price the change, and the peak**
+### Price the change, and the peak
 
 Compare the monthly cost of the readiness changes with the savings. Price the sale's extra capacity per hour: autoscaling means you pay for 30 instances only while you need them.
+
+![Where to find savings (waste, not resilience) and pricing a change and the peak, with invented monthly figures](/images/courses/devops-capstone/cost.svg "Waste first, never resilience; price the change and the peak.")
 
 ## Example
 

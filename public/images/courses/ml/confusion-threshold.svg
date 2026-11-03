@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="The confusion matrix for a credit model, with rows for what actually happened and columns for what the model predicted: true negatives, false positives (good borrowers turned away), false negatives (defaults we lent to) and true positives (defaults caught). Recall is TP divided by TP plus FN; precision is TP divided by TP plus FP. Beside it, an illustration: as the threshold falls, recall rises and precision falls.">
+<title>The confusion matrix, and how the threshold trades recall against precision.</title>
+
+<rect width="760" height="470" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="260.0" y="40.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">Predicted</text>
+<text xml:space="preserve" x="195.0" y="60.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">repays</text>
+<text xml:space="preserve" x="325.0" y="60.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">defaults</text>
+<text xml:space="preserve" x="118.0" y="139.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end">repays</text>
+<text xml:space="preserve" x="118.0" y="269.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end">defaults</text>
+<text xml:space="preserve" x="24.0" y="204.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">Actual</text>
+<rect x="132.0" y="72.0" width="126.0" height="126.0" rx="8" fill="#E5F0E8"/>
+<text xml:space="preserve" x="195.0" y="126.0" font-size="24" fill="#2F6B3F" font-weight="700" text-anchor="middle">TN</text>
+<text xml:space="preserve" x="142.0" y="156.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">good loan</text>
+<text xml:space="preserve" x="142.0" y="173.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">approved</text>
+<rect x="262.0" y="72.0" width="126.0" height="126.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="325.0" y="126.0" font-size="24" fill="#9B2C1F" font-weight="700" text-anchor="middle">FP</text>
+<text xml:space="preserve" x="272.0" y="156.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">good borrower</text>
+<text xml:space="preserve" x="272.0" y="173.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">turned away</text>
+<rect x="132.0" y="202.0" width="126.0" height="126.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="195.0" y="256.0" font-size="24" fill="#9B2C1F" font-weight="700" text-anchor="middle">FN</text>
+<text xml:space="preserve" x="142.0" y="286.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">default we lent</text>
+<text xml:space="preserve" x="142.0" y="303.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">to</text>
+<rect x="262.0" y="202.0" width="126.0" height="126.0" rx="8" fill="#E5F0E8"/>
+<text xml:space="preserve" x="325.0" y="256.0" font-size="24" fill="#2F6B3F" font-weight="700" text-anchor="middle">TP</text>
+<text xml:space="preserve" x="272.0" y="286.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">default caught</text>
+<text xml:space="preserve" x="16.0" y="376.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Recall = TP ÷ (TP + FN): of all defaults, how many we caught.</text>
+<text xml:space="preserve" x="16.0" y="398.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Precision = TP ÷ (TP + FP): of the loans we flagged, how many defaulted.</text>
+<line x1="440.0" y1="300.0" x2="740.0" y2="300.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="440.0" y1="70.0" x2="440.0" y2="300.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="440.0" y="58.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Illustration: moving the threshold</text>
+<text xml:space="preserve" x="590.0" y="322.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">threshold: high ← → low</text>
+<path d="M440.0,277.0 L455.0,249.8 L470.0,226.3 L485.0,206.2 L500.0,188.8 L515.0,173.8 L530.0,161.0 L545.0,149.9 L560.0,140.4 L575.0,132.2 L590.0,125.1 L605.0,119.0 L620.0,113.8 L635.0,109.3 L650.0,105.4 L665.0,102.1 L680.0,99.2 L695.0,96.8 L710.0,94.6 L725.0,92.8 L740.0,91.2" fill="none" stroke="#2F6B3F" stroke-width="2.6"/>
+<text xml:space="preserve" x="736.0" y="83.2" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="end">recall</text>
+<path d="M440.0,104.5 L455.0,107.3 L470.0,111.4 L485.0,116.2 L500.0,121.5 L515.0,127.3 L530.0,133.3 L545.0,139.8 L560.0,146.4 L575.0,153.4 L590.0,160.5 L605.0,167.9 L620.0,175.5 L635.0,183.3 L650.0,191.3 L665.0,199.4 L680.0,207.8 L695.0,216.2 L710.0,224.8 L725.0,233.6 L740.0,242.5" fill="none" stroke="#9B2C1F" stroke-width="2.6"/>
+<text xml:space="preserve" x="736.0" y="260.5" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="end">precision</text>
+<text xml:space="preserve" x="440.0" y="340.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Lower the threshold and you catch more</text>
+<text xml:space="preserve" x="440.0" y="358.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">defaults (recall up) but turn away more good</text>
+<text xml:space="preserve" x="440.0" y="376.2" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">borrowers (precision down).</text>
+<text xml:space="preserve" x="16.0" y="456.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Pick the threshold with the best total profit, using costs from the finance team.</text>
+</g></svg>

@@ -12,7 +12,7 @@ The best projects also add something the course didn't: a new feature that captu
 
 ## The concept
 
-**The project, step by step**
+### The project, step by step
 
 | Step | Deliverable | Lesson |
 | :-- | :-- | :-- |
@@ -24,7 +24,7 @@ The best projects also add something the course didn't: a new feature that captu
 | Target | gains, lift and a calling plan with its value | 6 |
 | Monitor | drift checks by segment, a retraining rule and triggers | 7 |
 
-**Ideas for new features**
+### Ideas for new features
 
 - **Variety**: the number of different transaction types in the last 90 days. Customers who use several services may be stickier.
 - **Large-value share**: the share of value from transfers, where competitors usually compete.

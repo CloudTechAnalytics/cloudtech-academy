@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="A plan starts from the questions, not the data. Turn a vague executive worry into specific questions you can answer with numbers, write down your definitions before you calculate, and agree the deliverables. The example is invented: a six-shop pharmacy chain whose owner asks why takings jumped.">
+<title>Questions first, then definitions, then deliverables.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">From worry to plan (invented example: a pharmacy chain)</text>
+<rect x="16.0" y="42.0" width="728.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="72.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Owner: "Takings are up a lot. I don't trust it. What is really behind it?"</text>
+<path d="M380.0,94.0 L380.0,112.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<circle cx="32.0" cy="130.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="134.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="52.0" y="135.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">How much of the rise is real, not price or a new shop?</text>
+<circle cx="32.0" cy="158.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="162.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="52.0" y="163.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Which shops improve, and which struggle?</text>
+<circle cx="32.0" cy="186.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="190.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="52.0" y="191.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Which products earn money, not just sales?</text>
+<circle cx="32.0" cy="214.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="218.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="52.0" y="219.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Are the shop targets fair?</text>
+<circle cx="32.0" cy="242.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="246.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="52.0" y="247.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Where is money being left on the table?</text>
+<text xml:space="preserve" x="16.0" y="288.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Definitions before numbers</text>
+<rect x="16.0" y="302.0" width="5.0" height="32.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="30.0" y="316.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Net sales</text>
+<text xml:space="preserve" x="30.0" y="331.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">qty × price − discount, returns included</text>
+<rect x="384.0" y="302.0" width="5.0" height="32.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="398.0" y="316.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Gross profit</text>
+<text xml:space="preserve" x="398.0" y="331.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">net sales − qty × cost in force on the date</text>
+<rect x="16.0" y="342.0" width="5.0" height="32.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="30.0" y="356.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Like for like</text>
+<text xml:space="preserve" x="30.0" y="371.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">shops open for the whole of both periods</text>
+<rect x="384.0" y="342.0" width="5.0" height="32.0" rx="2" fill="#2F6B3F"/>
+<text xml:space="preserve" x="398.0" y="356.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">The period</text>
+<text xml:space="preserve" x="398.0" y="371.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">exact start and end dates</text>
+<text xml:space="preserve" x="16.0" y="400.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Deliverables: cleaned data + cleaning log · 2–3 page dashboard · one-page summary with 3 recommendations · your working</text>
+</g></svg>

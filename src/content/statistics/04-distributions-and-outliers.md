@@ -14,13 +14,13 @@ Averages and standard deviations summarise data in one or two numbers, but they 
 
 ## The concept
 
-**The distribution and the histogram**
+### The distribution and the histogram
 
 A **distribution** is how often each value occurs. A **histogram** shows it: the values are grouped into ranges (bins) along the bottom, and each bar's height is how many values fall in that range.
 
 In Excel: select the column, then **Insert → Charts → Histogram** (Excel 2016 and later). Right-click the horizontal axis → **Format Axis** to set the bin width. In Google Sheets: **Insert → Chart → Chart type: Histogram**. Or count bins yourself with `COUNTIFS(range, ">="&low, range, "<"&high)`.
 
-**Shapes to recognise**
+### Shapes to recognise
 
 | Shape | What it looks like | Typical data | Mean vs median |
 | :-- | :-- | :-- | :-- |
@@ -33,7 +33,7 @@ A bimodal histogram is a signal to split the data: it usually means two processe
 
 `=SKEW(range)` gives a number: about 0 is symmetric, positive is right-skewed, negative left-skewed. Values above about 1 are strongly skewed.
 
-**How unusual is a value? The z-score**
+### How unusual is a value? The z-score
 
 A **z-score** says how many standard deviations a value is from the mean:
 
@@ -41,7 +41,17 @@ A **z-score** says how many standard deviations a value is from the mean:
 
 In Excel: `=STANDARDIZE(value, mean, sd)`. A z-score of 0 is exactly average; +2 is two SDs above. For bell-shaped data, values beyond ±2 are unusual (about 1 in 20) and beyond ±3 very unusual (about 1 in 400). For skewed data, z-scores are a rougher guide, because the tail is longer on one side.
 
-**Flagging outliers: the IQR rule**
+**Worked example.** Shanghai → Apapa shipments average 39.0 days with a standard deviation of 4.7 days.
+
+| Shipment took | Calculation | z | Reading |
+| :-- | :-- | --: | :-- |
+| 36 days | (36 − 39.0) ÷ 4.7 | −0.64 | A little faster than average: normal |
+| 45 days | (45 − 39.0) ÷ 4.7 | +1.28 | Slower than most, but not unusual |
+| 50 days | (50 − 39.0) ÷ 4.7 | +2.34 | Beyond +2: unusually slow, worth a look |
+
+A z-score turns "50 days" into "more than two standard deviations slow", which means the same thing on any route, whatever its normal length.
+
+### Flagging outliers: the IQR rule
 
 A common, robust rule (the one behind box plots):
 
@@ -50,7 +60,7 @@ A common, robust rule (the one behind box plots):
 
 Values outside the fences are **outliers**. Because it's built from quartiles, extreme values don't distort the rule itself.
 
-**What to do with an outlier**
+### What to do with an outlier
 
 An outlier is a question, not a mistake. Find out why before you act:
 
@@ -66,6 +76,8 @@ Shanghai → Lagos (Apapa), delivered shipments, transit days:
 
 - **Mean** 39.0 days, **SD** 4.7 days.
 - The histogram has a tall block at **35–38 days** (184 of 247 shipments) and then a **long tail to the right**, out to 53 days. Nothing arrives unusually early.
+
+![A histogram of transit days for 247 delivered Shanghai to Lagos shipments. Tall bars at 35 to 38 days, then low bars out to 53 days. A dashed line marks the mean, 39.0 days; another marks mean plus 2 standard deviations, 48.4 days. The bars beyond it are red.](/images/courses/statistics/transit-histogram.svg "Route 1's transit times: a tight block of on-time shipments and a one-sided tail of delays.")
 
 Z-scores make it concrete. The upper threshold of 2 SDs is 39.0 + 2 × 4.7 ≈ 48.4 days. **20 shipments** are more than 2 SDs slow; **none** are more than 2 SDs fast.
 

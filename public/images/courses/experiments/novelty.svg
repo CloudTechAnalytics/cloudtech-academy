@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="An illustration of a novelty effect. The new banner's effect on clicks is large in week 1 and shrinks each week, towards a small lasting effect by week 4. Judging the change on week 1 would overstate it.">
+<title>A novelty effect: the lift shrinks week by week.</title>
+
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="80.0" y1="270.0" x2="720.0" y2="270.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="72.0" y="274.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">+0%</text>
+<text xml:space="preserve" x="72.0" y="169.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">+5%</text>
+<text xml:space="preserve" x="72.0" y="64.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">+10%</text>
+<rect x="120.0" y="81.0" width="100.0" height="189.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="170.0" y="73.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">+9%</text>
+<text xml:space="preserve" x="170.0" y="290.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">week 1</text>
+<rect x="270.0" y="165.0" width="100.0" height="105.0" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="320.0" y="157.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">+5%</text>
+<text xml:space="preserve" x="320.0" y="290.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">week 2</text>
+<rect x="420.0" y="215.4" width="100.0" height="54.6" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="470.0" y="207.4" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">+2.6%</text>
+<text xml:space="preserve" x="470.0" y="290.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">week 3</text>
+<rect x="570.0" y="236.4" width="100.0" height="33.6" rx="4" fill="#DCC594"/>
+<text xml:space="preserve" x="620.0" y="228.4" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">+1.6%</text>
+<text xml:space="preserve" x="620.0" y="290.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">week 4</text>
+<text xml:space="preserve" x="16.0" y="32.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Effect of a new banner on clicks, by week (illustration)</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Plot the effect by week. If it fades, judge the change on the later weeks, or run longer.</text>
+</g></svg>

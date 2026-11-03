@@ -10,31 +10,33 @@ On the old page, customers typed an amount, pressed Pay, waited for a whole new 
 
 ## The concept
 
-**Finding elements**
+### Finding elements
 
 ```js norun
 const amount = document.querySelector("#amount");   // CSS selectors
 const output = document.querySelector("#after-payment");
 ```
 
-**Reading and changing them**
+### Reading and changing them
 
 `input.value` is what's typed (always text). `element.textContent = "..."` changes visible text safely. Avoid `innerHTML` with anything a user typed: it can run as HTML.
 
-**Events**
+### Events
 
 ```js norun
 amount.addEventListener("input", () => { /* runs on every keystroke */ });
 form.addEventListener("submit", (event) => { event.preventDefault(); /* ... */ });
 ```
 
-**Keep logic out of event handlers**
+### Keep logic out of event handlers
 
 Put the calculation in a plain function that takes values and returns a result. The event handler only reads the page, calls the function, and writes the result. The function can then be tested without a page (lesson 9).
 
-**Announce changes**
+### Announce changes
 
 `aria-live="polite"` on an element makes screen readers read out its new text when it changes.
+
+![Typing 2500 fires an input event; the handler reads input.value as text, calls balanceAfter(1000000, "2500") which returns remainingKobo 750000, and writes the result with textContent; aria-live announces it; textContent is safe, innerHTML with user input is not](/images/courses/webjs/dom-events.svg "The handler reads and writes the page; a plain function does the calculation.")
 
 ## Example
 

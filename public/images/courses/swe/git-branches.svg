@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Git's basic cycle and branches. Files you edit in the working folder are staged with git add, then recorded with git commit into the history. A branch is a separate line of work: a feature branch leaves main, gets a few small commits, and is merged back into main after review and tests, so main always works.">
+<title>The add–commit cycle, and a branch merged back into main.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="188.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="58.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Working folder</text>
+<text xml:space="preserve" x="30.0" y="82.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">files you edit</text>
+<rect x="286.0" y="30.0" width="188.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="300.0" y="58.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Staging area</text>
+<text xml:space="preserve" x="300.0" y="82.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">changes chosen for the next</text>
+<text xml:space="preserve" x="300.0" y="99.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">commit</text>
+<rect x="556.0" y="30.0" width="188.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="570.0" y="58.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">History</text>
+<text xml:space="preserve" x="570.0" y="82.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">commits, with messages</text>
+<path d="M206.0,70.0 L282.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="244.0" y="62.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">git add</text>
+<path d="M476.0,70.0 L552.0,70.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="514.0" y="62.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">git commit</text>
+<text xml:space="preserve" x="16.0" y="140.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">git status: what's changed.   git diff: line by line.   git log: the history.</text>
+<text xml:space="preserve" x="16.0" y="215.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">main</text>
+<text xml:space="preserve" x="16.0" y="295.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">round-vat</text>
+<line x1="100.0" y1="210.0" x2="720.0" y2="210.0" stroke="#2F5D8A" stroke-width="3"/>
+<path d="M240,210 C270,290 280,290 310,290 L530,290 C560,290 570,210 600,210" fill="none" stroke="#2F6B3F" stroke-width="3"/>
+<circle cx="130.0" cy="210.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="190.0" cy="210.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="240.0" cy="210.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="600.0" cy="210.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="670.0" cy="210.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="330.0" cy="290.0" r="9" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="420.0" cy="290.0" r="9" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="510.0" cy="290.0" r="9" fill="#2F6B3F" stroke="#FFFFFF" stroke-width="2"/>
+<text xml:space="preserve" x="330.0" y="318.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="middle">Add failing test</text>
+<text xml:space="preserve" x="420.0" y="336.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="middle">Round VAT half up</text>
+<text xml:space="preserve" x="510.0" y="318.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="middle">Update README</text>
+<text xml:space="preserve" x="600.0" y="192.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle">merge, after review</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Small commits, imperative messages ("Round VAT half up"), tests committed with the code.</text>
+</g></svg>

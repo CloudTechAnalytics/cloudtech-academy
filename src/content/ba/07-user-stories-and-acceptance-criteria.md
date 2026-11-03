@@ -1,6 +1,6 @@
 ---
 title: User stories and acceptance criteria
-minutes: 25
+minutes: 30
 summary: Express requirements as user stories that keep the user and the reason in view, split them to a buildable size, and pin down "done" with Given/When/Then acceptance criteria.
 ---
 
@@ -10,9 +10,35 @@ Ashgrove has chosen a supplier who works in two-week **sprints**, the agile way 
 
 Agile teams don't work from long specifications. They work from a **backlog** of small items, each describing something a user needs and why, and each with a clear test of "done". The standard format for those items is the **user story**, and writing good ones is now a core BA skill in almost every job advert.
 
+## A story from the field: the story with a missing ending
+
+A logistics startup in Lagos wrote this user story for its mobile app: *"As a customer, I want to track my parcel so that I know when it will arrive."* The developers built a map with a moving dot, demoed it, and everyone applauded.
+
+Two weeks after launch, support was flooded. A customer in Ikorodu opened the app, saw a spinning wheel and phoned to say the app was broken. Another saw the dot jump across the map. A third saw "Delivered" while her parcel was still on the road.
+
+The story was fine. What was missing was the **acceptance criteria**, the list of conditions that must be true for the story to count as done. Nobody had asked: *what happens when the phone has no network? What if the rider's GPS is off? When exactly does "Delivered" appear, and who confirms it?*
+
+The analyst rewrote the story with criteria:
+
+```text
+Given the customer has an active order
+When they open the tracking screen
+Then they see the rider's position, updated every 30 seconds.
+
+Given the phone has no network
+When the customer opens the tracking screen
+Then they see the last known position and the message "Last updated at [time]".
+
+Given the rider has not confirmed delivery
+When the parcel is near the address
+Then the status stays "On the way" and never shows "Delivered".
+```
+
+With these three short examples, the developers knew the edge cases, the testers knew what to check, and the support team knew what to tell customers. A user story starts the conversation. Acceptance criteria finish it.
+
 ## The concept
 
-**The user story format**
+### The user story format
 
 > As a **[type of user]**, I want **[something]**, so that **[benefit]**.
 
@@ -20,7 +46,7 @@ Agile teams don't work from long specifications. They work from a **backlog** of
 
 The "so that" is the most important part. It tells the team **why**, which lets them suggest a better way to deliver the benefit, and it lets the product owner prioritise by value.
 
-**INVEST: what makes a good story**
+### INVEST: what makes a good story
 
 | Letter | Means |
 | :-- | :-- |
@@ -33,7 +59,7 @@ The "so that" is the most important part. It tells the team **why**, which lets 
 
 A story too big to build in a sprint is an **epic**: split it, usually by user, by step in the process, or by rule ("send reminders" → "first reminder", "second reminder", "don't remind clients on a payment plan").
 
-**Acceptance criteria: Given / When / Then**
+### Acceptance criteria: Given / When / Then
 
 Each story has a few acceptance criteria that define "done", written as scenarios:
 
@@ -54,6 +80,45 @@ Write one for the normal case and one for each important exception. They become 
 > 3. **Given** a client on an agreed payment plan, **when** a reminder would be due, **then** no reminder is sent, and the invoice appears on the accounts officer's exceptions list.
 
 Criterion 2 catches the embarrassing bug (reminding someone who has paid). Criterion 3 comes straight from a business rule found in lesson 6. Good criteria are where the BA's knowledge of the edge cases pays off.
+
+![A user story card reading As an accounts officer, I want clients to get an automatic reminder before the due date, so that fewer invoices go overdue without me phoning anyone; below it three numbered acceptance criteria: normal case, already paid, and payment-plan exception.](/images/courses/ba/user-story.svg "A story says who, what and why; its acceptance criteria say when it's done.")
+
+## A real-world scenario: writing stories for a ticket-booking app
+
+A small bus company wants customers to book seats from their phones. The analyst breaks the need into stories using the standard shape: **As a [who], I want [what], so that [why].**
+
+**Story 1:** As a traveller, I want to choose my seat, so that I can sit with my family.
+
+**Acceptance criteria (Given / When / Then):**
+
+```text
+Given a bus with seats 1 to 40 and seats 5, 6 and 12 already booked
+When I open the seat map
+Then seats 5, 6 and 12 appear greyed out and cannot be selected.
+
+Given I have selected seat 7
+When I press "Continue"
+Then seat 7 is held for me for 10 minutes while I pay.
+
+Given I did not pay within 10 minutes
+When the time runs out
+Then seat 7 becomes available to other travellers again.
+
+Given two travellers pick seat 7 at the same moment
+When both press "Continue"
+Then only the first receives the seat and the second sees "Seat just taken, please choose another".
+```
+
+Notice what the criteria are doing: they answer the questions a developer would otherwise have to guess, including the awkward cases (the seat is taken, the time runs out).
+
+**Practical checks for a good story:**
+
+1. **Independent**: it can be built without waiting for another story.
+2. **Small**: it can be finished within one iteration of work.
+3. **Testable**: each criterion has a clear pass or fail.
+4. **Valuable**: the "so that" gives a real reason. If you cannot write one, the story may not be needed.
+
+**Common mistakes:** writing stories for the system ("As the database, I want...") instead of for a person, hiding several features in one story, and leaving out the failure cases.
 
 ## Walkthrough
 

@@ -10,15 +10,15 @@ Lesson 5 fixed one problem in the invoice export. There are several more: invoic
 
 ## The concept
 
-**Validate at the boundary**
+### Validate at the boundary
 
 Check data where it enters your system (an import, an API request, a form), before any calculation uses it.
 
-**Collect problems, don't stop at the first**
+### Collect problems, don't stop at the first
 
 A validator returns a **list of problems** for each record. An empty list means valid. Then you can report every problem at once, with counts.
 
-**Decide what happens to invalid records**
+### Decide what happens to invalid records
 
 | Option | When |
 | :-- | :-- |
@@ -28,7 +28,9 @@ A validator returns a **list of problems** for each record. An empty list means 
 
 Never silently drop bad records: totals become wrong and nobody knows.
 
-**Raise errors with useful messages**
+![Three incoming records pass through a validator: one returns an empty problem list, two return problems such as a negative quantity, a price that isn't a number and a discount over 20; problem records are rejected, quarantined, or fixed automatically only when the fix is certain](/images/courses/swe/validation.svg "Validate where data enters: a list of problems per record, and a decision for each.")
+
+### Raise errors with useful messages
 
 When a function can't continue, `raise ValueError(...)` with a message that says what was wrong and what was expected, as `invoice_total` does for discounts.
 

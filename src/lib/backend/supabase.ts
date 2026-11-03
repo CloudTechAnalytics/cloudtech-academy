@@ -1,21 +1,47 @@
 /**
  * Supabase backend. Tables, row-level security and the grading/certificate functions
- * are defined in supabase/migrations/0001_academy.sql.
+ * are defined in supabase/migrations (certificate management in 0007_certificate_management.sql).
  */
 import { createClient, type SupabaseClient, type User as SbUser } from "@supabase/supabase-js";
+import type { CourseSalesFields } from "@/content/catalog";
 import type { AssessmentDef, Course, Lesson, Module, ProjectDef } from "@/content/types";
 import { requiredExerciseIds } from "../lesson-format";
+import { certificatePayload, matchesCertificate } from "../certificates";
+import { DEFAULT_VIDEO_MAX_MB, MAX_VIDEO_MB_CEILING, parseVideoUrl, storageKey, thumbnailProblem, videoFileProblem } from "../video";
 import {
   BackendError,
   type AttemptResult,
   type Backend,
+  type AcademyEvent,
+  type AdminCertificate,
+  type AdminCourseOrder,
+  type AdminEnrollment,
+  type CourseOrder,
+  type CourseStats,
+  type PaymentAccount,
+  type OrderPayment,
+  type AdminPayment,
+  type EmailTemplate,
+  type EmailLogEntry,
+  type EmailSetup,
+  type TrackingSettings,
+  type ProgrammeStats,
+  type AdminProgrammeEnrollment,
   type Certificate,
   type CertificateOrder,
   type CertificatePrice,
+  type CommunitySettings,
+  type CourseVideoAdmin,
+  type CourseVideoInput,
+  type CourseVideoPublic,
+  type VideoStatus,
+  type EventInput,
+  type EventRegistration,
   type Credential,
   type PracticeResult,
   type PracticeSubmission,
   type ProjectSubmission,
+  type PublicCertificate,
   type PublicProfile,
   type Role,
   type User,
@@ -39,6 +65,92 @@ function check<T>(res: { data: T; error: { message: string } | null }): T {
   if (res.error) throw new BackendError(res.error.message);
   return res.data;
 }
+
+const toEvent = (r: Row, registered?: number): AcademyEvent => ({
+  id: r.id,
+  slug: r.slug,
+  title: r.title,
+  eventType: r.event_type,
+  shortDescription: r.short_description ?? null,
+  description: r.description ?? null,
+  learnPoints: r.learn_points ?? [],
+  coverImage: r.cover_image ?? null,
+  startDatetime: r.start_datetime,
+  endDatetime: r.end_datetime ?? null,
+  timezone: r.timezone,
+  venue: r.venue ?? null,
+  format: r.format,
+  meetingUrl: r.meeting_url ?? null,
+  registrationUrl: r.registration_url ?? null,
+  whatsappUrl: r.whatsapp_url ?? null,
+  speakerName: r.speaker_name ?? null,
+  speakerTitle: r.speaker_title ?? null,
+  speakerImage: r.speaker_image ?? null,
+  maxParticipants: r.max_participants ?? null,
+  registrationRequired: r.registration_required,
+  status: r.status,
+  isFeatured: r.is_featured,
+  series: r.series ?? null,
+  registeredCount: Number(registered ?? r.registered_count ?? 0),
+  createdAt: r.created_at,
+  updatedAt: r.updated_at,
+});
+
+const toRegistration = (r: Row): EventRegistration => ({
+  id: r.id,
+  eventId: r.event_id,
+  userId: r.user_id ?? null,
+  fullName: r.full_name,
+  email: r.email,
+  phone: r.phone ?? null,
+  registrationStatus: r.registration_status,
+  attendanceStatus: r.attendance_status,
+  registeredAt: r.registered_at,
+  attendedAt: r.attended_at ?? null,
+});
+
+const toCommunity = (r: Row): CommunitySettings => ({
+  name: r.name,
+  description: r.description,
+  whatsappUrl: r.whatsapp_invite_url ?? null,
+  welcomeMessage: r.welcome_message,
+  buttonText: r.button_text,
+  isActive: !!r.is_active,
+});
+
+/** An event as the database columns, with empty text turned into null. */
+const eventRow = (i: EventInput) => {
+  const t = (v: string | null) => (v && v.trim() ? v.trim() : null);
+  return {
+    title: i.title.trim(),
+    slug: i.slug,
+    event_type: i.eventType,
+    short_description: t(i.shortDescription),
+    description: t(i.description),
+    learn_points: i.learnPoints.map((x) => x.trim()).filter(Boolean),
+    cover_image: t(i.coverImage),
+    start_datetime: i.startDatetime,
+    end_datetime: i.endDatetime || null,
+    timezone: i.timezone,
+    venue: t(i.venue),
+    format: i.format,
+    meeting_url: t(i.meetingUrl),
+    registration_url: t(i.registrationUrl),
+    whatsapp_url: t(i.whatsappUrl),
+    speaker_name: t(i.speakerName),
+    speaker_title: t(i.speakerTitle),
+    speaker_image: t(i.speakerImage),
+    max_participants: i.maxParticipants,
+    registration_required: i.registrationRequired,
+    status: i.status,
+    is_featured: i.isFeatured,
+    series: t(i.series),
+  };
+};
+
+/** A friendlier message for the one database error an admin can cause by hand. */
+const eventError = (e: { code?: string; message: string }) =>
+  new BackendError(e.code === "23505" ? "Another event already uses that web address. Change the address and save again." : e.message);
 
 const toLesson = (r: Row): Lesson => ({
   id: r.id,
@@ -66,10 +178,40 @@ const toCourse = (r: Row): Course => ({
   description: r.description,
   categoryId: r.category_id,
   difficulty: r.difficulty,
+  difficultyMax: r.difficulty_max ?? undefined,
+  durationWeeks: r.duration_weeks ?? undefined,
+  thumbnail: r.thumbnail ?? undefined,
+  faqs: r.faqs ?? [],
+  archived: r.archived ?? false,
+  discountLabel: r.discount_label ?? undefined,
+  discountStart: r.discount_start ?? null,
+  discountEnd: r.discount_end ?? null,
   level: r.level ?? 1,
   levelLabel: r.level_label,
   estimatedHours: r.estimated_hours ?? undefined,
   isFree: r.is_free,
+  courseType: r.course_type ?? "free",
+  access: r.access_type ?? "free",
+  price: r.price === null || r.price === undefined ? null : Number(r.price),
+  currency: r.currency ?? "NGN",
+  discountPrice: r.discount_price === null || r.discount_price === undefined ? null : Number(r.discount_price),
+  discountActive: r.discount_active ?? false,
+  paymentStatus: r.payment_status ?? "active",
+  deliveryType: r.delivery_type ?? "self_paced",
+  enrollmentStatus: r.enrollment_status ?? "open",
+  enrollmentStart: r.enrollment_start ?? null,
+  enrollmentEnd: r.enrollment_end ?? null,
+  communityAccess: r.community_access ?? false,
+  instructorSupport: r.instructor_support ?? false,
+  durationLabel: r.duration_label ?? undefined,
+  publishedAt: r.published_at ?? null,
+  overview: r.overview ?? undefined,
+  audience: r.audience ?? [],
+  outcomes: r.outcomes ?? [],
+  included: r.included ?? [],
+  projectPreviews: r.project_previews ?? [],
+  instructor: r.instructor_name ? { name: r.instructor_name, title: r.instructor_title ?? "", bio: r.instructor_bio ?? "" } : undefined,
+  professionalOutcome: r.professional_outcome ?? undefined,
   status: r.status,
   published: r.published,
   position: r.position,
@@ -95,6 +237,7 @@ const toCourse = (r: Row): Course => ({
         badge: m.badge_name ?? null,
         badgeCode: m.badge_code ?? null,
         skills: m.skills ?? [],
+        topics: m.topics ?? [],
         lessons: ((m.lessons ?? []) as Row[]).map(toLesson).sort((a, b) => a.position - b.position),
       }),
     )
@@ -140,20 +283,60 @@ const toPracticeSubmission = (r: Row): PracticeSubmission => ({
 const toCertificate = (r: Row): Certificate => ({
   id: r.id,
   certificateId: r.certificate_id,
-  credentialId: r.credential_id,
-  userId: r.user_id,
-  courseId: r.course_id,
+  source: r.source ?? "course",
+  credentialId: r.credential_id ?? null,
+  trackId: r.track_id ?? null,
+  userId: r.user_id ?? null,
+  courseId: r.course_id ?? null,
   recipientName: r.recipient_name,
+  recipientEmail: r.recipient_email ?? null,
+  certificateTitle: r.certificate_title ?? null,
   courseTitle: r.course_title,
+  trainingType: r.training_type ?? "academy_course",
+  certificateType: r.certificate_type ?? "completion",
+  instructorName: r.instructor_name ?? null,
+  description: r.description ?? null,
+  startDate: r.start_date ?? null,
+  completionDate: r.completion_date ?? null,
   issuedAt: r.issued_at,
+  grade: r.grade ?? null,
+  duration: r.duration ?? null,
+  templateId: r.template_id ?? "classic",
   status: r.status,
+  revokedAt: r.revoked_at ?? null,
   revokedReason: r.revoked_reason ?? null,
+  replacedCertificateId: r.replaced_certificate_id ?? null,
+  updatedAt: r.updated_at ?? r.issued_at,
+});
+
+const toAdminCertificate = (r: Row): AdminCertificate => ({ ...toCertificate(r.certificate), issuedBy: r.issued_by || null, replacedBy: r.replaced_by ?? null });
+
+const toPublicCertificate = (r: Row): PublicCertificate => ({
+  certificateId: r.certificate_id,
+  credentialId: r.credential_id ?? null,
+  recipientName: r.recipient_name,
+  certificateTitle: r.certificate_title ?? null,
+  courseTitle: r.course_title,
+  trainingType: r.training_type,
+  certificateType: r.certificate_type,
+  instructorName: r.instructor_name ?? null,
+  description: r.description ?? null,
+  startDate: r.start_date ?? null,
+  completionDate: r.completion_date ?? null,
+  issuedAt: r.issued_at,
+  grade: r.grade ?? null,
+  duration: r.duration ?? null,
+  templateId: r.template_id,
+  status: r.status,
+  revokedAt: r.revoked_at ?? null,
+  replacedBy: r.replaced_by ?? null,
 });
 
 const toOrder = (r: Row): CertificateOrder => ({
   id: r.id,
   userId: r.user_id,
-  courseId: r.course_id,
+  courseId: r.course_id ?? null,
+  trackId: r.track_id ?? null,
   credentialId: r.credential_id,
   currency: r.currency,
   amount: Number(r.amount),
@@ -165,7 +348,78 @@ const toOrder = (r: Row): CertificateOrder => ({
   paidAt: r.paid_at ?? null,
 });
 
-const toPrice = (r: Row): CertificatePrice => ({ currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
+/** The commercial fields of a track row, in the shape the course pages use. */
+const toSales = (r: Row): CourseSalesFields => ({
+  access: r.access_type ?? "free",
+  courseType: r.access_type === "paid" ? "professional" : "free",
+  price: r.price === null || r.price === undefined ? null : Number(r.price),
+  currency: r.currency ?? "NGN",
+  discountPrice: r.discount_price === null || r.discount_price === undefined ? null : Number(r.discount_price),
+  discountActive: r.discount_active ?? false,
+  paymentStatus: r.payment_status ?? "active",
+  deliveryType: r.delivery_type ?? "self_paced",
+  enrollmentStatus: r.enrollment_status ?? "open",
+  enrollmentStart: r.enrollment_start ?? null,
+  enrollmentEnd: r.enrollment_end ?? null,
+  communityAccess: r.community_access ?? false,
+  instructorSupport: r.instructor_support ?? false,
+  durationLabel: r.duration_label ?? undefined,
+  overview: r.overview ?? undefined,
+  audience: r.audience ?? [],
+  included: r.included ?? [],
+  projectPreviews: r.project_previews ?? [],
+  instructor: r.instructor_name ? { name: r.instructor_name, title: r.instructor_title ?? "", bio: r.instructor_bio ?? "" } : undefined,
+  professionalOutcome: r.professional_outcome ?? undefined,
+  allowInstalments: r.instalments_enabled ?? false,
+  firstPercent: r.first_percent ?? 50,
+  secondDueDays: r.second_due_days ?? 30,
+});
+
+const toAccount = (r: Row): PaymentAccount => ({
+  id: r.id,
+  label: r.label,
+  bankName: r.bank_name ?? null,
+  accountName: r.account_name ?? null,
+  accountNumber: r.account_number ?? null,
+  instructions: r.instructions ?? null,
+  currency: r.currency ?? "NGN",
+  active: r.active ?? true,
+  position: r.position ?? 0,
+});
+
+const toPayment = (r: Row): OrderPayment => ({
+  id: r.id,
+  orderId: r.order_id,
+  part: r.part,
+  amount: Number(r.amount),
+  currency: r.currency,
+  dueAt: r.due_at ?? null,
+  status: r.status,
+  accountLabel: r.account_label ?? null,
+  reference: r.reference,
+  payerName: r.payer_name ?? null,
+  paidOn: r.paid_on ?? null,
+  proofPath: r.proof_path ?? null,
+  note: r.note ?? null,
+  rejectedReason: r.rejected_reason ?? null,
+  source: r.source ?? "student",
+  confirmedAt: r.confirmed_at ?? null,
+  createdAt: r.created_at,
+});
+
+const toCourseOrder = (r: Row): CourseOrder => ({
+  id: r.id,
+  courseId: r.course_id ?? null,
+  trackId: r.track_id ?? null,
+  currency: r.currency,
+  listAmount: Number(r.list_amount),
+  amount: Number(r.amount),
+  status: r.status,
+  createdAt: r.created_at,
+  paidAt: r.paid_at ?? null,
+});
+
+const toPrice = (r: Row): CertificatePrice => ({ kind: r.kind ?? "course", currency: r.currency, amount: Number(r.amount), active: r.active, position: r.position });
 
 const toAttempt = (r: Row): AttemptResult => ({
   id: r.id,
@@ -206,6 +460,61 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
   });
 
+  // ---- course overview videos: private storage, read through short-lived signed links ----
+  const VIDEO_BUCKET = "course-videos";
+  async function signedUrl(path: string | null | undefined, seconds = 6 * 3600): Promise<string | null> {
+    if (!path) return null;
+    const { data, error } = await sb.storage.from(VIDEO_BUCKET).createSignedUrl(path, seconds);
+    return error ? null : data.signedUrl;
+  }
+  async function toAdminVideo(row: Row): Promise<CourseVideoAdmin> {
+    return {
+      courseId: row.course_id,
+      title: row.title,
+      description: row.description ?? "",
+      source: row.source,
+      videoUrl: row.video_url ?? null,
+      storagePath: row.storage_path ?? null,
+      thumbnailPath: row.thumbnail_path ?? null,
+      mimeType: row.mime_type ?? null,
+      sizeBytes: row.size_bytes ?? null,
+      durationSeconds: row.duration_seconds ?? null,
+      status: row.status,
+      updatedAt: row.updated_at,
+      publishedAt: row.published_at ?? null,
+      previewUrl: row.source === "upload" ? await signedUrl(row.storage_path, 3600) : null,
+      thumbnailUrl: await signedUrl(row.thumbnail_path, 3600),
+    };
+  }
+  /** Why a video cannot be saved or published yet, or null when it is fine. */
+  function videoProblem(v: Pick<CourseVideoInput, "title" | "description" | "source" | "videoUrl" | "storagePath" | "status">): string | null {
+    if (v.title.trim().length < 3 || v.title.trim().length > 140) return "Give the video a title of 3 to 140 characters.";
+    if (v.description.length > 2000) return "The description is over 2,000 characters.";
+    if (v.source === "url") {
+      if (v.videoUrl || v.status === "published") {
+        const parsed = parseVideoUrl(v.videoUrl ?? "");
+        if (!parsed.ok) return parsed.error;
+      }
+    } else if (v.status === "published" && !v.storagePath) return "Upload a video file before publishing.";
+    return null;
+  }
+  async function videoMaxMb(): Promise<number> {
+    const { data } = await sb.from("site_settings").select("course_video_max_mb").eq("id", 1).maybeSingle();
+    return Number((data as Row | null)?.course_video_max_mb) || DEFAULT_VIDEO_MAX_MB;
+  }
+
+  /** A published video row as something a page can play, or null when its link or file can't be used. */
+  async function playable(row: Row): Promise<CourseVideoPublic | null> {
+    const poster = await signedUrl(row.thumbnail_path);
+    const durationSeconds = row.duration_seconds ?? null;
+    if (row.source === "url") {
+      const parsed = parseVideoUrl(String(row.video_url ?? ""));
+      return parsed.ok ? { title: row.title, description: row.description ?? "", kind: parsed.value.kind, src: parsed.value.src, poster, durationSeconds } : null;
+    }
+    const src = await signedUrl(row.storage_path);
+    return src ? { title: row.title, description: row.description ?? "", kind: "file", src, poster, durationSeconds } : null;
+  }
+
   let cached: { id: string; user: User } | null = null;
   async function toUser(u: SbUser | null | undefined): Promise<User | null> {
     if (!u) return (cached = null);
@@ -220,6 +529,18 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     cached = { id: u.id, user };
     return user;
   }
+  /** Lesson text for a course, from the database function that checks the caller may read it. */
+  async function loadBodies(courseId: string): Promise<Map<string, string>> {
+    const { data, error } = await sb.rpc("get_course_bodies", { p_course_id: courseId });
+    if (!error) return new Map(((data ?? []) as Row[]).map((r) => [r.lesson_id as string, r.body_md as string]));
+    // Before the access migration has been applied, the table could still be read directly.
+    if (error.code === "PGRST202" || error.code === "42883") {
+      const direct = await sb.from("lessons").select("id, body_md").eq("course_id", courseId);
+      if (!direct.error) return new Map(((direct.data ?? []) as Row[]).map((r) => [r.id as string, r.body_md as string]));
+    }
+    return new Map();
+  }
+
   async function requireUserId() {
     const { data } = await sb.auth.getSession();
     const id = data.session?.user.id;
@@ -293,10 +614,38 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       return (check(await q) as Row[]).map(toCourse);
     },
     async getCourse(slug, opts) {
-      let q = sb.from("courses").select("*, course_modules(*, lessons(*))").eq("slug", slug);
+      let q = sb.from("courses").select(`*, course_modules(*, lessons(${LESSON_LIST_COLUMNS}))`).eq("slug", slug);
       if (!opts?.includeUnpublished) q = q.eq("published", true);
       const row = check(await q.maybeSingle()) as Row | null;
-      return row ? toCourse(row) : null;
+      if (!row) return null;
+      const course = toCourse(row);
+      // Lesson text comes only from get_course_bodies, which the database answers only for free courses, enrolled learners and admins.
+      const bodies = await loadBodies(course.id);
+      for (const m of course.modules) for (const l of m.lessons) l.body = bodies.get(l.id) ?? "";
+      return course;
+    },
+    async getCourseVideo(courseId) {
+      // A video problem must never break the course page, so any failure just means "no video".
+      const { data, error } = await sb.from("course_videos").select("*").eq("course_id", courseId).eq("status", "published").maybeSingle();
+      if (error || !data) return null;
+      const row = data as Row;
+      const poster = await signedUrl(row.thumbnail_path);
+      let video: Omit<CourseVideoPublic, "poster"> | null = null;
+      if (row.source === "url") {
+        const parsed = parseVideoUrl(String(row.video_url ?? ""));
+        if (parsed.ok) video = { title: row.title, description: row.description ?? "", kind: parsed.value.kind, src: parsed.value.src };
+      } else {
+        const src = await signedUrl(row.storage_path);
+        if (src) video = { title: row.title, description: row.description ?? "", kind: "file", src };
+      }
+      return video ? { ...video, poster } : null;
+    },
+    async getLessonVideo(lessonId) {
+      // Row-level security returns the video only while it is published and this learner may read the lesson.
+      // Any failure just means "no video", so the written lesson is never held up.
+      const { data, error } = await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).eq("status", "published").maybeSingle();
+      if (error || !data) return null;
+      return playable(data as Row);
     },
     async getAssessment(courseId, moduleId) {
       let q = sb.from("assessments").select("*, assessment_questions(id, prompt, options, position)").eq("course_id", courseId);
@@ -321,17 +670,22 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async listEnrollments() {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("enrollments").select("*")) as Row[]).map((r) => ({
+      // Always filter to the signed-in user: row-level security also lets admins read everyone's rows.
+      return (check(await sb.from("enrollments").select("*").eq("user_id", data.session.user.id)) as Row[]).map((r) => ({
         courseId: r.course_id,
         enrolledAt: r.enrolled_at,
         completedAt: r.completed_at,
         lastLessonId: r.last_lesson_id,
         lastActiveAt: r.last_active_at ?? r.enrolled_at,
+        source: r.source ?? "free",
       }));
     },
     async enroll(courseId) {
       const id = await requireUserId();
-      check(await sb.from("enrollments").upsert({ user_id: id, course_id: courseId }, { onConflict: "user_id,course_id", ignoreDuplicates: true }));
+      // Paid courses can't be self-enrolled: an enrolment that already exists is left alone, and the database refuses a new one.
+      const have = check(await sb.from("enrollments").select("course_id").eq("user_id", id).eq("course_id", courseId).maybeSingle()) as Row | null;
+      if (have) return;
+      check(await sb.from("enrollments").insert({ user_id: id, course_id: courseId }));
     },
     async setLastLesson(courseId, lessonId) {
       const { data } = await sb.auth.getSession();
@@ -353,8 +707,8 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       const { data } = await sb.auth.getSession();
       if (!data.session) return { completedLessons: [], completedExercises: [] };
       const [lessons, exercises] = await Promise.all([
-        sb.from("lesson_progress").select("lesson_id").eq("course_id", courseId),
-        sb.from("exercise_completions").select("exercise_id").eq("course_id", courseId),
+        sb.from("lesson_progress").select("lesson_id").eq("user_id", data.session.user.id).eq("course_id", courseId),
+        sb.from("exercise_completions").select("exercise_id").eq("user_id", data.session.user.id).eq("course_id", courseId),
       ]);
       return {
         completedLessons: (check(lessons) as Row[]).map((r) => r.lesson_id),
@@ -383,12 +737,12 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     async listAttempts(assessmentId) {
       const { data } = await sb.auth.getSession();
       if (!data.session) return [];
-      return (check(await sb.from("assessment_attempts").select("*").eq("assessment_id", assessmentId).order("submitted_at")) as Row[]).map(toAttempt);
+      return (check(await sb.from("assessment_attempts").select("*").eq("user_id", data.session.user.id).eq("assessment_id", assessmentId).order("submitted_at")) as Row[]).map(toAttempt);
     },
     async getSubmission(projectId) {
       const { data } = await sb.auth.getSession();
       if (!data.session) return null;
-      const row = check(await sb.from("project_submissions").select("*").eq("project_id", projectId).maybeSingle()) as Row | null;
+      const row = check(await sb.from("project_submissions").select("*").eq("user_id", data.session.user.id).eq("project_id", projectId).maybeSingle()) as Row | null;
       return row ? toSubmission(row) : null;
     },
     async submitProject(projectId, { content, url }) {
@@ -470,8 +824,89 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
       return toCertificate((data as { certificate: Row }).certificate);
     },
-    async listCertificatePrices() {
-      return (check(await sb.from("certificate_prices").select("*").eq("active", true).order("position")) as Row[]).map(toPrice);
+    async startCourseOrder(courseId) {
+      return toCourseOrder(check(await sb.rpc("start_course_order", { p_course_id: courseId })) as Row);
+    },
+    async listMyCourseOrders() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("course_orders").select("*").eq("user_id", data.session.user.id).order("created_at", { ascending: false })) as Row[]).map(toCourseOrder);
+    },
+    async startCourseCheckout(orderId, returnUrl) {
+      const { data, error } = await sb.functions.invoke("certificate-checkout", { body: { orderId, returnUrl, kind: "course" } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't start the payment."));
+      return (data as { url: string }).url;
+    },
+    async confirmCoursePayment(reference) {
+      const { data, error } = await sb.functions.invoke("certificate-verify", { body: { reference } });
+      if (error) throw new BackendError(await functionError(error, "Couldn't confirm the payment."));
+      const d = data as { courseId?: string | null; trackId?: string | null };
+      if (!d.courseId && !d.trackId) throw new BackendError("That payment isn't for a course or programme.");
+      return { courseId: d.courseId ?? null, trackId: d.trackId ?? null };
+    },
+    async getTrackingSettings() {
+      const { data, error } = await sb.from("site_settings").select("ga4_id, google_ads_id, meta_pixel_id").eq("id", 1).maybeSingle();
+      if (error || !data) return { ga4Id: null, googleAdsId: null, metaPixelId: null } satisfies TrackingSettings;
+      return { ga4Id: data.ga4_id ?? null, googleAdsId: data.google_ads_id ?? null, metaPixelId: data.meta_pixel_id ?? null } satisfies TrackingSettings;
+    },
+    async getPaymentSettings() {
+      const { data, error } = await sb.from("payment_settings").select("*").eq("id", 1).maybeSingle();
+      // A database without the manual-payment migration keeps taking card payments.
+      if (error || !data) return { mode: "paystack", proofRequired: true, instructions: null };
+      return { mode: data.mode, proofRequired: data.proof_required, instructions: data.instructions ?? null };
+    },
+    async listPaymentAccounts() {
+      return (check(await sb.from("payment_accounts").select("*").eq("active", true).order("position").order("created_at")) as Row[]).map(toAccount);
+    },
+    async startManualOrder(kind, id, plan) {
+      const orderId = check(await sb.rpc("start_manual_order", { p_kind: kind, p_id: id, p_plan: plan })) as string;
+      const order = check(await sb.from("course_orders").select("*").eq("id", orderId).single()) as Row;
+      const payments = check(await sb.from("order_payments").select("*").eq("order_id", orderId).order("part")) as Row[];
+      return { order: toCourseOrder(order), payments: payments.map(toPayment) };
+    },
+    async listMyManualOrders() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      const payments = (check(await sb.from("order_payments").select("*").eq("user_id", data.session.user.id).order("part")) as Row[]).map(toPayment);
+      if (!payments.length) return [];
+      const orders = check(await sb.from("course_orders").select("*").in("id", [...new Set(payments.map((p) => p.orderId))]).order("created_at", { ascending: false })) as Row[];
+      return orders.map((o) => ({ order: toCourseOrder(o), payments: payments.filter((p) => p.orderId === o.id) }));
+    },
+    async submitPayment({ paymentId, accountId, payerName, paidOn, note, proof }) {
+      const uid = await requireUserId();
+      let path: string | null = null;
+      if (proof) {
+        if (proof.size > 5 * 1024 * 1024) throw new BackendError("The receipt must be 5 MB or smaller.");
+        path = `${uid}/${paymentId}-${Date.now()}-${proof.name.replace(/[^A-Za-z0-9._-]/g, "_")}`;
+        const up = await sb.storage.from("payment-proofs").upload(path, proof, { contentType: proof.type || undefined });
+        if (up.error) throw new BackendError(up.error.message);
+      }
+      check(await sb.rpc("submit_payment", { p_payment_id: paymentId, p_account_id: accountId, p_payer_name: payerName, p_paid_on: paidOn || null, p_proof_path: path, p_note: note }));
+    },
+    async listProgrammeSales() {
+      // Tolerates a database that hasn't had the programme migration yet: the site's built-in defaults apply.
+      const { data, error } = await sb.from("tracks").select("*");
+      if (error) return {};
+      return Object.fromEntries((data as Row[]).filter((r) => r.access_type !== undefined).map((r) => [r.id as string, toSales(r)]));
+    },
+    async listMyProgrammes() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      const res = await sb.from("programme_enrollments").select("*").eq("user_id", data.session.user.id);
+      if (res.error) return [];
+      return (res.data as Row[]).map((r) => ({ trackId: r.track_id, enrolledAt: r.enrolled_at, source: r.source }));
+    },
+    async startProgrammePurchase(trackId) {
+      return toCourseOrder(check(await sb.rpc("start_programme_purchase", { p_track_id: trackId })) as Row);
+    },
+    async claimProgrammeCertificate(trackId) {
+      return toCertificate(check(await sb.rpc("claim_programme_certificate", { p_track_id: trackId })) as Row);
+    },
+    async listCertificatePrices(kind = "course") {
+      return (check(await sb.from("certificate_prices").select("*").eq("kind", kind).eq("active", true).order("position")) as Row[]).map(toPrice);
+    },
+    async startProgrammeOrder(trackId, currency) {
+      return toOrder(check(await sb.rpc("start_programme_order", { p_track_id: trackId, p_currency: currency })) as Row);
     },
     async startCertificateOrder(courseId, currency) {
       return toOrder(check(await sb.rpc("start_certificate_order", { p_course_id: courseId, p_currency: currency })) as Row);
@@ -494,12 +929,283 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
     },
     async verifyCertificate(certificateId) {
       const r = (check(await sb.rpc("verify_certificate", { p_certificate_id: certificateId })) as Row[])?.[0];
-      return r
-        ? { certificateId: r.certificate_id, credentialId: r.credential_id, recipientName: r.recipient_name, courseTitle: r.course_title, issuedAt: r.issued_at, status: r.status }
-        : null;
+      return r ? toPublicCertificate(r) : null;
+    },
+    async recordCertificateDownload(certificateId) {
+      check(await sb.rpc("record_certificate_download", { p_certificate_id: certificateId }));
+    },
+
+    /* ---------- community and events ---------- */
+    async getCommunity() {
+      const r = (check(await sb.rpc("get_community")) as Row[])?.[0];
+      return r ? { name: r.name, description: r.description, whatsappUrl: r.whatsapp_invite_url, welcomeMessage: r.welcome_message, buttonText: r.button_text } : null;
+    },
+    async trackCommunityClick(source) {
+      // Counting must never get in the way of the button.
+      await sb.rpc("track_community_click", { p_source: source }).then(
+        () => undefined,
+        () => undefined,
+      );
+    },
+    async listEvents() {
+      return (check(await sb.rpc("list_public_events")) as Row[]).map((r) => toEvent(r));
+    },
+    async getEvent(slug) {
+      return (await backend.listEvents()).find((e) => e.slug === slug) ?? null;
+    },
+    async registerForEvent(eventId, input) {
+      return toRegistration(
+        check(await sb.rpc("register_for_event", { p_event_id: eventId, p_full_name: input.fullName, p_email: input.email, p_phone: input.phone })) as Row,
+      );
+    },
+    async revealEventLink(eventId, email) {
+      return (check(await sb.rpc("reveal_event_link", { p_event_id: eventId, p_email: email ?? null })) as string | null) ?? null;
+    },
+    async listMyRegistrations() {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) return [];
+      return (check(await sb.from("academy_event_registrations").select("*").eq("user_id", data.session.user.id).eq("registration_status", "registered")) as Row[]).map(toRegistration);
+    },
+    async cancelMyRegistration(eventId) {
+      check(await sb.rpc("cancel_my_registration", { p_event_id: eventId }));
     },
 
     admin: {
+      async getCommunitySettings() {
+        return toCommunity(check(await sb.from("academy_community_settings").select("*").eq("id", 1).single()) as Row);
+      },
+      async saveCommunitySettings(c) {
+        const res = await sb
+          .from("academy_community_settings")
+          .update({ name: c.name.trim(), description: c.description.trim(), whatsapp_invite_url: c.whatsappUrl?.trim() || null, welcome_message: c.welcomeMessage.trim(), button_text: c.buttonText.trim() || "Join Community", is_active: c.isActive })
+          .eq("id", 1);
+        if (res.error) throw new BackendError(res.error.message.includes("community_needs_link") ? "Add the WhatsApp invite link before switching the community on." : res.error.message);
+      },
+      async communityStats() {
+        const [stats, sources] = await Promise.all([sb.rpc("admin_community_stats"), sb.rpc("admin_community_click_sources")]);
+        const r = (check(stats) as Row[])[0] ?? {};
+        return {
+          clicksTotal: Number(r.clicks_total ?? 0),
+          clicks30d: Number(r.clicks_30d ?? 0),
+          upcomingEvents: Number(r.upcoming_events ?? 0),
+          registrationsTotal: Number(r.registrations_total ?? 0),
+          registrationsUpcoming: Number(r.registrations_upcoming ?? 0),
+          clickSources: (check(sources) as Row[]).map((x) => ({ source: x.source, clicks: Number(x.clicks) })),
+        };
+      },
+      async recentRegistrations(limit = 8) {
+        const [regs, events] = await Promise.all([
+          sb.from("academy_event_registrations").select("*").order("registered_at", { ascending: false }).limit(limit),
+          sb.from("academy_events").select("id, title"),
+        ]);
+        const titles = new Map((check(events) as Row[]).map((e) => [e.id, e.title]));
+        return (check(regs) as Row[]).map((r) => ({ ...toRegistration(r), eventTitle: titles.get(r.event_id) ?? "Deleted event" }));
+      },
+      async listAllEvents() {
+        const [events, regs] = await Promise.all([
+          sb.from("academy_events").select("*").order("start_datetime", { ascending: true }),
+          sb.from("academy_event_registrations").select("event_id").eq("registration_status", "registered"),
+        ]);
+        const counts = new Map<string, number>();
+        for (const r of check(regs) as Row[]) counts.set(r.event_id, (counts.get(r.event_id) ?? 0) + 1);
+        return (check(events) as Row[]).map((r) => toEvent(r, counts.get(r.id) ?? 0));
+      },
+      async getEventById(id) {
+        return (await backend.admin.listAllEvents()).find((e) => e.id === id) ?? null;
+      },
+      async saveEvent(input) {
+        const row = eventRow(input);
+        const res = input.id ? await sb.from("academy_events").update(row).eq("id", input.id).select("*").single() : await sb.from("academy_events").insert(row).select("*").single();
+        if (res.error) throw eventError(res.error);
+        return toEvent(res.data as Row);
+      },
+      async setEventStatus(id, status) {
+        check(await sb.from("academy_events").update({ status }).eq("id", id));
+      },
+      async duplicateEvent(id) {
+        const src = await backend.admin.getEventById(id);
+        if (!src) throw new BackendError("Event not found.");
+        const taken = new Set((await backend.admin.listAllEvents()).map((e) => e.slug));
+        let slug = `${src.slug}-copy`.slice(0, 95);
+        for (let n = 2; taken.has(slug); n++) slug = `${src.slug}-copy-${n}`.slice(0, 95);
+        const { id: _id, registeredCount: _rc, createdAt: _c, updatedAt: _u, ...rest } = src;
+        void _id; void _rc; void _c; void _u;
+        return backend.admin.saveEvent({ ...rest, title: `${src.title} (copy)`, slug, status: "draft", isFeatured: false });
+      },
+      async deleteEvent(id) {
+        check(await sb.from("academy_events").delete().eq("id", id));
+      },
+      async listRegistrations(eventId) {
+        return (check(await sb.from("academy_event_registrations").select("*").eq("event_id", eventId).order("registered_at", { ascending: false })) as Row[]).map(toRegistration);
+      },
+      async setAttendance(registrationId, status) {
+        check(await sb.rpc("admin_set_attendance", { p_registration_id: registrationId, p_status: status }));
+      },
+      async uploadEventImage(file) {
+        if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) throw new BackendError("Use a PNG, JPEG or WebP image.");
+        if (file.size > 2 * 1024 * 1024) throw new BackendError("That image is over 2 MB. Choose a smaller one.");
+        const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+        const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${ext}`;
+        const up = await sb.storage.from("event-images").upload(path, file, { contentType: file.type, cacheControl: "31536000" });
+        if (up.error) throw new BackendError(up.error.message);
+        return sb.storage.from("event-images").getPublicUrl(path).data.publicUrl;
+      },
+      async getCourseVideo(courseId) {
+        const row = check(await sb.from("course_videos").select("*").eq("course_id", courseId).maybeSingle()) as Row | null;
+        return row ? toAdminVideo(row) : null;
+      },
+      async saveCourseVideo(input) {
+        const problem = videoProblem(input);
+        if (problem) throw new BackendError(problem);
+        const { data: auth } = await sb.auth.getUser();
+        const row = check(
+          await sb
+            .from("course_videos")
+            .upsert(
+              {
+                course_id: input.courseId,
+                title: input.title.trim(),
+                description: input.description.trim(),
+                source: input.source,
+                video_url: input.source === "url" ? input.videoUrl?.trim() || null : null,
+                storage_path: input.source === "upload" ? input.storagePath : null,
+                thumbnail_path: input.thumbnailPath,
+                mime_type: input.source === "upload" ? input.mimeType : null,
+                size_bytes: input.source === "upload" ? input.sizeBytes : null,
+                status: input.status,
+                updated_by: auth.user?.id ?? null,
+              },
+              { onConflict: "course_id" },
+            )
+            .select("*")
+            .single(),
+        ) as Row;
+        return toAdminVideo(row);
+      },
+      async uploadCourseVideoFile(courseId, file, onProgress) {
+        const problem = videoFileProblem(file, await videoMaxMb());
+        if (problem) throw new BackendError(problem);
+        const { data: sess } = await sb.auth.getSession();
+        if (!sess.session) throw new BackendError("Sign in again to upload.");
+        const token = sess.session.access_token;
+        const path = storageKey(courseId, "video", file.type, crypto.randomUUID());
+        // supabase-js reports no upload progress, so the file goes to the storage endpoint with the same request it would use.
+        await new Promise<void>((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", `${url}/storage/v1/object/${VIDEO_BUCKET}/${path.split("/").map(encodeURIComponent).join("/")}`);
+          xhr.setRequestHeader("authorization", `Bearer ${token}`);
+          xhr.setRequestHeader("apikey", anonKey);
+          xhr.setRequestHeader("x-upsert", "false");
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+          };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) return resolve();
+            let message = "The upload failed.";
+            try {
+              message = (JSON.parse(xhr.responseText) as { message?: string }).message ?? message;
+            } catch {
+              /* keep the default message */
+            }
+            reject(new BackendError(xhr.status === 413 ? "That video is larger than the storage service allows. Compress it and try again." : message));
+          };
+          xhr.onerror = () => reject(new BackendError("The upload was interrupted. Check your connection and try again."));
+          xhr.onabort = () => reject(new BackendError("The upload was cancelled."));
+          const body = new FormData();
+          body.append("cacheControl", "3600");
+          body.append("", file);
+          xhr.send(body);
+        });
+        onProgress(100);
+        return { path, mimeType: file.type, sizeBytes: file.size };
+      },
+      async uploadCourseVideoThumbnail(courseId, file) {
+        const problem = thumbnailProblem(file);
+        if (problem) throw new BackendError(problem);
+        const path = storageKey(courseId, "thumb", file.type, crypto.randomUUID());
+        const up = await sb.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, cacheControl: "3600" });
+        if (up.error) throw new BackendError(up.error.message);
+        return path;
+      },
+      async deleteCourseVideoFiles(paths) {
+        const list = paths.filter(Boolean);
+        if (!list.length) return;
+        const res = await sb.storage.from(VIDEO_BUCKET).remove(list);
+        if (res.error) throw new BackendError(res.error.message);
+      },
+      async setCourseVideoStatus(courseId, status: VideoStatus) {
+        const existing = check(await sb.from("course_videos").select("*").eq("course_id", courseId).maybeSingle()) as Row | null;
+        if (!existing) throw new BackendError("This course has no video yet.");
+        const problem = videoProblem({ title: existing.title, description: existing.description ?? "", source: existing.source, videoUrl: existing.video_url, storagePath: existing.storage_path, status });
+        if (problem) throw new BackendError(problem);
+        const row = check(await sb.from("course_videos").update({ status }).eq("course_id", courseId).select("*").single()) as Row;
+        return toAdminVideo(row);
+      },
+      async removeCourseVideo(courseId) {
+        const existing = check(await sb.from("course_videos").select("storage_path, thumbnail_path").eq("course_id", courseId).maybeSingle()) as Row | null;
+        check(await sb.from("course_videos").delete().eq("course_id", courseId));
+        const files = [existing?.storage_path, existing?.thumbnail_path].filter(Boolean) as string[];
+        if (files.length) await sb.storage.from(VIDEO_BUCKET).remove(files); // the record is gone, so a leftover file is only untidy
+      },
+      async getCourseVideoMaxMb() {
+        return videoMaxMb();
+      },
+      async saveCourseVideoMaxMb(mb) {
+        if (!Number.isInteger(mb) || mb < 1 || mb > MAX_VIDEO_MB_CEILING) throw new BackendError(`Enter a whole number of megabytes from 1 to ${MAX_VIDEO_MB_CEILING}.`);
+        check(await sb.from("site_settings").update({ course_video_max_mb: mb, updated_at: new Date().toISOString() }).eq("id", 1));
+      },
+      async getLessonVideo(lessonId) {
+        const row = check(await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        return row ? { ...(await toAdminVideo(row)), lessonId } : null;
+      },
+      async saveLessonVideo(input) {
+        const problem = videoProblem(input);
+        if (problem) throw new BackendError(problem);
+        const { data: auth } = await sb.auth.getUser();
+        const row = check(
+          await sb
+            .from("lesson_videos")
+            .upsert(
+              {
+                lesson_id: input.lessonId,
+                course_id: input.courseId,
+                title: input.title.trim(),
+                description: input.description.trim(),
+                source: input.source,
+                video_url: input.source === "url" ? input.videoUrl?.trim() || null : null,
+                storage_path: input.source === "upload" ? input.storagePath : null,
+                thumbnail_path: input.thumbnailPath,
+                mime_type: input.source === "upload" ? input.mimeType : null,
+                size_bytes: input.source === "upload" ? input.sizeBytes : null,
+                duration_seconds: input.source === "upload" && input.durationSeconds ? Math.round(input.durationSeconds) : null,
+                status: input.status,
+                updated_by: auth.user?.id ?? null,
+              },
+              { onConflict: "lesson_id" },
+            )
+            .select("*")
+            .single(),
+        ) as Row;
+        return { ...(await toAdminVideo(row)), lessonId: input.lessonId };
+      },
+      async setLessonVideoStatus(lessonId, status: VideoStatus) {
+        const existing = check(await sb.from("lesson_videos").select("*").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        if (!existing) throw new BackendError("This lesson has no video yet.");
+        const problem = videoProblem({ title: existing.title, description: existing.description ?? "", source: existing.source, videoUrl: existing.video_url, storagePath: existing.storage_path, status });
+        if (problem) throw new BackendError(problem);
+        const row = check(await sb.from("lesson_videos").update({ status }).eq("lesson_id", lessonId).select("*").single()) as Row;
+        return { ...(await toAdminVideo(row)), lessonId };
+      },
+      async removeLessonVideo(lessonId) {
+        const existing = check(await sb.from("lesson_videos").select("storage_path, thumbnail_path").eq("lesson_id", lessonId).maybeSingle()) as Row | null;
+        check(await sb.from("lesson_videos").delete().eq("lesson_id", lessonId));
+        const files = [existing?.storage_path, existing?.thumbnail_path].filter(Boolean) as string[];
+        if (files.length) await sb.storage.from(VIDEO_BUCKET).remove(files); // the record is gone, so a leftover file is only untidy
+      },
+      async listLessonVideoStatuses(courseId) {
+        const rows = check(await sb.from("lesson_videos").select("lesson_id, status").eq("course_id", courseId)) as Row[];
+        return Object.fromEntries(rows.map((r) => [r.lesson_id as string, r.status as VideoStatus]));
+      },
       async saveCourse(c) {
         check(
           await sb.from("courses").upsert({
@@ -513,10 +1219,40 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             description: c.description,
             category_id: c.categoryId,
             difficulty: c.difficulty,
+            difficulty_max: c.difficultyMax ?? null,
+            duration_weeks: c.durationWeeks ?? null,
+            thumbnail: c.thumbnail?.trim() || null,
+            faqs: (c.faqs ?? []).filter((f) => f.q.trim() && f.a.trim()),
+            archived: c.archived ?? false,
+            discount_label: c.discountLabel?.trim() || null,
+            discount_start: c.discountStart || null,
+            discount_end: c.discountEnd || null,
             level: c.level,
             level_label: c.levelLabel,
             estimated_hours: c.estimatedHours ?? null,
-            is_free: c.isFree,
+            course_type: c.courseType ?? "free",
+            access_type: c.access ?? "free",
+            price: c.price ?? null,
+            currency: c.currency ?? "NGN",
+            discount_price: c.discountPrice ?? null,
+            discount_active: c.discountActive ?? false,
+            payment_status: c.paymentStatus ?? "active",
+            delivery_type: c.deliveryType ?? "self_paced",
+            enrollment_status: c.enrollmentStatus ?? "open",
+            enrollment_start: c.enrollmentStart || null,
+            enrollment_end: c.enrollmentEnd || null,
+            community_access: c.communityAccess ?? false,
+            instructor_support: c.instructorSupport ?? false,
+            duration_label: c.durationLabel?.trim() || null,
+            overview: c.overview?.trim() || null,
+            audience: c.audience ?? [],
+            outcomes: c.outcomes ?? [],
+            included: c.included ?? [],
+            project_previews: c.projectPreviews ?? [],
+            instructor_name: c.instructor?.name?.trim() || null,
+            instructor_title: c.instructor?.title?.trim() || null,
+            instructor_bio: c.instructor?.bio?.trim() || null,
+            professional_outcome: c.professionalOutcome?.trim() || null,
             status: c.status,
             published: c.published,
             position: c.position,
@@ -543,6 +1279,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
             badge_name: m.badge || null,
             badge_code: m.badgeCode || null,
             skills: m.skills,
+            topics: m.topics ?? [],
           }),
         );
       },
@@ -553,22 +1290,285 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         for (const [i, id] of ids.entries()) check(await sb.from("course_modules").update({ position: i + 1 }).eq("id", id));
       },
       async saveLesson(l) {
+        // An upsert needs read access to the whole table, which learners no longer have, so admins save through a function.
         check(
-          await sb.from("lessons").upsert({
-            id: l.id,
-            course_id: l.courseId,
-            module_id: l.moduleId,
-            slug: l.slug,
-            title: l.title,
-            summary: l.summary,
-            minutes: l.minutes,
-            body_md: l.body,
-            required: l.required,
-            published: l.published,
-            position: l.position,
-            required_exercises: requiredExerciseIds(l.body),
+          await sb.rpc("admin_save_lesson", {
+            p_lesson: {
+              id: l.id,
+              course_id: l.courseId,
+              module_id: l.moduleId,
+              slug: l.slug,
+              title: l.title,
+              summary: l.summary,
+              minutes: l.minutes,
+              body_md: l.body,
+              required: l.required,
+              published: l.published,
+              position: l.position,
+              required_exercises: requiredExerciseIds(l.body),
+            },
           }),
         );
+      },
+      async listCourseStats() {
+        return (check(await sb.rpc("admin_course_stats")) as Row[]).map(
+          (r): CourseStats => ({
+            courseId: r.course_id,
+            title: r.title,
+            courseType: r.course_type,
+            accessType: r.access_type,
+            published: r.published,
+            price: r.price === null ? null : Number(r.price),
+            currency: r.currency,
+            enrollments: r.enrollments,
+            freeEnrollments: r.free_enrollments,
+            paidEnrollments: r.paid_enrollments,
+            grantedEnrollments: r.granted_enrollments,
+            completions: r.completions,
+            revenue: Object.fromEntries(Object.entries((r.revenue ?? {}) as Record<string, number>).map(([k, v]) => [k, Number(v)])),
+            converted: r.converted,
+          }),
+        );
+      },
+      async saveProgramme(trackId, c) {
+        check(
+          await sb
+            .from("tracks")
+            .update({
+              access_type: c.access ?? "free",
+              price: c.price ?? null,
+              currency: c.currency ?? "NGN",
+              discount_price: c.discountPrice ?? null,
+              discount_active: c.discountActive ?? false,
+              payment_status: c.paymentStatus ?? "active",
+              delivery_type: c.deliveryType ?? "self_paced",
+              enrollment_status: c.enrollmentStatus ?? "open",
+              enrollment_start: c.enrollmentStart || null,
+              enrollment_end: c.enrollmentEnd || null,
+              community_access: c.communityAccess ?? false,
+              instructor_support: c.instructorSupport ?? false,
+              duration_label: c.durationLabel?.trim() || null,
+              overview: c.overview?.trim() || null,
+              audience: c.audience ?? [],
+              included: c.included ?? [],
+              project_previews: c.projectPreviews ?? [],
+              instructor_name: c.instructor?.name?.trim() || null,
+              instructor_title: c.instructor?.title?.trim() || null,
+              instructor_bio: c.instructor?.bio?.trim() || null,
+              professional_outcome: c.professionalOutcome?.trim() || null,
+              instalments_enabled: c.allowInstalments ?? false,
+              first_percent: c.firstPercent ?? 50,
+              second_due_days: c.secondDueDays ?? 30,
+              commerce_seeded: true,
+            })
+            .eq("id", trackId),
+        );
+      },
+      async saveTrackingSettings(s) {
+        const clean = (v: string | null) => v?.trim() || null;
+        check(await sb.from("site_settings").update({ ga4_id: clean(s.ga4Id), google_ads_id: clean(s.googleAdsId), meta_pixel_id: clean(s.metaPixelId), updated_at: new Date().toISOString() }).eq("id", 1));
+      },
+      async listEmailTemplates() {
+        return (check(await sb.from("email_templates").select("*").order("key", { ascending: false })) as Row[]).map((r): EmailTemplate => ({ key: r.key, label: r.label, subject: r.subject, body: r.body, enabled: r.enabled }));
+      },
+      async saveEmailTemplate(t) {
+        check(await sb.from("email_templates").update({ subject: t.subject.trim(), body: t.body, enabled: t.enabled, updated_at: new Date().toISOString() }).eq("key", t.key));
+      },
+      async listEmailLog() {
+        return (check(await sb.from("email_outbox").select("*").order("created_at", { ascending: false }).limit(200)) as Row[]).map(
+          (r): EmailLogEntry => ({ id: r.id, toEmail: r.to_email, toName: r.to_name ?? null, template: r.template ?? null, subject: r.subject, body: r.body, status: r.status, error: r.error ?? null, createdAt: r.created_at, sentAt: r.sent_at ?? null }),
+        );
+      },
+      async deleteEmails(ids) {
+        if (ids.length) check(await sb.from("email_outbox").delete().in("id", ids));
+      },
+      async emailSetup() {
+        const s = check(await sb.from("email_settings").select("enabled, reply_to").eq("id", 1).single()) as Row;
+        const st = ((check(await sb.rpc("admin_email_status")) as Row[]) ?? [])[0];
+        // A Gmail account saved in the dashboard counts as connected straight away; the function only adds the Resend case.
+        let configured = !!(st?.smtp_user && st?.has_password);
+        let provider: EmailSetup["provider"] = configured ? "gmail" : null;
+        let from: string | null = configured ? (st.smtp_user as string) : null;
+        try {
+          const { data } = await sb.functions.invoke("process-emails", { body: { check: true } });
+          const d = data as { configured?: boolean; from?: string | null; provider?: EmailSetup["provider"] } | null;
+          if (d?.configured) {
+            configured = true;
+            from = d.from ?? from;
+            provider = d.provider ?? provider;
+          }
+        } catch {
+          // The function can't be reached: the saved Gmail details still count.
+        }
+        return { enabled: s.enabled, replyTo: s.reply_to ?? null, configured, from, provider, smtpUser: (st?.smtp_user as string | null) ?? null } satisfies EmailSetup;
+      },
+      async saveEmailSettings(s) {
+        check(await sb.from("email_settings").update({ enabled: s.enabled, reply_to: s.replyTo?.trim() || null }).eq("id", 1));
+      },
+      async saveEmailCredentials(gmail, appPassword) {
+        check(await sb.rpc("admin_save_email_credentials", { p_user: gmail, p_pass: appPassword }));
+      },
+      async clearEmailCredentials() {
+        check(await sb.rpc("admin_clear_email_credentials"));
+      },
+      async sendMessage(userIds, subject, body) {
+        return check(await sb.rpc("admin_send_message", { p_user_ids: userIds, p_subject: subject, p_body: body })) as number;
+      },
+      async retryEmails() {
+        return check(await sb.rpc("admin_retry_emails")) as number;
+      },
+      async sendQueuedEmails() {
+        const { data, error } = await sb.functions.invoke("process-emails", { body: {} });
+        if (error) throw new BackendError(await functionError(error, "Couldn't send the emails."));
+        const d = data as { configured: boolean; sent?: number; failed?: number };
+        return { configured: d.configured, sent: d.sent ?? 0, failed: d.failed ?? 0 };
+      },
+      async deleteStudent(userId) {
+        check(await sb.rpc("admin_delete_student", { p_user: userId }));
+      },
+      async listPayments() {
+        return (check(await sb.rpc("admin_list_payments")) as Row[]).map(
+          (r): AdminPayment => ({
+            ...toPayment({ ...r, id: r.id }),
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            courseId: r.course_id ?? null,
+            trackId: r.track_id ?? null,
+            targetTitle: r.target_title ?? "",
+            orderStatus: r.order_status,
+            orderAmount: Number(r.order_amount),
+          }),
+        );
+      },
+      async confirmPayment(paymentId, note) {
+        check(await sb.rpc("admin_confirm_payment", { p_payment_id: paymentId, p_note: note }));
+      },
+      async rejectPayment(paymentId, reason) {
+        check(await sb.rpc("admin_reject_payment", { p_payment_id: paymentId, p_reason: reason }));
+      },
+      async registerPayment(i) {
+        check(
+          await sb.rpc("admin_register_payment", {
+            p_user: i.userId, p_kind: i.kind, p_id: i.targetId, p_amount: i.amount, p_method: i.method, p_reference: i.reference, p_note: i.note, p_paid_on: i.paidOn || null,
+          }),
+        );
+      },
+      async updatePayment(paymentId, p) {
+        check(await sb.rpc("admin_update_payment", { p_payment_id: paymentId, p_amount: p.amount, p_status: p.status, p_method: p.method, p_note: p.note, p_paid_on: p.paidOn }));
+      },
+      async deletePayment(paymentId) {
+        const row = (check(await sb.from("order_payments").select("proof_path").eq("id", paymentId).maybeSingle()) as Row | null) ?? null;
+        check(await sb.rpc("admin_delete_payment", { p_payment_id: paymentId }));
+        // The receipt file can only be removed through the storage API.
+        if (row?.proof_path) await sb.storage.from("payment-proofs").remove([row.proof_path]);
+      },
+      async listAllPaymentAccounts() {
+        return (check(await sb.from("payment_accounts").select("*").order("position").order("created_at")) as Row[]).map(toAccount);
+      },
+      async savePaymentAccount(a) {
+        const row = { label: a.label.trim(), bank_name: a.bankName?.trim() || null, account_name: a.accountName?.trim() || null, account_number: a.accountNumber?.trim() || null, instructions: a.instructions?.trim() || null, currency: a.currency || "NGN", active: a.active };
+        if (a.id) check(await sb.from("payment_accounts").update(row).eq("id", a.id));
+        else check(await sb.from("payment_accounts").insert(row));
+      },
+      async deletePaymentAccount(id) {
+        check(await sb.from("payment_accounts").delete().eq("id", id));
+      },
+      async savePaymentSettings(s) {
+        check(await sb.from("payment_settings").update({ mode: s.mode, proof_required: s.proofRequired, instructions: s.instructions?.trim() || null }).eq("id", 1));
+      },
+      async proofUrl(path) {
+        const { data } = await sb.storage.from("payment-proofs").createSignedUrl(path, 300);
+        return data?.signedUrl ?? null;
+      },
+      async listProgrammeStats() {
+        return (check(await sb.rpc("admin_programme_stats")) as Row[]).map(
+          (r): ProgrammeStats => ({
+            trackId: r.track_id,
+            title: r.title,
+            published: r.published,
+            price: r.price === null ? null : Number(r.price),
+            currency: r.currency,
+            enrollments: r.enrollments,
+            paidEnrollments: r.paid_enrollments,
+            grantedEnrollments: r.granted_enrollments,
+            completions: r.completions,
+            revenue: Object.fromEntries(Object.entries((r.revenue ?? {}) as Record<string, number>).map(([k, v]) => [k, Number(v)])),
+            converted: r.converted,
+          }),
+        );
+      },
+      async listProgrammeEnrollments(trackId) {
+        return (check(await sb.rpc("admin_list_programme_enrollments", { p_track_id: trackId ?? null })) as Row[]).map(
+          (r): AdminProgrammeEnrollment => ({
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            trackId: r.track_id,
+            trackTitle: r.track_title,
+            source: r.source,
+            enrolledAt: r.enrolled_at,
+            completedAt: r.completed_at ?? null,
+            amount: r.amount === null ? null : Number(r.amount),
+            currency: r.currency ?? null,
+            orderStatus: r.order_status ?? null,
+          }),
+        );
+      },
+      async grantProgrammeAccess(userId, trackId, note) {
+        check(await sb.rpc("admin_grant_programme_access", { p_user: userId, p_track_id: trackId, p_note: note }));
+      },
+      async revokeProgrammeAccess(userId, trackId, reason) {
+        check(await sb.rpc("admin_revoke_programme_access", { p_user: userId, p_track_id: trackId, p_reason: reason }));
+      },
+      async listCourseEnrollments(courseId) {
+        return (check(await sb.rpc("admin_list_enrollments", { p_course_id: courseId ?? null })) as Row[]).map(
+          (r): AdminEnrollment => ({
+            userId: r.user_id,
+            fullName: r.full_name ?? "Unknown",
+            email: r.email ?? "",
+            courseId: r.course_id,
+            courseTitle: r.course_title,
+            source: r.source,
+            enrolledAt: r.enrolled_at,
+            completedAt: r.completed_at ?? null,
+            amount: r.amount === null ? null : Number(r.amount),
+            currency: r.currency ?? null,
+            orderStatus: r.order_status ?? null,
+          }),
+        );
+      },
+      async deleteCourseOrder(orderId) {
+        check(await sb.rpc("admin_delete_order", { p_order_id: orderId }));
+      },
+      async listCourseOrders() {
+        const [orders, profiles, courses, tracks] = await Promise.all([
+          sb.from("course_orders").select("*").order("created_at", { ascending: false }).limit(500),
+          sb.from("profiles").select("id, full_name, email"),
+          sb.from("courses").select("id, title"),
+          sb.from("tracks").select("id, title, programme_title"),
+        ]);
+        const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
+        const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        for (const t of check(tracks) as Row[]) titles.set(t.id, t.programme_title ?? t.title);
+        return (check(orders) as Row[]).map(
+          (r): AdminCourseOrder => ({
+            ...toCourseOrder(r),
+            userId: r.user_id,
+            studentName: people.get(r.user_id)?.full_name ?? "Unknown",
+            studentEmail: people.get(r.user_id)?.email ?? "",
+            courseTitle: titles.get(r.course_id ?? r.track_id) ?? r.course_id ?? r.track_id,
+            provider: r.provider ?? null,
+            providerRef: r.provider_ref ?? null,
+            note: r.note ?? null,
+          }),
+        );
+      },
+      async grantCourseAccess(userId, courseId, note) {
+        check(await sb.rpc("admin_grant_course_access", { p_user: userId, p_course_id: courseId, p_note: note }));
+      },
+      async revokeCourseAccess(userId, courseId, reason) {
+        check(await sb.rpc("admin_revoke_course_access", { p_user: userId, p_course_id: courseId, p_reason: reason }));
       },
       async deleteLesson(id) {
         check(await sb.from("lessons").delete().eq("id", id));
@@ -655,34 +1655,73 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         if (t) q = q.or(`credential_id.ilike.%${t}%,recipient_name.ilike.%${t}%,badge_name.ilike.%${t}%`);
         return (check(await q) as Row[]).map(toCredential);
       },
+      async deleteCredential(credentialId, reason) {
+        check(await sb.rpc("admin_delete_credential", { p_credential_id: credentialId, p_reason: reason }));
+      },
       async revokeCredential(id, reason) {
         check(await sb.from("credentials").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
       },
       async listCertificates(search) {
-        let q = sb.from("certificates").select("*").order("issued_at", { ascending: false }).limit(200);
-        const t = search?.trim().replace(/[%,()]/g, "");
-        if (t) q = q.or(`certificate_id.ilike.%${t}%,recipient_name.ilike.%${t}%`);
-        return (check(await q) as Row[]).map(toCertificate);
+        return (check(await sb.rpc("admin_list_certificates")) as Row[]).map(toAdminCertificate).filter((c) => matchesCertificate(c, search));
       },
-      async revokeCertificate(id, reason) {
-        check(await sb.from("certificates").update({ status: "revoked", revoked_at: new Date().toISOString(), revoked_reason: reason }).eq("id", id));
+      async getCertificate(certificateId) {
+        const id = certificateId.trim().toUpperCase();
+        return (await backend.admin.listCertificates()).find((c) => c.certificateId === id) ?? null;
+      },
+      async issueCertificate(input) {
+        return toCertificate(check(await sb.rpc("admin_issue_certificate", { p: certificatePayload(input) })) as Row);
+      },
+      async updateCertificate(certificateId, edit) {
+        const p = { recipientEmail: edit.recipientEmail, userId: edit.userId, courseId: edit.courseId, templateId: edit.templateId };
+        return toCertificate(check(await sb.rpc("admin_update_certificate", { p_certificate_id: certificateId, p })) as Row);
+      },
+      async reissueCertificate(certificateId, input, reason) {
+        return toCertificate(check(await sb.rpc("admin_reissue_certificate", { p_certificate_id: certificateId, p: certificatePayload(input), p_reason: reason })) as Row);
+      },
+      async deleteCertificate(certificateId, reason) {
+        check(await sb.rpc("admin_delete_certificate", { p_certificate_id: certificateId, p_reason: reason }));
+      },
+      async revokeCertificate(certificateId, reason) {
+        check(await sb.rpc("admin_revoke_certificate", { p_certificate_id: certificateId, p_reason: reason }));
+      },
+      async listCertificateEvents(certificateId) {
+        let q = sb.from("certificate_events").select("*").order("created_at", { ascending: false }).limit(500);
+        if (certificateId) q = q.eq("certificate_id", certificateId.trim().toUpperCase());
+        return (check(await q) as Row[]).map((r) => ({
+          id: r.id,
+          certificateId: r.certificate_id,
+          action: r.action,
+          actorName: r.actor_name,
+          details: r.details ?? {},
+          createdAt: r.created_at,
+        }));
+      },
+      async listCertificateTemplates() {
+        return (check(await sb.from("certificate_templates").select("*").order("position")) as Row[]).map((r) => ({
+          id: r.id,
+          name: r.name,
+          description: r.description,
+          active: r.active,
+        }));
       },
       async listOrders() {
-        const [orders, profiles, courses, certs] = await Promise.all([
+        const [orders, profiles, courses, tracks, certs] = await Promise.all([
           sb.from("certificate_orders").select("*").order("created_at", { ascending: false }).limit(300),
           sb.from("profiles").select("id, full_name, email"),
           sb.from("courses").select("id, title"),
-          sb.from("certificates").select("user_id, course_id, certificate_id, status").eq("status", "valid"),
+          sb.from("tracks").select("id, title, programme_title"),
+          sb.from("certificates").select("user_id, course_id, track_id, certificate_id, status").eq("status", "valid").in("source", ["course", "programme"]),
         ]);
         const people = new Map((check(profiles) as Row[]).map((p) => [p.id, p]));
         const titles = new Map((check(courses) as Row[]).map((c) => [c.id, c.title]));
+        const programmes = new Map((check(tracks) as Row[]).map((t) => [t.id, `Professional Programme: ${t.programme_title ?? t.title}`]));
         const issued = check(certs) as Row[];
         return (check(orders) as Row[]).map((r) => ({
           ...toOrder(r),
           learnerName: people.get(r.user_id)?.full_name ?? "Unknown",
           learnerEmail: people.get(r.user_id)?.email ?? "",
-          courseTitle: titles.get(r.course_id) ?? r.course_id,
-          certificateId: issued.find((c) => c.user_id === r.user_id && c.course_id === r.course_id)?.certificate_id ?? null,
+          courseTitle: r.track_id ? (programmes.get(r.track_id) ?? r.track_id) : (titles.get(r.course_id) ?? r.course_id),
+          certificateId: issued.find((c) => c.user_id === r.user_id && (r.track_id ? c.track_id === r.track_id : c.course_id === r.course_id))?.certificate_id ?? null,
         }));
       },
       async listPracticeSubmissions() {
@@ -710,10 +1749,10 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
         return toCertificate(check(await sb.rpc("admin_grant_certificate", { p_order_id: orderId, p_note: note })) as Row);
       },
       async listPrices() {
-        return (check(await sb.from("certificate_prices").select("*").order("position")) as Row[]).map(toPrice);
+        return (check(await sb.from("certificate_prices").select("*").order("kind").order("position")) as Row[]).map(toPrice);
       },
       async savePrice(price) {
-        check(await sb.from("certificate_prices").upsert({ currency: price.currency.toUpperCase(), amount: price.amount, active: price.active, position: price.position }));
+        check(await sb.from("certificate_prices").upsert({ kind: price.kind, currency: price.currency.toUpperCase(), amount: price.amount, active: price.active, position: price.position }, { onConflict: "kind,currency" }));
       },
       async listSubmissions() {
         const [subs, profiles, projects] = await Promise.all([

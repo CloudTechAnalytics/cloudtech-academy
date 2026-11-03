@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-label="Tools classified by risk. Read tools such as get_transfer are allowed, scoped to the customer and logged. Safe writes such as freeze_card are protective and reversible: allowed, logged, and the customer is told. Handoffs to the fraud or support team are always fine when unsure. Risky writes such as refunds or closing accounts are not given to the agent, or need a person's approval each time.">
+<title>Classify every tool by risk; risky writes need a person.</title>
+
+<rect width="760" height="360" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="64.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="44.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">Read</text>
+<text xml:space="preserve" x="32.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">get_account, get_transfer</text>
+<text xml:space="preserve" x="380.0" y="46.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">allowed; scoped to the customer; logged</text>
+<rect x="16.0" y="92.0" width="728.0" height="64.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="120.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">Safe write</text>
+<text xml:space="preserve" x="32.0" y="140.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">freeze_card</text>
+<text xml:space="preserve" x="380.0" y="122.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">allowed; logged; customer told</text>
+<rect x="16.0" y="168.0" width="728.0" height="64.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="196.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Handoff</text>
+<text xml:space="preserve" x="32.0" y="216.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">escalate to fraud or support</text>
+<text xml:space="preserve" x="380.0" y="198.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">always fine when unsure</text>
+<rect x="16.0" y="244.0" width="728.0" height="64.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="272.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">Risky write</text>
+<text xml:space="preserve" x="32.0" y="292.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">refunds, closing accounts, limits</text>
+<text xml:space="preserve" x="380.0" y="274.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">not given to the agent, or a person approves each</text>
+<text xml:space="preserve" x="380.0" y="292.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">time</text>
+<text xml:space="preserve" x="16.0" y="340.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Least privilege: every tool you add is something the agent can do wrong, or be tricked into doing.</text>
+</g></svg>

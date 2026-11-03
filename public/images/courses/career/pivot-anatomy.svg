@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="How a PivotTable summarises a sales list. On the left, a list of barbershop sales with a service and an amount per row. In the middle, the field list: Service in Rows and Amount in Values. On the right, the PivotTable shows the total per service.">
+<title>A PivotTable turns a long list into a total for each group.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="24.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">Your data</text>
+<rect x="16.0" y="32.0" width="206.0" height="224.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,60 L17,40 Q17,33 24,33 L214,33 Q221,33 221,40 L221,60 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="50.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">Service</text>
+<text xml:space="preserve" x="212.0" y="50.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">Amount</text>
+<line x1="16.0" y1="60.0" x2="222.0" y2="60.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="78.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Haircut</text>
+<text xml:space="preserve" x="212.0" y="78.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2,500</text>
+<line x1="16.0" y1="88.0" x2="222.0" y2="88.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="106.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beard trim</text>
+<text xml:space="preserve" x="212.0" y="106.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">1,000</text>
+<line x1="16.0" y1="116.0" x2="222.0" y2="116.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="134.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Haircut</text>
+<text xml:space="preserve" x="212.0" y="134.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2,500</text>
+<line x1="16.0" y1="144.0" x2="222.0" y2="144.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="162.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Dyeing</text>
+<text xml:space="preserve" x="212.0" y="162.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">6,000</text>
+<line x1="16.0" y1="172.0" x2="222.0" y2="172.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="190.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beard trim</text>
+<text xml:space="preserve" x="212.0" y="190.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">1,000</text>
+<line x1="16.0" y1="200.0" x2="222.0" y2="200.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="218.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Haircut</text>
+<text xml:space="preserve" x="212.0" y="218.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2,500</text>
+<line x1="16.0" y1="228.0" x2="222.0" y2="228.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="246.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Dyeing</text>
+<text xml:space="preserve" x="212.0" y="246.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">6,000</text>
+<path d="M230.0,130.0 L268.0,130.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="278.0" y="24.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">Field list</text>
+<rect x="278.0" y="32.0" width="200.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="290.0" y="56.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Drag fields to:</text>
+<rect x="290.0" y="66.0" width="176.0" height="34.0" rx="5" fill="#E6EEF6"/>
+<text xml:space="preserve" x="300.0" y="88.0" font-size="11.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Rows</text>
+<text xml:space="preserve" x="456.0" y="88.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="end">Service</text>
+<rect x="290.0" y="108.0" width="176.0" height="34.0" rx="5" fill="#E5F0E8"/>
+<text xml:space="preserve" x="300.0" y="130.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Values</text>
+<text xml:space="preserve" x="456.0" y="130.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end">Sum of Amount</text>
+<path d="M482.0,130.0 L520.0,130.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="530.0" y="24.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">PivotTable</text>
+<rect x="530.0" y="32.0" width="214.0" height="140.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M531,60 L531,40 Q531,33 538,33 L736,33 Q743,33 743,40 L743,60 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="540.0" y="50.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">Row Labels</text>
+<text xml:space="preserve" x="734.0" y="50.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">Sum of Amount</text>
+<line x1="530.0" y1="60.0" x2="744.0" y2="60.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="540.0" y="78.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Beard trim</text>
+<text xml:space="preserve" x="734.0" y="78.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2,000</text>
+<line x1="530.0" y1="88.0" x2="744.0" y2="88.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="540.0" y="106.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Dyeing</text>
+<text xml:space="preserve" x="734.0" y="106.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">12,000</text>
+<line x1="530.0" y1="116.0" x2="744.0" y2="116.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="540.0" y="134.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Haircut</text>
+<text xml:space="preserve" x="734.0" y="134.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">7,500</text>
+<rect x="532.0" y="145.0" width="210.0" height="26.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="540.0" y="162.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Grand Total</text>
+<text xml:space="preserve" x="734.0" y="162.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">21,500</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">The list has seven rows; the PivotTable has one row per service, with the amounts added up. Change</text>
+<text xml:space="preserve" x="16.0" y="308.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Service to another column and it regroups instantly.</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Careful: units sold and money earned can rank differently. Say which one you mean.</text>
+</g></svg>

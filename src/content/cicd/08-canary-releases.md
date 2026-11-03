@@ -12,7 +12,7 @@ The new pipeline releases each version as a **canary** first: 10% of traffic for
 
 ## The concept
 
-**Deployment strategies**
+### Deployment strategies
 
 | Strategy | How | Risk if the release is bad |
 | :-- | :-- | :-- |
@@ -21,7 +21,9 @@ The new pipeline releases each version as a **canary** first: 10% of traffic for
 | **Blue-green** | start a full new set, switch traffic, keep the old set to switch back | everyone affected, but switching back is instant |
 | **Canary** | send a small share of traffic to the new version, compare, then promote or roll back | limited to the canary's share, for a few minutes |
 
-**Canary analysis**
+![Ten instances over three steps for each strategy: all at once switches everything; rolling switches a few at a time; blue-green switches all traffic to a new set while keeping the old one; canary sends a small share first, then promotes](/images/courses/cicd/deploy-strategies.svg "How much traffic a bad release can reach, and how fast you can undo it.")
+
+### Canary analysis
 
 Compare the canary with the **baseline** (the old version, serving at the same time): error rate, latency. A simple rule:
 

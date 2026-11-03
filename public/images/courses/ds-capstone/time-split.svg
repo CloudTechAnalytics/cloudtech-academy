@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Validate over time rather than at random. Train on the earliest months, choose models and settings on the next months, and keep the latest months as a test set touched once. For the test set use only the randomly assigned no-call group, because calls changed the outcomes of the others. Begin with a simple baseline and make complex models earn their place.">
+<title>Train on the past, validate on the next stretch, test once on untouched data.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A timeline split by time (invented example)</text>
+<rect x="16.0" y="44.0" width="396.0" height="54.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="214.0" y="68.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle">Train</text>
+<text xml:space="preserve" x="214.0" y="88.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="middle">fit models</text>
+<rect x="420.0" y="44.0" width="146.0" height="54.0" rx="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="493.0" y="68.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle">Validate</text>
+<text xml:space="preserve" x="493.0" y="88.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="middle">choose between models</text>
+<rect x="574.0" y="44.0" width="166.0" height="54.0" rx="6" fill="#2F6B3F"/>
+<text xml:space="preserve" x="657.0" y="68.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle">Test</text>
+<text xml:space="preserve" x="657.0" y="88.0" font-size="11.5" fill="#FFFFFF" font-weight="400" text-anchor="middle">one final check</text>
+<text xml:space="preserve" x="16.0" y="118.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Jan</text>
+<text xml:space="preserve" x="400.0" y="118.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Oct</text>
+<text xml:space="preserve" x="574.0" y="118.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Jan next year</text>
+<text xml:space="preserve" x="744.0" y="118.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">Mar</text>
+<text xml:space="preserve" x="16.0" y="156.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Why not a random split?</text>
+<text xml:space="preserve" x="16.0" y="178.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The model will score future bookings using the past. A random split mixes next March into training and</text>
+<text xml:space="preserve" x="16.0" y="196.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">flatters the result.</text>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Why only the "no call" group in the test set?</text>
+<rect x="16.0" y="238.0" width="358.0" height="70.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="262.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">No-call group</text>
+<text xml:space="preserve" x="30.0" y="284.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Randomly chosen, untouched by calls: a fair test.</text>
+<rect x="386.0" y="238.0" width="358.0" height="70.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="262.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Call group</text>
+<text xml:space="preserve" x="400.0" y="284.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Calls changed their outcomes: not a fair test.</text>
+<text xml:space="preserve" x="16.0" y="336.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Baseline first, then complexity must earn its place</text>
+<text xml:space="preserve" x="16.0" y="358.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Touch the test set once, at the end. Check it while tuning and it stops being a test.</text>
+</g></svg>

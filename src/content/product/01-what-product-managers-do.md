@@ -12,11 +12,11 @@ A product manager's job is to decide **what to build next and why**, using evide
 
 ## The concept
 
-**Outcomes, not outputs**
+### Outcomes, not outputs
 
 An **output** is something shipped: "savings goals launched". An **outcome** is a change in what users do: "more salary earners keep money in Paystream for a month". Product managers are measured on outcomes; shipping is only the means.
 
-**Product and project**
+### Product and project
 
 | | Project manager | Product manager |
 | :-- | :-- | :-- |
@@ -26,9 +26,11 @@ An **output** is something shipped: "savings goals launched". An **outcome** is 
 
 Most teams need both, and the Project Manager track teaches both.
 
-**A north star metric**
+### A north star metric
 
 One number that captures the value users get, which the whole team can move. For a wallet: **weekly active users who make at least one transaction**, not downloads or signups.
+
+![An output (savings goals launched) leads to changed behaviour, an outcome and a business result; a comparison of project manager and product manager questions; and the north star metric of weekly active users who transact](/images/courses/product/output-outcome.svg "Ship outputs to change outcomes; the north star counts users getting value.")
 
 ## Example
 

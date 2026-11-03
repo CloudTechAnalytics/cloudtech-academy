@@ -12,7 +12,7 @@ Two practices fix this: **modules**, so shared patterns are written once, and a 
 
 ## The concept
 
-**Modules**
+### Modules
 
 A module is a folder of Terraform code with inputs (variables) and outputs, used like a function:
 
@@ -35,7 +35,7 @@ module "vpc" {
 
 **Pin versions** of external modules and providers, so the same code gives the same result next month.
 
-**The pipeline**
+### The pipeline
 
 | Stage | Runs | Fails the PR when |
 | :-- | :-- | :-- |
@@ -47,6 +47,8 @@ module "vpc" {
 | `terraform apply` | after merge, from the pipeline only | apply errors |
 
 Only the pipeline has permission to apply. People review; the pipeline acts.
+
+![On every pull request: fmt and validate, plan, policy checks on the plan JSON, and the plan posted for review. After approval and merge: apply the reviewed plan and record it. A blocking policy violation stops the merge unless an override is recorded.](/images/courses/terraform/pipeline.svg "Plan and check on every pull request; apply only after merge.")
 
 ## Example
 

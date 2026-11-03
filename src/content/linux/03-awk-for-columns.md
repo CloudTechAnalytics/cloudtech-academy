@@ -24,6 +24,8 @@ Tallybook's status page said the app was down for 55 minutes on the morning of 3
 
 `substr(s, start, length)` takes part of a field. In the access log, `$4` looks like `[31/Aug/2026:09:41:07`, so `substr($4, 14, 5)` is the hour and minute, `09:41`.
 
+![An access log line split on spaces with field numbers: $1 client IP, $4 date and time, $6 method, $7 path, $9 status code, $10 bytes, and $NF the response time.](/images/courses/linux/awk-fields.svg "How awk numbers the fields of an access log line.")
+
 ## Example
 
 When were the first and last server errors?

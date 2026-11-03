@@ -12,7 +12,7 @@ The team had been watching thumbs-down feedback, which barely moved. But they al
 
 ## The concept
 
-**Why feedback is weak**
+### Why feedback is weak
 
 - Only a few per cent of customers click thumbs up or down.
 - Those who do aren't typical: people click when they're annoyed, often about things the assistant can't change (fees, limits, policies).
@@ -20,11 +20,11 @@ The team had been watching thumbs-down feedback, which barely moved. But they al
 
 Feedback is useful for finding examples to read, but it isn't a measure of accuracy.
 
-**Sampled grading**
+### Sampled grading
 
 A random sample of conversations, graded by trained people against the same standard as the regression suite. It's an unbiased estimate of live accuracy.
 
-**Small samples are noisy, so pool them**
+### Small samples are noisy, so pool them
 
 With 30 graded conversations a day, one day's accuracy jumps around by many points. Pool several days: 7 days give 210 graded conversations and a much more stable estimate. Use the same control-limit idea as lesson 7, with the limit based on the sample size:
 

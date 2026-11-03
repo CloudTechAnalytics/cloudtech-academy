@@ -12,7 +12,7 @@ A **product spec** (often called a PRD, product requirements document) answers a
 
 ## The concept
 
-**What a good spec contains**
+### What a good spec contains
 
 | Section | Answers |
 | :-- | :-- |
@@ -25,9 +25,11 @@ A **product spec** (often called a PRD, product requirements document) answers a
 | Launch and measurement plan | how it's rolled out and evaluated (a holdout, lesson 8) |
 | Open questions | what isn't known yet |
 
-**Baselines from data**
+### Baselines from data
 
 A target without a baseline is a guess. Measure the current value first, then set a realistic target.
+
+![The eight sections of a product spec and an example of a baseline of 58% and a realistic target of 65% for trader BVN verification](/images/courses/product/spec.svg "A spec: problem, users, goal with baseline and target, guardrails, scope, non-goals, plan, open questions.")
 
 ## Example
 

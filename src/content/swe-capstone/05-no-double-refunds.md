@@ -15,22 +15,24 @@ Neither can be fixed inside `refund_amount`, which only ever sees one request. T
 
 ## The concept
 
-**Idempotency keys**
+### Idempotency keys
 
 The app sends a unique `request_id` with each refund request and reuses it when it retries. The service stores it, and a **unique index** makes a second insert with the same key impossible. A repeated request gets the **original** answer back, not a new refund. This is how payment APIs handle retries.
 
-**Rules that span requests**
+### Rules that span requests
 
 - The delivery fee is refunded **once** per order.
 - The total refunded can never exceed what the customer **paid**.
 
-**Check and write in one transaction**
+### Check and write in one transaction
 
 Reading "how much has been refunded" and then writing a new refund must happen as one unit. Otherwise two requests can both read the old total, both pass the check, and both write. `BEGIN IMMEDIATE` takes SQLite's write lock before the check.
 
-**A migration, not an edit**
+### A migration, not an edit
 
 The live database already has a `refunds` table. Add the new columns and index with a migration script that can run on it, rather than editing `schema.sql` and starting again.
+
+![An idempotency key with a unique index prevents a double record, a race between two requests versus one transaction, rules across requests, and a migration](/images/courses/swe-capstone/idempotency.svg "Idempotency keys, one transaction for check and write, and a migration.")
 
 ## Example
 

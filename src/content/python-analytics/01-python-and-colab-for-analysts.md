@@ -14,7 +14,7 @@ This course teaches the Python an analyst actually uses: enough of the language 
 
 ## The concept
 
-**Where you'll write Python: Google Colab**
+### Where you'll write Python: Google Colab
 
 Colab is a free notebook that runs in your browser on Google's computers. Nothing to install, and pandas and the charting libraries are already there. Open **colab.research.google.com**, sign in with a Google account and choose **New notebook**.
 
@@ -25,7 +25,7 @@ A **notebook** is a list of **cells**:
 
 Cells share memory: a variable created in one cell is available in every cell you run afterwards. If you restart the notebook (**Runtime → Restart session**) that memory is wiped, and you run the cells again from the top. **Runtime → Run all** does that in one go.
 
-**Values and variables**
+### Values and variables
 
 A **variable** is a name for a value. You create it with `=`:
 
@@ -33,11 +33,16 @@ A **variable** is a name for a value. You create it with `=`:
 quantity = 14
 unit_price = 18600
 customer = "Ada Superstore"
+quantity * unit_price
+```
+
+```text
+260400
 ```
 
 Names use lowercase letters, numbers and underscores, and can't start with a number. Choose names that say what the value is: `unit_price`, not `x`.
 
-**The four types you'll meet most**
+### The four types you'll meet most
 
 | Type | Example | What it's for |
 | :-- | :-- | :-- |
@@ -48,11 +53,11 @@ Names use lowercase letters, numbers and underscores, and can't start with a num
 
 `type(value)` tells you which one you have. Types matter because they decide what you can do: `"14" * 2` gives `"1414"` (text repeated), while `14 * 2` gives `28`. Most "my numbers won't add up" problems in data work are really type problems.
 
-**Maths**
+### Maths
 
 `+ - * /` work as you'd expect. `**` is "to the power of", `//` divides and drops the remainder, `%` gives the remainder, and `round(x, 2)` rounds to 2 decimal places. Brackets control the order, exactly as in a spreadsheet formula.
 
-**f-strings: putting numbers into sentences**
+### f-strings: putting numbers into sentences
 
 Put an `f` before the quotes and anything inside `{ }` is worked out and inserted. After a colon you can say how to format it: `:,` adds thousands separators, `:.1f` shows one decimal place, `:.1%` shows a percentage.
 
@@ -60,6 +65,11 @@ Put an `f` before the quotes and anything inside `{ }` is worked out and inserte
 revenue = 247380.0
 print(f"Revenue: ₦{revenue:,.0f}")
 print(f"Discount rate: {0.05:.0%}")
+```
+
+```text
+Revenue: ₦247,380
+Discount rate: 5%
 ```
 
 That prints `Revenue: ₦247,380` and `Discount rate: 5%`.

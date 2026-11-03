@@ -12,7 +12,7 @@ The fix is simple and universal: **never put values into SQL text; pass them as 
 
 ## The concept
 
-**Parameters**
+### Parameters
 
 ```python norun
 # Never:
@@ -23,11 +23,13 @@ conn.execute("SELECT * FROM customers WHERE business_name = ?", (name,))
 
 With `?` placeholders, the database receives the SQL and the values separately. A value can contain any characters (apostrophes, quotes, SQL keywords) and is always treated as data.
 
-**Results**
+![An f-string pastes the value into SQL, so Mama's Kitchen causes a syntax error and x' OR '1'='1 matches every row; a ? placeholder sends the SQL and the value separately, so the value is only ever data](/images/courses/dbapi/parameters.svg "f-strings paste values into SQL; placeholders keep them separate.")
+
+### Results
 
 `fetchone()` gets one row, `fetchall()` all of them. Setting `conn.row_factory = sqlite3.Row` lets you use column names: `row["business_name"]`.
 
-**Let the database do the work**
+### Let the database do the work
 
 Joins and `GROUP BY` in SQL are usually faster and clearer than loading whole tables into Python and looping.
 

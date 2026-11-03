@@ -14,7 +14,7 @@ That's a real business question, and like most, it isn't one you can answer with
 
 ## The concept
 
-**1. Turn the question into answerable questions**
+### 1. Turn the question into answerable questions
 
 "Why are we losing people?" becomes:
 
@@ -25,19 +25,19 @@ That's a real business question, and like most, it isn't one you can answer with
 
 Each of these maps to a filter, a groupby or a comparison you already know.
 
-**2. Check the data before trusting it**
+### 2. Check the data before trusting it
 
 Before analysing, confirm the data means what you think it means. Does every `Resigned` employee have an `exit_date`, and does nobody `Active` have one? Are the dates real dates? Any duplicates? Five minutes of checks protects every number that follows.
 
-**3. Analyse: rates, not counts**
+### 3. Analyse: rates, not counts
 
 Use rates to compare groups of different sizes, compare like with like, and keep a note of how many people are behind each figure.
 
-**4. Test the obvious explanation**
+### 4. Test the obvious explanation
 
 Everyone will assume pay. Check it directly. An analysis that rules out the obvious explanation is often more valuable than one that confirms it.
 
-**5. Write the finding, with the caveat**
+### 5. Write the finding, with the caveat
 
 A finding has three parts: **what** you found (with a number), **so what** it means, and **now what** you recommend. Then the honest limit: here, only 11 people have left in seven years. Patterns in 11 people are worth acting on, but not worth over-claiming.
 

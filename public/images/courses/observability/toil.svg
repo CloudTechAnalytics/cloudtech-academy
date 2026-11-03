@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="What counts as toil. Toil is manual, repetitive, automatable, reactive, and grows with the service, without making it better. Examples of toil: restarting a stuck worker by hand, clearing full disks, dismissing noisy pages. Examples of engineering: reviewing pull requests, writing postmortems, improving dashboards, automating a toil task. A common target keeps toil at most half of an operations team's time.">
+<title>Toil versus engineering, and the 50% limit.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Toil is work that is…</text>
+<rect x="16.0" y="42.0" width="124.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="78.0" y="65.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">manual</text>
+<rect x="148.0" y="42.0" width="124.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="210.0" y="65.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">repetitive</text>
+<rect x="280.0" y="42.0" width="124.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="342.0" y="65.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">automatable</text>
+<rect x="412.0" y="42.0" width="124.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="474.0" y="65.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">reactive</text>
+<rect x="544.0" y="42.0" width="200.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="644.0" y="65.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="middle">grows with the service</text>
+<text xml:space="preserve" x="16.0" y="100.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">…and leaves the service no better than before.</text>
+<rect x="16.0" y="118.0" width="356.0" height="150.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="146.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Toil</text>
+<text xml:space="preserve" x="32.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">restart a stuck worker by hand</text>
+<text xml:space="preserve" x="32.0" y="194.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">clear old logs when a disk fills</text>
+<text xml:space="preserve" x="32.0" y="216.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">acknowledge and dismiss noisy pages</text>
+<text xml:space="preserve" x="32.0" y="238.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">renew certificates by hand</text>
+<rect x="388.0" y="118.0" width="356.0" height="150.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="146.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Engineering</text>
+<text xml:space="preserve" x="404.0" y="172.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">review infrastructure pull requests</text>
+<text xml:space="preserve" x="404.0" y="194.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">write postmortems</text>
+<text xml:space="preserve" x="404.0" y="216.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">improve dashboards and alerts</text>
+<text xml:space="preserve" x="404.0" y="238.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">automate a toil task away</text>
+<text xml:space="preserve" x="16.0" y="300.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">A common target for an operations team's time</text>
+<rect x="16.0" y="312.0" width="364.0" height="30.0" rx="4" fill="#F6E3E0"/>
+<rect x="380.0" y="312.0" width="364.0" height="30.0" rx="4" fill="#E5F0E8"/>
+<line x1="380.0" y1="306.0" x2="380.0" y2="348.0" stroke="#8A6A1F" stroke-width="2"/>
+<text xml:space="preserve" x="198.0" y="332.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">toil: at most half</text>
+<text xml:space="preserve" x="562.0" y="332.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="middle">engineering: at least half</text>
+<text xml:space="preserve" x="16.0" y="370.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Cheapest fix first: deleting a noisy alert removes a whole task.</text>
+</g></svg>

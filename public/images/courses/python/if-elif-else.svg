@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Decisions with if, elif and else, using ticket prices. Python checks the conditions from the top and runs the first one that is true, then skips the rest. If age is under 5, the ticket is free; elif under 18, child; elif under 60, adult; else senior. An age of 34 fails the first two checks and is true for the third, so the ticket is adult. Combining conditions: and needs both true, or needs one, not flips the answer.">
+<title>if / elif / else: the first true condition runs, and the rest are skipped.</title>
+<defs><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="18.0" width="250.0" height="50.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="49.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">if age &lt; 5:</text>
+<path d="M268.0,43.0 L300.0,43.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<rect x="304.0" y="18.0" width="170.0" height="50.0" rx="8" fill="#F2EFE8" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="318.0" y="49.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ticket = "free"</text>
+<text xml:space="preserve" x="490.0" y="49.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ false: go on</text>
+<rect x="16.0" y="80.0" width="250.0" height="50.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="111.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">elif age &lt; 18:</text>
+<path d="M268.0,105.0 L300.0,105.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<rect x="304.0" y="80.0" width="170.0" height="50.0" rx="8" fill="#F2EFE8" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="318.0" y="111.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ticket = "child"</text>
+<text xml:space="preserve" x="490.0" y="111.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ false: go on</text>
+<rect x="16.0" y="142.0" width="250.0" height="50.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="173.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">elif age &lt; 60:</text>
+<path d="M268.0,167.0 L300.0,167.0" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<rect x="304.0" y="142.0" width="170.0" height="50.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="318.0" y="173.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ticket = "adult"</text>
+<text xml:space="preserve" x="490.0" y="173.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ true: run this, stop</text>
+<rect x="16.0" y="204.0" width="250.0" height="50.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="235.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">else:</text>
+<path d="M268.0,229.0 L300.0,229.0" fill="none" stroke="#5E5A52" stroke-width="1.6" marker-end="url(#a5E5A52)"/>
+<rect x="304.0" y="204.0" width="170.0" height="50.0" rx="8" fill="#F2EFE8" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="318.0" y="235.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ticket = "senior"</text>
+<text xml:space="preserve" x="490.0" y="235.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">only if all were false</text>
+<text xml:space="preserve" x="16.0" y="280.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Say age = 34</text>
+<text xml:space="preserve" x="120.0" y="280.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">→ not under 5, not under 18, under 60 ✓  → ticket = "adult"</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Combining conditions</text>
+<rect x="16.0" y="330.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="354.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">and</text>
+<text xml:space="preserve" x="30.0" y="374.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">age &gt;= 18 and has_id</text>
+<text xml:space="preserve" x="30.0" y="392.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">both must be true</text>
+<rect x="264.0" y="330.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="354.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">or</text>
+<text xml:space="preserve" x="278.0" y="374.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">is_student or age &gt;= 60</text>
+<text xml:space="preserve" x="278.0" y="392.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">either one is enough</text>
+<rect x="512.0" y="330.0" width="232.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="354.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">not</text>
+<text xml:space="preserve" x="526.0" y="374.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">not is_member</text>
+<text xml:space="preserve" x="526.0" y="392.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">flips True and False</text>
+</g></svg>

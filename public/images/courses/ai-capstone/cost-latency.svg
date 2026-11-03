@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Cost and latency. Cost per message is input tokens times the input price plus output tokens times the output price; a longer prompt with a schema and examples costs more per message. Averages hide slow replies, so measure the 95th percentile, the time within which 95 percent of replies arrive. The invented example uses round numbers to show the arithmetic.">
+<title>Cost per message, and why p95 beats the average.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Cost per message (invented, round numbers)</text>
+<rect x="16.0" y="40.0" width="728.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">cost = input tokens × input price + output tokens × output price</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1,000 in × $0.002/1k + 200 out × $0.008/1k = $0.0036 per message</text>
+<text xml:space="preserve" x="16.0" y="134.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">A longer prompt costs more on every message</text>
+<rect x="16.0" y="146.0" width="150.0" height="22.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="172.0" y="162.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">short prompt: 600 tokens</text>
+<rect x="16.0" y="174.0" width="330.0" height="22.0" rx="3" fill="#8A6A1F"/>
+<text xml:space="preserve" x="352.0" y="190.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">prompt with schema and examples: 1,300 tokens</text>
+<text xml:space="preserve" x="16.0" y="232.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Latency: the average hides the slow replies</text>
+<rect x="40.0" y="368.0" width="24.0" height="12.0" rx="2" fill="#C5B38A"/>
+<rect x="70.0" y="344.0" width="24.0" height="36.0" rx="2" fill="#C5B38A"/>
+<rect x="100.0" y="308.0" width="24.0" height="72.0" rx="2" fill="#C5B38A"/>
+<rect x="130.0" y="272.0" width="24.0" height="108.0" rx="2" fill="#C5B38A"/>
+<rect x="160.0" y="284.0" width="24.0" height="96.0" rx="2" fill="#C5B38A"/>
+<rect x="190.0" y="308.0" width="24.0" height="72.0" rx="2" fill="#C5B38A"/>
+<rect x="220.0" y="332.0" width="24.0" height="48.0" rx="2" fill="#C5B38A"/>
+<rect x="250.0" y="344.0" width="24.0" height="36.0" rx="2" fill="#C5B38A"/>
+<rect x="280.0" y="356.0" width="24.0" height="24.0" rx="2" fill="#9B2C1F"/>
+<rect x="310.0" y="368.0" width="24.0" height="12.0" rx="2" fill="#9B2C1F"/>
+<rect x="340.0" y="368.0" width="24.0" height="12.0" rx="2" fill="#9B2C1F"/>
+<line x1="34.0" y1="380.0" x2="380.0" y2="380.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="172.0" y1="262.0" x2="172.0" y2="380.0" stroke="#8A6A1F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="176.0" y="270.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">average</text>
+<line x1="280.0" y1="262.0" x2="280.0" y2="380.0" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="284.0" y="270.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">p95</text>
+<text xml:space="preserve" x="34.0" y="400.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">faster ←  reply time  → slower</text>
+<rect x="420.0" y="262.0" width="324.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="434.0" y="286.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">p95</text>
+<text xml:space="preserve" x="434.0" y="308.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The time within which 95% of replies arrive.</text>
+<text xml:space="preserve" x="434.0" y="324.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The last few slow replies are the ones</text>
+<text xml:space="preserve" x="434.0" y="340.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">customers notice and remember.</text>
+</g></svg>

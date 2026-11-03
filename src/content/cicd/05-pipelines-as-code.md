@@ -12,11 +12,11 @@ Before you can review a pipeline, you need to read its YAML fluently, and know a
 
 ## The concept
 
-**YAML**
+### YAML
 
 A text format of keys, values and nested blocks, where **indentation is structure**. Lists start with `-`.
 
-**A GitHub Actions workflow**
+### A GitHub Actions workflow
 
 | Key | Meaning |
 | :-- | :-- |
@@ -30,7 +30,9 @@ A text format of keys, values and nested blocks, where **indentation is structur
 
 Without `needs`, jobs run **in parallel**.
 
-**A YAML trap**
+![lint and test run in parallel; build needs both; deploy-staging needs build; deploy-production needs deploy-staging and an approval](/images/courses/cicd/job-graph.svg "Jobs run in parallel unless needs makes them wait.")
+
+### A YAML trap
 
 In YAML 1.1, which many libraries (including Python's PyYAML) follow, the bare word `on` means **true**. So loading a workflow in Python gives a key `True`, not `"on"`. GitHub reads it correctly; your scripts must handle it.
 

@@ -12,7 +12,7 @@ Tallybook's old workflow has six security and safety problems in 28 lines. Each 
 
 ## The concept
 
-**What to check in every pipeline**
+### What to check in every pipeline
 
 | Check | Risk | Fix |
 | :-- | :-- | :-- |
@@ -23,7 +23,7 @@ Tallybook's old workflow has six security and safety problems in 28 lines. Each 
 | Secrets in logs | printing a secret exposes it to anyone who can read logs | never print secrets; GitHub masks them, but masking can miss multi-line values like SSH keys and any transformed copy |
 | Approvals | production changes with no human gate | an `environment: production` with required reviewers |
 
-**Deploy artifacts, not repositories**
+### Deploy artifacts, not repositories
 
 The old workflow ran `git pull` and `npm install` on the servers. The new one deploys the **image** that was built, tested and scanned in the pipeline.
 

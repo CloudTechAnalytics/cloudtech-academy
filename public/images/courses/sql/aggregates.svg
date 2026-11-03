@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The five aggregate functions on a column of six values, one of them missing (NULL): 8, 3, 5, NULL, 2, 9. COUNT of star counts rows: 6. COUNT of the column counts only non-missing values: 5. SUM adds the non-missing values: 27. AVG divides that sum by 5, not 6: 5.4. MIN is 2 and MAX is 9. Aggregates ignore NULL, so a missing value doesn't count as zero.">
+<title>Aggregates collapse many rows into one value, and they ignore NULL.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">containers (one value is missing)</text>
+<rect x="16.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="49.0" y="69.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="90.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="123.0" y="69.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<rect x="164.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="197.0" y="69.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">5</text>
+<rect x="238.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#B38A3E"/>
+<text xml:space="preserve" x="271.0" y="69.0" font-size="14" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">NULL</text>
+<rect x="312.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="345.0" y="69.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<rect x="386.0" y="40.0" width="66.0" height="44.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="419.0" y="69.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<rect x="16.0" y="112.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="138.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COUNT(*)</text>
+<text xml:space="preserve" x="30.0" y="162.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 6</text>
+<text xml:space="preserve" x="234.0" y="162.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">all rows, even with NULL</text>
+<rect x="264.0" y="112.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="138.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COUNT(containers)</text>
+<text xml:space="preserve" x="278.0" y="162.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 5</text>
+<text xml:space="preserve" x="482.0" y="162.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">rows with a value</text>
+<rect x="512.0" y="112.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="138.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SUM(containers)</text>
+<text xml:space="preserve" x="526.0" y="162.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 27</text>
+<text xml:space="preserve" x="730.0" y="162.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">adds the values</text>
+<rect x="16.0" y="196.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="222.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">AVG(containers)</text>
+<text xml:space="preserve" x="30.0" y="246.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 5.4</text>
+<text xml:space="preserve" x="234.0" y="246.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">27 ÷ 5, not ÷ 6</text>
+<rect x="264.0" y="196.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="222.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">MIN(containers)</text>
+<text xml:space="preserve" x="278.0" y="246.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 2</text>
+<text xml:space="preserve" x="482.0" y="246.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">smallest</text>
+<rect x="512.0" y="196.0" width="232.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="222.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">MAX(containers)</text>
+<text xml:space="preserve" x="526.0" y="246.0" font-size="18" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 9</text>
+<text xml:space="preserve" x="730.0" y="246.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="end">largest</text>
+<text xml:space="preserve" x="16.0" y="300.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One row out</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">With no GROUP BY, an aggregate turns the whole table into a single row. Filter first with WHERE if you want</text>
+<text xml:space="preserve" x="16.0" y="340.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">only some rows counted.</text>
+<rect x="16.0" y="360.0" width="728.0" height="46.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="389.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Don't mix: SELECT status, COUNT(*) needs GROUP BY status (next lessons).</text>
+</g></svg>

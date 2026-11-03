@@ -10,21 +10,21 @@ The malt drink is one of six products at the depot, and Kolanut has other depots
 
 ## The concept
 
-**One method, many series**
+### One method, many series
 
 Wrap the whole method (features, training, forecast) in a function, and run it for each product. Score every product with the same backtest, so they're comparable.
 
-**Accuracy differs by product**
+### Accuracy differs by product
 
 - High-volume, stable products are usually easiest.
 - Products with strong seasonality or frequent promotions are harder.
 - Low-volume products have more random noise relative to their sales, so their WAPE is higher even with a good model.
 
-**Where to spend human attention**
+### Where to spend human attention
 
 Rank products by **WAPE × sales value**: the products where forecast errors cost the most money. Review those by hand, and let the method run on the rest.
 
-**Top-down or bottom-up?**
+### Top-down or bottom-up?
 
 Totals are easier to forecast than their parts, because errors partly cancel out. If the business needs a total (for the depot's warehouse space or cash), forecast it directly as well as summing the products, and compare.
 

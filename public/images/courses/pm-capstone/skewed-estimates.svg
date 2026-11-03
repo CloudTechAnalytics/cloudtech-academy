@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Why a budget built from likely durations is too low. A three-point estimate has an optimistic, likely and pessimistic value. Because the pessimistic value is usually further from the likely one than the optimistic is, the expected duration, one sixth of optimistic plus four likely plus pessimistic, is longer than the likely value. The invented task is a licence application.">
+<title>Likely is the most probable value; expected is the average.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One task, three estimates (invented: a licence application)</text>
+<line x1="40.0" y1="174.0" x2="500.0" y2="174.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<path d="M40.0,174.0 L51.5,159.0 L63.0,144.0 L74.5,129.0 L86.0,114.0 L97.5,99.0 L109.0,84.0 L120.5,69.0 L132.0,54.0 L143.5,39.0 L155.0,24.0 L166.5,29.0 L178.0,34.0 L189.5,39.0 L201.0,44.0 L212.5,49.0 L224.0,54.0 L235.5,59.0 L247.0,64.0 L258.5,69.0 L270.0,74.0 L281.5,79.0 L293.0,84.0 L304.5,89.0 L316.0,94.0 L327.5,99.0 L339.0,104.0 L350.5,109.0 L362.0,114.0 L373.5,119.0 L385.0,124.0 L396.5,129.0 L408.0,134.0 L419.5,139.0 L431.0,144.0 L442.5,149.0 L454.0,154.0 L465.5,159.0 L477.0,164.0 L488.5,169.0 L500.0,174.0" fill="none" stroke="#2F5D8A" stroke-width="2.5"/>
+<path d="M40.0,174 L40.0,174.0 L51.5,159.0 L63.0,144.0 L74.5,129.0 L86.0,114.0 L97.5,99.0 L109.0,84.0 L120.5,69.0 L132.0,54.0 L143.5,39.0 L155.0,24.0 L166.5,29.0 L178.0,34.0 L189.5,39.0 L201.0,44.0 L212.5,49.0 L224.0,54.0 L235.5,59.0 L247.0,64.0 L258.5,69.0 L270.0,74.0 L281.5,79.0 L293.0,84.0 L304.5,89.0 L316.0,94.0 L327.5,99.0 L339.0,104.0 L350.5,109.0 L362.0,114.0 L373.5,119.0 L385.0,124.0 L396.5,129.0 L408.0,134.0 L419.5,139.0 L431.0,144.0 L442.5,149.0 L454.0,154.0 L465.5,159.0 L477.0,164.0 L488.5,169.0 L500.0,174.0 L500.0,174 Z" fill="#2F5D8A22" stroke="#2F5D8A" stroke-width="0"/>
+<line x1="40.0" y1="50.0" x2="40.0" y2="174.0" stroke="#2F6B3F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="40.0" y="192.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle">optimistic 10</text>
+<line x1="155.0" y1="50.0" x2="155.0" y2="174.0" stroke="#8A6A1F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="155.0" y="192.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="middle">likely 20</text>
+<line x1="500.0" y1="50.0" x2="500.0" y2="174.0" stroke="#9B2C1F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="500.0" y="192.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="middle">pessimistic 50</text>
+<line x1="193.3" y1="50.0" x2="193.3" y2="174.0" stroke="#B38A3E" stroke-width="2.4"/>
+<text xml:space="preserve" x="199.3" y="62.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">expected 23.3</text>
+<rect x="520.0" y="44.0" width="224.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="534.0" y="68.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">(O + 4M + P) ÷ 6</text>
+<text xml:space="preserve" x="534.0" y="94.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= (10 + 80 + 50) ÷ 6</text>
+<text xml:space="preserve" x="534.0" y="116.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 23.3 days</text>
+<text xml:space="preserve" x="534.0" y="140.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">The long tail pulls the average</text>
+<text xml:space="preserve" x="534.0" y="154.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">above the likely value.</text>
+<text xml:space="preserve" x="16.0" y="232.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">So a plan built from likely values</text>
+<rect x="16.0" y="246.0" width="232.0" height="94.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="272.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Is optimistic on purpose</text>
+<text xml:space="preserve" x="30.0" y="294.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Most tasks overrun more than they</text>
+<text xml:space="preserve" x="30.0" y="308.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">underrun.</text>
+<rect x="264.0" y="246.0" width="232.0" height="94.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="272.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Hides the soft spots</text>
+<text xml:space="preserve" x="278.0" y="294.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Tasks other people control, like</text>
+<text xml:space="preserve" x="278.0" y="308.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">licences and imports, have the</text>
+<text xml:space="preserve" x="278.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">longest tails.</text>
+<rect x="512.0" y="246.0" width="232.0" height="94.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="272.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Needs a reserve</text>
+<text xml:space="preserve" x="526.0" y="294.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Say it early: a gap found late is</text>
+<text xml:space="preserve" x="526.0" y="308.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">far more expensive.</text>
+<text xml:space="preserve" x="16.0" y="366.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Budget gap = Σ (expected days − likely days) × daily cost.</text>
+</g></svg>

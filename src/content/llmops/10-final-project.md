@@ -12,7 +12,7 @@ Your final project is that programme, built from the data in this course.
 
 ## The concept
 
-**What the plan contains**
+### What the plan contains
 
 | Part | Built in |
 | :-- | :-- |
@@ -23,7 +23,7 @@ Your final project is that programme, built from the data in this course.
 | Alerts with control limits | lessons 7 and 8 |
 | Incident playbook and a postmortem | lesson 9 |
 
-**A backtest of your monitoring**
+### A backtest of your monitoring
 
 The strongest evidence for a monitoring plan is to run it on the past: for each incident, the date your alerts would have fired, against the date it was actually found.
 

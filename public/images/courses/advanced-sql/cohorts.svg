@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Cohorts and retention, with an illustrative triangle. Each customer belongs to the cohort of their first booking quarter. For each cohort the table shows what share booked again 0, 1, 2 and 3 quarters later; quarter 0 is always 100 percent. Later cells are blank for recent cohorts, because those quarters haven't happened yet. Two traps: count each customer once per quarter, and never compare a cohort's later quarters before they exist.">
+<title>A retention triangle: each row is a cohort; columns are quarters since the first booking.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="11" fill="#5E5A52" font-weight="700" text-anchor="start">cohort</text>
+<text xml:space="preserve" x="196.0" y="28.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Q+0</text>
+<text xml:space="preserve" x="296.0" y="28.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Q+1</text>
+<text xml:space="preserve" x="396.0" y="28.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Q+2</text>
+<text xml:space="preserve" x="496.0" y="28.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Q+3</text>
+<text xml:space="preserve" x="16.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2025-Q1</text>
+<text xml:space="preserve" x="100.0" y="66.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">n=120</text>
+<rect x="156" y="38" width="92" height="38" rx="5" fill="#2F6B3F" fill-opacity="0.90"/>
+<text xml:space="preserve" x="202.0" y="63.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">100%</text>
+<rect x="256" y="38" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.61"/>
+<text xml:space="preserve" x="302.0" y="63.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">62%</text>
+<rect x="356" y="38" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.54"/>
+<text xml:space="preserve" x="402.0" y="63.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">51%</text>
+<rect x="456" y="38" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.51"/>
+<text xml:space="preserve" x="502.0" y="63.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">47%</text>
+<text xml:space="preserve" x="16.0" y="110.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2025-Q2</text>
+<text xml:space="preserve" x="100.0" y="110.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">n=135</text>
+<rect x="156" y="82" width="92" height="38" rx="5" fill="#2F6B3F" fill-opacity="0.90"/>
+<text xml:space="preserve" x="202.0" y="107.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">100%</text>
+<rect x="256" y="82" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.64"/>
+<text xml:space="preserve" x="302.0" y="107.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">66%</text>
+<rect x="356" y="82" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.56"/>
+<text xml:space="preserve" x="402.0" y="107.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">55%</text>
+<rect x="456.0" y="82.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="502.0" y="107.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="16.0" y="154.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2025-Q3</text>
+<text xml:space="preserve" x="100.0" y="154.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">n=98</text>
+<rect x="156" y="126" width="92" height="38" rx="5" fill="#2F6B3F" fill-opacity="0.90"/>
+<text xml:space="preserve" x="202.0" y="151.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">100%</text>
+<rect x="256" y="126" width="92" height="38" rx="5" fill="#2F5D8A" fill-opacity="0.60"/>
+<text xml:space="preserve" x="302.0" y="151.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">60%</text>
+<rect x="356.0" y="126.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="402.0" y="151.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="456.0" y="126.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="502.0" y="151.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="16.0" y="198.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2025-Q4</text>
+<text xml:space="preserve" x="100.0" y="198.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">n=110</text>
+<rect x="156" y="170" width="92" height="38" rx="5" fill="#2F6B3F" fill-opacity="0.90"/>
+<text xml:space="preserve" x="202.0" y="195.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">100%</text>
+<rect x="256.0" y="170.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="302.0" y="195.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="356.0" y="170.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="402.0" y="195.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<rect x="456.0" y="170.0" width="92.0" height="38.0" rx="5" fill="#F2EFE8"/>
+<text xml:space="preserve" x="502.0" y="195.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">–</text>
+<text xml:space="preserve" x="570.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Read across: how a cohort</text>
+<text xml:space="preserve" x="570.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">decays or holds.</text>
+<text xml:space="preserve" x="570.0" y="130.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Read down a column: is each</text>
+<text xml:space="preserve" x="570.0" y="150.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">new cohort retaining better?</text>
+<text xml:space="preserve" x="16.0" y="240.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Building it</text>
+<rect x="16.0" y="254.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="278.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Cohort</text>
+<text xml:space="preserve" x="28.0" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">MIN(booking quarter) per</text>
+<text xml:space="preserve" x="28.0" y="314.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">customer</text>
+<rect x="200.0" y="254.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="212.0" y="278.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">2  Activity</text>
+<text xml:space="preserve" x="212.0" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">one row per customer per</text>
+<text xml:space="preserve" x="212.0" y="314.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">quarter (DISTINCT)</text>
+<rect x="384.0" y="254.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="396.0" y="278.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">3  Index</text>
+<text xml:space="preserve" x="396.0" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">quarters since the</text>
+<text xml:space="preserve" x="396.0" y="314.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">cohort quarter</text>
+<rect x="568.0" y="254.0" width="172.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="580.0" y="278.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">4  Divide</text>
+<text xml:space="preserve" x="580.0" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">active ÷ cohort size</text>
+<rect x="16.0" y="350.0" width="728.0" height="60.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="374.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Two traps to say out loud</text>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Count a customer once per quarter. Blank cells aren't zero: those quarters haven't happened yet.</text>
+</g></svg>

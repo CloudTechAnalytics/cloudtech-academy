@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="A three-point estimate and PERT, for an illustrative task. Optimistic 4 days, most likely 6, pessimistic 14. Expected duration is (O + 4M + P) divided by 6, which is 7.0 days: longer than the most likely 6, because the pessimistic case is further from the most likely than the optimistic one. The standard deviation, (P minus O) divided by 6, is about 1.7 days.">
+<title>A three-point estimate: a long tail on the right pulls the expected duration above the most likely.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<polygon points="120.0,250.0 120.0,250.0 123.0,241.6 126.1,233.2 129.1,224.8 132.1,216.4 135.2,208.0 138.2,199.6 141.2,191.2 144.2,182.8 147.3,174.4 150.3,165.9 153.3,157.5 156.4,149.1 159.4,140.7 162.4,132.3 165.5,123.9 168.5,115.5 171.5,107.1 174.5,98.7 177.6,90.3 180.6,84.0 183.6,86.1 186.7,88.2 189.7,90.3 192.7,92.4 195.8,94.5 198.8,96.6 201.8,98.7 204.8,100.8 207.9,102.9 210.9,105.0 213.9,107.1 217.0,109.2 220.0,111.3 223.0,113.4 226.1,115.5 229.1,117.6 232.1,119.7 235.2,121.8 238.2,123.9 241.2,126.0 244.2,128.1 247.3,130.2 250.3,132.3 253.3,134.4 256.4,136.5 259.4,138.6 262.4,140.7 265.5,142.8 268.5,144.9 271.5,147.0 274.5,149.1 277.6,151.2 280.6,153.3 283.6,155.4 286.7,157.5 289.7,159.6 292.7,161.7 295.8,163.8 298.8,165.9 301.8,168.1 304.8,170.2 307.9,172.3 310.9,174.4 313.9,176.5 317.0,178.6 320.0,180.7 323.0,182.8 326.1,184.9 329.1,187.0 332.1,189.1 335.2,191.2 338.2,193.3 341.2,195.4 344.2,197.5 347.3,199.6 350.3,201.7 353.3,203.8 356.4,205.9 359.4,208.0 362.4,210.1 365.5,212.2 368.5,214.3 371.5,216.4 374.5,218.5 377.6,220.6 380.6,222.7 383.6,224.8 386.7,226.9 389.7,229.0 392.7,231.1 395.8,233.2 398.8,235.3 401.8,237.4 404.8,239.5 407.9,241.6 410.9,243.7 413.9,245.8 417.0,247.9 420.0,250.0 420.0,250.0" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="2"/>
+<line x1="60.0" y1="250.0" x2="480.0" y2="250.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="60.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">2</text>
+<text xml:space="preserve" x="120.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">4</text>
+<text xml:space="preserve" x="180.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">6</text>
+<text xml:space="preserve" x="240.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">8</text>
+<text xml:space="preserve" x="300.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">10</text>
+<text xml:space="preserve" x="360.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">12</text>
+<text xml:space="preserve" x="420.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">14</text>
+<text xml:space="preserve" x="480.0" y="268.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">16</text>
+<text xml:space="preserve" x="270.0" y="288.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">working days</text>
+<line x1="180.0" y1="250.0" x2="180.0" y2="84.0" stroke="#2F5D8A" stroke-width="2"/>
+<text xml:space="preserve" x="180.0" y="76.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">M = 6</text>
+<text xml:space="preserve" x="112.0" y="242.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="end">O = 4</text>
+<text xml:space="preserve" x="428.0" y="242.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">P = 14</text>
+<line x1="210.0" y1="104.0" x2="210.0" y2="250.0" stroke="#8A6A1F" stroke-width="2.4" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="224.0" y="120.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">expected 7.0</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Triangular range of one task (illustration)</text>
+<rect x="520.0" y="40.0" width="224.0" height="210.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="536.0" y="68.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">PERT</text>
+<text xml:space="preserve" x="536.0" y="98.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">expected = (O + 4M + P) ÷ 6</text>
+<text xml:space="preserve" x="536.0" y="122.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= (4 + 24 + 14) ÷ 6 = 7.0</text>
+<text xml:space="preserve" x="536.0" y="156.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">std dev ≈ (P − O) ÷ 6</text>
+<text xml:space="preserve" x="536.0" y="180.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">= 10 ÷ 6 ≈ 1.7</text>
+<text xml:space="preserve" x="536.0" y="214.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Longer than the most likely 6:</text>
+<text xml:space="preserve" x="536.0" y="230.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">the tail is on the right.</text>
+<text xml:space="preserve" x="16.0" y="320.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Ask the people who will do the work, and write down why.</text>
+<text xml:space="preserve" x="16.0" y="344.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Estimates are forecasts, not promises: re-estimate as you learn.</text>
+</g></svg>

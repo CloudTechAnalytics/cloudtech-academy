@@ -12,17 +12,19 @@ A forecast that uses everything known about the future dates should beat one tha
 
 ## The concept
 
-**Features known in advance**
+### Features known in advance
 
 For each future date, build the features you already know: trend (years since the start), weekday, month, payday, days before Eid, the December build-up, promotion planned, the week after a promotion, and the price level. Then fit a regression on the past and apply it to future dates.
 
-**Log scale, again**
+### Log scale, again
 
 Patterns here are multiplicative (December adds a percentage), so fit on log(units + 1) and convert back with exp(prediction) − 1. Drop days the depot was closed from training, and forecast zero for them.
 
-**The lag trap**
+### The lag trap
 
 Yesterday's sales are a powerful predictor of today's, so it's tempting to add "units 1 day ago" as a feature. But you're forecasting weeks 3 and 4 ahead: when you make the forecast, you don't know yesterday's sales for those days. **A lag feature is only allowed if it's at least as long as the horizon** (here, 28 days or more). Using shorter lags in testing gives a forecast that looks great and can't be produced in real life: it's leakage, in time-series form.
+
+![A strip of days: known history up to today, days 1 to 14 not yet known, and days 15 to 28 being forecast. A lag of 1 day points into the unknown period and is crossed out; a lag of 28 days points back into the known history and is allowed.](/images/courses/forecasting/lag-trap.svg "A lag must be at least as long as the horizon.")
 
 ## Example
 

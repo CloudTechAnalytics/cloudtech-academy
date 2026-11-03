@@ -14,7 +14,7 @@ Every question needs measures from this course: like-for-like time intelligence,
 
 ## The concept
 
-**From questions to measures**
+### From questions to measures
 
 | Question | Measures | Lesson |
 | :-- | :-- | :-- |
@@ -24,7 +24,7 @@ Every question needs measures from this course: like-for-like time intelligence,
 | Who's slipping away? | Active Customers 30d, Lapsed Customers 30d, New Customers | 7, 9 |
 | Where's the concentration risk? | Cumulative Share, ABC Class | 9 |
 
-**What makes the measure library trustworthy**
+### What makes the measure library trustworthy
 
 - Base measures defined once, and everything else built on them.
 - Display folders, formats and a description on every measure.

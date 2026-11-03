@@ -12,7 +12,7 @@ Nobody at Tallybook did anything wrong on any single day. Forgotten resources ar
 
 ## The concept
 
-**Common kinds of waste**
+### Common kinds of waste
 
 | Waste | How to spot it |
 | :-- | :-- |
@@ -22,7 +22,7 @@ Nobody at Tallybook did anything wrong on any single day. Forgotten resources ar
 | **Unused IP addresses** | reserved public IPs attached to nothing are charged |
 | **Old snapshots** | backups kept far longer than any policy requires |
 
-**Remove safely**
+### Remove safely
 
 1. Find an owner (tags, names, creation history), and ask.
 2. If nobody claims it: **snapshot then delete** for disks; **stop, wait, then delete** for servers.

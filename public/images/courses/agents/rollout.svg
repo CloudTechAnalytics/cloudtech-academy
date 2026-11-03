@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="A gradual rollout. Stage 1, shadow mode: the agent proposes and people act. Stage 2: the agent handles a small share of live requests. Stage 3: a larger share, as monitoring stays healthy. Throughout, a kill switch can send everything back to people instantly.">
+<title>Roll out in stages, with a kill switch at every stage.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="40.0" width="232.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="68.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">1 Shadow mode</text>
+<text xml:space="preserve" x="32.0" y="94.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">the agent proposes; people</text>
+<text xml:space="preserve" x="32.0" y="112.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">act</text>
+<text xml:space="preserve" x="32.0" y="152.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">0% live</text>
+<path d="M250.0,105.0 L262.0,105.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="264.0" y="40.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="280.0" y="68.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">2 Small share</text>
+<text xml:space="preserve" x="280.0" y="94.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">the agent acts on a few live</text>
+<text xml:space="preserve" x="280.0" y="112.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">requests</text>
+<text xml:space="preserve" x="280.0" y="152.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">e.g. 5%</text>
+<path d="M498.0,105.0 L510.0,105.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="512.0" y="40.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="528.0" y="68.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">3 Larger share</text>
+<text xml:space="preserve" x="528.0" y="94.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">more traffic while monitoring</text>
+<text xml:space="preserve" x="528.0" y="112.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">stays healthy</text>
+<text xml:space="preserve" x="528.0" y="152.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">e.g. 50%+</text>
+<rect x="16.0" y="196.0" width="728.0" height="50.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="32.0" y="227.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Kill switch: one action sends every request back to people, at any stage.</text>
+<text xml:space="preserve" x="16.0" y="280.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Weekly: people grade a random sample of live runs with the evaluation labels.</text>
+</g></svg>

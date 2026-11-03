@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Data quality checks to run before trusting a number. Profile a table: rows, distinct ids, minimum and maximum dates and values. Find orphans, rows whose foreign key points at nothing, with an anti-join. Find duplicates by grouping on what should be unique and keeping groups with more than one row. Reconcile totals: what was charged against what was received, with the difference called outstanding. Check logic: a payment dated before its shipment is a red flag.">
+<title>Profile, find orphans and duplicates, reconcile totals, check the logic.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="356.0" height="108.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Profile</text>
+<text xml:space="preserve" x="30.0" y="72.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">COUNT(*), COUNT(DISTINCT id), MIN, MAX</text>
+<text xml:space="preserve" x="30.0" y="108.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">asks: do the numbers look sane?</text>
+<rect x="388.0" y="20.0" width="356.0" height="108.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="46.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">2  Orphans</text>
+<text xml:space="preserve" x="402.0" y="72.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">LEFT JOIN … WHERE parent.id IS NULL</text>
+<text xml:space="preserve" x="402.0" y="108.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">asks: rows pointing at nothing</text>
+<rect x="16.0" y="140.0" width="356.0" height="108.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="166.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">3  Duplicates</text>
+<text xml:space="preserve" x="30.0" y="192.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">GROUP BY key HAVING COUNT(*) &gt; 1</text>
+<text xml:space="preserve" x="30.0" y="228.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">asks: ids that repeat</text>
+<rect x="388.0" y="140.0" width="356.0" height="108.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="166.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">4  Reconcile</text>
+<text xml:space="preserve" x="402.0" y="192.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">total charged − total received</text>
+<text xml:space="preserve" x="402.0" y="228.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">asks: does it add up?</text>
+<text xml:space="preserve" x="16.0" y="272.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">An orphan check, step by step</text>
+<rect x="16.0" y="286.0" width="200.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="24.0" y="304.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">payment_id</text>
+<text xml:space="preserve" x="124.0" y="304.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipment_id</text>
+<rect x="16.0" y="312.0" width="200.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="330.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P1</text>
+<text xml:space="preserve" x="124.0" y="330.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S10</text>
+<rect x="16.0" y="338.0" width="200.0" height="26.0" rx="0" fill="#F6E3E0"/>
+<text xml:space="preserve" x="24.0" y="356.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P2</text>
+<text xml:space="preserve" x="124.0" y="356.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S99</text>
+<rect x="16.0" y="364.0" width="200.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="382.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">P3</text>
+<text xml:space="preserve" x="124.0" y="382.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S11</text>
+<line x1="16.0" y1="390.0" x2="216.0" y2="390.0" stroke="#CFC4B2" stroke-width="1"/>
+<path d="M224.0,330.0 L270.0,330.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="247.0" y="318.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="middle">no S99</text>
+<rect x="274.0" y="296.0" width="150.0" height="70.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="286.0" y="320.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipments</text>
+<text xml:space="preserve" x="286.0" y="342.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">S10, S11, S12 …</text>
+<rect x="444.0" y="296.0" width="300.0" height="70.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="458.0" y="322.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">P2 is an orphan</text>
+<text xml:space="preserve" x="458.0" y="344.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">its shipment doesn't exist</text>
+<text xml:space="preserve" x="16.0" y="420.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Also check: a payment dated before its shipment, and negative or impossible values.</text>
+</g></svg>

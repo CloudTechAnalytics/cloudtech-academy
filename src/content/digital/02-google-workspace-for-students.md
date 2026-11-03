@@ -8,6 +8,8 @@ summary: Use Google Docs, Sheets, Forms and Calendar to write, collaborate on gr
 
 A free Google account gives you **Docs** (writing), **Sheets** (spreadsheets), **Slides** (presentations), **Forms** (surveys), **Calendar** and **Drive**. They work in any browser, save automatically and are built for working together.
 
+![Six Google tools and what students use them for: Docs, Sheets, Slides, Forms, Calendar and Drive; and how a Form's answers flow into a Sheet](/images/courses/digital/workspace-map.svg "One account, six tools, each for a student job.")
+
 ## Google Docs: write together
 
 - **Share** (top right) → add your group members as **Editors**.

@@ -12,10 +12,15 @@ Before you can use pandas well, you need the four ideas it's built on: **lists**
 
 ## The concept
 
-**Lists: values in order**
+### Lists: values in order
 
 ```python
 daily_sales = [412500, 389000, 455250, 501300, 298700, 610400, 352900]
+sum(daily_sales)
+```
+
+```text
+3020050
 ```
 
 - `len(daily_sales)` is how many values there are (7).
@@ -24,7 +29,7 @@ daily_sales = [412500, 389000, 455250, 501300, 298700, 610400, 352900]
 - `daily_sales[1:3]` is a **slice**: positions 1 and 2 (the end position isn't included).
 - `daily_sales.append(480000)` adds a value to the end.
 
-**Dictionaries: values by name**
+### Dictionaries: values by name
 
 A dictionary maps **keys** to **values**. It's how you'd store one row of data, or a lookup table:
 
@@ -33,18 +38,32 @@ category_of = {1: "Beverages", 5: "Snacks", 9: "Household", 13: "Personal care"}
 category_of[9]
 ```
 
+```text
+'Household'
+```
+
 That returns `'Household'`. Add or change an entry with `category_of[2] = "Beverages"`. Ask for a key that isn't there and you get a `KeyError`; `category_of.get(99, "Unknown")` returns a default instead.
 
-**Loops: do it for each one**
+### Loops: do it for each one
 
 ```python
 for amount in daily_sales:
     print(amount)
 ```
 
+```text
+412500
+389000
+455250
+501300
+298700
+610400
+352900
+```
+
 The indented lines run once for each value. Indentation (4 spaces, which Colab adds for you) is how Python knows which lines belong to the loop.
 
-**Decisions: if, elif, else**
+### Decisions: if, elif, else
 
 ```python
 amount = 610400
@@ -56,14 +75,23 @@ else:
     print("OK")
 ```
 
+```text
+Needs a second signature
+```
+
 Comparisons give `True` or `False`: `==` (equal), `!=` (not equal), `<`, `<=`, `>`, `>=`. Combine them with `and`, `or` and `not`.
 
-**Functions: name a calculation once, use it everywhere**
+### Functions: name a calculation once, use it everywhere
 
 ```python
 def line_revenue(quantity, unit_price, discount_pct=0):
     """Revenue of one order line after its discount."""
     return quantity * unit_price * (1 - discount_pct / 100)
+line_revenue(14, 18600)
+```
+
+```text
+260400.0
 ```
 
 `def` starts a function, the names in brackets are its **parameters**, and `return` sends the answer back. `discount_pct=0` is a **default**: leave it out and it's 0. Now `line_revenue(14, 18600, 5)` gives `247380.0` and `line_revenue(10, 9900)` gives `99000.0`.

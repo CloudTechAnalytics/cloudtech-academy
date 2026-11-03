@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="An illustration of underfitting and overfitting. As a tree grows deeper, training error keeps falling towards zero. Test error falls at first, reaches a minimum, then rises again as the model starts memorising noise. The gap between the two lines is the sign of overfitting.">
+<title>Training error keeps falling; test error falls, then rises: the gap is overfitting.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="70.0" y1="320.0" x2="720.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="70.0" y1="50.0" x2="70.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="60.0" y="185.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">error</text>
+<text xml:space="preserve" x="395.0" y="344.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">model complexity (for a tree: max_depth) →</text>
+<path d="M70.0,71.6 L86.2,90.3 L102.5,107.5 L118.8,123.4 L135.0,138.1 L151.2,151.7 L167.5,164.2 L183.8,175.8 L200.0,186.5 L216.2,196.3 L232.5,205.4 L248.8,213.8 L265.0,221.6 L281.2,228.7 L297.5,235.3 L313.8,241.4 L330.0,247.0 L346.2,252.2 L362.5,257.0 L378.8,261.5 L395.0,265.5 L411.2,269.3 L427.5,272.8 L443.7,276.0 L460.0,279.0 L476.2,281.7 L492.5,284.2 L508.8,286.6 L525.0,288.7 L541.2,290.7 L557.5,292.6 L573.8,294.3 L590.0,295.8 L606.2,297.3 L622.5,298.6 L638.8,299.8 L655.0,301.0 L671.2,302.0 L687.5,303.0 L703.8,303.9 L720.0,304.7" fill="none" stroke="#2F6B3F" stroke-width="2.6"/>
+<path d="M70.0,28.4 L86.2,47.1 L102.5,64.3 L118.8,80.2 L135.0,94.9 L151.2,108.5 L167.5,121.0 L183.8,132.6 L200.0,143.3 L216.2,153.1 L232.5,162.2 L248.8,170.6 L265.0,178.4 L281.2,185.5 L297.5,192.1 L313.8,198.2 L330.0,203.1 L346.2,206.7 L362.5,209.3 L378.8,211.1 L395.0,212.2 L411.2,212.7 L427.5,212.6 L443.7,211.9 L460.0,210.7 L476.2,209.0 L492.5,207.0 L508.8,204.4 L525.0,201.5 L541.2,198.3 L557.5,194.7 L573.8,190.7 L590.0,186.5 L606.2,181.9 L622.5,177.1 L638.8,172.0 L655.0,166.6 L671.2,161.0 L687.5,155.2 L703.8,149.1 L720.0,142.9" fill="none" stroke="#9B2C1F" stroke-width="2.6"/>
+<line x1="411.2" y1="50.0" x2="411.2" y2="320.0" stroke="#5E5A52" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text xml:space="preserve" x="411.2" y="44.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="middle">best test error</text>
+<text xml:space="preserve" x="716.0" y="294.7" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="end">training error</text>
+<text xml:space="preserve" x="716.0" y="132.9" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="end">test error</text>
+<text xml:space="preserve" x="148.0" y="60.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">← underfitting</text>
+<text xml:space="preserve" x="629.0" y="60.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">overfitting →</text>
+<path d="M655.0,301.0 L655.0,166.6" fill="none" stroke="#8A6A1F" stroke-width="1.6" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="647.0" y="233.8" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">the gap</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">An illustration of the shape, not measured values.</text>
+</g></svg>

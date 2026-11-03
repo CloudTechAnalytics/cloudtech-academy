@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="An incident timeline. The problem starts, then some time later it is detected (time to detect), then it is resolved (time to resolve). The incident is also classified by how it was detected: by your own alerts, or by someone else such as customers, which means monitoring missed it.">
+<title>Time to detect and time to resolve: the two numbers every incident is measured by.</title>
+
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="40.0" y="108.0" width="380.0" height="24.0" rx="4" fill="#F6E3E0"/>
+<rect x="420.0" y="108.0" width="300.0" height="24.0" rx="4" fill="#FBEBD6"/>
+<line x1="40.0" y1="90.0" x2="40.0" y2="150.0" stroke="#9B2C1F" stroke-width="2.4"/>
+<text xml:space="preserve" x="40.0" y="82.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">problem starts</text>
+<line x1="420.0" y1="90.0" x2="420.0" y2="150.0" stroke="#8A6A1F" stroke-width="2.4"/>
+<text xml:space="preserve" x="420.0" y="82.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">detected</text>
+<line x1="720.0" y1="90.0" x2="720.0" y2="150.0" stroke="#2F6B3F" stroke-width="2.4"/>
+<text xml:space="preserve" x="720.0" y="82.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="end">resolved</text>
+<text xml:space="preserve" x="230.0" y="170.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="middle">time to detect</text>
+<text xml:space="preserve" x="570.0" y="170.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="middle">time to resolve</text>
+<rect x="16.0" y="196.0" width="728.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="222.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">How was it detected?</text>
+<text xml:space="preserve" x="32.0" y="248.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Your own alert: monitoring worked.   Customers or social media: monitoring missed it, so add a check.</text>
+</g></svg>

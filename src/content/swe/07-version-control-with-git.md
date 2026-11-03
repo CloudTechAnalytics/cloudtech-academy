@@ -12,7 +12,7 @@ Before Git, Tallybook's code lived on one engineer's laptop and a shared folder,
 
 ## The concept
 
-**The basic cycle**
+### The basic cycle
 
 | Command | Does |
 | :-- | :-- |
@@ -23,11 +23,13 @@ Before Git, Tallybook's code lived on one engineer's laptop and a shared folder,
 | `git log` | the history of commits |
 | `git diff` | what changed, line by line |
 
-**Branches**
+### Branches
 
 A branch is a separate line of work. Make a branch for each change, commit to it, and **merge** it into `main` when it's reviewed and tested. `main` always works.
 
-**Good commits**
+![Working folder to staging area with git add, then to history with git commit; below, a round-vat branch leaves main, gets three small commits, and is merged back into main after review](/images/courses/swe/git-branches.svg "The add–commit cycle, and a branch merged back into main.")
+
+### Good commits
 
 - **Small**: one change per commit, so each can be understood, reviewed and undone.
 - **Clear messages**: say what and why, in the imperative ("Round VAT half up"), not "fixed stuff".

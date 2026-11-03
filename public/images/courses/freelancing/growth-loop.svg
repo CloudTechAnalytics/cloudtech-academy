@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="How a freelancer grows: build samples, do a first one or two jobs for people you know for a testimonial, win paid jobs and reviews, raise prices every few jobs, and repeat clients and referrals follow. Reviews feed the next job.">
+<title>Samples lead to first jobs, reviews, higher prices and repeat clients.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Start small; let each step feed the next</text>
+<rect x="16.0" y="46.0" width="126.0" height="120.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="38.0" cy="72.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="56.0" y="77.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Samples</text>
+<text xml:space="preserve" x="28.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">3–5 pieces to</text>
+<text xml:space="preserve" x="28.0" y="121.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">show</text>
+<path d="M144.0,106.0 L162.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="164.0" y="46.0" width="126.0" height="120.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="186.0" cy="72.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="186.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="204.0" y="77.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">First jobs</text>
+<text xml:space="preserve" x="176.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">For people you</text>
+<text xml:space="preserve" x="176.0" y="121.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">know, for a</text>
+<text xml:space="preserve" x="176.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">testimonial</text>
+<path d="M292.0,106.0 L310.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="312.0" y="46.0" width="126.0" height="120.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="334.0" cy="72.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="334.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="352.0" y="77.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Reviews</text>
+<text xml:space="preserve" x="324.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Ask politely when</text>
+<text xml:space="preserve" x="324.0" y="121.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">they're happy</text>
+<path d="M440.0,106.0 L458.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="460.0" y="46.0" width="126.0" height="120.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="482.0" cy="72.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="482.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="500.0" y="77.0" font-size="12.5" fill="#5C4F80" font-weight="700" text-anchor="start">Higher prices</text>
+<text xml:space="preserve" x="472.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Raise them every</text>
+<text xml:space="preserve" x="472.0" y="121.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">few jobs</text>
+<path d="M588.0,106.0 L606.0,106.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="608.0" y="46.0" width="126.0" height="120.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<circle cx="630.0" cy="72.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="630.0" y="76.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="648.0" y="77.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Repeat clients</text>
+<text xml:space="preserve" x="620.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Referrals and</text>
+<text xml:space="preserve" x="620.0" y="121.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">next-month work</text>
+<path d="M690,170 L690,214 L90,214 L90,170" fill="none" stroke="#5E5A52" stroke-width="1.8" marker-end="url(#a5E5A52)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="390.0" y="236.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">Reviews and referrals bring the next job</text>
+<rect x="16.0" y="262.0" width="728.0" height="56.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="286.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Most freelancers start with a few low-paid jobs. It grows as reviews and skills grow. It isn't a</text>
+<text xml:space="preserve" x="30.0" y="304.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">get-rich-quick scheme.</text>
+</g></svg>

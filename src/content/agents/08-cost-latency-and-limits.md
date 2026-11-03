@@ -12,24 +12,26 @@ Comparing cost per run is the wrong comparison. A cheap run that issues a wrong 
 
 ## The concept
 
-**Why agents cost more than single calls**
+### Why agents cost more than single calls
 
 Each step re-sends the whole conversation so far: instructions, tool definitions, the request and every earlier tool result. So the input grows with each step, and a 6-step run costs much more than twice a 3-step run.
 
-**What to measure**
+### What to measure
 
 - **Tokens per run**, input and output, from the trace.
 - **Cost per run**, with labelled price assumptions.
 - **Cost per correct resolution**: total cost ÷ number of correct runs.
 - **Latency**: total seconds per run, since the customer waits for every step.
 
-**Limits that control cost**
+### Limits that control cost
 
 - a **step limit** (lesson 3);
 - a **token budget** per run;
 - **short tool results** (lesson 7): less to re-send each step;
 - **prompt caching**, where providers offer it, to charge less for the instructions repeated at every step;
 - a **smaller model** for simple steps, if evaluation shows it's good enough.
+
+![Bars of input tokens per step, illustrated: a fixed base for instructions, tools and the request, plus a growing layer of earlier steps' results, from about 2,000 at step 1 to about 4,500 at step 6.](/images/courses/agents/token-growth.svg "Each step re-sends everything so far, so cost grows faster than the number of steps.")
 
 ## Example
 

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="How GROUP BY works: seven shipments are sorted into groups by status, each group is counted and its containers added up, and the result has one row per group.">
+<title>GROUP BY sorts rows into groups, then calculates one result per group.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">1. The rows</text>
+<rect x="16.0" y="40.0" width="216.0" height="208.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,66 L17,48 Q17,41 24,41 L224,41 Q231,41 231,48 L231,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">status</text>
+<text xml:space="preserve" x="222.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">containers</text>
+<line x1="16.0" y1="66.0" x2="232.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="83.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="222.0" y="83.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">8</text>
+<line x1="16.0" y1="92.0" x2="232.0" y2="92.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="109.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="222.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<line x1="16.0" y1="118.0" x2="232.0" y2="118.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="135.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="222.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">3</text>
+<line x1="16.0" y1="144.0" x2="232.0" y2="144.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="161.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="start">Cancelled</text>
+<text xml:space="preserve" x="222.0" y="161.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">1</text>
+<line x1="16.0" y1="170.0" x2="232.0" y2="170.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="187.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="222.0" y="187.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<line x1="16.0" y1="196.0" x2="232.0" y2="196.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="213.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="222.0" y="213.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">4</text>
+<line x1="16.0" y1="222.0" x2="232.0" y2="222.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="239.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="start">Cancelled</text>
+<text xml:space="preserve" x="222.0" y="239.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<text xml:space="preserve" x="262.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">2. GROUP BY status</text>
+<rect x="262.0" y="42.0" width="210.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="276.0" y="64.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="276.0" y="86.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">8, 3, 2</text>
+<text xml:space="preserve" x="458.0" y="86.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">COUNT = 3 · SUM = 13</text>
+<rect x="262.0" y="116.0" width="210.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="276.0" y="138.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="276.0" y="160.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">2, 4</text>
+<text xml:space="preserve" x="458.0" y="160.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">COUNT = 2 · SUM = 6</text>
+<rect x="262.0" y="190.0" width="210.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="276.0" y="212.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Cancelled</text>
+<text xml:space="preserve" x="276.0" y="234.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">1, 2</text>
+<text xml:space="preserve" x="458.0" y="234.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">COUNT = 2 · SUM = 3</text>
+<text xml:space="preserve" x="506.0" y="30.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">3. One row per group</text>
+<rect x="506.0" y="40.0" width="238.0" height="104.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M507,66 L507,48 Q507,41 514,41 L736,41 Q743,41 743,48 L743,66 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="516.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">status</text>
+<text xml:space="preserve" x="672.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">shipments</text>
+<text xml:space="preserve" x="734.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">cont.</text>
+<line x1="506.0" y1="66.0" x2="744.0" y2="66.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="516.0" y="83.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="672.0" y="83.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">3</text>
+<text xml:space="preserve" x="734.0" y="83.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">13</text>
+<line x1="506.0" y1="92.0" x2="744.0" y2="92.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="516.0" y="109.5" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">In transit</text>
+<text xml:space="preserve" x="672.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<text xml:space="preserve" x="734.0" y="109.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">6</text>
+<line x1="506.0" y1="118.0" x2="744.0" y2="118.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="516.0" y="135.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="start">Cancelled</text>
+<text xml:space="preserve" x="672.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2</text>
+<text xml:space="preserve" x="734.0" y="135.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">3</text>
+<path d="M236.0,150.0 L256.0,150.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M476.0,90.0 L500.0,90.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="506.0" y="168.0" width="238.0" height="130.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="518.0" y="192.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT status,</text>
+<text xml:space="preserve" x="518.0" y="210.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  COUNT(*) AS shipments,</text>
+<text xml:space="preserve" x="518.0" y="228.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  SUM(containers)</text>
+<text xml:space="preserve" x="518.0" y="246.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    AS containers</text>
+<text xml:space="preserve" x="518.0" y="264.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM shipments</text>
+<text xml:space="preserve" x="518.0" y="282.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">GROUP BY status;</text>
+<text xml:space="preserve" x="16.0" y="334.0" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">Seven rows in, three rows out: one for each status. Every column in the result is either the group</text>
+<text xml:space="preserve" x="16.0" y="353.6" font-size="13.5" fill="#5E5A52" font-weight="400" text-anchor="start">itself (status) or a calculation over the group's rows.</text>
+</g></svg>

@@ -12,15 +12,15 @@ A forecasting model can answer both questions, and it must, or it will keep maki
 
 ## The concept
 
-**Measuring effects from the model**
+### Measuring effects from the model
 
 In the log-scale calendar regression, each coefficient `c` means the feature multiplies sales by `exp(c)`. So `exp(c) − 1` is the percentage effect of a promotion, of the pre-Eid days, of payday, all estimated together, holding the others equal. That's better than comparing raw averages, which mix promotions in busy and quiet months.
 
-**The post-promotion dip**
+### The post-promotion dip
 
 Promotions often **pull sales forward**: shops stock up at the low price and buy less the following week. The true gain is the promotion lift minus the dip afterwards. Measure both.
 
-**Structural breaks**
+### Structural breaks
 
 A **structural break** is a lasting change in the level or pattern: a price rise, a new competitor, a lost major customer. Past data from before the break describes a world that no longer exists. Options:
 

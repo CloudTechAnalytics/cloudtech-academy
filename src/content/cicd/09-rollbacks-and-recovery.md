@@ -10,7 +10,7 @@ Even with good tests and canaries, some bad releases reach customers. What matte
 
 ## The concept
 
-**Roll back or fix forward?**
+### Roll back or fix forward?
 
 | | Roll back | Fix forward |
 | :-- | :-- | :-- |
@@ -20,11 +20,13 @@ Even with good tests and canaries, some bad releases reach customers. What matte
 
 Restore service first; understand the cause afterwards.
 
-**Making rollbacks possible**
+### Making rollbacks possible
 
 - Keep previous images in the registry, tagged by version.
 - Make **database changes backwards-compatible** (add a column first, start using it in a later release, remove the old one later still), so the previous app version still works.
 - Use **feature flags**: ship new code switched off, turn it on separately, and switch it off instantly if it misbehaves, with no deployment at all.
+
+![Three releases: expand adds the new column, migrate makes the app use it, contract removes the old column; every step can be rolled back safely, unlike renaming the column and changing the app in one release](/images/courses/cicd/expand-contract.svg "Change the database in steps, so the previous app version always still works.")
 
 ## Example
 

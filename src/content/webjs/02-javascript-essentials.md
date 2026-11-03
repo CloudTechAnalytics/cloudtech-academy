@@ -10,11 +10,11 @@ The payment page must show an invoice's total, with discount and VAT, exactly as
 
 ## The concept
 
-**Variables**
+### Variables
 
 `const` for values that won't be reassigned (most of them), `let` for those that will. Avoid the old `var`.
 
-**Functions**
+### Functions
 
 ```js norun
 function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
@@ -25,13 +25,15 @@ function invoiceTotal(lines, discountPct = 0, vatExempt = false) {
 
 Arrow functions are a shorter form: `const double = (n) => n * 2;`
 
-**Numbers**
+### Numbers
 
 JavaScript has one number type, a 64-bit float. Whole numbers are exact up to about 9 million billion, so **kobo as whole numbers** is safe; fractions like `0.075` are not exact.
 
-**Rounding**
+### Rounding
 
 `Math.round` rounds halves **up** for positive numbers (`Math.round(16.5)` is 17), unlike Python's `round`. But it rounds `-16.5` to -16, and it can only round what it's given: if a calculation lands on 16.499999999999996 instead of 16.5, it rounds down.
+
+![8.95 * 100 is 894.9999999999999, so Math.floor gives 894 and loses a kobo while Math.round gives 895; Math.round(16.5) is 17 but Math.round(-16.5) is -16; the rule: whole kobo everywhere, convert typed naira once](/images/courses/webjs/money-js.svg "Floats lose kobo: convert once with Math.round, then keep whole kobo.")
 
 ## Example
 

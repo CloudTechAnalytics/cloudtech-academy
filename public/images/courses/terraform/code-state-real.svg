@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Terraform compares three things on every plan: the code (what you want), the state file (what Terraform created last time, with real IDs), and the real infrastructure (what exists now). The plan is the set of changes that makes reality match the code. Anything not in the state is invisible to Terraform.">
+<title>Every plan compares code, state and the real cloud.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="232.0" height="130.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="32.0" y="58.0" font-size="16" fill="#2F5D8A" font-weight="700" text-anchor="start">Code (.tf)</text>
+<text xml:space="preserve" x="32.0" y="82.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">what you want</text>
+<text xml:space="preserve" x="32.0" y="116.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">aws_instance.api, count = 4</text>
+<rect x="264.0" y="30.0" width="232.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="280.0" y="58.0" font-size="16" fill="#8A6A1F" font-weight="700" text-anchor="start">State</text>
+<text xml:space="preserve" x="280.0" y="82.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">what Terraform made last time</text>
+<text xml:space="preserve" x="280.0" y="116.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">aws_instance.api[2] → r-0017</text>
+<rect x="512.0" y="30.0" width="232.0" height="130.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="528.0" y="58.0" font-size="16" fill="#2F6B3F" font-weight="700" text-anchor="start">Real cloud</text>
+<text xml:space="preserve" x="528.0" y="82.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">what exists now</text>
+<text xml:space="preserve" x="528.0" y="116.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">4 servers running, one resized</text>
+<text xml:space="preserve" x="528.0" y="133.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">by hand</text>
+<path d="M132,162 C132,230 380,230 380,252" fill="none" stroke="#2F5D8A" stroke-width="1.8" marker-end="url(#a2F5D8A)"/>
+<path d="M380,162 L380,252" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<path d="M628,162 C628,230 380,230 380,252" fill="none" stroke="#2F6B3F" stroke-width="1.8" marker-end="url(#a2F6B3F)"/>
+<rect x="240.0" y="256.0" width="280.0" height="64.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/>
+<text xml:space="preserve" x="380.0" y="284.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">terraform plan</text>
+<text xml:space="preserve" x="380.0" y="306.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">the changes that make reality match the code</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">A server created by hand isn't in the state, so Terraform can't see it: no review, no clean-up, no rebuild.</text>
+</g></svg>

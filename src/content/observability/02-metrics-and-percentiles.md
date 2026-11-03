@@ -10,7 +10,7 @@ Tallybook's old dashboard showed one latency number: the average. On a normal da
 
 ## The concept
 
-**Percentiles**
+### Percentiles
 
 The **p95** is the time that 95% of requests are faster than; 5% are slower. p50 is the median; p99 is the slowest 1%.
 
@@ -21,11 +21,13 @@ The **p95** is the time that 95% of requests are faster than; 5% are slower. p50
 | p99 | the tail: often a different problem (cold caches, lock waits, retries) |
 | Average | dragged by outliers, matches nobody's experience |
 
-**Percentiles don't average**
+### Percentiles don't average
 
 You can't average p95s across minutes or servers and get the p95 of the whole. Compute percentiles from the raw data, or use histogram metrics that can be combined.
 
-**A first dashboard**
+![Twenty request times sorted as bars: p50 is 255 ms, p95 is 900 ms, and the average of 498 ms is pulled up by one 4,200 ms request; a side box shows two servers' p95s of 100 and 1,000 ms averaging to 550 ms while the true p95 is about 1,000 ms](/images/courses/observability/percentiles.svg "p50, p95 and the average for 20 example requests; and why p95s can't be averaged.")
+
+### A first dashboard
 
 For each service: requests per minute, error rate, p50 and p95 (or p99) latency, and saturation of its tightest resource, on the same time axis.
 

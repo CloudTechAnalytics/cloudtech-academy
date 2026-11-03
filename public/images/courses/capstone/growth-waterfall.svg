@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Decomposing a headline growth figure with invented numbers. Last year's first-half sales of 100 rise to 130. A price rise explains 10, a new shop explains 12, and the remaining 8 is real change in volume and mix in existing shops. Like for like compares only shops open in both periods.">
+<title>A headline number is several stories: price, new shops, and real change.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Invented example: sales up from 100 to 130 (+30%)</text>
+<rect x="40.0" y="120.0" width="90.0" height="220.0" rx="4" fill="#8C857A"/>
+<text xml:space="preserve" x="85.0" y="360.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Last year</text>
+<text xml:space="preserve" x="85.0" y="112.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">100</text>
+<rect x="180.0" y="98.0" width="90.0" height="22.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="225.0" y="360.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Price rise</text>
+<text xml:space="preserve" x="225.0" y="90.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">+10</text>
+<rect x="320.0" y="71.6" width="90.0" height="26.4" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="365.0" y="360.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">New shop</text>
+<text xml:space="preserve" x="365.0" y="63.6" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">+12</text>
+<rect x="460.0" y="54.0" width="90.0" height="17.6" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="505.0" y="360.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Volume and mix</text>
+<text xml:space="preserve" x="505.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">+8</text>
+<rect x="600.0" y="54.0" width="90.0" height="286.0" rx="4" fill="#8A6A1F"/>
+<text xml:space="preserve" x="645.0" y="360.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">This year</text>
+<text xml:space="preserve" x="645.0" y="46.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">130</text>
+<line x1="30.0" y1="340.0" x2="740.0" y2="340.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="40.0" y="380.0" width="700.0" height="28.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="52.0" y="399.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Like for like = only shops open in both periods. Existing shops: +10 (price) + 8 (real) = +18%.</text>
+</g></svg>

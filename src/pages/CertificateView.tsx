@@ -4,9 +4,10 @@ import { Download, ExternalLink, Printer, Share2 } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { getBackend, type Certificate } from "@/lib/backend";
-import { verifyUrl } from "@/lib/certificates";
+import { certificateName, verifyUrl } from "@/lib/certificates";
 import { SITE } from "@/lib/site";
-import { CertificateArtwork, downloadCertificatePdf, downloadSvgPng } from "@/components/CertificateArtwork";
+import { downloadCertificatePdf, downloadSvgPng } from "@/components/CertificateArtwork";
+import { CertificateDocument, renderOf } from "@/components/CertificateDocument";
 import { CopyButton } from "@/components/sql/SqlParts";
 import { Alert } from "@/components/Form";
 import { buttonClass } from "@/components/Button";
@@ -15,7 +16,7 @@ function linkedInUrl(c: Certificate) {
   const d = new Date(c.issuedAt);
   const params = new URLSearchParams({
     startTask: "CERTIFICATION_NAME",
-    name: c.courseTitle,
+    name: certificateName(c),
     organizationName: SITE.name,
     issueYear: String(d.getFullYear()),
     issueMonth: String(d.getMonth() + 1),
@@ -56,8 +57,9 @@ function Inner() {
     setError(null);
     try {
       if (!svg.current) return;
-      if (format === "pdf") await downloadCertificatePdf(svg.current, `${cert.certificateId}.pdf`, `${cert.courseTitle} certificate`);
+      if (format === "pdf") await downloadCertificatePdf(svg.current, `${cert.certificateId}.pdf`, `${certificateName(cert)} certificate`);
       else await downloadSvgPng(svg.current, `${cert.certificateId}.png`);
+      void getBackend().then((b) => b.recordCertificateDownload(cert.certificateId)).catch(() => undefined);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Couldn't create the file.");
     }
@@ -68,26 +70,20 @@ function Inner() {
       <Link to="/dashboard" className="text-[0.875rem] text-muted hover:text-ink print:hidden">
         ← Dashboard
       </Link>
-      <h1 className="mt-4 font-serif text-[2.1rem] leading-tight sm:text-[2.6rem] print:hidden">{cert.courseTitle}</h1>
+      <h1 className="mt-4 font-serif text-[2.1rem] leading-tight sm:text-[2.6rem] print:hidden">{certificateName(cert)}</h1>
       {cert.status === "revoked" && (
         <div className="mt-5 print:hidden">
           <Alert tone="error">This certificate was revoked{cert.revokedReason ? `: ${cert.revokedReason}` : "."}</Alert>
         </div>
       )}
+      {cert.status === "replaced" && (
+        <div className="mt-5 print:hidden">
+          <Alert tone="info">This certificate was replaced by a corrected one. The replacement is in your certificates list.</Alert>
+        </div>
+      )}
 
       <div className="mt-8 overflow-hidden rounded-xl border border-line-strong shadow-[0_20px_50px_-30px_rgba(23,23,23,0.45)] print:border-0 print:shadow-none">
-        <CertificateArtwork
-          ref={svg}
-          data={{
-            recipientName: cert.recipientName,
-            courseTitle: cert.courseTitle,
-            issuedAt: cert.issuedAt,
-            certificateId: cert.certificateId,
-            credentialId: cert.credentialId,
-            verifyUrl: url,
-            revoked: cert.status === "revoked",
-          }}
-        />
+        <CertificateDocument ref={svg} templateId={cert.templateId} data={renderOf(cert)} />
       </div>
 
       {cert.status === "valid" && (
@@ -116,7 +112,7 @@ function Inner() {
               </Link>
             </div>
             <p className="mt-3 text-[0.8125rem] text-muted">
-              The QR code on the certificate opens this page. It shows your name, the course and the issue date only.
+              The QR code on the certificate opens this page. It shows what's printed on the certificate, never your email or account.
             </p>
           </div>
         </div>

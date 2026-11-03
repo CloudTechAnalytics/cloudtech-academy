@@ -12,13 +12,15 @@ When an AI feature misbehaves, the first hour matters: who decides, what gets sw
 
 ## The concept
 
-**Measure incidents**
+### Measure incidents
 
 - **Time to detect**: from start to detection.
 - **Time to resolve**: from detection to fix.
 - **How detected**: your own alerts, or someone else (customers, social media)? Incidents found by others are the ones your monitoring missed.
 
-**Prepare before it happens**
+![A timeline from problem starts to detected to resolved, with time to detect and time to resolve marked, and a note on whether your own alert or customers found it.](/images/courses/llmops/incident-timeline.svg "The two numbers every incident is measured by, and who found it.")
+
+### Prepare before it happens
 
 | Prepared in advance | Example |
 | :-- | :-- |
@@ -27,7 +29,7 @@ When an AI feature misbehaves, the first hour matters: who decides, what gets sw
 | **Safe fallbacks** | pin the model version; roll back to the last good release or index; switch the assistant to "hand over everything" |
 | **Customer message** | a pre-written notice that a person will help |
 
-**Blameless postmortems**
+### Blameless postmortems
 
 After each incident, write: timeline, impact, root cause, why it wasn't caught earlier, and actions with owners and dates. Focus on **systems**, not people. "Nobody checked the index" becomes "the index rebuild had no automated check that all articles were present."
 

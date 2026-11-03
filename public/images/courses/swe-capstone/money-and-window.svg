@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Money in whole smallest units. Floating point cannot represent most decimal fractions: 19.99 times 100 is 1998.9999999999998 and cutting it to an integer gives 1998, a unit lost. Keep amounts as integers in the smallest unit, and when a calculation makes fractions use Decimal and round once, explicitly. Write rules as the policy states them, naming the constant, and mean inclusive limits.">
+<title>Integers for money; round once; write the rule as the policy states it.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Why floats lose money</text>
+<rect x="16.0" y="40.0" width="360.0" height="127.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">19.99 * 100</text>
+<text xml:space="preserve" x="28.0" y="85.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"># 1998.9999999999998</text>
+<text xml:space="preserve" x="28.0" y="106.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="28.0" y="127.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">int(19.99 * 100)</text>
+<text xml:space="preserve" x="28.0" y="148.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"># 1998   ← one kobo lost</text>
+<rect x="396.0" y="40.0" width="348.0" height="130.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="410.0" y="66.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Keep money as whole kobo</text>
+<text xml:space="preserve" x="410.0" y="92.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">• Amounts as integers in the smallest unit</text>
+<text xml:space="preserve" x="410.0" y="116.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">• Fractions (a 10% fee)? Use Decimal</text>
+<text xml:space="preserve" x="410.0" y="140.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">• Round once, explicitly, with the stated rule</text>
+<text xml:space="preserve" x="16.0" y="208.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Write the rule as the policy states it</text>
+<rect x="16.0" y="222.0" width="358.0" height="74.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="246.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Policy: "cancel within 7 days"</text>
+<text xml:space="preserve" x="30.0" y="270.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">includes day 7. A boundary is part of the rule.</text>
+<rect x="386.0" y="222.0" width="358.0" height="74.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="246.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">CANCEL_WINDOW_DAYS = 7</text>
+<text xml:space="preserve" x="400.0" y="270.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">if days &lt;= CANCEL_WINDOW_DAYS:</text>
+<text xml:space="preserve" x="16.0" y="328.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Small, focused changes</text>
+<text xml:space="preserve" x="16.0" y="350.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Change only what the bugs need. A diff that's easy to review is easier to trust, and safer to ship.</text>
+<rect x="16.0" y="382.0" width="728.0" height="36.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="405.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">The tempting fix, round(x, 2), hides the problem. The amount is wrong before it is rounded.</text>
+</g></svg>

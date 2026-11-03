@@ -10,17 +10,19 @@ Fixes on your laptop help nobody. To reach customers, each fix goes through the 
 
 ## The concept
 
-**Branch, commit, merge**
+### Branch, commit, merge
 
 Work on a branch named after the change (`fix/return-window`). Commit in small steps, each with a message saying why. Merge into `main` when CI and review pass.
 
-**CI runs the tests on every push**
+### CI runs the tests on every push
 
 A workflow file in `.github/workflows/` tells GitHub Actions to install the dependencies and run `pytest` on every push and pull request. Make the tests a **required check**, so nothing merges red.
 
-**Versions and release notes**
+### Versions and release notes
 
 Tag each release (`v1.1.0`). With semantic versioning, fixes bump the last number, new features the middle one, and breaking changes the first. Release notes are for people outside the team: what changed for them, in their words.
+
+![The path from a branch through commits, pull request, CI, review and merge to a tag, and what the three numbers of a semantic version mean](/images/courses/swe-capstone/ship-it.svg "Branch, pull request, CI, review, merge, tag.")
 
 ## Example
 

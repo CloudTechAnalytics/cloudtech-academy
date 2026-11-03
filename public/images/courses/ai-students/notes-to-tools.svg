@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 316" width="760" height="316" role="img" aria-label="Turning your own lecture notes into study tools: flashcards with a question and short answer, multiple-choice questions with an explanation for each wrong option, a one-at-a-time quiz that waits for your answers, and a revision timetable. Working from your own notes keeps the AI close to what your lecturer taught.">
+<title>One set of notes, four study tools.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker><marker id="a5C4F80" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5C4F80"/></marker></defs>
+<rect width="760" height="316" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="100.0" width="170.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="2"/>
+<text xml:space="preserve" x="101.0" y="134.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="middle">Your own notes</text>
+<text xml:space="preserve" x="101.0" y="156.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">what your lecturer</text>
+<text xml:space="preserve" x="101.0" y="172.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">actually taught</text>
+<path d="M190,150 C230,150 230,49 262,49" fill="none" stroke="#2F5D8A" stroke-width="1.8" marker-end="url(#a2F5D8A)"/>
+<rect x="266.0" y="20.0" width="478.0" height="58.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="280.0" y="44.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Flashcards</text>
+<text xml:space="preserve" x="280.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Question one side, short answer the other</text>
+<path d="M190,150 C230,150 230,115 262,115" fill="none" stroke="#8A6A1F" stroke-width="1.8" marker-end="url(#a8A6A1F)"/>
+<rect x="266.0" y="86.0" width="478.0" height="58.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="280.0" y="110.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Multiple choice</text>
+<text xml:space="preserve" x="280.0" y="130.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">With a reason each wrong option is wrong</text>
+<path d="M190,150 C230,150 230,181 262,181" fill="none" stroke="#2F6B3F" stroke-width="1.8" marker-end="url(#a2F6B3F)"/>
+<rect x="266.0" y="152.0" width="478.0" height="58.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="280.0" y="176.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">One-by-one quiz</text>
+<text xml:space="preserve" x="280.0" y="196.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">It waits for each answer, then shows what you missed</text>
+<path d="M190,150 C230,150 230,247 262,247" fill="none" stroke="#5C4F80" stroke-width="1.8" marker-end="url(#a5C4F80)"/>
+<rect x="266.0" y="218.0" width="478.0" height="58.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<text xml:space="preserve" x="280.0" y="242.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Revision plan</text>
+<text xml:space="preserve" x="280.0" y="262.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Spread over your real week and exam dates</text>
+<text xml:space="preserve" x="16.0" y="308.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Check calculations and science working yourself: AI slips on steps.</text>
+</g></svg>

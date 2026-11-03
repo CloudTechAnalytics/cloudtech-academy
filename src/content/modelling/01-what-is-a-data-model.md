@@ -24,7 +24,7 @@ Models are usually described at three levels, from business language down to dat
 | **Logical** | Each thing's attributes, its key, and the relationships with their cardinality | Analysts and designers | *Customer (Customer ID, Name, Region); Order (Order ID, Customer ID, …); one customer to many orders.* |
 | **Physical** | Real tables in one specific database: names, data types, constraints, indexes | Database developers | `CREATE TABLE orders (order_id INT PRIMARY KEY, …)` in SQL Server |
 
-**Why it matters to an analyst**
+### Why it matters to an analyst
 
 - Good models make questions easy: "revenue by region" is one join, not a cleaning project.
 - Most "the numbers don't match" arguments come from models that store the same fact twice.

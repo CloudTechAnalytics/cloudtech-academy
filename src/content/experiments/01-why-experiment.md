@@ -12,15 +12,17 @@ The same trap catches almost every "before and after" or "users who did X versus
 
 ## The concept
 
-**Correlation isn't causation, for a specific reason**
+### Correlation isn't causation, for a specific reason
 
 When people **choose** a treatment (a feature, a channel, a plan), the choosers differ from the non-choosers: more engaged, richer, more urban. Those differences, not the treatment, may explain the outcome. They're called **confounders**.
 
-**Randomisation breaks the link**
+### Randomisation breaks the link
 
 If a coin decides who sees the new signup flow (B) and who sees the old one (A), then on average the two groups are the same in every way, seen and unseen. Any difference in outcomes beyond chance is caused by the flow. That's why A/B tests are the gold standard.
 
-**The pieces of an A/B test**
+![Left: when users choose, the choosers are mostly highly engaged and the non-choosers mostly not. Right: when a coin decides, both groups have the same mix of engaged and less engaged users.](/images/courses/experiments/randomisation.svg "Self-selection mixes who chose with what worked. Randomisation separates them.")
+
+### The pieces of an A/B test
 
 | Piece | Paystream's onboarding test |
 | :-- | :-- |

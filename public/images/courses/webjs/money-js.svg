@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Why money in JavaScript must be whole kobo. 8.95 times 100 gives 894.9999999999999, because 8.95 can't be stored exactly. Math.floor of that is 894, a kobo lost; Math.round gives 895. Math.round rounds positive halves up, 16.5 to 17, but negative halves towards zero, minus 16.5 to minus 16. Keep amounts as whole kobo, convert typed naira once with Math.round, and format only for display.">
+<title>Floats lose kobo: convert once with Math.round, then keep whole kobo.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Converting ₦8.95 to kobo</text>
+<rect x="16.0" y="40.0" width="728.0" height="94.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8.95 * 100              // 894.9999999999999</text>
+<text xml:space="preserve" x="28.0" y="88.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Math.floor(8.95 * 100)  // 894   ✗ a kobo lost</text>
+<text xml:space="preserve" x="28.0" y="112.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Math.round(8.95 * 100)  // 895   ✓</text>
+<line x1="80.0" y1="190.0" x2="680.0" y2="190.0" stroke="#CFC4B2" stroke-width="2"/>
+<line x1="80.0" y1="184.0" x2="80.0" y2="196.0" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="80.0" y="214.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">894.9</text>
+<line x1="380.0" y1="184.0" x2="380.0" y2="196.0" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="380.0" y="214.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">895.0</text>
+<line x1="680.0" y1="184.0" x2="680.0" y2="196.0" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="680.0" y="214.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">895.1</text>
+<circle cx="377.0" cy="190.0" r="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="370.0" y="174.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">894.9999999999999</text>
+<text xml:space="preserve" x="390.0" y="174.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">just short of 895</text>
+<text xml:space="preserve" x="16.0" y="254.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Math.round and halves</text>
+<rect x="16.0" y="266.0" width="480.0" height="84.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,294 L17,274 Q17,267 24,267 L488,267 Q495,267 495,274 L495,294 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">call</text>
+<text xml:space="preserve" x="216.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">result</text>
+<text xml:space="preserve" x="296.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start"></text>
+<line x1="16.0" y1="294.0" x2="496.0" y2="294.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="312.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Math.round(16.5)</text>
+<text xml:space="preserve" x="216.0" y="312.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17</text>
+<text xml:space="preserve" x="296.0" y="312.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">halves up</text>
+<line x1="16.0" y1="322.0" x2="496.0" y2="322.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="340.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Math.round(-16.5)</text>
+<text xml:space="preserve" x="216.0" y="340.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-16</text>
+<text xml:space="preserve" x="296.0" y="340.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">towards zero for negatives</text>
+<rect x="530.0" y="254.0" width="214.0" height="112.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="546.0" y="280.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">The rule</text>
+<text xml:space="preserve" x="546.0" y="304.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Whole kobo everywhere.</text>
+<text xml:space="preserve" x="546.0" y="322.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Convert typed naira once;</text>
+<text xml:space="preserve" x="546.0" y="340.2" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">format only for display.</text>
+</g></svg>

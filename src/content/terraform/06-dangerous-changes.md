@@ -16,7 +16,7 @@ Each has a standard fix. Knowing them is a core skill for anyone who approves in
 
 ## The concept
 
-**Renames: `moved` blocks**
+### Renames: `moved` blocks
 
 Tell Terraform the resource moved, and the rename becomes a no-op:
 
@@ -27,7 +27,9 @@ moved {
 }
 ```
 
-**Protect what can't be recreated**
+![Left: renaming a database resource without a moved block plans to destroy aws_db_instance.prod and create an empty aws_db_instance.main. Right: with a moved block, the plan has no changes.](/images/courses/terraform/moved-block.svg "A rename without a moved block destroys the database; with one, nothing changes.")
+
+### Protect what can't be recreated
 
 ```hcl
 resource "aws_db_instance" "main" {
@@ -42,12 +44,12 @@ resource "aws_db_instance" "main" {
 
 `prevent_destroy` makes Terraform refuse any plan that would destroy the resource. `deletion_protection` makes the cloud provider refuse it too, even from the console.
 
-**Sequence risky changes**
+### Sequence risky changes
 
 - Create the new thing in one PR; switch traffic and delete the old thing in another, after checking.
 - `create_before_destroy` in a `lifecycle` block makes replacements create first.
 
-**Check every changed attribute**
+### Check every changed attribute
 
 An update can hide changes the title doesn't mention. Compare `before` and `after` for every attribute, not just the one you expected.
 

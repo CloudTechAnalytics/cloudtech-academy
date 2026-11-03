@@ -12,19 +12,19 @@ A one-off clean-up saves money once. Six months later, without a process, the wa
 
 ## The concept
 
-**Ownership and showback**
+### Ownership and showback
 
 Every resource has a team tag, and each team sees its own monthly cost (**showback**). Untagged resources are reported until they're claimed.
 
-**Budgets and alerts**
+### Budgets and alerts
 
 A monthly budget per team and environment, with alerts at, for example, 80% and 100%, and an alert on unusual daily spikes (the same control-limit idea as monitoring).
 
-**Unit costs**
+### Unit costs
 
 Divide cost by a measure of business activity: cost per thousand requests, per invoice sent, per active customer. If the bill grows but unit cost stays flat or falls, the growth is the business growing. If unit cost rises, look for waste or a design problem.
 
-**The review cycle**
+### The review cycle
 
 Monthly: review showback, unit costs and the waste report. Quarterly: review commitments, rightsizing and the architecture.
 

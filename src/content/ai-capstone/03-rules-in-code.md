@@ -12,7 +12,7 @@ The same goes for documents. The policy says exactly what each claim type needs,
 
 ## The concept
 
-**Two signals, combined**
+### Two signals, combined
 
 - **Rules in code**: escalate if the extraction says injuries, the claim is theft, the message mentions ₦5m or more, or the wording is angry. Rules are predictable and testable.
 - **The model's flag**: catches cases the rules don't describe.
@@ -20,11 +20,13 @@ The same goes for documents. The policy says exactly what each claim type needs,
 
 Escalate if **any** of them fires. Measure **recall** (of messages that needed a person, the share escalated) first. Then check the cost: the share of all messages escalated.
 
-**Record the reason**
+### Record the reason
 
 Every escalation should carry its reasons ("injuries", "theft"). The person who picks it up knows why, and you can later see which rule fires most.
 
-**The checklist from the policy**
+![Three signals combined with OR (rules in code, the model's flag, fail-safe) that hand a case to a person, measured by recall first and then cost](/images/courses/ai-capstone/escalation.svg "Escalate if any signal fires; record why.")
+
+### The checklist from the policy
 
 Sections S05 to S07 of the policy list the documents for each claim type. Put them in a table in code. The only thing the message itself proves is whether photos were attached. Mentioning a police report isn't the same as sending it.
 

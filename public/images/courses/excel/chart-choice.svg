@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 664" width="760" height="664" role="img" aria-label="Four questions and the chart that answers each. A trend over time: a line chart of monthly revenue, peaking in December 2025. Comparing categories: a sorted bar chart of revenue by region, Lagos far ahead. Parts of a whole: 100% stacked bars of channel share in 2025 and 2026. Two measures on different scales: quarterly revenue as columns and order lines as a line.">
+<title>Pick the chart from the question: line, bar, 100% stacked bar, combo.</title>
+
+<rect width="760" height="664" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="358.0" height="292.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="42.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">A trend over time</text>
+<text xml:space="preserve" x="32.0" y="64.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Line chart</text>
+<line x1="66.0" y1="221.7" x2="358.0" y2="221.7" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="60.0" y="225.7" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">20m</text>
+<line x1="66.0" y1="175.4" x2="358.0" y2="175.4" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="60.0" y="179.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">40m</text>
+<line x1="66.0" y1="129.1" x2="358.0" y2="129.1" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="60.0" y="133.1" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">60m</text>
+<path d="M66.0,182.2 L83.2,184.4 L100.4,160.9 L117.5,164.7 L134.7,174.8 L151.9,176.0 L169.1,168.2 L186.2,161.5 L203.4,162.3 L220.6,161.7 L237.8,155.6 L254.9,114.6 L272.1,154.7 L289.3,168.4 L306.5,149.5 L323.6,141.7 L340.8,159.8 L358.0,161.1" fill="none" stroke="#B38A3E" stroke-width="2.6"/>
+<circle cx="254.9" cy="114.6" r="5" fill="#8A6A1F"/>
+<text xml:space="preserve" x="246.9" y="104.6" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">Dec 2025: ₦66.3m</text>
+<text xml:space="preserve" x="66.0" y="288.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Jan 2025</text>
+<text xml:space="preserve" x="358.0" y="288.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">Jun 2026</text>
+<rect x="386.0" y="16.0" width="358.0" height="292.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="42.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Comparing categories</text>
+<text xml:space="preserve" x="402.0" y="64.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Bar chart, sorted</text>
+<text xml:space="preserve" x="490.0" y="107.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Lagos</text>
+<rect x="498.0" y="95.0" width="186.0" height="18.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="690.0" y="108.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">411m</text>
+<text xml:space="preserve" x="490.0" y="139.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">South West</text>
+<rect x="498.0" y="127.0" width="59.5" height="18.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="563.5" y="140.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">132m</text>
+<text xml:space="preserve" x="490.0" y="171.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">North West</text>
+<rect x="498.0" y="159.0" width="36.9" height="18.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="540.9" y="172.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">82m</text>
+<text xml:space="preserve" x="490.0" y="203.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">North Central</text>
+<rect x="498.0" y="191.0" width="35.1" height="18.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="539.1" y="204.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">78m</text>
+<text xml:space="preserve" x="490.0" y="235.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">South South</text>
+<rect x="498.0" y="223.0" width="30.9" height="18.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="534.9" y="236.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">68m</text>
+<text xml:space="preserve" x="490.0" y="267.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">South East</text>
+<rect x="498.0" y="255.0" width="27.3" height="18.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="531.3" y="268.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">60m</text>
+<rect x="16.0" y="330.0" width="358.0" height="292.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="356.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Parts of a whole</text>
+<text xml:space="preserve" x="32.0" y="378.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">100% stacked bar</text>
+<text xml:space="preserve" x="70.0" y="442.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2025</text>
+<rect x="80.0" y="420.0" width="192.3" height="34.0" rx="0" fill="#B38A3E"/>
+<text xml:space="preserve" x="88.0" y="442.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">70.2%</text>
+<rect x="272.3" y="420.0" width="68.0" height="34.0" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="280.3" y="442.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">24.8%</text>
+<rect x="340.3" y="420.0" width="13.7" height="34.0" rx="0" fill="#E9DFC9"/>
+<text xml:space="preserve" x="70.0" y="498.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">2026</text>
+<rect x="80.0" y="476.0" width="189.6" height="34.0" rx="0" fill="#B38A3E"/>
+<text xml:space="preserve" x="88.0" y="498.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">69.2%</text>
+<rect x="269.6" y="476.0" width="72.1" height="34.0" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="277.6" y="498.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">26.3%</text>
+<rect x="341.7" y="476.0" width="12.3" height="34.0" rx="0" fill="#E9DFC9"/>
+<rect x="80.0" y="552.0" width="12.0" height="12.0" rx="0" fill="#B38A3E"/>
+<text xml:space="preserve" x="97.0" y="563.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Wholesale</text>
+<rect x="180.0" y="552.0" width="12.0" height="12.0" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="197.0" y="563.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Supermarket</text>
+<rect x="280.0" y="552.0" width="12.0" height="12.0" rx="0" fill="#E9DFC9"/>
+<text xml:space="preserve" x="297.0" y="563.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Kiosk</text>
+<rect x="386.0" y="330.0" width="358.0" height="292.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="356.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Two measures, different scales</text>
+<text xml:space="preserve" x="402.0" y="378.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Combo: columns + line</text>
+<rect x="424.9" y="461.1" width="31.8" height="120.9" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="440.8" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q1 25</text>
+<rect x="474.6" y="455.9" width="31.8" height="126.1" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="490.5" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q2 25</text>
+<rect x="524.3" y="445.6" width="31.8" height="136.4" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="540.2" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q3 25</text>
+<rect x="573.9" y="419.3" width="31.8" height="162.7" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="589.8" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q4 25</text>
+<rect x="623.6" y="437.1" width="31.8" height="144.9" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="639.5" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q1 26</text>
+<rect x="673.3" y="432.7" width="31.8" height="149.3" rx="0" fill="#DCC594"/>
+<text xml:space="preserve" x="689.2" y="600.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Q2 26</text>
+<path d="M440.8,524.4 L490.5,500.7 L540.2,511.1 L589.8,434.1 L639.5,498.1 L689.2,479.2" fill="none" stroke="#2F5D8A" stroke-width="2.4"/>
+<circle cx="440.8" cy="524.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="490.5" cy="500.7" r="3.2" fill="#2F5D8A"/>
+<circle cx="540.2" cy="511.1" r="3.2" fill="#2F5D8A"/>
+<circle cx="589.8" cy="434.1" r="3.2" fill="#2F5D8A"/>
+<circle cx="639.5" cy="498.1" r="3.2" fill="#2F5D8A"/>
+<circle cx="689.2" cy="479.2" r="3.2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="416.0" y="402.0" font-size="11.5" fill="#8A6A1F" font-weight="400" text-anchor="start">₦ revenue</text>
+<text xml:space="preserve" x="714.0" y="402.0" font-size="11.5" fill="#2F5D8A" font-weight="400" text-anchor="end">order lines</text>
+<text xml:space="preserve" x="16.0" y="652.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Kolanut's real figures, January 2025 to June 2026.</text>
+</g></svg>

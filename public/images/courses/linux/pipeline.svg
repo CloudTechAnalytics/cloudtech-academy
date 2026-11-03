@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="How a pipeline works. awk prints the first field (the client IP) of every log line; sort puts identical IPs next to each other; uniq -c counts each run of identical lines; sort -rn sorts those counts from largest to smallest; head -3 keeps the top three. Each command's output becomes the next one's input.">
+<title>A pipeline: each command's output feeds the next.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="44.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="13.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -3</text>
+<rect x="16.0" y="74.0" width="136.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="84.0" y="94.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">awk '{print $1}'</text>
+<rect x="16.0" y="112.0" width="136.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="26.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.1.5</text>
+<text xml:space="preserve" x="26.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102.67.233.152</text>
+<text xml:space="preserve" x="26.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.1.5</text>
+<text xml:space="preserve" x="26.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">41.58.9.20</text>
+<text xml:space="preserve" x="26.0" y="232.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">…</text>
+<path d="M153.0,196.0 L163.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="164.0" y="74.0" width="136.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="232.0" y="94.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">sort</text>
+<rect x="164.0" y="112.0" width="136.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="174.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.1.5</text>
+<text xml:space="preserve" x="174.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.1.5</text>
+<text xml:space="preserve" x="174.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">102.67.233.152</text>
+<text xml:space="preserve" x="174.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">41.58.9.20</text>
+<text xml:space="preserve" x="174.0" y="232.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">…</text>
+<path d="M301.0,196.0 L311.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="312.0" y="74.0" width="136.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="380.0" y="94.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">uniq -c</text>
+<rect x="312.0" y="112.0" width="136.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="322.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2 10.0.1.5</text>
+<text xml:space="preserve" x="322.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1 102.67.233.152</text>
+<text xml:space="preserve" x="322.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1 41.58.9.20</text>
+<text xml:space="preserve" x="322.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">…</text>
+<path d="M449.0,196.0 L459.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="460.0" y="74.0" width="136.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="528.0" y="94.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">sort -rn</text>
+<rect x="460.0" y="112.0" width="136.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="470.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2 10.0.1.5</text>
+<text xml:space="preserve" x="470.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1 102.67.233.152</text>
+<text xml:space="preserve" x="470.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1 41.58.9.20</text>
+<text xml:space="preserve" x="470.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">…</text>
+<path d="M597.0,196.0 L607.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="608.0" y="74.0" width="136.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="676.0" y="94.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">head -3</text>
+<rect x="608.0" y="112.0" width="136.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="618.0" y="136.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">the top three</text>
+<text xml:space="preserve" x="618.0" y="160.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">lines only</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">awk picks a column, sort groups identical lines, uniq -c counts them, sort -rn ranks the counts, head</text>
+<text xml:space="preserve" x="16.0" y="334.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">keeps the top. Five small tools, one answer: the busiest client addresses.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Sample lines for illustration; run it on the course's access.log for the real counts.</text>
+</g></svg>

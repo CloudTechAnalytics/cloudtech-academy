@@ -24,6 +24,8 @@ Many Nigerian university and polytechnic programmes require **SIWES** (Students 
 
 Even if SIWES isn't required, the same approach works for any internship.
 
+![A placement timeline: start looking two to three months before, get documents ready before day one, do real work and fill the logbook during, and keep the gains afterwards](/images/courses/internship/placement-timeline.svg "Start early, and keep the logbook weekly.")
+
 ## What employers look for in students
 
 They don't expect experience. They look for:
@@ -45,6 +47,8 @@ Before you apply anywhere, have these ready in one Drive folder:
 3. **LinkedIn profile** with a photo and headline.
 4. **Portfolio link**, even with one or two projects.
 5. **Documents** schools and employers often ask for: student ID, school letter, transcript or result slip, and passport photo.
+
+![What employers look for in students and how to show each quality, and the five documents to keep ready in one folder](/images/courses/internship/employers-kit.svg "What employers look for, and the five documents to have ready.")
 
 > [!TIP]
 > Save your CV as a PDF named `CV-Firstname-Lastname.pdf`. Recruiters see hundreds of files called `CV.pdf`.

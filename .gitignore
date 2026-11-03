@@ -7,3 +7,4 @@ dist
 
 # Practice logs for the Linux course are course content, not build logs.
 !public/datasets/linux/*.log
+marketing/ads/voice/build/

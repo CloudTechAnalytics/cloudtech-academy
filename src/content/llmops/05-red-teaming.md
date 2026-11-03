@@ -14,7 +14,7 @@ They wrote 240 attacks across six techniques and ran each against all three rele
 
 **Red-teaming** is structured, deliberate attack on your own system before others do it.
 
-**A catalogue of techniques**
+### A catalogue of techniques
 
 | Technique | Example |
 | :-- | :-- |
@@ -25,12 +25,12 @@ They wrote 240 attacks across six techniques and ran each against all three rele
 | Other languages | the same attack in Pidgin or mixed language |
 | Multi-turn escalation | friendly chat first, then the request |
 
-**Measure it**
+### Measure it
 
 - **Attack success rate (ASR)**: share of attacks that achieved their goal, graded by a person against a clear definition of success.
 - Break it down by **technique**, **release** and **defence**, because defences work unevenly.
 
-**Close the loop**
+### Close the loop
 
 Every successful attack becomes a fix (prompt, guardrail, tool permission) **and** a test case in the regression suite, so it stays fixed.
 

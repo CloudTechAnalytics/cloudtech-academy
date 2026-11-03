@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Structure a report like an argument across four pages: an overview with the answer at a glance, stores showing where it is going well or badly, products showing where the profit is, and opportunities showing money left on the table. Chart titles should state the finding, not just name the chart.">
+<title>Four pages, and titles that say the finding.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Four pages, one argument</text>
+<rect x="16.0" y="40.0" width="360.0" height="90.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Overview</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">The answer at a glance</text>
+<text xml:space="preserve" x="30.0" y="110.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">KPI cards · trend line · three key messages</text>
+<rect x="384.0" y="40.0" width="360.0" height="90.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="398.0" y="66.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">2  Stores</text>
+<text xml:space="preserve" x="398.0" y="88.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Where it's going well and badly</text>
+<text xml:space="preserve" x="398.0" y="110.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Like-for-like growth · target attainment</text>
+<rect x="16.0" y="140.0" width="360.0" height="90.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="166.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">3  Products</text>
+<text xml:space="preserve" x="30.0" y="188.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Where the profit is</text>
+<text xml:space="preserve" x="30.0" y="210.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Sales and gross profit by category · return rates</text>
+<rect x="384.0" y="140.0" width="360.0" height="90.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="398.0" y="166.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">4  Opportunities</text>
+<text xml:space="preserve" x="398.0" y="188.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Money left on the table</text>
+<text xml:space="preserve" x="398.0" y="210.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Attach rate · stock-out estimates</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A title that does the thinking</text>
+<rect x="16.0" y="276.0" width="358.0" height="54.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="298.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">✗  "Net sales by shop"</text>
+<text xml:space="preserve" x="30.0" y="318.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">A label. The reader works out the point.</text>
+<rect x="386.0" y="276.0" width="358.0" height="54.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="298.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">✓  "One shop is shrinking: down 20%"</text>
+<text xml:space="preserve" x="400.0" y="318.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">A finding. The chart becomes the proof.</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Judge the target before you judge the shop: a new shop given a mature shop's target will "fail".</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Sketch the four pages on paper first.</text>
+</g></svg>

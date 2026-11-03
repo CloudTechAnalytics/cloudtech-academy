@@ -12,18 +12,18 @@ Both are right, and that's the point of guardrails. An experiment that only look
 
 ## The concept
 
-**Primary metric and guardrails, together**
+### Primary metric and guardrails, together
 
 Report every pre-agreed metric with its effect and confidence interval. A change that improves the primary metric but significantly harms a guardrail isn't a win; it's a trade-off to decide.
 
-**Put both sides in naira**
+### Put both sides in naira
 
 - The gain: extra fee revenue per user per month.
 - The cost: users lost, each worth their future revenue (fees, interest on balances, other products) over a horizon such as a year.
 
 Short tests measure the gain fully but the cost only partly: churn keeps accumulating long after four weeks. A decision based only on the test window favours changes that harvest revenue and pay for it later.
 
-**Decision options**
+### Decision options
 
 Not just "ship" or "don't": a smaller increase (₦15 or ₦20), the higher fee only for large transfers, or a further test that measures retention over longer.
 

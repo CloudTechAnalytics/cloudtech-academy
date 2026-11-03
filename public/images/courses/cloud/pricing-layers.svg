@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="Layering pricing models over demand, illustrated. Demand over a day has a steady floor that always runs, a daytime rise, and occasional batch jobs. The steady baseline suits committed-use pricing; the daytime rise suits on-demand capacity that scales up and down; interruptible batch work suits spot capacity.">
+<title>Commit to the baseline, use on-demand for peaks, spot for interruptible work.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<polygon points="70.0,300.0 560.0,300.0 560.0,228.57142857142856 70.0,228.57142857142856" fill="#2F6B3F" fill-opacity="0.55"/>
+<polygon points="70.0,228.6 75.1,228.6 80.2,228.6 85.3,228.6 90.4,228.6 95.5,228.6 100.6,228.6 105.7,228.6 110.8,228.6 115.9,228.6 121.0,228.6 126.1,228.6 131.2,228.6 136.4,228.6 141.5,228.6 146.6,228.6 151.7,228.6 156.8,228.6 161.9,228.6 167.0,228.6 172.1,228.6 177.2,228.6 182.3,228.6 187.4,228.6 192.5,228.6 197.6,228.6 202.7,228.6 207.8,228.6 212.9,228.6 218.0,228.6 223.1,228.6 228.2,228.6 233.3,228.6 238.4,228.6 243.5,228.6 248.6,228.6 253.8,228.6 258.9,228.6 264.0,228.6 269.1,228.6 274.2,228.6 279.3,228.6 284.4,228.6 289.5,228.6 294.6,228.6 299.7,228.6 304.8,228.6 309.9,228.6 315.0,228.6 320.1,228.6 325.2,228.6 330.3,228.6 335.4,228.6 340.5,228.6 345.6,228.6 350.7,228.6 355.8,228.6 360.9,228.6 366.0,228.6 371.1,228.6 376.2,228.6 381.4,228.6 386.5,228.6 391.6,228.6 396.7,228.6 401.8,228.6 406.9,228.6 412.0,228.6 417.1,228.6 422.2,228.6 427.3,228.6 432.4,228.6 437.5,228.6 442.6,228.6 447.7,228.6 452.8,228.6 457.9,228.6 463.0,228.6 468.1,228.6 473.2,228.6 478.3,228.6 483.4,228.6 488.5,228.6 493.6,228.6 498.8,228.6 503.9,228.6 509.0,228.6 514.1,228.6 519.2,228.6 524.3,228.6 529.4,228.6 534.5,228.6 539.6,228.6 544.7,228.6 549.8,228.6 554.9,228.6 560.0,228.6 560.0,228.6 554.9,228.6 549.8,228.6 544.7,228.6 539.6,228.6 534.5,228.6 529.4,228.6 524.3,228.6 519.2,228.6 514.1,228.6 509.0,228.6 503.9,228.6 498.8,228.6 493.6,228.6 488.5,228.6 483.4,228.6 478.3,228.6 473.2,228.6 468.1,228.6 463.0,228.6 457.9,228.6 452.8,221.6 447.7,214.6 442.6,207.7 437.5,200.8 432.4,194.1 427.3,187.6 422.2,181.2 417.1,175.0 412.0,169.0 406.9,163.3 401.8,157.9 396.7,152.8 391.6,148.0 386.5,143.6 381.4,139.5 376.2,135.8 371.1,132.5 366.0,129.6 360.9,127.1 355.8,125.1 350.7,123.5 345.6,122.3 340.5,121.7 335.4,121.4 330.3,121.7 325.2,122.3 320.1,123.5 315.0,125.1 309.9,127.1 304.8,129.6 299.7,132.5 294.6,135.8 289.5,139.5 284.4,143.6 279.3,148.0 274.2,152.8 269.1,157.9 264.0,163.3 258.9,169.0 253.8,175.0 248.6,181.2 243.5,187.6 238.4,194.1 233.3,200.8 228.2,207.7 223.1,214.6 218.0,221.6 212.9,228.6 207.8,228.6 202.7,228.6 197.6,228.6 192.5,228.6 187.4,228.6 182.3,228.6 177.2,228.6 172.1,228.6 167.0,228.6 161.9,228.6 156.8,228.6 151.7,228.6 146.6,228.6 141.5,228.6 136.4,228.6 131.2,228.6 126.1,228.6 121.0,228.6 115.9,228.6 110.8,228.6 105.7,228.6 100.6,228.6 95.5,228.6 90.4,228.6 85.3,228.6 80.2,228.6 75.1,228.6 70.0,228.6" fill="#2F5D8A" fill-opacity="0.45"/>
+<rect x="90.4" y="192.6" width="40.8" height="34" fill="#B38A3E" fill-opacity="0.75" rx="3"/>
+<rect x="478.3" y="192.6" width="40.8" height="34" fill="#B38A3E" fill-opacity="0.75" rx="3"/>
+<line x1="70.0" y1="300.0" x2="560.0" y2="300.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="70.0" y="318.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">00:00</text>
+<text xml:space="preserve" x="192.5" y="318.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">06:00</text>
+<text xml:space="preserve" x="315.0" y="318.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">12:00</text>
+<text xml:space="preserve" x="437.5" y="318.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">18:00</text>
+<text xml:space="preserve" x="560.0" y="318.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">24:00</text>
+<text xml:space="preserve" x="315.0" y="268.3" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">baseline: always running</text>
+<text xml:space="preserve" x="335.4" y="175.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">daytime rise</text>
+<text xml:space="preserve" x="16.0" y="30.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Servers needed through a day (illustration)</text>
+<rect x="580.0" y="60.0" width="164.0" height="230.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="594.0" y="74.0" width="14.0" height="14.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="616.0" y="86.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Committed use</text>
+<text xml:space="preserve" x="594.0" y="108.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">steady baseline;</text>
+<text xml:space="preserve" x="594.0" y="125.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">~30–40% off</text>
+<rect x="594.0" y="144.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="616.0" y="156.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">On-demand</text>
+<text xml:space="preserve" x="594.0" y="178.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">peaks; no commitment</text>
+<rect x="594.0" y="214.0" width="14.0" height="14.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="616.0" y="226.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Spot</text>
+<text xml:space="preserve" x="594.0" y="248.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">batch jobs that can be</text>
+<text xml:space="preserve" x="594.0" y="265.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">retried; ~60–70% off</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Commit only to what runs every hour of the year, after rightsizing and clean-up. Discounts are illustrative.</text>
+</g></svg>

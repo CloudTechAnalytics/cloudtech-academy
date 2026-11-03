@@ -12,20 +12,22 @@ A model can rank customers well (high AUC) and still give probabilities that are
 
 ## The concept
 
-**AUC and calibration measure different things**
+### AUC and calibration measure different things
 
 - **AUC**: does the model put churners above non-churners? Only the **order** matters.
 - **Calibration**: when the model says 20%, do about 20% churn? The **values** matter.
 
-**The reliability table**
+### The reliability table
 
 Group customers by predicted probability (for example into deciles) and compare, in each group, the **average prediction** with the **actual churn rate**. A calibrated model's two columns match. Plotted, the points lie on the diagonal.
 
-**The Brier score**
+![A reliability diagram: a calibrated model's points follow the diagonal; an overconfident model's points fall below it, predicting 40% where about 25% churn.](/images/courses/features/reliability.svg "Calibrated points sit on the diagonal. An illustration of the idea.")
+
+### The Brier score
 
 The average of (prediction − outcome)², from 0 (perfect) upwards. Lower is better. It rewards both good ranking and good calibration. Compare it with the Brier score of predicting the overall churn rate for everyone.
 
-**Fixing calibration**
+### Fixing calibration
 
 `CalibratedClassifierCV` re-maps a model's probabilities using cross-validation (with `method="sigmoid"` or `"isotonic"`). It needs enough data, and it fixes the shape of the probabilities, not a change in the world (lesson 7).
 

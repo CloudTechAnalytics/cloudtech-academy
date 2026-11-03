@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" width="760" height="410" role="img" aria-label="A profiling checklist for every file and column: row count, key uniqueness, distinct text values, dates, number ranges, blanks and relationships to lookup files, each finding a different kind of problem. Every problem gets a decision: fix it, exclude it, or recognise that it is not a problem, such as real returns.">
+<title>Seven checks, then a decision for every problem.</title>
+
+<rect width="760" height="410" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="24.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Check every column before you analyse anything</text>
+<rect x="16.0" y="34.0" width="728.0" height="208.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,60 L17,42 Q17,35 24,35 L736,35 Q743,35 743,42 L743,60 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="51.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Check</text>
+<text xml:space="preserve" x="176.0" y="51.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Question</text>
+<text xml:space="preserve" x="484.0" y="51.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Finds</text>
+<line x1="16.0" y1="60.0" x2="744.0" y2="60.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="77.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Row count</text>
+<text xml:space="preserve" x="176.0" y="77.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Does the number make sense?</text>
+<text xml:space="preserve" x="484.0" y="77.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Missing or extra data</text>
+<line x1="16.0" y1="86.0" x2="744.0" y2="86.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="103.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Key</text>
+<text xml:space="preserve" x="176.0" y="103.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Is the ID (or combination) unique?</text>
+<text xml:space="preserve" x="484.0" y="103.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Duplicates</text>
+<line x1="16.0" y1="112.0" x2="744.0" y2="112.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="129.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Text values</text>
+<text xml:space="preserve" x="176.0" y="129.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Distinct values and counts?</text>
+<text xml:space="preserve" x="484.0" y="129.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Spelling variants, stray spaces</text>
+<line x1="16.0" y1="138.0" x2="744.0" y2="138.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="155.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Dates</text>
+<text xml:space="preserve" x="176.0" y="155.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Format, earliest, latest?</text>
+<text xml:space="preserve" x="484.0" y="155.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Mixed formats, impossible dates</text>
+<line x1="16.0" y1="164.0" x2="744.0" y2="164.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="181.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Numbers</text>
+<text xml:space="preserve" x="176.0" y="181.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Min, max, negatives, zeros?</text>
+<text xml:space="preserve" x="484.0" y="181.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Returns, errors, outliers</text>
+<line x1="16.0" y1="190.0" x2="744.0" y2="190.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="207.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Blanks</text>
+<text xml:space="preserve" x="176.0" y="207.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">How many per column?</text>
+<text xml:space="preserve" x="484.0" y="207.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Gaps to explain</text>
+<line x1="16.0" y1="216.0" x2="744.0" y2="216.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="233.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Relationships</text>
+<text xml:space="preserve" x="176.0" y="233.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Does every code match its lookup?</text>
+<text xml:space="preserve" x="484.0" y="233.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Orphans, test data</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Then every problem gets a decision, with the rows it affects</text>
+<rect x="16.0" y="276.0" width="232.0" height="78.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="302.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Fix it</text>
+<text xml:space="preserve" x="30.0" y="324.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Standardise a spelling or a date</text>
+<text xml:space="preserve" x="30.0" y="339.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">format.</text>
+<rect x="264.0" y="276.0" width="232.0" height="78.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="302.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Exclude it</text>
+<text xml:space="preserve" x="278.0" y="324.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Remove test rows or exact</text>
+<text xml:space="preserve" x="278.0" y="339.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">duplicates.</text>
+<rect x="512.0" y="276.0" width="232.0" height="78.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="302.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Keep it</text>
+<text xml:space="preserve" x="526.0" y="324.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Not a problem: returns are real</text>
+<text xml:space="preserve" x="526.0" y="339.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">events.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Record: what you found, how many rows, what you decided. That is your data quality log.</text>
+</g></svg>

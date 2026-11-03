@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="A release gate: set measurable thresholds before looking at results, then compare each candidate configuration against every requirement. Failing any one blocks release. The thresholds shown are invented and the candidates are made up, to show the shape of the decision.">
+<title>Thresholds first; every requirement must pass.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Set the gate before you look (invented thresholds and results)</text>
+<rect x="16.0" y="38.0" width="728.0" height="210.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,68 L17,46 Q17,39 24,39 L736,39 Q743,39 743,46 L743,68 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="57.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Requirement</text>
+<text xml:space="preserve" x="406.0" y="57.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Gate</text>
+<text xml:space="preserve" x="570.0" y="57.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Candidate A</text>
+<text xml:space="preserve" x="734.0" y="57.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="end">Candidate B</text>
+<line x1="16.0" y1="68.0" x2="744.0" y2="68.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="87.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Valid JSON</text>
+<text xml:space="preserve" x="406.0" y="87.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≥ 98%</text>
+<text xml:space="preserve" x="570.0" y="87.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">99%</text>
+<text xml:space="preserve" x="734.0" y="87.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">99%</text>
+<line x1="16.0" y1="98.0" x2="744.0" y2="98.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="417.0" y="99.0" width="162.0" height="28.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="117.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Fault type accuracy</text>
+<text xml:space="preserve" x="406.0" y="117.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≥ 90%</text>
+<text xml:space="preserve" x="570.0" y="117.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="end">88%</text>
+<text xml:space="preserve" x="734.0" y="117.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">93%</text>
+<line x1="16.0" y1="128.0" x2="744.0" y2="128.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="147.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Invented identifiers</text>
+<text xml:space="preserve" x="406.0" y="147.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≤ 2%</text>
+<text xml:space="preserve" x="570.0" y="147.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">1%</text>
+<text xml:space="preserve" x="734.0" y="147.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">0%</text>
+<line x1="16.0" y1="158.0" x2="744.0" y2="158.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="177.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Escalation recall</text>
+<text xml:space="preserve" x="406.0" y="177.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≥ 98%</text>
+<text xml:space="preserve" x="570.0" y="177.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">99%</text>
+<text xml:space="preserve" x="734.0" y="177.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">99%</text>
+<line x1="16.0" y1="188.0" x2="744.0" y2="188.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="207.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">p95 latency</text>
+<text xml:space="preserve" x="406.0" y="207.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≤ 5 s</text>
+<text xml:space="preserve" x="570.0" y="207.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">3 s</text>
+<text xml:space="preserve" x="734.0" y="207.5" font-size="12.5" fill="#2F6B3F" font-weight="400" text-anchor="end">4 s</text>
+<line x1="16.0" y1="218.0" x2="744.0" y2="218.0" stroke="#EDE6D8" stroke-width="1"/>
+<rect x="581.0" y="219.0" width="162.0" height="28.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="237.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Monthly cost</text>
+<text xml:space="preserve" x="406.0" y="237.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">≤ ₦100k</text>
+<text xml:space="preserve" x="570.0" y="237.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">₦40k</text>
+<text xml:space="preserve" x="734.0" y="237.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="end">₦120k</text>
+<rect x="16.0" y="258.0" width="358.0" height="70.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="282.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Candidate A: no</text>
+<text xml:space="preserve" x="30.0" y="304.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Accuracy is below the gate.</text>
+<rect x="386.0" y="258.0" width="358.0" height="70.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="282.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Candidate B: no</text>
+<text xml:space="preserve" x="400.0" y="304.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Cost is above the gate.</text>
+<rect x="16.0" y="344.0" width="728.0" height="44.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="362.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Neither passes. The answer is a conditional decision, not a favourite:</text>
+<text xml:space="preserve" x="30.0" y="380.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">what would have to change for one of them to pass?</text>
+</g></svg>

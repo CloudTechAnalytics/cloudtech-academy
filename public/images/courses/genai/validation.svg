@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 366" width="760" height="366" role="img" aria-label="Validating a model's output. The raw response is parsed as JSON; if extra text surrounds it, the JSON part is extracted. The result is checked against a schema: required fields present, value one of the allowed categories. If it fails, retry once with a reminder of the allowed values. If it still fails, send it to a person's review queue. Every failure is logged.">
+<title>Parse, validate, retry once, then send to a person: never guess.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="366" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="165.5" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="56.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">Model output</text>
+<text xml:space="preserve" x="30.0" y="80.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">raw text from the API</text>
+<path d="M184.5,78.0 L200.5,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="203.5" y="30.0" width="165.5" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="217.5" y="56.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">Parse JSON</text>
+<text xml:space="preserve" x="217.5" y="80.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">extract the {…} if</text>
+<text xml:space="preserve" x="217.5" y="98.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">there's extra text</text>
+<path d="M372.0,78.0 L388.0,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="391.0" y="30.0" width="165.5" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="405.0" y="56.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">Validate</text>
+<text xml:space="preserve" x="405.0" y="80.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">pydantic: fields</text>
+<text xml:space="preserve" x="405.0" y="98.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">present, value</text>
+<text xml:space="preserve" x="405.0" y="116.2" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">allowed</text>
+<path d="M559.5,78.0 L575.5,78.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="578.5" y="30.0" width="165.5" height="96.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="592.5" y="56.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">Use it</text>
+<text xml:space="preserve" x="592.5" y="80.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">a valid category goes</text>
+<text xml:space="preserve" x="592.5" y="98.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">to the queue</text>
+<path d="M390,126 L390,176" fill="none" stroke="#9B2C1F" stroke-width="1.8" marker-end="url(#a9B2C1F)"/>
+<text xml:space="preserve" x="398.0" y="160.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">invalid</text>
+<rect x="300.0" y="180.0" width="180.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="314.0" y="206.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Retry once</text>
+<text xml:space="preserve" x="314.0" y="230.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">with the allowed values</text>
+<text xml:space="preserve" x="314.0" y="248.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">repeated</text>
+<path d="M480,220 C530,220 540,140 560,126" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="520.0" y="206.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">valid</text>
+<path d="M390,260 L390,282" fill="none" stroke="#9B2C1F" stroke-width="1.8" marker-end="url(#a9B2C1F)"/>
+<rect x="270.0" y="284.0" width="240.0" height="40.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="390.0" y="309.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="middle">Still invalid → a person reviews it</text>
+<text xml:space="preserve" x="16.0" y="354.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Log every failure: a rising failure rate warns you that a prompt or model change broke something.</text>
+</g></svg>

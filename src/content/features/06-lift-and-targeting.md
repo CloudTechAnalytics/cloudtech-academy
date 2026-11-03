@@ -12,7 +12,7 @@ That's a different question from "how good is the model overall", and it has a d
 
 ## The concept
 
-**Gains and lift**
+### Gains and lift
 
 Sort customers by predicted probability, highest first, and cut the list into deciles:
 
@@ -21,7 +21,9 @@ Sort customers by predicted probability, highest first, and cut the list into de
 
 A random list captures 10% of churners in its top 10%. A useful model captures far more.
 
-**From lift to a decision**
+![A gains curve: the model's curve rises steeply above the diagonal of a random list, so the top of the list finds a much larger share of churners.](/images/courses/features/gains.svg "A gains curve, illustrated. You'll measure Paystream's real one in this lesson.")
+
+### From lift to a decision
 
 For the top k% of the list:
 

@@ -28,6 +28,34 @@ import { PYDA_ASSESSMENTS } from "./python-data/assessment";
 import { DIGI_ASSESSMENTS } from "./digital/assessment";
 import { INTERN_ASSESSMENTS } from "./internship/assessment";
 import { FREEL_ASSESSMENTS } from "./freelancing/assessment";
+import { IEMI_ASSESSMENTS } from "./import-export/assessment";
+import { PROC_ASSESSMENTS } from "./procurement/assessment";
+import { LFF_ASSESSMENTS } from "./logistics/assessment";
+import { SCM_ASSESSMENTS } from "./supply-chain/assessment";
+import { ENT_ASSESSMENTS } from "./entrepreneurship/assessment";
+import { BDS_ASSESSMENTS } from "./sales/assessment";
+import { DMS_ASSESSMENTS } from "./digital-marketing/assessment";
+import { ECOM_ASSESSMENTS } from "./ecommerce/assessment";
+import { PMGT_ASSESSMENTS } from "./project-management-practice/assessment";
+import { HRPM_ASSESSMENTS } from "./hr/assessment";
+import { CSCM_ASSESSMENTS } from "./customer-service/assessment";
+import { POA_ASSESSMENTS } from "./office-admin/assessment";
+import { BKP_ASSESSMENTS } from "./bookkeeping/assessment";
+import { BKP_PROJECT } from "./bookkeeping/project";
+import { WEB_PROJECT } from "./web/project";
+import { GIT_PROJECT } from "./git/project";
+import { POA_PROJECT } from "./office-admin/project";
+import { CSCM_PROJECT } from "./customer-service/project";
+import { HRPM_PROJECT } from "./hr/project";
+import { PMGT_PROJECT } from "./project-management-practice/project";
+import { ECOM_PROJECT } from "./ecommerce/project";
+import { DMS_PROJECT } from "./digital-marketing/project";
+import { BDS_PROJECT } from "./sales/project";
+import { ENT_PROJECT } from "./entrepreneurship/project";
+import { SCM_PROJECT } from "./supply-chain/project";
+import { LFF_PROJECT } from "./logistics/project";
+import { PROC_PROJECT } from "./procurement/project";
+import { IEMI_PROJECT } from "./import-export/project";
 import { PYAN_ASSESSMENT } from "./python-analytics/assessment";
 import { PYAN_PROJECT } from "./python-analytics/project";
 import { STAT_ASSESSMENT } from "./statistics/assessment";
@@ -38,6 +66,8 @@ import { DAX_ASSESSMENT } from "./dax/assessment";
 import { DAX_PROJECT } from "./dax/project";
 import { CAP_ASSESSMENT } from "./capstone/assessment";
 import { CAP_PROJECT } from "./capstone/project";
+import { PMC_ASSESSMENT } from "./pm-capstone/assessment";
+import { PMC_PROJECT } from "./pm-capstone/project";
 import { BAC_ASSESSMENT } from "./ba-capstone/assessment";
 import { BAC_PROJECT } from "./ba-capstone/project";
 import { DSC_ASSESSMENT } from "./ds-capstone/assessment";
@@ -103,6 +133,7 @@ const COURSE_DIRS: Record<string, string> = {
   dax: "power-bi-dax",
   capstone: "data-analyst-capstone",
   "ba-capstone": "business-analyst-capstone",
+  "pm-capstone": "project-manager-capstone",
   "ds-capstone": "data-scientist-capstone",
   "ai-capstone": "ai-engineer-capstone",
   "devops-capstone": "cloud-devops-capstone",
@@ -140,6 +171,19 @@ const COURSE_DIRS: Record<string, string> = {
   digital: "digital-skills-for-students",
   internship: "get-your-first-internship",
   freelancing: "freelancing-for-beginners",
+  "import-export": "import-export-mini-importation",
+  procurement: "procurement-sourcing",
+  logistics: "logistics-freight-forwarding",
+  "supply-chain": "supply-chain-management",
+  entrepreneurship: "entrepreneurship-business-management",
+  sales: "business-development-sales",
+  "digital-marketing": "digital-marketing-sales",
+  ecommerce: "ecommerce-online-business",
+  "project-management-practice": "project-management",
+  hr: "human-resources-people-management",
+  "customer-service": "customer-service-client-management",
+  "office-admin": "professional-office-administration",
+  bookkeeping: "bookkeeping-small-business-finance",
 };
 
 const lessonFiles = import.meta.glob("./*/*.md", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
@@ -162,6 +206,7 @@ function buildCourse(def: (typeof COURSES)[number], position: number): Course {
     badge: m.badge ?? null,
     badgeCode: m.badgeCode ?? null,
     skills: m.skills ?? [],
+    topics: m.topics ?? [],
     lessons: m.lessons.map((slug): Lesson => {
       const raw = BODIES[def.id]?.[slug];
       if (!raw) throw new Error(`Missing lesson file for ${def.id}/${slug}`);
@@ -201,6 +246,7 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   DAX_ASSESSMENT,
   CAP_ASSESSMENT,
   BAC_ASSESSMENT,
+  PMC_ASSESSMENT,
   DSC_ASSESSMENT,
   AIC_ASSESSMENT,
   CDC_ASSESSMENT,
@@ -238,7 +284,20 @@ export const BUNDLED_ASSESSMENTS: AssessmentDef[] = [
   ...DIGI_ASSESSMENTS,
   ...INTERN_ASSESSMENTS,
   ...FREEL_ASSESSMENTS,
+  ...IEMI_ASSESSMENTS,
+  ...PROC_ASSESSMENTS,
+  ...LFF_ASSESSMENTS,
+  ...SCM_ASSESSMENTS,
+  ...ENT_ASSESSMENTS,
+  ...BDS_ASSESSMENTS,
+  ...DMS_ASSESSMENTS,
+  ...ECOM_ASSESSMENTS,
+  ...PMGT_ASSESSMENTS,
+  ...HRPM_ASSESSMENTS,
+  ...CSCM_ASSESSMENTS,
+  ...POA_ASSESSMENTS,
+  ...BKP_ASSESSMENTS,
 ].map((a) => ({ ...a, kind: a.kind ?? "final" }));
-export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT];
+export const BUNDLED_PROJECTS: ProjectDef[] = [SQL_PROJECT, DAF_PROJECT, XLS_PROJECT, PBI_PROJECT, DMO_PROJECT, PYAN_PROJECT, STAT_PROJECT, ASQL_PROJECT, DAX_PROJECT, CAP_PROJECT, BA_PROJECT, ABA_PROJECT, PIL_PROJECT, ML_PROJECT, FEM_PROJECT, ABT_PROJECT, TSF_PROJECT, GAI_PROJECT, AGT_PROJECT, OPS_PROJECT, CLD_PROJECT, LNX_PROJECT, IAC_PROJECT, CICD_PROJECT, SRE_PROJECT, SWE_PROJECT, DBA_PROJECT, WJS_PROJECT, PMF_PROJECT, PDM_PROJECT, BAC_PROJECT, PMC_PROJECT, DSC_PROJECT, AIC_PROJECT, CDC_PROJECT, SDC_PROJECT, IEMI_PROJECT, PROC_PROJECT, LFF_PROJECT, SCM_PROJECT, ENT_PROJECT, BDS_PROJECT, DMS_PROJECT, ECOM_PROJECT, PMGT_PROJECT, HRPM_PROJECT, CSCM_PROJECT, POA_PROJECT, BKP_PROJECT, WEB_PROJECT, GIT_PROJECT];
 
 export { CATEGORIES, categoryName } from "./catalog";

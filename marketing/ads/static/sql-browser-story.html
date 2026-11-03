@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: PF; src: url('../fonts/playfair-700.woff2'); font-weight: 700; }
+@font-face { font-family: IN; src: url('../fonts/inter.woff2'); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { font-family: IN, 'Segoe UI', Arial, sans-serif; background: #FBF8F2; color: #1E1D1B; position: relative; }
+.deco { position: absolute; inset: 0; background: radial-gradient(900px 600px at 90% -10%, rgba(201,164,92,.28), transparent 60%); }
+.pad { position: absolute; inset: 0; padding: 210px 84px 330px; display: flex; flex-direction: column; }
+.serif { font-family: PF, Georgia, serif; font-weight: 700; letter-spacing: -0.015em; font-variant-numeric: lining-nums; }
+.gold { color: #B38A3E; }
+.logo { display: flex; align-items: center; gap: 18px; }
+.logo svg { width: 64px; height: 64px; }
+.logo .w { font-family: PF, serif; font-weight: 700; font-size: 38px; line-height: 1; color: #1E1D1B; }
+.logo .s { font-size: 15px; letter-spacing: 0.34em; font-weight: 600; margin-top: 6px; color: #8A6A1F; }
+.kick { font-size: 24px; letter-spacing: 0.3em; font-weight: 700; text-transform: uppercase; }
+.head { font-size: 128px; line-height: 1.02; margin-top: 26px; }
+.sub { font-size: 42px; line-height: 1.42; margin-top: 30px; max-width: 880px; }
+.pill { display: inline-block; border-radius: 999px; padding: 12px 26px; font-weight: 700; font-size: 26px; }
+.cta { padding: 26px 50px; font-size: 36px; }
+.url { font-weight: 700; font-size: 32px; letter-spacing: .01em; }
+.ctarow { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: auto; padding-top: 36px; }
+.vis { margin-top: 44px; display: flex; justify-content:center; align-items:center; flex:1; }
+.main { margin-top: 50px; display: flex; flex-direction: column; flex: 1; }
+.row { display: flex; gap: 40px; flex: 1; align-items: stretch; }
+.col { display: flex; flex-direction: column; flex: 1.1; }
+.row .vis { flex: 1; }
+.stack { flex: 1; display: flex; flex-direction: column; }
+.stack .vis { margin-bottom: 40px; }
+</style></head><body>
+<div class="deco"></div>
+<div class="pad">
+  <div class="logo"><svg viewBox="0 0 682 682" width="64" height="64"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w">CloudTech</div><div class="s">ACADEMY</div></div></div>
+  <div class="main"><div class="kick" style="color:#8A6A1F">Practise as you learn</div>
+    <div class="serif head" style="color:#1E1D1B">Write real SQL <span class="gold">in your browser.</span></div>
+    <div class="sub" style="color:#5B564D">No setup. No downloads. Run your query and see straight away whether your answer is right.</div><div class="vis"><div style="zoom:0.88"><div style="width:900px;border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(30,29,27,.55);border:2px solid #1E1D1B">
+  <div style="background:#1E1D1B;display:flex;justify-content:space-between;align-items:center;padding:16px 26px;color:#C9A45C;font-weight:700;font-size:22px"><span>Practice</span><span style="background:#C9A45C;color:#1E1D1B;border-radius:10px;padding:8px 18px;font-size:20px">Run and check</span></div>
+  <pre style="margin:0;background:#26241F;color:#EFE4CC;padding:30px 30px;font-family:Consolas,'Courier New',monospace;font-size:29px;line-height:1.5"><span style="color:#C9A45C">SELECT</span> customer, <span style="color:#C9A45C">SUM</span>(total) <span style="color:#C9A45C">AS</span> revenue
+<span style="color:#C9A45C">FROM</span> orders
+<span style="color:#C9A45C">WHERE</span> status = <span style="color:#9fd8b0">'paid'</span>
+<span style="color:#C9A45C">GROUP BY</span> customer
+<span style="color:#C9A45C">ORDER BY</span> revenue <span style="color:#C9A45C">DESC</span>;</pre>
+  <div style="background:#E3F2E7;color:#1F6B3A;padding:20px 30px;font-weight:700;font-size:26px;display:flex;gap:14px;align-items:center"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Correct. Your result matches.</div></div></div></div><div class="ctarow"><span class="pill cta" style="background:#1E1D1B;color:#FFFFFF">Try the first lesson free →</span><span class="url" style="color:#5B564D">academy.cloudtechanalytics.com</span></div></div>
+</div></body></html>

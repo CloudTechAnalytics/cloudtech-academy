@@ -12,7 +12,7 @@ The title is what the author **meant** to do. The plan is what **will** happen. 
 
 ## The concept
 
-**Plan symbols**
+### Plan symbols
 
 | Symbol | Action in JSON | Meaning |
 | :-- | :-- | :-- |
@@ -24,7 +24,9 @@ The title is what the author **meant** to do. The plan is what **will** happen. 
 
 The summary line counts a replacement as one add **and** one destroy: `Plan: 1 to add, 0 to change, 1 to destroy.`
 
-**Plan JSON**
+![An example plan: + creates a security group rule, ~ updates a server's instance type in place, - destroys an old IP, -/+ replaces a database, and the summary Plan: 2 to add, 1 to change, 2 to destroy.](/images/courses/terraform/plan-symbols.svg "An annotated plan. Read every -/+ twice.")
+
+### Plan JSON
 
 `terraform show -json plan.out` gives every change as data: the resource's address, the actions, and its attributes `before` and `after`. Review tools and policy checks (lesson 7) read this.
 

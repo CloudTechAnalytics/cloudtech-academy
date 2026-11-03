@@ -15,6 +15,8 @@ summary: Find internships through job boards, LinkedIn, direct approaches and yo
 | **Your school** | Career services, SIWES coordinator, departmental notice boards and WhatsApp groups |
 | **Your network** | Lecturers, alumni, family friends, older students who've done placements |
 
+![Five places to find internships: LinkedIn Jobs, job boards, company career pages, your school and your network, plus asking directly by email](/images/courses/internship/where-to-look.svg "Five places to look, plus asking directly.")
+
 ## Ask directly
 
 Many small and medium businesses never advertise internships but will take a keen student. A short, polite email works:
@@ -57,6 +59,8 @@ Scammers target students. Walk away if:
 - The pay is **far too high** for a student role, or the job is vague ("data entry, ₦300,000 weekly").
 
 Check the company: look it up on its official website and LinkedIn, and search its name plus "scam".
+
+![Six warning signs of a fake internship offer, and how to check a company before replying](/images/courses/internship/fake-offers.svg "Six signs an internship offer is fake.")
 
 > [!WARNING]
 > Never pay money to get an internship or job, and never share your BVN, PIN or OTP.

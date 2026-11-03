@@ -12,22 +12,24 @@ A **work breakdown structure** (WBS) starts from the outcome and breaks it down,
 
 ## The concept
 
-**Breaking down**
+### Breaking down
 
 1. The project outcome: an open, working Abuja depot.
 2. Major **deliverables** (here, the phases): initiation, facilities, systems, people, operations, launch.
 3. **Work packages**: tasks small enough to estimate with confidence (here, 1 to 25 working days likely) and owned by one person or team.
 
-**Rules of thumb**
+### Rules of thumb
 
 - The **100% rule**: the pieces at each level add up to all of the work of the level above, no more, no less.
 - Name tasks by their outcome ("Install racking", not "Racking").
 - Every task has exactly **one** owner.
 - Split anything too big to estimate or track weekly.
 
-**From WBS to plan**
+### From WBS to plan
 
 The WBS says **what**. Estimates (lesson 3) say **how long**, dependencies and the schedule (lesson 4) say **when**, and daily costs say **how much**.
+
+![A work breakdown structure for racking installation: the outcome splits into Design, Supply and Install deliverables, each with work packages that have one owner; the 100% rule and naming tasks by outcome](/images/courses/pm/wbs.svg "A WBS: outcome, deliverables, work packages with one owner each.")
 
 ## Example
 

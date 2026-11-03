@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="A function as a machine with inputs and an output, worked by hand. Inputs: lines of 3 at 1,000.00 and 1 at 500.00, a 10 percent discount, not VAT-exempt. Inside, the rules in order: the subtotal is 3,500.00; the discount removes 350.00, leaving 3,150.00; VAT at 7.5 percent adds 236.25; the function returns 3,386.25. Below: one function used by every caller is a single source of truth; three copies of the rules will eventually disagree.">
+<title>A function: named inputs, the rules in one place, one returned result.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">invoice_total(lines, discount_pct, vat_exempt)</text>
+<rect x="16.0" y="44.0" width="180.0" height="160.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="70.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Inputs</text>
+<text xml:space="preserve" x="30.0" y="96.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">lines:</text>
+<text xml:space="preserve" x="30.0" y="116.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  3 × 1,000.00</text>
+<text xml:space="preserve" x="30.0" y="136.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  1 ×   500.00</text>
+<text xml:space="preserve" x="30.0" y="156.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">discount_pct = 10</text>
+<text xml:space="preserve" x="30.0" y="176.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">vat_exempt = False</text>
+<path d="M198.0,124.0 L222.0,124.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="226.0" y="44.0" width="330.0" height="160.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="240.0" y="70.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">The rules, in order</text>
+<text xml:space="preserve" x="240.0" y="98.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">subtotal</text>
+<text xml:space="preserve" x="380.0" y="98.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">3×1,000 + 1×500</text>
+<text xml:space="preserve" x="542.0" y="98.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">3,500.00</text>
+<text xml:space="preserve" x="240.0" y="124.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">− discount</text>
+<text xml:space="preserve" x="380.0" y="124.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">10% of subtotal</text>
+<text xml:space="preserve" x="542.0" y="124.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">−350.00</text>
+<text xml:space="preserve" x="240.0" y="150.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">= after discount</text>
+<text xml:space="preserve" x="380.0" y="150.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start"></text>
+<text xml:space="preserve" x="542.0" y="150.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">3,150.00</text>
+<text xml:space="preserve" x="240.0" y="176.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">+ VAT</text>
+<text xml:space="preserve" x="380.0" y="176.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">7.5% of that</text>
+<text xml:space="preserve" x="542.0" y="176.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">+236.25</text>
+<path d="M558.0,124.0 L582.0,124.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="586.0" y="44.0" width="158.0" height="160.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="600.0" y="70.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Returns</text>
+<text xml:space="preserve" x="665.0" y="132.0" font-size="20" fill="#2F6B3F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">3,386.25</text>
+<text xml:space="preserve" x="600.0" y="166.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">a value, not a print</text>
+<text xml:space="preserve" x="16.0" y="240.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Single source of truth</text>
+<rect x="16.0" y="252.0" width="356.0" height="110.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="278.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Rules copied into each script</text>
+<text xml:space="preserve" x="32.0" y="304.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">invoices.py: VAT 7.5%</text>
+<text xml:space="preserve" x="32.0" y="324.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">reports.py: VAT 7.5%</text>
+<text xml:space="preserve" x="32.0" y="344.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">export.py: VAT 5% (old)</text>
+<rect x="388.0" y="252.0" width="356.0" height="110.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="278.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ One function, imported everywhere</text>
+<text xml:space="preserve" x="404.0" y="304.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Change the VAT rate once, and every invoice,</text>
+<text xml:space="preserve" x="404.0" y="322.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">report and export agrees.</text>
+<text xml:space="preserve" x="16.0" y="388.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Example figures for illustration, worked by hand.</text>
+</g></svg>

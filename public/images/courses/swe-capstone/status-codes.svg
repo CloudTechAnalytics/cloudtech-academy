@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Status codes that mean something and validation in order. A well-formed request for a missing order gets 404; a malformed request gets 400; a well-formed request the rules refuse gets 422; success is 201 for something created; and a client should never be able to cause a 500, which is only for bugs. Booleans count as integers in Python, so a quantity check must exclude them explicitly.">
+<title>400, 404, 422, 201, and 500 only for bugs.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Validate before you do any work (invented booking API)</text>
+<rect x="16.0" y="40.0" width="170.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Malformed?</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">missing field, wrong</text>
+<text xml:space="preserve" x="28.0" y="97.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">type, out of range</text>
+<rect x="28.0" y="112.0" width="52.0" height="20.0" rx="4" fill="#9B2C1F"/>
+<text xml:space="preserve" x="54.0" y="127.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">400</text>
+<path d="M188.0,90.0 L200.0,90.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="40.0" width="170.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.8"/>
+<text xml:space="preserve" x="214.0" y="64.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Exists?</text>
+<text xml:space="preserve" x="214.0" y="84.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">the booking is in the</text>
+<text xml:space="preserve" x="214.0" y="97.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">database</text>
+<rect x="214.0" y="112.0" width="52.0" height="20.0" rx="4" fill="#8A6A1F"/>
+<text xml:space="preserve" x="240.0" y="127.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">404</text>
+<path d="M374.0,90.0 L386.0,90.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="40.0" width="170.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.8"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Allowed by the rules?</text>
+<text xml:space="preserve" x="400.0" y="84.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">inside the cancel window,</text>
+<text xml:space="preserve" x="400.0" y="97.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">not already refunded</text>
+<rect x="400.0" y="112.0" width="52.0" height="20.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="426.0" y="127.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">422</text>
+<path d="M560.0,90.0 L572.0,90.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="40.0" width="170.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.8"/>
+<text xml:space="preserve" x="586.0" y="64.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Do it</text>
+<text xml:space="preserve" x="586.0" y="84.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">record the refund</text>
+<rect x="586.0" y="112.0" width="52.0" height="20.0" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="612.0" y="127.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">201</text>
+<text xml:space="preserve" x="16.0" y="170.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What each code tells the app</text>
+<rect x="16.0" y="184.0" width="728.0" height="168.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,212 L17,192 Q17,185 24,185 L736,185 Q743,185 743,192 L743,212 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="202.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Code</text>
+<text xml:space="preserve" x="226.0" y="202.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Meaning</text>
+<line x1="16.0" y1="212.0" x2="744.0" y2="212.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">400 Bad Request</text>
+<text xml:space="preserve" x="226.0" y="230.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The request itself is wrong: fix and resend</text>
+<line x1="16.0" y1="240.0" x2="744.0" y2="240.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">404 Not Found</text>
+<text xml:space="preserve" x="226.0" y="258.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">That booking doesn't exist</text>
+<line x1="16.0" y1="268.0" x2="744.0" y2="268.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="286.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">422 Unprocessable</text>
+<text xml:space="preserve" x="226.0" y="286.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Well formed, but the rules refuse it</text>
+<line x1="16.0" y1="296.0" x2="744.0" y2="296.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="314.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">201 Created</text>
+<text xml:space="preserve" x="226.0" y="314.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The refund was recorded</text>
+<line x1="16.0" y1="324.0" x2="744.0" y2="324.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="342.5" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">500</text>
+<text xml:space="preserve" x="226.0" y="342.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Only for bugs: a client must never cause one</text>
+<rect x="16.0" y="372.0" width="728.0" height="56.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="396.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">A Python trap</text>
+<text xml:space="preserve" x="30.0" y="418.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">isinstance(True, int) is True: a quantity check must exclude bool, or "true" passes as 1.</text>
+</g></svg>

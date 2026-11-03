@@ -12,18 +12,18 @@ Experienced AI engineers build the **evaluation harness first**, before the feat
 
 ## The concept
 
-**The prototype has two parts**
+### The prototype has two parts
 
 | Part | What it does | Evaluated with |
 | :-- | :-- | :-- |
 | **Ticket triage** | classifies each ticket into a category, with validation and a fraud safety net | accuracy and per-category recall on labelled tickets |
 | **Help answers** | answers customer questions from retrieved help articles, with citations and refusals | retrieval hit rate, human grades, automatic citation checks, a checked LLM judge |
 
-**The evaluation harness**
+### The evaluation harness
 
 A single notebook section that, given a version of the system, produces the same table every time: accuracy, fraud recall, retrieval hit@3, correct-answer rate, refusal accuracy, failure rate and cost per 1,000 requests. Run it on every change and keep the history.
 
-**The decision**
+### The decision
 
 Launch, launch with limits (for example, triage only, with people answering), or don't launch yet, with the evidence for each.
 

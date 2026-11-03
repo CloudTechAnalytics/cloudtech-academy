@@ -1,7 +1,7 @@
 ---
 title: Business intelligence
 minutes: 15
-summary: How BI turns one-off analysis into dashboards people use every week, and the pipeline behind them.
+summary: Analytics versus BI, the pipeline from source systems to dashboards, a single source of truth, dashboard design, and self-service with governance.
 ---
 
 ## The problem
@@ -12,29 +12,72 @@ Every Monday, Kolanut's sales manager asks for the same numbers: last week's rev
 
 ## The concept
 
-**Analytics vs BI.** The words overlap, but a useful distinction:
+### Analytics and BI
 
-- **Analytics** answers a question, often a new one: *why did North West fall?*
-- **BI** monitors the business with the same questions, repeatedly: *how is each region doing this week?*
+The words overlap, but a useful distinction:
 
-Good analysis often becomes BI. Once you know North West matters, you put it on the dashboard.
+| | Analytics | Business intelligence |
+| :-- | :-- | :-- |
+| Question | Often new: *why did North West fall?* | The same ones, repeatedly: *how is each region doing this week?* |
+| Output | A one-off analysis, a recommendation | Dashboards and reports that refresh themselves |
+| Built for | One decision | Many people, every week |
+| Typical tools | Spreadsheets, SQL, Python | Power BI, Tableau, Looker Studio |
 
-**The BI pipeline**
+Good analysis often becomes BI. Once you know North West matters, you put it on the dashboard so nobody has to ask again.
 
-```
-Source systems  →  Extract, transform, load (ETL)  →  Data warehouse / model  →  Reports & dashboards
-(orders, finance,    (clean, combine, calculate)        (one trusted version)       (Power BI, Tableau,
- HR, CRM)                                                                             Looker Studio)
-```
+### The BI pipeline
 
-1. **Sources**: the systems where work happens.
-2. **ETL**: copying data out, cleaning it and shaping it. In Power BI this is Power Query.
-3. **Model / warehouse**: clean tables with relationships and agreed calculations, a *single source of truth*.
-4. **Dashboards**: the views people look at, refreshed on a schedule.
+![Four stages from left to right: source systems (orders, finance, HR, CRM), ETL (extract, transform, load), a data model or warehouse with related tables and agreed measures, and dashboards. A bar underneath says the whole pipeline refreshes on a schedule.](/images/courses/daf/bi-pipeline.svg "The BI pipeline. Build it once, and every refresh repeats stages 2 to 4 on new data.")
 
-**Dashboards vs reports.** A **dashboard** is a one-screen summary of KPIs for monitoring. A **report** goes deeper, with several pages and details to explore. Most BI tools produce both.
+1. **Sources**: the systems where work happens: the order system, billing, HR, CRM, and the odd spreadsheet.
+2. **ETL** (extract, transform, load): copying data out, cleaning it and shaping it. In Power BI this is Power Query. Every cleaning step from lesson 5 becomes an automated step that runs on each refresh.
+3. **Model / warehouse**: clean tables with relationships (lesson 4) and agreed calculations: a **single source of truth**. A large company keeps this in a **data warehouse**, a database built for analysis; a small one may keep it inside the BI file itself.
+4. **Dashboards and reports**: the views people look at, refreshed on a schedule.
 
-**Common BI tools:** Microsoft Power BI, Tableau, Google Looker Studio, Qlik. Power BI is widely used in Nigerian companies because many already pay for Microsoft 365; it's covered in its own course here.
+### A single source of truth
+
+Without BI, every team builds its own spreadsheet, and their numbers disagree. Sales says revenue was ₦48m (before discounts), finance says ₦46m (after discounts and returns), and the meeting is spent arguing about whose number is right.
+
+A **single source of truth** means one place where each KPI is calculated, one way, from one set of cleaned data. Everyone's dashboard reads from it, so everyone sees the same number. The definitions from lesson 2 (name, formula, inclusions, source) are written into the model once.
+
+### Dashboards and reports
+
+| | Dashboard | Report |
+| :-- | :-- | :-- |
+| Purpose | Monitor: "are we OK?" | Explore and explain: "why?" |
+| Size | One screen | Several pages |
+| Content | A few KPIs, a trend, an exception list | Detail, breakdowns, tables |
+| Used | Daily or weekly, in seconds | When a question comes up |
+
+Most BI tools produce both, and a good dashboard links through to the report for detail.
+
+### Designing a dashboard
+
+1. **Start from the decisions.** Who opens this, and what will they do differently because of it?
+2. **Top-left is read first.** Put the headline KPIs there.
+3. **Every number needs a comparison**: against last year, last month or target. "₦290.7m" means little; "₦290.7m, up 19% on last year" means something.
+4. **Use the chart rules from lesson 7.** Lines for trends, sorted bars for comparisons, one highlight colour.
+5. **End with an action list**: the customers to call, the invoices to chase.
+6. **Leave things out.** Four KPIs and three visuals beat twenty tiles nobody reads.
+
+### Self-service and governance
+
+Modern BI tools let business users build their own reports from the shared model: **self-service BI**. It's powerful, but it needs **governance**:
+
+- **Certified data**: the official model is marked as trusted, so people build on it rather than on private copies.
+- **Access**: each person sees the data they're allowed to; a regional manager might see only their region. In Power BI this is called row-level security.
+- **Ownership**: each dashboard and each KPI has an owner who answers questions about it.
+
+### Common BI tools
+
+| Tool | Notes |
+| :-- | :-- |
+| **Microsoft Power BI** | Widely used in Nigerian companies, because many already pay for Microsoft 365. Covered in its own course here. |
+| **Tableau** | Strong on visual exploration; popular in larger companies. |
+| **Google Looker Studio** | Free, browser-based, works well with Google Sheets. |
+| **Qlik** | Common in some industries, such as manufacturing and banking. |
+
+The ideas in this lesson apply to all of them; the menus differ.
 
 ## Example
 
@@ -50,21 +93,35 @@ A sensible first dashboard for Kolanut's sales manager:
 
 Four KPIs, three visuals, one action list. The discipline is leaving things *out*.
 
+Note the leading indicator in the bottom table: a customer ordering less often is an early warning, before revenue falls. That's exactly what happened in the North West, and a list like this would have flagged those shops while there was still time to act.
+
 ## Walkthrough
 
 When a law firm like Ashgrove Chambers builds BI for its partners, it follows the same steps:
 
 1. **Agree the KPIs** with the partners: open matters, hearings adjourned, invoices overdue, **collection rate**.
-2. **Define each one precisely.** Collection rate = paid invoices ÷ all invoices issued × 100, counted by number of invoices.
+2. **Define each one precisely.** Collection rate = paid invoices ÷ all invoices issued × 100, counted by **number** of invoices. That choice matters: counted by **value** instead, Ashgrove's rate is 81.5%, because paid invoices are larger on average than unpaid ones. Both are reasonable; what's not reasonable is two partners using different ones.
 3. **Connect the sources:** the matter management system and the billing system.
 4. **Check the numbers** against a manual calculation before anyone relies on the dashboard.
 5. **Schedule the refresh**, for example every morning at 7.
+6. **Name an owner** for each KPI, who answers when someone asks "why did this change?"
 
 Step 4 is the one people skip. A dashboard that is wrong once loses trust for months.
 
 ```dataset
 { "dataset": "legal", "files": ["invoices"], "note": "Ashgrove Chambers' invoices from 2024 to August 2026: amount, status (Paid, Outstanding, Overdue) and payment date." }
 ```
+
+### Summary
+
+| Term | Meaning |
+| :-- | :-- |
+| BI | Building analysis once, so it refreshes and many people can use it |
+| ETL | Extract, transform, load: the automated cleaning stage |
+| Data warehouse / model | Clean, related tables with agreed measures |
+| Single source of truth | One place, one definition for each KPI |
+| Dashboard / report | Monitor at a glance / explore in detail |
+| Governance | Certified data, access rules and owners |
 
 ## Practice
 

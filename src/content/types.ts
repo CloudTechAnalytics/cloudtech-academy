@@ -63,6 +63,8 @@ export type Module = {
   badge: string | null;
   badgeCode: string | null;
   skills: string[];
+  /** What the module covers, for courses whose lessons are not written yet. */
+  topics: string[];
 };
 
 export type Course = Omit<CourseDef, "modules"> & {
@@ -132,6 +134,8 @@ export type AnswerSpec = {
  * the text must match at least `min` times, or with `absent` must not match at all; with
  * `perLine` every non-empty line must match instead. The length rules count words or lines.
  */
+import type { GitRule } from "@/lib/git-sim";
+
 export type TaskRule = {
   /** What the learner sees in the checklist, e.g. "Each bullet includes a number". */
   label: string;
@@ -142,7 +146,91 @@ export type TaskRule = {
   minWords?: number;
   maxWords?: number;
   minLines?: number;
+  /** Web tasks only: which file the pattern is tested against. Default: all three files together. */
+  in?: "html" | "css" | "js" | "all";
+  /** Web tasks only, checked on the rendered page: a CSS selector that must match min (default 1) elements. */
+  selector?: string;
+  /** With selector: things to do to the page first, in order, before the selector is checked. Rules with the same actions share one fresh page. */
+  act?: PageAction[];
+  /** With selector: check at this screen width in pixels (default 1000), to test responsive rules. */
+  at?: number;
+  /** With selector: at most this many elements may match. */
+  max?: number;
+  /** With selector: computed styles, e.g. { "display": "flex" }. Each value is a pattern; at least one element must match them all. */
+  style?: Record<string, string>;
+  /** With selector: attribute values, each a pattern, that at least one matched element must have, e.g. { "alt": ".{8,}" }. */
+  attr?: Record<string, string>;
+  /** With selector: a pattern the text of at least one matched element must match. */
+  contains?: string;
+  /** Web tasks only: a pattern the lines printed with console.log must match. */
+  output?: string;
+  /** Web tasks only: a pattern the visible text of the page must match. */
+  page?: string;
 };
+
+/** A scripted action on the page, used by rules to test behaviour: click an element, type into a field, submit a form, press a key, tick a box. */
+export type PageAction = { click?: string; type?: [string, string]; submit?: string; key?: [string, string]; check?: string };
+
+/** The three files of a web page the learner edits in a live editor. */
+export type WebFiles = { html?: string; css?: string; js?: string };
+
+/**
+ * A web practice task: the learner edits HTML, CSS and JavaScript in a live editor, sees the page
+ * in a preview, and it is checked against rules, some on the code and some on the rendered page.
+ * Written as ```webtask: a JSON header, then === sections (prompt, html, css, js, sample html, ...).
+ */
+export type WebTaskSpec = {
+  id: string;
+  prompt: string;
+  minutes: number;
+  rules: TaskRule[];
+  required?: boolean;
+  hint?: string;
+  note?: string;
+  /** The starting files. */
+  files: WebFiles;
+  /** A model answer. It must pass the task's own rules. */
+  sample: WebFiles;
+  /** Load Bootstrap 5 (CSS and JS) into the preview. */
+  bootstrap?: boolean;
+  /** Preview height in pixels. Default 340. */
+  height?: number;
+  /** Which editor tabs to show. Default: the files that are present. */
+  tabs?: ("html" | "css" | "js")[];
+  /** Put the preview under the editor, full width, instead of beside it. */
+  stack?: boolean;
+};
+
+/**
+ * A Git practice task: the learner types real Git commands in a terminal built into the page (a simulator), and
+ * the repository they end up with is checked against rules. Written as ```gittask: a JSON header, then === sections
+ * (prompt, setup, sample, file <name>).
+ */
+export type GitTaskSpec = {
+  id: string;
+  prompt: string;
+  minutes: number;
+  rules: GitRule[];
+  required?: boolean;
+  hint?: string;
+  note?: string;
+  /** The files in the folder at the start. */
+  files: Record<string, string>;
+  /** Commands run before the learner starts (not counted as theirs). */
+  setup: string[];
+  /** A model answer: the commands to type. It must pass the task's own rules. */
+  sample: string[];
+  /** Terminal height in pixels. Default 300. */
+  height?: number;
+  /** false: the learner starts with no Git name and email set. */
+  identity?: boolean;
+};
+
+/** A free practice terminal (```gitterm): the same terminal, with no rules. */
+export type GitTermSpec = { files: Record<string, string>; setup: string[]; height?: number; title?: string; identity?: boolean };
+
+/** A free editor with a live preview (```live): the learner changes the code and watches the page change. */
+export type LiveSpec = { files: WebFiles; bootstrap?: boolean; height?: number; tabs?: ("html" | "css" | "js")[]; title?: string; stack?: boolean };
 
 /**
  * A practice task where the learner writes or pastes real work (a CV bullet, a prompt,

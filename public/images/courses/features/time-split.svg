@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" width="760" height="460" role="img" aria-label="Two ways to split monthly snapshot tables. A random split mixes rows from every month into both training and test, so the model is tested on the same periods it learned from. A time-based split trains on earlier snapshots and tests on a later one, and leaves out recent snapshots whose 60-day labels are not complete yet.">
+<title>Random split versus time-based split, with incomplete labels left out.</title>
+
+<rect width="760" height="460" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="32.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">✗ Random split</text>
+<rect x="102.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="123.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="144.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="102.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="123.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="144.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="134.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Jul</text>
+<rect x="172.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="193.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="214.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="172.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="193.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="214.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="204.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Aug</text>
+<rect x="242.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="263.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="284.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="242.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="263.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="284.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="274.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Sep</text>
+<rect x="312.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="333.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="354.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="312.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="333.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="354.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="344.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Oct</text>
+<rect x="382.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="403.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="424.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="382.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="403.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="424.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="414.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Nov</text>
+<rect x="452.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="473.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="494.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="452.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="473.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="494.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="484.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Dec</text>
+<rect x="522.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="543.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="564.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="522.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="543.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="564.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="554.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Jan</text>
+<rect x="592.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="613.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="634.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="592.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="613.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="634.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="624.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Feb</text>
+<rect x="662.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="683.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="704.0" y="46.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="662.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<rect x="683.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#2F5D8A"/>
+<rect x="704.0" y="66.0" width="18.0" height="17.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="694.0" y="104.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Mar</text>
+<text xml:space="preserve" x="16.0" y="130.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Rows from every month land in both sets: the model is tested on the same season, prices and app version</text>
+<text xml:space="preserve" x="16.0" y="148.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">it learned from. Scores look better than real use.</text>
+<text xml:space="preserve" x="16.0" y="218.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">✓ Time-based split</text>
+<rect x="102.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="134.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Jul</text>
+<rect x="172.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="204.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Aug</text>
+<rect x="242.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="274.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Sep</text>
+<rect x="312.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="344.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Oct</text>
+<rect x="382.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="414.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Nov</text>
+<rect x="452.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#DCC594"/>
+<text xml:space="preserve" x="484.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Dec</text>
+<rect x="522.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#EFE8DA"/>
+<text xml:space="preserve" x="554.0" y="256.0" font-size="10.5" fill="#5E5A52" font-weight="700" text-anchor="middle">incomplete</text>
+<text xml:space="preserve" x="554.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Jan</text>
+<rect x="592.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#EFE8DA"/>
+<text xml:space="preserve" x="624.0" y="256.0" font-size="10.5" fill="#5E5A52" font-weight="700" text-anchor="middle">incomplete</text>
+<text xml:space="preserve" x="624.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Feb</text>
+<rect x="662.0" y="230.0" width="64.0" height="42.0" rx="5" fill="#2F5D8A"/>
+<text xml:space="preserve" x="694.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">Mar</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Train on July to December, test on March. January and February are left out: their 60-day outcomes</text>
+<text xml:space="preserve" x="16.0" y="334.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">weren't known yet on 31 March.</text>
+<rect x="100.0" y="404.0" width="18.0" height="18.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="126.0" y="418.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">train</text>
+<rect x="210.0" y="404.0" width="18.0" height="18.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="236.0" y="418.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">test</text>
+<rect x="310.0" y="404.0" width="18.0" height="18.0" rx="3" fill="#EFE8DA"/>
+<text xml:space="preserve" x="336.0" y="418.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">not usable yet</text>
+<text xml:space="preserve" x="16.0" y="448.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">The time-based score is usually lower. It's also the honest one.</text>
+</g></svg>

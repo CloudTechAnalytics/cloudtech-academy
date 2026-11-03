@@ -1,0 +1,24 @@
+task_id,name,phase,owner,optimistic_days,likely_days,pessimistic_days,predecessors,daily_cost_ngn
+A1,Approve business case and charter,Initiation,Board,2,3,5,,150000
+A2,Sign lease for the premises,Initiation,Operations,6,8,12,A1,200000
+A3,Obtain the facility licence,Initiation,Regulatory,15,22,45,A2,120000
+B1,Design the lab layout and clean areas,Facilities,Facilities,6,8,12,A2,260000
+B2,"Fit-out: floors, power and air handling",Facilities,Contractor,22,28,45,B1,900000
+B3,Order the analysers,Equipment,Procurement,4,6,10,B1,110000
+B4,Import and clear the analysers,Equipment,Procurement,18,25,45,B3,420000
+B5,Install and calibrate the analysers,Equipment,Contractor,5,7,10,B2;B4,680000
+B6,Install backup power and cold storage,Facilities,Contractor,6,8,12,B2,800000
+C1,Choose the lab information system,Systems,IT,6,8,12,A1,190000
+C2,"Buy computers, scanners and label printers",Systems,IT,5,8,15,C1,620000
+C3,Install network and internet,Systems,IT,4,5,9,B2,300000
+C4,Configure the system and load the test menu,Systems,IT,8,12,18,C1,260000
+C5,Test the system with the analysers,Systems,IT,4,6,10,B5;C2;C3;C4,240000
+D1,Hire the laboratory director,People,HR,15,22,35,A1,90000
+D2,Hire 14 laboratory staff,People,HR,15,20,30,D1,105000
+D3,Train the staff,People,Operations,5,8,10,D2;B5,400000
+E1,Agree reagent supplier schedules,Operations,Procurement,5,8,12,A2,100000
+E2,Stock reagents and consumables,Operations,Operations,4,6,9,B5;E1,560000
+F1,Validate the methods and run quality checks,Launch,Laboratory,8,12,20,B5;B6;E2,480000
+F2,Pass the external accreditation inspection,Launch,Regulatory,5,8,20,A3;C5;F1,350000
+F3,Trial run with sample specimens,Launch,Laboratory,4,6,9,D3;F2,520000
+F4,Opening day,Launch,Operations,1,1,2,F3,800000

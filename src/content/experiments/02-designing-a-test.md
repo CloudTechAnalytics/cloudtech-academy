@@ -12,19 +12,19 @@ Most failed experiments fail at the design stage: no clear metric, no idea what 
 
 ## The concept
 
-**The hypothesis**
+### The hypothesis
 
 Write it before the test starts: *"Showing a KYC reminder on day 2 will increase 7-day KYC completion, because many users abandon at the ID-photo step."* It names the change, the metric, the direction and the reason.
 
-**One primary metric, plus guardrails**
+### One primary metric, plus guardrails
 
 Choose **one** primary metric to decide the test. Others are secondary (to understand it) or guardrails (that mustn't get worse). Deciding with several metrics after the fact invites picking whichever one happens to look good.
 
-**Minimum detectable effect (MDE)**
+### Minimum detectable effect (MDE)
 
 The smallest improvement worth acting on, a business judgement. If a 1-point rise in KYC wouldn't justify the work, there's no point designing a test to detect it.
 
-**Significance, power and sample size**
+### Significance, power and sample size
 
 - **Significance level (α)**, usually 5%: the false-alarm rate you accept (declaring an effect when there's none).
 - **Power**, usually 80%: the chance of detecting the effect if it's really the size of your MDE.
@@ -34,7 +34,7 @@ The smallest improvement worth acting on, a business judgement. If a 1-point ris
 
 with z₁₋α/₂ = 1.96 for α = 5% and z_power = 0.84 for 80% power.
 
-**Duration**
+### Duration
 
 Divide by the users you get per day, and round **up to whole weeks**, so every weekday and weekend is equally represented. Never stop early because results look good (lesson 3 shows why).
 

@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="CIDR block sizes. The number after the slash is how many of the 32 bits are fixed; the rest can vary. /28 gives 16 addresses, /24 gives 256, /16 gives 65,536, and /0 means every address on the internet. Each bit you free doubles the block.">
+<title>CIDR: fewer fixed bits, bigger block. 0.0.0.0/0 is the whole internet.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="52.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.2.0/28</text>
+<rect x="180.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="191.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="202.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="213.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="224.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="235.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="246.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="257.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="268.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="279.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="290.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="301.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="312.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="323.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="334.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="345.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="356.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="367.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="378.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="389.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="400.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="411.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="422.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="433.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="444.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="455.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="466.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="477.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="488.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="499.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="510.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="521.0" y="36.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="540.0" y="48.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">16 addresses</text>
+<text xml:space="preserve" x="540.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">10.0.2.0 to 10.0.2.15</text>
+<text xml:space="preserve" x="16.0" y="116.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.2.0/24</text>
+<rect x="180.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="191.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="202.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="213.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="224.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="235.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="246.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="257.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="268.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="279.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="290.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="301.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="312.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="323.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="334.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="345.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="356.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="367.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="378.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="389.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="400.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="411.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="422.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="433.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="444.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="455.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="466.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="477.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="488.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="499.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="510.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="521.0" y="100.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="540.0" y="112.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">256 addresses</text>
+<text xml:space="preserve" x="540.0" y="130.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">10.0.2.0 to 10.0.2.255</text>
+<text xml:space="preserve" x="16.0" y="180.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10.0.0.0/16</text>
+<rect x="180.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="191.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="202.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="213.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="224.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="235.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="246.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="257.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="268.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="279.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="290.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="301.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="312.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="323.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="334.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="345.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#2F5D8A"/>
+<rect x="356.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="367.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="378.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="389.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="400.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="411.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="422.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="433.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="444.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="455.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="466.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="477.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="488.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="499.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="510.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<rect x="521.0" y="164.0" width="9.0" height="24.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="540.0" y="176.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">65,536 addresses</text>
+<text xml:space="preserve" x="540.0" y="194.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">10.0.0.0 to 10.0.255.255</text>
+<text xml:space="preserve" x="16.0" y="244.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0.0.0.0/0</text>
+<rect x="180.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="191.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="202.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="213.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="224.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="235.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="246.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="257.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="268.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="279.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="290.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="301.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="312.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="323.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="334.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="345.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="356.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="367.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="378.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="389.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="400.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="411.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="422.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="433.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="444.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="455.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="466.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="477.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="488.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="499.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="510.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<rect x="521.0" y="228.0" width="9.0" height="24.0" rx="2" fill="#F6E3E0"/>
+<text xml:space="preserve" x="540.0" y="240.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">every address</text>
+<text xml:space="preserve" x="540.0" y="258.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">the whole internet</text>
+<rect x="180.0" y="290.0" width="12.0" height="12.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="198.0" y="300.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">fixed bits</text>
+<rect x="290.0" y="290.0" width="12.0" height="12.0" rx="2" fill="#DCC594"/>
+<text xml:space="preserve" x="308.0" y="300.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">free bits</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">A firewall rule allowing SSH from 0.0.0.0/0 lets the whole internet try to log in.</text>
+</g></svg>

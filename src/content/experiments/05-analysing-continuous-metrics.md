@@ -12,11 +12,11 @@ Value is tricky. Most new users move small amounts, and a handful move very larg
 
 ## The concept
 
-**Welch's t-test**
+### Welch's t-test
 
 For a numeric metric (transactions, value), compare the two means with `stats.ttest_ind(b, a, equal_var=False)`. "Welch" means it doesn't assume the two groups have the same spread, which is the safer default. With thousands of users per group, the t-test works even when the data are skewed, because averages of many values are close to normally distributed.
 
-**Skewed metrics**
+### Skewed metrics
 
 For money, look at more than the mean:
 
@@ -24,7 +24,7 @@ For money, look at more than the mean:
 - the share of the total from the top 1% of users;
 - a **winsorised** or capped mean (capping values above, say, the 99th percentile), to check that a few extreme users aren't driving the result.
 
-**The bootstrap**
+### The bootstrap
 
 A general way to get a confidence interval for any statistic:
 

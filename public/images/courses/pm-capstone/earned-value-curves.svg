@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Earned value compares three curves in the same unit: planned value, earned value and actual cost. With invented numbers at week 10 the project has earned less than was planned, so it is behind schedule, and spent more than it has earned, so it is over budget. The indices are SPI equals earned over planned and CPI equals earned over actual.">
+<title>PV, EV and AC: behind and over budget.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Three curves, one unit: naira (invented project, week 10)</text>
+<line x1="50.0" y1="264.0" x2="490.0" y2="264.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<line x1="50.0" y1="44.0" x2="50.0" y2="264.0" stroke="#CFC4B2" stroke-width="1.6"/>
+<path d="M50.0,264.0 L138.0,247.1 L226.0,213.2 L314.0,162.5 L402.0,111.7 L490.0,77.8" fill="none" stroke="#B38A3E" stroke-width="2.8"/>
+<text xml:space="preserve" x="498.0" y="73.8" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">PV 110m</text>
+<path d="M50.0,264.0 L138.0,250.5 L226.0,223.4 L314.0,189.5 L402.0,159.1 L490.0,128.6" fill="none" stroke="#2F6B3F" stroke-width="2.8"/>
+<text xml:space="preserve" x="498.0" y="132.6" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">EV 80m</text>
+<path d="M50.0,264.0 L138.0,245.4 L226.0,209.8 L314.0,165.8 L402.0,125.2 L490.0,84.6" fill="none" stroke="#9B2C1F" stroke-width="2.8"/>
+<text xml:space="preserve" x="498.0" y="98.6" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">AC 106m</text>
+<text xml:space="preserve" x="270.0" y="286.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">Week</text>
+<rect x="560.0" y="44.0" width="184.0" height="220.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="574.0" y="68.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">At week 10</text>
+<text xml:space="preserve" x="574.0" y="96.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">PV</text>
+<text xml:space="preserve" x="620.0" y="96.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">110</text>
+<text xml:space="preserve" x="574.0" y="126.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">EV</text>
+<text xml:space="preserve" x="620.0" y="126.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">80</text>
+<text xml:space="preserve" x="574.0" y="156.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">AC</text>
+<text xml:space="preserve" x="620.0" y="156.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">106</text>
+<text xml:space="preserve" x="574.0" y="186.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">SPI</text>
+<text xml:space="preserve" x="620.0" y="186.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">80 ÷ 110 = 0.73</text>
+<text xml:space="preserve" x="574.0" y="216.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">CPI</text>
+<text xml:space="preserve" x="620.0" y="216.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">80 ÷ 106 = 0.75</text>
+<rect x="16.0" y="300.0" width="358.0" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="324.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Behind schedule</text>
+<text xml:space="preserve" x="30.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">EV is below PV: less work done than planned.</text>
+<text xml:space="preserve" x="30.0" y="368.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">SPI below 1.</text>
+<rect x="386.0" y="300.0" width="358.0" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="324.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Over budget</text>
+<text xml:space="preserve" x="400.0" y="348.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">AC is above EV: the work cost more than budgeted.</text>
+<text xml:space="preserve" x="400.0" y="368.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">CPI below 1.</text>
+</g></svg>

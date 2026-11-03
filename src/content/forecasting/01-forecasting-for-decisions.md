@@ -12,7 +12,7 @@ So every Monday, the depot manager needs a number: how much of each product will
 
 ## The concept
 
-**A forecast serves a decision**
+### A forecast serves a decision
 
 Before choosing any method, answer four questions:
 
@@ -23,11 +23,13 @@ Before choosing any method, answer four questions:
 | **Granularity**: what level of detail? | units per product per week (daily forecasts, added up) |
 | **Cost of errors**: which hurts more? | running out (lost sales and customers) usually hurts more than overstock |
 
-**Time series data**
+![Four weeks on a timeline. The order is placed today and takes two weeks to arrive, so weeks 1 and 2 are covered by stock and the forecast that matters is weeks 3 and 4.](/images/courses/forecasting/decision-timeline.svg "Why the horizon is weeks 3 and 4: the period the order must last.")
+
+### Time series data
 
 A time series is a measurement taken at regular intervals: daily units here. Unlike the rows in earlier courses, the order matters. Yesterday's sales tell you something about today's, and the past is all you have to learn from.
 
-**What forecasts can and can't do**
+### What forecasts can and can't do
 
 A forecast extends the patterns of the past: trends, seasons, regular events. It can't foresee things that have never happened (a competitor's launch, a strike). Good forecasting is honest about that, with a range as well as a number.
 

@@ -11,7 +11,13 @@ import { Alert, TextArea, TextField } from "@/components/Form";
 import NotFound from "../NotFound";
 import { AdminHeading } from "./AdminLayout";
 import { courseInput, randomId, useAdminCourse } from "./useAdmin";
+import { AdminCourseVideo } from "./AdminCourseVideo";
 import { LEVELS, type Level } from "@/content/tracks";
+import { BUNDLED_COURSES } from "@/content";
+
+const lines = (v: string) => v.split("\n");
+const clean = (xs: string[] | undefined) => (xs ?? []).map((x) => x.trim()).filter(Boolean);
+const localInput = (iso: string | null | undefined) => (iso ? new Date(new Date(iso).getTime() - new Date(iso).getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "");
 
 const selectCls = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2.5 text-[1rem]";
 
@@ -32,14 +38,23 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
   const set = <K extends keyof Course>(k: K, v: Course[K]) => setC((x) => ({ ...x, [k]: v }));
   const rule = <K extends keyof Course["certificate"]>(k: K, v: Course["certificate"][K]) => setC((x) => ({ ...x, certificate: { ...x.certificate, [k]: v } }));
 
+  const lessonCount = course.modules.flatMap((m) => m.lessons).length;
   const save = async () => {
     setMsg(null);
+    if (c.status === "available" && lessonCount === 0) return setMsg({ tone: "error", text: "This course has no lessons yet. Add at least one lesson under Curriculum below before setting it to Available; until then learners only see Opens soon." });
     if (c.title.trim().length < 3) return setMsg({ tone: "error", text: "The title is too short." });
     const score = c.certificate.passingScore;
     if (!Number.isInteger(score) || score < 1 || score > 100) return setMsg({ tone: "error", text: "The pass mark must be a whole number from 1 to 100." });
+    const paid = (c.access ?? "free") === "paid";
+    if ((c.courseType ?? "free") === "professional" && !paid) return setMsg({ tone: "error", text: "A professional course is always paid. Set Access to Paid." });
+    if (paid && !(c.price && c.price > 0)) return setMsg({ tone: "error", text: "A paid course needs a price above zero." });
+    if (c.discountPrice != null && (c.discountPrice <= 0 || (c.price != null && c.discountPrice >= c.price))) return setMsg({ tone: "error", text: "The discount price must be above zero and below the price." });
+    if (c.enrollmentStart && c.enrollmentEnd && new Date(c.enrollmentEnd) <= new Date(c.enrollmentStart)) return setMsg({ tone: "error", text: "Enrolment must end after it starts." });
     setBusy(true);
     try {
-      await (await getBackend()).admin.saveCourse(courseInput(c));
+      await (await getBackend()).admin.saveCourse(
+        courseInput({ ...c, audience: clean(c.audience), outcomes: clean(c.outcomes), included: clean(c.included), projectPreviews: (c.projectPreviews ?? []).filter((p) => p.title.trim()) }),
+      );
       await onSaved();
       setMsg({ tone: "success", text: "Saved." });
     } catch (e) {
@@ -59,6 +74,11 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
       }}
     >
       <h2 className="font-serif text-[1.4rem]">Details</h2>
+      {lessonCount === 0 && (
+        <Alert tone="info">
+          This course has no lessons yet ({course.modules.length} modules are listed). Learners see "Opens soon" and cannot enrol until you add lessons under Curriculum below and set Status to Available. As an admin you can preview everything from the course page.
+        </Alert>
+      )}
       <TextField label="Title" value={c.title} onChange={(e) => set("title", e.target.value)} />
       <TextArea label="Summary (one or two sentences, used on cards and in search results)" rows={2} value={c.summary} onChange={(e) => set("summary", e.target.value)} />
       <TextArea label="Description" rows={5} value={c.description} onChange={(e) => set("description", e.target.value)} />
@@ -85,12 +105,41 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
           </select>
         </div>
         <div>
+          <label className="text-[0.875rem] font-medium" htmlFor="state">
+            Availability
+          </label>
+          <select
+            id="state"
+            className={selectCls}
+            value={c.archived ? "archived" : c.published ? "published" : c.publishedAt ? "unpublished" : "draft"}
+            onChange={(e) => {
+              const v = e.target.value;
+              setC((x) => ({ ...x, published: v === "published" || v === "archived", archived: v === "archived" }));
+            }}
+          >
+            <option value="draft">Draft (not shown anywhere)</option>
+            <option value="published">Published</option>
+            <option value="unpublished">Unpublished (hidden again)</option>
+            <option value="archived">Archived (hidden from the catalogue, still open to people enrolled)</option>
+          </select>
+        </div>
+        <div>
           <label className="text-[0.875rem] font-medium" htmlFor="diff">
             Difficulty
           </label>
           <select id="diff" className={selectCls} value={c.difficulty} onChange={(e) => set("difficulty", e.target.value as Difficulty)}>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-[0.875rem] font-medium" htmlFor="diffmax">
+            Level range: up to (optional)
+          </label>
+          <select id="diffmax" className={selectCls} value={c.difficultyMax ?? ""} onChange={(e) => set("difficultyMax", (e.target.value || undefined) as Difficulty | undefined)}>
+            <option value="">Just the level above</option>
+            <option value="intermediate">Intermediate (Beginner to Intermediate)</option>
             <option value="advanced">Advanced</option>
           </select>
         </div>
@@ -116,6 +165,7 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
           hint="Leave empty while the course is being written."
         />
         <TextField label="Project title" value={c.projectTitle ?? ""} onChange={(e) => set("projectTitle", e.target.value || undefined)} />
+        <TextField label="Thumbnail (web address of a picture)" value={c.thumbnail ?? ""} onChange={(e) => set("thumbnail", e.target.value || undefined)} hint="Shown on the course card and page. Leave empty for none." />
       </div>
       <TextField
         label="Skills (comma separated)"
@@ -129,12 +179,172 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
         onBlur={() => set("skills", c.skills.map((s) => s.trim()).filter(Boolean))}
       />
       <TextArea
+        label="Frequently asked questions (one per line: Question | Answer)"
+        rows={5}
+        value={(c.faqs ?? []).map((f) => (f.a ? `${f.q} | ${f.a}` : f.q)).join("\n")}
+        onChange={(e) =>
+          set(
+            "faqs",
+            e.target.value.split("\n").map((l) => {
+              const [q, ...rest] = l.split("|");
+              return { q, a: rest.join("|").trimStart() };
+            }),
+          )
+        }
+        onBlur={() => set("faqs", (c.faqs ?? []).map((f) => ({ q: f.q.trim(), a: f.a.trim() })).filter((f) => f.q))}
+      />
+      <TextArea
         label="Prerequisites (one per line)"
         rows={3}
         value={c.prerequisites.join("\n")}
         onChange={(e) => set("prerequisites", e.target.value.split("\n"))}
         onBlur={() => set("prerequisites", c.prerequisites.map((s) => s.trim()).filter(Boolean))}
       />
+
+      <fieldset className="space-y-4 rounded-xl border border-brass/40 p-4">
+        <legend className="px-1 text-[0.875rem] font-semibold">Access and pricing</legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="ctype">
+              Course type
+            </label>
+            <select
+              id="ctype"
+              className={selectCls}
+              value={c.courseType ?? "free"}
+              onChange={(e) => {
+                const t = e.target.value as "free" | "professional";
+                setC((x) => ({ ...x, courseType: t, access: t === "professional" ? "paid" : x.access }));
+              }}
+            >
+              <option value="free">Free course (a short, useful skill)</option>
+              <option value="professional">Professional programme (complete and paid)</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="access">
+              Access
+            </label>
+            <select id="access" className={selectCls} value={c.access ?? "free"} disabled={c.courseType === "professional"} onChange={(e) => set("access", e.target.value as "free" | "paid")}>
+              <option value="free">Free</option>
+              <option value="paid">Paid</option>
+            </select>
+            <p className="mt-1 text-[0.8125rem] text-muted">Access, not the course name, decides who can open the lessons.</p>
+          </div>
+          <div>
+            <label className="text-[0.875rem] font-medium" htmlFor="delivery">
+              Delivery
+            </label>
+            <select id="delivery" className={selectCls} value={c.deliveryType ?? "self_paced"} onChange={(e) => set("deliveryType", e.target.value as NonNullable<Course["deliveryType"]>)}>
+              <option value="self_paced">Self-paced</option>
+              <option value="instructor_led">Instructor-led</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+          <TextField label="Duration (shown to learners)" value={c.durationLabel ?? ""} onChange={(e) => set("durationLabel", e.target.value || undefined)} hint="For example 3 months." />
+          <TextField label="Length in weeks (for filtering)" type="number" min={1} max={104} value={c.durationWeeks ?? ""} onChange={(e) => set("durationWeeks", e.target.value ? Number(e.target.value) : undefined)} hint="3 months is 12." />
+        </div>
+
+        {(c.access ?? "free") === "paid" && (
+          <>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <TextField label="Price" type="number" min={0} value={c.price ?? ""} onChange={(e) => set("price", e.target.value ? Number(e.target.value) : null)} />
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="cur">
+                  Currency
+                </label>
+                <select id="cur" className={selectCls} value={c.currency ?? "NGN"} onChange={(e) => set("currency", e.target.value)}>
+                  {["NGN", "USD", "GBP", "CAD"].map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <TextField label="Promotional price" type="number" min={0} value={c.discountPrice ?? ""} onChange={(e) => set("discountPrice", e.target.value ? Number(e.target.value) : null)} hint="Optional. Must be below the price." />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="promo">
+                  Promotion
+                </label>
+                <select id="promo" className={selectCls} value={c.discountActive ? "active" : "none"} onChange={(e) => set("discountActive", e.target.value === "active")}>
+                  <option value="none">No promotion</option>
+                  <option value="active">Active</option>
+                </select>
+              </div>
+              <TextField label="Promotion name" value={c.discountLabel ?? ""} onChange={(e) => set("discountLabel", e.target.value || undefined)} hint="For example Early Bird." />
+              <span />
+              <TextField label="Promotion starts (optional)" type="datetime-local" value={localInput(c.discountStart)} onChange={(e) => set("discountStart", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+              <TextField label="Promotion ends (optional)" type="datetime-local" value={localInput(c.discountEnd)} onChange={(e) => set("discountEnd", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+            </div>
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              <Check label="Payments are paused" checked={c.paymentStatus === "paused"} onChange={(v) => set("paymentStatus", v ? "paused" : "active")} />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="text-[0.875rem] font-medium" htmlFor="enrol">
+                  Enrolment
+                </label>
+                <select id="enrol" className={selectCls} value={c.enrollmentStatus ?? "open"} onChange={(e) => set("enrollmentStatus", e.target.value as "open" | "closed")}>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+              <TextField label="Enrolment opens" type="datetime-local" value={localInput(c.enrollmentStart)} onChange={(e) => set("enrollmentStart", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+              <TextField label="Enrolment closes" type="datetime-local" value={localInput(c.enrollmentEnd)} onChange={(e) => set("enrollmentEnd", e.target.value ? new Date(e.target.value).toISOString() : null)} />
+            </div>
+            {BUNDLED_COURSES.some((b) => b.id === c.id) && (
+              <Alert tone="info">
+                This course ships with the site. Switching it to paid locks its lessons in the database straight away, but its text is still inside the public site files until a
+                developer adds its folder to protected-courses.json and the site is redeployed.
+              </Alert>
+            )}
+          </>
+        )}
+
+        <div className="flex flex-wrap gap-x-8 gap-y-3">
+          <Check label="Instructor support is included" checked={!!c.instructorSupport} onChange={(v) => set("instructorSupport", v)} />
+          <Check label="Community access is included" checked={!!c.communityAccess} onChange={(v) => set("communityAccess", v)} />
+        </div>
+        <p className="text-[0.8125rem] text-muted">Certificates follow the completion rules below. Paying never awards a certificate by itself.</p>
+
+        {(c.courseType ?? "free") === "professional" && (
+          <div className="space-y-4 border-t border-line pt-4">
+            <p className="text-[0.875rem] font-semibold">Sales page</p>
+            <TextArea label="Programme overview" rows={4} value={c.overview ?? ""} onChange={(e) => set("overview", e.target.value || undefined)} />
+            <TextArea label="Who it is for (one per line)" rows={3} value={(c.audience ?? []).join("\n")} onChange={(e) => set("audience", lines(e.target.value))} />
+            <TextArea label="What you will learn (one per line)" rows={4} value={(c.outcomes ?? []).join("\n")} onChange={(e) => set("outcomes", lines(e.target.value))} />
+            <TextArea
+              label="Also included (one per line)"
+              rows={3}
+              value={(c.included ?? []).join("\n")}
+              onChange={(e) => set("included", lines(e.target.value))}
+            />
+            <p className="-mt-2 text-[0.8125rem] text-muted">Only list what you really provide. Modules, project, assessment, certificate, support and community are added automatically from the settings.</p>
+            <TextArea
+              label="Projects (one per line: Title | what the learner builds)"
+              rows={3}
+              value={(c.projectPreviews ?? []).map((p) => (p.summary ? `${p.title} | ${p.summary}` : p.title)).join("\n")}
+              onChange={(e) =>
+                set(
+                  "projectPreviews",
+                  lines(e.target.value).map((l) => {
+                    const [title, ...rest] = l.split("|");
+                    return { title, summary: rest.join("|").trim() };
+                  }),
+                )
+              }
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextField label="Instructor name" value={c.instructor?.name ?? ""} onChange={(e) => set("instructor", { name: e.target.value, title: c.instructor?.title ?? "", bio: c.instructor?.bio ?? "" })} />
+              <TextField label="Instructor title" value={c.instructor?.title ?? ""} onChange={(e) => set("instructor", { name: c.instructor?.name ?? "", title: e.target.value, bio: c.instructor?.bio ?? "" })} />
+            </div>
+            <TextArea label="Instructor bio" rows={2} value={c.instructor?.bio ?? ""} onChange={(e) => set("instructor", { name: c.instructor?.name ?? "", title: c.instructor?.title ?? "", bio: e.target.value })} />
+            <TextArea label="Professional outcome" rows={2} value={c.professionalOutcome ?? ""} onChange={(e) => set("professionalOutcome", e.target.value || undefined)} />
+          </div>
+        )}
+      </fieldset>
 
       <fieldset className="space-y-3 rounded-xl border border-line p-4">
         <legend className="px-1 text-[0.875rem] font-semibold">Completion rules</legend>
@@ -165,7 +375,7 @@ function Details({ course, onSaved }: { course: Course; onSaved: () => Promise<u
   );
 }
 
-const moduleInput = (m: Module): ModuleInput => ({ id: m.id, courseId: m.courseId, title: m.title, position: m.position, badge: m.badge, badgeCode: m.badgeCode, skills: m.skills });
+const moduleInput = (m: Module): ModuleInput => ({ id: m.id, courseId: m.courseId, title: m.title, position: m.position, badge: m.badge, badgeCode: m.badgeCode, skills: m.skills, topics: m.topics });
 
 /** A module's badge: its name, the code in its credential IDs, the skills on its credential page, and its check. */
 function ModuleBadge({ course, module: m, onSave }: { course: Course; module: Module; onSave: (m: ModuleInput) => Promise<void> }) {
@@ -213,9 +423,27 @@ function ModuleBadge({ course, module: m, onSave }: { course: Course; module: Mo
   );
 }
 
+const VIDEO_TAG = { draft: "Video: draft", published: "Video", unpublished: "Video: unpublished" } as const;
+
 function Curriculum({ course, reload }: { course: Course; reload: () => Promise<unknown> }) {
   const [newModule, setNewModule] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // Which lessons have a video, and in what state, so the list shows it at a glance.
+  const [videos, setVideos] = useState<Record<string, keyof typeof VIDEO_TAG>>({});
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const v = await (await getBackend()).admin.listLessonVideoStatuses(course.id);
+        if (alive) setVideos(v);
+      } catch {
+        if (alive) setVideos({}); // the list is a convenience; the curriculum works without it
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [course.id]);
 
   const run = async (fn: () => Promise<void>) => {
     setError(null);
@@ -241,6 +469,14 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
       await (await getBackend()).admin.saveModule({ ...moduleInput(m), title: title.trim() });
     });
 
+  const saveTopics = (id: string, text: string) =>
+    run(async () => {
+      const m = course.modules.find((x) => x.id === id)!;
+      const topics = text.split("\n").map((t) => t.trim()).filter(Boolean);
+      if (JSON.stringify(topics) === JSON.stringify(m.topics)) return;
+      await (await getBackend()).admin.saveModule({ ...moduleInput(m), topics });
+    });
+
   const remove = (id: string, lessons: number) => {
     const warning = lessons ? `Delete this module and its ${lessons} lesson(s)? Learner progress on those lessons is deleted too.` : "Delete this module?";
     if (!window.confirm(warning)) return;
@@ -258,6 +494,7 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
         badge: null,
         badgeCode: null,
         skills: [],
+        topics: [],
       });
       setNewModule("");
     });
@@ -294,13 +531,27 @@ function Curriculum({ course, reload }: { course: Course; reload: () => Promise<
                 </button>
               </div>
             </div>
+            <details className="mt-2 pl-6">
+              <summary className="cursor-pointer text-[0.8125rem] text-muted">What this module covers ({m.topics.length})</summary>
+              <textarea
+                aria-label={`What ${m.title} covers, one per line`}
+                defaultValue={m.topics.join("\n")}
+                rows={4}
+                onBlur={(e) => void saveTopics(m.id, e.target.value)}
+                className="mt-2 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.875rem]"
+              />
+              <p className="mt-1 text-[0.75rem] text-muted">One line each. Shown on the course page, so a course can be sold before its lessons are written.</p>
+            </details>
             <ul className="mt-3 space-y-1 pl-6">
               {m.lessons.map((l) => (
                 <li key={l.id} className="flex items-center justify-between gap-3 text-[0.9375rem]">
                   <Link to={`/admin/courses/${course.slug}/lessons/${encodeURIComponent(l.id)}`} className="min-w-0 truncate hover:text-brass-dark">
                     {l.title}
                   </Link>
-                  <span className="shrink-0 text-[0.75rem] text-muted">{l.published ? "Published" : "Draft"}</span>
+                  <span className="flex shrink-0 items-center gap-2 text-[0.75rem] text-muted">
+                    {videos[l.id] && <span className={`rounded-full px-2 py-0.5 font-medium ${videos[l.id] === "published" ? "bg-success-bg text-success" : "bg-sand text-ink"}`}>{VIDEO_TAG[videos[l.id]]}</span>}
+                    {l.published ? "Published" : "Draft"}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -356,6 +607,9 @@ export default function AdminCourseEditor() {
       <div className="grid gap-8 xl:grid-cols-2">
         <Details course={course} onSaved={reload} />
         <Curriculum course={course} reload={reload} />
+      </div>
+      <div className="mt-8">
+        <AdminCourseVideo course={course} />
       </div>
     </>
   );

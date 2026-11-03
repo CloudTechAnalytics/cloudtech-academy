@@ -4,6 +4,8 @@ import type { AssessmentPublic, Course, ProjectDef } from "@/content/types";
 import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type Progress, type ProjectSubmission } from "./backend";
 import { useAuth } from "./auth";
 import { eligibility } from "./certificates";
+import { TRACKS, type Track } from "@/content/tracks";
+import { withSales } from "./commerce";
 
 const publishedBundled = () => BUNDLED_COURSES.filter((c) => c.published);
 
@@ -24,6 +26,41 @@ export function useCourses() {
     };
   }, []);
   return courses;
+}
+
+/**
+ * The programmes (career tracks) with what admins have set for them in the database laid over the site's defaults.
+ * They start from the built-in values so the first render matches the prerendered HTML.
+ */
+export function useProgrammes() {
+  const [tracks, setTracks] = useState<Track[]>(TRACKS);
+  useEffect(() => {
+    let alive = true;
+    void getBackend()
+      .then((b) => b.listProgrammeSales())
+      .then((sales) => alive && setTracks(TRACKS.map((t) => withSales(t, sales[t.id]))))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return tracks;
+}
+
+/** The programmes the signed-in learner holds. */
+export function useMyProgrammes() {
+  const auth = useAuth();
+  const [held, setHeld] = useState<string[] | null>(null);
+  const reload = useCallback(async () => {
+    if (auth.status !== "signed-in") return setHeld([]);
+    const mine = await (await getBackend()).listMyProgrammes();
+    setHeld(mine.map((p) => p.trackId));
+  }, [auth.status]);
+  useEffect(() => {
+    if (auth.status === "loading") return;
+    void reload().catch(() => setHeld([]));
+  }, [auth.status, reload]);
+  return { held, loading: held === null, reload };
 }
 
 export function useCourse(slug: string | undefined) {

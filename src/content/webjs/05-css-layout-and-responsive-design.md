@@ -12,7 +12,7 @@ Most of Tallybook's customers open invoices on a phone, from a link in an email 
 
 ## The concept
 
-**CSS rules**
+### CSS rules
 
 ```css
 selector { property: value; }
@@ -20,12 +20,12 @@ selector { property: value; }
 
 Select by element (`button`), class (`.summary`) or id (`#amount`), and set properties such as `color`, `padding`, `font-size`.
 
-**Layout**
+### Layout
 
 - **Flexbox** (`display: flex`) lines items up in a row or column, with gaps and alignment.
 - **Grid** (`display: grid`) places items in rows and columns.
 
-**Mobile first**
+### Mobile first
 
 Write the phone layout as the default. Then add **media queries** that change the layout when there's room:
 
@@ -33,9 +33,11 @@ Write the phone layout as the default. Then add **media queries** that change th
 @media (min-width: 700px) { /* rules for wider screens */ }
 ```
 
-**Touch-friendly**
+### Touch-friendly
 
 Tap targets at least about 44 pixels tall, body text at least 16px (which also stops phones zooming into form fields), and enough contrast to read in daylight.
+
+![The phone layout stacks summary, invoice table and payment form in one column; a media query at 700px uses grid-template-columns and grid-template-areas to put the table on the left and the summary and form on the right](/images/courses/webjs/mobile-first.svg "Write the phone layout first; a media query adds columns when there's room.")
 
 ## Example
 

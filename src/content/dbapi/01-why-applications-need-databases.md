@@ -12,7 +12,7 @@ Applications keep their data in a **database**. In this course you'll design Tal
 
 ## The concept
 
-**What a relational database provides**
+### What a relational database provides
 
 | Need | How the database helps |
 | :-- | :-- |
@@ -23,11 +23,13 @@ Applications keep their data in a **database**. In this course you'll design Tal
 | Speed | **indexes** find rows without reading the whole table |
 | One question language | **SQL** |
 
-**SQLite**
+![A Python app sends SQL and values to the database and gets rows back; inside the database are tables, constraints, transactions and indexes](/images/courses/dbapi/app-database.svg "The app sends SQL and values; the database stores, guards and finds the data.")
+
+### SQLite
 
 A complete relational database in a single file (or in memory), built into Python as `sqlite3`. Production systems often use PostgreSQL or MySQL; the ideas and almost all the SQL in this course carry over directly.
 
-**From Python**
+### From Python
 
 ```python norun
 import sqlite3

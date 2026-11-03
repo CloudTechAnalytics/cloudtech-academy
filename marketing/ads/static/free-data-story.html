@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face { font-family: PF; src: url('../fonts/playfair-700.woff2'); font-weight: 700; }
+@font-face { font-family: IN; src: url('../fonts/inter.woff2'); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { font-family: IN, 'Segoe UI', Arial, sans-serif; background: #1E1D1B; color: #FFFFFF; position: relative; }
+.deco { position: absolute; inset: 0; background: radial-gradient(900px 700px at 85% 0%, rgba(201,164,92,.30), transparent 60%), radial-gradient(700px 700px at 0% 100%, rgba(201,164,92,.16), transparent 60%); }
+.pad { position: absolute; inset: 0; padding: 210px 84px 330px; display: flex; flex-direction: column; }
+.serif { font-family: PF, Georgia, serif; font-weight: 700; letter-spacing: -0.015em; font-variant-numeric: lining-nums; }
+.gold { color: #C9A45C; }
+.logo { display: flex; align-items: center; gap: 18px; }
+.logo svg { width: 64px; height: 64px; }
+.logo .w { font-family: PF, serif; font-weight: 700; font-size: 38px; line-height: 1; color: #FFFFFF; }
+.logo .s { font-size: 15px; letter-spacing: 0.34em; font-weight: 600; margin-top: 6px; color: #C9A45C; }
+.kick { font-size: 24px; letter-spacing: 0.3em; font-weight: 700; text-transform: uppercase; }
+.head { font-size: 128px; line-height: 1.02; margin-top: 26px; }
+.sub { font-size: 42px; line-height: 1.42; margin-top: 30px; max-width: 880px; }
+.pill { display: inline-block; border-radius: 999px; padding: 12px 26px; font-weight: 700; font-size: 26px; }
+.cta { padding: 26px 50px; font-size: 36px; }
+.url { font-weight: 700; font-size: 32px; letter-spacing: .01em; }
+.ctarow { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: auto; padding-top: 36px; }
+.vis { margin-top: 44px; display: flex; justify-content:center; align-items:center; flex:1; }
+.main { margin-top: 50px; display: flex; flex-direction: column; flex: 1; }
+.row { display: flex; gap: 40px; flex: 1; align-items: stretch; }
+.col { display: flex; flex-direction: column; flex: 1.1; }
+.row .vis { flex: 1; }
+.stack { flex: 1; display: flex; flex-direction: column; }
+.stack .vis { margin-bottom: 40px; }
+</style></head><body>
+<div class="deco"></div>
+<div class="pad">
+  <div class="logo"><svg viewBox="0 0 682 682" width="64" height="64"><rect width="170" height="170" rx="30" fill="#C9A45C"/><g fill="#4A4640"><rect x="256" width="170" height="170" rx="30"/><rect x="512" width="170" height="170" rx="30"/><rect y="256" width="170" height="170" rx="30"/><rect y="512" width="170" height="170" rx="30"/><rect x="256" y="256" width="426" height="426" rx="44"/></g></svg><div><div class="w">CloudTech</div><div class="s">ACADEMY</div></div></div>
+  <div class="main"><div class="kick" style="color:#C9A45C">Free courses</div>
+    <div class="serif head" style="color:#FFFFFF">Learn data. <span class="gold">Free.</span></div>
+    <div class="sub" style="color:#E6DECB">Excel, SQL, Power BI and Python, taught step by step. Practise in your browser and earn a badge for every skill.</div><div class="vis"><div style="zoom:0.94"><div style="width:900px;border-radius:30px;background:#2A2825;border:2px solid #3E3A34;overflow:hidden;color:#fff"><div style="display:flex;align-items:center;gap:22px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.12)"><span style="color:#C9A45C"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div style="flex:1"><div style="font-weight:700;font-size:30px">Excel for Data Analysis</div><div style="opacity:.65;font-size:22px;margin-top:3px">Formulas, pivot tables, charts</div></div><span class="pill" style="background:#C9A45C;color:#1E1D1B;padding:7px 18px;font-size:20px">FREE</span></div><div style="display:flex;align-items:center;gap:22px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.12)"><span style="color:#C9A45C"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div style="flex:1"><div style="font-weight:700;font-size:30px">SQL for Data Analysis</div><div style="opacity:.65;font-size:22px;margin-top:3px">Query real company data</div></div><span class="pill" style="background:#C9A45C;color:#1E1D1B;padding:7px 18px;font-size:20px">FREE</span></div><div style="display:flex;align-items:center;gap:22px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.12)"><span style="color:#C9A45C"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div style="flex:1"><div style="font-weight:700;font-size:30px">Power BI Fundamentals</div><div style="opacity:.65;font-size:22px;margin-top:3px">Build dashboards people use</div></div><span class="pill" style="background:#C9A45C;color:#1E1D1B;padding:7px 18px;font-size:20px">FREE</span></div><div style="display:flex;align-items:center;gap:22px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.12)"><span style="color:#C9A45C"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div style="flex:1"><div style="font-weight:700;font-size:30px">Python for Beginners</div><div style="opacity:.65;font-size:22px;margin-top:3px">From your first line of code</div></div><span class="pill" style="background:#C9A45C;color:#1E1D1B;padding:7px 18px;font-size:20px">FREE</span></div></div></div></div><div class="ctarow"><span class="pill cta" style="background:#C9A45C;color:#1E1D1B">Start learning free →</span><span class="url" style="color:#E6DECB">academy.cloudtechanalytics.com</span></div></div>
+</div></body></html>

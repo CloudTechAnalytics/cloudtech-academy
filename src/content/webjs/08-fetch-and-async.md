@@ -10,7 +10,7 @@ The old page sent the payment and then showed either "Success" or nothing at all
 
 ## The concept
 
-**fetch, async and await**
+### fetch, async and await
 
 ```js norun
 async function sendPayment(invoiceId, body) {
@@ -26,11 +26,11 @@ async function sendPayment(invoiceId, body) {
 
 `await` pauses the function until the response arrives, without freezing the page.
 
-**fetch only throws on network failure**
+### fetch only throws on network failure
 
 A 400 or 409 response is still a **response**: `fetch` succeeds, and you must check `response.ok` or `response.status`. Only a lost connection makes `fetch` throw.
 
-**Every outcome has a message**
+### Every outcome has a message
 
 | Outcome | What the customer sees |
 | :-- | :-- |
@@ -40,9 +40,11 @@ A 400 or 409 response is still a **response**: `fetch` succeeds, and you must ch
 | 404 | "This invoice link isn't valid" |
 | network error | "We couldn't reach Tallybook. Your payment wasn't recorded. Check your connection and try again." |
 
-**States**
+### States
 
 Disable the button and show "Recording payment..." while waiting, so it can't be pressed twice.
+
+![Pressing Pay disables the button while fetch runs; if fetch throws, show the network error message; otherwise check the status: 201 recorded with the new balance, 400 the server's message, 409 duplicate or too much, 404 invalid invoice link](/images/courses/webjs/fetch-outcomes.svg "fetch throws only when the connection fails; every status still needs checking.")
 
 ## Example
 

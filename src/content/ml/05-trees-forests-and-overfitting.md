@@ -12,11 +12,11 @@ But they bring a new danger. A tree can grow until it has a rule for every singl
 
 ## The concept
 
-**Decision trees**
+### Decision trees
 
 A decision tree asks a sequence of yes/no questions ("Is it in Ikoyi?", "Is the size over 120 m²?") and predicts the average rent of the training listings that end up in each final group (**leaf**). It handles interactions and doesn't need log transforms or scaling.
 
-**Overfitting and underfitting**
+### Overfitting and underfitting
 
 | | Training error | Test error | Cause |
 | :-- | :-- | :-- | :-- |
@@ -26,11 +26,13 @@ A decision tree asks a sequence of yes/no questions ("Is it in Ikoyi?", "Is the 
 
 The tell-tale sign of overfitting is a big **gap** between training and test error. Control it by limiting the tree: `max_depth` (how many questions deep), or `min_samples_leaf` (smallest group allowed).
 
-**Random forests**
+![Two curves against model complexity: training error falls steadily; test error falls to a minimum, then rises. The gap between them at high complexity is marked as overfitting.](/images/courses/ml/overfitting.svg "Underfitting on the left, overfitting on the right. The gap between the lines is the warning sign.")
+
+### Random forests
 
 A random forest grows hundreds of trees, each on a random sample of the rows and features, and averages their predictions. Individual trees overfit in different ways; averaging cancels much of it out. Forests are among the most reliable general-purpose models.
 
-**Feature importance**
+### Feature importance
 
 Forests report how much each feature contributed to their splits. It's a useful first look at what matters, but it favours features with many distinct values (like size). Lesson 9 shows a more reliable method.
 

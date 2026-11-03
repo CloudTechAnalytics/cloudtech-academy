@@ -32,6 +32,45 @@ Your model and measures are ready. Now they need to become a page someone can re
 
 **Tooltips.** Hovering shows details; add extra measures to the **Tooltips** well to show more (e.g. YoY % when hovering a region's bar).
 
+### Choosing a visual from the question
+
+| The reader asks | Visual | Kolanut |
+| :-- | :-- | :-- |
+| "How much, in total?" | **Card**, with a comparison measure nearby | Revenue ₦830.5m |
+| "How has it changed?" | **Line chart** on a date axis | Monthly revenue, this year and last |
+| "Which is biggest?" | **Bar chart**, sorted | Revenue by region |
+| "What's the breakdown by two things?" | **Matrix** | Category by year |
+| "Which ones, exactly?" | **Table** | Customers whose orders fell most |
+| "How do two measures relate?" | **Scatter chart** | Customers: credit limit against revenue |
+| "Two measures, different scales, over time" | **Line and clustered column** | Revenue (columns) and order lines (line) by month |
+
+Pie, donut, gauge and map visuals exist too. Use them rarely: a sorted bar chart compares values more accurately than a pie, and a map is only useful when location itself matters.
+
+### Filters at four levels
+
+Besides slicers, the **Filters pane** filters at different scopes:
+
+| Level | Affects | Example |
+| :-- | :-- | :-- |
+| **Visual** | One visual | A top 5 customers bar chart (Filter type: Top N) |
+| **Page** | Every visual on the page | This page shows 2026 only |
+| **Report** (all pages) | Every page | Exclude a test customer everywhere |
+| **Drillthrough** | A detail page, reached by right-clicking a data point | Right-click Lagos → Drill through → Region detail |
+
+Slicers sit on the page where users can see and change them. Filters-pane filters are often set by the report author and can be locked or hidden. A number that looks wrong is often explained by a forgotten filter, so check the Filters pane first.
+
+### Filter or highlight?
+
+When a user clicks a bar, other visuals respond in one of two ways:
+
+| Interaction | What the other visual shows | Good for |
+| :-- | :-- | :-- |
+| **Filter** | Only the selected data | Cards, tables, line charts: the number simply changes |
+| **Highlight** | All the data, with the selected part dark and the rest pale | Bar and column charts: you see the part against the whole |
+| **None** | No change | A visual that should always show the full picture |
+
+Set them with **Format → Edit interactions**: select the visual you'll click, then choose the icon above each other visual.
+
 ## Example
 
 A first report page for Kolanut:

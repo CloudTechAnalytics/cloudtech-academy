@@ -10,18 +10,20 @@ Getting users to a first transfer is only half the job. A wallet that people use
 
 ## The concept
 
-**Cohorts**
+### Cohorts
 
 Group users by when they started (their **cohort**), then track what share are active in each week after they started. Comparing cohorts shows whether the product is improving over time; comparing segments shows who it works for.
 
-**Reading a retention curve**
+### Reading a retention curve
 
 - A curve that keeps falling towards zero: people try it and leave.
 - A curve that **flattens**: a core of users has made it a habit. That flat level matters more than the first week.
 
-**Right-censoring**
+### Right-censoring
 
 Recent cohorts haven't had time to reach week 8. Only compare weeks every cohort has reached.
+
+![A retention curve that flattens at a habit level next to one that keeps falling to zero, and a cohort table where recent cohorts have not yet reached later weeks](/images/courses/product/retention.svg "A curve that flattens means a habit; recent cohorts haven't reached later weeks yet.")
 
 ## Example
 

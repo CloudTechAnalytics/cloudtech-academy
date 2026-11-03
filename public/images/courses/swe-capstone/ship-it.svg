@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Shipping a fix: work on a branch named after the change, commit in small steps with messages that say why, open a pull request, let continuous integration run the tests as a required check, get a review, merge, then tag a version. Semantic versioning bumps the last number for fixes, the middle for features and the first for breaking changes. Release notes are for people outside the team.">
+<title>Branch, pull request, CI, review, merge, tag.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">From your laptop to customers</text>
+<rect x="16.0" y="40.0" width="226.0" height="80.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="40.0" cy="66.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="71.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Branch</text>
+<text xml:space="preserve" x="30.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">fix/cancel-window</text>
+<rect x="264.0" y="40.0" width="226.0" height="80.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="288.0" cy="66.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="288.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="308.0" y="71.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Commits</text>
+<text xml:space="preserve" x="278.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">small, each says why</text>
+<rect x="512.0" y="40.0" width="226.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="536.0" cy="66.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="536.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="556.0" y="71.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Pull request</text>
+<text xml:space="preserve" x="526.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">describe the change</text>
+<rect x="16.0" y="132.0" width="226.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="40.0" cy="158.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="162.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="60.0" y="163.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">CI</text>
+<text xml:space="preserve" x="30.0" y="194.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">tests must pass</text>
+<rect x="264.0" y="132.0" width="226.0" height="80.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="288.0" cy="158.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="288.0" y="162.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="308.0" y="163.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">Review</text>
+<text xml:space="preserve" x="278.0" y="194.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">a colleague approves</text>
+<rect x="512.0" y="132.0" width="226.0" height="80.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<circle cx="536.0" cy="158.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="536.0" y="162.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="556.0" y="163.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Merge + tag</text>
+<text xml:space="preserve" x="526.0" y="194.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">v1.1.1</text>
+<text xml:space="preserve" x="16.0" y="238.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Semantic versions: MAJOR.MINOR.PATCH</text>
+<rect x="16.0" y="252.0" width="232.0" height="72.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="280.0" font-size="16" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1.1.1</text>
+<text xml:space="preserve" x="30.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">PATCH: a bug fix</text>
+<rect x="264.0" y="252.0" width="232.0" height="72.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="280.0" font-size="16" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1.2.0</text>
+<text xml:space="preserve" x="278.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">MINOR: a new feature, nothing breaks</text>
+<rect x="512.0" y="252.0" width="232.0" height="72.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="280.0" font-size="16" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2.0.0</text>
+<text xml:space="preserve" x="526.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">MAJOR: a breaking change</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Make the tests a required check so nothing merges red.</text>
+<text xml:space="preserve" x="16.0" y="378.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Release notes are written for people outside the team: what changed, in plain words.</text>
+</g></svg>

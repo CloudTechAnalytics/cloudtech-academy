@@ -12,7 +12,7 @@ Probably none of them. A process can only move as fast as its slowest point, its
 
 ## The concept
 
-**The theory of constraints in five steps**
+### The theory of constraints in five steps
 
 1. **Identify** the constraint: where does work pile up? Where are the longest waits?
 2. **Exploit** it: make sure the constraint never wastes time (no idle inspection slots, no files arriving incomplete).
@@ -20,13 +20,13 @@ Probably none of them. A process can only move as fast as its slowest point, its
 4. **Elevate** it: if it's still the limit, add capacity there (more inspection slots, earlier booking).
 5. **Repeat**: once it's no longer the constraint, something else will be. Find it.
 
-**Signs of a bottleneck in data**
+### Signs of a bottleneck in data
 
 - The longest average **wait** sits just before it.
 - Waits before it get longer when more work arrives at once.
 - Cases that skip it finish much faster.
 
-**Little's law**
+### Little's law
 
 For a stable process, over time:
 
@@ -45,6 +45,8 @@ Harbourline's clearances, before the pilot, by customs channel:
 | Red | physical inspection | 9.3 |
 
 Red cases spend about 1.7 days longer at port than Green ones, and the wait before physical inspection (42 hours on average) grows when several Red containers arrive in the same few days. The customs inspection queue behaves like a bottleneck for the 4 in 10 containers that go through it. But look back at the value stream: the waits for **corrected documents** and **duty payment** are as long or longer, and they affect every channel. There's more than one constraint, and some of them sit with Harbourline's own customers.
+
+![Bars of average days at port: Green, no inspection, 7.6; Yellow, document review, 8.7; Red, physical inspection, 9.3.](/images/courses/process/days-by-channel.svg "Inspection adds time, but even Green containers spend 7.6 days at port.")
 
 ## Walkthrough
 

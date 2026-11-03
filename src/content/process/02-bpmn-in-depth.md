@@ -12,7 +12,7 @@ In Business Analysis Fundamentals you drew simple swimlane diagrams. When a proc
 
 ## The concept
 
-**The core BPMN elements**
+### The core BPMN elements
 
 | Element | Symbol | Use |
 | :-- | :-- | :-- |
@@ -29,7 +29,7 @@ In Business Analysis Fundamentals you drew simple swimlane diagrams. When a proc
 | **Pool** | large box | one organisation (Harbourline, the customer, customs) |
 | **Lane** | strip inside a pool | a role or team within it |
 
-**Rules that keep models readable**
+### Rules that keep models readable
 
 - Label every gateway as a question ("Documents complete?") and every outgoing path with an answer ("Yes", "No").
 - Use **message flows** between pools, never sequence flows: one organisation can't control another's steps.
@@ -56,6 +56,8 @@ The clearance process, as a BA would describe the BPMN model in words:
 8. **Task** (Haulage lane): deliver to customer → **end event**: container delivered.
 
 The loop at step 3 is the part none of the three old diagrams showed. It's also where much of the delay turns out to be.
+
+![A BPMN diagram with a Customer pool, a Harbourline pool with Documentation, Customs broker, Terminal and Haulage lanes, and a Customs pool. Vessel arrives, check documents, gateway: complete? No leads to request corrected documents, a message event for documents received, re-check, and a dashed rework loop back to the gateway. Yes leads to submit declaration, a message event for duty assessed and payment confirmed, a channel gateway, release and gate-out, deliver to customer, and the end event. Dashed message flows run to the Customer and Customs pools.](/images/courses/process/bpmn-clearance.svg "The clearance process in BPMN. The rework loop at the top is the part the old diagrams left out.")
 
 ## Walkthrough
 

@@ -17,21 +17,23 @@ The Lagos claims manager says claims are "much faster". The head of IT says Apri
 
 ## The concept
 
-**Before and after isn't enough**
+### Before and after isn't enough
 
 Comparing Lagos in April to June with Lagos before mixes the pilot's effect with anything else that changed at the same time. April brings the rainy season, more accidents and busier assessors **everywhere**.
 
-**A comparison group**
+### A comparison group
 
 The other four regions didn't get the changes but did get the season. Their change over the same period shows what would probably have happened in Lagos without the pilot.
 
-**Difference in differences**
+### Difference in differences
 
 (Lagos after − Lagos before) − (others after − others before). The second bracket removes whatever affected everyone. It assumes Lagos and the other regions would otherwise have moved together, so check that they were similar before.
 
-**Check what it mustn't harm**
+### Check what it mustn't harm
 
 A faster process that rejects good claims or approves bad ones isn't a success. Look at rejection rates and the controls.
+
+![Difference in differences with invented numbers: the pilot group's change minus the comparison group's change gives the effect, removing the season](/images/courses/ba-capstone/did.svg "Subtract the comparison group's change to remove the season.")
 
 ## Example
 

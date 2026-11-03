@@ -12,7 +12,7 @@ The measure that answers it needs several steps: revenue now, revenue at last ye
 
 ## The concept
 
-**VAR and RETURN**
+### VAR and RETURN
 
 ```dax
 Measure name =
@@ -30,7 +30,7 @@ Variables make measures:
 
 One rule catches everyone: **a variable is calculated where it's defined**, in that filter context, and then never changes. `VAR Total = [Revenue]` followed by `CALCULATE ( Total, … )` doesn't recalculate `Total` with the new filters; it returns the same number. Put the `CALCULATE` inside the variable's definition instead.
 
-**BLANK is not zero**
+### BLANK is not zero
 
 DAX uses `BLANK()` for "no value". Visuals hide rows where every measure is blank, which is usually what you want: a product nobody bought in Kano doesn't clutter the table.
 
@@ -38,7 +38,7 @@ DAX uses `BLANK()` for "no value". Visuals hide rows where every measure is blan
 - `[Revenue] + 0` turns blanks into zeros, and suddenly the table shows every customer for every month, thousands of empty rows. Only do it when a zero genuinely means something (a sales rep's month with no sales on a performance page).
 - `COALESCE ( [Revenue], 0 )` does the same job more explicitly.
 
-**Readable DAX**
+### Readable DAX
 
 - One function argument per line, indented, as in the examples in this course.
 - Paste long measures into DAX Formatter (daxformatter.com, a free tool from SQLBI) to lay them out consistently.

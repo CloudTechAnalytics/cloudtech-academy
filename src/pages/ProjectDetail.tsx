@@ -63,7 +63,7 @@ function FileCard({ dataset, name, meta }: { dataset: string; name: string; meta
       <div className="overflow-x-auto px-4 py-4 sm:px-5">
         <table className="w-full min-w-[34rem] border-collapse text-left text-[0.875rem]">
           <thead>
-            <tr className="border-b border-line text-[0.75rem] uppercase tracking-[0.08em] text-muted">
+            <tr className="border-b border-line text-[0.8125rem] text-muted">
               <th scope="col" className="py-2 pr-3 font-semibold">
                 Column
               </th>
@@ -273,17 +273,17 @@ export default function ProjectDetail() {
       <div className="container-page grid gap-10 py-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-14">
         <div className="min-w-0 space-y-14">
           <Section id="overview" title="Overview">
-            <h3 className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">The business</h3>
+            <h3 className="text-[0.8125rem] font-semibold text-muted">The business</h3>
             <div className="mt-2 space-y-3 text-[1rem] leading-relaxed">
               {project.context.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
             <div className="mt-6 rounded-xl border-l-4 border-brass bg-brass-pale/40 p-5">
-              <h3 className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-brass-dark">Your brief</h3>
+              <h3 className="text-[0.8125rem] font-semibold text-brass-dark">Your brief</h3>
               <p className="mt-2 text-[1rem] leading-relaxed">{project.brief}</p>
             </div>
-            <h3 className="mt-8 text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">Questions to answer</h3>
+            <h3 className="mt-8 text-[0.8125rem] font-semibold text-muted">Questions to answer</h3>
             <ol className="mt-3 space-y-2.5">
               {project.questions.map((q, i) => (
                 <li key={q} className="flex gap-3">
@@ -294,7 +294,7 @@ export default function ProjectDetail() {
             </ol>
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               <div>
-                <h3 className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">What to deliver</h3>
+                <h3 className="text-[0.8125rem] font-semibold text-muted">What to deliver</h3>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[0.9375rem] leading-relaxed marker:text-brass">
                   {project.deliverables.map((d) => (
                     <li key={d}>{d}</li>
@@ -302,7 +302,7 @@ export default function ProjectDetail() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">Suggested approach</h3>
+                <h3 className="text-[0.8125rem] font-semibold text-muted">Suggested approach</h3>
                 <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-[0.9375rem] leading-relaxed marker:text-brass-dark">
                   {project.approach.map((a) => (
                     <li key={a}>{a}</li>

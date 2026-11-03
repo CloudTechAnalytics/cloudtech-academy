@@ -12,11 +12,11 @@ The test set must be used **once**, at the end. So how do you choose settings li
 
 ## The concept
 
-**Hyperparameters**
+### Hyperparameters
 
 Settings you choose before training, rather than ones the model learns: a tree's `max_depth`, a forest's number of trees, `min_samples_leaf`. Choosing them is called **tuning**.
 
-**k-fold cross-validation**
+### k-fold cross-validation
 
 1. Split the **training** data into k parts (folds), often 5.
 2. Train on 4 folds and measure the error on the 5th.
@@ -25,11 +25,13 @@ Settings you choose before training, rather than ones the model learns: a tree's
 
 Every training row is used for both learning and checking, and the average over 5 folds is far more stable than one split. Use it to compare settings, pick the best, then retrain on all the training data and score the **test set once**.
 
-**Grid search**
+![Five rounds of five folds. In each round a different fold is scored and the other four are used for training; the test set sits apart, unused.](/images/courses/ml/kfold.svg "5-fold cross-validation. The test set stays out of it.")
+
+### Grid search
 
 `GridSearchCV` automates this: give it a model, a list of settings to try and a scoring measure, and it cross-validates every combination and reports the best.
 
-**The three-way discipline**
+### The three-way discipline
 
 | Data | Used for |
 | :-- | :-- |

@@ -12,11 +12,13 @@ Big stories are where agile teams get into trouble. They're hard to estimate, th
 
 ## The concept
 
-**What a good split looks like**
+### What a good split looks like
 
 Each slice must still be a **user story**: valuable to a user on its own, and testable. Splitting by technical layer ("build the database", "build the screen") produces tasks, not stories, and nothing usable until all of them are done.
 
-**Splitting patterns**
+![Left: three horizontal layers, build the screen, logic and data for card payments, none usable alone. Right: three vertical slices through all layers: pay by debit card, clear message when payment fails, save card for next time.](/images/courses/agile-ba/vertical-slices.svg "Split vertically through every layer, so each slice is a story a user can try.")
+
+### Splitting patterns
 
 | Pattern | Split by | Kiosk app example |
 | :-- | :-- | :-- |
@@ -28,7 +30,7 @@ Each slice must still be a **user story**: valuable to a user on its own, and te
 | **Simple then complex** | the simplest version first | "Search products" → by name / by brand and category / with spelling mistakes |
 | **Spike** | a short time-boxed investigation, when the unknowns are too big to split | "Choose SMS provider" |
 
-**How small?**
+### How small?
 
 Small enough that several fit in one sprint, typically 1 to 3 days of work each. If a story is more than about a quarter of the team's sprint, split it.
 

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Difference-in-differences, illustrated. Two lines show an outcome before and after a change: the comparison group rises a little; the treated group rises more. A dashed line shows what the treated group would have done without the change, parallel to the comparison group. The effect is the gap between the treated group's actual value and that dashed line.">
+<title>Difference-in-differences: the effect is the gap from the parallel 'without the change' line.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="90.0" y1="310.0" x2="600.0" y2="310.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="90.0" y1="60.0" x2="90.0" y2="310.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="150.0" y="332.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">before</text>
+<text xml:space="preserve" x="540.0" y="332.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">after</text>
+<line x1="345.0" y1="60.0" x2="345.0" y2="310.0" stroke="#5E5A52" stroke-width="1.2" stroke-dasharray="3 4"/>
+<text xml:space="preserve" x="345.0" y="52.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">change launched</text>
+<line x1="150.0" y1="268.3" x2="540.0" y2="218.3" stroke="#2F5D8A" stroke-width="2.6"/>
+<text xml:space="preserve" x="550.0" y="222.3" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">comparison</text>
+<line x1="150.0" y1="226.7" x2="540.0" y2="101.7" stroke="#2F6B3F" stroke-width="2.6"/>
+<text xml:space="preserve" x="550.0" y="105.7" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">treated</text>
+<line x1="150.0" y1="226.7" x2="540.0" y2="176.7" stroke="#2F6B3F" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="550.0" y="180.7" font-size="12" fill="#2F6B3F" font-weight="400" text-anchor="start">treated, without the change</text>
+<line x1="540.0" y1="101.7" x2="540.0" y2="176.7" stroke="#8A6A1F" stroke-width="2.4"/>
+<text xml:space="preserve" x="532.0" y="143.2" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="end">effect</text>
+<circle cx="150.0" cy="268.3" r="5" fill="#2F5D8A"/>
+<circle cx="540.0" cy="218.3" r="5" fill="#2F5D8A"/>
+<circle cx="150.0" cy="226.7" r="5" fill="#2F6B3F"/>
+<circle cx="540.0" cy="101.7" r="5" fill="#2F6B3F"/>
+<text xml:space="preserve" x="16.0" y="368.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Effect = (treated after − treated before) − (comparison after − comparison before). It relies on parallel</text>
+<text xml:space="preserve" x="16.0" y="386.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">trends before the change.</text>
+</g></svg>

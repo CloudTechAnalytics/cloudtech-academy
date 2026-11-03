@@ -12,7 +12,7 @@ That question comes first on every analysis. How many rows? Which columns, and w
 
 ## The concept
 
-**pandas and the DataFrame**
+### pandas and the DataFrame
 
 **pandas** is the Python library for tables. Its main object is the **DataFrame**: rows and named columns, like a sheet in Excel. Each column is a **Series**, one column of values that all share a type. Everyone imports pandas with the short name `pd`:
 
@@ -20,7 +20,7 @@ That question comes first on every analysis. How many rows? Which columns, and w
 import pandas as pd
 ```
 
-**Loading a CSV**
+### Loading a CSV
 
 `pd.read_csv()` reads a file from a web address or from your computer:
 
@@ -29,12 +29,17 @@ base = "https://academy.cloudtechanalytics.com/datasets/sales/"
 orders = pd.read_csv(base + "orders.csv")
 customers = pd.read_csv(base + "customers.csv")
 products = pd.read_csv(base + "products.csv")
+orders.shape
+```
+
+```text
+(4266, 7)
 ```
 
 > [!TIP]
 > To use a file from your own computer in Colab, click the folder icon on the left, upload the file, then `pd.read_csv("orders.csv")`. Uploaded files disappear when the session ends; for work you keep, put files in Google Drive.
 
-**The first questions, in code**
+### The first questions, in code
 
 | Question | Code | Gives you |
 | :-- | :-- | :-- |
@@ -46,14 +51,14 @@ products = pd.read_csv(base + "products.csv")
 | How often does each value appear? | `orders["discount_pct"].value_counts()` | Each value and its count |
 | How many different values? | `orders["customer_id"].nunique()` | One number |
 
-**Selecting columns**
+### Selecting columns
 
 - One column, as a Series: `orders["quantity"]`.
 - Several columns, as a DataFrame: `orders[["order_date", "quantity"]]`. Note the **double** brackets: the inner pair is a list of names.
 
 Series have their own methods: `.sum()`, `.mean()`, `.min()`, `.max()`, `.median()`, `.count()`.
 
-**Types in pandas**
+### Types in pandas
 
 `info()` shows types with pandas names: `int64` (whole numbers), `float64` (decimals), `object` (usually text), `datetime64` (dates), `bool`. A date column that shows as `object` is being treated as text: it'll sort, but you can't take the month out of it or do date maths. You'll fix that in lesson 5.
 

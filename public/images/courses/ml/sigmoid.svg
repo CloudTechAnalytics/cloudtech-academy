@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="The logistic curve. Logistic regression adds up the features into a score, then squashes it into a probability between 0 and 1 with an S-shaped curve. A threshold, here 0.5, turns the probability into a decision: above it, flag the loan as likely to default; below it, approve.">
+<title>Logistic regression turns a score into a probability; a threshold turns it into a decision.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<line x1="80.0" y1="320.0" x2="720.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<line x1="80.0" y1="50.0" x2="80.0" y2="320.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="72.0" y="324.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">0</text>
+<text xml:space="preserve" x="72.0" y="189.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">0.5</text>
+<text xml:space="preserve" x="72.0" y="54.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">1</text>
+<text xml:space="preserve" x="40.0" y="36.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">probability of default</text>
+<text xml:space="preserve" x="400.0" y="346.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">risk score from the features (low → high)</text>
+<path d="M80.0,319.3 L85.3,319.3 L90.7,319.2 L96.0,319.1 L101.3,319.0 L106.7,318.9 L112.0,318.8 L117.3,318.7 L122.7,318.5 L128.0,318.4 L133.3,318.2 L138.7,318.0 L144.0,317.8 L149.3,317.6 L154.7,317.3 L160.0,317.0 L165.3,316.7 L170.7,316.4 L176.0,316.0 L181.3,315.6 L186.7,315.1 L192.0,314.6 L197.3,314.1 L202.7,313.5 L208.0,312.8 L213.3,312.1 L218.7,311.3 L224.0,310.4 L229.3,309.4 L234.7,308.4 L240.0,307.2 L245.3,305.9 L250.7,304.5 L256.0,303.0 L261.3,301.3 L266.7,299.5 L272.0,297.5 L277.3,295.4 L282.7,293.1 L288.0,290.5 L293.3,287.8 L298.7,284.9 L304.0,281.7 L309.3,278.3 L314.7,274.6 L320.0,270.7 L325.3,266.6 L330.7,262.2 L336.0,257.5 L341.3,252.6 L346.7,247.4 L352.0,242.0 L357.3,236.3 L362.7,230.4 L368.0,224.3 L373.3,218.1 L378.7,211.6 L384.0,205.1 L389.3,198.5 L394.7,191.7 L400.0,185.0 L405.3,178.3 L410.7,171.5 L416.0,164.9 L421.3,158.4 L426.7,151.9 L432.0,145.7 L437.3,139.6 L442.7,133.7 L448.0,128.0 L453.3,122.6 L458.7,117.4 L464.0,112.5 L469.3,107.8 L474.7,103.4 L480.0,99.3 L485.3,95.4 L490.7,91.7 L496.0,88.3 L501.3,85.1 L506.7,82.2 L512.0,79.5 L517.3,76.9 L522.7,74.6 L528.0,72.5 L533.3,70.5 L538.7,68.7 L544.0,67.0 L549.3,65.5 L554.7,64.1 L560.0,62.8 L565.3,61.6 L570.7,60.6 L576.0,59.6 L581.3,58.7 L586.7,57.9 L592.0,57.2 L597.3,56.5 L602.7,55.9 L608.0,55.4 L613.3,54.9 L618.7,54.4 L624.0,54.0 L629.3,53.6 L634.7,53.3 L640.0,53.0 L645.3,52.7 L650.7,52.4 L656.0,52.2 L661.3,52.0 L666.7,51.8 L672.0,51.6 L677.3,51.5 L682.7,51.3 L688.0,51.2 L693.3,51.1 L698.7,51.0 L704.0,50.9 L709.3,50.8 L714.7,50.7 L720.0,50.7" fill="none" stroke="#2F5D8A" stroke-width="2.8"/>
+<line x1="80.0" y1="185.0" x2="720.0" y2="185.0" stroke="#8A6A1F" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="720.0" y="177.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="end">threshold 0.5</text>
+<rect x="81.0" y="50.0" width="319.0" height="135.0" rx="0" fill="#E5F0E8" fill-opacity="0.0"/>
+<text xml:space="preserve" x="104.0" y="300.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">approve</text>
+<text xml:space="preserve" x="700.0" y="74.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="end">flag as likely default</text>
+<text xml:space="preserve" x="16.0" y="366.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Lower the threshold to catch more defaults, at the cost of turning away more good borrowers (lesson 8).</text>
+</g></svg>

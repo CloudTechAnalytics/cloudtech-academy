@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Service level objectives. An SLO such as 99.5 percent of requests succeed over 30 days leaves an error budget of 0.5 percent. Burn rate is the current error rate divided by the budget rate; a burn rate of 1 uses the budget exactly over the window. A multi-window alert pages only if the burn rate is high over both a long window and a short window, so it avoids blips and stops soon after recovery. Alerts should be actionable, urgent and real.">
+<title>SLO, error budget, burn rate, and alerts that matter.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">An SLO and its error budget (invented numbers)</text>
+<rect x="16.0" y="40.0" width="728.0" height="64.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">SLO: 99.9% of requests succeed over 30 days</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Error budget = 0.1%: about 43 minutes of full outage per month.</text>
+<text xml:space="preserve" x="16.0" y="134.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Burn rate = current error rate ÷ budget rate</text>
+<rect x="16.0" y="148.0" width="232.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="178.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">burn rate 1</text>
+<text xml:space="preserve" x="30.0" y="200.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Budget used exactly over 30 days</text>
+<rect x="264.0" y="148.0" width="232.0" height="66.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="178.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">burn rate 6</text>
+<text xml:space="preserve" x="278.0" y="200.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Budget gone in 5 days</text>
+<rect x="512.0" y="148.0" width="232.0" height="66.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="178.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">burn rate 14</text>
+<text xml:space="preserve" x="526.0" y="200.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Budget gone in about 2 days</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Multi-window alert: page only if both windows are hot</text>
+<rect x="16.0" y="260.0" width="358.0" height="70.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="284.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Long window (1 hour)</text>
+<text xml:space="preserve" x="30.0" y="306.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Avoids paging on short blips.</text>
+<rect x="386.0" y="260.0" width="358.0" height="70.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="284.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Short window (5 minutes)</text>
+<text xml:space="preserve" x="400.0" y="306.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Alert stops soon after recovery.</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Does the alert earn its place?</text>
+<rect x="16.0" y="376.0" width="232.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="398.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Actionable</text>
+<text xml:space="preserve" x="28.0" y="416.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Someone can do something</text>
+<rect x="264.0" y="376.0" width="232.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="276.0" y="398.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Urgent</text>
+<text xml:space="preserve" x="276.0" y="416.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">It can't wait until morning</text>
+<rect x="512.0" y="376.0" width="232.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="524.0" y="398.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Real</text>
+<text xml:space="preserve" x="524.0" y="416.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Fires for a real problem</text>
+</g></svg>

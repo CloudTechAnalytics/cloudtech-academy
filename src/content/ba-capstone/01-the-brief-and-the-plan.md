@@ -16,7 +16,7 @@ Notice what the brief contains: a symptom ("too long"), two consequences (custom
 
 ## The concept
 
-**The arc of a BA project**
+### The arc of a BA project
 
 | Stage | Output | Lesson |
 | :-- | :-- | :-- |
@@ -29,17 +29,19 @@ Notice what the brief contains: a symptom ("too long"), two consequences (custom
 | 7. Requirements and readiness | User stories, acceptance criteria, test results and a go/no-go | 7 |
 | 8. Present | A decision paper the board can approve | 8 |
 
+![The eight stages of a business analysis project, and a typical brief taken apart into symptom, consequences, experiment and proposed solution](/images/courses/ba-capstone/ba-arc.svg "Eight stages, and what a typical brief is made of.")
+
 Use the tools you know: SQL, Excel or Power BI. The lessons show SQL, which answers every question here; the same steps work as pivot tables or DAX measures.
 
-**A problem statement, not a solution**
+### A problem statement, not a solution
 
 A good problem statement says **who** is affected, **what** happens, **how much** (with a number), and **why it matters** to the business. It doesn't name a solution: "We need a new claims system" is a solution, and it closes off the options before you know the cause.
 
-**Scope**
+### Scope
 
 Say what's in and what's out. In: motor claims from submission to payment, the five regions, July 2025 to June 2026. Out: underwriting and pricing, non-motor products, and choosing a system vendor.
 
-**Definitions before numbers**
+### Definitions before numbers
 
 | Term | Definition |
 | :-- | :-- |
@@ -50,7 +52,9 @@ Say what's in and what's out. In: motor claims from submission to payment, the f
 
 Write these down before you calculate anything. Without them, two analysts get two different "average days" from the same data and the board stops trusting both.
 
-**Stakeholders**
+![A four-part problem statement, in and out of scope, definitions written first, and an influence and interest grid for stakeholders](/images/courses/ba-capstone/problem-scope.svg "Problem statement, scope, definitions and stakeholders.")
+
+### Stakeholders
 
 Plot each stakeholder by **influence** and **interest**. Manage closely those high on both, keep satisfied those with high influence but less interest, and keep informed those with high interest but little influence.
 

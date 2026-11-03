@@ -14,34 +14,54 @@ Raw monthly totals don't answer that well: months have different numbers of trad
 
 ## The concept
 
-**`pivot_table`: rows × columns × a value**
+### `pivot_table`: rows × columns × a value
 
 ```python
 pd.pivot_table(full, index="region", columns="year", values="revenue", aggfunc="sum")
 ```
 
+```text
+year                  2025         2026
+region
+Lagos          258393705.0  152768595.0
+North Central   50374935.0   27165785.0
+North West      64934505.0   16646820.0
+South East      40948980.0   19367705.0
+South South     45314580.0   23088650.0
+South West      79844085.0   51692900.0
+```
+
 One row per region, one column per year, revenue summed in each cell. It's a `groupby` on two columns followed by `unstack()`, written in one readable call. Add `margins=True` for totals, and `fill_value=0` where a combination has no rows.
 
-**`pd.crosstab`: counts of two categories**
+### `pd.crosstab`: counts of two categories
 
 `pd.crosstab(full["region"], full["channel"])` counts rows for each region and channel. `normalize="index"` turns each row into shares that add up to 1.
 
-**Time series: one row per period**
+### Time series: one row per period
 
 Turn dates into periods, then group:
 
 ```python
 monthly = orders.groupby(orders["order_date"].dt.to_period("M"))["revenue"].sum()
+monthly.head(3)
 ```
 
-**Measuring change**
+```text
+order_date
+2025-01    37088460.0
+2025-02    36138690.0
+2025-03    46282170.0
+Freq: M, Name: revenue, dtype: float64
+```
+
+### Measuring change
 
 - `.pct_change()` gives each period's change from the one before: `0.05` means 5% up.
 - `.pct_change(12)` on monthly data compares each month with the **same month a year earlier**, which removes seasonal effects like December's spike. That's **year-on-year (YoY)**.
 - `.diff()` gives the change in naira rather than in percent.
 - `.rolling(3).mean()` averages each month with the two before it: a **3-month rolling average**. It smooths out one-off spikes so you can see the direction.
 
-**Compare like with like**
+### Compare like with like
 
 The data covers January 2025 to June 2026. Comparing 2026 with 2025 as whole years compares 6 months with 12. Compare **H1 2025** (January–June) with **H1 2026** instead.
 

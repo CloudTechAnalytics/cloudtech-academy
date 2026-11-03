@@ -10,7 +10,7 @@ A model can't learn from 65,825 separate transactions. It needs one row per cust
 
 ## The concept
 
-**The building blocks**
+### The building blocks
 
 | Family | Feature | Idea |
 | :-- | :-- | :-- |
@@ -21,7 +21,7 @@ A model can't learn from 65,825 separate transactions. It needs one row per cust
 | **Experience** | failed transactions, and the failure rate | are they having a bad time? |
 | **Profile** | tenure, KYC tier, acquisition channel | who they are and how they arrived |
 
-**Time windows**
+### Time windows
 
 Calculate the same measure over several windows (30 and 90 days). Comparing windows gives **trend** features, often the most predictive of all, because churn is usually a fade, not a sudden stop:
 
@@ -29,11 +29,11 @@ Calculate the same measure over several windows (30 and 90 days). Comparing wind
 
 The `+ 1` stops division by zero for customers with no earlier activity. A trend below 1 means activity is falling.
 
-**Missing means zero (here)**
+### Missing means zero (here)
 
 A customer with no failed transactions in the window has no rows to count, so the count comes back missing. Here, missing genuinely means zero: fill it with 0. Don't do that blindly elsewhere: sometimes missing means unknown.
 
-**Check before you model**
+### Check before you model
 
 For each new feature, look at the churn rate across its range (for example by quartile). If churn barely changes, the feature probably won't help.
 

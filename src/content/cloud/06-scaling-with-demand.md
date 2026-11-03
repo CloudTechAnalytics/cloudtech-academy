@@ -12,21 +12,23 @@ The same fixed fleet is wasteful and too small. **Autoscaling** adjusts the numb
 
 ## The concept
 
-**Capacity**
+### Capacity
 
 Each web server can handle about 9,000 requests an hour at full load. Running servers at 100% makes responses slow, so you aim for a **target utilisation**, such as 60%, leaving headroom for sudden rises.
 
 **Servers needed** = requests per hour ÷ (9,000 × target utilisation), rounded up, never below a **minimum** (for resilience, at least 2, in different zones).
 
-**Autoscaling rules**
+### Autoscaling rules
 
 - **Target tracking**: keep average CPU near a target by adding or removing servers.
 - **Scheduled scaling**: add capacity before known peaks (month-end mornings), because new servers take a few minutes to start.
 - **Limits**: a minimum for resilience, a maximum to cap cost if something goes wrong.
 
-**Latency and load**
+### Latency and load
 
 Response time rises slowly as utilisation grows, then sharply as servers approach full load. Watching p95 latency against utilisation shows where the danger zone starts.
+
+![An illustrative curve: response time stays low up to about 60% utilisation, then climbs steeply into a shaded danger zone above 70%.](/images/courses/cloud/latency-utilisation.svg "Keep headroom: latency climbs sharply near full load.")
 
 ## Example
 

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ListTree, Lock, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ExternalLink, ListTree, Lock, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useCourse, useLearner } from "@/lib/data";
 import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
@@ -9,9 +9,13 @@ import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { LessonContent, lessonSections } from "@/components/LessonContent";
+import { LessonVideoSection } from "@/components/CourseVideo";
 import { LessonSidebar } from "@/components/LessonSidebar";
+import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button, ButtonLink } from "@/components/Button";
+import { isPaid } from "@/lib/commerce";
+import { EnrolDialog } from "@/components/EnrolDialog";
 import NotFound from "./NotFound";
 
 function CurriculumDrawer({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
@@ -54,6 +58,7 @@ export default function Learn() {
   const [localDone, setLocalDone] = useState<string[]>([]);
   const [localExercises, setLocalExercises] = useState<string[]>([]);
   const [message, setMessage] = useState<string | null>(null);
+  const [asking, setAsking] = useState(false);
 
   const lessons = course ? publishedLessons(course) : [];
   const index = lessons.findIndex((l) => l.slug === lessonSlug);
@@ -77,13 +82,11 @@ export default function Learn() {
         : undefined,
   });
 
-  // Signed-in learners are enrolled automatically and their place is remembered.
+  // Learners are never enrolled just by opening a lesson: they confirm first. Once enrolled, their place is remembered.
   useEffect(() => {
-    if (!course || !lesson || !learner.signedIn || learner.loading) return;
+    if (!course || !lesson || !learner.signedIn || learner.loading || !learner.enrollment) return;
     void (async () => {
-      const b = await getBackend();
-      if (!learner.enrollment) await b.enroll(course.id);
-      await b.setLastLesson(course.id, lesson.id);
+      await (await getBackend()).setLastLesson(course.id, lesson.id);
     })().catch(() => {});
   }, [course, lesson, learner.signedIn, learner.loading, learner.enrollment]);
 
@@ -96,14 +99,40 @@ export default function Learn() {
 
   if (!course || !lesson) return loading ? <PageLoading /> : <NotFound />;
 
+  // A paid course's lessons only open for enrolled learners (and admins). The database enforces this too:
+  // without access it sends no lesson text at all, so this screen is the friendly face of that rule.
+  if (isPaid(course) && !learner.enrollment && !lesson.body) {
+    if (learner.loading) return <PageLoading />;
+    return (
+      <div className="container-page max-w-2xl py-16 sm:py-24">
+        <Lock aria-hidden className="h-8 w-8 text-brass-dark" />
+        <h1 className="mt-4 font-serif text-[2.2rem] leading-tight">This lesson is part of a Professional Programme</h1>
+        <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">
+          {course.title} unlocks as soon as you enroll in a programme that includes it. Have a look at what's inside, and enroll when you're ready.
+        </p>
+        <ButtonLink to={`/courses/${course.slug}`} className="mt-6">
+          See where this course fits
+        </ButtonLink>
+      </div>
+    );
+  }
+
   const done = completedLessons.includes(lesson.id);
   const requiredLeft = lesson.requiredExercises.filter((id) => !completedExercises.includes(id)).length;
   const percent = lessons.length ? Math.round((lessons.filter((l) => completedLessons.includes(l.id)).length / lessons.length) * 100) : 0;
   const sections = lessonSections(lesson.body);
 
+  // Signed in but not enrolled: they can read and try things, but nothing is saved until they choose to enrol.
+  const notEnrolled = learner.signedIn && !learner.loading && !learner.enrollment && !isPaid(course);
+  const confirmEnrol = async () => {
+    await (await getBackend()).enroll(course.id);
+    await learner.reload();
+    setAsking(false);
+  };
+
   const onExerciseSolved = async (exerciseId: string) => {
     setLocalExercises((x) => [...x, exerciseId]);
-    if (!learner.signedIn) return;
+    if (!learner.signedIn || !learner.enrollment) return;
     try {
       await (await getBackend()).recordExercise(course.id, lesson.id, exerciseId);
     } catch (e) {
@@ -112,6 +141,7 @@ export default function Learn() {
   };
 
   const toggleComplete = async () => {
+    if (notEnrolled) return setAsking(true);
     setSaving(true);
     setMessage(null);
     try {
@@ -137,6 +167,16 @@ export default function Learn() {
   const sidebar = <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />;
 
   return (
+    <>
+      <EnrolDialog course={course} open={asking} onClose={() => setAsking(false)} onConfirm={confirmEnrol} />
+      {notEnrolled && (
+        <div className="border-b border-brass/30 bg-brass-pale/40">
+          <div className="container-page flex flex-wrap items-center justify-between gap-3 py-3">
+            <p className="text-[0.9375rem]">You are reading without being enrolled. Enrol to save your progress and earn badges.</p>
+            <Button onClick={() => setAsking(true)}>Enrol in this course</Button>
+          </div>
+        </div>
+      )}
     <div className="container-page grid gap-8 py-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:py-10 xl:grid-cols-[16rem_minmax(0,1fr)_13rem]">
       {/* Curriculum */}
       <aside className="hidden lg:block">
@@ -177,6 +217,19 @@ export default function Learn() {
               </span>
             )}
           </p>
+          {hasNotebook(lesson.body) && (
+            <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.875rem] text-muted">
+              <a
+                href={colabUrl(course.id, lesson.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-paper px-3 py-1.5 font-semibold text-ink hover:border-brass"
+              >
+                <ExternalLink aria-hidden className="h-4 w-4 text-brass-dark" /> Open in Colab
+              </a>
+              <span>Every example as a notebook you can run, edit and save to your Google Drive.</span>
+            </p>
+          )}
           {!learner.signedIn && !learner.loading && (
             <p className="mt-5 rounded-lg border border-brass/40 bg-brass-pale/35 px-4 py-3 text-[0.9rem]">
               You can read and practise without an account.{" "}
@@ -193,8 +246,10 @@ export default function Learn() {
           )}
         </header>
 
+        <LessonVideoSection lessonId={lesson.id} />
+
         <div className="max-w-[46rem] pt-8">
-          <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} />
+          <LessonContent body={lesson.body} completedExercises={completedExercises} onExerciseSolved={onExerciseSolved} lessonKey={lesson.id} />
         </div>
 
         {badgeModule && (
@@ -289,7 +344,7 @@ export default function Learn() {
         <div className="sticky top-24 space-y-8">
           {learner.signedIn && <ProgressBar value={percent} label="Course progress" />}
           <nav aria-label="On this page">
-            <p className="mb-2 text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted">On this page</p>
+            <p className="mb-2 text-[0.8125rem] font-semibold text-muted">On this page</p>
             <ul className="space-y-1.5 border-l border-line">
               {sections.map((s) => (
                 <li key={s.id}>
@@ -303,5 +358,6 @@ export default function Learn() {
         </div>
       </aside>
     </div>
+    </>
   );
 }

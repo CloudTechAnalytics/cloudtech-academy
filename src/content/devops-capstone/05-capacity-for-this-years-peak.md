@@ -10,17 +10,19 @@ Marketing expects this year's sale to bring **1.6 times** last year's peak traff
 
 ## The concept
 
-**A capacity target**
+### A capacity target
 
 Target = last year's peak × expected growth × **headroom**. Headroom (here 30%) covers forecast error, uneven traffic within a minute, and losing an instance or two at the worst moment.
 
-**Find the limiting resource**
+### Find the limiting resource
 
 Each configuration hits a different wall: app instances, database connections or database CPU. Adding more of something that isn't the limit does nothing, as last year showed.
 
-**Little's law**
+### Little's law
 
 Average number of things in a system = arrival rate × time each spends there. For a database: connections busy at once = queries per second × seconds per query. It tells you how many connections you actually need, and it's usually far fewer than 20 per instance.
+
+![A capacity target formula with invented numbers, which resource is the limiting wall in two configurations, and Little's law for busy connections](/images/courses/devops-capstone/capacity.svg "Target = last peak × growth × headroom; find the limiting resource.")
 
 ## Example
 

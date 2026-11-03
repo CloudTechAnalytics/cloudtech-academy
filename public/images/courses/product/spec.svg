@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The sections of a good product spec, with an example of a success metric. A spec has the problem with evidence, the users and their job, the goal and success metrics with a baseline and target, guardrails, scope, non-goals, a launch and measurement plan using a holdout, and open questions. A target needs a baseline: measure the current value first, here 58 percent trader BVN verification, then set a realistic target of 65 percent.">
+<title>A spec: problem, users, goal with baseline and target, guardrails, scope, non-goals, plan, open questions.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="238.0" height="66.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.3"/>
+<text xml:space="preserve" x="28.0" y="38.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Problem</text>
+<text xml:space="preserve" x="28.0" y="56.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">what's wrong, for whom, with</text>
+<text xml:space="preserve" x="28.0" y="72.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">evidence</text>
+<rect x="264.0" y="16.0" width="238.0" height="66.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.3"/>
+<text xml:space="preserve" x="276.0" y="38.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Users</text>
+<text xml:space="preserve" x="276.0" y="56.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">the segment and their job to be done</text>
+<rect x="16.0" y="92.0" width="238.0" height="66.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="28.0" y="114.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Goal and success metrics</text>
+<text xml:space="preserve" x="28.0" y="132.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">the outcome, with a baseline and a</text>
+<text xml:space="preserve" x="28.0" y="147.9" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">target</text>
+<rect x="264.0" y="92.0" width="238.0" height="66.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="276.0" y="114.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Guardrails</text>
+<text xml:space="preserve" x="276.0" y="132.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">what must not get worse</text>
+<rect x="16.0" y="168.0" width="238.0" height="66.0" rx="8" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="28.0" y="190.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Scope</text>
+<text xml:space="preserve" x="28.0" y="208.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">what's in the first version</text>
+<rect x="264.0" y="168.0" width="238.0" height="66.0" rx="8" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="276.0" y="190.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Non-goals</text>
+<text xml:space="preserve" x="276.0" y="208.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">what's deliberately out</text>
+<rect x="16.0" y="244.0" width="238.0" height="66.0" rx="8" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.3"/>
+<text xml:space="preserve" x="28.0" y="266.0" font-size="12.5" fill="#5C4F80" font-weight="700" text-anchor="start">Launch and measurement plan</text>
+<text xml:space="preserve" x="28.0" y="284.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">rollout and a holdout to evaluate</text>
+<rect x="264.0" y="244.0" width="238.0" height="66.0" rx="8" fill="#F2EFE8" stroke="#5E5A52" stroke-width="1.3"/>
+<text xml:space="preserve" x="276.0" y="266.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Open questions</text>
+<text xml:space="preserve" x="276.0" y="284.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">what isn't known yet</text>
+<rect x="516.0" y="16.0" width="228.0" height="242.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="530.0" y="42.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">A target needs a baseline</text>
+<text xml:space="preserve" x="530.0" y="66.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Trader BVN verification</text>
+<rect x="530.0" y="88.0" width="116.0" height="24.0" rx="3" fill="#5E5A52"/>
+<text xml:space="preserve" x="536.0" y="105.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">58%</text>
+<text xml:space="preserve" x="530.0" y="128.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">baseline: measure first</text>
+<rect x="530.0" y="132.0" width="130.0" height="24.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="536.0" y="149.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">65%</text>
+<text xml:space="preserve" x="530.0" y="172.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">target: realistic</text>
+<text xml:space="preserve" x="530.0" y="206.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">A target without a baseline is</text>
+<text xml:space="preserve" x="530.0" y="223.4" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">a guess.</text>
+<text xml:space="preserve" x="16.0" y="338.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Baselines come from data: funnels, cohorts and feedback (lessons 3 to 5).</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Write the spec so someone who wasn't in the room can build and measure it.</text>
+<text xml:space="preserve" x="16.0" y="390.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Illustrative numbers.</text>
+</g></svg>

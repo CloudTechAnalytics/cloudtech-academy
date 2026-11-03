@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Point-in-time features. For one patient's timeline of earlier appointments, a feature at the booking time may only count outcomes that were known by then. An earlier appointment whose result had not yet been recorded must not be counted, even though it was booked earlier. The naive cumulative sum counts every earlier booking's outcome and quietly leaks.">
+<title>Count only what was known at the time, not what was booked earlier.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">One patient's timeline (invented)</text>
+<line x1="40.0" y1="140.0" x2="720.0" y2="140.0" stroke="#CFC4B2" stroke-width="3"/>
+<circle cx="90.0" cy="140.0" r="9" fill="#2F6B3F"/>
+<text xml:space="preserve" x="90.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">Appt A</text>
+<text xml:space="preserve" x="90.0" y="164.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">booked 1 Mar</text>
+<text xml:space="preserve" x="90.0" y="180.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">result known 8 Mar</text>
+<circle cx="230.0" cy="140.0" r="9" fill="#8A6A1F"/>
+<text xml:space="preserve" x="230.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">Appt B</text>
+<text xml:space="preserve" x="230.0" y="164.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">booked 5 Mar</text>
+<text xml:space="preserve" x="230.0" y="180.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">result known 20 Mar</text>
+<circle cx="370.0" cy="140.0" r="9" fill="#2F6B3F"/>
+<text xml:space="preserve" x="370.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="middle">Appt C</text>
+<text xml:space="preserve" x="370.0" y="164.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">booked 12 Mar</text>
+<text xml:space="preserve" x="370.0" y="180.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">result known 15 Mar</text>
+<line x1="480.0" y1="100.0" x2="480.0" y2="180.0" stroke="#9B2C1F" stroke-width="2" stroke-dasharray="5 3"/>
+<text xml:space="preserve" x="480.0" y="94.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">New booking: 16 Mar</text>
+<circle cx="480.0" cy="140.0" r="9" fill="#9B2C1F"/>
+<text xml:space="preserve" x="16.0" y="212.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">At 16 March, what did we actually know?</text>
+<rect x="16.0" y="226.0" width="358.0" height="100.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="252.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Point in time (correct)</text>
+<text xml:space="preserve" x="30.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Counts A and C: their results were known.</text>
+<text xml:space="preserve" x="30.0" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">B's result wasn't known until 20 March.</text>
+<rect x="386.0" y="226.0" width="358.0" height="100.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="252.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Cumulative sum shortcut (leaks)</text>
+<text xml:space="preserve" x="400.0" y="274.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Counts A, B and C: every earlier booking.</text>
+<text xml:space="preserve" x="400.0" y="296.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">B's result leaks in from the future.</text>
+<rect x="16.0" y="342.0" width="728.0" height="44.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="360.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Use the time the outcome was recorded, not the time the earlier order was placed.</text>
+<text xml:space="preserve" x="30.0" y="378.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">In pandas, merge_asof joins each row to the latest earlier row, per customer.</text>
+</g></svg>

@@ -1,19 +1,29 @@
 import { forwardRef, useMemo } from "react";
 import QRCode from "qrcode";
 import { formatDate } from "@/lib/format";
+import playfair600 from "../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-600-normal.woff2?url";
+import playfair700 from "../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2?url";
+import playfairItalic from "../../node_modules/@fontsource/playfair-display/files/playfair-display-latin-400-italic.woff2?url";
+import interVariable from "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
 export type CertificateData = {
   recipientName: string;
   courseTitle: string;
   /** Completion date. */
   issuedAt: string;
-  /** Certificate number, e.g. CTA-CERT-2026-000124. Left out on previews. */
+  /** Certificate number, e.g. CTA-2026-000124. Left out on previews. */
   certificateId?: string;
-  /** The course completion credential it certifies, e.g. CTA-AIPF-8F72K. */
-  credentialId: string;
+  /** The course completion credential it certifies, e.g. CTA-AIPF-8F72K. Certificates issued by an admin have none. */
+  credentialId?: string;
+  /** Shown instead of the credential when there is none, e.g. "One-on-One Training". */
+  trainingLabel?: string;
+  /** Defaults to "Certificate of Completion" and "has successfully completed". */
+  heading?: string;
+  verb?: string;
   /** Public verification page; the QR code opens it. */
   verifyUrl: string;
   revoked?: boolean;
+  overlay?: "revoked" | "replaced" | "preview";
 };
 
 const W = 1600;
@@ -24,7 +34,7 @@ const nameSize = (name: string) => (name.length > 34 ? 58 : name.length > 26 ? 7
 const titleSize = (t: string) => (t.length > 42 ? 40 : 48);
 
 /** The QR code as SVG squares, so it stays sharp and needs no image loading. */
-function QrSquares({ text, x, y, size }: { text: string; x: number; y: number; size: number }) {
+export function QrSquares({ text, x, y, size }: { text: string; x: number; y: number; size: number }) {
   const qr = useMemo(() => QRCode.create(text, { errorCorrectionLevel: "M" }), [text]);
   const n = qr.modules.size;
   const cell = size / n;
@@ -56,7 +66,7 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
       viewBox={`0 0 ${W} ${H}`}
       className="h-auto w-full"
       role="img"
-      aria-label={`Certificate of completion for ${data.recipientName}, ${data.courseTitle}`}
+      aria-label={`${data.heading ?? "Certificate of Completion"} for ${data.recipientName}, ${data.courseTitle}`}
     >
       <rect width={W} height={H} fill="#FBF8F2" />
       <rect x="36" y="36" width={W - 72} height={H - 72} fill="none" stroke="#B38A3E" strokeWidth="3" />
@@ -83,7 +93,7 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
       <line x1={W / 2 - 60} y1="332" x2={W / 2 + 60} y2="332" stroke="#B38A3E" strokeWidth="2" />
 
       <text x={W / 2} y="408" textAnchor="middle" fontFamily={serif} fontSize="56" fill="#171717">
-        Certificate of Completion
+        {data.heading ?? "Certificate of Completion"}
       </text>
       <text x={W / 2} y="456" textAnchor="middle" fontFamily={sans} fontSize="17" fontWeight="700" letterSpacing="5" fill="#8C6A2C">
         OFFICIAL VERIFIED CERTIFICATE
@@ -96,7 +106,7 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
       </text>
       <line x1={W / 2 - 360} y1="634" x2={W / 2 + 360} y2="634" stroke="#D9C8A4" strokeWidth="1.5" />
       <text x={W / 2} y="690" textAnchor="middle" fontFamily={sans} fontSize="24" fill="#5E5A52">
-        has successfully completed
+        {data.verb ?? "has successfully completed"}
       </text>
       <text x={W / 2} y="756" textAnchor="middle" fontFamily={serif} fontSize={titleSize(data.courseTitle)} fontWeight="600" fill="#8C6A2C">
         {data.courseTitle}
@@ -118,10 +128,10 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
         </text>
 
         <text x="560" y="870" fontSize="15" letterSpacing="3" fill="#8C6A2C" fontWeight="700">
-          CREDENTIAL ID
+          {data.credentialId ? "CREDENTIAL ID" : "TRAINING"}
         </text>
-        <text x="560" y="904" fontSize="22" fontFamily={mono}>
-          {data.credentialId}
+        <text x="560" y="904" fontSize="22" fontFamily={data.credentialId ? mono : sans}>
+          {data.credentialId ?? data.trainingLabel ?? "CloudTech Academy"}
         </text>
         <text x="560" y="956" fontSize="15" letterSpacing="3" fill="#8C6A2C" fontWeight="700">
           VERIFY AT
@@ -143,27 +153,88 @@ export const CertificateArtwork = forwardRef<SVGSVGElement, { data: CertificateD
         </text>
       </g>
 
-      <QrSquares text={data.verifyUrl} x={1300} y={846} size={170} />
+      {data.certificateId ? (
+        <QrSquares text={data.verifyUrl} x={1300} y={846} size={170} />
+      ) : (
+        <>
+          <rect x={1290} y={836} width={190} height={190} fill="#FFFFFF" stroke="#D9C8A4" />
+          <text x={1385} y={936} textAnchor="middle" fontFamily={sans} fontSize="15" fill="#5E5A52">
+            QR code on issue
+          </text>
+        </>
+      )}
       <text x={1385} y={1044} textAnchor="middle" fontFamily={sans} fontSize="13" fill="#5E5A52">
         Scan to verify
       </text>
 
-      {data.revoked && (
+      {(data.revoked || data.overlay === "revoked" || data.overlay === "replaced") && (
         <g transform={`rotate(-18 ${W / 2} ${H / 2})`}>
           <rect x={W / 2 - 330} y={H / 2 - 70} width="660" height="140" fill="none" stroke="#9B2C1F" strokeWidth="8" />
           <text x={W / 2} y={H / 2 + 34} textAnchor="middle" fontFamily={sans} fontSize="92" fontWeight="800" fill="#9B2C1F" letterSpacing="10">
-            REVOKED
+            {data.overlay === "replaced" ? "REPLACED" : "REVOKED"}
           </text>
         </g>
+      )}
+      {data.overlay === "preview" && (
+        <text
+          x={W / 2}
+          y={H / 2 + 50}
+          textAnchor="middle"
+          transform={`rotate(-18 ${W / 2} ${H / 2})`}
+          fontFamily={sans}
+          fontSize="170"
+          fontWeight="800"
+          letterSpacing="20"
+          fill="#8C6A2C"
+          fillOpacity="0.1"
+        >
+          PREVIEW
+        </text>
       )}
     </svg>
   );
 });
 
-/** Draws an SVG (a certificate or a badge) onto a canvas at twice its viewBox size. */
+const FONTS = [
+  { family: "Playfair Display", weight: "600", style: "normal", url: playfair600 },
+  { family: "Playfair Display", weight: "700", style: "normal", url: playfair700 },
+  { family: "Playfair Display", weight: "400", style: "italic", url: playfairItalic },
+  { family: "Inter", weight: "100 900", style: "normal", url: interVariable },
+];
+let fontCss: Promise<string> | null = null;
+
+/**
+ * The brand fonts as embedded @font-face rules. An SVG drawn as an image can't load web fonts, so
+ * without these the downloaded files would fall back to Georgia and Arial.
+ */
+function embeddedFonts() {
+  fontCss ??= Promise.all(
+    FONTS.map(async (f) => {
+      const buf = new Uint8Array(await (await fetch(f.url)).arrayBuffer());
+      let bin = "";
+      for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+      return `@font-face{font-family:'${f.family}';font-style:${f.style};font-weight:${f.weight};src:url(data:font/woff2;base64,${btoa(bin)}) format('woff2');}`;
+    }),
+  )
+    .then((rules) => rules.join(""))
+    .catch(() => {
+      fontCss = null;
+      return "";
+    });
+  return fontCss;
+}
+
+/** Draws an SVG (a certificate or a badge) onto a canvas at twice its viewBox size, with the brand fonts. */
 async function svgToCanvas(svg: SVGSVGElement) {
   const { width, height } = svg.viewBox.baseVal;
-  const source = new XMLSerializer().serializeToString(svg);
+  const css = await embeddedFonts();
+  const copy = svg.cloneNode(true) as SVGSVGElement;
+  if (css) {
+    const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
+    style.textContent = css;
+    copy.insertBefore(style, copy.firstChild);
+  }
+  const source = new XMLSerializer().serializeToString(copy);
   const url = URL.createObjectURL(new Blob([source], { type: "image/svg+xml;charset=utf-8" }));
   try {
     const img = new Image();

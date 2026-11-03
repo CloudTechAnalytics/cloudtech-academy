@@ -12,11 +12,11 @@ The researcher interviewed 24 users, six from each segment. The interviews are c
 
 ## The concept
 
-**Jobs to be done**
+### Jobs to be done
 
 People don't want a wallet; they want to get something done. "Collect payment quickly at my stall" is a job. Features are judged by how well they help with a job.
 
-**Interviewing well**
+### Interviewing well
 
 | Instead of | Ask |
 | :-- | :-- |
@@ -26,7 +26,9 @@ People don't want a wallet; they want to get something done. "Collect payment qu
 
 Ask about **past behaviour**, not opinions about the future. People are poor at predicting what they'll do.
 
-**Coding notes**
+![A job to be done, and three weak interview questions (leading, hypothetical, asking for features) beside better ones that ask about the last time something happened](/images/courses/product/interviews.svg "Ask about the last time, not what people say they'd do.")
+
+### Coding notes
 
 Tag each interview with the job, the pain and anything surprising, then count across interviews. Six interviews per segment won't give percentages you can trust, but they show patterns worth measuring.
 

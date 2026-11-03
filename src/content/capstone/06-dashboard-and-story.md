@@ -12,7 +12,7 @@ There's one more question in the brief you haven't answered yet: "Do our targets
 
 ## The concept
 
-**Structure the report like an argument**
+### Structure the report like an argument
 
 | Page | Purpose | Contents |
 | :-- | :-- | :-- |
@@ -21,7 +21,9 @@ There's one more question in the brief you haven't answered yet: "Do our targets
 | 3. Products | where the profit is | sales and gross profit by category, return rates |
 | 4. Opportunities | money left on the table | attach rate by store, stock-out estimates |
 
-**Titles that say the finding**
+![A four-page report (overview, stores, products, opportunities) and the difference between a label title and a title that states the finding](/images/courses/capstone/dashboard-pages.svg "Four pages, and titles that say the finding.")
+
+### Titles that say the finding
 
 A chart titled "Net sales by store" makes the reader work out the message. "Port Harcourt is the only store to shrink, down 27% in transactions since February" tells them, and the chart becomes the proof. Write every title as a sentence with the finding in it.
 
@@ -29,7 +31,7 @@ A chart titled "Net sales by store" makes the reader work out the message. "Port
 
 Before you judge a store against its target, judge the target. Lekki's target was set at ₦52m a month **from its first month**, the level of a mature store. Of course it "failed" for its first six months: no new store starts at full speed. Judged on its trajectory, Lekki is a success: it beat ₦52m in April, May and June 2026. A report that just says "Lekki: 55% of target" in 2025 would be accurate and badly misleading.
 
-**The executive summary**
+### The executive summary
 
 One page, in this order:
 
@@ -37,6 +39,8 @@ One page, in this order:
 2. **Three key findings**, each with its number.
 3. **Three recommendations**, each linked to a finding, specific enough to act on.
 4. **Caveats**: what the data can't tell you, and any estimate's assumptions.
+
+![The one-page executive summary: answer first, three findings, three recommendations, caveats](/images/courses/capstone/executive-summary.svg "Answer first, three findings, three recommendations, caveats.")
 
 ## Example
 

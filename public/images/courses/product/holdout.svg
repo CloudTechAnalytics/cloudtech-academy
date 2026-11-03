@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Measuring a launch with a randomised holdout, with illustrative numbers. Comparing adopters with non-adopters is biased, because people who choose a feature differ from those who don't. Instead, a random half of users get early access and the other half are held back. Comparing all early-access users, adopters or not, with the holdout measures the effect of offering the feature: 26 percent versus 20 percent, a 6 point difference. Only 40 percent of early-access users adopted, so the effect per adopter is roughly 6 divided by 0.4, about 15 points. Guardrail metrics are checked the same way.">
+<title>Self-selection biases adopter comparisons; a random holdout doesn't.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="356.0" height="156.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="42.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">✗ Adopters vs non-adopters</text>
+<rect x="32.0" y="58.0" width="150.0" height="26.0" rx="4" fill="#E9DFC9"/>
+<text xml:space="preserve" x="40.0" y="76.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">chose to use it</text>
+<rect x="200.0" y="58.0" width="150.0" height="26.0" rx="4" fill="#E9DFC9"/>
+<text xml:space="preserve" x="208.0" y="76.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">chose not to</text>
+<text xml:space="preserve" x="32.0" y="112.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">People who opt in were already more engaged. The</text>
+<text xml:space="preserve" x="32.0" y="130.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">gap mixes the feature's effect with who they</text>
+<text xml:space="preserve" x="32.0" y="148.2" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">are.</text>
+<rect x="388.0" y="16.0" width="356.0" height="156.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="42.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">✓ Random holdout</text>
+<rect x="404.0" y="58.0" width="150.0" height="26.0" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="412.0" y="76.0" font-size="11.5" fill="#FFFFFF" font-weight="700" text-anchor="start">random half: early access</text>
+<rect x="572.0" y="58.0" width="150.0" height="26.0" rx="4" fill="#E9DFC9"/>
+<text xml:space="preserve" x="580.0" y="76.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="start">random half: held back</text>
+<text xml:space="preserve" x="404.0" y="112.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Chosen by chance, the groups are alike except</text>
+<text xml:space="preserve" x="404.0" y="130.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">for access. Compare all of each group.</text>
+<text xml:space="preserve" x="16.0" y="204.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Worked example (illustration)</text>
+<rect x="16.0" y="216.0" width="168.5" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="242.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Early access</text>
+<text xml:space="preserve" x="28.0" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">26% active at week 4</text>
+<path d="M187.5,258.0 L199.5,258.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.5" y="216.0" width="168.5" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.5" y="242.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Holdout</text>
+<text xml:space="preserve" x="214.5" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">20% active at week 4</text>
+<path d="M374.0,258.0 L386.0,258.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="389.0" y="216.0" width="168.5" height="84.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="401.0" y="242.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Effect of offering</text>
+<text xml:space="preserve" x="401.0" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">26 − 20 = 6 points</text>
+<path d="M560.5,258.0 L572.5,258.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="575.5" y="216.0" width="168.5" height="84.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="587.5" y="242.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Per adopter</text>
+<text xml:space="preserve" x="587.5" y="266.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">6 ÷ 0.40 adopted ≈ 15</text>
+<text xml:space="preserve" x="587.5" y="283.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">points</text>
+<text xml:space="preserve" x="16.0" y="332.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">The holdout is diluted by early-access users who never adopted; dividing by the adoption rate gives a rough effect per adopter.</text>
+<rect x="16.0" y="352.0" width="728.0" height="52.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="376.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Guardrails</text>
+<text xml:space="preserve" x="120.0" y="376.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">support tickets and failed transactions must not get worse: check them the same way.</text>
+</g></svg>

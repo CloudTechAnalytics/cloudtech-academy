@@ -12,7 +12,7 @@ The onboarding test has finished: 12,000 users, randomisation checked. Now the h
 
 ## The concept
 
-**The two-proportion z-test**
+### The two-proportion z-test
 
 For conversion rates p_A and p_B from n_A and n_B users:
 
@@ -22,13 +22,15 @@ For conversion rates p_A and p_B from n_A and n_B users:
 
 A p-value below 0.05 means a difference this large would be rare if the flows were really the same.
 
-**Report the effect, not just the p-value**
+### Report the effect, not just the p-value
 
 - **Absolute difference**: p_B − p_A, in percentage points.
 - **Confidence interval** for it: difference ± 1.96 × √[p_A(1 − p_A)/n_A + p_B(1 − p_B)/n_B]. It gives the range of effects consistent with the data.
+
+![Three estimated differences with 95% confidence intervals against a zero line: a clear improvement entirely above zero, an inconclusive result crossing zero, and a harmful change entirely below zero.](/images/courses/experiments/confidence-intervals.svg "Read the interval against zero, illustrated.")
 - **Relative lift**: (p_B − p_A) ÷ p_A.
 
-**Translate it**
+### Translate it
 
 "+4.5 points" means little to a director. "About 45 more verified customers per 1,000 signups, around 5,800 more a year at current signup rates" means a lot.
 

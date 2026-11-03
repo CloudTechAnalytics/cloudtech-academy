@@ -12,7 +12,7 @@ This course is about the difference between code that works once and **software*
 
 ## The concept
 
-**Functions**
+### Functions
 
 A function gives a piece of logic a name, clear **inputs** (parameters) and a clear **output** (the return value):
 
@@ -29,11 +29,11 @@ Good functions:
 - **return** a result rather than printing it, so other code (and tests) can use it;
 - are short enough to read in one go.
 
-**Single source of truth**
+### Single source of truth
 
 Each business rule (VAT rate, discount limit, rounding) should live in **one** place. If three copies of the code each apply VAT, they will eventually disagree.
 
-**Tallybook's rules**
+### Tallybook's rules
 
 | Rule | |
 | :-- | :-- |
@@ -41,6 +41,8 @@ Each business rule (VAT rate, discount limit, rounding) should live in **one** p
 | Discount | a percentage of the subtotal, at most 20% |
 | VAT | 7.5% of the amount after discount, unless the customer is VAT-exempt |
 | Rounding | to the nearest kobo, with halves rounded up |
+
+![invoice_total worked by hand: inputs 3 × 1,000.00 and 1 × 500.00 with a 10% discount give a subtotal of 3,500.00, minus 350.00 discount, 3,150.00, plus 236.25 VAT, returning 3,386.25; below, rules copied into three scripts drift apart while one imported function keeps them in step](/images/courses/swe/function-machine.svg "A function: named inputs, the rules in one place, one returned result.")
 
 ## Example
 

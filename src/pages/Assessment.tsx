@@ -240,7 +240,7 @@ function AssessmentInner() {
         {a.questions.map((q, i) => (
           <fieldset key={q.id} className="rounded-2xl border border-line bg-paper p-5 sm:p-6">
             <legend className="sr-only">Question {i + 1}</legend>
-            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-brass-dark">Question {i + 1}</p>
+            <p className="text-[0.8125rem] font-semibold text-brass-dark">Question {i + 1}</p>
             <p className="mt-2 text-[1.0313rem] font-semibold leading-snug">{q.prompt}</p>
             <div className="mt-4 grid gap-2">
               {optionOrder(q.id, q.options.length).map((oi) => (

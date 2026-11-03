@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 352" width="760" height="352" role="img" aria-label="A formula for strong CV bullets: action verb plus what you did plus a result with a number. A weak duty such as 'Responsible for deliveries' becomes 'Delivered 25 orders a day across Yaba, with fewer than 2 late a week'.">
+<title>Action verb + what you did + a result, ideally with a number.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="352" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The bullet formula</text>
+<rect x="16.0" y="42.0" width="150.0" height="76.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Action verb</text>
+<text xml:space="preserve" x="28.0" y="96.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">Delivered</text>
+<text xml:space="preserve" x="166.0" y="86.0" font-size="18" fill="#5E5A52" font-weight="700" text-anchor="middle">+</text>
+<rect x="178.0" y="42.0" width="300.0" height="76.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<text xml:space="preserve" x="190.0" y="66.0" font-size="12.5" fill="#B38A3E" font-weight="700" text-anchor="start">What you did</text>
+<text xml:space="preserve" x="190.0" y="96.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">25 orders a day across Yaba</text>
+<text xml:space="preserve" x="478.0" y="86.0" font-size="18" fill="#5E5A52" font-weight="700" text-anchor="middle">+</text>
+<rect x="490.0" y="42.0" width="250.0" height="76.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="502.0" y="66.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Result</text>
+<text xml:space="preserve" x="502.0" y="96.0" font-size="14.5" fill="#2A2926" font-weight="700" text-anchor="start">fewer than 2 late a week</text>
+<text xml:space="preserve" x="16.0" y="160.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Before and after</text>
+<rect x="16.0" y="174.0" width="300.0" height="42.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="200.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Responsible for deliveries</text>
+<path d="M320.0,195.0 L346.0,195.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="174.0" width="394.0" height="42.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="362.0" y="200.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Delivered 25 orders a day across Yaba, with fewer than 2 late a week</text>
+<rect x="16.0" y="224.0" width="300.0" height="42.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="250.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Handled the shop's WhatsApp</text>
+<path d="M320.0,245.0 L346.0,245.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="224.0" width="394.0" height="42.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="362.0" y="250.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Replied to 40+ customer messages a day within 15 minutes</text>
+<rect x="16.0" y="274.0" width="300.0" height="42.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="300.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Helped with the weekly stock count</text>
+<path d="M320.0,295.0 L346.0,295.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="274.0" width="394.0" height="42.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="362.0" y="300.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Counted 300 stock lines every Friday and cut errors by a third</text>
+<text xml:space="preserve" x="16.0" y="340.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">No honest number? Use [number?] and find the real one before you send it.</text>
+</g></svg>

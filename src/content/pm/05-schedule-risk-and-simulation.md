@@ -10,21 +10,23 @@ The sponsor asked: "Will we open by 30 September?" The plan says 11 September wi
 
 ## The concept
 
-**Monte Carlo simulation**
+### Monte Carlo simulation
 
 1. For each task, draw a random duration from its range (here, a triangular distribution between optimistic and pessimistic, peaking at most likely).
 2. Schedule the project with those durations and record the end date.
 3. Repeat thousands of times.
 4. The results form a **distribution** of end dates: you can read off the probability of meeting any date.
 
-**Merge bias**
+### Merge bias
 
 When several paths join (training waits for hiring **and** system testing), the task starts when the **slowest** finishes. Each path alone might be on time, but the chance that all of them are is lower. That's why simulation usually shows later dates than adding up one path's estimates.
 
-**Using the results**
+### Using the results
 
 - Quote dates with confidence: "P80" is the date you have an 80% chance of meeting.
 - A **schedule buffer** is the gap between the plan's date and the date you commit to.
+
+![A histogram of 20,000 simulated project lengths for a small schedule: the plan's 29 days is reached in only about 6% of runs, the median is 35 days and P80 is 38 days](/images/courses/pm/simulation.svg "Thousands of random runs: the plan's date is far from certain, and P80 is later.")
 
 ## Example
 

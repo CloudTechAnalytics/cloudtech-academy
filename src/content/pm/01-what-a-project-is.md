@@ -14,11 +14,11 @@ Ten weeks in, the fit-out is behind, imported equipment cost more than planned, 
 
 **A project** is temporary work with a defined outcome: it has a start, an end, and something specific to deliver. Running the depot afterwards is operations; launching it is a project.
 
-**Scope, time and cost**
+### Scope, time and cost
 
 Every project balances three things: **what** is delivered (scope), **when** (time) and **for how much** (cost), at an agreed quality. Change one and at least one other moves. Adding a cold room (scope) costs money and time; opening sooner (time) needs more money or less scope.
 
-**The lifecycle**
+### The lifecycle
 
 | Phase | Key outputs |
 | :-- | :-- |
@@ -27,9 +27,11 @@ Every project balances three things: **what** is delivered (scope), **when** (ti
 | Delivery | doing the work, tracking it, handling changes |
 | Closing | handing over, lessons learned |
 
-**The charter**
+### The charter
 
 One page that authorises the project: its objective, scope (in and out), deadline, budget, sponsor, project manager, and how success is measured. Without one, people disagree later about what was promised.
+
+![A triangle of scope, time and cost around quality, with an example where adding a cold room raises cost or time; below, the four project phases: initiation, planning, delivery and closing](/images/courses/pm/triple-constraint.svg "Scope, time and cost pull against each other; a project moves through four phases.")
 
 ## Example
 

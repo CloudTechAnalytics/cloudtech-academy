@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Adding a column with vectorised maths. Revenue is quantity times unit price times one minus discount over 100. pandas calculates it for every row at once, with no loop. For three illustrative rows: 10 times 2,000 with no discount is 20,000; 4 times 5,000 with a 10 percent discount is 18,000; 6 times 1,500 with a 20 percent discount is 7,200. Dates loaded as text become real dates with to_datetime, so you can pull out the year and month.">
+<title>One line of maths fills a whole new column; real dates let you pull out year and month.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="490.0" height="32.0" rx="0" fill="#F3EBD8"/>
+<rect x="376.0" y="20.0" width="130.0" height="134.0" rx="0" fill="#E5F0E8"/>
+<text xml:space="preserve" x="28.0" y="41.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">quantity</text>
+<text xml:space="preserve" x="138.0" y="41.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">unit_price</text>
+<text xml:space="preserve" x="258.0" y="41.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">discount_pct</text>
+<text xml:space="preserve" x="388.0" y="41.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">revenue</text>
+<rect x="16.0" y="52.0" width="490.0" height="34.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10</text>
+<text xml:space="preserve" x="138.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2,000</text>
+<text xml:space="preserve" x="258.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0</text>
+<text xml:space="preserve" x="388.0" y="74.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">20,000</text>
+<rect x="16.0" y="86.0" width="490.0" height="34.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="28.0" y="108.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="138.0" y="108.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">5,000</text>
+<text xml:space="preserve" x="258.0" y="108.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">10</text>
+<text xml:space="preserve" x="388.0" y="108.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">18,000</text>
+<rect x="16.0" y="120.0" width="490.0" height="34.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="28.0" y="142.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">6</text>
+<text xml:space="preserve" x="138.0" y="142.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1,500</text>
+<text xml:space="preserve" x="258.0" y="142.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">20</text>
+<text xml:space="preserve" x="388.0" y="142.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">7,200</text>
+<rect x="376" y="20" width="130" height="134" fill="none" stroke="#2F6B3F" stroke-width="1.6" rx="4"/>
+<rect x="16.0" y="176.0" width="728.0" height="44.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="200.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">orders["revenue"] = orders["quantity"] * orders["unit_price"] * (1 - orders["discount_pct"] / 100)</text>
+<text xml:space="preserve" x="520.0" y="66.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">no loop:</text>
+<text xml:space="preserve" x="520.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">pandas does every</text>
+<text xml:space="preserve" x="520.0" y="104.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">row at once</text>
+<text xml:space="preserve" x="16.0" y="250.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Dates: text → real dates</text>
+<rect x="16.0" y="264.0" width="300.0" height="84.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="288.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"2026-03-14"  (text)</text>
+<text xml:space="preserve" x="30.0" y="310.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">can't be sorted or grouped by month</text>
+<path d="M320.0,310.0 L396.0,310.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="358.0" y="300.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="middle">to_datetime</text>
+<rect x="400.0" y="264.0" width="344.0" height="84.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="414.0" y="288.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-03-14  (datetime64)</text>
+<text xml:space="preserve" x="414.0" y="308.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">.dt.year → 2026</text>
+<text xml:space="preserve" x="414.0" y="328.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">.dt.to_period("M") → 2026-03</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Check with orders.info(): the column type should now say datetime64.</text>
+</g></svg>

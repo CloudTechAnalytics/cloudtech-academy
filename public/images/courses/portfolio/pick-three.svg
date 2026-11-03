@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 334" width="760" height="334" role="img" aria-label="Choosing portfolio pieces: start with everything you have made, keep only pieces that pass three questions (does it show a skill my audience cares about, can I explain the problem and what I did, is it finished and presentable), and end with your best three.">
+<title>From everything you have made to your best three.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="334" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Start wide, then narrow to three</text>
+<rect x="16.0" y="42.0" width="220.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Everything you've made</text>
+<rect x="28.0" y="78.0" width="103.4" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="93.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Class project</text>
+<rect x="28.0" y="103.0" width="157.1" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="118.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Hostel budget tracker</text>
+<rect x="28.0" y="128.0" width="137.0" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="143.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Church event flyer</text>
+<rect x="28.0" y="153.0" width="116.8" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="168.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Club newsletter</text>
+<rect x="28.0" y="178.0" width="110.1" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="193.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Course project</text>
+<rect x="28.0" y="203.0" width="150.4" height="22.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="36.0" y="218.3" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Relative's shop page</text>
+<path d="M240.0,137.0 L270.0,137.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="274.0" y="42.0" width="250.0" height="190.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="288.0" y="66.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Three questions</text>
+<circle cx="296.0" cy="94.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="296.0" y="98.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="316.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Does it show a skill my</text>
+<text xml:space="preserve" x="316.0" y="106.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">audience cares about?</text>
+<circle cx="296.0" cy="144.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="296.0" y="148.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="316.0" y="140.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Can I explain the problem and</text>
+<text xml:space="preserve" x="316.0" y="156.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">what I did?</text>
+<circle cx="296.0" cy="194.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="296.0" y="198.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="316.0" y="190.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Is it finished and</text>
+<text xml:space="preserve" x="316.0" y="206.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">presentable?</text>
+<path d="M528.0,137.0 L558.0,137.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="562.0" y="42.0" width="182.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="2"/>
+<text xml:space="preserve" x="576.0" y="66.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Your best three</text>
+<rect x="576.0" y="80.0" width="154.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="653.0" y="103.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Piece 1</text>
+<rect x="576.0" y="126.0" width="154.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="653.0" y="149.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Piece 2</text>
+<rect x="576.0" y="172.0" width="154.0" height="36.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="653.0" y="195.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">Piece 3</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">More can be added later. A clear page with three good pieces beats a flashy site with nothing in it.</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Audience first: data roles want dashboards and queries; design wants posters and redesigns; any</text>
+<text xml:space="preserve" x="16.0" y="308.1" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">internship wants projects and leadership.</text>
+</g></svg>

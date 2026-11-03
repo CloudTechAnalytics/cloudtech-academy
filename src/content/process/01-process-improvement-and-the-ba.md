@@ -14,7 +14,7 @@ That's the central insight of **Lean**, and this course teaches you to find wher
 
 ## The concept
 
-**Lean and Six Sigma in one paragraph each**
+### Lean and Six Sigma in one paragraph each
 
 **Lean** (from Toyota's production system) is about **flow**: delivering value to the customer with as little waste, waiting and effort as possible. Its tools include value stream maps, the eight wastes and pull systems.
 
@@ -22,7 +22,7 @@ That's the central insight of **Lean**, and this course teaches you to find wher
 
 Most organisations blend the two ("Lean Six Sigma"). You don't need a belt to use them; a BA who can map a process, measure it from data and find root causes is already doing the core work.
 
-**The improvement cycle**
+### The improvement cycle
 
 | DMAIC | What you do | Lesson |
 | :-- | :-- | :-- |
@@ -32,7 +32,7 @@ Most organisations blend the two ("Lean Six Sigma"). You don't need a belt to us
 | **Improve** | design and pilot a better process | 8, 9 |
 | **Control** | make the improvement stick | 9 |
 
-**Measures customers feel**
+### Measures customers feel
 
 Frame the problem around what the customer experiences, not internal activity:
 

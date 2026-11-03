@@ -68,7 +68,7 @@ export function WrittenTask({
   return (
     <section aria-labelledby={`${id}-title`} className="not-prose rounded-2xl border border-line-strong bg-paper p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p id={`${id}-title`} className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-brass-dark">
+        <p id={`${id}-title`} className="text-[0.8125rem] font-semibold text-brass-dark">
           {label}
           {spec.required ? "" : " · optional"}
         </p>
@@ -86,7 +86,7 @@ export function WrittenTask({
       <div className="mt-2 space-y-2 text-[1rem] leading-relaxed text-ink [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">{prompt}</div>
 
       <div className="mt-4 rounded-lg border border-line bg-ivory px-3.5 py-3">
-        <p className="text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted">Your work is checked for</p>
+        <p className="text-[0.8125rem] font-semibold text-muted">Your work is checked for</p>
         <ul className="mt-2 space-y-1.5 text-[0.9rem]">
           {spec.rules.map((rule, i) => {
             const r = results?.[i];
@@ -153,7 +153,7 @@ export function WrittenTask({
       </div>
       {solved && showSample && spec.sample && (
         <div className="mt-3 rounded-lg border border-line bg-ivory px-3.5 py-3 text-[0.9375rem] leading-relaxed text-ink [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-sand [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em] [&_pre]:my-2 [&_pre]:text-[0.84rem] [&_ul]:ml-5 [&_ul]:list-disc [&_ol]:ml-5 [&_ol]:list-decimal [&_p+p]:mt-2">
-          <p className="mb-1.5 text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-muted">Model answer</p>
+          <p className="mb-1.5 text-[0.8125rem] font-semibold text-muted">Model answer</p>
           {sample}
           {note && <div className="mt-3 border-t border-line pt-3 text-muted">{note}</div>}
         </div>

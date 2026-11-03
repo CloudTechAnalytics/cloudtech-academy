@@ -10,15 +10,17 @@ Everyone at Shieldline has a theory. The agency manager blames the claims desk; 
 
 ## The concept
 
-**Cut the headline by every dimension you have**
+### Cut the headline by every dimension you have
 
 Average days to settle is 25.2. Break it down by **channel** (how the claim came in), **region** and **claim type**. Look for the groups that stand out and the ones that don't.
 
-**Look at every outcome, not just the happy one**
+![An invented headline average cut by channel and by depot, every outcome including failures, and customers' own words](/images/courses/ba-capstone/slice-metric.svg "Cut the headline by every dimension, and look at every outcome.")
+
+### Look at every outcome, not just the happy one
 
 Paid claims are only part of the story. Claims that are **withdrawn** (closed because the customer stopped responding) are a failure the average hides.
 
-**Customers' own words**
+### Customers' own words
 
 Complaints tell you what customers experience, which isn't always what the business measures. A claim "in progress" in the system can feel like silence to the customer.
 

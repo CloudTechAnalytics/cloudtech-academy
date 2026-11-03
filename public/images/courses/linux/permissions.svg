@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="Decoding the permission string -rwxr-x---. The first character is the type: a dash means a file. Then three sets of three: the owner can read, write and execute, which is 4 plus 2 plus 1, 7; the group can read and execute, 4 plus 1, 5; others have no permissions, 0. So the file is 750.">
+<title>Decoding -rwxr-x--- into 750.</title>
+
+<rect width="760" height="330" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="120.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="144.0" y="84.0" font-size="22" fill="#5E5A52" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<rect x="174.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="198.0" y="84.0" font-size="22" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">r</text>
+<text xml:space="preserve" x="198.0" y="122.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">4</text>
+<rect x="228.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="252.0" y="84.0" font-size="22" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">w</text>
+<text xml:space="preserve" x="252.0" y="122.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">2</text>
+<rect x="282.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="306.0" y="84.0" font-size="22" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">x</text>
+<text xml:space="preserve" x="306.0" y="122.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">1</text>
+<rect x="336.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="360.0" y="84.0" font-size="22" fill="#2F6B3F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">r</text>
+<text xml:space="preserve" x="360.0" y="122.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">4</text>
+<rect x="390.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="414.0" y="84.0" font-size="22" fill="#2F6B3F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="414.0" y="122.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">0</text>
+<rect x="444.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="468.0" y="84.0" font-size="22" fill="#2F6B3F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">x</text>
+<text xml:space="preserve" x="468.0" y="122.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">1</text>
+<rect x="498.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="522.0" y="84.0" font-size="22" fill="#5C4F80" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="522.0" y="122.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">0</text>
+<rect x="552.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="576.0" y="84.0" font-size="22" fill="#5C4F80" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="576.0" y="122.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">0</text>
+<rect x="606.0" y="50.0" width="48.0" height="50.0" rx="6" fill="#F2EFE8"/>
+<text xml:space="preserve" x="630.0" y="84.0" font-size="22" fill="#5C4F80" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="630.0" y="122.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">0</text>
+<path d="M120,142 L120,150 L168,150 L168,142" fill="none" stroke="#5E5A52" stroke-width="1.6"/>
+<text xml:space="preserve" x="144.0" y="170.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="middle">type</text>
+<path d="M174,142 L174,150 L330,150 L330,142" fill="none" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="252.0" y="170.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">owner</text>
+<path d="M336,142 L336,150 L492,150 L492,142" fill="none" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="414.0" y="170.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle">group</text>
+<path d="M498,142 L498,150 L654,150 L654,142" fill="none" stroke="#5C4F80" stroke-width="1.6"/>
+<text xml:space="preserve" x="576.0" y="170.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle">others</text>
+<text xml:space="preserve" x="252.0" y="192.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">4+2+1 = 7</text>
+<text xml:space="preserve" x="414.0" y="192.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">4+0+1 = 5</text>
+<text xml:space="preserve" x="576.0" y="192.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">0+0+0 = 0</text>
+<text xml:space="preserve" x="106.0" y="122.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end">r=4 w=2 x=1</text>
+<rect x="16.0" y="214.0" width="728.0" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="244.0" font-size="20" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-rwxr-x---  =  750</text>
+<text xml:space="preserve" x="320.0" y="236.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Owner: read, write, run. Group: read and run. Everyone</text>
+<text xml:space="preserve" x="320.0" y="254.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">else: nothing. chmod 750 script.sh sets it.</text>
+<text xml:space="preserve" x="32.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">600: secrets and private keys (owner only).   644: ordinary files.   755: programs and folders.</text>
+</g></svg>

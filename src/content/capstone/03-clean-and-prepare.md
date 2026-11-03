@@ -12,7 +12,7 @@ The goal is a cleaning process that's **repeatable** (rerun it on new data with 
 
 ## The concept
 
-**The cleaning steps for Voltline**
+### The cleaning steps for Voltline
 
 1. **Remove exact duplicate rows** (Surulere's double upload).
 2. **Exclude test transactions** (`product_code = 'TEST'`).
@@ -23,9 +23,11 @@ The goal is a cleaning process that's **repeatable** (rerun it on new data with 
 
 **The order matters.** Remove duplicates *before* you calculate anything. Exclude test rows *before* you check the totals. And convert dates *before* you filter by month.
 
-**Reconcile**
+### Reconcile
 
 Write down the row counts at every step: raw rows, minus duplicates, minus test rows, equals clean rows. If the counts don't add up, a step did something you didn't intend. It's the cleaning equivalent of balancing a bank statement.
+
+![An invented cleaning pipeline with row counts at each step that must add up, then the order of the remaining steps and why the order matters](/images/courses/capstone/clean-reconcile.svg "Clean in a fixed order, and reconcile the row counts at each step.")
 
 ## Example
 

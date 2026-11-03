@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The interview in three stages. Before: research the organisation, re-read the advert, prepare three stories, plan logistics. During: answer with STAR, look at the camera online, and ask your own questions. After: send a short thank-you email the same day.">
+<title>Before, during and after the interview.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="232.0" height="250.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Before</text>
+<text xml:space="preserve" x="30.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Research the organisation</text>
+<text xml:space="preserve" x="30.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Re-read the advert and your</text>
+<text xml:space="preserve" x="30.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">application</text>
+<text xml:space="preserve" x="30.0" y="166.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Prepare three stories</text>
+<text xml:space="preserve" x="30.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Plan travel, or test link,</text>
+<text xml:space="preserve" x="30.0" y="228.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">camera and data</text>
+<rect x="264.0" y="20.0" width="232.0" height="250.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="278.0" y="46.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">During</text>
+<text xml:space="preserve" x="278.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Answer with STAR; say "I"</text>
+<text xml:space="preserve" x="278.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Online: face the light, look</text>
+<text xml:space="preserve" x="278.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">at the camera</text>
+<text xml:space="preserve" x="278.0" y="166.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Phone silent, other tabs</text>
+<text xml:space="preserve" x="278.0" y="182.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">closed</text>
+<text xml:space="preserve" x="278.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Ask your two questions</text>
+<rect x="512.0" y="20.0" width="232.0" height="250.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.6"/>
+<text xml:space="preserve" x="526.0" y="46.0" font-size="15" fill="#5C4F80" font-weight="700" text-anchor="start">After</text>
+<text xml:space="preserve" x="526.0" y="74.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Thank-you email the same day</text>
+<text xml:space="preserve" x="526.0" y="120.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Mention one thing you enjoyed</text>
+<text xml:space="preserve" x="526.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">hearing</text>
+<text xml:space="preserve" x="526.0" y="166.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Note the follow-up date</text>
+<text xml:space="preserve" x="526.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">• Update your tracker</text>
+<text xml:space="preserve" x="16.0" y="304.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Good questions to ask them</text>
+<rect x="16.0" y="318.0" width="232.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="342.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">"What does a typical day look</text>
+<text xml:space="preserve" x="28.0" y="357.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">like for an intern?"</text>
+<rect x="264.0" y="318.0" width="232.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="276.0" y="342.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">"What would success look like at</text>
+<text xml:space="preserve" x="276.0" y="357.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">the end?"</text>
+<rect x="512.0" y="318.0" width="232.0" height="60.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="524.0" y="342.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">"Who would I work with most</text>
+<text xml:space="preserve" x="524.0" y="357.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">closely?"</text>
+</g></svg>

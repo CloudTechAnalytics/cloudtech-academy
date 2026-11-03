@@ -12,7 +12,7 @@ Part of Tallybook's infrastructure is managed differently: written as code with 
 
 ## The concept
 
-**ClickOps and its problems**
+### ClickOps and its problems
 
 Changing infrastructure by hand in a console ("ClickOps") is quick once, and costly forever:
 
@@ -21,11 +21,13 @@ Changing infrastructure by hand in a console ("ClickOps") is quick once, and cos
 - environments drift apart (staging stops matching production);
 - rebuilding after a disaster depends on memory.
 
-**Infrastructure as code (IaC)**
+### Infrastructure as code (IaC)
 
 Infrastructure is described in text files, kept in git, changed through reviewed pull requests, and applied by a tool. **Terraform** is the most widely used. You write what you want, for example "four API servers of this size", and Terraform works out what to create, change or delete to get there.
 
-**State**
+![Top: ClickOps, an engineer clicking changes straight into the cloud, with no record, review or reproducibility. Bottom: infrastructure as code, a change edited in a .tf file, reviewed in a pull request with its plan, applied by Terraform and recorded in git and state.](/images/courses/terraform/clickops-vs-iac.svg "ClickOps versus infrastructure as code.")
+
+### State
 
 Terraform keeps a **state file** recording every resource it manages and its last known settings. Anything that isn't in the state is invisible to Terraform: it won't change it, review it, or delete it.
 

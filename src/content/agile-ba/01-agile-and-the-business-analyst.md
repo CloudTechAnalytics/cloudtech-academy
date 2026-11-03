@@ -12,7 +12,7 @@ You've been hired as the team's business analyst. On your first day the develope
 
 ## The concept
 
-**What agile means**
+### What agile means
 
 Agile is a way of building things in small, usable increments, getting feedback early, and changing the plan as you learn. The Agile Manifesto (2001) values:
 
@@ -23,7 +23,7 @@ Agile is a way of building things in small, usable increments, getting feedback 
 
 The things on the right still matter; the things on the left matter more.
 
-**Scrum in one table**
+### Scrum in one table
 
 Scrum is the most widely used agile framework. Work happens in **sprints** of usually two weeks, each producing a usable increment.
 
@@ -39,9 +39,11 @@ Scrum is the most widely used agile framework. Work happens in **sprints** of us
 | **Sprint review** | the team shows what it built; stakeholders give feedback |
 | **Retrospective** | the team improves how it works |
 
+![The Scrum cycle: product backlog, sprint planning, a two-week sprint with a daily scrum, then sprint review and retrospective, with feedback looping back into the backlog. Green labels mark the BA's touchpoints: refinement, explaining stories, answering questions and checking work, and recording feedback.](/images/courses/agile-ba/scrum-cycle.svg "One sprint, and where the business analyst spends time in it.")
+
 Scrum has no "business analyst" role. A BA is usually one of the developers in the broad sense, or works closely with the product owner, and sometimes is the product owner.
 
-**What the BA does in an agile team**
+### What the BA does in an agile team
 
 - **Understands the problem and the users** before and during delivery.
 - **Shapes the backlog**: story maps, user stories, splitting, acceptance criteria.

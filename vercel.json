@@ -3,6 +3,22 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/welcome",
+      "destination": "/app"
+    },
+    {
+      "source": "/community",
+      "destination": "/app"
+    },
+    {
+      "source": "/events/:path*",
+      "destination": "/app"
+    },
+    {
+      "source": "/events",
+      "destination": "/app"
+    },
+    {
       "source": "/dashboard/:path*",
       "destination": "/app"
     },
@@ -74,7 +90,7 @@
   "redirects": [
     {
       "source": "/paths",
-      "destination": "/tracks/data-analyst",
+      "destination": "/programmes/data-analyst",
       "permanent": true
     },
     {

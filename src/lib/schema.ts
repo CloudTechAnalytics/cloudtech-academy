@@ -12,8 +12,12 @@ export function sitewideJsonLd() {
       "@type": "EducationalOrganization",
       "@id": ORG_ID,
       name: SITE.name,
+      // Other names people search for, so a search for the parent brand can connect to the Academy.
+      alternateName: ["CloudTech Analytics Academy", "CloudTech Academy by CloudTech Analytics"],
       url: `${SITE.url}/`,
       logo: `${SITE.url}/icon-512.png`,
+      // The company's own profiles, so search engines treat these pages and the Academy as one organisation.
+      sameAs: ["https://www.linkedin.com/company/cloudtech-analytics/", "https://www.instagram.com/jd_cta", "https://twitter.com/cloudtechanalytics", SITE.parentUrl],
       description: "Practical, self-paced courses in data, analytics and technology from CloudTech Analytics.",
       parentOrganization: { "@type": "Organization", name: SITE.parent, url: SITE.parentUrl },
       address: { "@type": "PostalAddress", addressLocality: "Lagos", addressCountry: "NG" },
@@ -22,7 +26,7 @@ export function sitewideJsonLd() {
 }
 
 export function webSiteJsonLd() {
-  return { "@context": "https://schema.org", "@type": "WebSite", name: SITE.name, url: `${SITE.url}/`, publisher: { "@id": ORG_ID } };
+  return { "@context": "https://schema.org", "@type": "WebSite", name: SITE.name, alternateName: "CloudTech Analytics Academy", url: `${SITE.url}/`, publisher: { "@id": ORG_ID } };
 }
 
 export function breadcrumbs(items: [name: string, path: string][]) {

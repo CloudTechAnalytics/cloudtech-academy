@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Capacity planning. The target is last peak times expected growth times headroom. Each configuration hits a different wall: app instances, database connections or database CPU, and adding more of something that is not the limit does nothing. Littles law gives connections busy at once as queries per second times seconds per query. All numbers are invented.">
+<title>Target = last peak × growth × headroom; find the limiting resource.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Capacity target (invented numbers)</text>
+<rect x="16.0" y="40.0" width="728.0" height="54.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">target = last peak × expected growth × headroom</text>
+<text xml:space="preserve" x="30.0" y="84.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">400 requests/s × 1.5 × 1.25 = 750 requests/s</text>
+<text xml:space="preserve" x="16.0" y="124.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Which wall does each configuration hit first? (max requests/s, invented)</text>
+<rect x="16.0" y="138.0" width="360.0" height="138.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="28.0" y="160.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Config A</text>
+<text xml:space="preserve" x="28.0" y="186.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">App instances</text>
+<rect x="128.0" y="174.0" width="189.0" height="18.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="321.0" y="187.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">900</text>
+<text xml:space="preserve" x="28.0" y="218.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">DB connections</text>
+<rect x="128.0" y="206.0" width="109.2" height="18.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="241.2" y="219.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">520</text>
+<text xml:space="preserve" x="28.0" y="250.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">DB CPU</text>
+<rect x="128.0" y="238.0" width="168.0" height="18.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="300.0" y="251.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">800</text>
+<line x1="285.5" y1="168.0" x2="285.5" y2="270.0" stroke="#2F6B3F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<rect x="384.0" y="138.0" width="360.0" height="138.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="396.0" y="160.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Config B</text>
+<text xml:space="preserve" x="396.0" y="186.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">App instances</text>
+<rect x="496.0" y="174.0" width="189.0" height="18.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="689.0" y="187.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">900</text>
+<text xml:space="preserve" x="396.0" y="218.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">DB connections</text>
+<rect x="496.0" y="206.0" width="172.2" height="18.0" rx="3" fill="#C5B38A"/>
+<text xml:space="preserve" x="672.2" y="219.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">820</text>
+<text xml:space="preserve" x="396.0" y="250.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start">DB CPU</text>
+<rect x="496.0" y="238.0" width="134.4" height="18.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="634.4" y="251.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start">640</text>
+<line x1="653.5" y1="168.0" x2="653.5" y2="270.0" stroke="#2F6B3F" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text xml:space="preserve" x="16.0" y="296.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Green dashed line: the target. The smallest bar is the wall.</text>
+<text xml:space="preserve" x="16.0" y="328.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Little's law: how many connections are busy?</text>
+<rect x="16.0" y="342.0" width="728.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="366.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">busy connections = queries per second × seconds per query</text>
+<text xml:space="preserve" x="30.0" y="392.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2,000 q/s × 0.02 s = 40 connections busy at once</text>
+</g></svg>

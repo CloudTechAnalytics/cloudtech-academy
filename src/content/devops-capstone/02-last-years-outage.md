@@ -12,21 +12,23 @@ You have per-minute metrics for checkout from 08:00 to 14:00 on sale day (`sale_
 
 ## The concept
 
-**Impact first**
+### Impact first
 
 When did it start and end, and how many requests failed? Use a clear definition: here, a minute is **bad** if more than 5% of requests failed.
 
-**Look for what changed just before**
+### Look for what changed just before
 
 Plot the metrics around the start. Something crosses a line: traffic, instances, connections, latency.
 
-**Read the errors**
+### Read the errors
 
 The logs say what failed. If one message dominates the bad minutes, it points at the cause.
 
-**Cause, not trigger**
+### Cause, not trigger
 
 Traffic was the **trigger**: it was always going to rise. The **cause** is why the system couldn't handle it. Postmortems that stop at "traffic was high" lead to the wrong fix.
+
+![An invented incident with bad minutes marked on a request chart, defining a bad minute first, and the difference between the trigger (traffic) and the cause (why the system could not cope)](/images/courses/devops-capstone/outage-review.svg "Impact first; then what crossed a line; then trigger versus cause.")
 
 ## Example
 

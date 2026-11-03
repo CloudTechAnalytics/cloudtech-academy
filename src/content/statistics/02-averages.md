@@ -14,7 +14,7 @@ Ashgrove Chambers' managing partner asks two questions about the firm's invoices
 
 ## The concept
 
-**The three averages**
+### The three averages
 
 | Average | What it is | Excel / Sheets | Best for |
 | :-- | :-- | :-- | :-- |
@@ -24,7 +24,28 @@ Ashgrove Chambers' managing partner asks two questions about the firm's invoices
 
 With an even number of values, the median is the average of the middle two.
 
-**Why they disagree: skew**
+### Working it out by hand
+
+Kolanut's Human Resources team has six people. Their monthly salaries, sorted:
+
+| | Salary |
+| :-- | --: |
+| Sade (Junior) | ₦355,000 |
+| Hauwa (Mid) | ₦545,000 |
+| Yusuf (Senior) | ₦765,000 |
+| Maryam (Senior) | ₦850,000 |
+| Musa (Senior) | ₦1,000,000 |
+| Ngozi (Manager) | ₦1,320,000 |
+
+1. **Mean.** Add them: 355,000 + 545,000 + 765,000 + 850,000 + 1,000,000 + 1,320,000 = 4,835,000. Divide by 6: **₦805,833**.
+2. **Median.** Six values, so take the middle two, Yusuf and Maryam: (765,000 + 850,000) ÷ 2 = **₦807,500**.
+3. **Mode.** Every salary appears once, so there's no mode. The mode is useful for repeated values, not for amounts like these.
+
+Mean and median are almost equal: this team's salaries are spread fairly evenly.
+
+Now imagine, just for the arithmetic, that the manager's salary were ₦3,000,000 instead. The total becomes 6,515,000 and the **mean jumps to ₦1,085,833**. The **median stays at ₦807,500**, because Yusuf and Maryam are still in the middle. One value moved the mean by ₦280,000 and the median not at all.
+
+### Why they disagree: skew
 
 The mean uses every value's size, so a few very large values pull it up. The median only cares about order, so it barely moves.
 
@@ -34,7 +55,12 @@ The mean uses every value's size, so a few very large values pull it up. The med
 
 So the gap between mean and median is itself useful information: it tells you the data is skewed and which way.
 
-**Choosing**
+![Each of IT's 12 monthly salaries as a dot on a line from ₦0 to ₦1.5m. Most dots sit between ₦195,000 and ₦975,000; two manager salaries sit far to the right. The median, ₦620,000, is in the middle of the group; the mean, ₦722,083, is pulled to the right.](/images/courses/statistics/mean-median-dots.svg "IT salaries: right-skewed, so the mean sits above the median.")
+
+In IT, two managers earn ₦1,320,000 and ₦1,495,000, well above everyone else. They lift the mean to ₦722,083, while the median, ₦620,000, stays between the sixth and seventh salaries. Seven of the 12 people earn less than the mean.
+
+
+### Choosing
 
 - Asking "what does a **typical** one look like?" Use the **median** for skewed data.
 - Asking "what's the **total** worth, or the per-unit cost?" Use the **mean**: mean × count = total, which is exactly what budgets need. The median can't be multiplied back up.
@@ -42,11 +68,11 @@ So the gap between mean and median is itself useful information: it tells you th
 
 When in doubt, report both, with a sentence explaining the gap.
 
-**Averages for groups**
+### Averages for groups
 
 `AVERAGEIFS(average_range, criteria_range, criteria, …)` averages only the rows that meet conditions. There's no `MEDIANIFS`, but `=MEDIAN(IF(criteria_range = "x", values))` does the same job (press Ctrl + Shift + Enter in older Excel), and in Google Sheets you can wrap a `FILTER`: `=MEDIAN(FILTER(values, criteria_range = "x"))`.
 
-**A middle way: the trimmed mean**
+### A middle way: the trimmed mean
 
 `=TRIMMEAN(range, 0.1)` drops the top and bottom 5% (10% in total) and averages the rest. It keeps most of the data's information while ignoring extremes, and it's used for things like judges' scores and some inflation measures.
 

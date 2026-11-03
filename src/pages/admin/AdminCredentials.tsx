@@ -1,10 +1,11 @@
 import { credentialKindLabel } from "@/lib/badges";
 import { useState } from "react";
 import { Link } from "react-router";
-import { getBackend } from "@/lib/backend";
+import { getBackend, type Credential } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { Alert, TextField } from "@/components/Form";
+import { DeleteDialog } from "@/components/DeleteDialog";
 import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
 
@@ -14,6 +15,8 @@ export default function AdminCredentials() {
   const [search, setSearch] = useState("");
   const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listCredentials(search), [search]);
   const [msg, setMsg] = useState<string | null>(null);
+  const [done, setDone] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<Credential | null>(null);
 
   const revoke = async (id: string, credentialId: string) => {
     const reason = window.prompt(`Why is ${credentialId} being revoked? The reason is kept on record, and its public page will show it as revoked.`);
@@ -52,11 +55,10 @@ export default function AdminCredentials() {
           Search
         </button>
       </form>
-      {msg && (
-        <div className="mb-4">
-          <Alert tone="error">{msg}</Alert>
-        </div>
-      )}
+      <div className="mb-4 space-y-3" aria-live="polite">
+        {msg && <Alert tone="error">{msg}</Alert>}
+        {done && <Alert tone="success">{done}</Alert>}
+      </div>
       {!data ? (
         <PageLoading />
       ) : data.length === 0 ? (
@@ -101,12 +103,15 @@ export default function AdminCredentials() {
                       </span>
                     )}
                   </td>
-                  <td className="text-right">
+                  <td className="whitespace-nowrap text-right">
                     {c.status === "valid" && (
-                      <button type="button" onClick={() => void revoke(c.id, c.credentialId)} className="text-[0.8125rem] font-semibold text-danger">
+                      <button type="button" onClick={() => void revoke(c.id, c.credentialId)} className="mr-4 text-[0.8125rem] font-semibold text-danger">
                         Revoke
                       </button>
                     )}
+                    <button type="button" onClick={() => (setMsg(null), setDone(null), setDeleting(c))} className="text-[0.8125rem] font-semibold text-danger">
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -114,6 +119,32 @@ export default function AdminCredentials() {
           </table>
         </div>
       )}
+      <DeleteDialog
+        open={!!deleting}
+        title="Delete this badge?"
+        confirmWord={deleting?.credentialId ?? ""}
+        onClose={() => setDeleting(null)}
+        onDelete={async (reason) => {
+          if (!deleting) return;
+          await (await getBackend()).admin.deleteCredential(deleting.credentialId, reason);
+          setDone(`${deleting.credentialId} deleted.`);
+          await reload();
+        }}
+      >
+        {deleting && (
+          <>
+            <p>
+              This permanently deletes <strong>{deleting.badgeName}</strong> for <strong>{deleting.recipientName}</strong> (
+              <span className="font-mono text-[0.875rem]">{deleting.credentialId}</span>). It disappears from their dashboard and profile, and its public page says "not
+              found".
+            </p>
+            <p className="text-[0.875rem] text-muted">
+              If the learner still meets the requirements they can earn it again. To withdraw it for good and keep a public "revoked" record, use Revoke instead. This
+              can't be undone.
+            </p>
+          </>
+        )}
+      </DeleteDialog>
     </>
   );
 }

@@ -10,19 +10,21 @@ From April to June 2026, Kasuwa phoned a random half of pay-on-delivery customer
 
 ## The concept
 
-**A randomised trial measures the effect**
+### A randomised trial measures the effect
 
 Because calls were assigned at random, the Call and No-call groups are alike in everything except the call. The difference in their failure rates is the call's effect: **failures prevented per call**.
 
-**Effects differ by risk**
+### Effects differ by risk
 
 A call can't prevent a failure that was never going to happen. So the effect should be bigger for riskier orders. Because the risk score uses only information from checkout, before the call, you can split the trial by risk band and compare Call with No call **within** each band. The randomisation still holds inside each band.
 
-**Value per call**
+### Value per call
 
 Value per call = failures prevented per call × ₦6,500 − ₦250. Call the orders where that's positive. The **threshold** is the risk level above which calls pay for themselves.
 
-**Noise**
+![Value per call by risk band using invented numbers: negative for low-risk bands, positive and rising for higher ones, with a threshold on the plateau](/images/courses/ds-capstone/value-per-call.svg "Value per call by risk band, and a threshold on the plateau.")
+
+### Noise
 
 Each band has a few thousand orders at most, so each estimate has an error of a few points. When several thresholds give similar values, don't chase the highest. Pick a sensible point on the plateau, and say it's an estimate.
 

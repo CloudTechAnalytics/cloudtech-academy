@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="The scope, time and cost triangle, and the project lifecycle. A project balances what is delivered (scope), when (time) and for how much (cost), at an agreed quality; changing one moves at least one other. Adding a cold room adds scope, which costs money and time. The lifecycle has four phases: initiation produces the business case and charter; planning produces tasks, estimates, schedule, budget and risks; delivery does the work, tracks it and handles changes; closing hands over and records lessons learned.">
+<title>Scope, time and cost pull against each other; a project moves through four phases.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<polygon points="190,40 330,250 50,250" fill="#F3EBD8" stroke="#B38A3E" stroke-width="2.5"/>
+<text xml:space="preserve" x="190.0" y="30.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="middle">Scope</text>
+<text xml:space="preserve" x="42.0" y="274.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="end">Time</text>
+<text xml:space="preserve" x="338.0" y="274.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Cost</text>
+<text xml:space="preserve" x="190.0" y="138.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="middle">Quality</text>
+<text xml:space="preserve" x="190.0" y="158.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">the agreed standard</text>
+<text xml:space="preserve" x="190.0" y="190.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">pull one corner, and</text>
+<text xml:space="preserve" x="190.0" y="208.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">another moves</text>
+<rect x="396.0" y="36.0" width="348.0" height="224.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="412.0" y="62.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Example: Sales ask for a cold room</text>
+<rect x="412.0" y="84.0" width="70.0" height="38.0" rx="6" fill="#F6E3E0"/>
+<text xml:space="preserve" x="447.0" y="108.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">Scope +</text>
+<text xml:space="preserve" x="494.0" y="108.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">a cold room is added</text>
+<rect x="412.0" y="136.0" width="70.0" height="38.0" rx="6" fill="#F6E3E0"/>
+<text xml:space="preserve" x="447.0" y="160.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">Cost ↑</text>
+<text xml:space="preserve" x="494.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">equipment and fit-out</text>
+<rect x="412.0" y="188.0" width="70.0" height="38.0" rx="6" fill="#F6E3E0"/>
+<text xml:space="preserve" x="447.0" y="212.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">Time ↑</text>
+<text xml:space="preserve" x="494.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">or open without it</text>
+<text xml:space="preserve" x="412.0" y="250.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Opening sooner needs more money or less scope.</text>
+<rect x="16.0" y="296.0" width="168.5" height="96.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Initiation</text>
+<text xml:space="preserve" x="28.0" y="346.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">business case, charter</text>
+<path d="M187.5,344.0 L199.5,344.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.5" y="296.0" width="168.5" height="96.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.5" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Planning</text>
+<text xml:space="preserve" x="214.5" y="346.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">tasks, estimates,</text>
+<text xml:space="preserve" x="214.5" y="363.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">schedule, budget, risks</text>
+<path d="M374.0,344.0 L386.0,344.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="389.0" y="296.0" width="168.5" height="96.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="401.0" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Delivery</text>
+<text xml:space="preserve" x="401.0" y="346.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">do the work, track it,</text>
+<text xml:space="preserve" x="401.0" y="363.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">handle changes</text>
+<path d="M560.5,344.0 L572.5,344.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="575.5" y="296.0" width="168.5" height="96.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="587.5" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Closing</text>
+<text xml:space="preserve" x="587.5" y="346.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">hand over, lessons</text>
+<text xml:space="preserve" x="587.5" y="363.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">learned</text>
+<text xml:space="preserve" x="16.0" y="416.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The charter, on one page: objective, scope in and out, deadline, budget, sponsor, manager, how success is measured.</text>
+</g></svg>

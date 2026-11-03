@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Outputs versus outcomes, and product versus project management. An output is something shipped, such as savings goals launched. An outcome is a change in what users do, such as more salary earners keeping money in the wallet for a month. Product managers are measured on outcomes. A project manager asks whether the agreed work is delivered on time and budget; a product manager asks whether the right thing is being built and whether it worked. A north star metric captures the value users get: weekly active users who make at least one transaction.">
+<title>Ship outputs to change outcomes; the north star counts users getting value.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="165.5" height="100.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="42.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Output</text>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">something shipped:</text>
+<text xml:space="preserve" x="28.0" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">savings goals launched</text>
+<path d="M184.5,66.0 L200.5,66.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="203.5" y="16.0" width="165.5" height="100.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="215.5" y="42.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Behaviour changes</text>
+<text xml:space="preserve" x="215.5" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">salary earners set a</text>
+<text xml:space="preserve" x="215.5" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">goal and keep money in</text>
+<path d="M372.0,66.0 L388.0,66.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="391.0" y="16.0" width="165.5" height="100.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="403.0" y="42.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Outcome</text>
+<text xml:space="preserve" x="403.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">more people still</text>
+<text xml:space="preserve" x="403.0" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">saving a month later</text>
+<path d="M559.5,66.0 L575.5,66.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="578.5" y="16.0" width="165.5" height="100.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="590.5" y="42.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Business result</text>
+<text xml:space="preserve" x="590.5" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">balances and revenue</text>
+<text xml:space="preserve" x="590.5" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">grow</text>
+<text xml:space="preserve" x="16.0" y="142.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Shipping is the means. Product managers are judged on the outcome.</text>
+<rect x="16.0" y="168.0" width="356.0" height="30.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="30.0" y="188.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Project manager</text>
+<rect x="388.0" y="168.0" width="356.0" height="30.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="402.0" y="188.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Product manager</text>
+<text xml:space="preserve" x="30.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Are we delivering what was agreed, on time and</text>
+<text xml:space="preserve" x="30.0" y="236.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">budget?</text>
+<text xml:space="preserve" x="402.0" y="218.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Are we building the right thing, and did it work?</text>
+<text xml:space="preserve" x="30.0" y="262.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Measured over a project's life</text>
+<text xml:space="preserve" x="402.0" y="262.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Measured over the product's life</text>
+<text xml:space="preserve" x="30.0" y="306.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Success: delivered as planned</text>
+<text xml:space="preserve" x="402.0" y="306.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Success: users' behaviour and the business</text>
+<text xml:space="preserve" x="402.0" y="324.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">improve</text>
+<rect x="16.0" y="356.0" width="728.0" height="72.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="382.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">North star metric</text>
+<text xml:space="preserve" x="32.0" y="404.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Weekly active users who make at least one transaction: value received, not downloads or signups.</text>
+</g></svg>

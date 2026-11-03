@@ -12,7 +12,7 @@ The clearing team's answer is "customers are careless". That's a symptom with a 
 
 ## The concept
 
-**The fishbone (Ishikawa) diagram**
+### The fishbone (Ishikawa) diagram
 
 Write the problem at the "head" and brainstorm causes along six "bones":
 
@@ -27,6 +27,8 @@ Write the problem at the "head" and brainstorm causes along six "bones":
 
 The fishbone generates candidate causes. Data and five whys test them.
 
+![A fishbone diagram with the problem, documents incomplete on arrival, at the head, and six bones: People (customers don't know what's needed), Process (checked only on arrival; no checklist), Policy (NAFDAC and SONCAP permits; rules change), Materials (permits most often missing), Systems (sent by email; versions mixed up), Measurement (nobody tracks it by customer).](/images/courses/process/fishbone.svg "Harbourline's fishbone: candidate causes, before the data tests them.")
+
 **Five whys**, applied:
 
 1. Why are documents incomplete? *The permit is missing.*
@@ -37,7 +39,7 @@ The fishbone generates candidate causes. Data and five whys test them.
 
 Root cause: **documents are checked too late for problems to be fixed before arrival.** That's something Harbourline controls.
 
-**Pareto analysis: rate versus count**
+### Pareto analysis: rate versus count
 
 Sort the causes (or customer groups) by how many problems they cause, and look at the cumulative share. Usually a few account for most. But compare two measures:
 

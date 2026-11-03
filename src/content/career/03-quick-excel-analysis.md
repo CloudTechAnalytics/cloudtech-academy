@@ -74,6 +74,8 @@ Formulas calculate from the data and update by themselves when the data changes.
 | Total Drinks sales? | `=SUMIF(C2:C21,"Drinks",F2:F21)` | Adds F only where C is "Drinks" |
 | Entries of ₦10,000 or more? | `=COUNTIF(F2:F21,">=10000")` | Counts cells in F that are at least 10,000 |
 
+![Five kinds of question matched to the Excel tool that answers each: totals with SUM, one kind with SUMIF or COUNTIF, every group with a PivotTable, biggest or smallest with sort and filter, and showing it with a chart](/images/courses/career/question-to-tool.svg "Pick the tool by the kind of question you are asked.")
+
 Read **SUMIF** as: "look in **this range** for **this condition**, and add up **that range**". It's the formula behind most "total by…" questions.
 
 > [!WARNING]
@@ -84,6 +86,8 @@ Read **SUMIF** as: "look in **this range** for **this condition**, and add up **
 ## Summarise with a PivotTable
 
 A **PivotTable** gives you "total by…" for every group at once, without typing formulas.
+
+![A list of barbershop sales with a service and amount on each row, the field list with Service in Rows and Amount in Values, and the resulting PivotTable showing a total for each service](/images/courses/career/pivot-anatomy.svg "A PivotTable turns a long list into one total per group.")
 
 1. Click inside the table, then **Insert → PivotTable → OK** (Google Sheets: **Insert → Pivot table → Create**).
 2. In the field list, drag **Product** to **Rows**.

@@ -12,11 +12,11 @@ None of that is a coding problem. It's what happens when stories reach a sprint 
 
 ## The concept
 
-**Backlog refinement**
+### Backlog refinement
 
 A regular session (often an hour or two a week) where the product owner, BA and developers look at the next items in the backlog and make them ready: clarify, split, add acceptance criteria and estimate. Aim to keep about **two sprints' worth** of work refined ahead.
 
-**The three amigos**
+### The three amigos
 
 Before a story is ready, three perspectives look at it together for 15 minutes:
 
@@ -26,7 +26,7 @@ Before a story is ready, three perspectives look at it together for 15 minutes:
 
 Most misunderstandings ("transfers can arrive the next day") surface in that conversation, when they cost nothing to fix.
 
-**Definition of ready (DoR)**
+### Definition of ready (DoR)
 
 The checklist a story must pass before the team takes it into a sprint, for example:
 
@@ -37,7 +37,7 @@ The checklist a story must pass before the team takes it into a sprint, for exam
 - dependencies known (data, other teams, decisions);
 - open questions answered.
 
-**Definition of done (DoD)**
+### Definition of done (DoD)
 
 The checklist every item must pass before it counts as done, for example:
 

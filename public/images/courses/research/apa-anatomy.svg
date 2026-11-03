@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="The parts of an APA reference-list entry for a journal article and how it links to the in-text citation. Author surname and initials, year in brackets, article title in sentence case, journal name and volume in italics, issue in brackets, page range, and a DOI link. In the text you cite just the author and year.">
+<title>Every in-text citation points to one reference-list entry.</title>
+<defs><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker></defs>
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">In your text</text>
+<rect x="16.0" y="36.0" width="728.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="63.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Market stalls with fixed prices lose fewer customers</text>
+<text xml:space="preserve" x="400.0" y="63.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">(Danjuma &amp; Eze, 2020).</text>
+<path d="M540.0,82.0 L540.0,112.0" fill="none" stroke="#2F5D8A" stroke-width="2" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="16.0" y="106.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">In your reference list</text>
+<rect x="16.0" y="118.0" width="728.0" height="96.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/>
+<text xml:space="preserve" x="30.0" y="148.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"><tspan fill="#2F5D8A" font-weight="700">Danjuma, K., &amp; Eze, T.</tspan> <tspan fill="#5C4F80" font-weight="700">(2020).</tspan> <tspan fill="#8A6A1F" font-weight="700">Fixed prices and customer loyalty</tspan></text>
+<text xml:space="preserve" x="30.0" y="170.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"><tspan fill="#8A6A1F" font-weight="700">in open markets.</tspan> <tspan fill="#2F6B3F" font-weight="700" font-style="italic">Journal of Retail Studies,</tspan> <tspan fill="#9B2C1F" font-weight="700">7(2), 45–61.</tspan></text>
+<text xml:space="preserve" x="30.0" y="192.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"><tspan fill="#5E5A52" font-weight="700">https://doi.org/…</tspan></text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Label each part</text>
+<rect x="16.0" y="260.0" width="6.0" height="34.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="32.0" y="275.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Authors</text>
+<text xml:space="preserve" x="32.0" y="291.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Surname, initials; &amp; before the last</text>
+<rect x="384.0" y="260.0" width="6.0" height="34.0" rx="3" fill="#5C4F80"/>
+<text xml:space="preserve" x="400.0" y="275.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Year</text>
+<text xml:space="preserve" x="400.0" y="291.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">In brackets, then a full stop</text>
+<rect x="16.0" y="304.0" width="6.0" height="34.0" rx="3" fill="#8A6A1F"/>
+<text xml:space="preserve" x="32.0" y="319.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Title</text>
+<text xml:space="preserve" x="32.0" y="335.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Sentence case: capital only on the first word</text>
+<rect x="384.0" y="304.0" width="6.0" height="34.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="400.0" y="319.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Journal</text>
+<text xml:space="preserve" x="400.0" y="335.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Name in italics, then volume</text>
+<rect x="16.0" y="348.0" width="6.0" height="34.0" rx="3" fill="#9B2C1F"/>
+<text xml:space="preserve" x="32.0" y="363.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Issue and pages</text>
+<text xml:space="preserve" x="32.0" y="379.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Issue in brackets, no space; page range</text>
+<rect x="384.0" y="348.0" width="6.0" height="34.0" rx="3" fill="#5E5A52"/>
+<text xml:space="preserve" x="400.0" y="363.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">DOI</text>
+<text xml:space="preserve" x="400.0" y="379.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">The permanent link, if it has one</text>
+<text xml:space="preserve" x="16.0" y="412.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Zotero or Google Scholar's Cite button can format it. Check capitals, issue numbers and names.</text>
+</g></svg>

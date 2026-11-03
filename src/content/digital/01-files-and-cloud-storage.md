@@ -37,6 +37,8 @@ A good file name tells you what it is without opening it:
 | `final final.pdf` | `CV-Amaka-Obi-2026-03.pdf` |
 | `IMG_2045.jpg` | `STA211-lecture-5-board.jpg` |
 
+![A shallow folder tree for school and personal files, and how a good file name is built with the course code first and dates written year-month-day, with weak names rewritten as strong ones](/images/courses/digital/folders-names.svg "A shallow folder tree, and file names that sort themselves.")
+
 Tips: put the course code first so files sort together, use dates as `YYYY-MM-DD` so they sort in order, and avoid spaces and symbols in files you'll upload.
 
 ## Back up to the cloud
@@ -50,6 +52,8 @@ If your laptop is stolen or your phone falls in water, anything that's only on t
 | **Dropbox** | 2 GB | Simple syncing |
 
 Install the desktop app (**Google Drive for desktop** or **OneDrive**) and keep your `School` folder inside it. It then backs up automatically.
+
+![Files only on a laptop are lost if it is stolen; keeping the School folder inside a cloud app syncs a copy automatically; share with specific people and the least access that works](/images/courses/digital/backup-sharing.svg "Keep a copy online automatically, and share with the least access needed.")
 
 > [!TIP]
 > Many universities give students a Microsoft 365 or Google Workspace account with much more storage. Check with your ICT unit.

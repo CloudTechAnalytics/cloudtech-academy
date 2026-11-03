@@ -12,7 +12,7 @@ There's a second trap. From April 2026, half of pay-on-delivery orders got a con
 
 ## The concept
 
-**Train, validate, test by time**
+### Train, validate, test by time
 
 | Set | Orders | Used for |
 | :-- | :-- | :-- |
@@ -22,15 +22,17 @@ There's a second trap. From April 2026, half of pay-on-delivery orders got a con
 
 Touch the test set once, at the end. If you keep checking it while you tune, it stops being a test.
 
-**Why only the No-call group?**
+![A timeline split into train, validate and test by time, and why the test set uses only the randomly assigned no-call group](/images/courses/ds-capstone/time-split.svg "Train on the past, validate on the next stretch, test once on untouched data.")
+
+### Why only the No-call group?
 
 The model predicts what happens **without** intervention. The No-call group was chosen at random, so it's a fair sample of all orders, untouched by calls. The Call group's outcomes were changed by the call, so they can't test the model. In lesson 6 they're exactly what you need, to measure the call's effect.
 
-**Start with a baseline**
+### Start with a baseline
 
 A simple rule, such as "longer delivery promises are riskier", shows how much the model really adds. Then compare logistic regression with gradient boosting. The more complex model has to earn its place.
 
-**Two ranking measures**
+### Two ranking measures
 
 - **AUC**: the chance that a random failed order is scored above a random delivered one.
 - **Average precision**: how well the top of the ranking is concentrated with failures, which suits a decision about whom to call.

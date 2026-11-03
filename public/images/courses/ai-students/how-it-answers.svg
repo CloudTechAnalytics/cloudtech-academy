@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="How an AI assistant answers: it predicts the next words from patterns in text it learned, it does not look facts up. That makes it strong at explaining, rephrasing, summarising and giving examples, and weak at exact dates, statistics, quotes and references, where it can produce a confident hallucination.">
+<title>An AI assistant predicts helpful words; it does not look facts up.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What happens when you ask a question</text>
+<rect x="16.0" y="42.0" width="170.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">Your question</text>
+<text xml:space="preserve" x="28.0" y="90.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">"Explain tides"</text>
+<path d="M190.0,77.0 L218.0,77.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="222.0" y="42.0" width="250.0" height="70.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="236.0" y="66.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">The model</text>
+<text xml:space="preserve" x="236.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Predicts a helpful reply, piece by</text>
+<text xml:space="preserve" x="236.0" y="102.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">piece, from patterns in text.</text>
+<path d="M476.0,77.0 L504.0,77.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="508.0" y="42.0" width="236.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="520.0" y="66.0" font-size="13" fill="#5E5A52" font-weight="700" text-anchor="start">Its reply</text>
+<text xml:space="preserve" x="520.0" y="90.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Fluent and confident</text>
+<text xml:space="preserve" x="16.0" y="146.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">So it is…</text>
+<rect x="16.0" y="158.0" width="358.0" height="190.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="184.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Strong at language</text>
+<text xml:space="preserve" x="30.0" y="212.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">✓  Explaining at your level</text>
+<text xml:space="preserve" x="30.0" y="242.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">✓  Rephrasing and summarising</text>
+<text xml:space="preserve" x="30.0" y="272.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">✓  Giving examples</text>
+<text xml:space="preserve" x="30.0" y="302.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">✓  Quizzing and planning</text>
+<rect x="386.0" y="158.0" width="358.0" height="190.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="400.0" y="184.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Risky for facts</text>
+<text xml:space="preserve" x="400.0" y="212.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">!  Exact dates and statistics</text>
+<text xml:space="preserve" x="400.0" y="242.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">!  Quotes</text>
+<text xml:space="preserve" x="400.0" y="272.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">!  References and citations</text>
+<text xml:space="preserve" x="400.0" y="302.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">!  Anything about your course</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A made-up reference can sound exactly like a real one. You stay in charge and check.</text>
+</g></svg>

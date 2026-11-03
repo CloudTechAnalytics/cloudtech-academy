@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Why money shouldn't be a float. The literal 2.675 is stored in binary as 2.67499999999999982236431605997495353221893310546875, slightly below 2.675, so rounding to two places gives 2.67. Python's round rounds exact halves to the nearest even number: 0.5 to 0, 2.5 to 2, 16.5 to 16, 17.5 to 18; rounding half up gives 1, 3, 17 and 18. The fix: store money as whole kobo integers, use Decimal with ROUND_HALF_UP for fractions, and convert to naira only for display.">
+<title>Floats can't store most decimals exactly, and round() rounds halves to even.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What 2.675 really is, as a float</text>
+<rect x="16.0" y="38.0" width="728.0" height="66.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="62.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2.674999999999999822364316…</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">round(2.675, 2)  →  2.67   (it was just below the half)</text>
+<text xml:space="preserve" x="16.0" y="128.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Halves: round() against round-half-up</text>
+<rect x="16.0" y="140.0" width="470.0" height="140.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,168 L17,148 Q17,141 24,141 L478,141 Q485,141 485,148 L485,168 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="158.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">value</text>
+<text xml:space="preserve" x="136.0" y="158.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">round()  (half to even)</text>
+<text xml:space="preserve" x="336.0" y="158.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">ROUND_HALF_UP</text>
+<line x1="16.0" y1="168.0" x2="486.0" y2="168.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="186.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0.5</text>
+<text xml:space="preserve" x="136.0" y="186.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0</text>
+<text xml:space="preserve" x="336.0" y="186.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<line x1="16.0" y1="196.0" x2="486.0" y2="196.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="214.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2.5</text>
+<text xml:space="preserve" x="136.0" y="214.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="336.0" y="214.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<line x1="16.0" y1="224.0" x2="486.0" y2="224.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="242.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">16.5</text>
+<text xml:space="preserve" x="136.0" y="242.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">16</text>
+<text xml:space="preserve" x="336.0" y="242.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17</text>
+<line x1="16.0" y1="252.0" x2="486.0" y2="252.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="270.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17.5</text>
+<text xml:space="preserve" x="136.0" y="270.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">18</text>
+<text xml:space="preserve" x="336.0" y="270.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">18</text>
+<rect x="518.0" y="128.0" width="226.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="534.0" y="154.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">The fix</text>
+<text xml:space="preserve" x="534.0" y="180.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Store money as whole kobo</text>
+<text xml:space="preserve" x="534.0" y="198.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">(int): ₦12.50 is 1250.</text>
+<text xml:space="preserve" x="534.0" y="226.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Decimal + ROUND_HALF_UP for</text>
+<text xml:space="preserve" x="534.0" y="244.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">VAT and discounts.</text>
+<text xml:space="preserve" x="534.0" y="268.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Naira only for display.</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Banker's rounding is fine for statistics, but invoices round halves up.</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Integers are exact: 1250 + 1250 is always 2500.</text>
+</g></svg>

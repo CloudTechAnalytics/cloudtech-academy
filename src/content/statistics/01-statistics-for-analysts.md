@@ -14,21 +14,26 @@ This course gives you those skills, in Excel or Google Sheets, on Kolanut's sale
 
 ## The concept
 
-**Two jobs statistics does**
+### Two jobs statistics does
 
 - **Descriptive statistics** summarise the data you have: the typical salary, how spread out delivery times are, how strongly two things move together. Lessons 2 to 6.
 - **Inferential statistics** help you draw conclusions beyond the data you have: is a difference real or just luck, how precise is an estimate, will a trend continue? Lessons 7 to 10.
 
 Most day-to-day analysis is descriptive. Inference is what stops you announcing a "finding" that's really noise.
 
-**Population and sample**
+### Population and sample
 
 - The **population** is everyone or everything you want to know about: all of Kolanut's customers, every shipment Harbourline will ever make.
 - A **sample** is the part you actually have data on.
 
 Sometimes your data is the whole population. Kolanut's `employees.csv` lists all 80 people who have worked there, so the average salary in it isn't an estimate; it's the fact. Often it isn't: a survey of 200 customers is a sample of all customers, and the answer would be slightly different with a different 200. Asking "is this all of them, or some of them?" decides which tools you need.
 
-**Kinds of variable**
+![A grid of squares standing for all 4,266 Kolanut order lines, with 50 picked at random and darkened. Below, the population mean of ₦194,689 next to the sample mean of ₦171,656.](/images/courses/statistics/population-sample.svg "A random sample of 50 order lines. Its average is close to the true one, but not equal: that gap is what statistics measures.")
+
+A number calculated from the whole population is a **parameter**: the true average order line is ₦194,689. A number calculated from a sample is a **statistic**: this sample of 50 gives ₦171,656. A different 50 would give a different answer. Lessons 7 and 8 show how to say how far off a sample is likely to be.
+
+
+### Kinds of variable
 
 | Kind | What it is | Example | Typical summaries |
 | :-- | :-- | :-- | :-- |
@@ -39,7 +44,7 @@ Sometimes your data is the whole population. Kolanut's `employees.csv` lists all
 
 The kind decides what's meaningful. An "average region" is nonsense; an average salary is fine. A job level of "2.4" means nothing even if you coded Junior as 1 and Senior as 3.
 
-**Three ways numbers mislead**
+### Three ways numbers mislead
 
 1. **The wrong average.** A few very high values pull the mean up. Kolanut's mean salary (₦609,250) is well above the median (₦492,500), because ten managers earn over ₦1.2 million. "The typical employee" is closer to the median. Lesson 2 shows how to choose.
 2. **No sense of spread.** "Average delivery time is 27 days" hides whether almost every shipment takes 26–28 days or some take 10 and others 60. Customers experience the spread, not the average. Lesson 3.

@@ -12,7 +12,7 @@ The team built an **AI agent** to do some of that work. Two versions have been t
 
 ## The concept
 
-**What makes something an agent**
+### What makes something an agent
 
 A chatbot takes text and returns text. An **agent** is given **tools** (functions it may ask to call) and works in a loop:
 
@@ -20,7 +20,9 @@ A chatbot takes text and returns text. An **agent** is given **tools** (function
 2. **Your code** runs the tool (the model never runs anything itself) and sends the result back.
 3. Repeat until the model answers, or a limit is reached.
 
-**Workflow or agent?**
+![The model sends a tool call to your code; your code runs the tool and sends the result back; the loop ends with a final answer. A trace records every step, and guards (maximum steps, repeated-call detection, timeouts, a fallback to a person) stop runaway loops.](/images/courses/agents/agent-loop.svg "The agent loop. The model never runs anything itself.")
+
+### Workflow or agent?
 
 | Approach | The steps are decided by | Use when |
 | :-- | :-- | :-- |
@@ -29,7 +31,7 @@ A chatbot takes text and returns text. An **agent** is given **tools** (function
 
 Agents are more flexible and harder to control. A good rule: use a workflow when you can, an agent when you must, and keep the agent's choices narrow.
 
-**Reading a run**
+### Reading a run
 
 Every serious agent system records each step: which tool was called, with what arguments, what came back, and the tokens and time used. These **traces** are how you debug, evaluate and audit an agent.
 

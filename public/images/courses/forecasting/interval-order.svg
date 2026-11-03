@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="An illustration of a forecast with a 90 percent prediction interval: a central forecast line with a shaded band that widens slightly. The order covers the forecast plus safety stock: the higher the service level, the further up the band the order goes, and the more stock is held.">
+<title>From a forecast range to an order: safety stock buys a higher service level.</title>
+
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<polygon points="70.0,141.7 87.5,117.5 105.0,110.9 122.5,126.4 140.0,151.7 157.5,167.2 175.0,160.6 192.5,136.3 210.0,112.1 227.5,105.5 245.0,121.0 262.5,146.3 280.0,161.8 297.5,155.2 315.0,131.0 332.5,106.7 350.0,100.1 367.5,115.6 385.0,140.9 402.5,156.4 420.0,149.8 437.5,125.6 455.0,101.3 472.5,94.7 490.0,110.2 507.5,135.5 525.0,151.0 542.5,144.5 560.0,120.2 560.0,253.1 542.5,267.5 525.0,270.7 507.5,259.7 490.0,242.4 472.5,231.4 455.0,234.6 437.5,249.0 420.0,263.5 402.5,266.6 385.0,255.7 367.5,238.4 350.0,227.4 332.5,230.5 315.0,245.0 297.5,259.5 280.0,262.6 262.5,251.6 245.0,234.3 227.5,223.4 210.0,226.5 192.5,241.0 175.0,255.4 157.5,258.6 140.0,247.6 122.5,230.3 105.0,219.3 87.5,222.5 70.0,236.9" fill="#2F5D8A" fill-opacity="0.15"/>
+<path d="M70.0,194.6 L87.5,175.8 L105.0,171.2 L122.5,184.2 L140.0,205.0 L157.5,218.1 L175.0,213.4 L192.5,194.6 L210.0,175.8 L227.5,171.2 L245.0,184.2 L262.5,205.0 L280.0,218.1 L297.5,213.4 L315.0,194.6 L332.5,175.8 L350.0,171.2 L367.5,184.2 L385.0,205.0 L402.5,218.1 L420.0,213.4 L437.5,194.6 L455.0,175.8 L472.5,171.2 L490.0,184.2 L507.5,205.0 L525.0,218.1 L542.5,213.4 L560.0,194.6" fill="none" stroke="#2F5D8A" stroke-width="2.4"/>
+<line x1="70.0" y1="310.0" x2="560.0" y2="310.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="315.0" y="332.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="middle">the 28 days the order must cover</text>
+<text xml:space="preserve" x="79.8" y="131.7" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">90% interval</text>
+<text xml:space="preserve" x="315.0" y="218.6" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">forecast</text>
+<rect x="586.0" y="60.0" width="158.0" height="250.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="600.0" y="86.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The order</text>
+<text xml:space="preserve" x="600.0" y="112.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">forecast</text>
+<text xml:space="preserve" x="600.0" y="132.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">+ safety stock</text>
+<text xml:space="preserve" x="600.0" y="152.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">− stock on hand</text>
+<text xml:space="preserve" x="600.0" y="190.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Safety stock ≈ z × spread</text>
+<text xml:space="preserve" x="600.0" y="208.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">of forecast error:</text>
+<text xml:space="preserve" x="600.0" y="234.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">90% service: z = 1.28</text>
+<text xml:space="preserve" x="600.0" y="254.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">95% service: z = 1.65</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">An illustration. Check the interval's coverage on the test period: a 90% interval should hold about 90% of days.</text>
+</g></svg>

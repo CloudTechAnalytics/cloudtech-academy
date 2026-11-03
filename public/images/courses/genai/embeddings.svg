@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Search by meaning, illustrated in two dimensions. Each help article and each question is a point; texts with similar meaning sit close together. A question about money not coming back sits near the article on reversals, even though it doesn't use that word. The nearest article is retrieved; if even the nearest is far away, the assistant says it can't help.">
+<title>Similar meanings sit close together; the nearest article answers the question.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="470.0" height="362.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="103.0" y="83.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="122.0" y="95.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Reversals</text>
+<rect x="323.0" y="103.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="342.0" y="115.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Daily limits</text>
+<rect x="143.0" y="293.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="162.0" y="305.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">KYC tiers</text>
+<rect x="373.0" y="293.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="392.0" y="305.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Card fees</text>
+<rect x="253.0" y="193.0" width="14.0" height="14.0" rx="3" fill="#2F5D8A"/>
+<text xml:space="preserve" x="272.0" y="205.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Agent cash-out</text>
+<circle cx="150.0" cy="130.0" r="7" fill="#B38A3E"/>
+<text xml:space="preserve" x="162.0" y="150.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">"my money hasn't come back"</text>
+<line x1="150.0" y1="130.0" x2="110.0" y2="90.0" stroke="#B38A3E" stroke-width="1.8" stroke-dasharray="4 3"/>
+<circle cx="420.0" cy="200.0" r="7" fill="#9B2C1F"/>
+<text xml:space="preserve" x="300.0" y="236.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">"how do I buy airtime?"</text>
+<line x1="420.0" y1="200.0" x2="380.0" y2="300.0" stroke="#9B2C1F" stroke-width="1.2" stroke-dasharray="2 4"/>
+<rect x="506.0" y="16.0" width="238.0" height="362.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="522.0" y="44.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">How to read it</text>
+<text xml:space="preserve" x="522.0" y="70.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Squares: help articles.</text>
+<text xml:space="preserve" x="522.0" y="88.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Circles: questions. Close means</text>
+<text xml:space="preserve" x="522.0" y="106.2" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">similar meaning (high cosine</text>
+<text xml:space="preserve" x="522.0" y="124.4" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">similarity).</text>
+<text xml:space="preserve" x="522.0" y="170.0" font-size="12.5" fill="#8A6A1F" font-weight="400" text-anchor="start">The gold question uses none of</text>
+<text xml:space="preserve" x="522.0" y="188.1" font-size="12.5" fill="#8A6A1F" font-weight="400" text-anchor="start">the article's words, but lands</text>
+<text xml:space="preserve" x="522.0" y="206.2" font-size="12.5" fill="#8A6A1F" font-weight="400" text-anchor="start">next to Reversals.</text>
+<text xml:space="preserve" x="522.0" y="250.0" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">The red question's nearest</text>
+<text xml:space="preserve" x="522.0" y="268.1" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">article is still far away:</text>
+<text xml:space="preserve" x="522.0" y="286.2" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">below the threshold, so the</text>
+<text xml:space="preserve" x="522.0" y="304.4" font-size="12.5" fill="#9B2C1F" font-weight="400" text-anchor="start">assistant says it can't help.</text>
+<text xml:space="preserve" x="16.0" y="412.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">An illustration. Real embeddings have hundreds of dimensions.</text>
+</g></svg>

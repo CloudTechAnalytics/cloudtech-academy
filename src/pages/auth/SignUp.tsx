@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track } from "@/lib/tracking";
 import { Link, useNavigate } from "react-router";
 import { useSeo } from "@/lib/seo";
 import { getBackend } from "@/lib/backend";
@@ -19,6 +20,8 @@ export default function SignUp() {
   const [error, setError] = useState<string | null>(null);
   const [confirm, setConfirm] = useState(false);
   const [busy, setBusy] = useState(false);
+  // While the account is being created this page doesn't redirect signed-in visitors, so the welcome step below isn't overridden.
+  const [signingUp, setSigningUp] = useState(false);
 
   const validate = (): Errors => {
     const e: Errors = {};
@@ -34,11 +37,14 @@ export default function SignUp() {
     setErrors(e);
     if (Object.keys(e).length) return;
     setBusy(true);
+    setSigningUp(true);
     try {
       const { needsConfirmation } = await (await getBackend()).signUp({ fullName: fullName.trim(), email: email.trim(), password });
+      track("sign_up");
       if (needsConfirmation) setConfirm(true);
-      else navigate(next, { replace: true });
+      else navigate(`/welcome?next=${encodeURIComponent(next)}`, { replace: true });
     } catch (err) {
+      setSigningUp(false);
       setError(err instanceof Error ? err.message : "Couldn't create your account.");
     } finally {
       setBusy(false);
@@ -59,6 +65,7 @@ export default function SignUp() {
 
   return (
     <AuthShell
+      redirectIfSignedIn={!signingUp}
       title="Create your free account"
       intro={
         <>

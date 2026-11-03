@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Date logic in SQL. Dates are stored as text in YYYY-MM-DD form, which sorts correctly. Subtracting the day numbers of two dates gives the gap in days: from 2026-03-02 to 2026-03-19 is 17 days. Grouping by the first seven characters, the year and month, buckets rows by month. But a month with no rows disappears from a GROUP BY result, so you build a calendar of every month and LEFT JOIN the data onto it: missing months then show as zero.">
+<title>Dates subtract into days; months with no rows need a calendar to appear as zero.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Gap between dates</text>
+<rect x="16.0" y="40.0" width="356.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ship_date      2026-03-02</text>
+<text xml:space="preserve" x="30.0" y="90.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">delivery_date  2026-03-19</text>
+<text xml:space="preserve" x="280.0" y="82.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="middle">17 days</text>
+<rect x="16.0" y="120.0" width="356.0" height="42.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="144.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">julianday(delivery_date) - julianday(ship_date)</text>
+<text xml:space="preserve" x="388.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Bucket by month</text>
+<rect x="388.0" y="40.0" width="356.0" height="66.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">strftime('%Y-%m', booking_date) AS month</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="11" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">-- or substr(booking_date, 1, 7)</text>
+<text xml:space="preserve" x="388.0" y="118.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-03-14  →  2026-03</text>
+<text xml:space="preserve" x="16.0" y="196.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Missing months: GROUP BY alone drops them</text>
+<rect x="16.0" y="210.0" width="180.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="24.0" y="228.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">month</text>
+<text xml:space="preserve" x="114.0" y="228.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipments</text>
+<rect x="16.0" y="236.0" width="180.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="254.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-01</text>
+<text xml:space="preserve" x="114.0" y="254.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">12</text>
+<rect x="16.0" y="262.0" width="180.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="24.0" y="280.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-02</text>
+<text xml:space="preserve" x="114.0" y="280.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<rect x="16.0" y="288.0" width="180.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-04</text>
+<text xml:space="preserve" x="114.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">15</text>
+<line x1="16.0" y1="314.0" x2="196.0" y2="314.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="16.0" y="336.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">no row for 2026-03: it disappears</text>
+<text xml:space="preserve" x="250.0" y="244.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">LEFT JOIN</text>
+<text xml:space="preserve" x="250.0" y="262.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">onto a calendar</text>
+<path d="M236.0,280.0 L330.0,280.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="340.0" y="196.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Calendar + COALESCE(n, 0)</text>
+<rect x="340.0" y="210.0" width="210.0" height="26.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="348.0" y="228.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">month</text>
+<text xml:space="preserve" x="448.0" y="228.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipments</text>
+<rect x="340.0" y="236.0" width="210.0" height="26.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="348.0" y="254.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-01</text>
+<text xml:space="preserve" x="448.0" y="254.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">12</text>
+<rect x="340.0" y="262.0" width="210.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="348.0" y="280.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-02</text>
+<text xml:space="preserve" x="448.0" y="280.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<rect x="340.0" y="288.0" width="210.0" height="26.0" rx="0" fill="#E5F0E8"/>
+<text xml:space="preserve" x="348.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-03</text>
+<text xml:space="preserve" x="448.0" y="306.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">0</text>
+<rect x="340.0" y="314.0" width="210.0" height="26.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="348.0" y="332.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2026-04</text>
+<text xml:space="preserve" x="448.0" y="332.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">15</text>
+<line x1="340.0" y1="340.0" x2="550.0" y2="340.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="340.0" y="352.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">every month shows, with a 0 where nothing was booked</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">"As of" date: use a fixed date, not today, so a report gives the same answer tomorrow.</text>
+</g></svg>

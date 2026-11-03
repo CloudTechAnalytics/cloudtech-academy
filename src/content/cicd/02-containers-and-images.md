@@ -12,7 +12,7 @@ Containers fix this. The pipeline builds the app **once** into an **image**, tes
 
 ## The concept
 
-**Images and containers**
+### Images and containers
 
 - An **image** is a packaged app with everything it needs to run: the code, its libraries, and a minimal operating system. It doesn't change once built.
 - A **container** is a running instance of an image, isolated from other containers on the same machine.
@@ -20,7 +20,9 @@ Containers fix this. The pipeline builds the app **once** into an **image**, tes
 
 Build once, run anywhere the same way: on a laptop, in testing, in production.
 
-**Dockerfiles**
+![A Dockerfile is built into an image of read-only layers (base OS, Node.js runtime, dependencies, app code), pushed to a registry with a tag, then pulled and run as three identical containers](/images/courses/cicd/image-registry.svg "Dockerfile → image → registry → containers.")
+
+### Dockerfiles
 
 A Dockerfile is the recipe for an image:
 
@@ -35,7 +37,7 @@ A Dockerfile is the recipe for an image:
 | `EXPOSE` | document the port the app listens on |
 | `CMD` | the command that starts the app |
 
-**Layers and caching**
+### Layers and caching
 
 Each instruction creates a **layer**. When you rebuild, Docker reuses layers that haven't changed, **up to the first instruction whose input changed**; everything after it is rebuilt. Order matters: put what changes least (installing dependencies) before what changes most (your code).
 

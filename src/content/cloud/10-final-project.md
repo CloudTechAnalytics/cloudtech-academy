@@ -12,7 +12,7 @@ Your final project is that review, built from the data in this course.
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |

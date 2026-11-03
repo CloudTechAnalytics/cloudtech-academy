@@ -10,17 +10,19 @@ The payment page now has four pieces of logic: the invoice total, the live balan
 
 ## The concept
 
-**Test the functions, not the clicks**
+### Test the functions, not the clicks
 
 Because the logic lives in plain functions (lessons 6 to 8), most of it can be tested without a browser page at all: call the function, compare the result.
 
-**A test is still just an assertion**
+### A test is still just an assertion
 
 Every test framework does the same thing: run named checks, report which passed and which failed.
 
-**Real projects**
+### Real projects
 
 In a project with Node.js, use a test framework: **Vitest** or **Jest** (`npm install -D vitest`, then `npx vitest`). They find `*.test.js` files, run them on every change, and can simulate a page for DOM tests. For checking whole pages in real browsers, teams use **Playwright** or Cypress. The tests you write here move into those files almost unchanged.
+
+![A test pyramid: many fast function tests with Vitest or Jest, such as checking balanceAfter, and a few whole-page tests in a real browser with Playwright or Cypress](/images/courses/webjs/testing.svg "Many fast tests of plain functions; a few tests of whole pages in a browser.")
 
 ## Example
 

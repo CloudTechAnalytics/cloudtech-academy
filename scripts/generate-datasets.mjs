@@ -2834,6 +2834,110 @@ function projectData() {
   return { tasks, weekly_status: weekly, risks, changes };
 }
 
+/* ------------------------------------------------------------------ lab (Project Manager capstone) */
+// Medlink Diagnostics is opening a diagnostic laboratory in Port Harcourt. The opening was promised to
+// the state health ministry for a fixed date. By the end of week 10 the project is behind: the analysers'
+// import is taking far longer than estimated, the licence took longer than planned, and naira costs have
+// risen. Tasks, weekly status, risks, change requests, stakeholders and recovery options. All fictional.
+function labData() {
+  seed = 20280301;
+  const T = [
+    ["A1", "Approve business case and charter", "Initiation", "Board", 2, 3, 5, "", 150000],
+    ["A2", "Sign lease for the premises", "Initiation", "Operations", 6, 8, 12, "A1", 200000],
+    ["A3", "Obtain the facility licence", "Initiation", "Regulatory", 15, 22, 45, "A2", 120000],
+    ["B1", "Design the lab layout and clean areas", "Facilities", "Facilities", 6, 8, 12, "A2", 260000],
+    ["B2", "Fit-out: floors, power and air handling", "Facilities", "Contractor", 22, 28, 45, "B1", 900000],
+    ["B3", "Order the analysers", "Equipment", "Procurement", 4, 6, 10, "B1", 110000],
+    ["B4", "Import and clear the analysers", "Equipment", "Procurement", 18, 25, 45, "B3", 420000],
+    ["B5", "Install and calibrate the analysers", "Equipment", "Contractor", 5, 7, 10, "B2;B4", 680000],
+    ["B6", "Install backup power and cold storage", "Facilities", "Contractor", 6, 8, 12, "B2", 800000],
+    ["C1", "Choose the lab information system", "Systems", "IT", 6, 8, 12, "A1", 190000],
+    ["C2", "Buy computers, scanners and label printers", "Systems", "IT", 5, 8, 15, "C1", 620000],
+    ["C3", "Install network and internet", "Systems", "IT", 4, 5, 9, "B2", 300000],
+    ["C4", "Configure the system and load the test menu", "Systems", "IT", 8, 12, 18, "C1", 260000],
+    ["C5", "Test the system with the analysers", "Systems", "IT", 4, 6, 10, "B5;C2;C3;C4", 240000],
+    ["D1", "Hire the laboratory director", "People", "HR", 15, 22, 35, "A1", 90000],
+    ["D2", "Hire 14 laboratory staff", "People", "HR", 15, 20, 30, "D1", 105000],
+    ["D3", "Train the staff", "People", "Operations", 5, 8, 10, "D2;B5", 400000],
+    ["E1", "Agree reagent supplier schedules", "Operations", "Procurement", 5, 8, 12, "A2", 100000],
+    ["E2", "Stock reagents and consumables", "Operations", "Operations", 4, 6, 9, "B5;E1", 560000],
+    ["F1", "Validate the methods and run quality checks", "Launch", "Laboratory", 8, 12, 20, "B5;B6;E2", 480000],
+    ["F2", "Pass the external accreditation inspection", "Launch", "Regulatory", 5, 8, 20, "A3;C5;F1", 350000],
+    ["F3", "Trial run with sample specimens", "Launch", "Laboratory", 4, 6, 9, "D3;F2", 520000],
+    ["F4", "Opening day", "Launch", "Operations", 1, 1, 2, "F3", 800000],
+  ];
+  const tasks = T.map(([task_id, name, phase, owner, o, m, p, preds, daily]) => ({ task_id, name, phase, owner, optimistic_days: o, likely_days: m, pessimistic_days: p, predecessors: preds, daily_cost_ngn: daily }));
+  // How long and how dear each task actually turns out, against its likely estimate.
+  const DUR = { A3: 1.5, B4: 1.5, D1: 1.3, C2: 1.2, B2: 1.1 };
+  const COST = { B4: 1.4, C2: 1.3, B2: 1.06 };
+  const byId = Object.fromEntries(tasks.map((t) => [t.task_id, t]));
+  const actual = {};
+  for (const t of tasks) {
+    const preds = t.predecessors ? t.predecessors.split(";") : [];
+    const start = preds.length ? Math.max(...preds.map((p) => actual[p].finish)) : 0;
+    const dur = Math.round(t.likely_days * (DUR[t.task_id] ?? 0.96 + rand() * 0.12));
+    actual[t.task_id] = { start, finish: start + dur, dur, costFactor: COST[t.task_id] ?? 0.98 + rand() * 0.06 };
+  }
+  const weekly = [];
+  for (let week = 1; week <= 10; week++) {
+    const dayNo = week * 5;
+    for (const t of tasks) {
+      const a = actual[t.task_id];
+      if (dayNo <= a.start) continue;
+      const done = Math.min(1, (dayNo - a.start) / a.dur);
+      const spentDays = Math.min(dayNo, a.finish) - a.start;
+      weekly.push({
+        week,
+        task_id: t.task_id,
+        percent_complete: Math.round(done * 100),
+        actual_cost_ngn: Math.round((spentDays * byId[t.task_id].daily_cost_ngn * a.costFactor) / 1000) * 1000,
+      });
+    }
+  }
+  const risks = [
+    ["R01", "Customs holds the analysers longer than expected", 0.5, 5000000, 12, "Procurement", "Hire a clearing agent; pre-file the paperwork", "open"],
+    ["R02", "Naira weakens further, raising imported equipment costs", 0.5, 7000000, 0, "Finance", "Buy dollars forward for the remaining imports", "open"],
+    ["R03", "Analysers damaged in transit", 0.08, 14000000, 25, "Procurement", "Insure the shipment; inspect at the port", "open"],
+    ["R04", "Accreditation inspector finds a major non-conformance", 0.3, 3000000, 15, "Regulatory", "Pre-inspection by a consultant", "open"],
+    ["R05", "Shortlisted scientists decline offers", 0.3, 900000, 10, "HR", "Keep a reserve list of candidates", "open"],
+    ["R06", "Grid power too unreliable for the analysers", 0.7, 2500000, 0, "Facilities", "Backup power and cold storage (task B6)", "open"],
+    ["R07", "Rainy season slows the fit-out", 0.25, 1800000, 8, "Contractor", "Do the indoor work first", "open"],
+    ["R08", "Information system will not connect to the analysers", 0.3, 1200000, 6, "IT", "Vendor support during testing", "open"],
+    ["R09", "Reagent supplier cannot deliver on time", 0.2, 1500000, 7, "Procurement", "Second supplier on standby", "open"],
+    ["R10", "Opening misses the ministry's date, with public criticism", 0.35, 10000000, 0, "Sponsor", "Protect the critical path; decide changes quickly", "open"],
+    ["R11", "Theft from the site during fit-out", 0.12, 2500000, 0, "Facilities", "Guards from day one of fit-out", "open"],
+    ["R12", "Laboratory director leaves during the project", 0.05, 1600000, 15, "HR", "Retention bonus at opening", "open"],
+    ["R13", "Licence conditions change mid-application", 0.15, 800000, 10, "Regulatory", "Weekly contact with the licensing office", "closed"],
+  ].map(([risk_id, description, probability, impact_ngn, impact_days, owner, response, status]) => ({ risk_id, description, probability, impact_ngn, impact_days, owner, response, status }));
+  const changes = [
+    ["CR1", 9, "Add a molecular testing room with its own air handling", "Medical director", "B2", 14, 16000000],
+    ["CR2", 9, "Hire 3 more phlebotomists for longer collection hours", "Operations", "", 0, 2100000],
+    ["CR3", 10, "Pay the contractor for weekend working on the fit-out", "Project manager", "B2", -5, 3200000],
+    ["CR4", 10, "Upgrade the information system to include a patient portal", "IT", "C4", 6, 4800000],
+    ["CR5", 10, "Ship the analysers by air instead of sea", "Procurement", "B4", -9, 5500000],
+    ["CR6", 10, "Add a home-collection van and route software", "Sales", "", 0, 3600000],
+  ].map(([change_id, requested_week, description, requested_by, affects_task, extra_days, extra_cost_ngn]) => ({ change_id, requested_week, description, requested_by, affects_task, extra_days, extra_cost_ngn, decision: "pending" }));
+  const stakeholders = [
+    ["Managing director (sponsor)", "Medlink", "High", "High", "The ministry date", "I promised the commissioner an opening on 1 March. I need to know now whether I can keep that promise."],
+    ["State commissioner for health", "Government", "High", "Medium", "Public access to testing", "The state has been waiting two years for a lab like this. A date given in public is a date kept."],
+    ["Medical director", "Medlink", "Medium", "High", "Test menu and quality", "I will not open a lab that can't run the full menu. People's treatment depends on these results."],
+    ["Chief financial officer", "Medlink", "High", "Medium", "Budget", "The budget was approved once. Every extra naira has to be explained, and I will not be surprised again."],
+    ["Licensing office", "Regulator", "High", "Low", "Compliance", "We inspect when the paperwork is complete, not when you would like us to."],
+    ["Head of procurement", "Medlink", "Medium", "High", "Import costs", "The analysers are stuck in clearance and the naira moved against us. I can only do so much from here."],
+    ["Laboratory director", "Medlink", "Medium", "High", "Readiness of the team", "I can train people only once the equipment is in the building."],
+    ["Local community leaders", "Community", "Low", "Medium", "Jobs and access", "People want to know when the lab opens and whether local people will be hired."],
+  ].map(([stakeholder, group, influence, interest, concern, quote]) => ({ stakeholder, group, influence, interest, concern, quote }));
+  const options = [
+    ["O1", "Carry on as planned", "Keep the plan and the current resources. No extra cost.", 0, 0, "No change to the forecast date."],
+    ["O2", "Fly the analysers in", "Pay for air freight and priority customs clearance of the analysers (CR5).", 5500000, 9, "Applies to the analyser import (B4). Risk of damage in transit remains."],
+    ["O3", "Weekend working on the fit-out", "Pay the contractor for weekend shifts on the fit-out (CR3).", 3200000, 5, "Applies to the fit-out (B2). Helps only if the fit-out is on the critical path."],
+    ["O4", "Start reagent stocking early", "Stock reagents while the analysers are being installed instead of after.", 450000, 4, "Overlaps E2 with B5. Reagents must be stored cold from delivery."],
+    ["O5", "Open with a reduced test menu", "Open with the 60% most requested tests, validating the rest after opening.", 1200000, 6, "Shortens validation (F1). Needs the medical director's agreement."],
+    ["O6", "Add a molecular testing room first", "Build the molecular room before opening (CR1).", 16000000, -14, "Adds 14 days. Not a recovery option."],
+  ].map(([option_id, option, description, extra_cost_ngn, days_saved, notes]) => ({ option_id, option, description, extra_cost_ngn, days_saved, notes }));
+  return { tasks, weekly_status: weekly, risks, changes, stakeholders, options };
+}
+
 /* ------------------------------------------------------------------ product (a wallet's product data) */
 // Paystream's product data for the product management course: eight weeks of signups with
 // their onboarding steps and weekly activity, user feedback from four sources, coded
@@ -3836,6 +3940,11 @@ for (const [table, rows] of Object.entries(assistantData())) writeCsv("assistant
   const { csvs, text } = refundsData();
   for (const [table, rows] of Object.entries(csvs)) writeCsv("refunds", table, rows);
   for (const [name, body] of Object.entries(text)) writeText("refunds", name, body);
+}
+
+{
+  const lab = labData();
+  for (const [table, rows] of Object.entries(lab)) writeCsv("lab", table, rows);
 }
 
 // Summary for the build log

@@ -12,13 +12,13 @@ The model didn't "hack" anything. The tool allowed it. Tool design is where most
 
 ## The concept
 
-**A tool definition has three parts**
+### A tool definition has three parts
 
 - a **name** the model uses to call it (`get_transfer`);
 - a **description** that tells the model when and how to use it: this is a prompt, and it matters as much as any prompt;
 - an **input schema** (JSON Schema) listing the arguments, their types and which are required.
 
-**Principles for good tools**
+### Principles for good tools
 
 | Principle | Example |
 | :-- | :-- |
@@ -27,6 +27,8 @@ The model didn't "hack" anything. The tool allowed it. Tool design is where most
 | **Errors as data** | return `{"error": "not_found"}` so the model can ask the customer to check the ID, rather than crashing |
 | **Return what's needed** | the status and amount, not the full record with other people's details |
 | **Validate inputs** | reject a transfer ID that isn't in the right format before touching the database |
+
+![A JSON tool definition for get_transfer with its name, description and input schema, beside a list of good-tool principles. account_id comes from the session, not from the model.](/images/courses/agents/tool-definition.svg "A tool definition has three parts; the description is a prompt in itself.")
 
 ## Example
 

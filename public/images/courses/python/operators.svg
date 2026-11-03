@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Arithmetic with 17 and 5. Addition gives 22, subtraction 12, multiplication 85, power, 2 to the 5, is 32, division 17 slash 5 gives 3.4 (always a float), floor division 17 double slash 5 gives 3, and the remainder, percent, gives 2, because 5 goes into 17 three times with 2 left over. Order of operations: 10 minus 2 times 3 to the power 2 works out the power first, 9, then the multiplication, 18, then the subtraction, giving negative 8. Brackets change the order.">
+<title>The operators, with 17 and 5, and the order Python works things out.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="26.0" y="32.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="45.0" y="53.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">+</text>
+<text xml:space="preserve" x="74.0" y="52.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 + 5 → 22</text>
+<text xml:space="preserve" x="30.0" y="80.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">add</text>
+<rect x="200.0" y="20.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="210.0" y="32.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="229.0" y="53.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="258.0" y="52.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 - 5 → 12</text>
+<text xml:space="preserve" x="214.0" y="80.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">subtract</text>
+<rect x="384.0" y="20.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="394.0" y="32.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="413.0" y="53.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">*</text>
+<text xml:space="preserve" x="442.0" y="52.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 * 5 → 85</text>
+<text xml:space="preserve" x="398.0" y="80.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">multiply</text>
+<rect x="568.0" y="20.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="578.0" y="32.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="597.0" y="53.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">**</text>
+<text xml:space="preserve" x="626.0" y="52.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2 ** 5 → 32</text>
+<text xml:space="preserve" x="582.0" y="80.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">power</text>
+<rect x="16.0" y="104.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="26.0" y="116.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="45.0" y="137.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">/</text>
+<text xml:space="preserve" x="74.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 / 5 → 3.4</text>
+<text xml:space="preserve" x="30.0" y="164.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">divide: always a float</text>
+<rect x="200.0" y="104.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="210.0" y="116.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="229.0" y="137.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">//</text>
+<text xml:space="preserve" x="258.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 // 5 → 3</text>
+<text xml:space="preserve" x="214.0" y="164.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">whole-number division</text>
+<rect x="384.0" y="104.0" width="172.0" height="72.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<rect x="394.0" y="116.0" width="38.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="413.0" y="137.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">%</text>
+<text xml:space="preserve" x="442.0" y="136.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">17 % 5 → 2</text>
+<text xml:space="preserve" x="398.0" y="164.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">remainder</text>
+<rect x="560.0" y="104.0" width="184.0" height="72.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="574.0" y="126.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">17 // 5 = 3 and 17 % 5 =</text>
+<text xml:space="preserve" x="574.0" y="143.4" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">2: 5 × 3 + 2 = 17.</text>
+<text xml:space="preserve" x="16.0" y="214.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Order of operations: powers, then × ÷ // %, then + −</text>
+<rect x="16.0" y="228.0" width="168.0" height="68.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="100.0" y="258.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">10 - 2 * 3 ** 2</text>
+<text xml:space="preserve" x="100.0" y="282.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">start</text>
+<path d="M186.0,262.0 L198.0,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="200.0" y="228.0" width="168.0" height="68.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="284.0" y="258.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">10 - 2 * 9</text>
+<text xml:space="preserve" x="284.0" y="282.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">power first</text>
+<path d="M370.0,262.0 L382.0,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="384.0" y="228.0" width="168.0" height="68.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="468.0" y="258.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">10 - 18</text>
+<text xml:space="preserve" x="468.0" y="282.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">then multiply</text>
+<path d="M554.0,262.0 L566.0,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="568.0" y="228.0" width="168.0" height="68.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="652.0" y="258.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-8</text>
+<text xml:space="preserve" x="652.0" y="282.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">then subtract</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Brackets win: (10 - 2) * 3 ** 2 = 8 * 9 = 72.</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Floats can look odd: 0.1 + 0.2 shows 0.30000000000000004. Use round() to tidy results, and integers (kobo) for exact money.</text>
+</g></svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" role="img" aria-label="A sample product listing with six numbered parts to check: the product title and photos, the price tiers, the minimum order quantity, the supplier type and years on the platform, the sample and customisation options, and the payment protection offered.">
+<title>How to read a supplier listing: the parts to check before you message anyone.</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="500" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16" y="16" width="440" height="462" rx="12" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="32" y="32" width="160" height="130" rx="8" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1"/>
+<text x="112" y="102.0" font-size="12" fill="#8A6A1F" font-weight="600" text-anchor="middle">Product photos</text>
+<text x="208" y="52.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Wireless earbuds, Bluetooth 5.3</text>
+<text x="208" y="70.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Charging case, 20-hour battery</text>
+<rect x="208" y="84" width="232" height="78" rx="6" fill="#F5F2EA"/>
+<text x="220" y="104.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">1-99 pcs</text>
+<text x="432" y="104.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="end">$6.80</text>
+<text x="220" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">100-499 pcs</text>
+<text x="432" y="124.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="end">$5.90</text>
+<text x="220" y="144.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">500+ pcs</text>
+<text x="432" y="144.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="end">$5.20</text>
+<text x="32" y="192.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Minimum order: 100 pieces</text>
+<text x="32" y="216.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Lead time: 7 days for 100-499 pieces</text>
+<line x1="32" y1="232" x2="440" y2="232" stroke="#DDD6C6" stroke-width="1"/>
+<text x="32" y="254.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Shenzhen Example Electronics Co., Ltd.</text>
+<text x="32" y="273.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Manufacturer  |  8 years  |  Verified  |  Reply within 4 hours</text>
+<line x1="32" y1="290" x2="440" y2="290" stroke="#DDD6C6" stroke-width="1"/>
+<text x="32" y="312.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Samples available  |  Logo printing  |  Custom colours</text>
+<line x1="32" y1="328" x2="440" y2="328" stroke="#DDD6C6" stroke-width="1"/>
+<text x="32" y="350.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Order protection: payment held until delivery</text>
+<rect x="32" y="376" width="408" height="36" rx="8" fill="#1F6F43"/>
+<text x="236" y="399.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">Contact supplier</text>
+<text x="32" y="440.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">An illustration, not a real listing. Always check the supplier profile page.</text>
+<circle cx="486" cy="60" r="13" fill="#8A6A1F"/>
+<text x="486" y="65.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text x="508" y="58.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Title and photos</text>
+<text x="508" y="74.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Do they match what you want? Ask</text>
+<text x="508" y="87.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">for real photos.</text>
+<circle cx="486" cy="128" r="13" fill="#8A6A1F"/>
+<text x="486" y="133.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text x="508" y="126.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Price tiers</text>
+<text x="508" y="142.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">The price falls as you buy more.</text>
+<text x="508" y="155.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Plan for the tier you can afford.</text>
+<circle cx="486" cy="196" r="13" fill="#8A6A1F"/>
+<text x="486" y="201.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text x="508" y="194.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Minimum order</text>
+<text x="508" y="210.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Your first order may need to be</text>
+<text x="508" y="223.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">the minimum, so check it fits your</text>
+<text x="508" y="237.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">budget.</text>
+<circle cx="486" cy="264" r="13" fill="#8A6A1F"/>
+<text x="486" y="269.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text x="508" y="262.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Who is selling</text>
+<text x="508" y="278.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Manufacturer or trader? Years</text>
+<text x="508" y="291.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">active and verification help, but</text>
+<text x="508" y="305.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">are not proof.</text>
+<circle cx="486" cy="332" r="13" fill="#8A6A1F"/>
+<text x="486" y="337.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text x="508" y="330.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Samples</text>
+<text x="508" y="346.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Order one before the bulk order,</text>
+<text x="508" y="359.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">and ask what customising costs.</text>
+<circle cx="486" cy="400" r="13" fill="#8A6A1F"/>
+<text x="486" y="405.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text x="508" y="398.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Payment protection</text>
+<text x="508" y="414.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Pay through the platform so the</text>
+<text x="508" y="427.5" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">money is held until delivery.</text>
+</g>
+</svg>

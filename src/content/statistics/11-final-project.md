@@ -14,7 +14,7 @@ A review like that needs everything in this course: the right averages and sprea
 
 ## The concept
 
-**From questions to statistics**
+### From questions to statistics
 
 Each of the director's questions maps to a tool:
 
@@ -26,7 +26,7 @@ Each of the director's questions maps to a tool:
 | Is anything getting better or worse? | Two-proportion test, 2025 against 2026 | 9 |
 | What should a quote look like? | Regression of charge on containers, for one route | 10 |
 
-**Definitions first**
+### Definitions first
 
 State them at the top of your workbook, because every number depends on them:
 
@@ -34,7 +34,7 @@ State them at the top of your workbook, because every number depends on them:
 - **On time** = transit days ≤ the route's `target_transit_days`.
 - **Year** = the year of `booking_date`. 2026 runs from January to August only.
 
-**A fair comparison**
+### A fair comparison
 
 Routes have very different targets: one day for Lagos–Ibadan by road, 42 for Shanghai–Onne by sea. Comparing raw transit times across routes is meaningless; compare on-time rates, or days late against each route's own target. And watch for small routes: a route with 36 deliveries has a wide confidence interval.
 

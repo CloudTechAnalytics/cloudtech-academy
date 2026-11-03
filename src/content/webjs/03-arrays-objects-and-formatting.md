@@ -10,7 +10,7 @@ When a customer opens the portal, the page receives their invoices from the API 
 
 ## The concept
 
-**Objects and arrays**
+### Objects and arrays
 
 ```js norun
 const invoice = { id: "INV-100357", dueDate: "2026-08-03", totalKobo: 4250458, paidKobo: 0 };
@@ -18,7 +18,7 @@ const invoices = [invoice, /* ... */];
 invoice.totalKobo;                 // read a property
 ```
 
-**Array methods**
+### Array methods
 
 | Method | Returns |
 | :-- | :-- |
@@ -28,11 +28,13 @@ invoice.totalKobo;                 // read a property
 | `toSorted(fn)` | a sorted copy (`sort` sorts in place) |
 | `find(fn)` | the first matching item |
 
-**Intl**
+![Four example invoices: filter drops the two fully paid ones, map turns the other two into balances of 100,000 and 80,000 kobo, reduce adds them to 180,000 kobo, and Intl formats it as ₦1,800.00](/images/courses/webjs/filter-map-reduce.svg "filter, map, reduce, then format: four invoices to one amount owed.")
+
+### Intl
 
 `Intl.NumberFormat` and `Intl.DateTimeFormat` format numbers, currencies and dates for a locale, such as `en-NG`.
 
-**JSON**
+### JSON
 
 `JSON.parse(text)` turns API text into objects; `JSON.stringify(value)` turns objects into text.
 

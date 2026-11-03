@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="The Terraform workflow. terraform init downloads providers and connects to the state. terraform fmt and validate tidy and check the code. terraform plan shows what would change without changing anything. terraform apply makes the changes, after review, and updates the state.">
+<title>init, then fmt and validate, then plan, then apply.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="165.5" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">terraform init</text>
+<text xml:space="preserve" x="28.0" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">download providers;</text>
+<text xml:space="preserve" x="28.0" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">connect to state</text>
+<path d="M184.5,85.0 L200.5,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="203.5" y="30.0" width="165.5" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="215.5" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">fmt, validate</text>
+<text xml:space="preserve" x="215.5" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">tidy and check the</text>
+<text xml:space="preserve" x="215.5" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">code</text>
+<path d="M372.0,85.0 L388.0,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="391.0" y="30.0" width="165.5" height="110.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="403.0" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">terraform plan</text>
+<text xml:space="preserve" x="403.0" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">show what would</text>
+<text xml:space="preserve" x="403.0" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">change; changes</text>
+<text xml:space="preserve" x="403.0" y="114.8" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">nothing</text>
+<path d="M559.5,85.0 L575.5,85.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="578.5" y="30.0" width="165.5" height="110.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="590.5" y="56.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">terraform apply</text>
+<text xml:space="preserve" x="590.5" y="80.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">make the changes;</text>
+<text xml:space="preserve" x="590.5" y="97.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">update state</text>
+<text xml:space="preserve" x="16.0" y="190.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Plan is safe to run any time: it only reads. Apply changes real infrastructure, so it runs after the plan</text>
+<text xml:space="preserve" x="16.0" y="208.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">has been reviewed, ideally from the pipeline, not a laptop.</text>
+<rect x="16.0" y="230.0" width="728.0" height="44.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="254.0" font-size="13" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">terraform plan -var-file=production.tfvars.json -out=plan.out</text>
+</g></svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" role="img" aria-label="A value stream timeline for Harbourline's clearance before the pilot. Each step shows the wait before it as a long pale bar and its process time as a short dark bar: check documents waits 22.1 hours and takes 2.0; the correction loop, for incomplete files, waits about 72 hours and takes 1.5; the customs declaration waits 18.2 and takes 1.5; duty assessment waits 30.5 and takes 1.0; confirming duty payment waits 46.1 and takes 0.5; physical inspection, for Red channel, waits 42.1 and takes 3.0; release waits 27.2 and takes 1.5. Waiting dwarfs work at every step.">
+<title>Waiting versus working at each step of the clearance value stream.</title>
+
+<rect width="760" height="500" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Wait before each step (pale) and hands-on process time (dark), hours</text>
+<text xml:space="preserve" x="238.0" y="69.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Check documents</text>
+<rect x="250.0" y="56.0" width="106.1" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="356.1" y="56.0" width="9.6" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="373.7" y="70.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 22.1 · work 2</text>
+<text xml:space="preserve" x="238.0" y="121.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end">Correction loop (if incomplete)</text>
+<rect x="250.0" y="108.0" width="345.6" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="595.6" y="108.0" width="7.2" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="610.8" y="122.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 72 · work 1.5</text>
+<text xml:space="preserve" x="238.0" y="173.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Customs declaration</text>
+<rect x="250.0" y="160.0" width="87.4" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="337.4" y="160.0" width="7.2" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="352.6" y="174.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 18.2 · work 1.5</text>
+<text xml:space="preserve" x="238.0" y="225.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Duty assessment</text>
+<rect x="250.0" y="212.0" width="146.4" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="396.4" y="212.0" width="4.8" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="409.2" y="226.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 30.5 · work 1</text>
+<text xml:space="preserve" x="238.0" y="277.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Confirm duty payment</text>
+<rect x="250.0" y="264.0" width="221.3" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="471.3" y="264.0" width="3.0" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="481.7" y="278.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 46.1 · work 0.5</text>
+<text xml:space="preserve" x="238.0" y="329.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="end">Physical inspection (Red)</text>
+<rect x="250.0" y="316.0" width="202.1" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="452.1" y="316.0" width="14.4" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="474.5" y="330.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 42.1 · work 3</text>
+<text xml:space="preserve" x="238.0" y="381.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="end">Release and gate-out</text>
+<rect x="250.0" y="368.0" width="130.6" height="18.0" rx="3" fill="#E9DFC9"/>
+<rect x="380.6" y="368.0" width="7.2" height="18.0" rx="2" fill="#8A6A1F"/>
+<text xml:space="preserve" x="395.8" y="382.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">wait 27.2 · work 1.5</text>
+<line x1="250.0" y1="420.0" x2="610.0" y2="420.0" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="250.0" y="438.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">0h</text>
+<text xml:space="preserve" x="365.2" y="438.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">24h</text>
+<text xml:space="preserve" x="480.4" y="438.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">48h</text>
+<text xml:space="preserve" x="595.6" y="438.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">72h</text>
+<text xml:space="preserve" x="16.0" y="470.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Bold steps happen only for some clearances. Every step waits many times longer than it works: the</text>
+<text xml:space="preserve" x="16.0" y="488.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">improvement is in the waits.</text>
+</g></svg>

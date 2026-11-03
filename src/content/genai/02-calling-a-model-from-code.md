@@ -12,7 +12,7 @@ That means an **API**: your code sends a request to the model provider and gets 
 
 ## The concept
 
-**The parts of a request**
+### The parts of a request
 
 | Part | What it does |
 | :-- | :-- |
@@ -22,17 +22,19 @@ That means an **API**: your code sends a request to the model provider and gets 
 | **max_tokens** | the most tokens the model may write in its answer |
 | **temperature** | randomness: low for consistent, factual tasks |
 
-**Keep keys out of code**
+### Keep keys out of code
 
 An API key is a password that spends money. Never type it into a notebook or commit it to GitHub. In Google Colab, store it under **Secrets** (the key icon) and read it with `userdata.get(...)`. Anyone who gets your key can run up charges on your account.
 
-**Estimating cost**
+### Estimating cost
 
 Providers charge per million tokens, with output tokens usually priced several times higher than input. For a feature:
 
 > monthly cost = requests per month × (input tokens × input price + output tokens × output price)
 
 Always use the provider's **current** price list. The prices in this course are illustrative assumptions for practice, not real prices.
+
+![A request box with model, system, messages, max_tokens and temperature, an arrow to a response box with the generated text and token usage, and a warning to keep the API key in Colab Secrets.](/images/courses/genai/request-anatomy.svg "The parts of a request, and what you pay for in the response.")
 
 ## Example
 

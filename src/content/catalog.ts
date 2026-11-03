@@ -5,6 +5,7 @@
  */
 
 import type { Level } from "./tracks";
+import { BUSINESS_COURSES } from "./business-courses.ts";
 
 export type Difficulty = "beginner" | "intermediate" | "advanced";
 export type CourseStatus = "available" | "coming_soon";
@@ -27,7 +28,23 @@ export const CATEGORIES: Category[] = [
   { id: "business-analysis", name: "Business Analysis", description: "Requirements, processes and decisions." },
   { id: "project-management", name: "Product & Project Management", description: "Planning, delivering and steering projects and products." },
   { id: "cloud", name: "Cloud & Technology", description: "Cloud platforms, cost, reliability and security." },
+  { id: "business-entrepreneurship", name: "Business & Entrepreneurship", description: "Starting, running, marketing and selling for a business." },
+  { id: "trade-logistics", name: "Trade & Logistics", description: "Importing, exporting, procurement, freight and supply chains." },
+  { id: "professional-skills", name: "Professional Skills", description: "The skills that make people effective at work: managing, serving, organising and accounting." },
 ];
+
+/**
+ * The four areas of the Academy. A category belongs to a division; every category that is not listed under Business, Trade or
+ * Professional Skills is part of Data & Technology, so the existing courses need no change.
+ */
+export type Division = { id: string; name: string; blurb: string; categoryIds: string[] };
+export const DIVISIONS: Division[] = [
+  { id: "data-tech", name: "Data & Technology", blurb: "Data, analytics, AI, coding, cloud and the digital skills behind them.", categoryIds: [] },
+  { id: "business", name: "Business & Entrepreneurship", blurb: "Start, run, market and grow a business.", categoryIds: ["business-entrepreneurship"] },
+  { id: "trade", name: "Trade & Logistics", blurb: "Import, export, procure, ship and manage supply chains.", categoryIds: ["trade-logistics"] },
+  { id: "professional", name: "Professional Skills", blurb: "Manage projects and people, serve clients, run an office and keep the books.", categoryIds: ["professional-skills"] },
+];
+export const divisionOf = (categoryId: string) => DIVISIONS.find((d) => d.categoryIds.includes(categoryId)) ?? DIVISIONS[0];
 
 export type CertificateRules = {
   enabled: boolean;
@@ -49,9 +66,60 @@ export type ModuleDef = {
   badgeCode?: string;
   /** Skills shown on the module badge's public credential page. */
   skills?: string[];
+  /** What the module covers, one line each. Lets the curriculum of a course still being written be shown in full. */
+  topics?: string[];
 };
 
-export type CourseDef = {
+/** A free course teaches one skill or an introduction. A professional course is a complete, structured, paid programme. */
+export type CourseType = "free" | "professional";
+export type AccessType = "free" | "paid";
+export type DeliveryType = "self_paced" | "instructor_led" | "hybrid";
+
+/** What a professional course's sales page shows. Everything here is optional: a page shows only what an admin filled in. */
+export type CourseSalesFields = {
+  /** What the course is: free (default) or a professional programme. A professional course is always paid. */
+  courseType?: CourseType;
+  /** Free (default) or paid. Paid courses' lessons are locked until the learner pays or an admin grants access. */
+  access?: AccessType;
+  price?: number | null;
+  currency?: string;
+  discountPrice?: number | null;
+  discountActive?: boolean;
+  /** "paused" stops new payments without hiding the course. */
+  paymentStatus?: "active" | "paused";
+  deliveryType?: DeliveryType;
+  enrollmentStatus?: "open" | "closed";
+  /** ISO date-times; empty means no limit. */
+  enrollmentStart?: string | null;
+  enrollmentEnd?: string | null;
+  /** Name of the promotion shown beside the price, e.g. "Early Bird". */
+  discountLabel?: string;
+  /** ISO date-times; the promotional price applies only inside them. Empty means no limit. */
+  discountStart?: string | null;
+  discountEnd?: string | null;
+  /** Shown only when the course really includes them. */
+  communityAccess?: boolean;
+  instructorSupport?: boolean;
+  /** e.g. "12 weeks" or "40 hours". */
+  durationLabel?: string;
+  publishedAt?: string | null;
+  overview?: string;
+  audience?: string[];
+  outcomes?: string[];
+  /** What's included, one line each. Only list what CloudTech actually provides. */
+  included?: string[];
+  projectPreviews?: { title: string; summary: string }[];
+  instructor?: { name: string; title: string; bio: string };
+  professionalOutcome?: string;
+  /** Programmes only: learners may pay in two parts. The first part opens the programme; the second falls due later. */
+  allowInstalments?: boolean;
+  /** Share of the price paid in the first part, in percent (10 to 90). */
+  firstPercent?: number;
+  /** Days after the first part is confirmed that the second part falls due. */
+  secondDueDays?: number;
+};
+
+export type CourseDef = CourseSalesFields & {
   id: string;
   /** "short": modules of 15–30 minutes, each with a check and a badge. "full": longer lessons with practice. Default "full". */
   format?: "full" | "short";
@@ -65,6 +133,15 @@ export type CourseDef = {
   description: string;
   categoryId: string;
   difficulty: Difficulty;
+  /** The top of the level range, e.g. a course for "Beginner to Intermediate" has difficulty beginner and difficultyMax intermediate. */
+  difficultyMax?: Difficulty;
+  /** Length in weeks, for filtering (a 3 month course is 12). Short courses leave it empty and show hours. */
+  durationWeeks?: number;
+  /** A picture for the course card and page (a web address). */
+  thumbnail?: string;
+  faqs?: { q: string; a: string }[];
+  /** Archived courses leave the catalogue but stay open to people already enrolled. */
+  archived?: boolean;
   /** 1 Foundations, 2 Practical Skills, 3 Professional, 4 Career Projects (see LEVELS in tracks.ts). */
   level: Level;
   levelLabel: string;
@@ -105,7 +182,7 @@ const shortRules: CertificateRules = {
   passingScore: 60,
 };
 
-export const COURSES: CourseDef[] = [
+const ALL_COURSES: CourseDef[] = [
   {
     id: "ai-productivity-fundamentals",
     slug: "ai-productivity-fundamentals",
@@ -113,9 +190,9 @@ export const COURSES: CourseDef[] = [
     code: "AIPF",
     title: "AI Productivity Fundamentals",
     completionBadge: "AI Productivity Fundamentals",
-    summary: "Use AI tools to research, write and create faster: prompting, Claude, ChatGPT and presentations, in four short modules.",
+    summary: "Use AI tools to research, write and create faster: what AI is and how it works, a prompt framework with a full worked example, then Claude, ChatGPT and presentations.",
     description:
-      "Learn practical ways to use AI assistants at work, at school and in your business. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
+      "Learn practical ways to use AI assistants at work, at school and in your business, starting from what AI really is. Write prompts that get useful answers, work with your own documents in Claude, research with sources in ChatGPT, and turn an idea into a presentation. Each module takes about 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
     categoryId: "ai-productivity",
     difficulty: "beginner",
     level: 1,
@@ -126,7 +203,7 @@ export const COURSES: CourseDef[] = [
     prerequisites: ["No experience needed", "A free account with any AI assistant, such as ChatGPT or Claude"],
     certificate: shortRules,
     modules: [
-      { id: "aipf-m01", title: "Prompting Essentials", lessons: ["prompting-essentials"], badge: "Prompting Essentials", badgeCode: "PROMPT", skills: ["Write a prompt with context, task and format", "Give examples so the AI matches your style", "Improve a weak answer instead of starting again", "Check AI answers before you use them"] },
+      { id: "aipf-m01", title: "AI Foundations and Prompting", lessons: ["what-is-ai", "how-ai-works", "the-prompt-framework", "worked-example", "prompting-essentials"], badge: "Prompting Essentials", badgeCode: "PROMPT", skills: ["Explain what AI is, its main types and how a chat assistant works", "Write a prompt with role, context, task, rules and format", "Work a real task through from goal to checked result", "Check AI answers before you use them"] },
       { id: "aipf-m02", title: "Using Claude", lessons: ["using-claude"], badge: "Claude AI Essentials", badgeCode: "CLAUDE", skills: ["Start a conversation and follow up well", "Summarise and question a document you upload", "Rewrite text for a different reader or tone", "Keep ongoing work organised in a project"] },
       { id: "aipf-m03", title: "Using ChatGPT", lessons: ["using-chatgpt"], badge: "ChatGPT Essentials", badgeCode: "CHATGPT", skills: ["Ask focused questions and refine the answer", "Use files and images in a chat", "Research with sources you can check", "Save your preferences so every chat starts better"] },
       { id: "aipf-m04", title: "Presentations with AI", lessons: ["presentations-with-ai"], badge: "AI Presentations", badgeCode: "SLIDES", skills: ["Get a slide-by-slide outline from an AI assistant", "Write short, clear slide text and speaker notes", "Build the deck quickly in PowerPoint, Google Slides or Canva", "Check the facts and make it sound like you"] },
@@ -264,24 +341,27 @@ export const COURSES: CourseDef[] = [
     slug: "git-and-github-for-beginners",
     format: "short",
     code: "GIT",
-    title: "Git & GitHub for Beginners",
+    title: "Git & GitHub: From First Commit to Pull Request",
     completionBadge: "Git & GitHub",
-    summary: "Track your work with Git, put projects on GitHub and turn your profile into a portfolio employers can check.",
+    summary: "Learn Git the way professionals use it: commits, branches, merging, conflicts, undoing mistakes, GitHub, pull requests and automation, practising real commands in a terminal built into the lesson, and finish with a portfolio employers can check.",
     description:
-      "Learn what version control is and why every developer and data analyst uses it. Create repositories and commit changes in your browser, publish projects from your computer with GitHub Desktop, and write READMEs that show off your work. Each module takes 15 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
+      "Version control is a skill every developer, data analyst and web professional is expected to have. This course teaches Git properly, with no experience needed. Twelve lessons take you from what Git is and how it thinks (the working folder, the staging area and the repository) through the everyday loop of status, add, commit and log; diffs, good commit messages and .gitignore; undoing mistakes with restore, amend, reset, revert and stash; branches, merging and resolving conflicts; connecting to GitHub with push, pull and clone; pull requests and code review; issues, project files and keeping secrets safe; GitHub Pages and GitHub Actions; and turning your profile into a portfolio. In every lesson you type real Git commands in a practice terminal inside the page, edit files beside it, and your repository is checked when you finish. You also practise a full day on a team: an urgent bug, a conflict with a teammate and a tagged release. Each module has a check and a badge.",
     categoryId: "coding",
     difficulty: "beginner",
     level: 1,
-    levelLabel: "Beginner",
+    levelLabel: "Beginner to intermediate",
+    estimatedHours: 6,
     isFree: true,
     status: "available",
-    skills: ["Version control with Git", "Repositories, commits, push and pull", "Writing a good README", "A GitHub profile that works as a portfolio"],
-    prerequisites: ["No experience needed", "A free GitHub account"],
+    skills: ["The Git workflow: add, commit, log and diff", "Branching, merging and resolving conflicts", "Undoing mistakes safely", "GitHub: push, pull, clone and pull requests", "Keeping secrets out of repositories", "GitHub Pages and Actions", "A GitHub profile that works as a portfolio"],
+    prerequisites: ["No experience needed", "A free GitHub account", "A computer where you can install Git (optional: the practice terminal runs in the lesson)"],
+    projectTitle: "A professional GitHub repository with a real workflow",
     certificate: shortRules,
     modules: [
-      { id: "git-m01", title: "What Git and GitHub Are", lessons: ["what-git-and-github-are"], badge: "Git Basics", badgeCode: "GITBASIC", skills: ["Explain version control", "Tell Git and GitHub apart", "Use the key words: repo, commit, push, pull", "Set up a secure GitHub account"] },
-      { id: "git-m02", title: "Your First Repository", lessons: ["your-first-repository"], badge: "First Repository", badgeCode: "FIRSTREP", skills: ["Create a repository", "Add, upload and edit files", "Write clear commit messages", "Read the commit history"] },
-      { id: "git-m03", title: "Show Your Projects on GitHub", lessons: ["show-projects-on-github"], badge: "GitHub Portfolio", badgeCode: "GITHUB", skills: ["Push projects with GitHub Desktop", "Know the basic Git commands", "Write a README that sells a project", "Pin projects and write a profile README"] },
+      { id: "git-m01", title: "Git Fundamentals", lessons: ["what-git-and-github-are", "your-first-repository", "staging-history-gitignore", "undoing-mistakes"], badge: "Git Basics", badgeCode: "GITBASIC", skills: ["Explain version control and how Git thinks", "Use init, status, add, commit and log", "Compare changes and keep secrets out with .gitignore", "Undo mistakes with restore, amend, reset, revert and stash"] },
+      { id: "git-m02", title: "Branching and Merging", lessons: ["branches", "merge-conflicts"], badge: "Git Branching", badgeCode: "BRANCHES", skills: ["Create, switch, merge and delete branches", "Keep main always working", "Read conflict markers and resolve conflicts", "Abort a merge and avoid conflicts"] },
+      { id: "git-m03", title: "GitHub and Collaboration", lessons: ["github-remotes", "pull-requests", "collaboration-security"], badge: "GitHub Collaboration", badgeCode: "GITTEAM", skills: ["Connect to GitHub with push, pull and clone", "Open and review pull requests", "Write issues and professional project files", "Handle secrets and access safely"] },
+      { id: "git-m04", title: "Automation, Portfolio and Workflow", lessons: ["github-pages-actions", "show-projects-on-github", "team-workflow-capstone"], badge: "GitHub Portfolio", badgeCode: "GITHUB", skills: ["Publish with GitHub Pages and automate with Actions", "Present projects with READMEs and a profile", "Handle an urgent bug, a conflict and a release", "Follow a professional Git workflow"] },
     ],
   },
   {
@@ -289,25 +369,27 @@ export const COURSES: CourseDef[] = [
     slug: "web-development-for-beginners",
     format: "short",
     code: "WEB",
-    title: "Web Development for Beginners",
+    title: "Web Development: HTML, CSS, JavaScript and Bootstrap",
     completionBadge: "Web Development Basics",
-    summary: "Learn HTML, CSS and JavaScript by building your own personal website, then publish it free with GitHub Pages.",
+    summary: "Learn to build real websites from scratch. Write HTML, style it with CSS, add behaviour with JavaScript and speed up with Bootstrap, practising in a live editor that shows what you build as you type, then publish it free.",
     description:
-      "Build a real website from scratch. Structure a page with HTML, style it with CSS, add interaction with JavaScript, and publish it at your own free web address with GitHub Pages. Each module takes 25 to 30 minutes, including tasks you do yourself, and ends with a check and a badge.",
+      "A complete, practical introduction to web development, with no experience needed. Every lesson has an editor and a live preview built into the page, so you type code and watch the page change, without installing anything. You will learn how the web works and write your first page; every important HTML element (text, lists, links, images, forms, tables, semantic page structure, media and accessibility); CSS from selectors and the cascade through the box model, colour and typography, flexbox, grid, responsive design and animation; JavaScript from variables and logic to arrays, objects, the DOM, events, forms, fetch and storage; and Bootstrap 5 for building polished, responsive pages fast. Each lesson ends with tasks that are checked on your code and on the page you build, and every module has a check and a badge. You finish with a real website you publish at your own free web address.",
     categoryId: "coding",
     difficulty: "beginner",
     level: 1,
-    levelLabel: "Beginner",
+    levelLabel: "Beginner to advanced",
+    estimatedHours: 14,
     isFree: true,
     status: "available",
-    skills: ["Writing HTML pages", "Styling and layout with CSS", "Adding interaction with JavaScript", "Publishing a website with GitHub Pages"],
-    prerequisites: ["No experience needed", "A computer with a free code editor such as VS Code"],
+    skills: ["Writing semantic, accessible HTML", "Styling and layout with CSS, flexbox and grid", "Responsive, mobile-first design", "Animations and transitions", "Programming with JavaScript and the DOM", "Forms, events and fetching data", "Building pages with Bootstrap 5", "Publishing a website with GitHub Pages"],
+    prerequisites: ["No experience needed", "A computer or phone with a modern browser. The editors run in the lesson page"],
+    projectTitle: "A published website for a real business",
     certificate: shortRules,
     modules: [
-      { id: "web-m01", title: "HTML: The Structure", lessons: ["html-the-structure"], badge: "HTML Basics", badgeCode: "HTML", skills: ["Explain how HTML, CSS and JavaScript work together", "Write a valid HTML page", "Use headings, paragraphs, lists and links", "Add images with alt text"] },
-      { id: "web-m02", title: "CSS: The Style", lessons: ["css-the-style"], badge: "CSS Basics", badgeCode: "CSS", skills: ["Link a stylesheet", "Use element, class and id selectors", "Understand the box model", "Build a simple responsive layout with flexbox"] },
-      { id: "web-m03", title: "JavaScript: The Behaviour", lessons: ["javascript-the-behaviour"], badge: "JavaScript Basics", badgeCode: "JS", skills: ["Use the browser console", "Work with variables, conditions and functions", "Respond to clicks with event listeners", "Read error messages to fix bugs"] },
-      { id: "web-m04", title: "Publish Your First Website", lessons: ["publish-your-first-website"], badge: "First Website", badgeCode: "WEBSITE", skills: ["Plan a personal website", "Name files safely for the web", "Publish with GitHub Pages", "Test a live site on a phone"] },
+      { id: "web-m01", title: "HTML: Build the Structure", lessons: ["html-the-structure", "html-text-links-images", "html-semantic-layout", "html-forms-tables", "html-media-seo-accessibility"], badge: "HTML", badgeCode: "HTML", skills: ["Write a valid, semantic HTML page", "Use headings, text, lists, links and images", "Build forms and tables", "Make pages accessible and search friendly"] },
+      { id: "web-m02", title: "CSS: Style and Layout", lessons: ["css-the-style", "css-box-model-units", "css-colour-fonts-effects", "css-flexbox", "css-grid", "css-responsive-design", "css-transitions-animation"], badge: "CSS", badgeCode: "CSS", skills: ["Style with selectors and the cascade", "Control spacing with the box model", "Lay out pages with flexbox and grid", "Make responsive, animated designs"] },
+      { id: "web-m03", title: "JavaScript: Make It Interactive", lessons: ["javascript-the-behaviour", "js-logic-functions", "js-arrays-objects", "js-the-dom", "js-events-forms", "js-fetch-storage"], badge: "JavaScript", badgeCode: "JS", skills: ["Program with variables, logic and functions", "Work with arrays, objects and JSON", "Change the page with the DOM and events", "Fetch data and save it in the browser"] },
+      { id: "web-m04", title: "Bootstrap, Building and Launching", lessons: ["bootstrap-grid-utilities", "bootstrap-components", "bootstrap-landing-page", "publish-your-first-website"], badge: "Website Builder", badgeCode: "WEBSITE", skills: ["Build responsive pages with Bootstrap", "Create a complete landing page", "Run a launch checklist", "Publish a website with GitHub Pages"] },
     ],
   },
   {
@@ -317,22 +399,39 @@ export const COURSES: CourseDef[] = [
     code: "PY",
     title: "Python for Beginners",
     completionBadge: "Python Basics",
-    summary: "Write your first Python code in Google Colab: variables, decisions, loops and functions, ending with a budget tracker project.",
+    summary: "Learn Python step by step in Google Colab, from your first line of code to variables, text, decisions, lists, loops, dictionaries, functions and errors, ending with a budget tracker project.",
     description:
-      "Start programming with one of the world's most popular languages, with nothing to install. Learn values and variables, make decisions with if statements, repeat work with loops, and write your own functions, then build a small budget tracker for your portfolio. Each module takes 20 to 25 minutes, including tasks you do yourself, and ends with a check and a badge.",
+      "Start programming with one of the world's most popular languages, with nothing to install. Ten step-by-step lessons take you through the whole foundation, each idea explained with small examples you run yourself: printing and comments, variables and data types, numbers and maths, working with text, decisions with if, lists and tuples, for and while loops, dictionaries and sets, your own functions, and handling errors and using modules. Along the way you build a budget tracker for your portfolio. Each module has tasks you do yourself, a check and a badge.",
     categoryId: "python",
     difficulty: "beginner",
     level: 1,
     levelLabel: "Beginner",
     isFree: true,
     status: "available",
-    skills: ["Python variables and types", "Conditions, lists and loops", "Writing functions", "Dictionaries and a small project"],
+    skills: [
+      "Run Python in Google Colab",
+      "Variables, data types and conversions",
+      "Numbers, maths and formatting",
+      "Working with text",
+      "Decisions with if, elif and else",
+      "Lists, tuples, dictionaries and sets",
+      "for and while loops",
+      "Writing functions",
+      "Handling errors and using modules",
+    ],
     prerequisites: ["No experience needed", "A free Google account for Google Colab"],
     certificate: shortRules,
     modules: [
-      { id: "py-m01", title: "First Steps in Python", lessons: ["first-steps-in-python"], badge: "Python First Steps", badgeCode: "PYSTART", skills: ["Run Python in Google Colab", "Store values in variables", "Know the main data types", "Do maths and format text with f-strings"] },
-      { id: "py-m02", title: "Decisions, Lists and Loops", lessons: ["decisions-and-loops"], badge: "Python Logic", badgeCode: "PYLOOPS", skills: ["Make decisions with if, elif and else", "Store values in lists", "Repeat work with for loops", "Use range and zip"] },
-      { id: "py-m03", title: "Functions and a Mini Project", lessons: ["functions-and-a-mini-project"], badge: "Python Functions", badgeCode: "PYFUNC", skills: ["Write functions with parameters and return", "Use dictionaries", "Combine it all in a small program", "Save a notebook to GitHub"] },
+      { id: "py-m01", title: "First Steps in Python", lessons: ["first-steps-in-python"], badge: "Python First Steps", badgeCode: "PYSTART", skills: ["Run Python in Google Colab", "Print text and numbers", "Write comments", "Read an error message"] },
+      { id: "py-m04", title: "Variables and Data Types", lessons: ["variables-and-data-types"], badge: "Python Variables", badgeCode: "PYVARS", skills: ["Store and update values in variables", "Know the main data types", "Convert between types", "Put values into text with f-strings"] },
+      { id: "py-m05", title: "Numbers and Maths", lessons: ["numbers-and-maths"], badge: "Python Numbers", badgeCode: "PYNUM", skills: ["Use the arithmetic operators", "Follow the order of operations", "Round and use the math module", "Work out percentages and format money"] },
+      { id: "py-m06", title: "Working with Text", lessons: ["working-with-text"], badge: "Python Text", badgeCode: "PYTEXT", skills: ["Index and slice strings", "Clean text with string methods", "Split and join text", "Format output with f-strings"] },
+      { id: "py-m07", title: "Conditions: if, elif and else", lessons: ["conditions-if-elif-else"], badge: "Python Decisions", badgeCode: "PYIF", skills: ["Compare values", "Make decisions with if, elif and else", "Combine conditions with and, or and not", "Use truthy and falsy values"] },
+      { id: "py-m08", title: "Lists and Tuples", lessons: ["lists-and-tuples"], badge: "Python Lists", badgeCode: "PYLIST", skills: ["Create, index and slice lists", "Add, change and remove items", "Sort and summarise lists", "Use tuples for fixed values"] },
+      { id: "py-m02", title: "Loops: for and while", lessons: ["decisions-and-loops"], badge: "Python Loops", badgeCode: "PYLOOPS", skills: ["Loop over lists, text and range", "Build totals, counts and new lists", "Use while, break and continue", "Write simple list comprehensions"] },
+      { id: "py-m09", title: "Dictionaries and Sets", lessons: ["dictionaries-and-sets"], badge: "Python Dictionaries", badgeCode: "PYDICT", skills: ["Store and look up values by key", "Loop through keys, values and items", "Count things with a dictionary", "Find unique values with sets"] },
+      { id: "py-m03", title: "Functions and a Mini Project", lessons: ["functions-and-a-mini-project"], badge: "Python Functions", badgeCode: "PYFUNC", skills: ["Write functions with parameters and return", "Use default and keyword arguments", "Understand scope", "Build a small budget tracker"] },
+      { id: "py-m10", title: "Errors, Modules and Next Steps", lessons: ["errors-modules-and-next-steps"], badge: "Python Errors and Modules", badgeCode: "PYERR", skills: ["Read a traceback", "Handle errors with try and except", "Raise your own errors", "Use the random, datetime and statistics modules"] },
     ],
   },
   {
@@ -482,7 +581,7 @@ export const COURSES: CourseDef[] = [
     difficulty: "beginner",
     level: 2,
     levelLabel: "Beginner",
-    estimatedHours: 7,
+    estimatedHours: 9,
     isFree: true,
     status: "available",
     skills: ["Formulas and functions", "IF, SUMIF and COUNTIF", "XLOOKUP", "Data cleaning", "Pivot tables", "Charts"],
@@ -557,7 +656,7 @@ export const COURSES: CourseDef[] = [
     difficulty: "beginner",
     level: 2,
     levelLabel: "Beginner to intermediate",
-    estimatedHours: 7,
+    estimatedHours: 10,
     isFree: true,
     status: "available",
     skills: [
@@ -1861,6 +1960,65 @@ export const COURSES: CourseDef[] = [
       ["Ship It", "ship-it"],
     ].map(([title, slug], i) => ({ id: `sdc-m${String(i + 1).padStart(2, "0")}`, title, lessons: [slug] })),
   },
+  {
+    id: "project-manager-capstone",
+    slug: "project-manager-capstone",
+    code: "PMC",
+    title: "Project Manager Capstone: Rescue the Opening",
+    summary: "Take over a laboratory opening in week 10: write the charter, find the real critical path and the chance of the promised date, measure earned value, forecast the finish and the cost, price the risks, judge six change requests and write the decision paper that recovers the opening.",
+    description:
+      "The capstone of the Project Manager track. Medlink Diagnostics is opening a diagnostic laboratory in Port Harcourt, and its managing director has promised the state commissioner an opening date in public. In week 10 you inherit the project: the analysers are stuck in customs, the naira has moved against the budget, and six change requests are on the desk. You'll write the charter and map the stakeholders, check the plan and find that its approved budget was built on likely rather than expected durations, build the critical path and discover the promise had one working day of cushion, simulate the plan to find the real chance of the date, measure earned value at week 10, and forecast the finish and the cost from the remaining work. Then you'll price the risk register, test six change requests against the schedule (one really saves nine days, another saves none), measure six recovery options and combine the ones that work, and write the one-page decision paper that leads with a recommendation and a trigger. Every number comes from running the code.",
+    categoryId: "project-management",
+    difficulty: "intermediate",
+    level: 4,
+    levelLabel: "Career project",
+    estimatedHours: 10,
+    isFree: true,
+    status: "available",
+    skills: [
+      "Charters, scope and stakeholder strategy",
+      "PERT estimates and budget gaps",
+      "Critical path and float",
+      "Monte Carlo schedule risk",
+      "Earned value management",
+      "Forecasting dates and costs from progress",
+      "Risk registers, EMV and critical-chain risk",
+      "Change request analysis",
+      "Recovery options and decision papers",
+    ],
+    prerequisites: ["Project Management Fundamentals, which teaches each technique used here", "Python for Data Analytics, or comfort with pandas"],
+    projectTitle: "Medlink Diagnostics: recovering a laboratory opening",
+    certificate: rules(true),
+    modules: [
+      ["The Brief and the Charter", "the-brief-and-the-charter"],
+      ["Scope, WBS and Estimates", "scope-wbs-and-estimates"],
+      ["The Critical Path", "the-critical-path"],
+      ["How Sure Are We?", "how-sure-are-we"],
+      ["Where Are We Now?", "where-are-we-now"],
+      ["The Forecast", "the-forecast"],
+      ["Risks and Change Requests", "risks-and-change-requests"],
+      ["Recovery and the Decision Paper", "recovery-and-the-decision-paper"],
+    ].map(([title, slug], i) => ({ id: `pmc-m${String(i + 1).padStart(2, "0")}`, title, lessons: [slug] })),
+  },
 ];
+/**
+ * Courses that only exist inside a Professional Programme. Their lessons are paid: a learner reaches them by enrolling in a
+ * programme that includes them, and individual enrolment is closed. Every other course is free and stays open to everyone,
+ * including the free introductions that also appear inside a programme. Admins can change any of this in the dashboard;
+ * these are the starting values the seed writes once.
+ */
+export const PROGRAMME_ONLY_COURSES = new Set([
+  "advanced-sql", "data-modelling", "power-bi-dax", "python-for-data-analytics", "data-analyst-capstone",
+  "agile-business-analysis", "process-improvement-bpmn-lean", "business-analyst-capstone",
+  "machine-learning-fundamentals", "feature-engineering-model-evaluation", "experimentation-ab-testing", "time-series-forecasting", "data-scientist-capstone",
+  "generative-ai-engineering", "ai-agents-tool-use", "llm-evaluation-safety-production", "software-engineering-with-python", "databases-and-apis-for-developers", "ai-engineer-capstone",
+  "terraform-infrastructure-as-code", "cicd-and-containers", "observability-site-reliability", "cloud-devops-capstone",
+  "web-development-with-javascript", "software-developer-capstone",
+]);
+
+export const COURSES: CourseDef[] = [...ALL_COURSES, ...BUSINESS_COURSES].map((c) =>
+  PROGRAMME_ONLY_COURSES.has(c.id) ? { ...c, isFree: false, access: "paid", courseType: "professional", enrollmentStatus: "closed" } : c,
+);
+
 export const findCourseDef = (slug: string | undefined) => COURSES.find((c) => c.slug === slug);
 export const categoryName = (id: string) => CATEGORIES.find((c) => c.id === id)?.name ?? id;

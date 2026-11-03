@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 412" width="760" height="412" role="img" aria-label="RICE scoring for three invented items. Score is Reach times Impact times Confidence divided by Effort. X1, savings goals: 8,000 × 2 × 0.8 ÷ 6 is 2,133. X2, USSD top-up: 15,000 × 1 × 0.5 ÷ 10 is 750. X3, faster KYC retry: 12,000 × 0.5 × 1.0 ÷ 2 is 3,000. The cheap item wins, but the scores are for discussion: check how sensitive the ranking is to uncertain inputs.">
+<title>RICE: reach × impact × confidence ÷ effort, for three invented items.</title>
+
+<rect width="760" height="412" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="728.0" height="136.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,54 L17,28 Q17,21 24,21 L736,21 Q743,21 743,28 L743,54 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Item</text>
+<text xml:space="preserve" x="276.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Reach</text>
+<text xml:space="preserve" x="366.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Impact</text>
+<text xml:space="preserve" x="446.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Confidence</text>
+<text xml:space="preserve" x="546.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Effort</text>
+<text xml:space="preserve" x="636.0" y="41.5" font-size="12.0" fill="#5E5A52" font-weight="700" text-anchor="start">Score</text>
+<line x1="16.0" y1="54.0" x2="744.0" y2="54.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">X1  In-app savings goals</text>
+<text xml:space="preserve" x="276.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">8,000</text>
+<text xml:space="preserve" x="366.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">2</text>
+<text xml:space="preserve" x="446.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">0.8</text>
+<text xml:space="preserve" x="546.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">6 wks</text>
+<text xml:space="preserve" x="636.0" y="75.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">2,133</text>
+<line x1="16.0" y1="88.0" x2="744.0" y2="88.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">X2  USSD top-up</text>
+<text xml:space="preserve" x="276.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">15,000</text>
+<text xml:space="preserve" x="366.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">1</text>
+<text xml:space="preserve" x="446.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">0.5</text>
+<text xml:space="preserve" x="546.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">10 wks</text>
+<text xml:space="preserve" x="636.0" y="109.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">750</text>
+<rect x="18.0" y="123.0" width="724.0" height="32.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="26.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">X3  Faster KYC retry</text>
+<text xml:space="preserve" x="276.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">12,000</text>
+<text xml:space="preserve" x="366.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">0.5</text>
+<text xml:space="preserve" x="446.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">1.0</text>
+<text xml:space="preserve" x="546.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">2 wks</text>
+<text xml:space="preserve" x="636.0" y="143.5" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">3,000</text>
+<text xml:space="preserve" x="16.0" y="188.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">X1</text>
+<rect x="56.0" y="172.0" width="398.2" height="24.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="462.2" y="189.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">2,133</text>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">X2</text>
+<rect x="56.0" y="208.0" width="140.0" height="24.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="204.0" y="225.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">750</text>
+<text xml:space="preserve" x="16.0" y="260.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">X3</text>
+<rect x="56.0" y="244.0" width="560.0" height="24.0" rx="3" fill="#2F6B3F"/>
+<text xml:space="preserve" x="624.0" y="261.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">3,000</text>
+<text xml:space="preserve" x="16.0" y="296.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Impact scale: 3 massive, 2 high, 1 medium, 0.5 low, 0.25 minimal.   Confidence: 1 high, 0.8 medium, 0.5 low.</text>
+<rect x="16.0" y="316.0" width="728.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="342.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Scores are for discussion, not autopilot</text>
+<text xml:space="preserve" x="32.0" y="364.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Ask: which input are we least sure of? Does the ranking survive if it's wrong? If you override it, write down why.</text>
+<text xml:space="preserve" x="16.0" y="400.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Invented numbers for illustration.</text>
+</g></svg>

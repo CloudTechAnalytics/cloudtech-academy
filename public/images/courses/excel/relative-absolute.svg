@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="Copying a share-of-total formula down three rows. Without dollar signs, the reference to the total cell K1 moves to K2 and K3, which are empty, giving #DIV/0! errors. With $K$1, the total stays fixed and every row gives the right share.">
+<title>Relative references move when you copy; absolute references ($) stay put.</title>
+
+<rect width="760" height="560" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="16" fill="#9B2C1F" font-weight="700" text-anchor="start">Relative: =H2/K1, copied down</text>
+<rect x="16.0" y="38.0" width="560.0" height="120.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,68 L17,46 Q17,39 24,39 L568,39 Q575,39 575,46 L575,68 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="51.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">row</text>
+<text xml:space="preserve" x="226.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">H (revenue)</text>
+<text xml:space="preserve" x="246.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">formula in I</text>
+<text xml:space="preserve" x="566.0" y="57.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">result</text>
+<line x1="16.0" y1="68.0" x2="576.0" y2="68.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="87.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">2</text>
+<text xml:space="preserve" x="226.0" y="87.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">260,400</text>
+<text xml:space="preserve" x="246.0" y="87.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H2/K1</text>
+<text xml:space="preserve" x="566.0" y="87.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">0.03%</text>
+<line x1="16.0" y1="98.0" x2="576.0" y2="98.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="117.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">3</text>
+<text xml:space="preserve" x="226.0" y="117.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">92,400</text>
+<text xml:space="preserve" x="246.0" y="117.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H3/K2</text>
+<text xml:space="preserve" x="566.0" y="117.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="end">#DIV/0!</text>
+<line x1="16.0" y1="128.0" x2="576.0" y2="128.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="147.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">4</text>
+<text xml:space="preserve" x="226.0" y="147.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">14,400</text>
+<text xml:space="preserve" x="246.0" y="147.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H4/K3</text>
+<text xml:space="preserve" x="566.0" y="147.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="end">#DIV/0!</text>
+<text xml:space="preserve" x="600.0" y="78.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Both references move</text>
+<text xml:space="preserve" x="600.0" y="96.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">down a row. K2 and K3</text>
+<text xml:space="preserve" x="600.0" y="115.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">are empty, so Excel</text>
+<text xml:space="preserve" x="600.0" y="134.6" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">divides by zero.</text>
+<text xml:space="preserve" x="16.0" y="222.0" font-size="16" fill="#2F6B3F" font-weight="700" text-anchor="start">Absolute: =H2/$K$1, copied down</text>
+<rect x="16.0" y="232.0" width="560.0" height="120.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,262 L17,240 Q17,233 24,233 L568,233 Q575,233 575,240 L575,262 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="51.0" y="251.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">row</text>
+<text xml:space="preserve" x="226.0" y="251.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">H (revenue)</text>
+<text xml:space="preserve" x="246.0" y="251.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">formula in I</text>
+<text xml:space="preserve" x="566.0" y="251.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">result</text>
+<line x1="16.0" y1="262.0" x2="576.0" y2="262.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">2</text>
+<text xml:space="preserve" x="226.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">260,400</text>
+<text xml:space="preserve" x="246.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H2/$K$1</text>
+<text xml:space="preserve" x="566.0" y="281.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">0.03%</text>
+<line x1="16.0" y1="292.0" x2="576.0" y2="292.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="311.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">3</text>
+<text xml:space="preserve" x="226.0" y="311.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">92,400</text>
+<text xml:space="preserve" x="246.0" y="311.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H3/$K$1</text>
+<text xml:space="preserve" x="566.0" y="311.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">0.01%</text>
+<line x1="16.0" y1="322.0" x2="576.0" y2="322.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="51.0" y="341.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">4</text>
+<text xml:space="preserve" x="226.0" y="341.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">14,400</text>
+<text xml:space="preserve" x="246.0" y="341.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=H4/$K$1</text>
+<text xml:space="preserve" x="566.0" y="341.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">0.00%</text>
+<text xml:space="preserve" x="600.0" y="272.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">H moves with each</text>
+<text xml:space="preserve" x="600.0" y="290.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">row, as it should.</text>
+<text xml:space="preserve" x="600.0" y="309.7" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">$K$1 is locked: every</text>
+<text xml:space="preserve" x="600.0" y="328.6" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">row divides by the</text>
+<text xml:space="preserve" x="600.0" y="347.4" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">grand total.</text>
+<rect x="16.0" y="420.0" width="728.0" height="120.0" rx="10" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="450.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">K1 holds the grand total, ₦830,541,245.</text>
+<text xml:space="preserve" x="32.0" y="478.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">The $ before the column letter locks the column; the $ before the row</text>
+<text xml:space="preserve" x="32.0" y="499.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">number locks the row. Press F4 while editing a reference to add them.</text>
+</g></svg>

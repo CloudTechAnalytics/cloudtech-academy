@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="How XLOOKUP works. Order 10001 has customer_id 27. XLOOKUP searches the customer_id column of the Customers table, finds 27, and returns the region from the same row: Lagos.">
+<title>XLOOKUP finds customer 27 in the customer_id column and returns the region from the same row, Lagos.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="560" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="46.0" font-size="15" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=XLOOKUP(</text>
+<text xml:space="preserve" x="118.0" y="46.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">[@customer_id],</text>
+<text xml:space="preserve" x="268.0" y="46.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Customers[customer_id],</text>
+<text xml:space="preserve" x="32.0" y="76.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">         Customers[region],</text>
+<text xml:space="preserve" x="300.0" y="76.0" font-size="15" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"Not found")</text>
+<text xml:space="preserve" x="16.0" y="134.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Orders</text>
+<rect x="16.0" y="144.0" width="330.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,176 L17,152 Q17,145 24,145 L338,145 Q345,145 345,152 L345,176 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="26.0" y="164.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">order_id</text>
+<text xml:space="preserve" x="176.0" y="164.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">customer_id</text>
+<text xml:space="preserve" x="246.0" y="164.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">region</text>
+<line x1="16.0" y1="176.0" x2="346.0" y2="176.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="26.0" y="196.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">10001</text>
+<text xml:space="preserve" x="176.0" y="196.5" font-size="13" fill="#8A6A1F" font-weight="400" text-anchor="middle">27</text>
+<text xml:space="preserve" x="246.0" y="196.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Lagos</text>
+<text xml:space="preserve" x="380.0" y="160.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">① Take this row's customer_id: 27.</text>
+<text xml:space="preserve" x="16.0" y="254.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Customers</text>
+<rect x="16.0" y="264.0" width="620.0" height="160.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,296 L17,272 Q17,265 24,265 L628,265 Q635,265 635,272 L635,296 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="76.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">customer_id</text>
+<text xml:space="preserve" x="146.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">customer_name</text>
+<text xml:space="preserve" x="376.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">channel</text>
+<text xml:space="preserve" x="506.0" y="284.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">region</text>
+<line x1="16.0" y1="296.0" x2="636.0" y2="296.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="76.0" y="316.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">25</text>
+<text xml:space="preserve" x="146.0" y="316.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="376.0" y="316.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="506.0" y="316.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<line x1="16.0" y1="328.0" x2="636.0" y2="328.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="76.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">26</text>
+<text xml:space="preserve" x="146.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Chuks Trading Co.</text>
+<text xml:space="preserve" x="376.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Wholesale</text>
+<text xml:space="preserve" x="506.0" y="348.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">South West</text>
+<rect x="18.0" y="361.0" width="616.0" height="30.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="76.0" y="380.5" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle">27</text>
+<text xml:space="preserve" x="146.0" y="380.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Alhaji Musa Wholesale</text>
+<text xml:space="preserve" x="376.0" y="380.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Wholesale</text>
+<text xml:space="preserve" x="506.0" y="380.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="start">Lagos</text>
+<line x1="16.0" y1="392.0" x2="636.0" y2="392.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="76.0" y="412.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">28</text>
+<text xml:space="preserve" x="146.0" y="412.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="376.0" y="412.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<text xml:space="preserve" x="506.0" y="412.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">…</text>
+<rect x="18.0" y="298.0" width="116.0" height="128.0" rx="6" fill="none" stroke="#2F5D8A" stroke-width="2" stroke-dasharray="5 4"/>
+<rect x="498.0" y="298.0" width="136.0" height="128.0" rx="6" fill="none" stroke="#2F6B3F" stroke-width="2" stroke-dasharray="5 4"/>
+<path d="M180,206 C180,300 130,376 98,376" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M636,370 C720,330 700,196 352,192" fill="none" stroke="#2F6B3F" stroke-width="2" marker-end="url(#a2F6B3F)" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="16.0" y="468.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">② Search the lookup_array (customer_id) from the top until 27 is found.</text>
+<text xml:space="preserve" x="16.0" y="492.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">③ Return the return_array value (region) from that same row: Lagos.</text>
+<text xml:space="preserve" x="16.0" y="516.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">If 27 weren't in the list, the cell would show "Not found" instead of #N/A.</text>
+</g></svg>

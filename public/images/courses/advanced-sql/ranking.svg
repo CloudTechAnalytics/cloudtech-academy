@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Numbering functions and ties. Four invented routes ordered by shipments descending have values 9, 7, 7 and 4. ROW_NUMBER gives 1, 2, 3, 4: ties get different numbers, arbitrarily. RANK gives 1, 2, 2, 4: ties share a rank and the next number is skipped. DENSE_RANK gives 1, 2, 2, 3: ties share a rank with no gap. Keep only number 1 per group for a latest-row or top-per-group, and keep rank 2 for the second highest, with ties.">
+<title>Choose ROW_NUMBER, RANK or DENSE_RANK by what ties should do.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="24.0" width="600.0" height="34.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="24.0" y="50.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">route</text>
+<text xml:space="preserve" x="114.0" y="50.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">shipments</text>
+<text xml:space="preserve" x="234.0" y="50.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ROW_NUMBER</text>
+<text xml:space="preserve" x="374.0" y="50.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">RANK</text>
+<text xml:space="preserve" x="484.0" y="50.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">DENSE_RANK</text>
+<rect x="16.0" y="58.0" width="600.0" height="34.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="84.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">R-A</text>
+<text xml:space="preserve" x="114.0" y="84.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">9</text>
+<text xml:space="preserve" x="234.0" y="84.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="374.0" y="84.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="484.0" y="84.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<rect x="16.0" y="92.0" width="600.0" height="34.0" rx="0" fill="#E6EEF6"/>
+<text xml:space="preserve" x="24.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">R-B</text>
+<text xml:space="preserve" x="114.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">7</text>
+<text xml:space="preserve" x="234.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="374.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="484.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<rect x="16.0" y="126.0" width="600.0" height="34.0" rx="0" fill="#E6EEF6"/>
+<text xml:space="preserve" x="24.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">R-C</text>
+<text xml:space="preserve" x="114.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">7</text>
+<text xml:space="preserve" x="234.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<text xml:space="preserve" x="374.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="484.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<rect x="16.0" y="160.0" width="600.0" height="34.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="24.0" y="186.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">R-D</text>
+<text xml:space="preserve" x="114.0" y="186.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="234.0" y="186.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="374.0" y="186.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="484.0" y="186.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<line x1="16.0" y1="194.0" x2="616.0" y2="194.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="16.0" y="224.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">R-B and R-C tie on 7.</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">ROW_NUMBER splits the tie arbitrarily; RANK repeats a number and skips; DENSE_RANK repeats and doesn't skip.</text>
+<text xml:space="preserve" x="16.0" y="284.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Pick by the question</text>
+<rect x="16.0" y="298.0" width="232.0" height="76.0" rx="8" fill="#E6EEF6" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Latest row per customer</text>
+<text xml:space="preserve" x="30.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">ROW_NUMBER() … = 1 (add a</text>
+<text xml:space="preserve" x="30.0" y="358.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">tie-breaker)</text>
+<rect x="264.0" y="298.0" width="232.0" height="76.0" rx="8" fill="#E5F0E8" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="278.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Top 3 including ties</text>
+<text xml:space="preserve" x="278.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">RANK() &lt;= 3 or DENSE_RANK()</text>
+<rect x="512.0" y="298.0" width="232.0" height="76.0" rx="8" fill="#F3EBD8" stroke="#CFC4B2" stroke-width="1.3"/>
+<text xml:space="preserve" x="526.0" y="322.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Second-highest value</text>
+<text xml:space="preserve" x="526.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">DENSE_RANK() = 2 (all ties shown)</text>
+<text xml:space="preserve" x="16.0" y="404.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Pattern: number the rows inside each group (PARTITION BY), then keep the number you want.</text>
+</g></svg>

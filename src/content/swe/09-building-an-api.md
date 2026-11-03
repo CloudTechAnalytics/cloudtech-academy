@@ -10,7 +10,7 @@ Tallybook's mobile app, website and month-end job each had their own copy of the
 
 ## The concept
 
-**A web API**
+### A web API
 
 Clients send HTTP requests (lesson 8 of the Linux course) with JSON bodies; the API returns JSON responses with a status code.
 
@@ -21,17 +21,19 @@ Clients send HTTP requests (lesson 8 of the Linux course) with JSON bodies; the 
 | 404 | no such resource |
 | 500 | the server failed (should never be caused by bad input) |
 
-**Flask**
+### Flask
 
 A small Python web framework: decorate a function with a route, read the request, return a response.
 
-**Validate, then calculate**
+### Validate, then calculate
 
 The API checks every request (lesson 6) and returns **400 with a clear message** for bad input. A traceback or a 500 for bad input is a bug.
 
-**Test without a server**
+### Test without a server
 
 Flask's **test client** sends requests to the app directly, so API tests run as fast as any other test.
+
+![A client posts JSON to /invoices/total; the API validates it, and a bad request gets a 400 with a message while a good one returns 200 with total_kobo 193500; a table of status codes 200, 400, 404, 500; tests use app.test_client() without a server](/images/courses/swe/api-flow.svg "Validate, then calculate: 400 with a clear message for bad input, 200 with the result for good.")
 
 ## Example
 

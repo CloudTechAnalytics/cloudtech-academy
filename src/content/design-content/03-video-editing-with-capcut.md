@@ -25,6 +25,8 @@ For a small food business in Ikeja:
 
 Notice the order: **the result first**, then how, then proof, then the action. Most people decide in the first two seconds whether to keep watching, so a logo or "Hi guys, welcome back" in the opening seconds loses them.
 
+![A 15-second shot list on a timeline: result first, then how, then proof, then the action](/images/courses/design-content/shot-list.svg "Result first, then how, then proof, then the action.")
+
 ## Set up the project
 
 **CapCut** is a free video editor for phone and computer, with a browser version too. Menu names differ slightly between versions and devices; if a button here looks different, look for the nearest match.
@@ -50,6 +52,8 @@ Many people watch with the sound off, so words on screen carry the message.
 - **Headline text:** **Text → Add text**. Keep it short ("Feeds 4 for ₦8,000"), in a clear font, and away from the very bottom and right edge, where app buttons and captions cover it.
 - **Automatic captions:** under **Captions** (or **Text → Auto captions**), CapCut listens to the speech and writes subtitles. They're a huge time saver, and they're often wrong on names, places and Nigerian words. **Read every line.**
 
+![A tall phone video frame with the top, bottom and right edges marked as covered by the app, and the middle marked as the safe area for headline text](/images/courses/design-content/safe-zone.svg "Keep text out of the edges the app covers.")
+
 Here's what auto-captions produced for a 10-second voiceover:
 
 ```text
@@ -70,6 +74,8 @@ The speaker said **jollof**, **₦8,000**, **Ikeja** and **WhatsApp**. Left unco
 > Popular songs are usually copyrighted. On a business page, a video with unlicensed music can be muted or removed. Use music licensed for commercial use (CapCut marks some as such, and platforms have business-safe libraries), or record a voiceover.
 
 **Export:**
+
+![Six steps for a short video: plan, set up, cut, words, sound and export, with two checks before exporting](/images/courses/design-content/capcut-workflow.svg "Plan, set up, cut, caption, sound, export.")
 
 1. Watch the whole video twice: once with sound, once **muted**. Does it still make sense muted?
 2. Tap **Export** (often an arrow at the top). Choose **1080p** and **30 fps**: good quality without a huge file.

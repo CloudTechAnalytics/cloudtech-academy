@@ -84,9 +84,13 @@ What makes it work:
 | Unemployed | Customer Service Professional \| 3 years in retail banking \| Open to CX roles in Lagos |
 | Hardworking and passionate | Graphic Designer \| Brand identity & social media design \| Canva, Illustrator \| Ibadan |
 
+![A LinkedIn headline is built from target role, key tools, what you do and city, separated by bars, with two weak headlines rewritten as strong ones](/images/courses/career/headline-formula.svg "A headline is made of the words a recruiter would search for.")
+
 Never write "unemployed" or "looking for job". Describe what you **do** and what you're aiming for.
 
 **About** (up to 2,600 characters, but shorter is better). Write in the **first person**, in four short parts: a one-line hook, proof with numbers, your skills, and what you want plus how to reach you. Three to five short paragraphs is plenty.
+
+![The four parts of a LinkedIn About section: a hook, proof with numbers, skills, and what you want with how to reach you, each with an example line](/images/courses/career/about-parts.svg "Hook, proof, skills, what you want.")
 
 **Skills.** Add the skills that appear in adverts for the jobs you want, using the advert's spelling, and pin your top few so they show first. Skip vague ones like "hardworking", "team player" or "passionate": everyone claims them and nobody searches for them. Show those qualities in your experience instead.
 

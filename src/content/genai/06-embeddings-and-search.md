@@ -12,7 +12,7 @@ So before the model sees a question, a **search** step must find the most releva
 
 ## The concept
 
-**Vectors for text**
+### Vectors for text
 
 To search by meaning, each text is turned into a vector of numbers so that similar texts get similar vectors. Similarity between two vectors is measured with **cosine similarity** (1 = same direction, 0 = unrelated).
 
@@ -21,14 +21,16 @@ To search by meaning, each text is turned into a vector of numbers so that simil
 
 This lesson uses TF-IDF because it runs anywhere without a key. The method (vectorise, compare, rank, measure) is identical with embeddings.
 
-**Measuring retrieval**
+### Measuring retrieval
 
 With a labelled question set (each question linked to the article that answers it):
 
 - **hit@1**: share of questions where the right article is ranked first;
 - **hit@3**: share where it's in the top three (what you'd send to the model).
 
-**Questions with no answer**
+![Help articles and questions as points in two dimensions. A question about money not coming back sits next to the Reversals article; a question about airtime is far from every article.](/images/courses/genai/embeddings.svg "Search by meaning, illustrated. Close points mean similar meaning.")
+
+### Questions with no answer
 
 Some questions aren't covered by any article. Their best match usually has a **low similarity**. A threshold ("if the best match is below 0.15, don't answer from the articles") lets the assistant say it can't help instead of answering from a weak match.
 

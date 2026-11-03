@@ -12,7 +12,7 @@ Tallybook's account has 20 people and 8 service accounts (logins used by softwar
 
 ## The concept
 
-**Identity and access management (IAM)**
+### Identity and access management (IAM)
 
 Every person and program that can act in the account is a **principal** with permissions.
 
@@ -25,11 +25,11 @@ Every person and program that can act in the account is a **principal** with per
 | **Remove unused service accounts** | software that no longer runs shouldn't hold keys |
 | **No unintended public storage** | public buckets are readable by anyone on the internet |
 
-**Least privilege**
+### Least privilege
 
 Give each principal only the permissions its job needs. Developers rarely need admin; a backup job needs to write backups, not delete databases.
 
-**Fix by risk**
+### Fix by risk
 
 An administrator without MFA, or an admin access key that's two years old, comes before a non-admin's stale key.
 

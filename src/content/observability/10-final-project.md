@@ -10,7 +10,7 @@ Tallybook's CTO has read three explanations of the month-end outages: too few we
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -20,7 +20,7 @@ Tallybook's CTO has read three explanations of the month-end outages: too few we
 | Capacity: pool sizing and job isolation | lesson 8 |
 | Toil and the error budget policy | lesson 9 |
 
-**Reconcile the explanations**
+### Reconcile the explanations
 
 Good reviews don't just give the right answer; they explain why the earlier ones were incomplete. The web fleet and the miner were real issues that made things worse, but the evidence shows the pool was the cause. Say so, with the data.
 

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="How pytest works. It finds files named test_*.py, runs every function named test_* in them, and reports each as passed or failed. A test sets up a small input, calls the code, and asserts the answer worked out by hand. pytest.raises checks that bad input fails the way it should.">
+<title>pytest finds test_ files and functions, runs them, and reports each one.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="165.5" height="90.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="42.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">test_invoicing.py</text>
+<text xml:space="preserve" x="28.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">pytest finds files</text>
+<text xml:space="preserve" x="28.0" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">named test_*.py</text>
+<path d="M184.5,61.0 L200.5,61.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="203.5" y="16.0" width="165.5" height="90.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="215.5" y="42.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">def test_…()</text>
+<text xml:space="preserve" x="215.5" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">and runs each test_</text>
+<text xml:space="preserve" x="215.5" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">function</text>
+<path d="M372.0,61.0 L388.0,61.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="391.0" y="16.0" width="165.5" height="90.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="403.0" y="42.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">assert</text>
+<text xml:space="preserve" x="403.0" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">compare with the</text>
+<text xml:space="preserve" x="403.0" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">answer worked by hand</text>
+<path d="M559.5,61.0 L575.5,61.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="578.5" y="16.0" width="165.5" height="90.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="590.5" y="42.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">report</text>
+<text xml:space="preserve" x="590.5" y="66.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">a dot per pass, F per</text>
+<text xml:space="preserve" x="590.5" y="83.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">failure</text>
+<text xml:space="preserve" x="16.0" y="140.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Anatomy of a test</text>
+<rect x="16.0" y="152.0" width="480.0" height="222.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="176.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">def test_discount_applies_before_vat():</text>
+<text xml:space="preserve" x="28.0" y="196.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    # 2 × 100,000 = 200,000; 10% off → 180,000</text>
+<text xml:space="preserve" x="28.0" y="216.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    # VAT 7.5% of 180,000 = 13,500</text>
+<text xml:space="preserve" x="28.0" y="236.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    lines = [(2, 100_000)]</text>
+<text xml:space="preserve" x="28.0" y="256.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    total = invoice_total(lines, discount_pct=10)</text>
+<text xml:space="preserve" x="28.0" y="276.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    assert total == 193_500</text>
+<text xml:space="preserve" x="28.0" y="296.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"></text>
+<text xml:space="preserve" x="28.0" y="316.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">def test_discount_over_20_is_refused():</text>
+<text xml:space="preserve" x="28.0" y="336.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    with pytest.raises(ValueError):</text>
+<text xml:space="preserve" x="28.0" y="356.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">        invoice_total([(1, 500)], discount_pct=25)</text>
+<path d="M500.0,172.0 L520.0,172.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="526.0" y="176.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">name</text>
+<text xml:space="preserve" x="526.0" y="194.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">says the behaviour</text>
+<path d="M500.0,204.0 L520.0,204.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="526.0" y="208.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">hand-worked answer</text>
+<text xml:space="preserve" x="526.0" y="226.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">the comment shows how</text>
+<path d="M500.0,262.0 L520.0,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="526.0" y="266.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">call + assert</text>
+<text xml:space="preserve" x="526.0" y="284.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">one behaviour per test</text>
+<path d="M500.0,330.0 L520.0,330.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="526.0" y="334.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">pytest.raises</text>
+<text xml:space="preserve" x="526.0" y="352.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">bad input must fail</text>
+</g></svg>

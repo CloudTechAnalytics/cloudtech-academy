@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Next-token prediction, illustrated. Given the text 'Your transfer was reversed because the', the model gives a probability to each possible next token: 'recipient' 41 percent, 'account' 23 percent, 'bank' 14 percent, 'network' 9 percent, others less. One is chosen, added to the text, and the step repeats. Low temperature favours the top choice; high temperature spreads the choices out.">
+<title>An LLM writes one token at a time, each chosen from a probability for every possible next token.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="50.0" font-size="16" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Your transfer was reversed because the</text>
+<rect x="452.0" y="30.0" width="110.0" height="30.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="507.0" y="50.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="middle">▮ next?</text>
+<text xml:space="preserve" x="150.0" y="117.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">recipient</text>
+<rect x="162.0" y="104.0" width="287.0" height="20.0" rx="3" fill="#B38A3E"/>
+<text xml:space="preserve" x="455.0" y="119.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">41%</text>
+<text xml:space="preserve" x="150.0" y="151.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">account</text>
+<rect x="162.0" y="138.0" width="161.0" height="20.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="329.0" y="153.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">23%</text>
+<text xml:space="preserve" x="150.0" y="185.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">bank</text>
+<rect x="162.0" y="172.0" width="98.0" height="20.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="266.0" y="187.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">14%</text>
+<text xml:space="preserve" x="150.0" y="219.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">network</text>
+<rect x="162.0" y="206.0" width="63.0" height="20.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="231.0" y="221.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">9%</text>
+<text xml:space="preserve" x="150.0" y="253.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">daily</text>
+<rect x="162.0" y="240.0" width="35.0" height="20.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="203.0" y="255.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">5%</text>
+<text xml:space="preserve" x="150.0" y="287.0" font-size="14" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">…others</text>
+<rect x="162.0" y="274.0" width="56.0" height="20.0" rx="3" fill="#DCC594"/>
+<text xml:space="preserve" x="224.0" y="289.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">8%</text>
+<rect x="500.0" y="100.0" width="244.0" height="194.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="516.0" y="126.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Then repeat</text>
+<text xml:space="preserve" x="516.0" y="152.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Add the chosen token to the</text>
+<text xml:space="preserve" x="516.0" y="170.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">text and predict the next one,</text>
+<text xml:space="preserve" x="516.0" y="189.7" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">until the answer is complete.</text>
+<text xml:space="preserve" x="516.0" y="232.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Temperature near 0: almost</text>
+<text xml:space="preserve" x="516.0" y="250.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">always the top choice. Higher:</text>
+<text xml:space="preserve" x="516.0" y="268.2" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">more varied text.</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">The model picks a plausible continuation, not a checked one: that's why it can be confidently wrong.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Illustrative probabilities.</text>
+</g></svg>

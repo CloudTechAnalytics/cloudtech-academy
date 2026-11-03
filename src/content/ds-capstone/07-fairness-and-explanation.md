@@ -10,25 +10,27 @@ The model will decide which customers get a phone call. That's a light-touch act
 
 ## The concept
 
-**Check performance by group**
+### Check performance by group
 
 For each city, compare the actual failure rate with the average prediction (calibration), the AUC (ranking within the city), and the share of orders the policy would call. A model can be accurate overall and wrong for one group.
 
-**Unseen groups**
+### Unseen groups
 
 Kaduna launched in April 2026, after the training period. The model has never seen a Kaduna order. With `handle_unknown="ignore"`, it treats Kaduna as if it had no city effect at all, which may be badly wrong.
 
-**Permutation importance**
+### Permutation importance
 
 Shuffle one feature at a time in the validation data and see how much the AUC drops. A large drop means the model relies on that feature. It's fairer than the importance built into tree models, and it works for any model.
 
-**Location as a proxy**
+### Location as a proxy
 
 City is a legitimate predictor, because delivery distances and promised days differ. But in Nigeria a city can also stand in for ethnicity or religion. For a call, using city is probably acceptable: the customer gets a helpful check, not a penalty. For a deposit or a refusal, it would need a much harder look. Test what the model loses without it.
 
-**A model card**
+### A model card
 
 A short document saying what the model is for, its data, its performance overall and by group, its limits, and when it must be reviewed.
+
+![A table checking performance by group including a group unseen in training, how permutation importance and location proxies work, and the five parts of a model card](/images/courses/ds-capstone/fairness-card.svg "Check each group, explain the model, write a model card.")
 
 ## Example
 

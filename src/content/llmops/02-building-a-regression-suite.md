@@ -12,7 +12,7 @@ A **regression suite** fixes that: the same set of cases, with the expected beha
 
 ## The concept
 
-**What a good suite covers**
+### What a good suite covers
 
 - **Every category** of real traffic, roughly in proportion, plus extra cases for high-stakes ones (fraud).
 - **Difficulty**: easy, medium and hard cases, so improvements on hard cases show.
@@ -22,9 +22,11 @@ A **regression suite** fixes that: the same set of cases, with the expected beha
 
 **Each case needs a clear expected behaviour**, written so that two graders would agree whether an answer passes.
 
-**How precise is a score?**
+### How precise is a score?
 
 A pass rate from a finite set of cases is an estimate. With *n* cases and pass rate *p*, a 95% confidence interval is roughly ± 2 × √(p(1 − p)/n). The **Wilson interval** is a better version for rates near 0 or 1. The key point: a category with 30 cases has a much wider interval than the whole suite of 400.
+
+![95% Wilson intervals for a 90% pass rate: 74% to 97% with 30 cases, 83% to 94% with 100 cases, 87% to 93% with 400 cases.](/images/courses/llmops/interval-width.svg "The same 90% pass rate is far less certain from 30 cases than from 400.")
 
 ## Example
 

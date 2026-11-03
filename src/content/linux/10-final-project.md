@@ -10,7 +10,7 @@ Tallybook's CTO has asked for a written investigation of prod-web-01, the server
 
 ## The concept
 
-**An investigation report**
+### An investigation report
 
 | Section | Contents | From |
 | :-- | :-- | :-- |
@@ -21,7 +21,7 @@ Tallybook's CTO has asked for a written investigation of prod-web-01, the server
 | **Fixes** | done now, and to do, with owners | lessons 4 to 8 |
 | **Detection** | the check that would have caught each problem | lesson 9 |
 
-**Separate facts from conclusions**
+### Separate facts from conclusions
 
 "The log shows a password login for `backup` from 194.26.29.120 at 02:14:51 on 30 August" is a fact. "The attacker installed the miner" is a conclusion, supported by the facts that the miner runs as `backup` and started after that login. Good reports make the difference clear.
 

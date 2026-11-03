@@ -15,18 +15,34 @@ In Excel you'd write a formula in the first row and drag it down 4,266 rows. In 
 
 ## The concept
 
-**Column arithmetic works on every row at once**
+### Column arithmetic works on every row at once
 
 ```python
 orders["revenue"] = orders["quantity"] * orders["unit_price"] * (1 - orders["discount_pct"] / 100)
+orders[["quantity", "unit_price", "discount_pct", "revenue"]].head(3)
+```
+
+```text
+quantity  unit_price  discount_pct   revenue
+0        14       18600             0  260400.0
+1         7       13200             0   92400.0
+2         4        3600             0   14400.0
 ```
 
 There's no loop: pandas multiplies the columns row by row for you. This is called **vectorised** code, and it's both shorter and far faster than looping over rows yourself. Assigning to a name that doesn't exist yet (`orders["revenue"]`) creates the column; assigning to one that exists replaces it.
 
-**Text to dates: `pd.to_datetime`**
+### Text to dates: `pd.to_datetime`
 
 ```python
 orders["order_date"] = pd.to_datetime(orders["order_date"])
+orders["order_date"].head(3)
+```
+
+```text
+0   2025-01-01
+1   2025-01-01
+2   2025-01-01
+Name: order_date, dtype: datetime64[ns]
 ```
 
 After this, `orders.info()` shows `datetime64[ns]`, and the **`.dt` accessor** gives you the parts of each date:
@@ -42,20 +58,25 @@ After this, `orders.info()` shows `datetime64[ns]`, and the **`.dt` accessor** g
 
 Dates written day-first, like `14/03/2026`, need `pd.to_datetime(col, dayfirst=True)`. Dates in other layouts need a `format`, such as `format="%d-%b-%Y"` for `14-Mar-2026`. Always check a few converted dates against the original text: a day/month mix-up is silent and expensive.
 
-**Real dates filter by real ranges**
+### Real dates filter by real ranges
 
 ```python
 q1_2026 = orders[(orders["order_date"] >= "2026-01-01") & (orders["order_date"] < "2026-04-01")]
+len(q1_2026)
+```
+
+```text
+695
 ```
 
 Using `< "2026-04-01"` rather than `<= "2026-03-31"` is a good habit: it still works when timestamps include a time of day.
 
-**Categories from conditions**
+### Categories from conditions
 
 - Two outcomes: `np.where(condition, value_if_true, value_if_false)`, from the **numpy** library (imported as `np`), which pandas is built on.
 - Several bands: `pd.cut(column, bins=[...], labels=[...])`. With `bins=[0, 9, 19, 30]`, a value goes in the band whose range includes it: 1–9, 10–19 or 20–30. By default the left edge is excluded and the right edge included.
 
-**Tidy number columns**
+### Tidy number columns
 
 - `.round(2)` rounds; `.astype(int)` converts to whole numbers.
 - Money is often stored in whole naira. If a column of whole numbers shows as `float64`, a missing value is usually the reason.

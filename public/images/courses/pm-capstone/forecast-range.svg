@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="A forecast is a range with a basis. The invented example gives a cost forecast two ways: the typical estimate at completion, budget at completion divided by CPI, which assumes the rest of the project costs as the work so far, and the atypical one, actual cost plus the budget for the work remaining, which assumes the overrun was a one-off. A date forecast re-schedules the remaining work at the planned rate and at the rate achieved so far.">
+<title>Two cost forecasts and two date forecasts, each with its assumption.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Cost: estimate at completion (invented numbers)</text>
+<rect x="30.0" y="52.0" width="360.0" height="24.0" rx="4" fill="#C5B38A"/>
+<text xml:space="preserve" x="36.0" y="69.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Approved budget  ₦200m</text>
+<rect x="30.0" y="84.0" width="438.0" height="24.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="36.0" y="101.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">Atypical EAC  ₦244m  (overrun was a one-off)</text>
+<rect x="30.0" y="116.0" width="500.0" height="24.0" rx="4" fill="#9B2C1F"/>
+<text xml:space="preserve" x="36.0" y="133.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="start">Typical EAC  ₦280m  (BAC ÷ CPI of 0.71)</text>
+<text xml:space="preserve" x="16.0" y="176.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Date: re-schedule what's left</text>
+<line x1="60.0" y1="232.0" x2="700.0" y2="232.0" stroke="#CFC4B2" stroke-width="3"/>
+<circle cx="150.0" cy="232.0" r="9" fill="#8A6A1F" stroke="#FFFFFF" stroke-width="3"/>
+<text xml:space="preserve" x="150.0" y="208.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">Promised</text>
+<circle cx="320.0" cy="232.0" r="9" fill="#2F5D8A" stroke="#FFFFFF" stroke-width="3"/>
+<text xml:space="preserve" x="320.0" y="208.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="middle">Plan rate</text>
+<circle cx="500.0" cy="232.0" r="9" fill="#9B2C1F" stroke="#FFFFFF" stroke-width="3"/>
+<text xml:space="preserve" x="500.0" y="208.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="middle">Current rate</text>
+<rect x="320.0" y="252.0" width="180.0" height="14.0" rx="7" fill="#C5B38A"/>
+<text xml:space="preserve" x="410.0" y="284.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">the realistic range</text>
+<text xml:space="preserve" x="16.0" y="316.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Report it as a range, with its basis</text>
+<rect x="16.0" y="330.0" width="728.0" height="52.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="352.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“12 to 19 June, depending on whether the clearance speeds up.”</text>
+<text xml:space="preserve" x="30.0" y="372.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">A single date invites a promise; a range with a reason invites a decision.</text>
+</g></svg>

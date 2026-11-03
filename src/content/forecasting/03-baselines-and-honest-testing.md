@@ -12,17 +12,19 @@ The only test that counts is the one that mimics real use: build the forecast us
 
 ## The concept
 
-**A time-based hold-out**
+### A time-based hold-out
 
 Choose a cut-off. Everything before it is training data; everything after is the test period. Forecast the whole test period from the training data alone, then compare. Here: train up to 28 February 2026, and forecast March to June 2026, which includes Eid, a payday each month and several promotions.
 
-**Measuring error: WAPE**
+![A timeline split at 28 February 2026: training from July 2022 to February 2026, and the test period March to June 2026.](/images/courses/forecasting/holdout.svg "A time-based hold-out: forecast the whole test period from the training data alone.")
+
+### Measuring error: WAPE
 
 > WAPE (weighted absolute percentage error) = total absolute error ÷ total actual sales
 
 It reads as "the forecast is off by about x% of sales", it handles days with zero sales (where the usual percentage error breaks), and it weights busy days more than quiet ones, as the business does. Also check **bias**: (total forecast − total actual) ÷ total actual. A forecast that's always 5% high is a different problem from one that's randomly off.
 
-**Baselines**
+### Baselines
 
 | Baseline | Forecast for each future day |
 | :-- | :-- |

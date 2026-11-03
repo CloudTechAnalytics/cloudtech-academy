@@ -10,7 +10,24 @@ The managing director wants one number to start: Kolanut's total revenue since J
 
 ## The concept
 
-**Two ways to open a CSV**
+### What a CSV file is
+
+Most data reaches an analyst as a **CSV** file: *comma-separated values*. It's plain text, one row per line, with commas between the columns. Open `orders.csv` in Notepad and you see exactly this:
+
+```text
+order_id,order_date,customer_id,product_id,quantity,unit_price,discount_pct
+10001,2025-01-01,27,3,14,18600,0
+10002,2025-01-01,56,1,7,13200,0
+10003,2025-01-01,37,2,4,3600,0
+```
+
+- The **first line** is the header: the column names.
+- Each **following line** is one record: here, one product on one order.
+- A value containing a comma is wrapped in quotes: `"2,050,000"`.
+
+A CSV holds **only values**. There are no formulas, no formatting, no column widths, no multiple sheets. Every system can write one, which is why they're everywhere; and because it's just text, the program that opens it has to **guess** what each value is. That guess is where problems start.
+
+### Two ways to open a CSV
 
 | Method | What happens | Use when |
 | :-- | :-- | :-- |
@@ -26,15 +43,64 @@ Excel's guesses can go wrong: codes with leading zeros lose them (`007` becomes 
 
 Importing through **Data → From Text/CSV** lets you catch these before they spread.
 
-**Values vs formatting.** A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
+### Check the data types
 
-**Calculated columns in a Table.** Type a formula once in a Table column and Excel fills it down for every row, using **structured references**: `[@quantity]` means "the quantity in this row".
+After loading, check that each column came in as the right type. Click a cell and look at **Home → Number Format** (the drop-down in the Number group):
+
+| Column | Should be | Shows as | If it's wrong |
+| :-- | :-- | :-- | :-- |
+| `order_id`, `customer_id`, `product_id` | Number (or text, for codes with leading zeros) | `10001` | Fine either way, as long as both tables match |
+| `order_date` | **Date** | `01/01/2025` or `2025-01-01` | Left-aligned dates are text: re-import (lesson 7) |
+| `quantity`, `unit_price`, `discount_pct` | **Number** | `14`, `18600`, `0` | Left-aligned numbers are text |
+
+A quick test for a whole column: select it and look at the status bar. If it shows **Sum**, the cells are numbers; if it only shows **Count**, they're text.
+
+### Number formats
+
+A cell's *value* is what's stored; its *format* is how it's shown. `0.19` formatted as a percentage shows `19%`. Formatting never changes the value, so rounding a display to 0 decimals doesn't round the number used in calculations.
+
+Open the full list with **Ctrl + 1** (Format Cells) → **Number** tab:
+
+| Format | `260400` shows as | Use for |
+| :-- | :-- | :-- |
+| General | `260400` | The default: Excel decides |
+| Number, 0 decimals, 1000 separator | `260,400` | Money in reports, counts |
+| Currency (₦) | `₦260,400.00` | Invoices, where the symbol helps |
+| Percentage | `26040000%` | Only for ratios such as `0.19` → `19%` |
+| Date | `12-Dec-2612` | Only for real dates! |
+| Text | `260400`, left-aligned | Codes and phone numbers, not amounts |
+
+The last rows show why formats matter: the same number shown as a date or a percentage is nonsense. If a column suddenly displays dates or `####`, check its format before you check the data. (`####` just means the column is too narrow: double-click the column border to widen it.)
+
+### Calculated columns in a Table
+
+Type a formula once in a Table column and Excel fills it down for every row, using **structured references**: `[@quantity]` means "the quantity in this row".
+
+| Reference | Means |
+| :-- | :-- |
+| `[@quantity]` | The quantity in **this row** |
+| `Orders[quantity]` | The **whole** quantity column of the Orders table |
+| `Orders[@quantity]` | This row's quantity, written from outside the table |
+| `Orders` | All the data rows of the table |
 
 **Kolanut revenue for one order line:**
 
 ```excel
 =[@quantity]*[@unit_price]*(1-[@discount_pct]/100)
 ```
+
+The discount is stored as a whole number (`5` means 5%), so it's divided by 100. `1 - 5/100` is `0.95`: the customer pays 95% of the full price.
+
+Outside a Table, you write the formula in the first row with ordinary references, `=E2*F2*(1-G2/100)`, and copy it down by **double-clicking the fill handle**: the small square at the bottom right of the selected cell. Excel copies it down as far as the column next to it has data.
+
+### Saving your work
+
+| Save as | Keeps | Use for |
+| :-- | :-- | :-- |
+| **Excel Workbook (.xlsx)** | Formulas, formatting, Tables, several sheets, charts | Your working file. Always. |
+| CSV (.csv) | Values of the **current sheet** only | Sending data to another system |
+
+If you open a CSV, add formulas, and press Ctrl + S, Excel asks whether to keep the CSV format. Choose **Save As → Excel Workbook**. Saving as CSV silently throws away every formula, every other sheet and all formatting.
 
 ## Example
 

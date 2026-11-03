@@ -13,18 +13,21 @@
 //   links point at real courses and datasets, and every SQL starter runs
 // Run: npm run test:content
 import initSqlJs from "sql.js";
+import { stripTypeScriptTypes } from "node:module";
 import fs from "node:fs";
 import path from "node:path";
 import { openDataset, query } from "./lib/csv-db.mjs";
 import { parseCsv } from "./lib/csv-parse.mjs";
-import { checkTask } from "../src/lib/task-check.ts";
+import { checkTask, checkWebCode, isRenderRule } from "../src/lib/task-check.ts";
+import { parseGitTask, parseLive, parseWebTask } from "../src/lib/lesson-format.ts";
+import { checkGitTask, prepare, run as gitRun } from "../src/lib/git-sim.ts";
 import { lessonTime, roundMinutes, timingOk } from "./lib/lesson-time.mjs";
 
 const SQL = await initSqlJs();
 const IMAGE_SIZES = JSON.parse(fs.readFileSync("src/content/image-sizes.json", "utf8"));
 const logistics = new SQL.Database(fs.readFileSync("public/datasets/logistics.sqlite"));
 const CONTENT = "src/content";
-const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform", "cicd", "observability", "swe", "dbapi", "webjs", "pm", "product", "ba-capstone", "ds-capstone", "ai-capstone", "devops-capstone", "swe-capstone"];
+const FULL = ["sql", "daf", "excel", "powerbi", "modelling", "python-analytics", "statistics", "advanced-sql", "dax", "capstone", "ba", "agile-ba", "process", "ml", "features", "experiments", "forecasting", "genai", "agents", "llmops", "cloud", "linux", "terraform", "cicd", "observability", "swe", "dbapi", "webjs", "pm", "product", "ba-capstone", "pm-capstone", "ds-capstone", "ai-capstone", "devops-capstone", "swe-capstone"];
 /** Short courses: one lesson per module, a module check each, and a final assessment. */
 const SHORT = [
   "ai-productivity",
@@ -40,8 +43,52 @@ const SHORT = [
   "digital",
   "internship",
   "freelancing",
+  "import-export",
+  "procurement",
+  "logistics",
+  "supply-chain",
+  "entrepreneurship",
+  "sales",
+  "digital-marketing",
+  "ecommerce",
+  "project-management-practice",
+  "hr",
+  "customer-service",
+  "office-admin",
+  "bookkeeping",
 ];
 const COURSES = [...FULL, ...SHORT];
+// The folders withheld from the public site must be exactly the programme-only (paid) courses in the catalogue.
+{
+  const { PROGRAMME_ONLY_COURSES } = await import("../src/content/catalog.ts");
+  const dirs = fs.readFileSync("src/content/index.ts", "utf8");
+  const folderOf = (id) => [...dirs.matchAll(/^\s*"?([\w-]+)"?: "([\w-]+)",$/gm)].find((m) => m[2] === id)?.[1];
+  const { COURSES: ALL } = await import("../src/content/catalog.ts");
+  // Programme-only courses, plus paid courses sold on their own that have lessons: their text is not shipped in the public bundle.
+  const paidWithLessons = ALL.filter((c) => c.access === "paid" && !PROGRAMME_ONLY_COURSES.has(c.id) && c.modules.some((m) => m.lessons.length > 0)).map((c) => c.id);
+  const want = [...PROGRAMME_ONLY_COURSES, ...paidWithLessons].map(folderOf).sort();
+  const have = [...JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders].sort();
+  if (JSON.stringify(want) !== JSON.stringify(have)) throw new Error(`protected-courses.json must list exactly the paid course folders.
+expected: ${want.join(", ")}
+found:    ${have.join(", ")}`);
+}
+// Every course sits in a real category, and a paid course that is still being written is complete on the page: a price,
+// enrolment closed (so nobody can pay for lessons that do not exist yet) and what each module covers.
+{
+  const { COURSES, CATEGORIES } = await import("../src/content/catalog.ts");
+  for (const c of COURSES) {
+    if (!CATEGORIES.some((x) => x.id === c.categoryId)) throw new Error(`${c.id} uses an unknown category: ${c.categoryId}`);
+    if (c.status === "coming_soon" && c.access === "paid") {
+      if (!(c.price > 0)) throw new Error(`${c.id} is paid but has no price.`);
+      if (c.enrollmentStatus !== "closed") throw new Error(`${c.id} has no lessons yet, so enrolment must stay closed.`);
+      for (const m of c.modules) if (!m.topics?.length) throw new Error(`${c.id}/${m.id} lists no topics.`);
+    }
+  }
+}
+// Folders whose lesson text is withheld from the public site (paid courses) must be real course folders.
+for (const f of JSON.parse(fs.readFileSync("src/content/protected-courses.json", "utf8")).folders) {
+  if (!COURSES.includes(f)) throw new Error(`protected-courses.json lists "${f}", which is not a course folder.`);
+}
 const SECTIONS = ["## The problem", "## The concept", "## Example", "## Walkthrough", "## Practice", "## Check your understanding"];
 /** A long, awkward answer for timing task patterns: bullets, stars, hashes, colons, digits and long lines. */
 const STRESS_TEXT = Array.from({ length: 120 }, (_, i) => `${i % 3 ? "-" : "*"} line ${i}: #tag${i} word word "quote ${i}" 12,${i}00 | x ${"filler ".repeat(i % 7)}`).join("\n") + "\n" + "a ".repeat(3000);
@@ -118,6 +165,84 @@ for (const course of COURSES) {
       if (t.sample) {
         const r = checkTask(t, t.sample.replace(/^```\w*\n|\n```$/g, ""));
         if (!r.passed) fail(`${t.id}: the model answer fails "${r.results.find((x) => !x.passed).label}"`);
+      }
+    }
+
+    // Web tasks: an editor and live preview, checked on the code and on the rendered page. Here we check
+    // the code rules (and that the starting code does not already pass); scripts/test-webtasks.mjs
+    // runs the model answers in a real browser to check the rendered-page rules too.
+    for (const block of fence(body, "webtask")) {
+      let t;
+      try {
+        t = parseWebTask(block);
+      } catch (e) {
+        fail(`webtask: ${e.message}`);
+        continue;
+      }
+      if (!t.minutes) fail(`${t.id}: needs minutes`);
+      if (ids.has(t.id)) fail(`duplicate id ${t.id}`);
+      ids.add(t.id);
+      let compiled = true;
+      try {
+        for (const r of t.rules) {
+          if (r.pattern) new RegExp(r.pattern, "im");
+          if (r.output) new RegExp(r.output, "im");
+          if (r.page) new RegExp(r.page, "im");
+          if (r.contains) new RegExp(r.contains, "i");
+          for (const v of [...Object.values(r.style ?? {}), ...Object.values(r.attr ?? {})]) new RegExp(v, "i");
+        }
+      } catch (e) {
+        fail(`${t.id}: a rule pattern doesn't compile: ${e.message}`);
+        compiled = false;
+      }
+      if (!compiled) continue;
+      if (t.rules.some((r) => !r.label)) fail(`${t.id}: every rule needs a label`);
+      const code = checkWebCode(t.rules, { ...t.files, ...t.sample });
+      const bad = t.rules.findIndex((r, i) => code[i] === false);
+      if (bad >= 0) fail(`${t.id}: the model answer fails "${t.rules[bad].label}"`);
+      if (!t.rules.some((r) => !isRenderRule(r)) && !t.rules.some(isRenderRule)) fail(`${t.id}: no rules`);
+      // The starting code must not already pass every rule it can be checked against here.
+      const start = checkWebCode(t.rules, t.files);
+      if (start.every((x) => x === true || x === null) && !t.rules.some(isRenderRule)) fail(`${t.id}: the starting code already passes; the learner has nothing to do`);
+      for (const k of ["html", "css", "js"]) if (t.tabs && !t.tabs.includes(k) && t.sample[k]) fail(`${t.id}: the model answer changes ${k}, which is not an editable tab`);
+    }
+    // Git tasks: run the model answer in the simulator, and check that it passes every rule while the starting repository does not.
+    for (const block of fence(body, "gittask")) {
+      let t;
+      try {
+        t = parseGitTask(block);
+      } catch (e) {
+        fail(`gittask: ${e.message}`);
+        continue;
+      }
+      if (!t.minutes) fail(`${t.id}: needs minutes`);
+      if (ids.has(t.id)) fail(`duplicate id ${t.id}`);
+      ids.add(t.id);
+      try {
+        for (const r of t.rules) {
+          if (!r.label) fail(`${t.id}: every rule needs a label`);
+          for (const k of ["contains", "log", "ran"]) if (r[k]) new RegExp(r[k], "i");
+        }
+      } catch (e) {
+        fail(`${t.id}: a rule pattern doesn't compile: ${e.message}`);
+        continue;
+      }
+      const start = prepare({ files: t.files, setup: t.setup, identity: t.identity });
+      if (checkGitTask(start, t.rules).passed) fail(`${t.id}: the starting repository already passes every rule`);
+      const repo = prepare({ files: t.files, setup: t.setup, identity: t.identity });
+      for (const line of t.sample) {
+        const out = gitRun(repo, line);
+        if (out.error && !/^git (merge|commit)\b/.test(line)) fail(`${t.id}: the model answer's command "${line}" fails: ${out.out.split("\n")[0]}`);
+      }
+      const res = checkGitTask(repo, t.rules);
+      if (!res.passed) fail(`${t.id}: the model answer fails "${res.results.find((x) => !x.passed).label}"`);
+    }
+    for (const block of fence(body, "live")) {
+      try {
+        const l = parseLive(block);
+        if (!Object.keys(l.files).length) fail("a live example has no code");
+      } catch (e) {
+        fail(`live example: ${e.message}`);
       }
     }
 
@@ -222,10 +347,9 @@ for (const course of COURSES) {
 
 // Assessments are plain data in TypeScript: strip the type annotations and evaluate them.
 function loadAssessments(file) {
-  const src = fs
-    .readFileSync(file, "utf8")
-    .replace(/^import .*$/gm, "")
-    .replace(/export const \w+: AssessmentDef(\[\])? =/, "return");
+  // Strip the TypeScript types (Node's built-in stripper), then run the file and take its export.
+  const src = stripTypeScriptTypes(fs.readFileSync(file, "utf8").replace(/^import type .*$/gm, ""))
+    .replace(/export const \w+\s*=/, "return");
   const value = new Function(src)();
   return Array.isArray(value) ? value : [value];
 }
@@ -270,13 +394,16 @@ for (const course of COURSES) {
 
 // Every module with a badge in the catalogue has a module check, and every check points at a module.
 const catalog = fs.readFileSync("src/content/catalog.ts", "utf8");
-const badgeModules = [...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?badge: "/g)].map((m) => m[1]);
+const badgeModules = [
+  ...[...catalog.matchAll(/\{ id: "([a-z0-9-]+)", title: [^}]*?badge: "/g)].map((m) => m[1]),
+  // Courses defined in business-courses.ts, once their lessons are written.
+  ...(await import("../src/content/business-courses.ts")).BUSINESS_COURSES.flatMap((c) => c.modules.filter((m) => m.badge).map((m) => m.id)),
+];
 const checkedModules = new Set(COURSES.flatMap((c) => (fs.existsSync(path.join(CONTENT, c, "assessment.ts")) ? loadAssessments(path.join(CONTENT, c, "assessment.ts")) : [])).filter((a) => a.kind === "module").map((a) => a.moduleId));
 for (const m of badgeModules) if (!checkedModules.has(m)) fail(`module ${m} has a badge but no module check`);
 for (const m of checkedModules) if (!badgeModules.includes(m)) fail(`module check for ${m}, which has no badge in the catalogue`);
 
 // Practice projects (src/content/projects.ts, loaded with its types stripped).
-const { stripTypeScriptTypes } = await import("node:module");
 const os = await import("node:os");
 const { pathToFileURL } = await import("node:url");
 const projectsJs = path.join(os.tmpdir(), `cta-projects-${process.pid}.mjs`);

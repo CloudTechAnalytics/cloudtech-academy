@@ -1,6 +1,6 @@
 ---
 title: Testing and adoption
-minutes: 25
+minutes: 30
 summary: Check the delivered change against the requirements with user acceptance testing and a traceability matrix, then help people actually adopt it and measure whether it worked.
 ---
 
@@ -10,9 +10,21 @@ The new process is ready. Reminders are set up, the invoice template has a due d
 
 "Done" means two different things. **Does it do what was specified?** That's testing. **Do people use it, and is the problem getting smaller?** That's adoption. Plenty of changes pass every test and still fail, because lawyers keep sending time by WhatsApp, or the accounts officer quietly keeps her notebook. The BA's job doesn't end at go-live.
 
+## A story from the field: the payroll system nobody used
+
+A manufacturing company in Ikeja spent ₦14 million on a new payroll system. It passed every test. It went live on the first of the month. By the fifteenth, the payroll team had quietly gone back to their old spreadsheets.
+
+The analyst, Tolani, was asked to find out why. She sat with the payroll officers and watched. The system was correct, but it needed twelve clicks to enter overtime for one worker, and the officers entered overtime for 300 workers every month. Nobody had shown them shortcuts, and the one-hour training had covered the screens, not their working day. The old spreadsheet took them four minutes a worker. The new system took six.
+
+The technology had been tested. The **adoption** had not. Tolani did three things. She ran a user acceptance session where officers processed real overtime from last month and wrote down every place they got stuck. She asked the vendor to add a bulk-entry screen for overtime. And she paired each officer with a "super-user" colleague for the first two pay cycles.
+
+By the next cycle, the team was entering overtime in under two minutes a worker, and the spreadsheets were retired.
+
+A system that works but is not used has failed. Testing proves the system does what it was specified to do. Adoption proves that people will actually use it. A good analyst plans for both.
+
 ## The concept
 
-**User acceptance testing (UAT)**
+### User acceptance testing (UAT)
 
 Before go-live, the people who'll use the change test it against real scenarios. Each test case says:
 
@@ -26,11 +38,13 @@ Before go-live, the people who'll use the change test it against real scenarios.
 
 Your acceptance criteria from lesson 7 are the starting point: most Given/When/Then scenarios become UAT cases almost word for word.
 
-**Traceability**
+### Traceability
 
 A **traceability matrix** links every requirement to the user stories, test cases and KPIs that cover it. It answers two questions: "Has every requirement been tested?" and "Why does this feature exist?". A requirement with no test hasn't been checked. A feature with no requirement is scope creep.
 
-**Adoption: the people side**
+![Six linked boxes: business requirement (reduce days to pay to 30), functional requirement FR-03 (reminder 7 days before due), user story (automatic reminder), acceptance criterion (no reminder on payment plans), UAT test case UAT-06, and KPI (average days to pay).](/images/courses/ba/traceability.svg "One requirement traced from the goal to its test and its measure.")
+
+### Adoption: the people side
 
 People adopt a change when they understand **why**, know **how**, and find it easier than the old way. Plan for:
 
@@ -39,7 +53,7 @@ People adopt a change when they understand **why**, know **how**, and find it ea
 - **Support**: a named person to ask in the first weeks.
 - **Switching off the old way**: the spreadsheet and the notebook are retired on a fixed date, or they never will be.
 
-**Measure the benefits**
+### Measure the benefits
 
 After go-live, rerun the baseline measures from lesson 4 with exactly the same definitions, monthly, and report against the business case targets. That's the only way to say "it worked".
 
@@ -55,6 +69,31 @@ Part of Ashgrove's traceability matrix:
 | FR-07 No reminders on payment plans | (exception in the reminder story) | UAT-06 | |
 
 FR-07 came from an acceptance criterion, not from the original requirements list, and the matrix makes sure it's tested anyway.
+
+## A real-world scenario: a go-live plan for a new booking system
+
+A physiotherapy clinic is replacing its paper diary with an online booking system. The analyst prepares a plan with three parts: **testing**, **training** and **rollout**.
+
+**Part 1: User acceptance testing (UAT).** The people who will really use the system run real tasks, using scripts written from the acceptance criteria.
+
+| Test | Steps | Expected result | Pass or fail |
+| :-- | :-- | :-- | :-- |
+| Book a new patient | Enter name and phone, pick a 30-minute slot | Slot is reserved and a confirmation SMS is sent | |
+| Double booking | Book the same slot for two patients | The second is refused with a message | |
+| Cancel an appointment | Cancel a booking 2 hours before | Slot becomes available again | |
+| Receptionist off sick | Another staff member logs in and views the day's list | List appears with all bookings | |
+
+Every failure is logged with who found it, what they did and what happened. The team decides which must be fixed before go-live.
+
+**Part 2: Training.** Short (45 minutes), by role, using real examples from the clinic, with a one-page quick guide at each desk.
+
+**Part 3: Rollout.** Do not switch off the paper diary on day one.
+
+1. **Week 1:** run both, new bookings in the system and the paper diary as a backup.
+2. **Week 2:** system only, with a super-user available each morning.
+3. **Week 4:** review. Count bookings, missed appointments and staff comments. Compare with the baseline.
+
+**Practical checklist before go-live:** acceptance tests passed, known issues agreed, staff trained, support person named, backup plan ready and a date to review the results.
 
 ## Walkthrough
 

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="A power and interest grid for Ashgrove's billing change. High power and high interest: the managing partner, managed closely. High power, low interest: none here; the lawyers have medium power and low interest, so they are kept satisfied. Low power, high interest: the accounts officer, kept informed and involved in design. Medium interest: clients and the IT contractor.">
+<title>Ashgrove's stakeholders on the power and interest grid.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="560" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="90.0" y="30.0" width="300.0" height="150.0" rx="10" fill="#F3EBD8" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="104.0" y="56.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Keep satisfied</text>
+<text xml:space="preserve" x="104.0" y="76.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">brief updates; involve at key decisions</text>
+<rect x="400.0" y="30.0" width="300.0" height="150.0" rx="10" fill="#EADBB9" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="414.0" y="56.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Manage closely</text>
+<text xml:space="preserve" x="414.0" y="76.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">involve throughout; agree decisions</text>
+<rect x="90.0" y="190.0" width="300.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="104.0" y="216.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Monitor</text>
+<text xml:space="preserve" x="104.0" y="236.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">occasional information</text>
+<rect x="400.0" y="190.0" width="300.0" height="150.0" rx="10" fill="#F3EBD8" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="414.0" y="216.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Keep informed</text>
+<text xml:space="preserve" x="414.0" y="236.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">regular updates; ask for their input</text>
+<path d="M66,340 L66,30" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text transform="rotate(-90 56 190.0)" xml:space="preserve" x="56.0" y="190.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">POWER</text>
+<path d="M90,364 L700,364" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="395.0" y="384.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="middle">INTEREST</text>
+<circle cx="450.0" cy="114.0" r="7" fill="#8A6A1F"/>
+<text xml:space="preserve" x="462.0" y="119.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Managing partner (sponsor)</text>
+<circle cx="130.0" cy="142.0" r="7" fill="#2F5D8A"/>
+<text xml:space="preserve" x="142.0" y="147.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Lawyers (8)</text>
+<circle cx="540.0" cy="266.0" r="7" fill="#2F6B3F"/>
+<text xml:space="preserve" x="552.0" y="271.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Accounts officer</text>
+<circle cx="260.0" cy="154.0" r="7" fill="#2F5D8A"/>
+<text xml:space="preserve" x="272.0" y="159.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Clients (50)</text>
+<circle cx="430.0" cy="320.0" r="7" fill="#5E5A52"/>
+<text xml:space="preserve" x="442.0" y="325.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">IT contractor</text>
+<text xml:space="preserve" x="16.0" y="428.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">The accounts officer has little power but knows the process best: involve her in the design. The</text>
+<text xml:space="preserve" x="16.0" y="447.6" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">lawyers can block anything that costs them time, so keep their extra admin minimal.</text>
+</g></svg>

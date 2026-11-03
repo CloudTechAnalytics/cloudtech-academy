@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="NULL means unknown, not nothing. Any comparison with NULL gives unknown, which is neither true nor false, so WHERE drops the row: containers equals NULL and containers not equal to 5 both skip a row with a NULL. Test for it with IS NULL. NOT IN with a list that contains a NULL returns no rows at all, because nothing can be proved not equal to an unknown. Aggregates ignore NULL: AVG of 4, 8 and NULL is 6, not 4. Integer division truncates: 7 divided by 2 is 3 unless one side is a decimal.">
+<title>NULL is unknown: comparisons skip it, NOT IN breaks on it, aggregates ignore it.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="170.0" height="28.0" rx="0" fill="#F3EBD8"/>
+<text xml:space="preserve" x="24.0" y="40.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">id</text>
+<text xml:space="preserve" x="84.0" y="40.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">containers</text>
+<rect x="16.0" y="48.0" width="170.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="68.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1</text>
+<text xml:space="preserve" x="84.0" y="68.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<rect x="16.0" y="76.0" width="170.0" height="28.0" rx="0" fill="#FBF8F2"/>
+<text xml:space="preserve" x="24.0" y="96.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="84.0" y="96.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">8</text>
+<rect x="16.0" y="104.0" width="170.0" height="28.0" rx="0" fill="#FFFFFF"/>
+<text xml:space="preserve" x="24.0" y="124.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3</text>
+<text xml:space="preserve" x="84.0" y="124.0" font-size="12" fill="#B38A3E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">NULL</text>
+<line x1="16.0" y1="132.0" x2="186.0" y2="132.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="212.0" y="22.0" width="532.0" height="30.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="224.0" y="42.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers = 4</text>
+<text xml:space="preserve" x="740.0" y="42.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">row 1</text>
+<rect x="212.0" y="58.0" width="532.0" height="30.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="224.0" y="78.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers &lt;&gt; 4</text>
+<text xml:space="preserve" x="740.0" y="78.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">row 2 only: row 3 is unknown, dropped</text>
+<rect x="212.0" y="94.0" width="532.0" height="30.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="224.0" y="114.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers = NULL</text>
+<text xml:space="preserve" x="740.0" y="114.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="end">no rows: nothing equals unknown</text>
+<rect x="212.0" y="130.0" width="532.0" height="30.0" rx="6" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="224.0" y="150.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WHERE containers IS NULL</text>
+<text xml:space="preserve" x="740.0" y="150.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="end">row 3</text>
+<rect x="16.0" y="172.0" width="356.0" height="100.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="198.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">The NOT IN trap</text>
+<text xml:space="preserve" x="30.0" y="222.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">x NOT IN (1, 2, NULL)</text>
+<text xml:space="preserve" x="30.0" y="246.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">returns no rows: nothing is provably "not equal" to</text>
+<text xml:space="preserve" x="30.0" y="262.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">unknown. Use NOT EXISTS, or filter NULLs out.</text>
+<rect x="388.0" y="172.0" width="356.0" height="100.0" rx="8" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="402.0" y="198.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Aggregates skip NULL</text>
+<text xml:space="preserve" x="402.0" y="222.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">AVG(4, 8, NULL) = 6</text>
+<text xml:space="preserve" x="402.0" y="246.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">(4 + 8) ÷ 2 values, not ÷ 3. COUNT(*) counts the row;</text>
+<text xml:space="preserve" x="402.0" y="262.7" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">COUNT(column) doesn't.</text>
+<rect x="16.0" y="290.0" width="356.0" height="70.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="316.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Integer division</text>
+<text xml:space="preserve" x="30.0" y="340.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">7 / 2 = 3     7 / 2.0 = 3.5</text>
+<rect x="388.0" y="290.0" width="356.0" height="70.0" rx="8" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="402.0" y="316.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Readable SQL</text>
+<text xml:space="preserve" x="402.0" y="338.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">one clause per line, clear aliases, comments for why</text>
+<text xml:space="preserve" x="16.0" y="396.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Ask of every column: can it be NULL, and what should happen to those rows?</text>
+</g></svg>

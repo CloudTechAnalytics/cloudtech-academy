@@ -1,7 +1,7 @@
 ---
 title: Measures with CALCULATE and time intelligence
-minutes: 15
-summary: Change the filter context with CALCULATE, build percentage-of-total, year-to-date and year-on-year measures.
+minutes: 20
+summary: Change the filters with CALCULATE: fixed segments, shares of the total with REMOVEFILTERS and ALLSELECTED, and time intelligence for year to date and year on year.
 ---
 
 ## The problem
@@ -10,19 +10,43 @@ The managing director wants three numbers on every page: *revenue this year to d
 
 ## The concept
 
-**CALCULATE** evaluates an expression under modified filters:
+In the last lesson, every measure accepted the filter context it was given: a Lagos cell got Lagos revenue. Many business questions need something different: *Lagos revenue next to every region*, *each category against the total*, *this year against last year*. For those, the measure has to **change the filters** before it calculates. That's what `CALCULATE` does, and it's the most important function in DAX.
+
+### CALCULATE
 
 ```dax
 CALCULATE ( <expression>, <filter1>, <filter2>, … )
 ```
 
+| Argument | Meaning |
+| :-- | :-- |
+| `expression` | Usually a measure: what to calculate |
+| `filter1, filter2, …` | Changes to the filter context, applied **before** the expression runs |
+
+CALCULATE takes the cell's filter context, applies your changes, then evaluates the expression in the new context.
+
+### Adding or replacing a filter
+
 ```dax
-Revenue Lagos = CALCULATE ( [Revenue], customers[region] = "Lagos" )
+Revenue Wholesale = CALCULATE ( [Revenue], customers[channel] = "Wholesale" )
 ```
 
-That measure shows Lagos revenue even in a visual sliced by another region: the filter argument replaces the region filter.
+Across all dates, this gives ₦580,264,905. Put it in a table by **region** and each row shows that region's wholesale revenue: the row's region filter stays, and CALCULATE adds the channel filter.
 
-**Removing filters: ALL / REMOVEFILTERS**
+Put it in a table by **channel**, and every row shows ₦580,264,905, even the Kiosk row. A filter argument on a column **replaces** any existing filter on that same column. That's often exactly what you want (a fixed benchmark beside each row), but it surprises people the first time.
+
+Several filters are combined with AND:
+
+```dax
+Revenue Lagos Beverages =
+CALCULATE ( [Revenue], customers[region] = "Lagos", products[category] = "Beverages" )
+```
+
+That's ₦116,162,310, across all dates.
+
+### Removing filters: REMOVEFILTERS and ALL
+
+To compare each row with a total, remove a filter instead of adding one:
 
 ```dax
 Revenue All Categories = CALCULATE ( [Revenue], REMOVEFILTERS ( products[category] ) )
@@ -30,9 +54,34 @@ Revenue All Categories = CALCULATE ( [Revenue], REMOVEFILTERS ( products[categor
 % of Revenue = DIVIDE ( [Revenue], [Revenue All Categories] )
 ```
 
-In a table by category, the first measure ignores the category on each row, giving the grand total, so the ratio is each category's share. Format `% of Revenue` as a percentage.
+![A table of revenue by category. For the Snacks row, Revenue keeps the category filter and gives ₦125,676,475. Revenue All Categories uses CALCULATE with REMOVEFILTERS, drops the filter, and gives ₦830,541,245. DIVIDE gives 15.1%.](/images/courses/powerbi/calculate-removefilters.svg "The numerator keeps the row's filter; the denominator removes it.")
 
-**Time intelligence** (needs the marked date table from lesson 7):
+In each row, `Revenue` is that category's revenue, and `Revenue All Categories` is the grand total, so the ratio is the category's share. Format `% of Revenue` as a percentage.
+
+| Function | Removes |
+| :-- | :-- |
+| `REMOVEFILTERS ( products[category] )` | Filters on one column |
+| `REMOVEFILTERS ( products )` | Filters on every column of a table |
+| `REMOVEFILTERS ()` | Every filter in the model |
+| `ALL ( … )` | The same as REMOVEFILTERS when used inside CALCULATE; also returns a table, so you'll see it in older formulas |
+| `ALLSELECTED ( … )` | Filters from inside the visual, but keeps the user's slicer choices |
+
+> [!TIP]
+> Use `ALLSELECTED` when a share should add up to 100% of what the user has **selected**. With `REMOVEFILTERS ( products[category] )`, a slicer that picks two categories is removed too, so each category is shown as a share of **all four**, and the page won't add up to 100%. (A slicer on a different column, such as region, is unaffected: REMOVEFILTERS only removes filters on the column you name.)
+
+### Time intelligence
+
+DAX has functions that shift and stretch the date filter. They need the **marked date table** from lesson 7.
+
+| Function | Returns | Used for |
+| :-- | :-- | :-- |
+| `TOTALYTD ( <expr>, 'Date'[Date] )` | The expression from 1 January to the last date in context | Year to date |
+| `DATESYTD ( 'Date'[Date] )` | The dates from 1 January to the last date in context | Inside CALCULATE: the same as TOTALYTD |
+| `SAMEPERIODLASTYEAR ( 'Date'[Date] )` | The dates in context, moved back one year | Last year's figure |
+| `DATEADD ( 'Date'[Date], -1, MONTH )` | The dates moved by any number of days, months, quarters or years | Previous month, previous quarter |
+| `DATESINPERIOD ( 'Date'[Date], <end>, -3, MONTH )` | A window of dates ending on a date | Rolling three months |
+
+The three measures you'll use most:
 
 ```dax
 Revenue YTD = TOTALYTD ( [Revenue], 'Date'[Date] )
@@ -42,9 +91,27 @@ Revenue LY = CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
 YoY % = DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )
 ```
 
-- `TOTALYTD` adds everything from 1 January up to the latest date in the current filter.
-- `SAMEPERIODLASTYEAR` shifts the dates in the filter back one year.
-- `YoY %` compares them; blank when there's no previous year.
+- `TOTALYTD` adds everything from 1 January up to the latest date in the current filter. At September 2025 it shows ₦379,011,165: January to September.
+- `SAMEPERIODLASTYEAR` shifts the dates in the filter back one year. In the cell for March 2026, it gives March 2025.
+- `YoY %` compares them. It's blank when there's no previous year, thanks to `DIVIDE`.
+
+### Common measure patterns
+
+| Question | Pattern |
+| :-- | :-- |
+| One segment, whatever the visual shows | `CALCULATE ( [Revenue], customers[channel] = "Wholesale" )` |
+| Share of the total | `DIVIDE ( [Revenue], CALCULATE ( [Revenue], REMOVEFILTERS ( … ) ) )` |
+| Year to date | `TOTALYTD ( [Revenue], 'Date'[Date] )` |
+| Same period last year | `CALCULATE ( [Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )` |
+| Growth | `DIVIDE ( [Revenue] - [Revenue LY], [Revenue LY] )` |
+| Previous month | `CALCULATE ( [Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) )` |
+
+### When a measure gives a surprising number
+
+1. **Ask what's filtered.** Put the measure in a table with the fields from the visual, one at a time, and watch it change.
+2. **Check the total row.** A different total than you expected usually means a filter is being removed or replaced.
+3. **Test with a Card.** A Card with no other fields shows the measure in the widest context: compare it with a number you know (₦830,541,245 for all revenue).
+4. **Break it into variables** and return each one in turn to see which part is wrong.
 
 ## Example
 
@@ -56,18 +123,34 @@ A matrix with `Date[Year]` and `Date[Month]` in Rows:
 | 2026 Feb | 43,042,730 | 36,138,690 | 19.1% |
 | 2026 Mar | 51,202,475 | 46,282,170 | 10.6% |
 
-And **Revenue YTD** at 2026 March shows Q1 2026 in total.
+Check the first row by hand: (48,963,925 − 37,088,460) ÷ 37,088,460 = 0.320, so 32.0%.
+
+At month level, **Revenue YTD** keeps adding: it shows January alone in January, January and February in February, and so on.
 
 > [!WARNING]
 > At **year** level, 2026's YoY % compares January–June 2026 with **all** of 2025, because 2026 only has data to June. Compare full year against half year and 2026 looks like a disaster. Compare **H1 with H1** (filter the page to January–June, or use the monthly or quarterly rows) to get the fair +19.1%.
 
 ## Walkthrough
 
-1. In `_Measures`, add `Revenue All Categories` and `% of Revenue`. Build a table: `products[category]`, `[Revenue]`, `[% of Revenue]`.
-2. Add `Revenue YTD`, `Revenue LY` and `YoY %`. Format YoY % as a percentage with one decimal place.
-3. Build a matrix with `Date[Year]` → `Date[Month]` in Rows and the three measures in Values.
-4. Check one number by hand: February 2026's YoY % should equal (43.04 − 36.14) ÷ 36.14.
-5. Add a **Card** for `Revenue YTD` and a slicer on `Date[Month]`: selecting March 2026 shows year-to-date March.
+1. In `_Measures`, add `Revenue All Categories` and `% of Revenue`. Build a table: `products[category]`, `[Revenue]`, `[% of Revenue]`. The percentages should add up to 100%.
+2. Add a slicer on `products[category]` and pick two categories. The shares no longer add to 100%: each is a share of all four categories. Change `REMOVEFILTERS` to `ALLSELECTED` and they add to 100% again. Decide which one your report needs.
+3. Add `Revenue YTD`, `Revenue LY` and `YoY %`. Format YoY % as a percentage with one decimal place.
+4. Build a matrix with `Date[Year]` → `Date[Month]` in Rows and the three measures in Values.
+5. Check one number by hand: February 2026's YoY % should equal (43.04 − 36.14) ÷ 36.14.
+6. Add a **Card** for `Revenue YTD` and a slicer on `Date[Month]`: selecting March 2026 shows year-to-date March.
+7. Add `Revenue Wholesale` to a table by channel and see the "replace" behaviour for yourself.
+
+### Summary
+
+| Need | Use |
+| :-- | :-- |
+| Change filters, then calculate | `CALCULATE ( expression, filters… )` |
+| A fixed segment | A filter argument: `customers[channel] = "Wholesale"` |
+| A total to compare with | `REMOVEFILTERS ( … )`, or `ALLSELECTED ( … )` to respect slicers |
+| Year to date | `TOTALYTD` |
+| Last year | `SAMEPERIODLASTYEAR` inside CALCULATE |
+| Any shift in time | `DATEADD` |
+| A surprising number | Ask what's filtered; test in a table and a Card |
 
 ## Practice
 

@@ -12,24 +12,26 @@ Set the line low and the bank declines many borrowers who would have repaid, los
 
 ## The concept
 
-**The confusion matrix**
+### The confusion matrix
 
 | | Predicted: repays | Predicted: defaults |
 | :-- | :-- | :-- |
 | **Actually repays** | true negative (TN) | false positive (FP): a good borrower turned away |
 | **Actually defaults** | false negative (FN): a default we lent to | true positive (TP): a default caught |
 
-**Measures from it**
+### Measures from it
 
 - **Recall** (sensitivity) = TP ÷ (TP + FN): of all the defaults, how many did we catch?
 - **Precision** = TP ÷ (TP + FP): of the loans we flagged, how many really defaulted?
 - Lowering the threshold raises recall and lowers precision. There's always a trade-off.
 
-**AUC: ranking quality, independent of threshold**
+![A two-by-two confusion matrix: true negatives (good loan approved), false positives (good borrower turned away), false negatives (default we lent to), true positives (default caught). Beside it, an illustration of recall rising and precision falling as the threshold is lowered.](/images/courses/ml/confusion-threshold.svg "The confusion matrix, and the trade-off the threshold controls.")
+
+### AUC: ranking quality, independent of threshold
 
 The **ROC AUC** measures how well the model ranks risky loans above safe ones, across all thresholds: 0.5 is random guessing, 1.0 is perfect. Credit scoring models typically score 0.70 to 0.85. Use it to compare models; use the threshold analysis to make the decision.
 
-**Choosing the threshold from costs**
+### Choosing the threshold from costs
 
 For each possible threshold, simulate the decision on the test set:
 

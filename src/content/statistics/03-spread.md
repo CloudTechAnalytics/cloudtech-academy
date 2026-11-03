@@ -14,11 +14,11 @@ Two datasets can have exactly the same average and behave completely differently
 
 ## The concept
 
-**Range: the simplest spread**
+### Range: the simplest spread
 
 `=MAX(range) - MIN(range)`. Easy to explain, but it depends entirely on the two most extreme values, so one unusual shipment can double it.
 
-**Quartiles and the interquartile range (IQR)**
+### Quartiles and the interquartile range (IQR)
 
 Sort the data and cut it into four equal parts:
 
@@ -28,6 +28,10 @@ Sort the data and cut it into four equal parts:
 
 The **IQR = Q3 − Q1** is the range of the middle half of the data. Extremes don't affect it, which makes it the natural partner of the median.
 
+![A box plot of packs per order line. The box runs from Q1 = 7 to Q3 = 19 packs with the median, 13, inside it. Whiskers reach the minimum, 1, and the maximum, 30. A bracket under the box marks the IQR: 12 packs.](/images/courses/statistics/box-plot.svg "A box plot shows the quartiles at a glance: the box is the middle half of the data.")
+
+A **box plot** (Insert → Charts → Box and Whisker in Excel 2016 and later) draws exactly these numbers. For Kolanut's order lines, the middle half order between 7 and 19 packs; the whiskers show the full range, 1 to 30.
+
 ```excel
 =QUARTILE.INC(range, 1)      Q1
 =QUARTILE.INC(range, 3)      Q3
@@ -36,13 +40,31 @@ The **IQR = Q3 − Q1** is the range of the middle half of the data. Extremes do
 
 Percentiles answer service-level questions directly: "90% of sea shipments arrive within X days" is a promise a customer can plan around.
 
-**Standard deviation: the typical distance from the mean**
+### Standard deviation: the typical distance from the mean
 
 The **standard deviation (SD)** measures how far values typically are from the mean, in the same units as the data. Roughly:
 
 1. Find each value's distance from the mean.
 2. Square the distances (so negatives don't cancel positives), and average them: that's the **variance**.
 3. Take the square root to get back to the original units: the **standard deviation**.
+
+**By hand, on five real shipments.** The first five delivered Shanghai → Apapa shipments took 36, 36, 37, 38 and 38 days.
+
+| Shipment | Days | Distance from mean (days − 37) | Squared |
+| :-- | --: | --: | --: |
+| 100002 | 36 | −1 | 1 |
+| 100030 | 36 | −1 | 1 |
+| 100051 | 37 | 0 | 0 |
+| 100058 | 38 | +1 | 1 |
+| 100068 | 38 | +1 | 1 |
+| **Total** | **185** | **0** | **4** |
+
+1. **Mean**: 185 ÷ 5 = **37 days**.
+2. The distances always add up to 0, which is why they're squared: otherwise the ups and downs cancel.
+3. **Variance**: the squared distances add to 4. Divide by n − 1 = 4 (a sample): **1**.
+4. **Standard deviation**: √1 = **1 day**. These five shipments are typically about a day from their average.
+
+`=STDEV.S(36,36,37,38,38)` gives 1, the same answer. Dividing by n = 5 instead (`STDEV.P`) gives 0.89.
 
 ```excel
 =STDEV.S(range)    a sample: divides by n − 1
@@ -53,7 +75,7 @@ The **standard deviation (SD)** measures how far values typically are from the m
 
 The SD goes with the mean; the IQR goes with the median. On skewed data, report the median and IQR.
 
-**Comparing spread fairly: the coefficient of variation**
+### Comparing spread fairly: the coefficient of variation
 
 Managers' salaries vary by about ₦121,000 and juniors' by about ₦62,000. Are managers' salaries more variable? Not relative to their size. The **coefficient of variation (CV)** puts spread on a common scale:
 

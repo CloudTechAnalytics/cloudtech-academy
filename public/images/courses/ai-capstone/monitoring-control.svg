@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Monitoring after launch. Use a stable early period to set control limits at the baseline mean plus three standard deviations; a day above the limit is unlikely to be normal variation. Signals differ in speed: invalid output arrives at once, the daily audit shows wrong but valid-looking output, thumbs down takes hours or days. When a limit is breached, ask what changed that day and compare affected and unaffected messages.">
+<title>Control limits from a stable period, and from alert to cause.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A metric with a control limit (invented)</text>
+<rect x="50.0" y="44.0" width="440.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<line x1="50.0" y1="118.9" x2="490.0" y2="118.9" stroke="#9B2C1F" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text xml:space="preserve" x="60.0" y="112.9" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">baseline mean + 3 SD</text>
+<rect x="54.0" y="48.0" width="273.2" height="162.0" rx="6" fill="#2F6B3F" fill-opacity="0.07"/>
+<text xml:space="preserve" x="62.0" y="64.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">stable baseline</text>
+<path d="M60.0,144.8 L79.8,137.4 L99.6,152.2 L119.4,144.8 L139.2,137.4 L159.0,144.8 L178.8,152.2 L198.6,144.8 L218.4,137.4 L238.2,144.8 L258.0,152.2 L277.8,144.8 L297.6,137.4 L317.4,144.8 L337.2,144.8 L357.0,137.4 L376.8,100.4 L396.6,78.2 L416.4,85.6 L436.2,70.8 L456.0,78.2 L475.8,63.4" fill="none" stroke="#2F5D8A" stroke-width="2.2"/>
+<circle cx="60.0" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="79.8" cy="137.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="99.6" cy="152.2" r="3.2" fill="#2F5D8A"/>
+<circle cx="119.4" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="139.2" cy="137.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="159.0" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="178.8" cy="152.2" r="3.2" fill="#2F5D8A"/>
+<circle cx="198.6" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="218.4" cy="137.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="238.2" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="258.0" cy="152.2" r="3.2" fill="#2F5D8A"/>
+<circle cx="277.8" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="297.6" cy="137.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="317.4" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="337.2" cy="144.8" r="3.2" fill="#2F5D8A"/>
+<circle cx="357.0" cy="137.4" r="3.2" fill="#2F5D8A"/>
+<circle cx="376.8" cy="100.4" r="3.2" fill="#9B2C1F"/>
+<circle cx="396.6" cy="78.2" r="3.2" fill="#9B2C1F"/>
+<circle cx="416.4" cy="85.6" r="3.2" fill="#9B2C1F"/>
+<circle cx="436.2" cy="70.8" r="3.2" fill="#9B2C1F"/>
+<circle cx="456.0" cy="78.2" r="3.2" fill="#9B2C1F"/>
+<circle cx="475.8" cy="63.4" r="3.2" fill="#9B2C1F"/>
+<line x1="376.8" y1="50.0" x2="376.8" y2="208.0" stroke="#8A6A1F" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text xml:space="preserve" x="380.8" y="200.0" font-size="11" fill="#8A6A1F" font-weight="700" text-anchor="start">voice notes launched</text>
+<rect x="512.0" y="44.0" width="232.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="526.0" y="68.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">What it means</text>
+<text xml:space="preserve" x="526.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">A day above the limit is very</text>
+<text xml:space="preserve" x="526.0" y="106.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">unlikely to be normal variation:</text>
+<text xml:space="preserve" x="526.0" y="122.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">investigate.</text>
+<text xml:space="preserve" x="526.0" y="140.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Use the first stable weeks as</text>
+<text xml:space="preserve" x="526.0" y="156.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">the baseline.</text>
+<text xml:space="preserve" x="16.0" y="246.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Signals arrive at different speeds</text>
+<rect x="16.0" y="260.0" width="170.0" height="62.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="26.0" y="282.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Invalid output rate</text>
+<text xml:space="preserve" x="26.0" y="312.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">At once</text>
+<rect x="202.0" y="260.0" width="170.0" height="62.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="212.0" y="282.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">p95 latency</text>
+<text xml:space="preserve" x="212.0" y="312.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">At once</text>
+<rect x="388.0" y="260.0" width="170.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="398.0" y="282.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Daily audit error rate</text>
+<text xml:space="preserve" x="398.0" y="312.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Daily; noisy but crucial</text>
+<rect x="574.0" y="260.0" width="170.0" height="62.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="584.0" y="282.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="start">Thumbs down</text>
+<text xml:space="preserve" x="584.0" y="312.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Hours to days</text>
+<text xml:space="preserve" x="16.0" y="354.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">From alert to cause</text>
+<rect x="16.0" y="368.0" width="232.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<circle cx="36.0" cy="396.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="36.0" y="400.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="56.0" y="390.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">What changed that day?</text>
+<rect x="264.0" y="368.0" width="232.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<circle cx="284.0" cy="396.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="284.0" y="400.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="304.0" y="390.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">A release, a new channel, a</text>
+<text xml:space="preserve" x="304.0" y="404.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">new kind of customer</text>
+<rect x="512.0" y="368.0" width="232.0" height="56.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<circle cx="532.0" cy="396.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="532.0" y="400.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="552.0" y="390.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Compare affected with</text>
+<text xml:space="preserve" x="552.0" y="404.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">unaffected messages</text>
+</g></svg>

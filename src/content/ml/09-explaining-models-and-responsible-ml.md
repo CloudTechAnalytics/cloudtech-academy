@@ -16,23 +16,23 @@ A model that can't answer these shouldn't be making decisions about people's liv
 
 ## The concept
 
-**Global explanations: what drives the model overall?**
+### Global explanations: what drives the model overall?
 
 - **Coefficients** (for logistic regression on scaled features): the sign says which way a feature pushes the risk, and the size says how strongly, per standard deviation.
 - **Permutation importance**: shuffle one feature's values in the test set and measure how much the model's AUC drops. A big drop means the model relies on that feature. It works for any model and doesn't favour features with many values.
 
-**Local explanations: why this applicant?**
+### Local explanations: why this applicant?
 
 For one application, list the features that pushed its probability up most (for logistic regression, each feature's scaled value × its coefficient). Turn the top two or three into plain reasons: "loan large relative to revenue", "late payments on previous loans".
 
-**Fairness**
+### Fairness
 
 - Don't use **protected characteristics** (sex, religion, ethnicity) as features. This dataset doesn't contain them.
 - Watch for **proxies**: features that stand in for a protected group. In Nigeria, **region** can be a proxy for ethnicity or religion.
 - Ask whether a feature reflects **behaviour** the borrower controls (late payments, the loan's size compared with revenue) or **who they are** (where they live). Prefer behaviour.
 - Test it: does dropping the feature lose real predictive power? If not, drop it.
 
-**Monitoring: models age**
+### Monitoring: models age
 
 The world changes: interest rates, the economy, the bank's own lending policy. Track, monthly:
 

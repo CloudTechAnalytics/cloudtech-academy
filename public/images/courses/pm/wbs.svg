@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 432" width="760" height="432" role="img" aria-label="A work breakdown structure for a small project, a depot's racking installation, as an illustration. The outcome sits at the top, split into major deliverables, each split into work packages that are small enough to estimate and have exactly one owner. The 100 percent rule says the pieces at each level add up to all of the work above them, no more and no less. Tasks are named by their outcome.">
+<title>A WBS: outcome, deliverables, work packages with one owner each.</title>
+
+<rect width="760" height="432" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="240.0" y="16.0" width="280.0" height="44.0" rx="8" fill="#B38A3E" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="380.0" y="44.0" font-size="13.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Racking installed and signed off</text>
+<path d="M380,60 L380,84 L126.0,84 L126.0,100" fill="none" stroke="#5E5A52" stroke-width="1.6"/>
+<rect x="16.0" y="100.0" width="220.0" height="40.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="126.0" y="126.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">Design</text>
+<path d="M30,140 L30,180 L42,180" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="42.0" y="164.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="52.0" y="187.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Survey the floor</text>
+<text xml:space="preserve" x="228.0" y="187.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Chika</text>
+<path d="M30,140 L30,224 L42,224" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="42.0" y="208.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="52.0" y="231.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Approve the layout</text>
+<text xml:space="preserve" x="228.0" y="231.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Emeka</text>
+<path d="M380,60 L380,84 L380.0,84 L380.0,100" fill="none" stroke="#5E5A52" stroke-width="1.6"/>
+<rect x="270.0" y="100.0" width="220.0" height="40.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="380.0" y="126.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">Supply</text>
+<path d="M284,140 L284,180 L296,180" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="296.0" y="164.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="306.0" y="187.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Order the racking</text>
+<text xml:space="preserve" x="482.0" y="187.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Ngozi</text>
+<path d="M284,140 L284,224 L296,224" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="296.0" y="208.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="306.0" y="231.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Track the delivery</text>
+<text xml:space="preserve" x="482.0" y="231.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Ngozi</text>
+<path d="M380,60 L380,84 L634.0,84 L634.0,100" fill="none" stroke="#5E5A52" stroke-width="1.6"/>
+<rect x="524.0" y="100.0" width="220.0" height="40.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="634.0" y="126.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="middle">Install</text>
+<path d="M538,140 L538,180 L550,180" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="550.0" y="164.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="560.0" y="187.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Assemble the frames</text>
+<text xml:space="preserve" x="736.0" y="187.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Yusuf</text>
+<path d="M538,140 L538,224 L550,224" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="550.0" y="208.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="560.0" y="231.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Fix to the floor</text>
+<text xml:space="preserve" x="736.0" y="231.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Yusuf</text>
+<path d="M538,140 L538,268 L550,268" fill="none" stroke="#5E5A52" stroke-width="1.2"/>
+<rect x="550.0" y="252.0" width="194.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="560.0" y="275.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Safety inspection</text>
+<text xml:space="preserve" x="736.0" y="275.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="end">Aisha</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Work packages: small enough to estimate, one owner each.</text>
+<rect x="16.0" y="340.0" width="356.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="366.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">The 100% rule</text>
+<text xml:space="preserve" x="30.0" y="386.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Each level adds up to all of the level above: nothing</text>
+<text xml:space="preserve" x="30.0" y="402.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">missing, nothing extra.</text>
+<rect x="388.0" y="340.0" width="356.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="366.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Name tasks by outcome</text>
+<text xml:space="preserve" x="402.0" y="386.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">"Assemble the frames", not "Racking". Split anything</text>
+<text xml:space="preserve" x="402.0" y="402.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">too big to track weekly.</text>
+</g></svg>

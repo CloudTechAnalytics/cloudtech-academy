@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The traceability chain: a business requirement leads to functional requirements, each delivered by user stories, checked by acceptance criteria that become UAT test cases, and measured afterwards by KPIs. Example: reduce days to pay to 30, reminder 7 days before due, the reminder story, the payment-plan criterion, UAT-06, average days to pay.">
+<title>Every requirement traced from goal to test to measure.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="232.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="40.0" cy="44.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="48.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="49.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Business requirement</text>
+<text xml:space="preserve" x="34.0" y="86.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">Reduce days to pay from 45</text>
+<text xml:space="preserve" x="34.0" y="105.6" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">to 30</text>
+<text xml:space="preserve" x="34.0" y="132.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lesson 6</text>
+<rect x="264.0" y="16.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="288.0" cy="44.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="288.0" y="48.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="308.0" y="49.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Functional requirement</text>
+<text xml:space="preserve" x="282.0" y="86.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">FR-03: reminder 7 days</text>
+<text xml:space="preserve" x="282.0" y="105.6" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">before due</text>
+<text xml:space="preserve" x="282.0" y="132.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lesson 6</text>
+<rect x="512.0" y="16.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="536.0" cy="44.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="536.0" y="48.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="556.0" y="49.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">User story</text>
+<text xml:space="preserve" x="530.0" y="86.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">Automatic reminder before</text>
+<text xml:space="preserve" x="530.0" y="105.6" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">due date</text>
+<text xml:space="preserve" x="530.0" y="132.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lesson 7</text>
+<rect x="16.0" y="186.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="40.0" cy="214.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="218.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="60.0" y="219.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Acceptance criterion</text>
+<text xml:space="preserve" x="34.0" y="256.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">No reminder on payment</text>
+<text xml:space="preserve" x="34.0" y="275.6" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">plans</text>
+<text xml:space="preserve" x="34.0" y="302.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lesson 7</text>
+<rect x="264.0" y="186.0" width="232.0" height="130.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<circle cx="288.0" cy="214.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="288.0" y="218.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="308.0" y="219.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">UAT test case</text>
+<text xml:space="preserve" x="282.0" y="256.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">UAT-06</text>
+<text xml:space="preserve" x="282.0" y="302.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lesson 10</text>
+<rect x="512.0" y="186.0" width="232.0" height="130.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="536.0" cy="214.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="536.0" y="218.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="556.0" y="219.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">KPI</text>
+<text xml:space="preserve" x="530.0" y="256.0" font-size="13.5" fill="#2F5D8A" font-weight="400" text-anchor="start">Average days to pay</text>
+<text xml:space="preserve" x="530.0" y="302.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">lessons 4, 8</text>
+<path d="M250.0,81.0 L262.0,81.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M498.0,81.0 L510.0,81.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M626,148 C626,168 132,160 132,182" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M250.0,251.0 L262.0,251.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M498.0,251.0 L510.0,251.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="16.0" y="360.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A requirement with no test hasn't been checked. A feature with no requirement is scope creep.</text>
+</g></svg>

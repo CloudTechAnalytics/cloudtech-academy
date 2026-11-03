@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Scan versus index search for WHERE customer_id = 'C0007'. Without an index, the database reads every row of invoices, checking each one: a SCAN. With an index on customer_id, a sorted list of customer IDs with pointers to the rows, it jumps straight to C0007's entries and reads only those rows: a SEARCH. EXPLAIN QUERY PLAN shows which will happen.">
+<title>Without an index, every row is read; with one, the database jumps to the matches.</title>
+<defs><marker id="a2F6B3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6B3F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="30.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">No index: SCAN</text>
+<text xml:space="preserve" x="388.0" y="30.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Index on customer_id: SEARCH</text>
+<rect x="16.0" y="44.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="60.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100100</text>
+<text xml:space="preserve" x="206.0" y="60.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0012</text>
+<text xml:space="preserve" x="224.0" y="60.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="70.0" width="200.0" height="22.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="26.0" y="86.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100101</text>
+<text xml:space="preserve" x="206.0" y="86.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0007</text>
+<text xml:space="preserve" x="224.0" y="86.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="96.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="112.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100102</text>
+<text xml:space="preserve" x="206.0" y="112.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0230</text>
+<text xml:space="preserve" x="224.0" y="112.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="122.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="138.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100103</text>
+<text xml:space="preserve" x="206.0" y="138.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0051</text>
+<text xml:space="preserve" x="224.0" y="138.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="148.0" width="200.0" height="22.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="26.0" y="164.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100104</text>
+<text xml:space="preserve" x="206.0" y="164.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0007</text>
+<text xml:space="preserve" x="224.0" y="164.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="174.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="190.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100105</text>
+<text xml:space="preserve" x="206.0" y="190.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0198</text>
+<text xml:space="preserve" x="224.0" y="190.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="200.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="216.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100106</text>
+<text xml:space="preserve" x="206.0" y="216.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0003</text>
+<text xml:space="preserve" x="224.0" y="216.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="226.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="242.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100107</text>
+<text xml:space="preserve" x="206.0" y="242.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0077</text>
+<text xml:space="preserve" x="224.0" y="242.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="252.0" width="200.0" height="22.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="26.0" y="268.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100108</text>
+<text xml:space="preserve" x="206.0" y="268.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0007</text>
+<text xml:space="preserve" x="224.0" y="268.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<rect x="16.0" y="278.0" width="200.0" height="22.0" rx="3" fill="#F6E3E0"/>
+<text xml:space="preserve" x="26.0" y="294.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100109</text>
+<text xml:space="preserve" x="206.0" y="294.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="end" font-family="'JetBrains Mono', Consolas, monospace">C0140</text>
+<text xml:space="preserve" x="224.0" y="294.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">read</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">10 of 10 rows read</text>
+<text xml:space="preserve" x="388.0" y="56.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">Index (sorted)</text>
+<text xml:space="preserve" x="590.0" y="56.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">Rows read</text>
+<rect x="388.0" y="66.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="82.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0003</text>
+<rect x="388.0" y="92.0" width="150.0" height="22.0" rx="3" fill="#E6EEF6"/>
+<text xml:space="preserve" x="398.0" y="108.0" font-size="11" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0007</text>
+<rect x="590.0" y="106.0" width="154.0" height="24.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="123.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100101  C0007</text>
+<path d="M540,103 C565,103 565,118 588,118" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<rect x="590.0" y="136.0" width="154.0" height="24.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="153.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100104  C0007</text>
+<path d="M540,103 C565,103 565,148 588,148" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<rect x="590.0" y="166.0" width="154.0" height="24.0" rx="3" fill="#E5F0E8"/>
+<text xml:space="preserve" x="600.0" y="183.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">INV-100108  C0007</text>
+<path d="M540,103 C565,103 565,178 588,178" fill="none" stroke="#2F6B3F" stroke-width="1.6" marker-end="url(#a2F6B3F)"/>
+<rect x="388.0" y="118.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="134.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0012</text>
+<rect x="388.0" y="144.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="160.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0051</text>
+<rect x="388.0" y="170.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="186.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0077</text>
+<rect x="388.0" y="196.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="212.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0140</text>
+<rect x="388.0" y="222.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="238.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0198</text>
+<rect x="388.0" y="248.0" width="150.0" height="22.0" rx="3" fill="#F2EFE8"/>
+<text xml:space="preserve" x="398.0" y="264.0" font-size="11" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">C0230</text>
+<text xml:space="preserve" x="388.0" y="330.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">3 rows read, by jumping straight to C0007</text>
+<text xml:space="preserve" x="16.0" y="366.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Indexes cost space and slow inserts: add them for columns you filter, join or sort by often.</text>
+</g></svg>

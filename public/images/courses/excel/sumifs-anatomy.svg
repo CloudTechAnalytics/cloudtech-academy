@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" width="760" height="600" role="img" aria-label="How SUMIFS reads its arguments: the range to add comes first, then pairs of a range to test and a condition. Of six example order lines, only those that pass both tests are added.">
+<title>SUMIFS: what to add comes first, then each test as a range and a condition.</title>
+
+<rect width="760" height="600" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="112.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="46.0" font-size="15" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=SUMIFS(</text>
+<text xml:space="preserve" x="32.0" y="72.0" font-size="15" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  Orders[revenue],</text>
+<text xml:space="preserve" x="330.0" y="72.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">① what to add up</text>
+<text xml:space="preserve" x="32.0" y="96.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  Orders[product_id], 1,</text>
+<text xml:space="preserve" x="330.0" y="96.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">② test 1: range, condition</text>
+<text xml:space="preserve" x="32.0" y="120.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  Orders[discount_pct], "&gt;0")</text>
+<text xml:space="preserve" x="330.0" y="120.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">③ test 2: range, condition</text>
+<rect x="16.0" y="146.0" width="580.0" height="210.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<path d="M17,176 L17,154 Q17,147 24,147 L588,147 Q595,147 595,154 L595,176 Z" fill="#EFE4CC"/>
+<text xml:space="preserve" x="71.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">product_id</text>
+<text xml:space="preserve" x="186.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">discount_pct</text>
+<text xml:space="preserve" x="346.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="end">revenue</text>
+<text xml:space="preserve" x="396.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">test 1</text>
+<text xml:space="preserve" x="476.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">test 2</text>
+<text xml:space="preserve" x="556.0" y="165.5" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="middle">added?</text>
+<line x1="16.0" y1="176.0" x2="596.0" y2="176.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="71.0" y="195.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">1</text>
+<text xml:space="preserve" x="186.0" y="195.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">0</text>
+<text xml:space="preserve" x="346.0" y="195.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">92,400</text>
+<text xml:space="preserve" x="396.0" y="195.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="476.0" y="195.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="556.0" y="195.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">no</text>
+<line x1="16.0" y1="206.0" x2="596.0" y2="206.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="71.0" y="225.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">3</text>
+<text xml:space="preserve" x="186.0" y="225.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">5</text>
+<text xml:space="preserve" x="346.0" y="225.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">212,040</text>
+<text xml:space="preserve" x="396.0" y="225.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="476.0" y="225.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="556.0" y="225.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">no</text>
+<rect x="18.0" y="237.0" width="576.0" height="28.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="71.0" y="255.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="186.0" y="255.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">5</text>
+<text xml:space="preserve" x="346.0" y="255.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">250,800</text>
+<text xml:space="preserve" x="396.0" y="255.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="476.0" y="255.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="556.0" y="255.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">yes</text>
+<line x1="16.0" y1="266.0" x2="596.0" y2="266.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="71.0" y="285.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">7</text>
+<text xml:space="preserve" x="186.0" y="285.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">0</text>
+<text xml:space="preserve" x="346.0" y="285.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">159,600</text>
+<text xml:space="preserve" x="396.0" y="285.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="476.0" y="285.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="556.0" y="285.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">no</text>
+<rect x="18.0" y="297.0" width="576.0" height="28.0" rx="3" fill="#F3EBD8"/>
+<text xml:space="preserve" x="71.0" y="315.5" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="186.0" y="315.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">10</text>
+<text xml:space="preserve" x="346.0" y="315.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">166,320</text>
+<text xml:space="preserve" x="396.0" y="315.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="476.0" y="315.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="556.0" y="315.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">yes</text>
+<line x1="16.0" y1="326.0" x2="596.0" y2="326.0" stroke="#EDE6D8" stroke-width="1"/>
+<text xml:space="preserve" x="71.0" y="345.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">2</text>
+<text xml:space="preserve" x="186.0" y="345.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="middle">10</text>
+<text xml:space="preserve" x="346.0" y="345.5" font-size="13" fill="#2A2926" font-weight="400" text-anchor="end">32,400</text>
+<text xml:space="preserve" x="396.0" y="345.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">✗</text>
+<text xml:space="preserve" x="476.0" y="345.5" font-size="13" fill="#2F6B3F" font-weight="400" text-anchor="middle">✓</text>
+<text xml:space="preserve" x="556.0" y="345.5" font-size="13" fill="#9B2C1F" font-weight="400" text-anchor="middle">no</text>
+<rect x="16.0" y="386.0" width="728.0" height="110.0" rx="10" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="416.0" font-size="17" fill="#2A2926" font-weight="700" text-anchor="start">Result: 250,800 + 166,320 = 417,120</text>
+<text xml:space="preserve" x="32.0" y="446.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">A row is added only when every test is true (AND).</text>
+<text xml:space="preserve" x="32.0" y="468.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">COUNTIFS works the same way but counts the rows: 2.</text>
+<text xml:space="preserve" x="16.0" y="530.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Six example rows, for illustration. On the full Orders table the same formula adds 121 lines and gives</text>
+<text xml:space="preserve" x="16.0" y="548.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">₦27,877,340.</text>
+</g></svg>

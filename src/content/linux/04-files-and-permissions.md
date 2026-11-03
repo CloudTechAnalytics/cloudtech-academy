@@ -12,7 +12,7 @@ Here's the listing of Tallybook's app folder, `/srv/tallybook`, taken with `ls -
 
 ## The concept
 
-**Reading a permission string**
+### Reading a permission string
 
 `-rw-r--r--` is ten characters:
 
@@ -25,9 +25,11 @@ Here's the listing of Tallybook's app folder, `/srv/tallybook`, taken with `ls -
 
 `r` read, `w` write, `x` execute (for a directory, `x` means you can enter it).
 
-**Numbers**
+### Numbers
 
 Each set of three is a digit: r = 4, w = 2, x = 1, added. `rw-` = 6, `r--` = 4, `rwx` = 7. So `-rw-r--r--` is **644** and `-rw-------` is **600**.
+
+![The string -rwxr-x--- decoded: type file; owner rwx is 4+2+1 = 7; group r-x is 4+0+1 = 5; others --- is 0; so 750.](/images/courses/linux/permissions.svg "Decoding a permission string into its number.")
 
 | Typical setting | Use |
 | :-- | :-- |
@@ -37,7 +39,7 @@ Each set of three is a digit: r = 4, w = 2, x = 1, added. `rw-` = 6, `r--` = 4, 
 | 755 | programs and folders anyone may run or enter |
 | 777 | **anyone can change it**: almost never right |
 
-**Changing them**
+### Changing them
 
 `chmod 600 .env` sets permissions; `chown tallybook:tallybook file` sets the owner and group. On a real server you'd fix things with these; here you'll find what needs fixing.
 

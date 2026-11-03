@@ -24,6 +24,8 @@ If your school gives you a student email, use it for anything to do with school.
 5. **Closing:** thank them and say what happens next.
 6. **Sign-off and signature:** "Kind regards," then your full name and details.
 
+![A professional email with six numbered parts: subject, greeting, who you are, the point, closing, and sign-off](/images/courses/digital/email-anatomy.svg "The six parts of a professional email.")
+
 ## An example
 
 ```text

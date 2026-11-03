@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Four join patterns beyond the basic inner join. An anti-join finds rows with no match, using NOT EXISTS: customers with no shipments. A semi-join, using EXISTS, keeps a row if at least one match exists, without repeating it for each match. A self join joins a table to itself, such as employees to their managers. A cross join pairs every row of one list with every row of another, such as every route with every month, to build a complete grid; LEFT JOIN the facts onto it so empty cells show as zero.">
+<title>Anti-join, semi-join, self join and cross join: four ways to ask about matches.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="20.0" width="356.0" height="186.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="46.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Anti-join: no match</text>
+<text xml:space="preserve" x="30.0" y="68.0" font-size="10" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">NOT EXISTS (SELECT 1 FROM shipments s WHERE s.cu…</text>
+<text xml:space="preserve" x="30.0" y="92.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">customers who never booked</text>
+<rect x="30.0" y="106.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C1  Ade ✓ has shipments</text>
+<rect x="30.0" y="136.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="154.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C2  Kano ✓</text>
+<rect x="30.0" y="166.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C3  Sun ✗ none  ← kept</text>
+<rect x="388.0" y="20.0" width="356.0" height="186.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="46.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Semi-join: at least one</text>
+<text xml:space="preserve" x="402.0" y="68.0" font-size="10" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">EXISTS (SELECT 1 FROM shipments s WHERE …)</text>
+<text xml:space="preserve" x="402.0" y="92.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">customers who booked, once each</text>
+<rect x="402.0" y="106.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C1  Ade  (3 shipments) → 1 row</text>
+<rect x="402.0" y="136.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="154.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C2  Kano (1 shipment) → 1 row</text>
+<rect x="402.0" y="166.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="184.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">C3  Sun (none) → no row</text>
+<rect x="16.0" y="218.0" width="356.0" height="186.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="244.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Self join: a table with itself</text>
+<text xml:space="preserve" x="30.0" y="266.0" font-size="10" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM employees e JOIN employees m ON e.manager_i…</text>
+<text xml:space="preserve" x="30.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">who reports to whom</text>
+<rect x="30.0" y="304.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Bola → manager Chi</text>
+<rect x="30.0" y="334.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="352.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Dayo → manager Chi</text>
+<rect x="30.0" y="364.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="40.0" y="382.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Chi → manager (none)</text>
+<rect x="388.0" y="218.0" width="356.0" height="186.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="244.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Cross join: every pairing</text>
+<text xml:space="preserve" x="402.0" y="266.0" font-size="10" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">FROM routes CROSS JOIN months</text>
+<text xml:space="preserve" x="402.0" y="290.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">a complete grid, then LEFT JOIN facts</text>
+<rect x="402.0" y="304.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">2 routes × 3 months</text>
+<rect x="402.0" y="334.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="352.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">= 6 rows, each a cell</text>
+<rect x="402.0" y="364.0" width="328.0" height="26.0" rx="4" fill="#FFFFFF"/>
+<text xml:space="preserve" x="412.0" y="382.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">empty cells → 0</text>
+<text xml:space="preserve" x="16.0" y="420.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Joins can multiply rows: check the row count before and after.</text>
+</g></svg>

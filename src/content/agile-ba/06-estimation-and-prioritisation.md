@@ -12,15 +12,15 @@ With two sprints to go before the Surulere pilot, the kiosk app still has 11 sto
 
 ## The concept
 
-**Story points: relative estimates**
+### Story points: relative estimates
 
 Instead of estimating hours, agile teams compare items with each other: "Is this bigger or smaller than 'Log in with PIN'?" Story points (often on a Fibonacci-like scale: 1, 2, 3, 5, 8, 13) capture size, complexity and uncertainty together. They're relative and team-specific: one team's 5 isn't another's.
 
-**Planning poker**
+### Planning poker
 
 Each developer privately picks a card, everyone shows at once, and the highest and lowest explain their reasoning. The conversation is the point: a 2 and a 13 on the same story means someone knows something the others don't. Then the team estimates again.
 
-**Cost of delay and WSJF**
+### Cost of delay and WSJF
 
 **Cost of delay** asks: what do we lose for every sprint this item isn't done? A simple version scores three things from 1 to 20 (relative to each other):
 

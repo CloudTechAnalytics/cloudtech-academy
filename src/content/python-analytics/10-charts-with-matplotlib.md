@@ -12,7 +12,7 @@ A chart earns its place when it makes one point obvious. This lesson covers the 
 
 ## The concept
 
-**pandas draws with matplotlib**
+### pandas draws with matplotlib
 
 Every Series and DataFrame has a `.plot()` method that uses **matplotlib**, Python's main charting library, underneath. You import its plotting part as `plt` to adjust the chart:
 
@@ -20,7 +20,7 @@ Every Series and DataFrame has a `.plot()` method that uses **matplotlib**, Pyth
 import matplotlib.pyplot as plt
 ```
 
-**Pick the chart for the question**
+### Pick the chart for the question
 
 | Question | Chart | pandas |
 | :-- | :-- | :-- |
@@ -33,18 +33,18 @@ Horizontal bars (`barh`) are easier to read when the labels are long, like regio
 
 Avoid pie charts for more than three or four slices, and avoid 3D charts entirely. People can't compare angles or perspective accurately; they can compare bar lengths.
 
-**Make it readable**
+### Make it readable
 
 - `ax = series.plot(...)` returns the chart's **axes**. You use it to set the title and labels: `ax.set_title(...)`, `ax.set_xlabel(...)`, `ax.set_ylabel(...)`.
 - Large naira values: divide by 1,000,000 before plotting and label the axis "₦ millions". `1e6` is Python's shorthand for 1,000,000.
 - Bar charts start at zero. A bar axis that starts at ₦15m makes a small difference look huge.
 - `figsize=(8, 4)` sets the size in inches; wide and short suits time series.
 
-**Titles that state the finding**
+### Titles that state the finding
 
 "Revenue by region" describes the chart. "North West revenue fell 47% while South West grew 79%" tells the reader what to take away. That second kind, an **action title**, is the most useful habit in this lesson.
 
-**Saving**
+### Saving
 
 `plt.savefig("revenue_trend.png", dpi=200, bbox_inches="tight")` saves the current chart. Call it **before** `plt.show()`. `bbox_inches="tight"` stops the labels being cut off.
 

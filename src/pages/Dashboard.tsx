@@ -7,7 +7,7 @@ import { useCourses } from "@/lib/data";
 import { getBackend, type AttemptResult, type Certificate, type Credential, type Enrollment, type PracticeSubmission, type Progress } from "@/lib/backend";
 import { findProject } from "@/content/projects";
 import { ProjectCover } from "@/components/ProjectCover";
-import { eligibility } from "@/lib/certificates";
+import { certificateName, eligibility } from "@/lib/certificates";
 import { credentialBadge, credentialKindLabel } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
 import { Button, ButtonLink } from "@/components/Button";
@@ -16,13 +16,20 @@ import { CourseCard } from "@/components/CourseCard";
 import { ProgressBar } from "@/components/ProgressBar";
 import { BadgeArtwork } from "@/components/BadgeArtwork";
 import { ShareMenu } from "@/components/ShareMenu";
+import { DashboardConnect, StartingSoonBanner } from "@/components/CommunityWidgets";
+import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
+import { enrolmentState, isPaid } from "@/lib/commerce";
+import { useMyProgrammes, useProgrammes } from "@/lib/data";
+import { PaymentReminders } from "@/components/PaymentReminders";
 
 type Row = { enrollment: Enrollment; progress: Progress; attempts: AttemptResult[] };
 
 function DashboardInner() {
   const auth = useAuth();
   const courses = useCourses();
+  const programmes = useProgrammes();
+  const { held: heldProgrammes } = useMyProgrammes();
   const [rows, setRows] = useState<Row[] | null>(null);
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [certs, setCerts] = useState<Certificate[]>([]);
@@ -33,6 +40,8 @@ function DashboardInner() {
   const [removing, setRemoving] = useState(false);
   const [removeError, setRemoveError] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
+  const { events } = useEvents();
+  const { registrations } = useMyRegistrations();
 
   const load = useCallback(async () => {
     const b = await getBackend();
@@ -83,6 +92,7 @@ function DashboardInner() {
 
   const firstName = auth.user.fullName.split(" ")[0] || "there";
   const valid = credentials.filter((c) => c.status === "valid");
+  const myProgrammes = programmes.filter((t) => heldProgrammes?.includes(t.id));
   const learning = rows
     .map((r) => {
       const course = courses.find((c) => c.id === r.enrollment.courseId);
@@ -94,14 +104,18 @@ function DashboardInner() {
       const resume = lessons.find((l) => l.id === r.enrollment.lastLessonId) ?? lessons.find((l) => !r.progress.completedLessons.includes(l.id)) ?? lessons[0];
       // Warn only when there's something to lose: done lessons, tasks or assessment attempts.
       const hasProgress = r.progress.completedLessons.length > 0 || r.progress.completedExercises.length > 0 || r.attempts.length > 0;
-      const resetsIn = !completion && hasProgress ? daysUntilReset(r.enrollment.lastActiveAt) : null;
-      return { course, percent: completion ? 100 : status.percent, completion, resume, resetsIn };
+      // The 14-day restart applies to free courses only; a programme you paid for never resets.
+      const resetsIn = !completion && hasProgress && r.enrollment.source === "free" ? daysUntilReset(r.enrollment.lastActiveAt) : null;
+      return { course, percent: completion ? 100 : status.percent, completion, resume, resetsIn, source: r.enrollment.source };
     })
     .filter((x) => x !== null);
   const inProgress = learning.filter((l) => !l.completion);
   const completed = learning.filter((l) => l.completion);
   const enrolledIds = new Set(learning.map((a) => a.course.id));
-  const suggestions = courses.filter((c) => !enrolledIds.has(c.id)).slice(0, 3);
+  // Free courses first, with one open professional programme offered as a gentle next step once the learner has started something.
+  const notStarted = courses.filter((c) => !enrolledIds.has(c.id));
+  const nextProgramme = learning.length ? notStarted.find((c) => isPaid(c) && enrolmentState(c) === "open") : undefined;
+  const suggestions = [...notStarted.filter((c) => !isPaid(c)).slice(0, nextProgramme ? 2 : 3), ...(nextProgramme ? [nextProgramme] : [])];
   const opened = valid.find((c) => c.credentialId === open);
 
   return (
@@ -128,6 +142,10 @@ function DashboardInner() {
         ))}
       </dl>
 
+      <StartingSoonBanner events={events ?? []} registrations={registrations} />
+      <DashboardConnect events={events ?? []} registrations={registrations} />
+      <PaymentReminders />
+
       <section className="mt-12" aria-labelledby="my-learning">
         <h2 id="my-learning" className="font-serif text-[1.7rem]">
           My Learning
@@ -141,11 +159,26 @@ function DashboardInner() {
             {RESET_AFTER_DAYS} days without activity. Your badges are still yours.
           </p>
         )}
+        {myProgrammes.length > 0 && (
+          <ul className="mt-5 grid gap-4 lg:grid-cols-2">
+            {myProgrammes.map((t) => (
+              <li key={t.id} className="flex items-center justify-between gap-4 rounded-2xl border border-brass/40 bg-brass-pale/40 p-5">
+                <div>
+                  <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Professional Programme</p>
+                  <p className="font-serif text-[1.3rem] leading-snug">{t.programmeName ?? t.title}</p>
+                </div>
+                <ButtonLink to={`/programmes/${t.slug}`} variant="secondary">
+                  Open programme
+                </ButtonLink>
+              </li>
+            ))}
+          </ul>
+        )}
         {removeError && <p className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-4 py-3 text-[0.9375rem]">{removeError}</p>}
         {learning.length === 0 ? (
           <div className="mt-5 rounded-2xl border border-dashed border-line-strong p-8 text-center">
             <p className="text-[1.0625rem]">You haven't started a course yet.</p>
-            <p className="mt-1 text-muted">Open any lesson and you're enrolled automatically. It's free.</p>
+            <p className="mt-1 text-muted">Pick a course and confirm to enrol. It's free.</p>
             <div className="mt-5">
               <ButtonLink to="/courses" arrow>
                 Browse courses
@@ -154,27 +187,32 @@ function DashboardInner() {
           </div>
         ) : (
           <ul className="mt-5 grid gap-4 lg:grid-cols-2">
-            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn }) => (
+            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn, source }) => (
               <li key={course.id} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
                 <div className="flex items-start justify-between gap-3">
                   <Link to={`/courses/${course.slug}`} className="font-serif text-[1.35rem] leading-snug hover:text-brass-dark">
                     {course.title}
                   </Link>
                   <div className="flex shrink-0 items-center gap-2">
+                    {source !== "free" && (
+                      <span className="rounded-full border border-brass/50 bg-brass-pale/50 px-2.5 py-0.5 text-[0.75rem] font-medium text-brass-dark">Professional</span>
+                    )}
                     {completion && (
                       <span className="inline-flex items-center gap-1 rounded-full border border-success/40 bg-success-bg px-2.5 py-0.5 text-[0.75rem] font-medium text-success">
                         <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> Completed
                       </span>
                     )}
-                    <button
-                      type="button"
-                      onClick={() => setConfirming(course.id)}
-                      aria-label={`Remove ${course.title} from My Learning`}
-                      title="Remove from My Learning"
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
-                    >
-                      <X aria-hidden className="h-4 w-4" />
-                    </button>
+                    {source === "free" && (
+                      <button
+                        type="button"
+                        onClick={() => setConfirming(course.id)}
+                        aria-label={`Remove ${course.title} from My Learning`}
+                        title="Remove from My Learning"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
+                      >
+                        <X aria-hidden className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 </div>
                 {confirming === course.id && (
@@ -338,10 +376,11 @@ function DashboardInner() {
             {certs.map((c) => (
               <li key={c.id} className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-medium">{c.courseTitle}</p>
+                  <p className="font-medium">{certificateName(c)}</p>
                   <p className="text-[0.8125rem] text-muted">
                     {c.certificateId} · Issued {formatDate(c.issuedAt)}
                     {c.status === "revoked" && <span className="ml-2 font-semibold text-danger">Revoked</span>}
+                    {c.status === "replaced" && <span className="ml-2 font-semibold">Replaced</span>}
                   </p>
                 </div>
                 <div className="flex gap-4">
@@ -376,7 +415,17 @@ function DashboardInner() {
               </thead>
               <tbody>
                 {[
-                  ...certs.map((c) => ({ key: c.id, name: `${c.courseTitle}: official certificate`, type: "Certificate", date: c.issuedAt, id: c.certificateId, href: `/verify/${c.certificateId}`, status: c.status })),
+                  ...certs
+                    .filter((c) => c.status !== "replaced")
+                    .map((c) => ({
+                      key: c.id,
+                      name: c.source === "manual" ? certificateName(c) : `${c.courseTitle}: official certificate`,
+                      type: "Certificate",
+                      date: c.issuedAt,
+                      id: c.certificateId,
+                      href: `/verify/${c.certificateId}`,
+                      status: c.status === "valid" ? ("valid" as const) : ("revoked" as const),
+                    })),
                   ...credentials.map((c) => ({
                     key: c.id,
                     name: c.badgeName,
@@ -415,7 +464,7 @@ function DashboardInner() {
       {suggestions.length > 0 && (
         <section className="mt-14" aria-labelledby="more">
           <h2 id="more" className="font-serif text-[1.7rem]">
-            {learning.length ? "What to learn next" : "Courses"}
+            {learning.length ? "Continue Your Learning" : "Courses"}
           </h2>
           <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {suggestions.map((c) => (

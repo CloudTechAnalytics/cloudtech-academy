@@ -12,20 +12,20 @@ Without a clear answer to "what is this product **for**?", every request looks e
 
 ## The concept
 
-**A product vision**
+### A product vision
 
 One or two sentences describing who the product is for, the problem it solves and why it's better than the alternative. A common template:
 
 > **For** [target users] **who** [need or problem], **the** [product] **is a** [type of product] **that** [key benefit]. **Unlike** [current alternative], **our product** [main difference].
 
-**Outputs versus outcomes**
+### Outputs versus outcomes
 
 - An **output** is something the team ships: "a reorder button".
 - An **outcome** is a change in behaviour that matters to the business: "kiosks order every 10 days instead of every 22".
 
 Teams that measure outputs celebrate shipping features nobody uses. Teams that measure outcomes keep asking whether the features work. A good product goal is an outcome, with a number and a date.
 
-**Choosing outcome measures**
+### Choosing outcome measures
 
 | Measure | Why it matters for the kiosk app |
 | :-- | :-- |

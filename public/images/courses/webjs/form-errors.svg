@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="An accessible error message, annotated. The reference field has a visible label, a red border and an error icon, and the message Enter the reference from your bank transfer, which says how to fix it. The input has aria-invalid true and aria-describedby pointing at the message, so screen readers announce it, and focus moves to the first field with an error on submit. Checks run in the browser for friendly feedback, and again on the server for the real rules.">
+<title>A good error says how to fix it, sits next to the field, and is announced.</title>
+<defs><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="420.0" height="210.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="36.0" y="46.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Bank reference</text>
+<rect x="36.0" y="58.0" width="300.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="2.2"/>
+<text xml:space="preserve" x="48.0" y="84.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">abc</text>
+<text xml:space="preserve" x="36.0" y="126.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">⚠ Enter the reference from your bank transfer,</text>
+<text xml:space="preserve" x="54.0" y="146.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">for example FBN-2026-08-31-4471.</text>
+<rect x="36.0" y="170.0" width="120.0" height="38.0" rx="6" fill="#B38A3E"/>
+<text xml:space="preserve" x="96.0" y="194.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">Pay</text>
+<path d="M438.0,78.0 L458.0,78.0" fill="none" stroke="#2F5D8A" stroke-width="1.6" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="464.0" y="82.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">visible label, above the field</text>
+<path d="M438.0,98.0 L458.0,98.0" fill="none" stroke="#2F5D8A" stroke-width="1.6" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="464.0" y="102.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">aria-invalid="true" + red border</text>
+<path d="M438.0,136.0 L458.0,136.0" fill="none" stroke="#2F5D8A" stroke-width="1.6" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="464.0" y="140.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">says how to fix it; icon, not colour alone</text>
+<path d="M438.0,160.0 L458.0,160.0" fill="none" stroke="#2F5D8A" stroke-width="1.6" marker-end="url(#a2F5D8A)"/>
+<text xml:space="preserve" x="464.0" y="164.0" font-size="12" fill="#2F5D8A" font-weight="700" text-anchor="start">linked by aria-describedby: announced</text>
+<text xml:space="preserve" x="464.0" y="200.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">On submit: focus moves to the first error.</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Validate in two places</text>
+<rect x="16.0" y="274.0" width="356.0" height="96.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="32.0" y="300.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Browser</text>
+<text xml:space="preserve" x="32.0" y="324.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">fast, friendly feedback while people type and</text>
+<text xml:space="preserve" x="32.0" y="342.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">submit: a courtesy</text>
+<rect x="388.0" y="274.0" width="356.0" height="96.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="404.0" y="300.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Server (the API)</text>
+<text xml:space="preserve" x="404.0" y="324.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">the real rules, for every request from any</text>
+<text xml:space="preserve" x="404.0" y="342.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">client: 400 and 409</text>
+</g></svg>

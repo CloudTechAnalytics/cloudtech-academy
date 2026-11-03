@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The parts of a request to a language model API: the model name, a system prompt with standing instructions, the messages (the user's input), max_tokens limiting the length of the answer, and temperature. The response contains the generated text and a count of input and output tokens, which is what you pay for.">
+<title>What goes into a model request, and what comes back.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="440.0" height="360.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<text xml:space="preserve" x="32.0" y="44.0" font-size="15" fill="#2F5D8A" font-weight="700" text-anchor="start">Request</text>
+<rect x="32.0" y="64.0" width="408.0" height="50.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="44.0" y="86.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">model</text>
+<text xml:space="preserve" x="44.0" y="104.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">which model: bigger is more capable, smaller is cheaper</text>
+<rect x="32.0" y="124.0" width="408.0" height="50.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="44.0" y="146.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">system</text>
+<text xml:space="preserve" x="44.0" y="164.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">role, rules and output format</text>
+<rect x="32.0" y="184.0" width="408.0" height="50.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="44.0" y="206.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">messages</text>
+<text xml:space="preserve" x="44.0" y="224.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">the user's input (untrusted text)</text>
+<rect x="32.0" y="244.0" width="408.0" height="50.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="44.0" y="266.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">max_tokens</text>
+<text xml:space="preserve" x="44.0" y="284.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">the most the answer may use</text>
+<rect x="32.0" y="304.0" width="408.0" height="50.0" rx="6" fill="#F7F3EA"/>
+<text xml:space="preserve" x="44.0" y="326.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">temperature</text>
+<text xml:space="preserve" x="44.0" y="344.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">low for consistent, factual tasks</text>
+<path d="M460.0,196.0 L492.0,196.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="496.0" y="96.0" width="248.0" height="200.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="512.0" y="124.0" font-size="15" fill="#2F6B3F" font-weight="700" text-anchor="start">Response</text>
+<text xml:space="preserve" x="512.0" y="152.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">The generated text, and usage:</text>
+<text xml:space="preserve" x="512.0" y="170.8" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">input tokens and output tokens.</text>
+<text xml:space="preserve" x="512.0" y="220.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">You pay per token, with output</text>
+<text xml:space="preserve" x="512.0" y="238.1" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">usually priced higher.</text>
+<rect x="496.0" y="306.0" width="248.0" height="70.0" rx="8" fill="#F6E3E0"/>
+<text xml:space="preserve" x="510.0" y="330.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">The API key is a password that</text>
+<text xml:space="preserve" x="510.0" y="347.4" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">spends money: keep it in Colab</text>
+<text xml:space="preserve" x="510.0" y="364.8" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">Secrets, never in code.</text>
+</g></svg>

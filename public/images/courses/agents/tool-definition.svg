@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The three parts of a tool definition: a name the model calls, a description that tells the model when and how to use it, and an input schema listing the arguments and their types. Beside it, design principles: scope to the user, keep it narrow, return errors as data, return only what's needed, and validate inputs.">
+<title>A tool definition: name, description and input schema.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="420.0" height="295.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">{</text>
+<text xml:space="preserve" x="28.0" y="61.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  "name": "get_transfer",</text>
+<text xml:space="preserve" x="28.0" y="82.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  "description": "Look up one of the</text>
+<text xml:space="preserve" x="28.0" y="103.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    customer's transfers by its ID.</text>
+<text xml:space="preserve" x="28.0" y="124.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    Use when they ask about a transfer.",</text>
+<text xml:space="preserve" x="28.0" y="145.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  "input_schema": {</text>
+<text xml:space="preserve" x="28.0" y="166.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    "type": "object",</text>
+<text xml:space="preserve" x="28.0" y="187.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    "properties": {</text>
+<text xml:space="preserve" x="28.0" y="208.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">      "transfer_id": {"type": "string"}</text>
+<text xml:space="preserve" x="28.0" y="229.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    },</text>
+<text xml:space="preserve" x="28.0" y="250.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    "required": ["transfer_id"]</text>
+<text xml:space="preserve" x="28.0" y="271.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  }</text>
+<text xml:space="preserve" x="28.0" y="292.0" font-size="12.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">}</text>
+<text xml:space="preserve" x="448.0" y="40.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">① name: what the model calls</text>
+<text xml:space="preserve" x="448.0" y="90.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">② description: a prompt in itself</text>
+<text xml:space="preserve" x="448.0" y="200.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">③ input schema: arguments and types</text>
+<rect x="448.0" y="230.0" width="296.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="462.0" y="254.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Good tools are</text>
+<text xml:space="preserve" x="462.0" y="278.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">scoped to the logged-in customer</text>
+<text xml:space="preserve" x="462.0" y="297.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">narrow and single-purpose</text>
+<text xml:space="preserve" x="462.0" y="316.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">returning errors as data</text>
+<text xml:space="preserve" x="462.0" y="335.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">returning only what's needed</text>
+<text xml:space="preserve" x="462.0" y="354.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">validating their inputs</text>
+<text xml:space="preserve" x="16.0" y="344.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">account_id isn't an argument: it comes from the session,</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">so the model can't ask for someone else's transfer.</text>
+</g></svg>

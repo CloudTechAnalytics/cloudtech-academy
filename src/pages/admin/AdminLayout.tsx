@@ -1,6 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Award, BadgeCheck, BookOpen, FolderCheck, FolderKanban, LayoutGrid, Users } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, Layers, Mail, CreditCard, UserPlus, CalendarDays, FolderCheck, FolderKanban, LayoutGrid, MessageCircle, Settings, Users } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { IS_LIVE } from "@/lib/backend";
@@ -8,19 +8,27 @@ import { IS_LIVE } from "@/lib/backend";
 const LINKS = [
   { to: "/admin", label: "Overview", icon: LayoutGrid, end: true },
   { to: "/admin/courses", label: "Courses", icon: BookOpen },
+  { to: "/admin/programmes", label: "Programmes", icon: Layers },
   { to: "/admin/students", label: "Students", icon: Users },
+  { to: "/admin/enrollments", label: "Enrollments", icon: UserPlus },
   { to: "/admin/submissions", label: "Course projects", icon: FolderCheck },
   { to: "/admin/practice", label: "Practice projects", icon: FolderKanban },
   { to: "/admin/credentials", label: "Badges & credentials", icon: BadgeCheck },
-  { to: "/admin/certificates", label: "Certificates & payments", icon: Award },
+  { to: "/admin/certificates", label: "Certificates", icon: Award },
+  { to: "/admin/payments", label: "Payments", icon: CreditCard },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { to: "/admin/emails", label: "Emails", icon: Mail },
+  { to: "/admin/events", label: "Events", icon: CalendarDays },
+  { to: "/admin/community", label: "Community", icon: MessageCircle },
+  { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminLayout() {
   useSeo({ title: "Admin | CloudTech Academy", description: "Academy administration.", noindex: true });
   return (
     <RequireAuth admin>
-      <div className="container-page grid gap-8 py-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:py-12">
-        <aside>
+      <div className="container-page grid grid-cols-1 gap-8 py-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:py-12">
+        <aside className="min-w-0">
           <p className="kicker mb-3 hidden lg:block">Admin</p>
           <nav aria-label="Admin" className="-mx-1 flex gap-1 overflow-x-auto pb-1 lg:mx-0 lg:flex-col lg:overflow-visible">
             {LINKS.map(({ to, label, icon: Icon, end }) => (

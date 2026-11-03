@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 390" width="760" height="390" role="img" aria-label="Where each kind of work lives and how to share it. Documents, spreadsheets and slides go in Google Drive set to anyone with the link can view; designs go in Canva with a view-only link; code and data analysis go on GitHub with a README; videos go on YouTube as unlisted. Always test the link in a private window.">
+<title>Put each kind of work somewhere linkable, and test the link.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="390" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Link, don't attach</text>
+<rect x="16.0" y="42.0" width="230.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="72.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Documents, sheets, slides</text>
+<path d="M250.0,67.0 L276.0,67.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="42.0" width="464.0" height="50.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="294.0" y="64.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Google Drive / OneDrive</text>
+<text xml:space="preserve" x="294.0" y="82.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Anyone with the link can view</text>
+<rect x="16.0" y="100.0" width="230.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="130.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Designs and posters</text>
+<path d="M250.0,125.0 L276.0,125.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="100.0" width="464.0" height="50.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<text xml:space="preserve" x="294.0" y="122.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Canva</text>
+<text xml:space="preserve" x="294.0" y="140.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">View-only link, or exported PNG/PDF</text>
+<rect x="16.0" y="158.0" width="230.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="188.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Code, websites, analysis</text>
+<path d="M250.0,183.0 L276.0,183.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="158.0" width="464.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="294.0" y="180.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">GitHub</text>
+<text xml:space="preserve" x="294.0" y="198.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Repository with a README</text>
+<rect x="16.0" y="216.0" width="230.0" height="50.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="246.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Videos</text>
+<path d="M250.0,241.0 L276.0,241.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="280.0" y="216.0" width="464.0" height="50.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="294.0" y="238.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">YouTube (unlisted)</text>
+<text xml:space="preserve" x="294.0" y="256.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Link plus a thumbnail image</text>
+<text xml:space="preserve" x="16.0" y="292.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Before you share any link</text>
+<rect x="16.0" y="304.0" width="728.0" height="70.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<circle cx="42.0" cy="339.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="343.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="62.0" y="335.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Open it in a private window</text>
+<circle cx="282.0" cy="339.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="282.0" y="343.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="302.0" y="335.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Asks you to sign in? Fix the</text>
+<text xml:space="preserve" x="302.0" y="353.1" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">setting</text>
+<circle cx="522.0" cy="339.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="522.0" y="343.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="542.0" y="335.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Check it says view, not edit</text>
+</g></svg>

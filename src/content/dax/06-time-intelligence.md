@@ -12,11 +12,11 @@ Time comparisons are what managers ask for most: this year so far, against last 
 
 ## The concept
 
-**Prerequisites**
+### Prerequisites
 
 Time intelligence functions work on a proper date table: one row per day with no gaps, covering whole years, marked as a date table, and related to the fact table. You built exactly that in lesson 1.
 
-**The core functions**
+### The core functions
 
 Each one returns a **set of dates**, which you use as a filter in `CALCULATE`:
 
@@ -46,7 +46,9 @@ CALCULATE (
 
 `TOTALYTD ( [Revenue], 'Date'[Date] )` is a shortcut for the YTD measure. For a financial year ending 30 June, `DATESYTD ( 'Date'[Date], "30/6" )` restarts the count each 1 July.
 
-**The incomplete-year trap**
+![A grid of 18 months, January 2025 to June 2026, with March 2026 selected. Revenue covers March 2026: ₦51.2m. Revenue PM covers February 2026: ₦43.0m. Revenue LY covers March 2025: ₦46.3m. Revenue YTD and Revenue Rolling 3M both cover January to March 2026: ₦143.2m.](/images/courses/dax/time-windows.svg "Each time-intelligence function changes which dates the measure adds up.")
+
+### The incomplete-year trap
 
 At year level, the 2026 filter contains every date from 1 January to 31 December 2026, because the date table covers whole years. `SAMEPERIODLASTYEAR` shifts that to the whole of 2025, and you're comparing six months of sales with twelve.
 

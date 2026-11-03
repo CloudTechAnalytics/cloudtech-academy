@@ -10,7 +10,7 @@ summary: Measure Kasuwa's delivery with the four DORA measures, find which deplo
 
 ## The concept
 
-**The four DORA measures**
+### The four DORA measures
 
 | Measure | Question |
 | :-- | :-- |
@@ -19,13 +19,15 @@ summary: Measure Kasuwa's delivery with the four DORA measures, find which deplo
 | Change failure rate | What share of deploys cause a failure (rolled back or hotfixed)? |
 | Time to restore | When a deploy fails, how long until service is restored? |
 
-**What makes a deploy risky?**
+### What makes a deploy risky?
 
 Compare failure rates by the deploy's features: whether the change had automated tests, how big it was, when it was deployed. Small groups give noisy rates, so count the deploys behind each one.
 
-**A freeze with evidence**
+### A freeze with evidence
 
 A freeze is a trade-off. It removes deploy risk during the sale, but changes pile up and land together afterwards. A short freeze around the sale, with rules that cut risk in the weeks before, usually beats a long one.
+
+![The four DORA measures, invented failure rates by deploy type, and what a freeze removes and what it costs](/images/courses/devops-capstone/dora-freeze.svg "Measure delivery, find what makes deploys risky, and freeze with evidence.")
 
 ## Example
 

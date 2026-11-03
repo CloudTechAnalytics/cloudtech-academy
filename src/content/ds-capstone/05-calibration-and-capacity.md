@@ -10,11 +10,13 @@ Operations will use the model in two ways. They'll **rank** orders, to call the 
 
 ## The concept
 
-**Calibration**
+### Calibration
 
 Group orders by predicted risk and compare the average prediction with the actual failure rate in each group. If they match, the model is calibrated. Logistic regression is often well calibrated on data like its training data. It drifts when the world changes.
 
-**Brier score**
+![A calibration plot with points near the diagonal, Brier score compared with a no-skill guess, and recall at the top 20 percent](/images/courses/ds-capstone/calibration.svg "Do predicted risks match what really happens?")
+
+### Brier score
 
 The average squared gap between predicted probability and outcome (0 or 1). Lower is better. Compare it with the Brier score of predicting the overall failure rate for everyone.
 
@@ -22,7 +24,7 @@ The average squared gap between predicted probability and outcome (0 or 1). Lowe
 
 If the call centre can only make so many calls, the question is how many failures the riskiest orders contain. **Recall at the top 20%** is the share of all failures found by calling the riskiest fifth of orders.
 
-**The missing piece**
+### The missing piece
 
 If a call prevented **every** failure it reached, the break-even risk would be ₦250 ÷ ₦6,500 = **3.8%**, and you'd call almost everyone. But a call doesn't turn every doubtful customer into a happy one. To set a threshold, you need to know how much a call actually **reduces** the risk, and that needs the trial.
 

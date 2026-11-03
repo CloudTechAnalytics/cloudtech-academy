@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Google search operators: quotation marks for an exact phrase, site: for one website or domain, filetype: for one kind of file, a minus sign to leave a word out, OR for either word, and after: or before: for dates. They can be combined, for example a phrase plus site:.gov.ng plus filetype:pdf finds PDF reports on government websites.">
+<title>Six operators, and how they combine.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Type these into the search box</text>
+<rect x="16.0" y="40.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="26.0" y="50.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="72.0" y="69.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">"quotes"</text>
+<text xml:space="preserve" x="128.0" y="68.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">This exact phrase</text>
+<text xml:space="preserve" x="28.0" y="95.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"food inflation rate"</text>
+<rect x="384.0" y="40.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="394.0" y="50.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="440.0" y="69.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">site:</text>
+<text xml:space="preserve" x="496.0" y="68.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Only this site or domain</text>
+<text xml:space="preserve" x="396.0" y="95.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">rice prices site:.gov.ng</text>
+<rect x="16.0" y="114.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="26.0" y="124.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="72.0" y="143.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">filetype:</text>
+<text xml:space="preserve" x="128.0" y="142.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Only this kind of file</text>
+<text xml:space="preserve" x="28.0" y="169.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">market survey filetype:pdf</text>
+<rect x="384.0" y="114.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="394.0" y="124.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="440.0" y="143.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">-</text>
+<text xml:space="preserve" x="496.0" y="142.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Leave this word out</text>
+<text xml:space="preserve" x="396.0" y="169.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">jaguar -car</text>
+<rect x="16.0" y="188.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="26.0" y="198.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="72.0" y="217.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">OR</text>
+<text xml:space="preserve" x="128.0" y="216.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Either word (capitals)</text>
+<text xml:space="preserve" x="28.0" y="243.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">farmer OR agribusiness</text>
+<rect x="384.0" y="188.0" width="360.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.3"/>
+<rect x="394.0" y="198.0" width="92.0" height="28.0" rx="6" fill="#EFE4CC"/>
+<text xml:space="preserve" x="440.0" y="217.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">after:</text>
+<text xml:space="preserve" x="496.0" y="216.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Only newer pages</text>
+<text xml:space="preserve" x="396.0" y="243.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">fintech Nigeria after:2024-01-01</text>
+<text xml:space="preserve" x="16.0" y="288.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Put them together</text>
+<rect x="16.0" y="300.0" width="728.0" height="56.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="32.0" y="334.0" font-size="14" fill="#B38A3E" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"mobile money"</text>
+<text xml:space="preserve" x="152.4" y="334.0" font-size="14" fill="#F3EBD8" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"> Nigeria</text>
+<text xml:space="preserve" x="221.2" y="334.0" font-size="14" fill="#8FB8E0" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"> site:.gov.ng</text>
+<text xml:space="preserve" x="333.0" y="334.0" font-size="14" fill="#9BD0A8" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace"> filetype:pdf</text>
+<text xml:space="preserve" x="16.0" y="380.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">→ PDF reports on mobile money from Nigerian government websites.</text>
+<text xml:space="preserve" x="16.0" y="404.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Tip: site:.edu, site:.org and site:.gov.ng narrow results to universities, organisations and governments. It</text>
+<text xml:space="preserve" x="16.0" y="421.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">doesn't guarantee quality, but it removes noise.</text>
+</g></svg>

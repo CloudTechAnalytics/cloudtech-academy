@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="Framing a data science problem. Start from the decision a model will change, then define the unit, the target and the prediction moment, and measure success in money, not just AUC. The invented example is a clinic booking app that wants to know which appointments to confirm by phone, because a reminder call costs 100 naira and a missed appointment costs 2,000.">
+<title>Decision, unit, target, prediction moment, and a metric in naira.</title>
+
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">"Build a model that stops no-shows" is not a plan. Frame it.</text>
+<rect x="16.0" y="40.0" width="728.0" height="50.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="71.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">The decision</text>
+<text xml:space="preserve" x="250.0" y="71.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">For each booking, at booking time, should we phone to confirm?</text>
+<rect x="16.0" y="98.0" width="728.0" height="50.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="129.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">The unit</text>
+<text xml:space="preserve" x="250.0" y="129.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One booked appointment that wasn't cancelled</text>
+<rect x="16.0" y="156.0" width="728.0" height="50.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="187.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">The target</text>
+<text xml:space="preserve" x="250.0" y="187.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">no_show = 1 if the patient didn't turn up</text>
+<rect x="16.0" y="214.0" width="728.0" height="50.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="245.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">The prediction moment</text>
+<text xml:space="preserve" x="250.0" y="245.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Booking. Every feature must be known at that moment.</text>
+<rect x="16.0" y="272.0" width="728.0" height="50.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="303.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">The metric</text>
+<text xml:space="preserve" x="250.0" y="303.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Net naira saved: no-shows prevented × 2,000 − calls × 100</text>
+<text xml:space="preserve" x="16.0" y="346.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two numbers, not one</text>
+<rect x="16.0" y="356.0" width="358.0" height="66.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="380.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">AUC</text>
+<text xml:space="preserve" x="30.0" y="402.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">How well the model ranks bookings by risk.</text>
+<rect x="386.0" y="356.0" width="358.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="400.0" y="380.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Net naira saved</text>
+<text xml:space="preserve" x="400.0" y="402.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">What the business cares about; needs trial evidence.</text>
+</g></svg>

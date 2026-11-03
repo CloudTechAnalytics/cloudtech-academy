@@ -7,11 +7,15 @@
  *   ```answer       JSON: a task done in Excel / Power BI / by hand, checked by its result (AnswerSpec)
  *   ```task         JSON: written work checked against rules, with a model answer (TaskSpec)
  *   ```dataset      JSON: { dataset, files?, note? } download card for a practice dataset
+ *   ```live         a live HTML/CSS/JS editor with a preview: optional JSON header, then === html / === css / === js sections
+ *   ```gittask      a Git practice task checked on the repository the learner ends up with (GitTaskSpec): JSON header, then === sections
+ *   ```gitterm      a free Git practice terminal: optional JSON header, === file <name> and === setup sections
+ *   ```webtask      a web task checked on the code and the rendered page (WebTaskSpec): JSON header, then === sections
  *
  * Callouts use blockquotes starting with [!TIP], [!NOTE], [!WARNING] or [!BUSINESS].
  * These helpers are dependency-free so the same logic can be mirrored by build scripts.
  */
-import type { AnswerSpec, DatasetBlock, ExerciseSpec, QuizQuestion, TaskSpec } from "@/content/types";
+import type { AnswerSpec, DatasetBlock, ExerciseSpec, GitTaskSpec, GitTermSpec, LiveSpec, QuizQuestion, TaskSpec, WebFiles, WebTaskSpec } from "@/content/types";
 
 export function parseFrontmatter(raw: string): { meta: Record<string, string>; body: string } {
   const text = raw.replace(/\r\n/g, "\n");
@@ -20,7 +24,12 @@ export function parseFrontmatter(raw: string): { meta: Record<string, string>; b
   const meta: Record<string, string> = {};
   for (const line of m[1].split("\n")) {
     const i = line.indexOf(":");
-    if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    if (i <= 0) continue;
+    let value = line.slice(i + 1).trim();
+    // YAML lets a value be quoted (needed when it contains a colon): drop the quotes.
+    const q = value.match(/^"(.*)"$/) ?? value.match(/^'(.*)'$/);
+    if (q) value = q[1].replace(/\\"/g, '"');
+    meta[line.slice(0, i).trim()] = value;
   }
   return { meta, body: text.slice(m[0].length) };
 }
@@ -76,7 +85,80 @@ export function extractTasks(body: string): TaskSpec[] {
   return fences(body, "task").map(parseTask);
 }
 
-/** IDs of every required practice task in a lesson: SQL exercises, answer tasks and written tasks. */
+/** Splits a web block into its JSON header (the text before the first === line) and its === sections. */
+function webSections(text: string): { header: string; sections: Record<string, string> } {
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const sections: Record<string, string[]> = {};
+  const head: string[] = [];
+  let current: string[] | null = null;
+  for (const line of lines) {
+    const m = line.match(/^===\s*(.+?)\s*$/);
+    if (m) {
+      const name = /^file\s+/i.test(m[1]) ? "file " + m[1].replace(/^file\s+/i, "").trim() : m[1].toLowerCase();
+      current = sections[name] = [];
+    } else if (current) current.push(line);
+    else head.push(line);
+  }
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(sections)) out[k] = v.join("\n").replace(/^\n+|\s+$/g, "");
+  return { header: head.join("\n").trim(), sections: out };
+}
+
+const pickFiles = (sections: Record<string, string>, prefix = ""): WebFiles => {
+  const files: WebFiles = {};
+  for (const k of ["html", "css", "js"] as const) if (sections[prefix + k] !== undefined) files[k] = sections[prefix + k];
+  return files;
+};
+
+export function parseWebTask(text: string): WebTaskSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<WebTaskSpec>;
+  const t = { ...meta, prompt: sections.prompt ?? "", note: sections.note, files: pickFiles(sections), sample: pickFiles(sections, "sample ") } as WebTaskSpec;
+  if (!t.id || !t.prompt || !Array.isArray(t.rules) || !t.rules.length) throw new Error("A web task needs id, prompt and rules");
+  if (!Object.keys(t.sample).length) throw new Error(`${t.id}: a web task needs a model answer (=== sample html, sample css or sample js)`);
+  return t;
+}
+
+export function parseLive(text: string): LiveSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<LiveSpec>;
+  const files = Object.keys(sections).some((k) => ["html", "css", "js"].includes(k)) ? pickFiles(sections) : { html: text.trim() };
+  return { ...meta, files };
+}
+
+const commandLines = (text: string | undefined) =>
+  (text ?? "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith("#"));
+
+const fileSections = (sections: Record<string, string>) =>
+  Object.fromEntries(Object.entries(sections).filter(([k]) => k.startsWith("file ")).map(([k, v]) => [k.slice(5), v === "" ? "" : v + "\n"]));
+
+export function parseGitTask(text: string): GitTaskSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<GitTaskSpec>;
+  const t = { ...meta, prompt: sections.prompt ?? "", note: sections.note, files: fileSections(sections), setup: commandLines(sections.setup), sample: commandLines(sections.sample) } as GitTaskSpec;
+  if (!t.id || !t.prompt || !Array.isArray(t.rules) || !t.rules.length) throw new Error("A Git task needs id, prompt and rules");
+  if (!t.sample.length) throw new Error(`${t.id}: a Git task needs a model answer (=== sample, one command per line)`);
+  return t;
+}
+
+export function parseGitTerm(text: string): GitTermSpec {
+  const { header, sections } = webSections(text);
+  const meta = JSON.parse(header || "{}") as Partial<GitTermSpec>;
+  return { ...meta, files: fileSections(sections), setup: commandLines(sections.setup) };
+}
+
+export function extractGitTasks(body: string): GitTaskSpec[] {
+  return fences(body, "gittask").map(parseGitTask);
+}
+
+export function extractWebTasks(body: string): WebTaskSpec[] {
+  return fences(body, "webtask").map(parseWebTask);
+}
+
+/** IDs of every required practice task in a lesson: SQL exercises, answer tasks, written tasks and web tasks. */
 export function requiredExerciseIds(body: string): string[] {
-  return [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body)].filter((e) => e.required).map((e) => e.id);
+  return [...extractExercises(body), ...extractAnswers(body), ...extractTasks(body), ...extractWebTasks(body), ...extractGitTasks(body)].filter((e) => e.required).map((e) => e.id);
 }

@@ -20,23 +20,36 @@ const SUPABASE_KEY = env(import.meta.env.VITE_SUPABASE_ANON_KEY) ?? (import.meta
 export const IS_LIVE = Boolean(SUPABASE_URL && SUPABASE_KEY);
 
 let instance: Backend | null = null;
+let pending: Promise<Backend> | null = null;
+
+async function createBackend(): Promise<Backend> {
+  if (IS_LIVE) {
+    const { createSupabaseBackend } = await import("./supabase");
+    return createSupabaseBackend(SUPABASE_URL!, SUPABASE_KEY!);
+  }
+  if (!import.meta.env.PROD) {
+    // Demo mode exists for local development only. Loading it this way keeps it, and the practice
+    // project answer keys it grades with, out of production builds, which always use Supabase.
+    const { createDemoBackend } = await import("./demo");
+    return createDemoBackend();
+  }
+  throw new Error("Supabase isn't configured.");
+}
 
 /**
  * The backend is created lazily in the browser. It is never used while prerendering
  * (pages render bundled content on the server), so Supabase isn't imported on the server.
+ * Several parts of the app ask for it at start-up at the same moment; they all share the one
+ * creation in flight, so there is only ever a single backend (and a single auth listener set).
  */
-export async function getBackend(): Promise<Backend> {
-  if (instance) return instance;
-  if (IS_LIVE) {
-    const { createSupabaseBackend } = await import("./supabase");
-    instance = createSupabaseBackend(SUPABASE_URL!, SUPABASE_KEY!);
-  } else if (!import.meta.env.PROD) {
-    // Demo mode exists for local development only. Loading it this way keeps it, and the practice
-    // project answer keys it grades with, out of production builds, which always use Supabase.
-    const { createDemoBackend } = await import("./demo");
-    instance = createDemoBackend();
-  } else {
-    throw new Error("Supabase isn't configured.");
-  }
-  return instance;
+export function getBackend(): Promise<Backend> {
+  if (instance) return Promise.resolve(instance);
+  pending ??= createBackend().then(
+    (b) => (instance = b),
+    (e: unknown) => {
+      pending = null; // let the next call try again
+      throw e;
+    },
+  );
+  return pending;
 }

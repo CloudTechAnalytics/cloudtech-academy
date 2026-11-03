@@ -10,7 +10,7 @@ The steering committee meets at the end of week 10. They want one report: where 
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -22,7 +22,7 @@ The steering committee meets at the end of week 10. They want one report: where 
 | Risks, responses and contingency | lesson 8 |
 | Change decisions | lesson 9 |
 
-**One page first**
+### One page first
 
 Busy sponsors read the first page. Put the status, the forecast date and cost, and the decisions needed at the top; put the analysis behind it.
 

@@ -10,13 +10,15 @@ summary: Define service level indicators from what users experience, set objecti
 
 ## The concept
 
-**SLI, SLO, error budget**
+### SLI, SLO, error budget
 
 - A **service level indicator** (SLI) measures what users experience, as a ratio of good events to all events. For example: the share of requests that succeed, or that finish in under one second.
 - A **service level objective** (SLO) is the target for that ratio over a period: **99.9% of requests succeed, over 30 days**.
 - The **error budget** is what's left: 0.1% of requests may fail. Spending it on releases and experiments is fine; running out means reliability work comes first.
 
-**Choose SLIs users would recognise**
+![SLI (good events over all events) leads to an SLO (99.9% over 30 days) and an error budget (the remaining 0.1%); for 10 million requests a month, 10,000 may fail, about 43 minutes of full outage; budget left means ship, budget spent means reliability first](/images/courses/observability/error-budget.svg "SLI, SLO and the error budget, with example numbers.")
+
+### Choose SLIs users would recognise
 
 | SLI | Good event |
 | :-- | :-- |
@@ -25,7 +27,7 @@ summary: Define service level indicators from what users experience, set objecti
 
 Measure them where users meet the service (the load balancer or web tier), not deep inside.
 
-**Pick realistic objectives**
+### Pick realistic objectives
 
 100% is the wrong target: it's impossible, and chasing it stops all change. Pick what users actually need, and what the system can achieve.
 

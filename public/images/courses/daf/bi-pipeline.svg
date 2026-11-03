@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="The BI pipeline in four stages. Source systems (orders, finance, HR, CRM) feed an ETL stage that extracts, cleans and combines the data. That loads into a data model or warehouse: one trusted version with relationships and agreed calculations. Dashboards and reports read from the model and refresh on a schedule.">
+<title>The BI pipeline: sources → ETL → model or warehouse → dashboards, refreshed on a schedule.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="560" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="42.0" cy="44.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="48.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="64.0" y="50.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Sources</text>
+<text xml:space="preserve" x="64.0" y="76.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Where work happens: each team's own</text>
+<text xml:space="preserve" x="64.0" y="94.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">system.</text>
+<rect x="330.0" y="34.0" width="107.4" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="340.0" y="51.7" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Order system</text>
+<rect x="530.0" y="34.0" width="143.8" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="540.0" y="51.7" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Finance / billing</text>
+<rect x="330.0" y="70.0" width="121.9" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="340.0" y="87.7" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">HR and payroll</text>
+<rect x="530.0" y="70.0" width="143.8" height="26.0" rx="6" fill="#F3EBD8"/>
+<text xml:space="preserve" x="540.0" y="87.7" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">CRM, spreadsheets</text>
+<rect x="16.0" y="136.0" width="728.0" height="100.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.6"/>
+<circle cx="42.0" cy="164.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="168.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="64.0" y="170.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">ETL</text>
+<text xml:space="preserve" x="64.0" y="196.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">In Power BI: Power Query. Cleaning,</text>
+<text xml:space="preserve" x="64.0" y="214.8" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">as in lesson 5.</text>
+<text xml:space="preserve" x="330.0" y="164.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Extract</text>
+<text xml:space="preserve" x="420.0" y="164.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">copy data out</text>
+<text xml:space="preserve" x="330.0" y="190.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Transform</text>
+<text xml:space="preserve" x="420.0" y="190.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">clean, combine, calculate</text>
+<text xml:space="preserve" x="330.0" y="216.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Load</text>
+<text xml:space="preserve" x="420.0" y="216.0" font-size="13.5" fill="#2A2926" font-weight="400" text-anchor="start">into the model</text>
+<rect x="16.0" y="256.0" width="728.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="42.0" cy="284.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="288.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="64.0" y="290.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Model / warehouse</text>
+<text xml:space="preserve" x="64.0" y="316.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">One trusted version: the single</text>
+<text xml:space="preserve" x="64.0" y="334.9" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">source of truth.</text>
+<rect x="330.0" y="274.0" width="85.5" height="26.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="340.0" y="291.7" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">customers</text>
+<rect x="470.0" y="274.0" width="78.2" height="26.0" rx="6" fill="#E6EEF6"/>
+<text xml:space="preserve" x="480.0" y="291.7" font-size="13" fill="#2F5D8A" font-weight="400" text-anchor="start">products</text>
+<rect x="400.0" y="314.0" width="63.7" height="26.0" rx="6" fill="#DCE7F2"/>
+<text xml:space="preserve" x="410.0" y="331.7" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">orders</text>
+<text xml:space="preserve" x="560.0" y="306.0" font-size="12.5" fill="#2F5D8A" font-weight="400" text-anchor="start">+ agreed measures:</text>
+<text xml:space="preserve" x="560.0" y="326.0" font-size="12.5" fill="#2F5D8A" font-weight="400" text-anchor="start">revenue, growth,</text>
+<text xml:space="preserve" x="560.0" y="344.0" font-size="12.5" fill="#2F5D8A" font-weight="400" text-anchor="start">active customers</text>
+<rect x="16.0" y="376.0" width="728.0" height="100.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<circle cx="42.0" cy="404.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="42.0" y="408.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="64.0" y="410.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Dashboards</text>
+<text xml:space="preserve" x="64.0" y="436.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Power BI, Tableau, Looker Studio.</text>
+<rect x="330.0" y="392.0" width="60.0" height="26.0" rx="4" fill="#F3EBD8"/>
+<rect x="400.0" y="392.0" width="60.0" height="26.0" rx="4" fill="#F3EBD8"/>
+<rect x="470.0" y="392.0" width="60.0" height="26.0" rx="4" fill="#F3EBD8"/>
+<path d="M540,456 L570,440 L600,446 L630,422 L660,430 L700,406" fill="none" stroke="#B38A3E" stroke-width="2.4"/>
+<rect x="330.0" y="432.0" width="150.0" height="10.0" rx="0" fill="#DCC594"/>
+<rect x="330.0" y="448.0" width="110.0" height="10.0" rx="0" fill="#DCC594"/>
+<rect x="330.0" y="464.0" width="70.0" height="8.0" rx="0" fill="#9B2C1F"/>
+<path d="M380.0,118.0 L380.0,134.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M380.0,238.0 L380.0,254.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<path d="M380.0,358.0 L380.0,374.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="16.0" y="494.0" width="728.0" height="50.0" rx="8" fill="#EFE4CC" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="524.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Scheduled refresh, e.g. every morning at 7: stages 2 to 4 run again on new data.</text>
+</g></svg>

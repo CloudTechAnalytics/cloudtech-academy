@@ -22,7 +22,7 @@ This is how SQL Server shows them for Harbourline's `customers` table:
 
 ![SQL Server Object Explorer listing the columns of dbo.customers: customer_id marked PK, account_manager_id marked FK, and the other columns with their data types.](/images/courses/sql/ssms-object-explorer.webp "Harbourline in SQL Server: the key icon and PK mark the primary key (2); FK marks the foreign key (3). The tables are listed above (1).")
 
-**Natural vs surrogate keys**
+### Natural vs surrogate keys
 
 | | Natural key | Surrogate key |
 | :-- | :-- | :-- |
@@ -36,6 +36,31 @@ Analytics models usually use **surrogate keys**, and keep natural keys as ordina
 **Composite key:** a key made of two or more columns together. In a table of which students take which courses, neither `student_id` nor `course_id` is unique alone, but the pair `(student_id, course_id)` is.
 
 **Referential integrity:** every foreign key value must exist as a primary key in the other table. A shipment for customer 999 when there is no customer 999 is an **orphan**, and it silently drops out of inner joins.
+
+### Testing a key on real data
+
+Never assume a column is a key: count. A column (or set of columns) is a valid key only if the number of **distinct** values equals the number of **rows**. On Kolanut's sales data:
+
+| Candidate key | Rows | Distinct values | A key? |
+| :-- | --: | --: | :-- |
+| `customers.customer_id` | 90 | 90 | Yes |
+| `orders.order_id` | 4,266 | 4,266 | Yes |
+| `orders.customer_id` | 4,266 | 90 | No: a foreign key, repeated on each customer's lines |
+| `orders(customer_id, order_date)` | 4,266 | 3,982 | No: 263 shop visits bought more than one product |
+| `orders(customer_id, order_date, product_id)` | 4,266 | 4,246 | No: on 20 occasions a shop ordered the same product twice in a day |
+
+The last row is the surprising one, and the reason to test. It looks as if "this customer, this day, this product" should be unique, but the data says otherwise. If you'd built a model on that assumption, those 20 lines would collide. That's why the order system gives every line its own `order_id`: a **surrogate key** that is unique by design.
+
+In SQL, the test is one query:
+
+```sql
+SELECT COUNT(*) AS rows, COUNT(DISTINCT customer_id) AS distinct_ids
+FROM customers;
+```
+
+In a spreadsheet, compare `=ROWS(range)` with `=COUNTA(UNIQUE(range))`.
+
+**And test the foreign keys.** For every foreign key, count the values that have no match in the other table. For Kolanut, every `customer_id` and `product_id` in `orders` matches a real customer and product: zero orphans.
 
 ## Example
 

@@ -1,17 +1,28 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { Download, Mail } from "lucide-react";
-import { getBackend, type AdminOrder, type Certificate, type CertificatePrice } from "@/lib/backend";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { MenuPanel } from "@/components/MenuPanel";
+import { Link, NavLink, useLocation } from "react-router";
+import { Award, Ban, Copy, Download, Eye, Mail, MoreHorizontal, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
+import { getBackend, type AdminCertificate, type AdminOrder, type CertificateKind, type CertificatePrice } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { formatMoney } from "@/lib/currency";
 import { gmailUrl } from "@/lib/email";
-import { verifyUrl } from "@/lib/certificates";
+import {
+  CERTIFICATE_TYPES,
+  certificateName,
+  certificateTypeMeta,
+  issueDay,
+  matchesCertificate,
+  TRAINING_TYPES,
+  trainingTypeLabel,
+  verifyUrl,
+} from "@/lib/certificates";
 import { SITE } from "@/lib/site";
-import { Button, buttonClass } from "@/components/Button";
+import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { Alert, TextField } from "@/components/Form";
 import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
+import { certificateLink, copyText, DeleteCertificateDialog, RevokeDialog, STATUS_LABEL, StatusChip, useCertificateDownload } from "./certificate-shared";
 
 const STATUS: Record<AdminOrder["status"], string> = {
   pending: "Awaiting payment",
@@ -137,112 +148,6 @@ function Orders({ onGranted }: { onGranted: () => void }) {
   );
 }
 
-function Issued({ version }: { version: number }) {
-  const [q, setQ] = useState("");
-  const [search, setSearch] = useState("");
-  const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listCertificates(search), [search, version]);
-  const [msg, setMsg] = useState<string | null>(null);
-  const revoke = async (c: Certificate) => {
-    const reason = window.prompt(`Why is ${c.certificateId} being revoked? Its verification page will show it as revoked.`);
-    if (!reason?.trim()) return;
-    try {
-      await (await getBackend()).admin.revokeCertificate(c.id, reason.trim());
-      await reload();
-    } catch (e) {
-      setMsg(e instanceof Error ? e.message : "Couldn't revoke the certificate.");
-    }
-  };
-  if (error) return <Alert tone="error">{error}</Alert>;
-  return (
-    <section aria-labelledby="issued-title">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <h2 id="issued-title" className="font-serif text-[1.5rem]">
-          Issued certificates
-        </h2>
-        <Button
-          variant="secondary"
-          disabled={!data?.length}
-          onClick={() =>
-            csv(
-              [["Certificate", "Credential", "Recipient", "Course", "Issued", "Status"], ...(data ?? []).map((c) => [c.certificateId, c.credentialId, c.recipientName, c.courseTitle, c.issuedAt.slice(0, 10), c.status])],
-              `certificates-${new Date().toISOString().slice(0, 10)}.csv`,
-            )
-          }
-        >
-          <Download aria-hidden className="h-4 w-4" /> Download records
-        </Button>
-      </div>
-      <form
-        className="mt-4 mb-4 flex max-w-lg items-end gap-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSearch(q);
-        }}
-      >
-        <div className="flex-1">
-          <TextField label="Search by name or certificate ID" type="search" value={q} onChange={(e) => setQ(e.target.value)} />
-        </div>
-        <button type="submit" className="mb-0.5 rounded-lg border border-line-strong px-4 py-2.5 text-[0.9375rem] font-semibold hover:border-ink/40">
-          Search
-        </button>
-      </form>
-      {msg && <Alert tone="error">{msg}</Alert>}
-      {!data ? (
-        <PageLoading />
-      ) : data.length === 0 ? (
-        <p className="text-muted">{search ? "No certificates match that search." : "No certificates issued yet."}</p>
-      ) : (
-        <div className="table-scroll rounded-2xl border border-line bg-paper">
-          <table>
-            <thead>
-              <tr>
-                <th>Certificate</th>
-                <th>Recipient</th>
-                <th>Course</th>
-                <th>Issued</th>
-                <th>Status</th>
-                <th>
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((c) => (
-                <tr key={c.id}>
-                  <td className="whitespace-nowrap font-mono text-[0.8125rem]">
-                    <Link to={`/verify/${c.certificateId}`} className="hover:text-brass-dark">
-                      {c.certificateId}
-                    </Link>
-                  </td>
-                  <td>{c.recipientName}</td>
-                  <td>{c.courseTitle}</td>
-                  <td className="whitespace-nowrap">{formatDate(c.issuedAt)}</td>
-                  <td>
-                    {c.status === "valid" ? (
-                      "Valid"
-                    ) : (
-                      <span className="text-danger" title={c.revokedReason ?? undefined}>
-                        Revoked
-                      </span>
-                    )}
-                  </td>
-                  <td className="text-right">
-                    {c.status === "valid" && (
-                      <button type="button" onClick={() => void revoke(c)} className="text-[0.8125rem] font-semibold text-danger">
-                        Revoke
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </section>
-  );
-}
-
 function PriceRow({ price, onSave }: { price: CertificatePrice; onSave: (p: CertificatePrice) => Promise<void> }) {
   const [amount, setAmount] = useState(String(price.amount));
   const [active, setActive] = useState(price.active);
@@ -279,17 +184,71 @@ function PriceRow({ price, onSave }: { price: CertificatePrice; onSave: (p: Cert
   );
 }
 
+function PriceTable({ kind, title, note, prices, onSave }: { kind: CertificateKind; title: string; note: string; prices: CertificatePrice[]; onSave: (p: CertificatePrice) => Promise<void> }) {
+  const [currency, setCurrency] = useState("");
+  const [amount, setAmount] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const mine = prices.filter((p) => p.kind === kind);
+  return (
+    <div>
+      <h3 className="font-serif text-[1.2rem]">{title}</h3>
+      <p className="mt-1 max-w-2xl text-[0.875rem] text-muted">{note}</p>
+      <div className="table-scroll mt-3 max-w-2xl rounded-2xl border border-line bg-paper">
+        <table>
+          <thead>
+            <tr>
+              <th>Currency</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>
+                <span className="sr-only">Save</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {mine.map((p) => (
+              <PriceRow key={`${kind}-${p.currency}`} price={p} onSave={onSave} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <form
+        className="mt-3 flex max-w-2xl flex-wrap items-end gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const c = currency.trim().toUpperCase();
+          if (!/^[A-Z]{3}$/.test(c) || !(Number(amount) > 0)) return setErr("Enter a three-letter currency code (e.g. GBP) and a price.");
+          setErr(null);
+          void onSave({ kind, currency: c, amount: Number(amount), active: true, position: mine.length + 1 }).then(() => {
+            setCurrency("");
+            setAmount("");
+          });
+        }}
+      >
+        <div className="w-32">
+          <TextField label="Add currency" value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="GBP" maxLength={3} />
+        </div>
+        <div className="w-40">
+          <TextField label="Price" type="number" min={0.01} step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        </div>
+        <Button type="submit" variant="secondary">
+          Add
+        </Button>
+      </form>
+      {err && <p className="mt-2 text-[0.8125rem] text-danger">{err}</p>}
+    </div>
+  );
+}
+
 function Pricing() {
   // Admins see every price, including ones switched off.
   const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listPrices());
-  const [currency, setCurrency] = useState("");
-  const [amount, setAmount] = useState("");
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
   const save = async (p: CertificatePrice) => {
     setMsg(null);
     try {
       await (await getBackend()).admin.savePrice(p);
-      setMsg({ tone: "success", text: `${p.currency} price saved.` });
+      setMsg({ tone: "success", text: `${p.kind === "programme" ? "Programme" : "Course"} ${p.currency} price saved.` });
       await reload();
     } catch (e) {
       setMsg({ tone: "error", text: e instanceof Error ? e.message : "Couldn't save the price." });
@@ -308,64 +267,28 @@ function Pricing() {
       <div className="mt-3" aria-live="polite">
         {msg && <Alert tone={msg.tone}>{msg.text}</Alert>}
       </div>
-      <div className="table-scroll mt-4 max-w-2xl rounded-2xl border border-line bg-paper">
-        <table>
-          <thead>
-            <tr>
-              <th>Currency</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>
-                <span className="sr-only">Save</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((p) => (
-              <PriceRow key={p.currency} price={p} onSave={save} />
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-4 space-y-10">
+        <PriceTable kind="programme" title="Professional Programme certificates" note="One certificate for a whole programme: every required course and the capstone. Priced higher than a single course." prices={data} onSave={save} />
+        <PriceTable kind="course" title="Course certificates" note="The optional certificate for a single completed course." prices={data} onSave={save} />
       </div>
-      <form
-        className="mt-4 flex max-w-2xl flex-wrap items-end gap-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const c = currency.trim().toUpperCase();
-          if (!/^[A-Z]{3}$/.test(c) || !(Number(amount) > 0)) return setMsg({ tone: "error", text: "Enter a three-letter currency code (e.g. GBP) and a price." });
-          void save({ currency: c, amount: Number(amount), active: true, position: data.length + 1 }).then(() => {
-            setCurrency("");
-            setAmount("");
-          });
-        }}
-      >
-        <div className="w-32">
-          <TextField label="Add currency" value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="GBP" maxLength={3} />
-        </div>
-        <div className="w-40">
-          <TextField label="Price" type="number" min={0.01} step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
-        </div>
-        <Button type="submit" variant="secondary">
-          Add
-        </Button>
-      </form>
     </section>
   );
 }
 
-export default function AdminCertificates() {
-  const [version, setVersion] = useState(0);
+/** Certificates → Course purchases: orders for paid course certificates, and pricing. */
+export function AdminCertificatePayments() {
   const [online, setOnline] = useState<boolean | null>(null);
   useEffect(() => {
     void getBackend().then((b) => setOnline(b.paymentsEnabled));
   }, []);
   return (
     <>
-      <AdminHeading title="Certificates & payments" />
+      <AdminHeading title="Certificates" />
+      <CertificateTabs />
       <div className="mb-8 max-w-3xl">
         {online === false && (
           <Alert tone="info">
-            Online payment isn't connected yet. Learners who want a certificate create an order and message you to pay by bank transfer. Once you've
+            Online payment isn't connected yet. Learners who want a course certificate create an order and message you to pay by bank transfer. Once you've
             confirmed the transfer, press <strong>Grant certificate</strong> on their order below.{" "}
             <a href={`${SITE.url}/certificates`} className={`${buttonClass("ghost")} px-0 underline`}>
               What learners see
@@ -374,10 +297,308 @@ export default function AdminCertificates() {
         )}
       </div>
       <div className="space-y-14">
-        <Orders onGranted={() => setVersion((v) => v + 1)} />
-        <Issued version={version} />
+        <Orders onGranted={() => undefined} />
         <Pricing />
       </div>
+    </>
+  );
+}
+
+export function CertificateTabs() {
+  const tab = (isActive: boolean) =>
+    `-mb-px border-b-2 px-1 pb-2.5 text-[0.9375rem] ${isActive ? "border-brass-dark font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`;
+  return (
+    <nav aria-label="Certificate sections" className="-mt-4 mb-8 flex gap-6 border-b border-line">
+      <NavLink to="/admin/certificates" end className={({ isActive }) => tab(isActive)}>
+        All certificates
+      </NavLink>
+      <NavLink to="/admin/certificates/payments" className={({ isActive }) => tab(isActive)}>
+        Course purchases & pricing
+      </NavLink>
+    </nav>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-2xl border border-line bg-paper p-5">
+      <p className="text-[0.8125rem] text-muted">{label}</p>
+      <p className="mt-2 font-serif text-[2.1rem] leading-none">{value}</p>
+    </div>
+  );
+}
+
+const selectCls =
+  "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2.5 text-[0.9375rem] text-ink focus:border-ink/60 focus:outline-2 focus:outline-offset-2 focus:outline-brass-dark";
+
+function Filter({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: { value: string; label: string }[] }) {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id} className="text-[0.875rem] font-medium">
+        {label}
+      </label>
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={selectCls}>
+        <option value="">All</option>
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+/** Row actions in a small menu. <details> keeps it keyboard-accessible without extra code. */
+function Actions({ c, onDownload, onCopy, onRevoke, onDelete }: { c: AdminCertificate; onDownload: () => void; onCopy: () => void; onRevoke: () => void; onDelete: () => void }) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  const close = () => ref.current?.removeAttribute("open");
+  const item = "flex w-full items-center gap-2 px-3.5 py-2 text-left text-[0.875rem] hover:bg-sand";
+  return (
+    <details ref={ref} className="relative inline-block text-left">
+      <summary
+        title="Actions"
+        className="inline-flex cursor-pointer list-none items-center rounded-lg border border-line-strong p-2 hover:border-ink/40 [&::-webkit-details-marker]:hidden"
+      >
+        <MoreHorizontal aria-hidden className="h-4 w-4" />
+        <span className="sr-only">Actions for {c.certificateId}</span>
+      </summary>
+      <MenuPanel className="w-56">
+        <Link to={`/admin/certificates/${c.certificateId}`} className={item}>
+          <Eye aria-hidden className="h-4 w-4" /> View
+        </Link>
+        <button type="button" className={item} onClick={() => (close(), onDownload())}>
+          <Download aria-hidden className="h-4 w-4" /> Download PDF
+        </button>
+        <button type="button" className={item} onClick={() => (close(), onCopy())}>
+          <Copy aria-hidden className="h-4 w-4" /> Copy verification link
+        </button>
+        {c.status !== "replaced" && (
+          <Link to={`/admin/certificates/${c.certificateId}/edit`} className={item}>
+            <Pencil aria-hidden className="h-4 w-4" /> Edit
+          </Link>
+        )}
+        {c.status !== "replaced" && (
+          <Link to={`/admin/certificates/${c.certificateId}/reissue`} className={item}>
+            <RefreshCw aria-hidden className="h-4 w-4" /> Reissue
+          </Link>
+        )}
+        {c.status === "valid" && (
+          <button type="button" className={`${item} text-danger`} onClick={() => (close(), onRevoke())}>
+            <Ban aria-hidden className="h-4 w-4" /> Revoke
+          </button>
+        )}
+        <button type="button" className={`${item} border-t border-line text-danger`} onClick={() => (close(), onDelete())}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Delete
+        </button>
+      </MenuPanel>
+    </details>
+  );
+}
+
+const thisMonth = (iso: string) => {
+  const d = new Date(iso);
+  const n = new Date();
+  return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth();
+};
+
+/** Admin Dashboard → Certificates. */
+export default function AdminCertificates() {
+  const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listCertificates());
+  const [q, setQ] = useState("");
+  const [status, setStatus] = useState("");
+  const [training, setTraining] = useState("");
+  const [type, setType] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const deletedId = (useLocation().state as { deleted?: string } | null)?.deleted;
+  const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(
+    deletedId ? { tone: "success", text: `${deletedId} deleted. Its verification page now says "Certificate Not Found".` } : null,
+  );
+  const [revoking, setRevoking] = useState<AdminCertificate | null>(null);
+  const [deleting, setDeleting] = useState<AdminCertificate | null>(null);
+  const onError = useCallback((text: string) => setMsg({ tone: "error", text }), []);
+  const { download, hidden } = useCertificateDownload(onError);
+
+  const rows = useMemo(
+    () =>
+      (data ?? []).filter(
+        (c) =>
+          matchesCertificate(c, q) &&
+          (!status || c.status === status) &&
+          (!training || c.trainingType === training) &&
+          (!type || c.certificateType === type) &&
+          (!from || issueDay(c.issuedAt) >= from) &&
+          (!to || issueDay(c.issuedAt) <= to),
+      ),
+    [data, q, status, training, type, from, to],
+  );
+
+  if (error) return <Alert tone="error">{error}</Alert>;
+  const all = data ?? [];
+  const filtered = q || status || training || type || from || to;
+
+  return (
+    <>
+      <AdminHeading title="Certificates">
+        <ButtonLink to="/admin/certificates/new">
+          <Plus aria-hidden className="h-4 w-4" /> Issue certificate
+        </ButtonLink>
+      </AdminHeading>
+      <CertificateTabs />
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Stat label="Total certificates" value={all.length} />
+        <Stat label="Active" value={all.filter((c) => c.status === "valid").length} />
+        <Stat label="Revoked" value={all.filter((c) => c.status === "revoked").length} />
+        <Stat label="Issued this month" value={all.filter((c) => thisMonth(c.issuedAt)).length} />
+      </div>
+
+      <div className="mt-8 grid gap-4 rounded-2xl border border-line bg-paper p-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="sm:col-span-2 lg:col-span-3">
+          <TextField label="Search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Name, email, certificate title or ID" />
+        </div>
+        <Filter label="Status" value={status} onChange={setStatus} options={(["valid", "revoked", "replaced"] as const).map((v) => ({ value: v, label: STATUS_LABEL[v] }))} />
+        <Filter label="Training type" value={training} onChange={setTraining} options={TRAINING_TYPES} />
+        <Filter label="Certificate type" value={type} onChange={setType} options={CERTIFICATE_TYPES} />
+        <TextField label="Issued from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+        <TextField label="Issued to" type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+        <div className="flex items-end gap-3">
+          <Button
+            variant="secondary"
+            disabled={!filtered}
+            onClick={() => {
+              setQ("");
+              setStatus("");
+              setTraining("");
+              setType("");
+              setFrom("");
+              setTo("");
+            }}
+          >
+            Clear filters
+          </Button>
+          <Button
+            variant="ghost"
+            disabled={!rows.length}
+            onClick={() =>
+              csv(
+                [
+                  ["Certificate ID", "Recipient", "Email", "Certificate", "Programme", "Training type", "Certificate type", "Issued", "Status", "Issued by", "Replaced by"],
+                  ...rows.map((c) => [
+                    c.certificateId,
+                    c.recipientName,
+                    c.recipientEmail,
+                    certificateName(c),
+                    c.courseTitle,
+                    trainingTypeLabel(c.trainingType),
+                    certificateTypeMeta(c.certificateType).label,
+                    issueDay(c.issuedAt),
+                    STATUS_LABEL[c.status],
+                    c.issuedBy,
+                    c.replacedBy,
+                  ]),
+                ],
+                `certificates-${new Date().toISOString().slice(0, 10)}.csv`,
+              )
+            }
+          >
+            <Download aria-hidden className="h-4 w-4" /> CSV
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-4" aria-live="polite">
+        {msg && <Alert tone={msg.tone}>{msg.text}</Alert>}
+      </div>
+
+      {!data ? (
+        <PageLoading />
+      ) : all.length === 0 ? (
+        <div className="mt-6 rounded-2xl border border-dashed border-line-strong p-10 text-center">
+          <Award aria-hidden className="mx-auto h-9 w-9 text-brass-dark" />
+          <p className="mt-3 font-serif text-[1.4rem]">No certificates yet</p>
+          <p className="mx-auto mt-1 max-w-md text-muted">Issue one for anyone CloudTech has trained, with or without an Academy account. It takes under a minute.</p>
+          <ButtonLink to="/admin/certificates/new" className="mt-5">
+            <Plus aria-hidden className="h-4 w-4" /> Issue certificate
+          </ButtonLink>
+        </div>
+      ) : rows.length === 0 ? (
+        <p className="mt-6 text-muted">No certificates match these filters.</p>
+      ) : (
+        <div className="table-scroll mt-4 rounded-2xl border border-line bg-paper">
+          <table className="[&_td]:px-2.5 [&_th]:px-2.5">
+            <thead>
+              <tr>
+                <th>Recipient</th>
+                <th>Certificate</th>
+                <th>Certificate ID</th>
+                <th>Training type</th>
+                <th>Issued</th>
+                <th>Status</th>
+                <th>Issued by</th>
+                <th className="sticky right-0 bg-sand">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((c) => (
+                <tr key={c.id}>
+                  <td>
+                    <Link to={`/admin/certificates/${c.certificateId}`} className="font-semibold hover:text-brass-dark">
+                      {c.recipientName}
+                    </Link>
+                    {c.recipientEmail && <span className="block text-[0.75rem] text-muted">{c.recipientEmail}</span>}
+                  </td>
+                  <td className="min-w-[11rem]">
+                    {certificateName(c)}
+                    <span className="block text-[0.75rem] text-muted">{certificateTypeMeta(c.certificateType).label}</span>
+                  </td>
+                  <td className="whitespace-nowrap font-mono text-[0.8125rem]">{c.certificateId}</td>
+                  <td className="text-[0.875rem]">{trainingTypeLabel(c.trainingType).replace(" Training", "")}</td>
+                  <td className="whitespace-nowrap text-[0.875rem]">{formatDate(c.issuedAt).replace(/ (\w{3})\w* /, " $1 ")}</td>
+                  <td>
+                    <StatusChip status={c.status} />
+                  </td>
+                  <td className="text-[0.875rem]">{c.issuedBy ?? (c.source === "course" ? "Course purchase" : "")}</td>
+                  <td className="sticky right-0 bg-paper text-right shadow-[-12px_0_12px_-12px_rgba(23,23,23,0.18)]">
+                    <Actions
+                      c={c}
+                      onDownload={() => void download(c)}
+                      onCopy={() =>
+                        void copyText(certificateLink(c.certificateId)).then((ok) =>
+                          setMsg(ok ? { tone: "success", text: `Verification link for ${c.certificateId} copied.` } : { tone: "error", text: certificateLink(c.certificateId) }),
+                        )
+                      }
+                      onRevoke={() => setRevoking(c)}
+                      onDelete={() => setDeleting(c)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <RevokeDialog
+        cert={revoking}
+        onClose={() => setRevoking(null)}
+        onRevoked={() => {
+          setMsg({ tone: "success", text: `${revoking?.certificateId} revoked. Its verification page now shows it as revoked.` });
+          void reload();
+        }}
+      />
+      <DeleteCertificateDialog
+        cert={deleting}
+        onClose={() => setDeleting(null)}
+        onDeleted={(id) => {
+          setMsg({ tone: "success", text: `${id} deleted. Its verification page now says "Certificate Not Found".` });
+          void reload();
+        }}
+      />
+      {hidden}
     </>
   );
 }

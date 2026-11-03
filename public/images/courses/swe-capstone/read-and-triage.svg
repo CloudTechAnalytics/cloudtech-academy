@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Working on someone else's code: read before you change by finding the entry points, the rules and the data access, and running the tests, remembering passing tests only prove what they test. Triage bugs by harm: security first, then money, then customers wrongly refused, then harmless errors. Every bug gets a test that fails first, then a fix, and the test stays.">
+<title>Read first, triage by harm, and give every bug a test.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Read before you change (invented example: a hostel booking service)</text>
+<rect x="16.0" y="40.0" width="170.0" height="80.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Entry points</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">The API: where requests</text>
+<text xml:space="preserve" x="28.0" y="98.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">arrive</text>
+<rect x="202.0" y="40.0" width="170.0" height="80.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="64.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">The rules</text>
+<text xml:space="preserve" x="214.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Where the business</text>
+<text xml:space="preserve" x="214.0" y="98.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">decisions live</text>
+<rect x="388.0" y="40.0" width="170.0" height="80.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Data access</text>
+<text xml:space="preserve" x="400.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Queries and the schema</text>
+<rect x="574.0" y="40.0" width="170.0" height="80.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="64.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">The tests</text>
+<text xml:space="preserve" x="586.0" y="84.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Run them. Passing only</text>
+<text xml:space="preserve" x="586.0" y="98.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">proves what they test.</text>
+<text xml:space="preserve" x="16.0" y="154.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Triage by harm</text>
+<rect x="16.0" y="168.0" width="700.0" height="40.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<circle cx="38.0" cy="188.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="38.0" y="192.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="185.0" font-size="13" fill="#9B2C1F" font-weight="700" text-anchor="start">Security</text>
+<text xml:space="preserve" x="60.0" y="201.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Data exposed or changed by the wrong person. Can't be undone.</text>
+<rect x="16.0" y="214.0" width="620.0" height="40.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<circle cx="38.0" cy="234.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="38.0" y="238.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="60.0" y="231.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Money</text>
+<text xml:space="preserve" x="60.0" y="247.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Paying out too much or too little.</text>
+<rect x="16.0" y="260.0" width="540.0" height="40.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="38.0" cy="280.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="284.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="60.0" y="277.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Customers wrongly refused</text>
+<text xml:space="preserve" x="60.0" y="293.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Unfair, and generates complaints.</text>
+<rect x="16.0" y="306.0" width="460.0" height="40.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<circle cx="38.0" cy="326.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="38.0" y="330.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="60.0" y="323.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Errors with no lasting harm</text>
+<text xml:space="preserve" x="60.0" y="339.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Fix, but after the above.</text>
+<rect x="16.0" y="360.0" width="728.0" height="54.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="384.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Every bug gets a test</text>
+<text xml:space="preserve" x="30.0" y="404.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Reproduce it with a failing test → fix it → keep the test so it can't come back.</text>
+</g></svg>

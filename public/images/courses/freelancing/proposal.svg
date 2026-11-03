@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="The four parts of a short proposal: show you read the brief in the first line, give one or two relevant samples as proof, state your plan with deliverables and timing, and end with the price and next step. The example is for a bakery owner who needs a stock sheet cleaned.">
+<title>A proposal is short and about the client.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="14.0" width="448.0" height="372.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.6"/>
+<rect x="17.0" y="15.0" width="446.0" height="26.0" rx="0" fill="#EFE4CC"/>
+<text xml:space="preserve" x="30.0" y="33.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start">Proposal</text>
+<text xml:space="preserve" x="30.0" y="70.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Hi Mrs Yusuf,</text>
+<text xml:space="preserve" x="30.0" y="100.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">You need your bakery's stock sheet cleaned so</text>
+<text xml:space="preserve" x="30.0" y="118.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">you can see what's running low.</text>
+<text xml:space="preserve" x="30.0" y="156.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">I clean spreadsheets for small food shops.</text>
+<text xml:space="preserve" x="30.0" y="174.0" font-size="12.5" fill="#2F5D8A" font-weight="400" text-anchor="start">Samples: [link] [link]</text>
+<text xml:space="preserve" x="30.0" y="212.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">My plan: remove duplicates, fix dates and add a</text>
+<text xml:space="preserve" x="30.0" y="230.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">low-stock flag. Delivered by Friday, with one</text>
+<text xml:space="preserve" x="30.0" y="248.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">round of changes.</text>
+<text xml:space="preserve" x="30.0" y="286.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Price: ₦8,000. I can start today if the</text>
+<text xml:space="preserve" x="30.0" y="304.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">details suit you.</text>
+<text xml:space="preserve" x="30.0" y="342.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Tosin</text>
+<line x1="464.0" y1="109.0" x2="488.0" y2="109.0" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="502.0" cy="109.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="502.0" y="113.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="522.0" y="114.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Show you read the brief</text>
+<text xml:space="preserve" x="522.0" y="131.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">First line is about them.</text>
+<line x1="464.0" y1="165.0" x2="488.0" y2="165.0" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="502.0" cy="165.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="502.0" y="169.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="522.0" y="170.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Proof</text>
+<text xml:space="preserve" x="522.0" y="187.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">One or two relevant samples.</text>
+<line x1="464.0" y1="230.0" x2="488.0" y2="230.0" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="502.0" cy="230.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="502.0" y="234.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="522.0" y="235.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Plan</text>
+<text xml:space="preserve" x="522.0" y="252.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">What you'll deliver, and when.</text>
+<line x1="464.0" y1="295.0" x2="488.0" y2="295.0" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="502.0" cy="295.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="502.0" y="299.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="522.0" y="300.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Price and next step</text>
+<text xml:space="preserve" x="522.0" y="317.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Clear price; ready to start.</text>
+</g></svg>

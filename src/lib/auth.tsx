@@ -15,8 +15,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let alive = true;
     const apply = (user: User | null) => alive && setState(user ? { status: "signed-in", user } : { status: "signed-out", user: null });
     void getBackend().then(async (b) => {
-      apply(await b.getUser());
+      if (!alive) return;
+      // Subscribe before fetching the user, so a sign-in that happens in between isn't missed.
       unsubscribe = b.onAuthChange(apply);
+      apply(await b.getUser());
     });
     return () => {
       alive = false;

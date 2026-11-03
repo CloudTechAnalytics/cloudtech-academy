@@ -16,7 +16,7 @@ Both are **regression** questions: fit a line through past data and use it to es
 
 ## The concept
 
-**The line of best fit**
+### The line of best fit
 
 Simple linear regression finds the straight line **y = intercept + slope × x** that sits closest to the points on a scatter chart (it minimises the squared vertical distances, hence "least squares").
 
@@ -29,19 +29,21 @@ Simple linear regression finds the straight line **y = intercept + slope × x** 
 
 On a scatter chart, right-click the points → **Add Trendline**, and tick **Display equation** and **Display R-squared**. Google Sheets: **Customise → Series → Trendline**, with the label set to the equation.
 
-**Reading the slope**
+### Reading the slope
 
 The slope is in real units: "₦4.2 million per container", "₦730,000 more revenue each month". That's usually the most useful number regression gives you.
 
-**How good is the line? r²**
+### How good is the line? r²
 
 r² runs from 0 to 1. Near 1, the line captures almost everything and estimates from it are reliable. Near 0, the line explains little: the points scatter widely around it and any single estimate could be far off. There's no universal "good" value. For pricing, you'd want 0.9 or more; for messy business trends, 0.3 can still show a real direction while warning you not to trust individual months.
 
-**Residuals: what the line misses**
+### Residuals: what the line misses
 
 A **residual** is actual minus predicted. Plot or list them. A big residual is a point the line doesn't explain: an outlier worth investigating (December's festive spike). A pattern in the residuals (all positive in the middle, negative at the ends) means a straight line is the wrong shape.
 
-**When regression misleads**
+![Kolanut's 18 months of revenue as dots with a rising trend line. Thin red lines join each dot to the line: these are the residuals. December 2025, at ₦66.3m, sits far above the line.](/images/courses/statistics/trend-residuals.svg "Residuals are the gaps between the data and the line. December 2025's is by far the largest.")
+
+### When regression misleads
 
 - **Extrapolation:** a line fitted to 1–8 containers says nothing reliable about 40 containers. A trend fitted to 18 months says little about 3 years from now.
 - **Seasonality:** a straight line through monthly sales ignores December. Compare the same months year on year (lesson 9) or model seasons separately.

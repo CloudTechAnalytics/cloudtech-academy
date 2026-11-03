@@ -12,7 +12,7 @@ In this course you investigate what happened on Tallybook's web server, prod-web
 
 ## The concept
 
-**The shell**
+### The shell
 
 A program that reads commands you type and runs them. On most Linux servers it's **bash**. A command is a program name followed by **arguments**:
 
@@ -22,11 +22,11 @@ wc -l access.log
 
 `wc` is the program (word count), `-l` is an **option** (count lines), and `access.log` is the file.
 
-**Running commands in Google Colab**
+### Running commands in Google Colab
 
 Colab notebooks run on a Linux machine. Start a cell with `%%bash` and the whole cell runs as shell commands. Files you download stay in the notebook's folder (`/content`) until the session ends. Every shell example in this course is written as a Colab cell, ready to paste.
 
-**First commands**
+### First commands
 
 | Command | What it does |
 | :-- | :-- |

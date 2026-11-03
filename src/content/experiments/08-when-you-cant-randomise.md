@@ -12,7 +12,7 @@ Weekly active users in the three agent states rose by about 6%. But a before-and
 
 ## The concept
 
-**Difference-in-differences (DiD)**
+### Difference-in-differences (DiD)
 
 Compare the **change** in the treated group with the **change** in a comparison group over the same period:
 
@@ -20,11 +20,13 @@ Compare the **change** in the treated group with the **change** in a comparison 
 
 or, in percentages, the treated group's growth minus the comparison group's growth. The comparison group's change stands in for what would have happened to the treated states without the agents.
 
-**The parallel-trends assumption**
+![Lines for a comparison group and a treated group before and after a change. A dashed line shows the treated group's path without the change, parallel to the comparison group; the effect is the gap between the treated group's actual value and that line.](/images/courses/experiments/did.svg "Difference-in-differences, illustrated.")
+
+### The parallel-trends assumption
 
 DiD only works if, without the treatment, both groups would have moved in parallel. You can't check that directly, but you can check that they **did** move in parallel **before** the change. If their pre-period trends differ, the estimate is suspect.
 
-**Other options when you can't randomise**
+### Other options when you can't randomise
 
 - A **staggered rollout**: launch in different places at different times, which gives several before-and-after comparisons.
 - **Holdouts**: keep a random set of places or users without the change for a while.

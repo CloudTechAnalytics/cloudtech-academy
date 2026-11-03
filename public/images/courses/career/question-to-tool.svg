@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-label="Matching a business question to the Excel tool that answers it. How much in total: SUM. How much for one kind: SUMIF or COUNTIF. Which group earns most: a PivotTable. What is the biggest or smallest: sort or filter. How does it change over time: a line chart; comparing items: a bar chart.">
+<title>Pick the Excel tool by the kind of question.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="360" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What are you being asked?  →  Which tool?</text>
+<rect x="16.0" y="42.0" width="300.0" height="54.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="74.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">A single number for everything</text>
+<path d="M320.0,69.0 L346.0,69.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="42.0" width="394.0" height="54.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="66.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">SUM, AVERAGE, COUNT</text>
+<text xml:space="preserve" x="364.0" y="86.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=SUM(F2:F40)</text>
+<rect x="16.0" y="104.0" width="300.0" height="54.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="136.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">A number for one kind only</text>
+<path d="M320.0,131.0 L346.0,131.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="104.0" width="394.0" height="54.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="128.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">SUMIF, COUNTIF</text>
+<text xml:space="preserve" x="364.0" y="148.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">=SUMIF(C:C,"Hair",F:F)</text>
+<rect x="16.0" y="166.0" width="300.0" height="54.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="198.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">A total for every group at once</text>
+<path d="M320.0,193.0 L346.0,193.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="166.0" width="394.0" height="54.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="190.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">PivotTable</text>
+<text xml:space="preserve" x="364.0" y="210.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Rows: Service  Values: Sales</text>
+<rect x="16.0" y="228.0" width="300.0" height="54.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="260.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Biggest, smallest or just some rows</text>
+<path d="M320.0,255.0 L346.0,255.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="228.0" width="394.0" height="54.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="252.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Sort and filter</text>
+<text xml:space="preserve" x="364.0" y="272.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">▼ on a column heading</text>
+<rect x="16.0" y="290.0" width="300.0" height="54.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<text xml:space="preserve" x="28.0" y="322.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Show it to someone</text>
+<path d="M320.0,317.0 L346.0,317.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="350.0" y="290.0" width="394.0" height="54.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="364.0" y="314.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Bar chart, or line over time</text>
+<text xml:space="preserve" x="364.0" y="334.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Title says the point</text>
+</g></svg>

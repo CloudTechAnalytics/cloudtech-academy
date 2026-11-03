@@ -19,12 +19,14 @@ Rules that must **always** hold belong in the database itself, as **constraints*
 | `REFERENCES` (foreign key) | a link to a row that doesn't exist |
 | `CHECK (...)` | any row where the condition is false |
 
-**Two SQLite details**
+![Five example rows: a duplicate customer refused by PRIMARY KEY, a missing business name by NOT NULL, an invoice for a non-existent customer by REFERENCES, a 35% discount by CHECK, and a valid invoice inserted](/images/courses/dbapi/constraints.svg "Each constraint refuses a different kind of bad row.")
+
+### Two SQLite details
 
 - Foreign keys are only enforced after `PRAGMA foreign_keys = ON`, on every connection. (PostgreSQL always enforces them.)
 - An empty string `''` is **not** NULL. `NOT NULL` won't catch a blank customer ID; the foreign key will, because no customer has the ID `''`.
 
-**Database rules and code rules**
+### Database rules and code rules
 
 Keep both: validate in code to give users friendly messages, and constrain in the database so the rule holds everywhere. In code, catch `sqlite3.IntegrityError` and turn it into a clear response.
 

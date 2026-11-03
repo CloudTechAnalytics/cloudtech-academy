@@ -2,87 +2,212 @@ import type { AssessmentDef } from "../types";
 
 const C = "web-development-for-beginners";
 
+type Q = AssessmentDef["questions"][number];
+const q = (id: string, prompt: string, options: string[], answer: number, explanation: string): Q => ({ id, prompt, options, answer, explanation });
+const check = (n: string, title: string, questions: Q[]): AssessmentDef => ({
+  id: `web-${n}-check`,
+  courseId: C,
+  kind: "module",
+  moduleId: `web-${n}`,
+  title: `${title}: module check`,
+  passingScore: 60,
+  questions,
+});
+
 /**
- * Web Development for Beginners: a check for each module (it awards the module badge, and
- * unlocks only after the module's tasks are done) and a final assessment. Questions are
- * scenarios with plausible wrong answers.
+ * Web Development: a check for each module (it awards the module badge, and unlocks only after the
+ * module's tasks are done) and a final assessment. Questions are scenarios with plausible wrong answers.
  */
-export const WEB_ASSESSMENTS: AssessmentDef[] = [
-  {
-    id: "web-m01-check",
-    courseId: C,
-    kind: "module",
-    moduleId: "web-m01",
-    title: "HTML: The Structure: module check",
-    passingScore: 60,
-    questions: [
-      { id: "web-m01-q1", prompt: "Which part of a web page does HTML handle?", options: ["Colours and layout", "Structure and content", "Clicks and interaction", "Hosting"], answer: 1, explanation: "CSS styles it; JavaScript adds behaviour." },
-      { id: "web-m01-q2", prompt: "Where does visible content like headings and paragraphs go?", options: ["Inside <head>", "Inside <body>", "Before <!DOCTYPE html>", "In the <title>"], answer: 1, explanation: "<head> holds information about the page; <body> holds what people see." },
-      { id: "web-m01-q3", prompt: "Which line creates a working link to GitHub?", options: ["<link>https://github.com</link>", "<a href=\"https://github.com\">GitHub</a>", "<a>https://github.com</a>", "<href=\"https://github.com\">"], answer: 1, explanation: "The address goes in the href attribute of <a>." },
-      { id: "web-m01-q4", prompt: "Which image tag is best?", options: ["<img src=\"me.jpg\">", "<img src=\"me.jpg\" alt=\"image\">", "<img src=\"me.jpg\" alt=\"Chioma smiling in front of the library\">", "<image>me.jpg</image>"], answer: 2, explanation: "The alt text should describe the image usefully." },
-      { id: "web-m01-q5", prompt: "A page has five <h1> headings. What's the better structure?", options: ["Keep five", "One <h1> for the page title, <h2> for sections", "No headings", "Use <p> with bold text"], answer: 1, explanation: "One <h1> per page; sections below it." },
-    ],
-  },
-  {
-    id: "web-m02-check",
-    courseId: C,
-    kind: "module",
-    moduleId: "web-m02",
-    title: "CSS: The Style: module check",
-    passingScore: 60,
-    questions: [
-      { id: "web-m02-q1", prompt: "You wrote style.css but the page looks unstyled. What's the most likely cause?", options: ["CSS doesn't work offline", "The <link rel=\"stylesheet\" href=\"style.css\"> line is missing or the file name doesn't match", "The browser is too old", "You need JavaScript first"], answer: 1, explanation: "The HTML must link the stylesheet with the exact file name." },
-      { id: "web-m02-q2", prompt: "Which selector targets the one element with id=\"contact\"?", options: [".contact", "#contact", "contact", "*contact"], answer: 1, explanation: "# for ids, . for classes." },
-      { id: "web-m02-q3", prompt: "What does max-width: 720px; margin: 0 auto; do to the body?", options: ["Hides it", "Keeps the content a comfortable width and centres it", "Makes it 720px tall", "Adds a border"], answer: 1, explanation: "A readable line length, centred on wide screens." },
-      { id: "web-m02-q4", prompt: "Your cards squeeze into one tiny row on a phone. Which line helps?", options: ["flex-wrap: wrap;", "display: none;", "color: red;", "font-size: 2px;"], answer: 0, explanation: "Wrapping lets cards move onto new lines." },
-      { id: "web-m02-q5", prompt: "In the box model, what's between the content and the border?", options: ["Margin", "Padding", "Outline", "Shadow"], answer: 1, explanation: "Padding is inside the border; margin is outside." },
-    ],
-  },
-  {
-    id: "web-m03-check",
-    courseId: C,
-    kind: "module",
-    moduleId: "web-m03",
-    title: "JavaScript: The Behaviour: module check",
-    passingScore: 60,
-    questions: [
-      { id: "web-m03-q1", prompt: "Your button does nothing when clicked. Where should you look first?", options: ["The CSS file", "The browser Console for a red error", "Your router", "The page title"], answer: 1, explanation: "The Console names the file and line with the problem." },
-      { id: "web-m03-q2", prompt: "The Console says 'button is not defined' but your code says const buton = …. What's wrong?", options: ["JavaScript is broken", "The variable name is spelled differently where it's created and where it's used", "Buttons can't be variables", "You need let instead of const"], answer: 1, explanation: "Names must match exactly." },
-      { id: "web-m03-q3", prompt: "What are the three steps behind most interaction on a page?", options: ["Save, refresh, publish", "Find an element, listen for an event, change something", "Write HTML, write CSS, write HTML again", "Open, close, reload"], answer: 1, explanation: "querySelector, addEventListener, then change the page." },
-      { id: "web-m03-q4", prompt: "What does classList.toggle(\"dark\") do?", options: ["Always adds the class", "Adds the class if it's missing, removes it if it's there", "Deletes the element", "Changes the text"], answer: 1, explanation: "Perfect for on/off switches." },
-      { id: "web-m03-q5", prompt: "Where should <script src=\"script.js\"></script> usually go?", options: ["Before <!DOCTYPE html>", "Just before </body>", "Inside <title>", "In style.css"], answer: 1, explanation: "So the page's elements exist when the script runs." },
-    ],
-  },
-  {
-    id: "web-m04-check",
-    courseId: C,
-    kind: "module",
-    moduleId: "web-m04",
-    title: "Publish Your First Website: module check",
-    passingScore: 60,
-    questions: [
-      { id: "web-m04-q1", prompt: "Your GitHub username is tobi-dev. Which repository name publishes to https://tobi-dev.github.io?", options: ["website", "tobi-dev.github.io", "tobi-dev", "github.io"], answer: 1, explanation: "The repository must be named exactly username.github.io." },
-      { id: "web-m04-q2", prompt: "An image works on your laptop but is broken online. The HTML says me.jpg; the file is Me.JPG. Why?", options: ["GitHub doesn't host images", "Web servers treat capital letters as different, so the names don't match", "The image is too big", "It needs alt text"], answer: 1, explanation: "Keep file names lowercase with no spaces." },
-      { id: "web-m04-q3", prompt: "You share github.com/tobi-dev/tobi-dev.github.io as your website. What's the problem?", options: ["Nothing", "That's the code page, not the live site; share https://tobi-dev.github.io", "It's too long", "GitHub links can't be shared"], answer: 1, explanation: "Share the live address." },
-      { id: "web-m04-q4", prompt: "You commit a change to your site. What happens?", options: ["Nothing until you delete the repo", "The live site updates within a few minutes", "GitHub emails your visitors", "You must pay to update"], answer: 1, explanation: "GitHub Pages redeploys after each commit." },
-      { id: "web-m04-q5", prompt: "What should you do before sharing your site?", options: ["Nothing", "Open it on your phone, click every link and check the Console for errors", "Make it private", "Remove the projects"], answer: 1, explanation: "Recruiters often open links on their phones." },
-    ],
-  },
+const LESSON_CHECKS: AssessmentDef[] = [
+  check("m01", "How the Web Works and Your First Page", [
+    q("web-m01-q1", "You type a web address and press Enter. What does the server send back to your browser?", ["A finished picture of the page", "Files (HTML, CSS and JavaScript) that the browser turns into the page", "Only the page's text", "An email with a link"], 1, "The browser draws the page from the files the server sends."),
+    q("web-m01-q2", "A friend says: \"My page has the right words but looks plain, with no colours or layout.\" Which language is missing or not connected?", ["HTML", "CSS", "JavaScript", "SQL"], 1, "HTML gives structure and content; CSS controls colour, fonts and layout."),
+    q("web-m01-q3", "Where does the text people see on a page, like headings and paragraphs, belong?", ["Inside <head>", "Inside <body>", "Before <!DOCTYPE html>", "Inside <title>"], 1, "<head> holds information about the page; <body> holds what visitors see."),
+    q("web-m01-q4", "Which line is the correct way to write a link to Google?", ["<a>https://www.google.com</a>", "<link href=\"https://www.google.com\">Google</link>", "<a href=\"https://www.google.com\">Google</a>", "<href=\"https://www.google.com\">Google</href>"], 2, "A link is an <a> element, and its address goes in the href attribute."),
+    q("web-m01-q5", "A page has a heading, and the next paragraph is not closed with </p>. What is the best fix?", ["Ignore it, browsers always guess right", "Add the closing </p> tag", "Delete the heading", "Replace the paragraph with <br>"], 1, "Close every tag you open. Guessing browsers can render the rest of the page wrongly."),
+  ]),
+  check("m02", "Text, Lists, Links and Images", [
+    q("web-m02-q1", "Which element should you use for an ordered list of steps in a recipe?", ["<ul>", "<ol>", "<dl>", "<li> on its own"], 1, "<ol> numbers the items, which matters when order matters. <li> items go inside it."),
+    q("web-m02-q2", "You want a link that jumps to the section <h2 id=\"prices\"> on the same page. What is the href?", ["href=\"prices\"", "href=\"#prices\"", "href=\".prices\"", "href=\"/prices.html\""], 1, "A # followed by the id jumps to that element on the same page."),
+    q("web-m02-q3", "Which image tag follows good practice?", ["<img src=\"cake.jpg\">", "<img src=\"cake.jpg\" alt=\"image\">", "<img src=\"cake.jpg\" alt=\"A three-tier birthday cake with white icing\" width=\"600\" height=\"400\">", "<img alt=\"A cake\">"], 2, "Useful alt text, plus width and height so the page does not jump while the image loads. An image without src shows nothing."),
+    q("web-m02-q4", "A link opens a page on another website in a new tab. Which attribute should you add for safety?", ["rel=\"noopener noreferrer\"", "alt=\"external\"", "download", "id=\"external\""], 0, "target=\"_blank\" should be paired with rel=\"noopener noreferrer\"."),
+    q("web-m02-q5", "Which link text is best for someone using a screen reader to jump from link to link?", ["Click here", "Read more", "Download the 2026 price list (PDF)", "Link"], 2, "Link text should make sense on its own."),
+  ]),
+  check("m03", "Page Structure: Semantic HTML and Layout Elements", [
+    q("web-m03-q1", "Why use <nav> and <footer> instead of <div> for every part of a page?", ["Divs are not allowed any more", "They tell browsers, search engines and screen readers what each part is", "They load faster", "They add colour automatically"], 1, "Semantic elements carry meaning that helps accessibility and search."),
+    q("web-m03-q2", "A page has the site menu, a news story and a copyright line. Which elements fit best, in that order?", ["<div>, <div>, <div>", "<nav>, <article>, <footer>", "<header>, <aside>, <main>", "<section>, <nav>, <article>"], 1, "Navigation, a standalone story and the footer."),
+    q("web-m03-q3", "How many <main> elements should one page have?", ["One", "As many as there are sections", "Zero", "Two, one per column"], 0, "<main> marks the single main content of the page."),
+    q("web-m03-q4", "Which sentence about class and id is true?", ["Many elements can share an id, but a class must be unique", "Many elements can share a class, but an id must be unique on the page", "They are the same", "Only ids can be used in CSS"], 1, "Classes are for groups, ids for one-off elements."),
+    q("web-m03-q5", "You need a plain box just to group some elements so CSS can style them, and nothing else fits. What do you use?", ["<section>", "<article>", "<div>", "<aside>"], 2, "<div> is the generic block box with no meaning, for when no meaningful element fits."),
+  ]),
+  check("m04", "Forms and Tables", [
+    q("web-m04-q1", "Clicking the label \"Email\" should put the cursor in the email box. What makes that work?", ["Putting the label above the input", "A matching for on the <label> and id on the <input>", "Using placeholder text", "Giving the input a class"], 1, "<label for=\"email\"> goes with <input id=\"email\">."),
+    q("web-m04-q2", "Which input type gives you a calendar picker?", ["type=\"text\"", "type=\"date\"", "type=\"number\"", "type=\"calendar\""], 1, "type=\"date\" shows a date picker. There is no calendar type."),
+    q("web-m04-q3", "A form has three radio buttons for \"How will you attend?\" but the visitor can tick all three. What is wrong?", ["They need different ids", "They need the same name", "They need the required attribute", "Radios cannot be in a form"], 1, "Radio buttons with the same name form a group where only one can be chosen."),
+    q("web-m04-q4", "A signup form accepts \"ada\" in the email box. Which change gets the browser to check it for an @?", ["Use type=\"text\"", "Use type=\"email\"", "Use a longer placeholder", "Remove the label"], 1, "type=\"email\" checks the format before submission."),
+    q("web-m04-q5", "In a timetable table, which element is used for the header cell at the top of a column?", ["<td scope=\"col\">", "<th scope=\"col\">", "<tr scope=\"col\">", "<caption>"], 1, "<th> is a header cell, and scope says whether it heads a column or a row."),
+  ]),
+  check("m05", "Media, Page Information, Search and Accessibility", [
+    q("web-m05-q1", "When someone shares your link on WhatsApp, which tags control the title and picture shown in the preview?", ["<h1> and <img>", "Open Graph meta tags such as og:title and og:image", "The favicon", "The viewport tag"], 1, "Open Graph tags describe the page for sharing."),
+    q("web-m05-q2", "Which is the best meta description for a school's homepage?", ["School", "A small, friendly school in Ibadan for ages 6 to 17, with WAEC preparation and a coding club.", "Welcome to our website, which is the best website for the best school, best school, best school", "Click here"], 1, "A clear sentence of about 150 characters that makes people want to click."),
+    q("web-m05-q3", "A button shows only a magnifying-glass icon. What should you add so a screen reader user knows what it does?", ["A bigger icon", "aria-label=\"Search\"", "A red border", "alt=\"Search\" on the button"], 1, "aria-label gives an accessible name to an icon-only control."),
+    q("web-m05-q4", "Which step helps a keyboard-only visitor most?", ["Making every control reachable and usable with Tab and Enter", "Adding more images", "Using smaller text", "Hiding the focus outline"], 0, "Everything a mouse can do must also work with the keyboard."),
+    q("web-m05-q5", "Lighthouse in Chrome DevTools reports an accessibility score of 62. What is the best next step?", ["Ignore it, scores do not matter", "Read the list of issues it gives and fix them, like missing alt text and labels", "Delete the page", "Add more colour"], 1, "Lighthouse lists concrete fixes."),
+  ]),
+  check("m06", "CSS Fundamentals: Selectors and the Cascade", [
+    q("web-m06-q1", "You wrote style.css, but the page looks unstyled. What is the most likely cause?", ["CSS does not work offline", "The <link rel=\"stylesheet\" href=\"style.css\"> line is missing or the file name does not match", "The browser is too old", "JavaScript is needed first"], 1, "The HTML must link the stylesheet with the exact file name."),
+    q("web-m06-q2", "Which selector targets the one element with id=\"contact\"?", [".contact", "#contact", "contact", "*contact"], 1, "# is for ids and . is for classes."),
+    q("web-m06-q3", "A paragraph has class=\"note\". Your CSS has p { color: black; } above .note { color: crimson; }. What colour is it?", ["Black, because it was written first", "Crimson, because a class is more specific than an element", "Crimson only if you add !important", "Neither, they cancel out"], 1, "Specificity: a class beats an element selector."),
+    q("web-m06-q4", "Which rule styles every link inside the <nav> and nothing else?", ["nav, a { }", "nav a { }", "nav > p { }", "a.nav { }"], 1, "A descendant selector: an <a> anywhere inside <nav>."),
+    q("web-m06-q5", "Why is body { font-family: system-ui, sans-serif; } enough to set the font for the whole page?", ["Because body is the biggest element", "Because font-family is inherited by child elements", "Because CSS always applies to everything", "It is not enough"], 1, "Some properties, like font-family and color, are inherited."),
+  ]),
+  check("m07", "The Box Model, Units, Display and Position", [
+    q("web-m07-q1", "A box has width: 300px, padding: 20px and a 5px border with the default box-sizing. How wide is it on the page?", ["300px", "340px", "350px", "320px"], 2, "300 + 20 + 20 + 5 + 5 = 350px. With box-sizing: border-box it would be 300px."),
+    q("web-m07-q2", "Which two lines centre a box with a set width in its parent?", ["text-align: center;", "margin: 0 auto;", "padding: auto;", "display: center;"], 1, "Left and right margins of auto split the free space equally."),
+    q("web-m07-q3", "Your link has padding: 12px 24px but the vertical padding does not push other lines away. What fixes it?", ["display: inline-block;", "position: static;", "float: none;", "display: inline;"], 0, "Inline elements ignore vertical sizing. inline-block respects it."),
+    q("web-m07-q4", "You want a menu bar that stays at the top of the screen while the page scrolls. Which is the best choice?", ["position: sticky; top: 0;", "position: static;", "display: none;", "overflow: hidden;"], 0, "sticky flows normally, then sticks to the top when you scroll past it."),
+    q("web-m07-q5", "Which unit is best for text size, so it respects the user's own text-size settings?", ["px", "rem", "vh", "cm"], 1, "rem scales with the base font size the user has chosen."),
+  ]),
+  check("m08", "Colour, Fonts, Backgrounds and Visual Effects", [
+    q("web-m08-q1", "Your light grey text on white is stylish but hard to read. What should you check?", ["The colour contrast ratio, aiming for at least 4.5 to 1", "The font file size", "The image sizes", "The page title"], 0, "WCAG asks for at least 4.5 to 1 for normal text."),
+    q("web-m08-q2", "Which gives comfortable, readable body text?", ["font-size: 12px; line-height: 1;", "font-size: 1rem; line-height: 1.6;", "font-size: 10px; line-height: 3;", "font-size: 2rem; line-height: 0.8;"], 1, "About 16px with a line height of 1.5 to 1.7."),
+    q("web-m08-q3", "Your brand colour is used in forty rules and the client wants a new colour. What would have made this a one-line change?", ["Using color names", "CSS custom properties, like --brand set on :root and used with var(--brand)", "Using inline styles", "Using !important"], 1, "Variables let you change a value in one place."),
+    q("web-m08-q4", "How do you draw a diagonal two-colour background with no image file?", ["background: url(gradient)", "background: linear-gradient(135deg, #0f766e, #134e4a);", "background: two-colours;", "background-image: diagonal;"], 1, "CSS gradients are drawn by the browser, so they load instantly."),
+    q("web-m08-q5", "Why should a page use at most two fonts?", ["Browsers only allow two", "Every font file makes the page slower, and too many fonts look messy", "Fonts cost money", "More than two cannot be centred"], 1, "Speed and visual consistency."),
+  ]),
+  check("m09", "Flexbox: Layout in One Direction", [
+    q("web-m09-q1", "Which property, set on the flex container, spreads items along the main axis with the first at one end and the last at the other?", ["align-items: center", "justify-content: space-between", "flex-wrap: wrap", "gap: 1rem"], 1, "space-between puts the free space between items."),
+    q("web-m09-q2", "You want to centre one item both horizontally and vertically inside a tall box. Which works?", ["display: flex; justify-content: center; align-items: center;", "text-align: center;", "margin: auto;", "position: center;"], 0, "Flexbox centres on both axes with those two properties."),
+    q("web-m09-q3", "Cards in a flex row shrink to tiny widths on a phone. Which change lets them drop onto new lines?", ["flex-wrap: wrap;", "display: block;", "overflow: hidden;", "flex-direction: row;"], 0, "flex-wrap: wrap allows items to move to a new line."),
+    q("web-m09-q4", "What does flex: 1 1 200px mean for an item?", ["Always exactly 200px", "It can grow, can shrink, and starts at 200px", "It is hidden below 200px", "It must have 200 items"], 1, "grow 1, shrink 1, basis 200px."),
+    q("web-m09-q5", "A navbar has a logo and links, and you want the logo on the left and links on the right. Which is the best approach?", ["Make the header display: flex; justify-content: space-between;", "Float the logo", "Use a table", "Use text-align: justify"], 0, "A classic flexbox pattern."),
+  ]),
+  check("m10", "CSS Grid: Layout in Rows and Columns", [
+    q("web-m10-q1", "What does grid-template-columns: 1fr 2fr create?", ["Two equal columns", "Two columns where the second is twice as wide as the first", "One column of 3px", "Two rows"], 1, "fr divides the free space in proportion."),
+    q("web-m10-q2", "Which line makes as many columns of at least 220px as will fit, sharing the leftover space?", ["grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));", "grid-template-columns: 220px;", "display: columns;", "grid-columns: auto;"], 0, "A responsive gallery with no media queries."),
+    q("web-m10-q3", "You want one featured card to be twice as wide as the others in a grid. What do you give it?", ["grid-column: span 2;", "width: 200%;", "flex: 2;", "display: wide;"], 0, "Items can span multiple tracks."),
+    q("web-m10-q4", "When is grid a better choice than flexbox?", ["When laying out items in a single row", "When you need rows and columns together, such as a gallery or a whole page layout", "Never, flexbox does everything", "Only for text"], 1, "Flexbox is one-dimensional, grid is two-dimensional."),
+    q("web-m10-q5", "In grid-template-areas, what is the picture of strings used for?", ["Setting font sizes", "Drawing the page layout, then giving each element a name with grid-area", "Adding images", "Choosing colours"], 1, "The drawing is the layout."),
+  ]),
+  check("m11", "Responsive Design: One Site for Every Screen", [
+    q("web-m11-q1", "Which is the mobile-first way to write a three-column layout?", ["Write three columns first, then remove them with max-width queries", "Write one column first, then add columns with @media (min-width: ...)", "Make two separate websites", "Use fixed pixel widths"], 1, "Start small and add layout as the screen grows."),
+    q("web-m11-q2", "A wide photo overflows a narrow phone screen. Which rule is the standard fix?", ["img { width: 2000px; }", "img { max-width: 100%; height: auto; }", "img { display: none; }", "img { position: fixed; }"], 1, "The image shrinks to fit its container and keeps its proportions."),
+    q("web-m11-q3", "What does font-size: clamp(1.8rem, 4vw + 1rem, 3rem) do?", ["Fixes the size at 3rem", "Scales with the screen but never below 1.8rem or above 3rem", "Makes text blink", "Applies only on phones"], 1, "clamp(min, ideal, max)."),
+    q("web-m11-q4", "Where do you decide your breakpoints?", ["At the sizes of the latest iPhone", "Where your own layout starts to look stretched or crowded", "At 1000px always", "You cannot choose them"], 1, "Let the content decide."),
+    q("web-m11-q5", "What does @media (prefers-reduced-motion: reduce) let you do?", ["Make the page smaller", "Switch off animations for people who asked their device for less motion", "Reduce the image sizes", "Hide the menu"], 1, "It respects an accessibility setting on the user's device."),
+  ]),
+  check("m12", "Transitions, Transforms, Animation and Pseudo-elements", [
+    q("web-m12-q1", "You want a button to change colour smoothly over a third of a second on hover. What do you add?", ["transition: background 0.3s ease; on the button", "animation: hover;", "display: smooth;", "delay: 0.3s"], 0, "A transition makes a change gradual."),
+    q("web-m12-q2", "Which two properties are the best to animate for smooth, fast motion?", ["width and height", "transform and opacity", "margin and top", "padding and border"], 1, "They do not force the browser to recalculate the page layout."),
+    q("web-m12-q3", "What must you write inside ::before or ::after for the pseudo-element to appear?", ["content: \"\";", "display: pseudo;", "visible: true;", "text: before;"], 0, "Without a content property, the pseudo-element is not generated."),
+    q("web-m12-q4", "A spinner should turn forever. Which animation shorthand does this?", ["animation: spin 0.9s linear infinite;", "animation: spin once;", "transition: spin 0.9s;", "transform: spin;"], 0, "infinite repeats the keyframes forever."),
+    q("web-m12-q5", "Why add @media (prefers-reduced-motion: reduce) to your CSS?", ["To make animations faster", "Some people feel unwell with lots of motion, and it lets them turn it off", "It is required by browsers", "It improves SEO"], 1, "It is about accessibility and kindness."),
+  ]),
+  check("m13", "JavaScript Basics: Variables, Types and the Console", [
+    q("web-m13-q1", "Your code says const price = 1200; and later price = 1500;. What happens?", ["The price becomes 1500", "A TypeError: you cannot reassign a const", "Nothing, JavaScript ignores it", "The page reloads"], 1, "const values cannot be reassigned. Use let for values that change."),
+    q("web-m13-q2", "What does console.log(\"5\" + 3) print?", ["8", "53", "NaN", "An error"], 1, "With a string on one side, + joins text, so the result is \"53\"."),
+    q("web-m13-q3", "Which is the safest way to compare two values in JavaScript?", ["a = b", "a == b", "a === b", "a equals b"], 2, "=== compares value and type, avoiding surprises from type conversion."),
+    q("web-m13-q4", "Which line builds the text Hello Ada using a template literal and a variable called name?", ["\"Hello ${name}\"", "`Hello ${name}`", "'Hello' + name + ''", "Hello {name}"], 1, "Template literals use backticks and ${...} for values."),
+    q("web-m13-q5", "The Console says: ReferenceError: totl is not defined. The variable is called total. What is the most likely cause?", ["A typo in the name", "JavaScript is broken", "The page has no CSS", "You need var"], 0, "A ReferenceError means a name that does not exist, often a spelling mistake."),
+  ]),
+  check("m14", "Decisions, Loops and Functions", [
+    q("web-m14-q1", "score is 65. The code is: if (score >= 70) A; else if (score >= 60) B; else C. What is the result?", ["A", "B", "C", "Nothing"], 1, "JavaScript runs the first condition that is true, which is score >= 60."),
+    q("web-m14-q2", "How many times does for (let i = 1; i <= 5; i++) { ... } run its body?", ["4", "5", "6", "It never stops"], 1, "i takes the values 1, 2, 3, 4 and 5."),
+    q("web-m14-q3", "What does a function return if it has no return statement?", ["0", "An empty string", "undefined", "null"], 2, "Without return, the call gives undefined."),
+    q("web-m14-q4", "Why is it better to write a function once than to copy the same code in five places?", ["Functions run faster", "You fix and change it in one place, and the code is shorter and clearer", "Copying is not allowed", "Functions use less memory always"], 1, "Reuse means fewer bugs and easier changes."),
+    q("web-m14-q5", "A while loop never ends and freezes the page. What is the likely mistake?", ["The condition never becomes false", "The loop has too few lines", "You used let", "The function is async"], 0, "Something inside the loop must move it towards finishing."),
+  ]),
+  check("m15", "Arrays, Objects and JSON", [
+    q("web-m15-q1", "What is the index of \"Yam\" in [\"Rice\", \"Beans\", \"Yam\"]?", ["1", "2", "3", "0"], 1, "Indexes start at 0, so Yam is at 2."),
+    q("web-m15-q2", "You have an array of products with prices and want only those under ₦5,000. Which method do you use?", ["map", "filter", "reduce", "push"], 1, "filter keeps the items for which the function returns true."),
+    q("web-m15-q3", "Which gives the total of all numbers in the prices array?", ["prices.reduce((sum, p) => sum + p, 0)", "prices.filter((p) => p)", "prices.map((p) => p + 1)", "prices.length"], 0, "reduce carries a running value through the list."),
+    q("web-m15-q4", "How do you turn the object task into JSON text to save it?", ["JSON.parse(task)", "JSON.stringify(task)", "task.toJSON", "String.task(task)"], 1, "stringify converts a value to text. parse converts text back to a value."),
+    q("web-m15-q5", "[10, 9, 1].sort() gives [1, 10, 9]. Why, and what is the fix?", ["A bug in JavaScript, use sortNumbers", "It sorts as text by default. Pass (a, b) => a - b", "Arrays cannot be sorted", "Use reverse()"], 1, "Without a comparison function, sort compares items as strings."),
+  ]),
+  check("m16", "The DOM: Changing a Page with JavaScript", [
+    q("web-m16-q1", "Which line finds the first element with class \"card\"?", ["document.getElement(\".card\")", "document.querySelector(\".card\")", "document.card", "find(\".card\")"], 1, "querySelector takes a CSS selector."),
+    q("web-m16-q2", "A form field's text comes from a visitor. How should you put it into the page safely?", ["element.innerHTML = text", "element.textContent = text", "document.write(text)", "eval(text)"], 1, "textContent treats it as plain text, avoiding injected HTML or scripts."),
+    q("web-m16-q3", "The Console says: Cannot read properties of null. Which is the most likely cause?", ["querySelector found nothing, perhaps a wrong selector or the script ran before the element existed", "The CSS is broken", "A loop is too long", "You used const"], 0, "querySelector returns null when nothing matches."),
+    q("web-m16-q4", "What are the three steps to add a new list item to the page?", ["Find, read, delete", "Create the element, fill it, append it", "Save, reload, check", "Copy, paste, refresh"], 1, "createElement, set its text, then append it to a parent."),
+    q("web-m16-q5", "Why is toggling a CSS class often better than setting many styles in JavaScript?", ["Classes are faster to type only", "The look stays in CSS, and JavaScript only decides when it applies", "Styles cannot be set in JavaScript", "Classes work without HTML"], 1, "Keeping design in CSS makes code easier to maintain."),
+  ]),
+  check("m17", "Events and Forms: Making Pages Interactive", [
+    q("web-m17-q1", "Which call runs a function every time a button is clicked?", ["button.onclick()", "button.addEventListener(\"click\", handler)", "button.click = handler()", "button.run(handler)"], 1, "addEventListener registers a callback for an event."),
+    q("web-m17-q2", "A form reloads the page when submitted, and your JavaScript never shows its message. What do you add to the submit handler?", ["event.preventDefault()", "event.stop()", "form.reload()", "return true"], 0, "preventDefault stops the browser's default reload so your code decides what happens."),
+    q("web-m17-q3", "A list gets new items added later by JavaScript. How do you handle clicks on all items, old and new, with one listener?", ["Add a listener to every item when you create it and hope", "Listen on the parent list and use event.target (event delegation)", "Use setInterval", "It is impossible"], 1, "Clicks bubble up to the parent, so one listener handles any number of children."),
+    q("web-m17-q4", "Why must a real server validate a form again, even if your JavaScript already did?", ["JavaScript is slow", "Visitors can bypass browser code, so the server cannot trust it", "Servers cannot read forms", "Validation only works on servers"], 1, "Client-side validation is for convenience, not security."),
+    q("web-m17-q5", "Where should the validation message appear so a screen reader announces it?", ["In the console", "In an element with role=\"alert\" or aria-live", "In the title", "In a comment"], 1, "role=\"alert\" announces the text when it changes."),
+  ]),
+  check("m18", "Fetch, Async Code and Local Storage", [
+    q("web-m18-q1", "fetch(url) gets a 404 Not Found response. What happens?", ["fetch throws an error", "fetch gives a response whose ok is false, so you must check it", "The page reloads", "Nothing"], 1, "fetch only throws on network failure. HTTP errors are normal responses."),
+    q("web-m18-q2", "What does await do inside an async function?", ["Stops the whole page", "Pauses that function until the promise has a result, while the page stays responsive", "Repeats the code", "Deletes the promise"], 1, "await waits for a promise without freezing the browser."),
+    q("web-m18-q3", "A data screen should have three states. Which is the right set?", ["Loading, error, and success or empty", "Red, green, blue", "Header, body, footer", "Start, middle, end"], 0, "Always plan for waiting, failure and results."),
+    q("web-m18-q4", "You want to save the array cart in localStorage. What do you write?", ["localStorage.setItem(\"cart\", cart)", "localStorage.setItem(\"cart\", JSON.stringify(cart))", "localStorage.cart = cart", "localStorage.save(cart)"], 1, "localStorage stores strings only, so convert with JSON.stringify."),
+    q("web-m18-q5", "Which is not a good thing to store in localStorage?", ["A theme preference", "A draft message", "A user's password", "A cart"], 2, "Any script on the page can read localStorage, so never store secrets."),
+  ]),
+  check("m19", "Bootstrap 5: Setup, the Grid and Utilities", [
+    q("web-m19-q1", "A page has Bootstrap's grid but looks wrong on phones. Which tag is probably missing?", ["The viewport meta tag", "A <footer>", "A second stylesheet", "A favicon"], 0, "Without the viewport meta tag, phones show a zoomed-out desktop page."),
+    q("web-m19-q2", "What does class=\"col-12 col-md-4\" do?", ["Full width on phones, one third of the row from the md breakpoint up", "One third on phones and full width on tablets", "Hides the column on phones", "Gives the column 12 pixels"], 0, "Columns apply from their breakpoint upwards, and below it they stack."),
+    q("web-m19-q3", "Which classes give an element 1.5rem of margin at the top and 1rem of padding on every side?", ["mt-4 p-3", "m-4 pt-3", "margin-top p-all", "mt-1 p-1"], 0, "mt-4 is 1.5rem top margin, p-3 is 1rem padding all round."),
+    q("web-m19-q4", "In which order should the stylesheets be linked so your own CSS can override Bootstrap?", ["Your CSS first, then Bootstrap", "Bootstrap first, then your CSS", "Order never matters", "Only one stylesheet is allowed"], 1, "The later rule wins when specificity is equal."),
+    q("web-m19-q5", "Which classes centre a block horizontally and make its text centred?", ["mx-auto text-center", "center-all", "d-center", "align-self-center only"], 0, "mx-auto sets auto side margins and text-center centres the text."),
+  ]),
+  check("m20", "Bootstrap Components: Navbar, Cards, Forms, Modals and More", [
+    q("web-m20-q1", "The hamburger button of your navbar does nothing. What is the most common cause?", ["The data-bs-target does not match the id of the collapsing part, or Bootstrap's JavaScript is missing", "The brand is too long", "The cards are wrong", "You used a footer"], 0, "The toggler finds its target by id, and the JS bundle makes it work."),
+    q("web-m20-q2", "What does navbar-expand-lg mean?", ["The menu is always collapsed", "The full menu shows from the lg breakpoint up, and collapses below it", "The navbar is large only", "The menu has a gradient"], 1, "Below lg the links collapse behind the toggler."),
+    q("web-m20-q3", "You want cards in one row to be equal height. Which class do you add to each card?", ["h-100", "w-100", "d-flex", "p-5"], 0, "h-100 makes each card fill its column's full height."),
+    q("web-m20-q4", "A button should open a modal with id=\"orderModal\". Which attributes does the button need?", ["data-bs-toggle=\"modal\" data-bs-target=\"#orderModal\"", "href=\"orderModal\"", "onclick=\"modal\"", "class=\"modal\""], 0, "The trigger names the target with a # selector."),
+    q("web-m20-q5", "When is writing your own CSS better than using Bootstrap?", ["Never", "When you need a unique brand look, or must avoid loading unused CSS", "When you have a navbar", "When using a grid"], 1, "Bootstrap is fast and consistent, but custom CSS gives uniqueness and can be lighter."),
+  ]),
+  check("m21", "Build a Complete Website with Bootstrap", [
+    q("web-m21-q1", "Why do professionals plan the sections of a landing page before coding?", ["It is a rule of HTML", "Each section should help one clear goal for a specific visitor", "Plans make pages load faster", "Bootstrap requires it"], 1, "A page works when every part supports the visitor and the main action."),
+    q("web-m21-q2", "A hero heading uses class=\"display-4\" on an <h1>. What is the benefit of keeping it an <h1>?", ["It is bigger", "The heading level gives the page its outline for screen readers and search, and the class only controls size", "h1 loads faster", "There is no benefit"], 1, "Meaning (h1) and looks (display-4) are separate concerns."),
+    q("web-m21-q3", "A 5 MB hero photo makes your page slow on mobile data. What is the best fix?", ["Resize and compress it, and use img-fluid", "Make it larger", "Remove the alt text", "Use position: fixed"], 0, "Smaller images load faster, and images should scale to fit the screen."),
+    q("web-m21-q4", "A form on your landing page has inputs with no labels. What is the problem?", ["None, placeholders are enough", "Screen readers cannot tell what each field is for, and tapping the label does not help", "It will not submit", "Bootstrap hides it"], 1, "Every input needs a connected label."),
+    q("web-m21-q5", "Which testing step is the most important before sharing your site?", ["Opening it on a real phone and clicking everything", "Changing the colours", "Adding more sections", "Checking it only on your laptop"], 0, "Real devices reveal problems that desktop previews can hide."),
+  ]),
+  check("m22", "Publish, Test and Polish Your Website", [
+    q("web-m22-q1", "Your GitHub username is tobi-dev. Which repository name publishes to https://tobi-dev.github.io?", ["website", "tobi-dev.github.io", "tobi-dev", "github.io"], 1, "The repository must be named exactly username.github.io."),
+    q("web-m22-q2", "An image works on your laptop but is broken online. The HTML says me.jpg and the file is Me.JPG. Why?", ["GitHub does not host images", "Web servers treat capital letters as different, so the names do not match", "The image is too large", "HTML is case sensitive for tags only"], 1, "Names must match exactly. Use lowercase with no spaces."),
+    q("web-m22-q3", "You share github.com/tobi-dev/tobi-dev.github.io as your website. What is the problem?", ["Nothing", "That is the code page, not the live site; share https://tobi-dev.github.io", "It is too long", "GitHub links cannot be shared"], 1, "The live site has its own address."),
+    q("web-m22-q4", "A link in your page points to a file on the author's own computer, like C:\\Users\\Ada\\Desktop\\cv.pdf. What happens online?", ["It works for everyone", "It only exists on Ada's computer, so it is broken for visitors", "It opens a PDF viewer", "GitHub fixes it"], 1, "Use a relative path to a file inside the site, like cv.pdf."),
+    q("web-m22-q5", "What does Lighthouse give you?", ["A score for performance, accessibility, best practices and SEO, with a list of fixes", "A free domain", "A new design", "Hosting"], 0, "It audits the page and tells you what to improve."),
+  ]),
   {
     id: "web-development-for-beginners-final",
     courseId: C,
     kind: "final",
-    title: "Web Development for Beginners: final assessment",
+    title: "Web Development: final assessment",
     passingScore: 60,
     questions: [
-      { id: "web-f01", prompt: "Which language controls colours, fonts and layout?", options: ["HTML", "CSS", "JavaScript", "Markdown"], answer: 1, explanation: "CSS is the style layer." },
-      { id: "web-f02", prompt: "Which tag makes a bulleted list item?", options: ["<ul>", "<li>", "<ol>", "<p>"], answer: 1, explanation: "<li> items go inside <ul> (bullets) or <ol> (numbers)." },
-      { id: "web-f03", prompt: "Why give images alt text?", options: ["It makes them load faster", "It describes them for screen readers and if they fail to load", "It's required for colour", "It adds a caption"], answer: 1, explanation: "Accessibility and resilience." },
-      { id: "web-f04", prompt: "Which CSS makes cards sit side by side and wrap on phones?", options: ["display: flex; flex-wrap: wrap;", "display: none;", "position: fixed;", "float: center;"], answer: 0, explanation: "Flexbox with wrapping." },
-      { id: "web-f05", prompt: "What does document.querySelector(\"#theme-btn\") do?", options: ["Creates a button", "Finds the element with id theme-btn", "Deletes the button", "Changes the theme"], answer: 1, explanation: "It finds an element so you can work with it." },
-      { id: "web-f06", prompt: "Which keyword declares a value that won't change?", options: ["let", "const", "var only", "change"], answer: 1, explanation: "const for constants, let for values that change." },
-      { id: "web-f07", prompt: "What's the live address of a GitHub Pages user site for username ada-dev?", options: ["github.com/ada-dev", "https://ada-dev.github.io", "ada-dev.com", "pages.github.com/ada-dev"], answer: 1, explanation: "username.github.io." },
-      { id: "web-f08", prompt: "Your site works locally but a link is broken online. What's a likely cause?", options: ["The internet is down", "A file name or path mismatch, often capital letters or spaces", "HTML doesn't work online", "Too many links"], answer: 1, explanation: "Servers are strict about file names." },
+      q("web-f01", "Which language controls colours, fonts and layout?", ["HTML", "CSS", "JavaScript", "Markdown"], 1, "CSS is the style layer."),
+      q("web-f02", "Which tag makes a bulleted list item?", ["<ul>", "<li>", "<ol>", "<p>"], 1, "<li> items go inside <ul> (bullets) or <ol> (numbers)."),
+      q("web-f03", "Why give images alt text?", ["It makes them load faster", "It describes them for screen readers and if they fail to load", "It is required for colour", "It adds a caption"], 1, "Accessibility and resilience."),
+      q("web-f04", "Which CSS makes cards sit side by side and wrap on phones?", ["display: flex; flex-wrap: wrap;", "display: none;", "position: fixed;", "float: center;"], 0, "Flexbox with wrapping."),
+      q("web-f05", "A shared link on WhatsApp shows no title or picture. What is missing?", ["Open Graph meta tags in the head", "More paragraphs", "A bigger font", "A favicon only"], 0, "og:title, og:description and og:image."),
+      q("web-f06", "Which selector is the most specific?", ["p", ".note", "#special", "p.note"], 2, "An id beats a class, which beats an element."),
+      q("web-f07", "Which is the best way to build a page's overall header, sidebar, main content and footer?", ["A CSS grid with named areas", "Nested tables", "Absolute positioning for everything", "Images"], 0, "Grid is made for two-dimensional page layouts."),
+      q("web-f08", "Your site works on your laptop, but on a phone the text is tiny and the page is zoomed out. What is missing?", ["The viewport meta tag", "A bigger heading", "More padding", "JavaScript"], 0, "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">."),
+      q("web-f09", "Which JavaScript line finds the element with id \"theme-btn\"?", ["document.querySelector(\"#theme-btn\")", "document.find(\"theme-btn\")", "document.theme-btn", "getId(\"theme-btn\")"], 0, "querySelector takes a CSS selector, and # selects an id."),
+      q("web-f10", "Which keyword declares a value that will not be reassigned?", ["let", "const", "var only", "change"], 1, "Use const by default and let when a value changes."),
+      q("web-f11", "A user types a comment that goes onto the page. Which is safe?", ["innerHTML = comment", "textContent = comment", "document.write(comment)", "eval(comment)"], 1, "textContent never interprets HTML."),
+      q("web-f12", "Which sentence about fetch is true?", ["It throws an error on a 404 response", "It only throws on network failure, so you check response.ok", "It always returns an array", "It needs jQuery"], 1, "HTTP errors are still responses."),
+      q("web-f13", "You want a hamburger menu to collapse on a phone with Bootstrap. Which pieces do you need?", ["A navbar-expand class, a toggler button, a collapse element with a matching id, and Bootstrap's JS", "Only CSS", "A table", "An iframe"], 0, "The toggler targets the collapse element by id and the JS bundle makes it work."),
+      q("web-f14", "What does mobile-first mean?", ["Write for phones first and add layout for larger screens with min-width queries", "Only build for phones", "Test only on phones", "Use only fixed pixel widths"], 0, "Start simple and enhance as screens grow."),
+      q("web-f15", "Your site is live but a link is broken. Which is a likely cause?", ["The internet is down", "A file name or path mismatch, often capital letters, spaces or a path on your own computer", "HTML does not work online", "Too many links"], 1, "Names and paths must match exactly on the server."),
+      q("web-f16", "Which is the best order to add resources to a page with Bootstrap and your own CSS?", ["Your CSS, then Bootstrap's CSS", "Bootstrap's CSS, then your CSS, with scripts at the end of the body", "Scripts in the head only", "It does not matter"], 1, "Later rules win, so your CSS must come after Bootstrap's."),
     ],
   },
+];
+
+const FINAL = LESSON_CHECKS.find((a) => a.kind === "final")!;
+/** The first `per` questions of each listed lesson check, so a stage check covers all of its lessons. */
+const pick = (moduleIds: string[], per: number): Q[] => LESSON_CHECKS.filter((a) => a.moduleId && moduleIds.includes(a.moduleId)).flatMap((a) => a.questions.slice(0, per));
+
+export const WEB_ASSESSMENTS: AssessmentDef[] = [
+  check("m01", "HTML: Build the Structure", pick(["web-m01", "web-m02", "web-m03", "web-m04", "web-m05"], 3)),
+  check("m02", "CSS: Style and Layout", pick(["web-m06", "web-m07", "web-m08", "web-m09", "web-m10", "web-m11", "web-m12"], 2)),
+  check("m03", "JavaScript: Make It Interactive", pick(["web-m13", "web-m14", "web-m15", "web-m16", "web-m17", "web-m18"], 2)),
+  check("m04", "Bootstrap, Building and Launching", pick(["web-m19", "web-m20", "web-m21", "web-m22"], 3)),
+  FINAL,
 ];

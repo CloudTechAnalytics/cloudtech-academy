@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" role="img" aria-label="The Scrum cycle. The product backlog feeds sprint planning, which produces a sprint backlog. During the two-week sprint the team holds a daily scrum. The sprint ends with a review, where stakeholders see the increment, and a retrospective, where the team improves how it works. Refinement keeps the top of the backlog ready. The business analyst's main touchpoints are marked.">
+<title>The Scrum cycle, with the business analyst's main touchpoints.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="470" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="150.0" width="150.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="91.0" y="176.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Product</text>
+<text xml:space="preserve" x="91.0" y="194.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">backlog</text>
+<rect x="36.0" y="208.0" width="110.0" height="10.0" rx="2" fill="#B38A3E"/>
+<rect x="36.0" y="224.0" width="98.0" height="10.0" rx="2" fill="#DCC594"/>
+<rect x="36.0" y="240.0" width="86.0" height="10.0" rx="2" fill="#DCC594"/>
+<rect x="36.0" y="256.0" width="74.0" height="10.0" rx="2" fill="#DCC594"/>
+<rect x="36.0" y="272.0" width="62.0" height="10.0" rx="2" fill="#DCC594"/>
+<rect x="30.0" y="112.0" width="118.0" height="26.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="40.0" y="129.5" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">BA: refinement</text>
+<path d="M168.0,225.0 L206.0,225.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="210.0" y="180.0" width="120.0" height="90.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="270.0" y="214.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">Sprint</text>
+<text xml:space="preserve" x="270.0" y="232.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">planning</text>
+<rect x="206.0" y="282.0" width="160.0" height="26.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="216.0" y="299.5" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">BA: explains stories</text>
+<path d="M332.0,225.0 L368.0,225.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<circle cx="470" cy="225" r="92" fill="#FFFFFF" stroke="#B38A3E" stroke-width="2.4"/>
+<text xml:space="preserve" x="470.0" y="215.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle">Sprint</text>
+<text xml:space="preserve" x="470.0" y="235.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="middle">2 weeks</text>
+<path d="M500,129 C540,93 400,93 440,129" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="470.0" y="91.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">Daily scrum, 15 minutes</text>
+<rect x="380.0" y="329.0" width="258.0" height="26.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="390.0" y="346.5" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">BA: answers questions, checks work</text>
+<path d="M564.0,225.0 L610.0,225.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="614.0" y="140.0" width="130.0" height="76.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="679.0" y="172.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Sprint review</text>
+<text xml:space="preserve" x="679.0" y="192.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">show the increment</text>
+<rect x="614.0" y="236.0" width="130.0" height="76.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="679.0" y="268.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle">Retrospective</text>
+<text xml:space="preserve" x="679.0" y="288.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="middle">improve how we work</text>
+<rect x="600.0" y="108.0" width="160.0" height="26.0" rx="6" fill="#E5F0E8"/>
+<text xml:space="preserve" x="610.0" y="125.5" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">BA: records feedback</text>
+<path d="M679,316 C679,400 91,420 91,304" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)" stroke-dasharray="6 4"/>
+<text xml:space="preserve" x="385.0" y="414.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle">feedback and new ideas go back into the backlog</text>
+<text xml:space="preserve" x="16.0" y="456.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start">Green labels: where a business analyst usually spends time in each sprint.</text>
+</g></svg>

@@ -10,21 +10,23 @@ Interviews and feedback both pointed at verification. But how much does it reall
 
 ## The concept
 
-**A funnel**
+### A funnel
 
 The steps a new user takes to get value, in order, with the share who reach each one. Paystream's onboarding funnel: phone verified → BVN verified → first deposit → first transfer.
 
-**Step conversion**
+### Step conversion
 
 The share of users at one step who reach the next. The step with the lowest conversion (and the most users lost) is where to look first.
 
-**Activation**
+### Activation
 
 The moment a new user first gets the product's value. For a wallet, the **first transfer**: users who make one are far more likely to keep using the app (lesson 5).
 
-**Segments and channels**
+### Segments and channels
 
 Break every funnel down. An average can hide a step that works for most users and fails badly for one segment.
+
+![An onboarding funnel from phone verified to first transfer with step conversion between steps, and the same funnel for two segments where market traders lose far more at BVN verification](/images/courses/product/funnel.svg "A funnel shows where users are lost; segments show who it fails.")
 
 ## Example
 

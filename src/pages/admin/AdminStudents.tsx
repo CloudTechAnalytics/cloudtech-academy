@@ -1,18 +1,78 @@
 import { credentialKindLabel } from "@/lib/badges";
 import { useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { getBackend } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
-import { Copy, Download, Mail, X } from "lucide-react";
+import { Copy, Download, Mail, Trash2, X } from "lucide-react";
 import type { StudentSummary } from "@/lib/backend";
 import { daysSince, formatDate, percent, plural, timeAgo } from "@/lib/format";
 import { gmailUrl, mailtoUrl } from "@/lib/email";
 import { Alert, TextArea, TextField } from "@/components/Form";
 import { Button, buttonClass } from "@/components/Button";
 import { ProgressBar } from "@/components/ProgressBar";
+import { Modal } from "@/components/Modal";
 import NotFound from "../NotFound";
 import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
+
+/**
+ * Removes students for good: their account, enrolments, progress, orders and payments. A student who holds certificates is
+ * refused (their certificates must stay verifiable), and the reason is shown.
+ */
+function RemoveStudents({ people, open, onClose, onDone }: { people: { userId: string; fullName: string; email: string }[]; open: boolean; onClose: () => void; onDone: (removed: string[]) => void }) {
+  const [busy, setBusy] = useState(false);
+  const [problems, setProblems] = useState<string[]>([]);
+  const run = async () => {
+    setBusy(true);
+    setProblems([]);
+    const b = await getBackend();
+    const removed: string[] = [];
+    const failed: string[] = [];
+    for (const p of people) {
+      try {
+        await b.admin.deleteStudent(p.userId);
+        removed.push(p.userId);
+      } catch (e) {
+        failed.push(`${p.fullName || p.email}: ${e instanceof Error ? e.message : "couldn't be removed."}`);
+      }
+    }
+    setBusy(false);
+    setProblems(failed);
+    if (removed.length) onDone(removed);
+    if (!failed.length) onClose();
+  };
+  return (
+    <Modal open={open} title={people.length === 1 ? "Remove this student?" : `Remove ${people.length} students?`} onClose={busy ? () => {} : onClose}>
+      <p className="text-[0.9375rem] leading-relaxed">
+        {people.length === 1 ? (
+          <>
+            <strong className="font-semibold">{people[0].fullName || people[0].email}</strong> ({people[0].email}) will be removed.
+          </>
+        ) : (
+          <>These students will be removed: {people.map((p) => p.fullName || p.email).join(", ")}.</>
+        )}{" "}
+        Their account, enrolments, progress, badges, orders and payments are deleted. This cannot be undone.
+      </p>
+      {problems.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {problems.map((m) => (
+            <Alert key={m} tone="error">
+              {m}
+            </Alert>
+          ))}
+        </div>
+      )}
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button onClick={() => void run()} loading={busy} className="!bg-danger !text-white">
+          <Trash2 aria-hidden className="h-4 w-4" /> Remove
+        </Button>
+        <Button variant="secondary" onClick={onClose} disabled={busy}>
+          Cancel
+        </Button>
+      </div>
+    </Modal>
+  );
+}
 
 type Filter = "all" | "active" | "inactive" | "completed" | "quick" | "not-started";
 
@@ -28,7 +88,8 @@ const FILTERS: { id: Filter; label: string; test: (s: StudentSummary) => boolean
 const selectCls = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2.5 text-[1rem]";
 
 export function AdminStudents() {
-  const { data, error } = useAdminData(async () => (await getBackend()).admin.listStudents());
+  const { data, error, reload } = useAdminData(async () => (await getBackend()).admin.listStudents());
+  const [removing, setRemoving] = useState(false);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [picked, setPicked] = useState<Set<string>>(new Set());
@@ -68,7 +129,19 @@ export function AdminStudents() {
         <Button onClick={() => setComposing(true)} disabled={!chosen.length}>
           <Mail aria-hidden className="h-4 w-4" /> Email {chosen.length ? plural(chosen.length, "student") : "students"}
         </Button>
+        <Button variant="secondary" onClick={() => setRemoving(true)} disabled={!chosen.length}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Remove {chosen.length ? plural(chosen.length, "student") : "students"}
+        </Button>
       </AdminHeading>
+      <RemoveStudents
+        people={chosen}
+        open={removing && chosen.length > 0}
+        onClose={() => setRemoving(false)}
+        onDone={(ids) => {
+          setPicked((prev) => new Set([...prev].filter((id) => !ids.includes(id))));
+          void reload();
+        }}
+      />
 
       {composing && chosen.length > 0 && <Composer recipients={chosen} onClose={() => setComposing(false)} />}
 
@@ -228,6 +301,8 @@ function downloadCsv(rows: StudentSummary[]) {
 export function AdminStudent() {
   const { userId = "" } = useParams();
   const { data, error } = useAdminData(async () => (await getBackend()).admin.getStudent(userId), [userId]);
+  const [removing, setRemoving] = useState(false);
+  const navigate = useNavigate();
   if (error) return <Alert tone="error">{error}</Alert>;
   if (data === undefined) return <PageLoading />;
   if (!data) return <NotFound />;
@@ -241,7 +316,11 @@ export function AdminStudent() {
         <a href={`mailto:${s.email}`} className={buttonClass("ghost")}>
           Mail app
         </a>
+        <Button variant="secondary" onClick={() => setRemoving(true)}>
+          <Trash2 aria-hidden className="h-4 w-4" /> Remove student
+        </Button>
       </AdminHeading>
+      <RemoveStudents people={[{ userId: s.userId, fullName: s.fullName, email: s.email }]} open={removing} onClose={() => setRemoving(false)} onDone={() => navigate("/admin/students")} />
       <p className="-mt-4 mb-6 text-[0.875rem] text-muted">
         <Link to="/admin/students" className="hover:text-ink">
           ← Students

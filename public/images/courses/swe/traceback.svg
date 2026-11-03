@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="How to read a Python traceback: from the bottom. The last line gives the error type and message, ValueError: could not convert string to float, with the value that failed. The line above shows where it happened, the innermost call, in parse_amount. Above that is the call that led there, in the main loop. Below, the debugging method: read, reproduce, find all, fix the cause, test.">
+<title>Read a traceback from the bottom up.</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a2F5D8A" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F5D8A"/></marker><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="500.0" height="154.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Traceback (most recent call last):</text>
+<text xml:space="preserve" x="28.0" y="62.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  File "import_payments.py", line 12, in &lt;module&gt;</text>
+<text xml:space="preserve" x="28.0" y="84.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    total += parse_amount(row["amount_paid"])</text>
+<text xml:space="preserve" x="28.0" y="106.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  File "import_payments.py", line 5, in parse_amount</text>
+<text xml:space="preserve" x="28.0" y="128.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    return float(text)</text>
+<text xml:space="preserve" x="28.0" y="150.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ValueError: could not convert string to float: '₦12,500.00'</text>
+<path d="M520.0,58.0 L540.0,58.0" fill="none" stroke="#5E5A52" stroke-width="2" marker-end="url(#a5E5A52)"/>
+<circle cx="556.0" cy="58.0" r="12" fill="#5E5A52"/>
+<text xml:space="preserve" x="556.0" y="62.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="572.0" y="63.0" font-size="12.5" fill="#5E5A52" font-weight="700" text-anchor="start">who called it</text>
+<path d="M520.0,102.0 L540.0,102.0" fill="none" stroke="#2F5D8A" stroke-width="2" marker-end="url(#a2F5D8A)"/>
+<circle cx="556.0" cy="102.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="556.0" y="106.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="572.0" y="107.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">where it failed</text>
+<path d="M520.0,146.0 L540.0,146.0" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<circle cx="556.0" cy="146.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="556.0" y="150.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="572.0" y="151.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">start here: type and value</text>
+<text xml:space="preserve" x="16.0" y="202.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Then follow a method</text>
+<rect x="16.0" y="214.0" width="132.8" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="240.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Read</text>
+<text xml:space="preserve" x="28.0" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">what failed, on</text>
+<text xml:space="preserve" x="28.0" y="281.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">what value?</text>
+<path d="M151.8,262.0 L161.8,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="164.8" y="214.0" width="132.8" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="176.8" y="240.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Reproduce</text>
+<text xml:space="preserve" x="176.8" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">one small failing</text>
+<text xml:space="preserve" x="176.8" y="281.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">input</text>
+<path d="M300.6,262.0 L310.6,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="313.6" y="214.0" width="132.8" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="325.6" y="240.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Find all</text>
+<text xml:space="preserve" x="325.6" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">every value like</text>
+<text xml:space="preserve" x="325.6" y="281.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">it, and its kind</text>
+<path d="M449.4,262.0 L459.4,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="462.4" y="214.0" width="132.8" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="474.4" y="240.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Fix the cause</text>
+<text xml:space="preserve" x="474.4" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">handle every kind</text>
+<path d="M598.2,262.0 L608.2,262.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="611.2" y="214.0" width="132.8" height="96.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="623.2" y="240.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Test</text>
+<text xml:space="preserve" x="623.2" y="264.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">add the input</text>
+<text xml:space="preserve" x="623.2" y="281.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">that failed</text>
+<text xml:space="preserve" x="16.0" y="352.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Ask the data too: which values in this column don't look like the rest?</text>
+</g></svg>

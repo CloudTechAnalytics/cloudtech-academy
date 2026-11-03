@@ -10,17 +10,19 @@ Three weeks before the sale, the team ran a **game day**: a planned morning of b
 
 ## The concept
 
-**A game day**
+### A game day
 
 Each drill has a scenario, a success criterion and, where it matters, a target time, such as a **recovery time objective** (RTO) for restoring the database. Record what actually happened, including the surprises.
 
-**Pass, fail and what it teaches**
+### Pass, fail and what it teaches
 
 A failed drill is a success for the game day: you found the problem before the sale did. Each failure becomes an action with an owner and a date, then a re-test.
 
-**Go, no-go, or go with conditions**
+### Go, no-go, or go with conditions
 
 A readiness decision lists what's done, what's open, and the conditions that must be met by a date. "Go if the backup restore passes a re-test by 20 November" is more useful than a vague "mostly ready".
+
+![An invented game day drill that missed its target time, the fail, action, re-test, pass loop, and go, go with conditions and no-go decisions](/images/courses/devops-capstone/game-day.svg "Drill, record, fix and re-test; then go, no-go or go with conditions.")
 
 ## Example
 

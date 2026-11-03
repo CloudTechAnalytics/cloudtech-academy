@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" role="img" aria-label="Reviewing a pull request in two passes: an automated pass for patterns in the added lines such as secrets in code, bare except, floats for money and changes with no tests; then a reading pass for what the change does, which rules it skips, how it fails and who can use it. A good comment states where, what and why in terms of harm, a suggestion, and how serious it is, and criticises the change, not the person.">
+<title>Two passes, and a comment with where, what, why, fix, severity.</title>
+
+<rect width="760" height="420" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Two passes</text>
+<rect x="16.0" y="40.0" width="358.0" height="112.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start">1  Automated</text>
+<text xml:space="preserve" x="30.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• Secrets in code</text>
+<text xml:space="preserve" x="30.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• A bare except that hides errors</text>
+<text xml:space="preserve" x="30.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• Floats for money</text>
+<text xml:space="preserve" x="30.0" y="142.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• A change with no tests</text>
+<rect x="386.0" y="40.0" width="358.0" height="112.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="13.5" fill="#5C4F80" font-weight="700" text-anchor="start">2  Reading</text>
+<text xml:space="preserve" x="400.0" y="88.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• What does it do, and should it?</text>
+<text xml:space="preserve" x="400.0" y="106.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• Which rules does it skip?</text>
+<text xml:space="preserve" x="400.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• How does it fail?</text>
+<text xml:space="preserve" x="400.0" y="142.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">• Who can use it?</text>
+<text xml:space="preserve" x="16.0" y="184.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">What a good comment says</text>
+<rect x="16.0" y="198.0" width="728.0" height="112.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="222.0" font-size="12" fill="#5E5A52" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">payments.py line 31:</text>
+<text xml:space="preserve" x="30.0" y="246.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">This swallows every error, so a failed payment reports success.</text>
+<text xml:space="preserve" x="30.0" y="268.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Customers could be told they've paid when they haven't. Catch the specific error</text>
+<text xml:space="preserve" x="30.0" y="286.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">and return a failure. Must fix before merging.</text>
+<rect x="16.0" y="322.0" width="170.0" height="26.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="101.0" y="340.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">Where</text>
+<rect x="202.0" y="322.0" width="170.0" height="26.0" rx="6" fill="#9B2C1F"/>
+<text xml:space="preserve" x="287.0" y="340.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">What + why</text>
+<rect x="388.0" y="322.0" width="170.0" height="26.0" rx="6" fill="#2F6B3F"/>
+<text xml:space="preserve" x="473.0" y="340.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">Suggestion</text>
+<rect x="574.0" y="322.0" width="170.0" height="26.0" rx="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="659.0" y="340.0" font-size="12" fill="#FFFFFF" font-weight="700" text-anchor="middle">How serious</text>
+<rect x="16.0" y="362.0" width="358.0" height="44.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.3"/>
+<text xml:space="preserve" x="30.0" y="389.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">✗  "Did you even test this?"</text>
+<rect x="386.0" y="362.0" width="358.0" height="44.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.3"/>
+<text xml:space="preserve" x="400.0" y="389.0" font-size="12" fill="#2F6B3F" font-weight="700" text-anchor="start">✓  Review the change, not the person.</text>
+</g></svg>

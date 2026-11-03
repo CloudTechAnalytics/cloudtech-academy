@@ -12,7 +12,7 @@ Tools such as **hadolint** check Dockerfiles automatically. You'll write a small
 
 ## The concept
 
-**Rules for a good Dockerfile**
+### Rules for a good Dockerfile
 
 | Rule | Why | Fix |
 | :-- | :-- | :-- |
@@ -24,7 +24,9 @@ Tools such as **hadolint** check Dockerfiles automatically. You'll write a small
 | Exclude junk | `COPY . .` copies `.git`, `.env`, local `node_modules` | a `.dockerignore` file |
 | Exec-form CMD | the app receives stop signals properly | `CMD ["node", "server.js"]` |
 
-**Multi-stage builds**
+![Two Dockerfiles after a one-line code change: copying all code before npm ci rebuilds the install layer; copying package files and installing first keeps the install layer cached](/images/courses/cicd/layer-cache.svg "Install dependencies before copying code, so code changes reuse the cached install layer.")
+
+### Multi-stage builds
 
 Build in one stage with all the tools, then copy only the result into a small runtime image:
 

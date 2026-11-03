@@ -12,7 +12,7 @@ v1 also read other customers' transfers back to the people asking. Both problems
 
 ## The concept
 
-**Classify every tool by risk**
+### Classify every tool by risk
 
 | Level | Examples | Control |
 | :-- | :-- | :-- |
@@ -21,11 +21,13 @@ v1 also read other customers' transfers back to the people asking. Both problems
 | **Handoff** | escalate to the fraud or support team | allowed; always fine to use when unsure |
 | **Risky write** (money, irreversible, other people) | refunds, closing accounts, changing limits | **not given to the agent**, or only with a person's approval each time |
 
-**Least privilege**
+![Four levels: read tools allowed and logged; safe writes such as freeze_card allowed, logged and the customer told; handoffs always fine; risky writes such as refunds not given to the agent or approved by a person each time.](/images/courses/agents/risk-ladder.svg "Classify every tool by risk. Risky writes need a person.")
+
+### Least privilege
 
 Give the agent the fewest, narrowest tools that do the job. Every tool you add is something it can do wrong, or be tricked into doing.
 
-**Human approval**
+### Human approval
 
 For actions that are risky but useful, the agent **proposes** and a person **approves**: the tool creates a pending request that a staff member reviews, rather than acting directly. The agent's job is to prepare a good proposal: the facts, the reason, the amount.
 

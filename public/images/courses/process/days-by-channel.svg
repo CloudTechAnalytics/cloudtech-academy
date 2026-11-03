@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" role="img" aria-label="Days at port before the pilot by customs channel: Green, no inspection, 7.6 days; Yellow, document review, 8.7; Red, physical inspection, 9.3. Red takes longest, but even Green, with no inspection at all, takes 7.6 days.">
+<title>Days at port by customs channel: inspection adds time, but most of the time is spent elsewhere.</title>
+
+<rect width="760" height="300" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">Average days at port, before the pilot</text>
+<text xml:space="preserve" x="218.0" y="72.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="end">Green</text>
+<text xml:space="preserve" x="218.0" y="89.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">no inspection</text>
+<rect x="230.0" y="58.0" width="349.6" height="30.0" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="587.6" y="79.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">7.6 days</text>
+<text xml:space="preserve" x="218.0" y="128.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="end">Yellow</text>
+<text xml:space="preserve" x="218.0" y="145.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">document review</text>
+<rect x="230.0" y="114.0" width="400.2" height="30.0" rx="4" fill="#8A6A1F"/>
+<text xml:space="preserve" x="638.2" y="135.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">8.7 days</text>
+<text xml:space="preserve" x="218.0" y="184.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="end">Red</text>
+<text xml:space="preserve" x="218.0" y="201.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="end">physical inspection</text>
+<rect x="230.0" y="170.0" width="427.8" height="30.0" rx="4" fill="#9B2C1F"/>
+<text xml:space="preserve" x="665.8" y="191.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">9.3 days</text>
+<text xml:space="preserve" x="16.0" y="250.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Inspection adds about a day and a half, but a Green container with no inspection still spends 7.6 days at</text>
+<text xml:space="preserve" x="16.0" y="268.9" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">port. The waits for corrected documents and duty payment affect every channel.</text>
+</g></svg>

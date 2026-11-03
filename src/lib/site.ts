@@ -18,10 +18,20 @@ export const SITE = {
 export const NAV_LINKS = [
   { to: "/courses", label: "Courses" },
   { to: "/students", label: "Students" },
-  { to: "/tracks", label: "Career Tracks" },
+  { to: "/programmes", label: "Programmes" },
   { to: "/projects", label: "Projects" },
+  { to: "/events", label: "Events" },
   { to: "/certificates", label: "Certificates" },
   { to: "/about", label: "About" },
 ] as const;
+
+export type NavLinkItem = { to: string; label: string };
+
+/** The Community link is added after Events, only while the community is switched on. */
+export function navLinks(hasCommunity: boolean): NavLinkItem[] {
+  const links: NavLinkItem[] = [...NAV_LINKS];
+  if (hasCommunity) links.splice(links.findIndex((l) => l.to === "/events") + 1, 0, { to: "/community", label: "Community" });
+  return links;
+}
 
 export const whatsappLink = (text?: string) => `https://wa.me/${SITE.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;

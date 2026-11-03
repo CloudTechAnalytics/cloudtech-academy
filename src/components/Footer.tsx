@@ -1,9 +1,11 @@
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { AcademyLogo } from "./Logo";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import { navLinks, SITE } from "@/lib/site";
+import { useCommunity } from "@/lib/community";
 
 export function Footer() {
+  const links = navLinks(!!useCommunity().community);
   const link = "text-[0.9375rem] text-cream/75 transition-colors hover:text-cream";
   return (
     <footer className="bg-night text-cream">
@@ -22,7 +24,7 @@ export function Footer() {
         <nav aria-label="Academy" className="lg:col-span-3">
           <h2 className="mb-4 text-[0.875rem] font-medium text-cream/50">Academy</h2>
           <ul className="space-y-3">
-            {NAV_LINKS.map((l) => (
+            {links.map((l) => (
               <li key={l.to}>
                 <Link to={l.to} className={link}>
                   {l.label}
@@ -46,8 +48,11 @@ export function Footer() {
           </ul>
         </nav>
       </div>
-      <div className="container-page border-t border-cream/12 py-7 text-[0.8125rem] text-cream/55">
-        © {new Date().getFullYear()} CloudTech Analytics. All rights reserved.
+      <div className="container-page flex flex-wrap items-center justify-between gap-3 border-t border-cream/12 py-7 text-[0.8125rem] text-cream/55">
+        <span>© {new Date().getFullYear()} CloudTech Analytics. All rights reserved.</span>
+        <button type="button" onClick={() => window.dispatchEvent(new Event("ct-cookie-choices"))} className="underline-offset-2 hover:text-cream hover:underline">
+          Cookie choices
+        </button>
       </div>
     </footer>
   );

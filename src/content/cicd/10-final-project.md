@@ -10,7 +10,7 @@ Three months after switching to the new pipeline, Tallybook's CTO wants a review
 
 ## The concept
 
-**The parts of the review**
+### The parts of the review
 
 | Part | Built in |
 | :-- | :-- |
@@ -22,7 +22,7 @@ Three months after switching to the new pipeline, Tallybook's CTO wants a review
 | Canary performance and policy | lesson 8 |
 | Recovery | lesson 9 |
 
-**Show the trade-offs**
+### Show the trade-offs
 
 The board will ask whether faster releases mean more risk. The data answers it; make sure your review shows it plainly.
 

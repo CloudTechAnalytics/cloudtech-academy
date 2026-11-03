@@ -1,13 +1,16 @@
 import { Fragment, useMemo, type ReactNode } from "react";
 import { marked, type Token, type Tokens } from "marked";
 import { AlertTriangle, Briefcase, Info, Lightbulb } from "lucide-react";
-import { parseAnswer, parseDataset, parseExercise, parseQuiz, parseTask } from "@/lib/lesson-format";
+import { parseAnswer, parseDataset, parseExercise, parseGitTask, parseGitTerm, parseLive, parseQuiz, parseTask, parseWebTask } from "@/lib/lesson-format";
 import { RunnableSql } from "./sql/RunnableSql";
+import { RunnablePython } from "./RunnablePython";
 import { SqlExercise } from "./sql/SqlExercise";
 import { LessonQuiz } from "./LessonQuiz";
 import { CopyButton } from "./sql/SqlParts";
 import { AnswerExercise } from "./AnswerExercise";
 import { WrittenTask } from "./WrittenTask";
+import { LiveCode, WebTask } from "./LiveCode";
+import { GitTask, GitTerm } from "./GitLab";
 import { DatasetCard } from "./DatasetCard";
 import IMAGE_SIZES from "@/content/image-sizes.json";
 
@@ -24,7 +27,7 @@ const decode = (s: string) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 
 /** Labels for formula code blocks, e.g. ```excel or ```dax. */
-const CODE_LABELS: Record<string, string> = { excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML" };
+const CODE_LABELS: Record<string, string> = { git: "Git", yml: "GitHub Actions workflow", text: "Output", excel: "Excel formula", sheets: "Google Sheets formula", dax: "DAX", m: "Power Query (M)", sql: "SQL", bash: "Shell (bash)", hcl: "Terraform (HCL)", dockerfile: "Dockerfile", yaml: "YAML", js: "JavaScript", html: "HTML", css: "CSS", json: "JSON" };
 
 const safeHref = (href: string) => (/^(https?:|mailto:|\/|#)/i.test(href) ? href : "#");
 
@@ -101,7 +104,10 @@ function Figure({ image }: { image: Tokens.Image }) {
       </a>
       <figcaption className="mt-2.5 text-[0.875rem] leading-relaxed text-muted">
         {image.title && decode(image.title)}
-        <span className="block text-[0.8125rem] text-subtle sm:hidden print:hidden">Tap the image to see it full size.</span>
+        <span className="block text-[0.8125rem] text-subtle print:hidden">
+          <span className="sm:hidden">Tap</span>
+          <span className="hidden sm:inline">Click</span> the image to see it full size.
+        </span>
       </figcaption>
     </figure>
   );
@@ -119,9 +125,15 @@ type Ctx = {
   onExerciseSolved: (id: string) => void;
   sectionIndex: { n: number };
   exerciseLabel: { current: string };
+  /** Every runnable Python block in the lesson, in order, so a block can run the ones before it. */
+  pythonBlocks: string[];
+  lessonKey: string;
   /** Static version for the course PDF: practice shows its question only, never the answer. */
   print: boolean;
 };
+
+/** Python fences that can run in the browser: ```python, but not ```python norun. */
+const isRunnablePython = (lang: string) => /^python\b/.test(lang) && !/\bnorun\b/.test(lang);
 
 /** A practice block in the course PDF: the question, and where to check the answer. */
 function PrintedPractice({ label, prompt, starter, note }: { label: string; prompt: ReactNode; starter?: string; note: string }) {
@@ -258,7 +270,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const inner = marked.lexer(m ? q.text.slice(m[0].length) : q.text);
       if (!m)
         return (
-          <blockquote className="border-l-2 border-brass pl-4 font-serif text-[1.15rem] italic text-ink/90">
+          <blockquote className="rounded-r-lg border-l-4 border-brass bg-brass-pale/40 py-3 pl-4 pr-3 text-[1.0625rem] italic text-ink">
             {inner.map((t, i) => (
               <Block key={i} token={t} ctx={ctx} />
             ))}
@@ -267,7 +279,7 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
       const c = CALLOUTS[m[1] as keyof typeof CALLOUTS];
       return (
         <aside className={`not-prose rounded-xl border px-4 py-3.5 text-[0.9688rem] leading-relaxed ${c.cls}`}>
-          <p className="mb-1 flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-ink/80">
+          <p className="mb-1 flex items-center gap-2 text-[0.8125rem] font-semibold text-ink/80">
             <c.icon aria-hidden className="h-4 w-4 text-brass-dark" /> {c.label}
           </p>
           <div className="space-y-2 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:bg-ivory/70 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[0.88em]">
@@ -339,15 +351,49 @@ function Block({ token, ctx }: { token: Token; ctx: Ctx }): ReactNode {
             />
           );
         }
+        if (lang === "gitterm") return <GitTerm spec={parseGitTerm(c.text)} />;
+        if (lang === "gittask") {
+          const spec = parseGitTask(c.text);
+          const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
+          return (
+            <GitTask
+              spec={spec}
+              prompt={md(spec.prompt)}
+              note={spec.note ? md(spec.note) : undefined}
+              label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current}
+              completed={ctx.completedExercises.includes(spec.id)}
+              onSolved={ctx.onExerciseSolved}
+            />
+          );
+        }
+        if (lang === "live") return <LiveCode spec={parseLive(c.text)} />;
+        if (lang === "webtask") {
+          const spec = parseWebTask(c.text);
+          const md = (s: string) => marked.lexer(s).map((t, i) => <Block key={i} token={t} ctx={ctx} />);
+          return (
+            <WebTask
+              spec={spec}
+              prompt={md(spec.prompt)}
+              note={spec.note ? md(spec.note) : undefined}
+              label={ctx.exerciseLabel.current === "Practice" ? "Task" : ctx.exerciseLabel.current}
+              completed={ctx.completedExercises.includes(spec.id)}
+              onSolved={ctx.onExerciseSolved}
+            />
+          );
+        }
         if (lang === "dataset") return <DatasetCard block={parseDataset(c.text)} />;
       } catch (e) {
         return <p className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-[0.875rem]">This block couldn't be read: {e instanceof Error ? e.message : String(e)}</p>;
       }
       if (/^sql\b/.test(lang) && /\brun\b/.test(lang) && !ctx.print) return <RunnableSql sql={c.text} />;
+      if (isRunnablePython(lang) && !ctx.print) {
+        const index = ctx.pythonBlocks.indexOf(c.text);
+        if (index >= 0) return <RunnablePython code={c.text} index={index} blocks={ctx.pythonBlocks} lessonKey={ctx.lessonKey} />;
+      }
       const codeLabel = CODE_LABELS[lang.split(/\s+/)[0]];
       return (
         <div className="not-prose relative">
-          {codeLabel && <p className="mb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">{codeLabel}</p>}
+          {codeLabel && <p className="mb-1 text-[0.8125rem] font-semibold text-muted">{codeLabel}</p>}
           <pre className={`code-block ${ctx.print ? "whitespace-pre-wrap wrap-break-word" : "pr-20"}`}>
             <code>{c.text}</code>
           </pre>
@@ -374,16 +420,23 @@ export function LessonContent({
   body,
   completedExercises = [],
   onExerciseSolved = () => {},
+  lessonKey = "preview",
   print = false,
 }: {
   body: string;
   completedExercises?: string[];
   onExerciseSolved?: (id: string) => void;
+  /** Identifies the lesson, so its Python examples share one namespace. */
+  lessonKey?: string;
   /** Render the static, answer-free version used in the course PDF. */
   print?: boolean;
 }) {
   const tokens = useMemo(() => marked.lexer(body), [body]);
-  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" }, print };
+  const pythonBlocks = useMemo(
+    () => tokens.flatMap((t) => (t.type === "code" && isRunnablePython(((t as Tokens.Code).lang ?? "").trim()) ? [(t as Tokens.Code).text] : [])),
+    [tokens],
+  );
+  const ctx: Ctx = { completedExercises, onExerciseSolved, sectionIndex: { n: 0 }, exerciseLabel: { current: "Practice" }, pythonBlocks, lessonKey, print };
   eagerImages = print;
   return (
     <div className="lesson">

@@ -18,6 +18,8 @@ Most accounts are hacked because of weak or reused passwords.
 
 Turn it on for your **email** first (email resets every other account), then WhatsApp, Instagram, LinkedIn and your bank app.
 
+![With only a password a thief gets in; with two-step verification they also need a code from your phone; turn it on for email first, then social apps, then money](/images/courses/digital/two-step.svg "A stolen password isn't enough when a code from your phone is also needed.")
+
 > [!WARNING]
 > Never share a verification code (OTP) with anyone, even someone claiming to be from your bank, WhatsApp or school. No genuine organisation will ask for it.
 
@@ -30,6 +32,8 @@ Turn it on for your **email** first (email resets every other account), then Wha
 - **Odd links:** hover over (or long-press) a link to see where it really goes. `unilag-portal.xyz` isn't your school.
 - **Requests for codes, PINs or passwords.**
 - **Messages from friends asking for money** out of the blue. Their account may be hacked. Call them to check.
+
+![A fake text message with its warning signs marked: urgency, an odd link, a prize that asks for payment, and a request for a code; hovering over the link reveals a lookalike address](/images/courses/digital/phishing.svg "A fake message, with its warning signs marked.")
 
 When in doubt, don't click. Go to the website yourself or contact the organisation using details you already trust.
 

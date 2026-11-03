@@ -44,6 +44,8 @@ Efosa Igbinedion
 2. **One or two examples** that match what they need.
 3. **Thanks** and a clear close.
 
+![Tailor a CV in four steps, and write a cover letter in three paragraphs: why this role, proof, and thanks with a clear close](/images/courses/internship/tailor-cover.svg "Tailor the CV in four steps; keep the cover letter to three paragraphs.")
+
 > [!TIP]
 > AI tools can help you draft and polish, but always rewrite in your own voice and check every claim is true. Recruiters notice generic, AI-sounding letters.
 
@@ -54,6 +56,8 @@ Use a simple Google Sheet:
 | Company | Role | Link | Date applied | Status | Follow-up date | Notes |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | Kolanut Foods | Data Analyst Intern | … | 2026-10-02 | Applied | 2026-10-16 | Referred by Tolu |
+
+![A status for each application from saved to applied, interview and offer or rejected, one example row in the tracking sheet, and a follow-up after about two weeks](/images/courses/internship/tracker.svg "A status for every application, and a follow-up date.")
 
 Add a **Status** dropdown: Saved, Applied, Interview, Offer, Rejected.
 

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 484" width="760" height="484" role="img" aria-label="Anatomy of a user story. As an accounts officer (who), I want clients to get an automatic reminder before the due date (what), so that fewer invoices go overdue (why). Below it, three Given When Then acceptance criteria: the normal case, an invoice already paid, and a client on a payment plan.">
+<title>A user story and its acceptance criteria.</title>
+
+<rect width="760" height="484" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="150.0" rx="10" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.8"/>
+<text xml:space="preserve" x="32.0" y="50.0" font-size="16" fill="#5E5A52" font-weight="400" text-anchor="start">As an</text>
+<text xml:space="preserve" x="90.0" y="50.0" font-size="16" fill="#2F5D8A" font-weight="700" text-anchor="start">accounts officer,</text>
+<text xml:space="preserve" x="32.0" y="82.0" font-size="16" fill="#5E5A52" font-weight="400" text-anchor="start">I want</text>
+<text xml:space="preserve" x="92.0" y="82.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start">clients to get an automatic reminder before the due date,</text>
+<text xml:space="preserve" x="32.0" y="114.0" font-size="16" fill="#5E5A52" font-weight="400" text-anchor="start">so that</text>
+<text xml:space="preserve" x="98.0" y="114.0" font-size="16" fill="#2F6B3F" font-weight="700" text-anchor="start">fewer invoices go overdue without me phoning anyone.</text>
+<text xml:space="preserve" x="32.0" y="150.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">WHO · WHAT · WHY. The "so that" lets the team suggest a better way to deliver the benefit.</text>
+<text xml:space="preserve" x="16.0" y="202.0" font-size="15" fill="#2A2926" font-weight="700" text-anchor="start">Acceptance criteria: Given / When / Then</text>
+<rect x="16.0" y="216.0" width="728.0" height="78.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<circle cx="40.0" cy="240.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="244.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="60.0" y="245.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Normal case</text>
+<text xml:space="preserve" x="60.0" y="268.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Given an unpaid invoice due 30 June, when it is 23 June,</text>
+<text xml:space="preserve" x="60.0" y="286.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">then the client gets a reminder with number, amount and due date.</text>
+<rect x="16.0" y="302.0" width="728.0" height="78.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<circle cx="40.0" cy="326.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="330.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="60.0" y="331.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Already paid</text>
+<text xml:space="preserve" x="60.0" y="354.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Given an invoice paid on 20 June, when it is 23 June,</text>
+<text xml:space="preserve" x="60.0" y="372.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">then no reminder is sent.</text>
+<rect x="16.0" y="388.0" width="728.0" height="78.0" rx="8" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.2"/>
+<circle cx="40.0" cy="412.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="416.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="60.0" y="417.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Exception (business rule)</text>
+<text xml:space="preserve" x="60.0" y="440.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">Given a client on a payment plan, when a reminder would be due,</text>
+<text xml:space="preserve" x="60.0" y="458.0" font-size="13" fill="#2A2926" font-weight="400" text-anchor="start">then none is sent, and the invoice goes on the exceptions list.</text>
+</g></svg>

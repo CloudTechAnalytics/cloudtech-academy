@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="An onboarding funnel with illustrative numbers: 100 percent verify their phone, 74 percent verify their BVN, 52 percent make a first deposit and 31 percent make a first transfer. Step conversion is the share who reach the next step: 74, 70 and 60 percent. The first transfer is the activation moment. Beside it, the same funnel for two segments shows an average can hide a step that fails for one segment.">
+<title>A funnel shows where users are lost; segments show who it fails.</title>
+
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="30.0" width="380.0" height="50.0" rx="4" fill="#2F5D8A"/>
+<text xml:space="preserve" x="206.0" y="52.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">Phone verified</text>
+<text xml:space="preserve" x="206.0" y="70.0" font-size="12" fill="#FFFFFF" font-weight="400" text-anchor="middle">100% of signups</text>
+<rect x="65.4" y="92.0" width="281.2" height="50.0" rx="4" fill="#4F7DAA"/>
+<text xml:space="preserve" x="206.0" y="114.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">BVN verified</text>
+<text xml:space="preserve" x="206.0" y="132.0" font-size="12" fill="#FFFFFF" font-weight="400" text-anchor="middle">74% of signups</text>
+<text xml:space="preserve" x="404.0" y="84.0" font-size="12" fill="#9B2C1F" font-weight="700" text-anchor="start">↓ 74%</text>
+<rect x="107.2" y="154.0" width="197.6" height="50.0" rx="4" fill="#B38A3E"/>
+<text xml:space="preserve" x="206.0" y="176.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle">First deposit</text>
+<text xml:space="preserve" x="206.0" y="194.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">52% of signups</text>
+<text xml:space="preserve" x="404.0" y="146.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">↓ 70%</text>
+<rect x="147.1" y="216.0" width="117.8" height="50.0" rx="4" fill="#2F6B3F"/>
+<text xml:space="preserve" x="206.0" y="238.0" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">First transfer</text>
+<text xml:space="preserve" x="206.0" y="256.0" font-size="12" fill="#FFFFFF" font-weight="400" text-anchor="middle">31% of signups</text>
+<text xml:space="preserve" x="404.0" y="208.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">↓ 60%</text>
+<text xml:space="preserve" x="16.0" y="290.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Activation: the first transfer is when a user first gets the product's value.</text>
+<text xml:space="preserve" x="500.0" y="36.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">Same funnel, two segments</text>
+<text xml:space="preserve" x="404.0" y="24.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">step conversion</text>
+<text xml:space="preserve" x="500.0" y="66.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Salary earners</text>
+<rect x="500.0" y="74.0" width="190.0" height="16.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="696.0" y="87.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">100%</text>
+<rect x="500.0" y="96.0" width="161.5" height="16.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="667.5" y="109.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">85%</text>
+<rect x="500.0" y="118.0" width="125.4" height="16.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="631.4" y="131.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">66%</text>
+<rect x="500.0" y="140.0" width="85.5" height="16.0" rx="2" fill="#2F5D8A"/>
+<text xml:space="preserve" x="591.5" y="153.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">45%</text>
+<text xml:space="preserve" x="500.0" y="174.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Market traders</text>
+<rect x="500.0" y="182.0" width="190.0" height="16.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="696.0" y="195.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">100%</text>
+<rect x="500.0" y="204.0" width="110.2" height="16.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="616.2" y="217.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">58%</text>
+<rect x="500.0" y="226.0" width="76.0" height="16.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="582.0" y="239.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">40%</text>
+<rect x="500.0" y="248.0" width="39.9" height="16.0" rx="2" fill="#B38A3E"/>
+<text xml:space="preserve" x="545.9" y="261.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">21%</text>
+<text xml:space="preserve" x="16.0" y="330.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Step conversion = users at one step who reach the next. Look first at the step that loses most users.</text>
+<text xml:space="preserve" x="16.0" y="354.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">In the segment view, traders lose far more at BVN: an average would hide it.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">Illustrative numbers.</text>
+</g></svg>

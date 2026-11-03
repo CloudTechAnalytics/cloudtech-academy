@@ -12,7 +12,7 @@ First, **it hasn't been checked**. Every analyst makes mistakes; good ones catch
 
 ## The concept
 
-**Review your own work like a stranger**
+### Review your own work like a stranger
 
 Leave it for a day, then check:
 
@@ -26,11 +26,11 @@ Leave it for a day, then check:
 
 Then ask someone else to read the executive summary and tell you, in their own words, the three main messages. If they can't, the summary isn't finished.
 
-**Prepare for the questions you'll be asked**
+### Prepare for the questions you'll be asked
 
 Boards ask predictable questions: "How do you know?", "Compared with what?", "What would you do?" and "What could make this wrong?" Write down the three hardest questions you expect and your answer to each, with the number you'll point to.
 
-**Publish it for your portfolio**
+### Publish it for your portfolio
 
 A portfolio entry is a short case study, not the full report:
 
@@ -39,6 +39,8 @@ A portfolio entry is a short case study, not the full report:
 3. **What you did**: the tools and the main steps.
 4. **What you found**: two or three findings with numbers.
 5. **Links**: the report (PDF or Power BI link), and your code or workbook.
+
+![A review checklist, a ten-minute talk split into one, six and three minutes, four hard board questions, and the five parts of a portfolio case study](/images/courses/capstone/review-present-publish.svg "Review, rehearse, then publish a short case study.")
 
 Publish it on GitHub (a README with screenshots), a portfolio site, or a LinkedIn post linking to them. The Build Your Student Portfolio course covers the details.
 

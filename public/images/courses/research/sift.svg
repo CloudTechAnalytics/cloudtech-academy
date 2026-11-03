@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 390" width="760" height="390" role="img" aria-label="Reading laterally with the SIFT habit. Stop before you believe or share. Investigate the source by opening new tabs and searching who they are. Find better coverage of the same claim. Trace the claim to its original source. Fact-checkers leave the page instead of reading it closely.">
+<title>SIFT: Stop, Investigate, Find better coverage, Trace.</title>
+
+<rect width="760" height="390" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Leave the page to judge the page</text>
+<rect x="16.0" y="42.0" width="728.0" height="66.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<circle cx="52.0" cy="75.0" r="22" fill="#9B2C1F"/>
+<text xml:space="preserve" x="52.0" y="83.0" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<text xml:space="preserve" x="92.0" y="70.0" font-size="14.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Stop</text>
+<text xml:space="preserve" x="92.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Don't believe or share yet. Caps, 'forward to all' and no link are red flags.</text>
+<rect x="16.0" y="116.0" width="728.0" height="66.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="52.0" cy="149.0" r="22" fill="#2F5D8A"/>
+<text xml:space="preserve" x="52.0" y="157.0" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">I</text>
+<text xml:space="preserve" x="92.0" y="144.0" font-size="14.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Investigate the source</text>
+<text xml:space="preserve" x="92.0" y="166.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Open a new tab. Who are they? Who funds them?</text>
+<rect x="16.0" y="190.0" width="728.0" height="66.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<circle cx="52.0" cy="223.0" r="22" fill="#8A6A1F"/>
+<text xml:space="preserve" x="52.0" y="231.0" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">F</text>
+<text xml:space="preserve" x="92.0" y="218.0" font-size="14.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Find better coverage</text>
+<text xml:space="preserve" x="92.0" y="240.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Do reliable sources report the same claim?</text>
+<rect x="16.0" y="264.0" width="728.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="52.0" cy="297.0" r="22" fill="#2F6B3F"/>
+<text xml:space="preserve" x="52.0" y="305.0" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">T</text>
+<text xml:space="preserve" x="92.0" y="292.0" font-size="14.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Trace to the original</text>
+<text xml:space="preserve" x="92.0" y="314.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Find where the number first came from: the organisation that measures it.</text>
+<text xml:space="preserve" x="16.0" y="356.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A convincing page can still be fake. What other people say about it is the better test.</text>
+</g></svg>

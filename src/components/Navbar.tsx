@@ -4,7 +4,8 @@ import { ChevronDown, LayoutDashboard, LogOut, Settings, Shield, UserRound } fro
 import { AcademyLogo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 import { ButtonLink } from "./Button";
-import { NAV_LINKS } from "@/lib/site";
+import { navLinks } from "@/lib/site";
+import { useCommunity } from "@/lib/community";
 import { useAuth } from "@/lib/auth";
 import { getBackend } from "@/lib/backend";
 
@@ -83,6 +84,7 @@ function AccountMenu({ name, admin }: { name: string; admin: boolean }) {
 
 export function Navbar() {
   const auth = useAuth();
+  const links = navLinks(!!useCommunity().community);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
@@ -103,7 +105,7 @@ export function Navbar() {
   }, [menuOpen]);
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
-    `relative py-2 text-[0.875rem] transition-colors hover:text-ink ${isActive ? "text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-brass" : "text-muted"}`;
+    `relative whitespace-nowrap py-2 text-[0.8125rem] transition-colors hover:text-ink xl:text-[0.875rem] ${isActive ? "text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-brass" : "text-muted"}`;
 
   return (
     <header className={`sticky top-0 z-40 border-b transition-colors ${scrolled || menuOpen ? "border-line bg-ivory" : "border-transparent bg-ivory/0"}`}>
@@ -116,8 +118,8 @@ export function Navbar() {
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
-            {NAV_LINKS.map((l) => (
+          <ul className="flex items-center gap-3.5 xl:gap-7">
+            {links.map((l) => (
               <li key={l.to}>
                 <NavLink to={l.to} className={linkCls}>
                   {l.label}
@@ -167,7 +169,7 @@ export function Navbar() {
         <div className="container-page flex min-h-full flex-col py-6">
           <nav aria-label="Mobile">
             <ul className="divide-y divide-line border-b border-line">
-              {[{ to: "/", label: "Home" }, ...NAV_LINKS].map((l) => (
+              {[{ to: "/", label: "Home" }, ...links].map((l) => (
                 <li key={l.to}>
                   <NavLink to={l.to} end className={({ isActive }) => `block py-3.5 font-serif text-[1.7rem] ${isActive ? "text-brass-dark" : "text-ink"}`}>
                     {l.label}

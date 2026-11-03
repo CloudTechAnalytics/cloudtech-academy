@@ -10,7 +10,7 @@ A wrong answer about insurance is costly. A customer told "yes, you can use your
 
 ## The concept
 
-**Grades**
+### Grades
 
 | Grade | Meaning |
 | :-- | :-- |
@@ -21,13 +21,15 @@ A wrong answer about insurance is costly. A customer told "yes, you can use your
 
 Unsupported answers are the most dangerous kind. They sound confident and can't be traced to anything.
 
-**Answer quality depends on retrieval**
+### Answer quality depends on retrieval
 
 Split the graded answers by whether retrieval found the right section. If most bad answers come from retrieval misses, fix retrieval first.
 
-**Judging the judge**
+### Judging the judge
 
 Before an LLM judge replaces people, compare its grades with human grades on the same answers. Look at overall agreement, but especially at agreement on the grades that matter most. A judge that calls unsupported answers "Correct" is worse than useless for safety.
+
+![Four answer grades with unsupported as the most dangerous, splitting results by retrieval hit or miss, and checking the judge against human grades](/images/courses/ai-capstone/grounded-grades.svg "Four grades, retrieval versus answer, and checking the judge.")
 
 ## Example
 

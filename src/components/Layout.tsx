@@ -4,6 +4,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { IS_LIVE } from "@/lib/backend";
 import { PageLoading } from "@/lib/auth";
+import { Tracking } from "./Tracking";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -42,6 +43,7 @@ export function Layout() {
         </Suspense>
       </main>
       <Footer />
+      <Tracking />
     </div>
   );
 }

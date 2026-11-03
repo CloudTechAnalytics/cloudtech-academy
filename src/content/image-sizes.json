@@ -1,4 +1,596 @@
 {
+ "/images/courses/advanced-sql/business-patterns.svg": [
+  760,
+  446
+ ],
+ "/images/courses/advanced-sql/cohorts.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/data-quality.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/dates.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/join-patterns.svg": [
+  760,
+  440
+ ],
+ "/images/courses/advanced-sql/null-logic.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/performance.svg": [
+  760,
+  466
+ ],
+ "/images/courses/advanced-sql/pivot.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/ranking.svg": [
+  760,
+  430
+ ],
+ "/images/courses/advanced-sql/window-frames.svg": [
+  760,
+  440
+ ],
+ "/images/courses/agents/agent-loop.svg": [
+  760,
+  430
+ ],
+ "/images/courses/agents/risk-ladder.svg": [
+  760,
+  360
+ ],
+ "/images/courses/agents/rollout.svg": [
+  760,
+  300
+ ],
+ "/images/courses/agents/token-growth.svg": [
+  760,
+  360
+ ],
+ "/images/courses/agents/tool-definition.svg": [
+  760,
+  400
+ ],
+ "/images/courses/agents/tool-injection.svg": [
+  760,
+  420
+ ],
+ "/images/courses/agile-ba/burn-up.svg": [
+  760,
+  440
+ ],
+ "/images/courses/agile-ba/littles-law.svg": [
+  760,
+  400
+ ],
+ "/images/courses/agile-ba/scrum-cycle.svg": [
+  760,
+  470
+ ],
+ "/images/courses/agile-ba/story-map.svg": [
+  760,
+  470
+ ],
+ "/images/courses/agile-ba/vertical-slices.svg": [
+  760,
+  340
+ ],
+ "/images/courses/ai-capstone/cost-latency.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ai-capstone/escalation.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/grounded-grades.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/model-reads-code-decides.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/monitoring-control.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ai-capstone/red-team.svg": [
+  760,
+  456
+ ],
+ "/images/courses/ai-capstone/release-gate.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/retrieval.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-capstone/validation.svg": [
+  760,
+  456
+ ],
+ "/images/courses/ai-productivity/ai-nested.svg": [
+  760,
+  470
+ ],
+ "/images/courses/ai-productivity/ai-timeline.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-productivity/ai-types.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ai-productivity/check-before-use.svg": [
+  760,
+  416
+ ],
+ "/images/courses/ai-productivity/claude-jobs.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-productivity/iterate.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ai-productivity/llm-next-word.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-productivity/presentation-plan.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-productivity/prompt-framework.svg": [
+  760,
+  520
+ ],
+ "/images/courses/ai-productivity/prompt-parts.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ai-productivity/read-document.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ai-productivity/rewrite-reader.svg": [
+  760,
+  340
+ ],
+ "/images/courses/ai-productivity/slide-rewrite.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ai-productivity/verify.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ai-productivity/worked-example-steps.svg": [
+  760,
+  330
+ ],
+ "/images/courses/ai-students/coach-not-ghostwriter.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ai-students/how-it-answers.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ai-students/notes-to-tools.svg": [
+  760,
+  316
+ ],
+ "/images/courses/ai-students/prompt-parts.svg": [
+  760,
+  360
+ ],
+ "/images/courses/ai-students/research-workflow.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ai-students/retrieval.svg": [
+  760,
+  340
+ ],
+ "/images/courses/ai-students/rules-first.svg": [
+  760,
+  370
+ ],
+ "/images/courses/ba-capstone/ba-arc.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ba-capstone/business-case.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ba-capstone/decision-paper.svg": [
+  760,
+  446
+ ],
+ "/images/courses/ba-capstone/did.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ba-capstone/event-log.svg": [
+  760,
+  430
+ ],
+ "/images/courses/ba-capstone/problem-scope.svg": [
+  760,
+  458
+ ],
+ "/images/courses/ba-capstone/requirements-trace.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ba-capstone/root-causes.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ba-capstone/slice-metric.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ba/billing-as-is.svg": [
+  760,
+  610
+ ],
+ "/images/courses/ba/days-to-pay-trend.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ba/option-b-benefit.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ba/power-interest.svg": [
+  760,
+  560
+ ],
+ "/images/courses/ba/traceability.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ba/user-story.svg": [
+  760,
+  484
+ ],
+ "/images/courses/capstone/analysis-arc.svg": [
+  760,
+  306
+ ],
+ "/images/courses/capstone/clean-reconcile.svg": [
+  760,
+  380
+ ],
+ "/images/courses/capstone/dashboard-pages.svg": [
+  760,
+  400
+ ],
+ "/images/courses/capstone/executive-summary.svg": [
+  760,
+  380
+ ],
+ "/images/courses/capstone/grain-traps.svg": [
+  760,
+  430
+ ],
+ "/images/courses/capstone/growth-waterfall.svg": [
+  760,
+  420
+ ],
+ "/images/courses/capstone/plan-questions.svg": [
+  760,
+  430
+ ],
+ "/images/courses/capstone/profiling-checks.svg": [
+  760,
+  410
+ ],
+ "/images/courses/capstone/review-present-publish.svg": [
+  760,
+  456
+ ],
+ "/images/courses/capstone/star-schema.svg": [
+  760,
+  380
+ ],
+ "/images/courses/career/about-parts.svg": [
+  760,
+  380
+ ],
+ "/images/courses/career/bullet-formula.svg": [
+  760,
+  352
+ ],
+ "/images/courses/career/headline-formula.svg": [
+  760,
+  300
+ ],
+ "/images/courses/career/pivot-anatomy.svg": [
+  760,
+  380
+ ],
+ "/images/courses/career/question-to-tool.svg": [
+  760,
+  360
+ ],
+ "/images/courses/career/two-filters.svg": [
+  760,
+  430
+ ],
+ "/images/courses/cicd/deploy-strategies.svg": [
+  760,
+  440
+ ],
+ "/images/courses/cicd/expand-contract.svg": [
+  760,
+  340
+ ],
+ "/images/courses/cicd/image-registry.svg": [
+  760,
+  380
+ ],
+ "/images/courses/cicd/job-graph.svg": [
+  760,
+  340
+ ],
+ "/images/courses/cicd/layer-cache.svg": [
+  760,
+  380
+ ],
+ "/images/courses/cicd/pipeline-dora.svg": [
+  760,
+  400
+ ],
+ "/images/courses/cloud/average-vs-p95.svg": [
+  760,
+  360
+ ],
+ "/images/courses/cloud/latency-utilisation.svg": [
+  760,
+  360
+ ],
+ "/images/courses/cloud/pricing-layers.svg": [
+  760,
+  380
+ ],
+ "/images/courses/cloud/series-parallel.svg": [
+  760,
+  400
+ ],
+ "/images/courses/cloud/service-models.svg": [
+  760,
+  460
+ ],
+ "/images/courses/daf/analysis-cycle.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/bi-pipeline.svg": [
+  760,
+  560
+ ],
+ "/images/courses/daf/column-types.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/four-kinds.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/kolanut-erd.svg": [
+  760,
+  470
+ ],
+ "/images/courses/daf/kpi-tree.svg": [
+  760,
+  450
+ ],
+ "/images/courses/daf/mean-median.svg": [
+  760,
+  420
+ ],
+ "/images/courses/daf/region-mapping.svg": [
+  760,
+  681
+ ],
+ "/images/courses/daf/weak-strong-chart.svg": [
+  760,
+  720
+ ],
+ "/images/courses/dax/context-transition.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dax/pareto-2025.svg": [
+  760,
+  390
+ ],
+ "/images/courses/dax/time-windows.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/app-database.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/constraints.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/fixtures.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/migrations.svg": [
+  760,
+  380
+ ],
+ "/images/courses/dbapi/parameters.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/rest.svg": [
+  760,
+  420
+ ],
+ "/images/courses/dbapi/scan-search.svg": [
+  760,
+  400
+ ],
+ "/images/courses/dbapi/schema.svg": [
+  760,
+  440
+ ],
+ "/images/courses/dbapi/transactions.svg": [
+  760,
+  420
+ ],
+ "/images/courses/design-content/canva-rules.svg": [
+  760,
+  430
+ ],
+ "/images/courses/design-content/canva-sizes.svg": [
+  760,
+  340
+ ],
+ "/images/courses/design-content/capcut-workflow.svg": [
+  760,
+  420
+ ],
+ "/images/courses/design-content/caption-anatomy.svg": [
+  760,
+  420
+ ],
+ "/images/courses/design-content/content-calendar.svg": [
+  760,
+  400
+ ],
+ "/images/courses/design-content/content-pillars.svg": [
+  760,
+  360
+ ],
+ "/images/courses/design-content/one-idea-many.svg": [
+  760,
+  380
+ ],
+ "/images/courses/design-content/safe-zone.svg": [
+  760,
+  430
+ ],
+ "/images/courses/design-content/shot-list.svg": [
+  760,
+  340
+ ],
+ "/images/courses/devops-capstone/capacity.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/cost.svg": [
+  760,
+  420
+ ],
+ "/images/courses/devops-capstone/dora-freeze.svg": [
+  760,
+  446
+ ],
+ "/images/courses/devops-capstone/game-day.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/inventory.svg": [
+  760,
+  450
+ ],
+ "/images/courses/devops-capstone/outage-review.svg": [
+  760,
+  400
+ ],
+ "/images/courses/devops-capstone/slo-burn.svg": [
+  760,
+  440
+ ],
+ "/images/courses/devops-capstone/terraform-plan.svg": [
+  760,
+  420
+ ],
+ "/images/courses/digital/backup-sharing.svg": [
+  760,
+  400
+ ],
+ "/images/courses/digital/email-anatomy.svg": [
+  760,
+  470
+ ],
+ "/images/courses/digital/folders-names.svg": [
+  760,
+  400
+ ],
+ "/images/courses/digital/phishing.svg": [
+  760,
+  430
+ ],
+ "/images/courses/digital/two-step.svg": [
+  760,
+  380
+ ],
+ "/images/courses/digital/workspace-map.svg": [
+  760,
+  412
+ ],
+ "/images/courses/ds-capstone/calibration.svg": [
+  760,
+  410
+ ],
+ "/images/courses/ds-capstone/fairness-card.svg": [
+  760,
+  436
+ ],
+ "/images/courses/ds-capstone/final-presentation.svg": [
+  760,
+  340
+ ],
+ "/images/courses/ds-capstone/frame-problem.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ds-capstone/monitoring.svg": [
+  760,
+  442
+ ],
+ "/images/courses/ds-capstone/point-in-time.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ds-capstone/prediction-moment.svg": [
+  760,
+  420
+ ],
+ "/images/courses/ds-capstone/time-split.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ds-capstone/value-per-call.svg": [
+  760,
+  440
+ ],
+ "/images/courses/excel/chart-choice.svg": [
+  760,
+  664
+ ],
  "/images/courses/excel/chart.webp": [
   1310,
   620
@@ -27,9 +619,17 @@
   880,
   660
  ],
+ "/images/courses/excel/pivot-areas.svg": [
+  760,
+  600
+ ],
  "/images/courses/excel/pivot-table.webp": [
   1426,
   713
+ ],
+ "/images/courses/excel/relative-absolute.svg": [
+  760,
+  560
  ],
  "/images/courses/excel/remove-duplicates.webp": [
   820,
@@ -43,45 +643,441 @@
   950,
   220
  ],
+ "/images/courses/excel/sumifs-anatomy.svg": [
+  760,
+  600
+ ],
  "/images/courses/excel/sumifs.webp": [
   900,
   420
+ ],
+ "/images/courses/excel/xlookup-flow.svg": [
+  760,
+  560
  ],
  "/images/courses/excel/xlookup.webp": [
   1060,
   713
  ],
+ "/images/courses/experiments/confidence-intervals.svg": [
+  760,
+  330
+ ],
+ "/images/courses/experiments/did.svg": [
+  760,
+  400
+ ],
+ "/images/courses/experiments/novelty.svg": [
+  760,
+  340
+ ],
+ "/images/courses/experiments/peeking.svg": [
+  760,
+  400
+ ],
+ "/images/courses/experiments/randomisation.svg": [
+  760,
+  400
+ ],
+ "/images/courses/features/gains.svg": [
+  760,
+  450
+ ],
+ "/images/courses/features/reliability.svg": [
+  760,
+  470
+ ],
+ "/images/courses/features/snapshot-timeline.svg": [
+  760,
+  300
+ ],
+ "/images/courses/features/time-split.svg": [
+  760,
+  460
+ ],
+ "/images/courses/forecasting/decision-timeline.svg": [
+  760,
+  300
+ ],
+ "/images/courses/forecasting/holdout.svg": [
+  760,
+  260
+ ],
+ "/images/courses/forecasting/interval-order.svg": [
+  760,
+  380
+ ],
+ "/images/courses/forecasting/lag-trap.svg": [
+  760,
+  300
+ ],
+ "/images/courses/forecasting/rolling-origin.svg": [
+  760,
+  330
+ ],
+ "/images/courses/forecasting/water-series.svg": [
+  760,
+  400
+ ],
+ "/images/courses/freelancing/deliver-reviews.svg": [
+  760,
+  400
+ ],
+ "/images/courses/freelancing/find-clients.svg": [
+  760,
+  376
+ ],
+ "/images/courses/freelancing/get-paid.svg": [
+  760,
+  404
+ ],
+ "/images/courses/freelancing/growth-loop.svg": [
+  760,
+  340
+ ],
+ "/images/courses/freelancing/offer-builder.svg": [
+  760,
+  380
+ ],
+ "/images/courses/freelancing/pricing.svg": [
+  760,
+  400
+ ],
+ "/images/courses/freelancing/proposal.svg": [
+  760,
+  400
+ ],
+ "/images/courses/freelancing/scope.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/embeddings.svg": [
+  760,
+  420
+ ],
+ "/images/courses/genai/injection-layers.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/next-token.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/rag.svg": [
+  760,
+  380
+ ],
+ "/images/courses/genai/request-anatomy.svg": [
+  760,
+  400
+ ],
+ "/images/courses/genai/validation.svg": [
+  760,
+  366
+ ],
+ "/images/courses/git/commit-diff.svg": [
+  760,
+  400
+ ],
+ "/images/courses/git/git-vs-github.svg": [
+  760,
+  430
+ ],
+ "/images/courses/git/workflow-readme.svg": [
+  760,
+  430
+ ],
+ "/images/courses/import-export/air-freight-loading.jpg": [
+  1024,
+  644
+ ],
+ "/images/courses/import-export/container-port.jpg": [
+  1280,
+  853
+ ],
+ "/images/courses/import-export/journey-ten-steps.svg": [
+  760,
+  400
+ ],
+ "/images/courses/import-export/landed-cost-bars.svg": [
+  760,
+  430
+ ],
+ "/images/courses/import-export/listing-anatomy.svg": [
+  760,
+  500
+ ],
+ "/images/courses/import-export/sea-freight-ship.jpg": [
+  1280,
+  722
+ ],
+ "/images/courses/import-export/shipment-documents.svg": [
+  760,
+  330
+ ],
+ "/images/courses/internship/employers-kit.svg": [
+  760,
+  420
+ ],
+ "/images/courses/internship/fake-offers.svg": [
+  760,
+  400
+ ],
+ "/images/courses/internship/interview-journey.svg": [
+  760,
+  400
+ ],
+ "/images/courses/internship/placement-timeline.svg": [
+  760,
+  330
+ ],
+ "/images/courses/internship/star.svg": [
+  760,
+  400
+ ],
+ "/images/courses/internship/tailor-cover.svg": [
+  760,
+  430
+ ],
+ "/images/courses/internship/tracker.svg": [
+  760,
+  330
+ ],
+ "/images/courses/internship/where-to-look.svg": [
+  760,
+  380
+ ],
+ "/images/courses/linux/awk-fields.svg": [
+  760,
+  330
+ ],
+ "/images/courses/linux/cidr.svg": [
+  760,
+  330
+ ],
+ "/images/courses/linux/cron.svg": [
+  760,
+  300
+ ],
+ "/images/courses/linux/dns-http.svg": [
+  760,
+  400
+ ],
+ "/images/courses/linux/permissions.svg": [
+  760,
+  330
+ ],
+ "/images/courses/linux/pipeline.svg": [
+  760,
+  400
+ ],
+ "/images/courses/llmops/control-chart.svg": [
+  760,
+  380
+ ],
+ "/images/courses/llmops/incident-timeline.svg": [
+  760,
+  300
+ ],
+ "/images/courses/llmops/interval-width.svg": [
+  760,
+  330
+ ],
+ "/images/courses/llmops/lifecycle.svg": [
+  760,
+  430
+ ],
+ "/images/courses/llmops/paired.svg": [
+  760,
+  330
+ ],
+ "/images/courses/llmops/release-gate.svg": [
+  760,
+  440
+ ],
+ "/images/courses/ml/confusion-threshold.svg": [
+  760,
+  470
+ ],
+ "/images/courses/ml/kfold.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ml/overfitting.svg": [
+  760,
+  400
+ ],
+ "/images/courses/ml/sigmoid.svg": [
+  760,
+  380
+ ],
+ "/images/courses/ml/train-test-baseline.svg": [
+  760,
+  330
+ ],
+ "/images/courses/ml/workflow.svg": [
+  760,
+  430
+ ],
  "/images/courses/modelling/cardinality.svg": [
-  1180,
-  560
+  760,
+  700
  ],
  "/images/courses/modelling/design-steps.svg": [
-  1100,
-  250
+  760,
+  344
  ],
  "/images/courses/modelling/entity-anatomy.svg": [
-  1060,
-  470
+  760,
+  440
  ],
  "/images/courses/modelling/model-levels.svg": [
-  1180,
-  470
+  760,
+  676
  ],
  "/images/courses/modelling/normalisation.svg": [
-  1180,
-  640
+  760,
+  560
  ],
  "/images/courses/modelling/slowly-changing-dimensions.svg": [
-  1100,
-  470
+  760,
+  560
  ],
  "/images/courses/modelling/star-schema.svg": [
-  1100,
+  760,
   640
  ],
  "/images/courses/modelling/star-vs-snowflake.svg": [
-  1100,
+  760,
+  520
+ ],
+ "/images/courses/observability/burn-rate.svg": [
+  760,
+  380
+ ],
+ "/images/courses/observability/error-budget.svg": [
+  760,
   400
+ ],
+ "/images/courses/observability/good-page.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/littles-law.svg": [
+  760,
+  420
+ ],
+ "/images/courses/observability/percentiles.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/structured-logs.svg": [
+  760,
+  400
+ ],
+ "/images/courses/observability/three-signals.svg": [
+  760,
+  420
+ ],
+ "/images/courses/observability/toil.svg": [
+  760,
+  380
+ ],
+ "/images/courses/observability/trace-waterfall.svg": [
+  760,
+  380
+ ],
+ "/images/courses/pm-capstone/change-effect.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm-capstone/charter-stakeholders.svg": [
+  760,
+  446
+ ],
+ "/images/courses/pm-capstone/critical-chain.svg": [
+  760,
+  420
+ ],
+ "/images/courses/pm-capstone/cushion-percentiles.svg": [
+  760,
+  380
+ ],
+ "/images/courses/pm-capstone/decision-paper.svg": [
+  760,
+  380
+ ],
+ "/images/courses/pm-capstone/earned-value-curves.svg": [
+  760,
+  400
+ ],
+ "/images/courses/pm-capstone/forecast-range.svg": [
+  760,
+  400
+ ],
+ "/images/courses/pm-capstone/recovery-options.svg": [
+  760,
+  448
+ ],
+ "/images/courses/pm-capstone/skewed-estimates.svg": [
+  760,
+  380
+ ],
+ "/images/courses/pm/change-control.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/critical-path.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/earned-value.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/forecast.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/pert.svg": [
+  760,
+  380
+ ],
+ "/images/courses/pm/risk-emv.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/simulation.svg": [
+  760,
+  400
+ ],
+ "/images/courses/pm/triple-constraint.svg": [
+  760,
+  430
+ ],
+ "/images/courses/pm/wbs.svg": [
+  760,
+  432
+ ],
+ "/images/courses/portfolio/hosting.svg": [
+  760,
+  390
+ ],
+ "/images/courses/portfolio/page-layout.svg": [
+  760,
+  470
+ ],
+ "/images/courses/portfolio/pick-three.svg": [
+  760,
+  334
+ ],
+ "/images/courses/portfolio/post-anatomy.svg": [
+  760,
+  430
+ ],
+ "/images/courses/portfolio/project-summary.svg": [
+  760,
+  420
  ],
  "/images/courses/powerbi/added-custom.webp": [
   1920,
@@ -90,6 +1086,10 @@
  "/images/courses/powerbi/blank-report.webp": [
   1426,
   893
+ ],
+ "/images/courses/powerbi/calculate-removefilters.svg": [
+  760,
+  500
  ],
  "/images/courses/powerbi/csv-preview.webp": [
   880,
@@ -103,9 +1103,17 @@
   1920,
   560
  ],
+ "/images/courses/powerbi/filter-context.svg": [
+  760,
+  560
+ ],
  "/images/courses/powerbi/get-data.webp": [
   1920,
   1032
+ ],
+ "/images/courses/powerbi/merge-append.svg": [
+  760,
+  600
  ],
  "/images/courses/powerbi/model-view.webp": [
   1360,
@@ -119,6 +1127,10 @@
   882,
   702
  ],
+ "/images/courses/powerbi/page-layout.svg": [
+  760,
+  640
+ ],
  "/images/courses/powerbi/power-query-editor.webp": [
   1920,
   1032
@@ -131,6 +1143,10 @@
   1320,
   750
  ],
+ "/images/courses/powerbi/star-schema.svg": [
+  760,
+  500
+ ],
  "/images/courses/powerbi/table-view.webp": [
   1920,
   1032
@@ -139,13 +1155,197 @@
   840,
   420
  ],
+ "/images/courses/process/bpmn-clearance.svg": [
+  760,
+  640
+ ],
+ "/images/courses/process/days-by-channel.svg": [
+  760,
+  300
+ ],
+ "/images/courses/process/fishbone.svg": [
+  760,
+  470
+ ],
+ "/images/courses/process/variants.svg": [
+  760,
+  380
+ ],
+ "/images/courses/process/vsm-timeline.svg": [
+  760,
+  500
+ ],
+ "/images/courses/product/feedback-sources.svg": [
+  760,
+  400
+ ],
+ "/images/courses/product/funnel.svg": [
+  760,
+  430
+ ],
+ "/images/courses/product/holdout.svg": [
+  760,
+  420
+ ],
+ "/images/courses/product/interviews.svg": [
+  760,
+  400
+ ],
+ "/images/courses/product/output-outcome.svg": [
+  760,
+  440
+ ],
+ "/images/courses/product/retention.svg": [
+  760,
+  420
+ ],
+ "/images/courses/product/rice.svg": [
+  760,
+  412
+ ],
+ "/images/courses/product/roadmap.svg": [
+  760,
+  430
+ ],
+ "/images/courses/product/spec.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python-data/charts.svg": [
+  760,
+  440
+ ],
+ "/images/courses/python-data/columns-dates.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python-data/dataframe.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python-data/filter-mask.svg": [
+  760,
+  436
+ ],
+ "/images/courses/python-data/groupby.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python-data/merge.svg": [
+  760,
+  400
+ ],
+ "/images/courses/python/dictionaries-sets.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python/functions.svg": [
+  760,
+  440
+ ],
+ "/images/courses/python/how-python-runs.svg": [
+  760,
+  420
+ ],
+ "/images/courses/python/if-elif-else.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python/lists.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python/loops.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python/operators.svg": [
+  760,
+  430
+ ],
+ "/images/courses/python/string-positions.svg": [
+  760,
+  400
+ ],
+ "/images/courses/python/try-except.svg": [
+  760,
+  436
+ ],
+ "/images/courses/python/variables-types.svg": [
+  760,
+  430
+ ],
+ "/images/courses/research/apa-anatomy.svg": [
+  760,
+  420
+ ],
+ "/images/courses/research/operators.svg": [
+  760,
+  430
+ ],
+ "/images/courses/research/quote-paraphrase.svg": [
+  760,
+  448
+ ],
+ "/images/courses/research/refine-search.svg": [
+  760,
+  414
+ ],
+ "/images/courses/research/sift.svg": [
+  760,
+  390
+ ],
+ "/images/courses/research/source-strength.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/aggregates.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/case.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/clause-order.svg": [
+  760,
+  446
+ ],
+ "/images/courses/sql/cte.svg": [
+  760,
+  446
+ ],
+ "/images/courses/sql/database-anatomy.svg": [
+  760,
+  420
+ ],
+ "/images/courses/sql/group-by.svg": [
+  760,
+  380
+ ],
  "/images/courses/sql/harbourline-erd.svg": [
-  1180,
-  700
+  760,
+  640
+ ],
+ "/images/courses/sql/joins.svg": [
+  760,
+  570
+ ],
+ "/images/courses/sql/limit-offset.svg": [
+  760,
+  430
  ],
  "/images/courses/sql/mysql-workbench-layout.svg": [
-  1100,
-  640
+  760,
+  560
+ ],
+ "/images/courses/sql/order-by.svg": [
+  760,
+  430
+ ],
+ "/images/courses/sql/select.svg": [
+  760,
+  442
  ],
  "/images/courses/sql/ssms-object-explorer.webp": [
   330,
@@ -154,5 +1354,205 @@
  "/images/courses/sql/ssms-window.webp": [
   1430,
   863
+ ],
+ "/images/courses/sql/subquery.svg": [
+  760,
+  440
+ ],
+ "/images/courses/sql/where-filter.svg": [
+  760,
+  300
+ ],
+ "/images/courses/sql/window-vs-group.svg": [
+  760,
+  460
+ ],
+ "/images/courses/statistics/box-plot.svg": [
+  760,
+  280
+ ],
+ "/images/courses/statistics/confidence-intervals.svg": [
+  760,
+  450
+ ],
+ "/images/courses/statistics/correlation-panels.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/mean-median-dots.svg": [
+  760,
+  300
+ ],
+ "/images/courses/statistics/normal-curve.svg": [
+  760,
+  340
+ ],
+ "/images/courses/statistics/population-sample.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/simpson.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/transit-histogram.svg": [
+  760,
+  330
+ ],
+ "/images/courses/statistics/trend-residuals.svg": [
+  760,
+  340
+ ],
+ "/images/courses/swe-capstone/idempotency.svg": [
+  760,
+  450
+ ],
+ "/images/courses/swe-capstone/money-and-window.svg": [
+  760,
+  430
+ ],
+ "/images/courses/swe-capstone/pr-review.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe-capstone/read-and-triage.svg": [
+  760,
+  430
+ ],
+ "/images/courses/swe-capstone/reproduce-first.svg": [
+  760,
+  456
+ ],
+ "/images/courses/swe-capstone/ship-it.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe-capstone/sql-injection.svg": [
+  760,
+  440
+ ],
+ "/images/courses/swe-capstone/status-codes.svg": [
+  760,
+  440
+ ],
+ "/images/courses/swe/api-flow.svg": [
+  760,
+  420
+ ],
+ "/images/courses/swe/boundaries.svg": [
+  760,
+  360
+ ],
+ "/images/courses/swe/code-review.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/float-rounding.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/function-machine.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/git-branches.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/pytest.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/traceback.svg": [
+  760,
+  400
+ ],
+ "/images/courses/swe/validation.svg": [
+  760,
+  400
+ ],
+ "/images/courses/terraform/clickops-vs-iac.svg": [
+  760,
+  400
+ ],
+ "/images/courses/terraform/code-state-real.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/moved-block.svg": [
+  760,
+  340
+ ],
+ "/images/courses/terraform/pipeline.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/plan-symbols.svg": [
+  760,
+  380
+ ],
+ "/images/courses/terraform/workflow.svg": [
+  760,
+  300
+ ],
+ "/images/courses/web/css-rule.svg": [
+  760,
+  380
+ ],
+ "/images/courses/web/flexbox.svg": [
+  760,
+  340
+ ],
+ "/images/courses/web/js-pattern.svg": [
+  760,
+  400
+ ],
+ "/images/courses/web/publish.svg": [
+  760,
+  400
+ ],
+ "/images/courses/web/three-languages.svg": [
+  760,
+  476
+ ],
+ "/images/courses/webjs/dom-events.svg": [
+  760,
+  380
+ ],
+ "/images/courses/webjs/fetch-outcomes.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/filter-map-reduce.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/form-errors.svg": [
+  760,
+  400
+ ],
+ "/images/courses/webjs/mobile-first.svg": [
+  760,
+  400
+ ],
+ "/images/courses/webjs/money-js.svg": [
+  760,
+  380
+ ],
+ "/images/courses/webjs/page-load.svg": [
+  760,
+  420
+ ],
+ "/images/courses/webjs/semantic-html.svg": [
+  760,
+  440
+ ],
+ "/images/courses/webjs/testing.svg": [
+  760,
+  380
+ ],
+ "/images/hero-learners.jpg": [
+  1100,
+  733
  ]
 }

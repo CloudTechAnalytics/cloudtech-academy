@@ -12,7 +12,7 @@ The property company wants more than a number. Landlords ask: "How much more cou
 
 ## The concept
 
-**What linear regression learns**
+### What linear regression learns
 
 It predicts the target as a weighted sum of the features:
 
@@ -20,15 +20,15 @@ It predicts the target as a weighted sum of the features:
 
 Training finds the weights (the **coefficients**) that make the predictions as close as possible to the real rents in the training data.
 
-**The flaw: prices multiply, they don't add**
+### The flaw: prices multiply, they don't add
 
 A linear model says being serviced adds a fixed amount, say ₦1.5m, everywhere. But in reality it adds a **percentage**: about the same proportion in Kubwa as in Ikoyi, so many more naira in Ikoyi. Prices, salaries and sales usually behave like this.
 
-**The fix: model the log of the target**
+### The fix: model the log of the target
 
 Train on `np.log(rent)` and convert predictions back with `np.exp`. On the log scale, percentage effects become additive, which is exactly what a linear model can learn. A coefficient `c` then means: this feature multiplies rent by `exp(c)`, a change of `(exp(c) − 1) × 100` percent.
 
-**Reading the error**
+### Reading the error
 
 Use the same test set and the same measure (MAE) as the baselines, so the comparison is fair. Add R² to see how much of the variation the model explains.
 

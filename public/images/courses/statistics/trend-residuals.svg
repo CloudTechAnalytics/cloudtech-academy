@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" role="img" aria-label="Kolanut's monthly revenue for 18 months as dots, with a straight trend line rising about 0.73 million naira a month. Thin vertical lines show each month's residual, its distance from the line. December 2025 sits far above the line. r squared is 0.32.">
+<title>A trend line through monthly revenue, with residuals; December 2025 is far above the line.</title>
+<rect width="760" height="340" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text x="30.0" y="32.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="start" >Monthly revenue with a trend line (r² = 0.32)</text>
+<line x1="60" x2="720" y1="280.0" y2="280.0" stroke="#EDE6D8"/>
+<text x="52.0" y="284.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end" >₦30m</text>
+<line x1="60" x2="720" y1="225.0" y2="225.0" stroke="#EDE6D8"/>
+<text x="52.0" y="229.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end" >₦40m</text>
+<line x1="60" x2="720" y1="170.0" y2="170.0" stroke="#EDE6D8"/>
+<text x="52.0" y="174.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end" >₦50m</text>
+<line x1="60" x2="720" y1="115.0" y2="115.0" stroke="#EDE6D8"/>
+<text x="52.0" y="119.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end" >₦60m</text>
+<line x1="60" x2="720" y1="60.0" y2="60.0" stroke="#EDE6D8"/>
+<text x="52.0" y="64.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="end" >₦70m</text>
+<line x1="60.0" x2="720.0" y1="227.3" y2="155.1" stroke="#2F5D8A" stroke-width="2.4"/>
+<line x1="78.3" x2="78.3" y1="241.0" y2="225.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="78.3" cy="241.0" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="115.0" x2="115.0" y1="246.2" y2="221.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="115.0" cy="246.2" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="151.7" x2="151.7" y1="190.4" y2="217.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="151.7" cy="190.4" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="188.3" x2="188.3" y1="199.5" y2="213.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="188.3" cy="199.5" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="225.0" x2="225.0" y1="223.6" y2="209.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="225.0" cy="223.6" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="261.7" x2="261.7" y1="226.3" y2="205.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="261.7" cy="226.3" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="298.3" x2="298.3" y1="207.7" y2="201.3" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="298.3" cy="207.7" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="335.0" x2="335.0" y1="191.8" y2="197.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="335.0" cy="191.8" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="371.7" x2="371.7" y1="193.8" y2="193.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="371.7" cy="193.8" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="408.3" x2="408.3" y1="192.3" y2="189.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="408.3" cy="192.3" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="445.0" x2="445.0" y1="177.9" y2="185.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="445.0" cy="177.9" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="481.7" x2="481.7" y1="80.4" y2="181.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="481.7" cy="80.4" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="518.3" x2="518.3" y1="175.7" y2="177.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="518.3" cy="175.7" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="555.0" x2="555.0" y1="208.3" y2="173.2" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="555.0" cy="208.3" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="591.7" x2="591.7" y1="163.4" y2="169.1" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="591.7" cy="163.4" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="628.3" x2="628.3" y1="144.8" y2="165.1" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="628.3" cy="144.8" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="665.0" x2="665.0" y1="187.8" y2="161.1" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="665.0" cy="187.8" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<line x1="701.7" x2="701.7" y1="191.0" y2="157.1" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="701.7" cy="191.0" r="5" fill="#B38A3E" stroke="#8A6A1F"/>
+<text x="491.7" y="84.4" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start" >Dec 2025: ₦66.3m, far above the line</text>
+<text x="78.3" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle" >Jan 25</text>
+<text x="298.3" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle" >Jul 25</text>
+<text x="518.3" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle" >Jan 26</text>
+<text x="701.7" y="298.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle" >Jun 26</text>
+<text x="30.0" y="326.0" font-size="13" fill="#5E5A52" font-weight="400" text-anchor="start" >Red lines are residuals: what the trend doesn't explain. Big residuals mean a low r².</text>
+</g></svg>

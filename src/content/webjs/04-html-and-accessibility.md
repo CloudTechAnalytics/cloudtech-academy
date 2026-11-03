@@ -12,7 +12,7 @@ Accessible HTML isn't extra work: it's using the right element for each job, whi
 
 ## The concept
 
-**Semantic elements**
+### Semantic elements
 
 | Use | Instead of |
 | :-- | :-- |
@@ -22,11 +22,13 @@ Accessible HTML isn't extra work: it's using the right element for each job, whi
 | `<button>` | a clickable `<div>` (no keyboard, no role) |
 | `<label for="amount">` linked to `<input id="amount">` | placeholder text as the only label |
 
-**Forms**
+### Forms
 
 Every input needs a visible **label**. Give inputs the right `type` and `inputmode` (phones show a number pad for `inputmode="decimal"`), and connect hints and errors with `aria-describedby`.
 
-**Checking**
+![A page outline with header, nav, main (h1, table with caption, form with label, input and button) and footer; beside it, an amount field whose label is linked by for and id and whose hint is linked by aria-describedby](/images/courses/webjs/semantic-html.svg "Semantic elements give the page structure that keyboards and screen readers can use.")
+
+### Checking
 
 Use the keyboard only (Tab, Shift+Tab, Enter, Space), zoom to 200%, and run the **Lighthouse** accessibility audit in Chrome's DevTools.
 

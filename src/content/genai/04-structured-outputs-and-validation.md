@@ -12,11 +12,11 @@ Any system built on an LLM needs a layer that **checks every output** before it'
 
 ## The concept
 
-**Ask for structure**
+### Ask for structure
 
 Ask for JSON with a fixed shape, and show the shape in the prompt. Many APIs also support **tool use** or **structured output** modes that make the model fill in a defined schema, which reduces (but doesn't eliminate) malformed responses.
 
-**Validate everything**
+### Validate everything
 
 A schema library such as **pydantic** describes what a valid output looks like, then checks each response:
 
@@ -24,7 +24,7 @@ A schema library such as **pydantic** describes what a valid output looks like, 
 - Does it have the required fields?
 - Is each value allowed (for example, one of the defined categories)?
 
-**Handle failures deliberately**
+### Handle failures deliberately
 
 | Failure | Typical handling |
 | :-- | :-- |
@@ -33,6 +33,8 @@ A schema library such as **pydantic** describes what a valid output looks like, 
 | Still invalid | send to a person (a "needs review" queue), never guess |
 
 Log every failure: a rising failure rate is an early sign that a prompt change or a model update has broken something.
+
+![A flow: model output, parse JSON, validate, use it. Invalid outputs go to a single retry; if still invalid, a person reviews them.](/images/courses/genai/validation.svg "Parse, validate, retry once, then a person: never guess.")
 
 ## Example
 

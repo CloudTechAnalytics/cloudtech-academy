@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="Jobs to be done and interview questions. A job is something a person wants done, such as collecting payment quickly at their stall; features are judged by how well they help with a job. Good interview questions ask about past behaviour: tell me about the last time you saved for something, walk me through the last payment you made, what did you do when that didn't work. Weak questions are leading or hypothetical: would you use savings goals, do you like the app, what features do you want.">
+<title>Ask about the last time, not what people say they'd do.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="70.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="32.0" y="42.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">A job to be done</text>
+<text xml:space="preserve" x="32.0" y="68.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">When I'm busy at my stall, I want to get paid in seconds, so I don't lose the sale.</text>
+<text xml:space="preserve" x="16.0" y="118.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Instead of this</text>
+<text xml:space="preserve" x="388.0" y="118.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Ask this</text>
+<rect x="16.0" y="130.0" width="340.0" height="62.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="156.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“Would you use savings goals?”</text>
+<text xml:space="preserve" x="30.0" y="176.0" font-size="11.5" fill="#9B2C1F" font-weight="400" text-anchor="start">leading and hypothetical</text>
+<path d="M360.0,161.0 L384.0,161.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="130.0" width="356.0" height="62.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="402.0" y="155.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“Tell me about the last time you saved for</text>
+<text xml:space="preserve" x="402.0" y="173.1" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">something.”</text>
+<rect x="16.0" y="202.0" width="340.0" height="62.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="228.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“Do you like the app?”</text>
+<text xml:space="preserve" x="30.0" y="248.0" font-size="11.5" fill="#9B2C1F" font-weight="400" text-anchor="start">invites politeness</text>
+<path d="M360.0,233.0 L384.0,233.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="202.0" width="356.0" height="62.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="402.0" y="227.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“Walk me through the last payment you made. What</text>
+<text xml:space="preserve" x="402.0" y="245.1" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">happened?”</text>
+<rect x="16.0" y="274.0" width="340.0" height="62.0" rx="8" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="300.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“What features do you want?”</text>
+<text xml:space="preserve" x="30.0" y="320.0" font-size="11.5" fill="#9B2C1F" font-weight="400" text-anchor="start">asks for solutions</text>
+<path d="M360.0,305.0 L384.0,305.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="274.0" width="356.0" height="62.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.2"/>
+<text xml:space="preserve" x="402.0" y="299.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">“What did you do when that didn't work?”</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Past behaviour, not opinions about the future: people are poor at predicting what they'll do.</text>
+<text xml:space="preserve" x="16.0" y="386.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Then tag each interview with the job, the pain and anything surprising, and count across interviews.</text>
+</g></svg>

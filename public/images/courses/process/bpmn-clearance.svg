@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 640" width="760" height="640" role="img" aria-label="A BPMN model of Harbourline's clearance process. The Harbourline pool has lanes for Documentation, Customs broker, Terminal and Haulage. It starts when the vessel arrives; documents are checked; a gateway asks whether they are complete. If not, Harbourline requests corrected documents from the customer by message flow, waits for them, re-checks and loops back. If complete, the broker submits the declaration to Customs, waits for the duty assessment and payment confirmation, then a gateway on the customs channel leads to no inspection, document review or physical inspection. The terminal releases the container and haulage delivers it, ending the process.">
+<title>Harbourline's clearance process in BPMN, with the correction loop and the customs channel gateway.</title>
+<defs><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker><marker id="a2A2926" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2A2926"/></marker><marker id="a5E5A52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5E5A52"/></marker></defs>
+<rect width="760" height="640" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="728.0" height="70.0" rx="4" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.4"/>
+<rect x="16.0" y="16.0" width="30.0" height="70.0" rx="4" fill="#EFE4CC"/>
+<text transform="rotate(-90 31 51)" xml:space="preserve" x="31.0" y="51.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="middle">Customer</text>
+<rect x="16.0" y="100.0" width="728.0" height="400.0" rx="4" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.4"/>
+<rect x="16.0" y="100.0" width="30.0" height="400.0" rx="4" fill="#EFE4CC"/>
+<text transform="rotate(-90 31 300)" xml:space="preserve" x="31.0" y="300.0" font-size="12" fill="#2A2926" font-weight="700" text-anchor="middle">Harbourline</text>
+<line x1="46.0" y1="100.0" x2="744.0" y2="100.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="46.0" y="100.0" width="86.0" height="130.0" rx="0" fill="#F7F3EA"/>
+<text xml:space="preserve" x="52.0" y="165.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Documentation</text>
+<line x1="46.0" y1="230.0" x2="744.0" y2="230.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="46.0" y="230.0" width="86.0" height="100.0" rx="0" fill="#F7F3EA"/>
+<text xml:space="preserve" x="52.0" y="280.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Customs</text>
+<text xml:space="preserve" x="52.0" y="294.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">broker</text>
+<line x1="46.0" y1="330.0" x2="744.0" y2="330.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="46.0" y="330.0" width="86.0" height="80.0" rx="0" fill="#F7F3EA"/>
+<text xml:space="preserve" x="52.0" y="370.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Terminal</text>
+<line x1="46.0" y1="410.0" x2="744.0" y2="410.0" stroke="#CFC4B2" stroke-width="1"/>
+<rect x="46.0" y="410.0" width="86.0" height="90.0" rx="0" fill="#F7F3EA"/>
+<text xml:space="preserve" x="52.0" y="455.0" font-size="11.5" fill="#5E5A52" font-weight="700" text-anchor="start">Haulage</text>
+<rect x="16.0" y="514.0" width="728.0" height="70.0" rx="4" fill="#FFFFFF" stroke="#5E5A52" stroke-width="1.4"/>
+<rect x="16.0" y="514.0" width="30.0" height="70.0" rx="4" fill="#EFE4CC"/>
+<text transform="rotate(-90 31 549)" xml:space="preserve" x="31.0" y="549.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="middle">Customs</text>
+<circle cx="160.0" cy="150.0" r="13" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<text xml:space="preserve" x="160.0" y="182.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">vessel arrives</text>
+<path d="M173.0,150.0 L190.0,150.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<rect x="192.0" y="128.0" width="92.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.4"/>
+<text xml:space="preserve" x="238.0" y="147.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Check</text>
+<text xml:space="preserve" x="238.0" y="162.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">documents</text>
+<path d="M284.0,150.0 L304.0,150.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<polygon points="322,132 340,150 322,168 304,150" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<text xml:space="preserve" x="322.0" y="155.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">✕</text>
+<text xml:space="preserve" x="300.0" y="124.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="end">complete?</text>
+<path d="M322.0,168.0 L322.0,194.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<text xml:space="preserve" x="330.0" y="188.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">No</text>
+<rect x="270.0" y="196.0" width="108.0" height="44.0" rx="10" fill="#F3EBD8" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="324.0" y="215.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Request corrected</text>
+<text xml:space="preserve" x="324.0" y="230.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">documents</text>
+<path d="M378,218 L410,218" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<circle cx="426.0" cy="218.0" r="13" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<circle cx="426.0" cy="218.0" r="9.5" fill="none" stroke="#2A2926" stroke-width="1.2"/>
+<rect x="421.0" y="214.5" width="10.0" height="7.0" rx="0" fill="#FFFFFF"/>
+<path d="M421,214.5 L426,218.5 L431,214.5" fill="none" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="426.0" y="248.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">docs received</text>
+<path d="M439.0,218.0 L456.0,218.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<rect x="458.0" y="196.0" width="80.0" height="44.0" rx="10" fill="#F3EBD8" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="498.0" y="223.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Re-check</text>
+<path d="M498,196 L498,150 L342,150" fill="none" stroke="#9B2C1F" stroke-width="1.4" marker-end="url(#a9B2C1F)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="420.0" y="142.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="middle">rework loop</text>
+<path d="M290,196 L290,86" fill="none" stroke="#5E5A52" stroke-width="1.2" marker-end="url(#a5E5A52)" stroke-dasharray="5 4"/>
+<path d="M424,204 L424,86" fill="none" stroke="#5E5A52" stroke-width="1.2" marker-end="url(#a5E5A52)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="250.0" y="72.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">request</text>
+<text xml:space="preserve" x="432.0" y="72.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">corrected docs</text>
+<path d="M322,132 L322,114 L560,114 L560,262" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<text xml:space="preserve" x="330.0" y="110.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">Yes</text>
+<rect x="514.0" y="264.0" width="92.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.4"/>
+<text xml:space="preserve" x="560.0" y="283.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Submit</text>
+<text xml:space="preserve" x="560.0" y="298.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">declaration</text>
+<path d="M560,308 L560,532" fill="none" stroke="#5E5A52" stroke-width="1.2" marker-end="url(#a5E5A52)" stroke-dasharray="5 4"/>
+<text xml:space="preserve" x="566.0" y="524.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="start">declaration</text>
+<circle cx="648.0" cy="286.0" r="13" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<circle cx="648.0" cy="286.0" r="9.5" fill="none" stroke="#2A2926" stroke-width="1.2"/>
+<rect x="643.0" y="282.5" width="10.0" height="7.0" rx="0" fill="#FFFFFF"/>
+<path d="M643,282.5 L648,286.5 L653,282.5" fill="none" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="648.0" y="316.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">duty assessed,</text>
+<text xml:space="preserve" x="648.0" y="328.0" font-size="10.5" fill="#5E5A52" font-weight="400" text-anchor="middle">payment confirmed</text>
+<path d="M606.0,286.0 L633.0,286.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<path d="M648,548 L648,301" fill="none" stroke="#5E5A52" stroke-width="1.2" marker-end="url(#a5E5A52)" stroke-dasharray="5 4"/>
+<polygon points="700,352 718,370 700,388 682,370" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.5"/>
+<text xml:space="preserve" x="700.0" y="375.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="middle">✕</text>
+<path d="M661,286 L700,286 L700,350" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<text xml:space="preserve" x="700.0" y="400.0" font-size="11.5" fill="#2A2926" font-weight="700" text-anchor="middle">channel?</text>
+<text xml:space="preserve" x="150.0" y="548.0" font-size="11.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Green: none</text>
+<text xml:space="preserve" x="280.0" y="548.0" font-size="11.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Yellow: review</text>
+<text xml:space="preserve" x="410.0" y="548.0" font-size="11.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Red: inspect</text>
+<rect x="420.0" y="348.0" width="110.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.4"/>
+<text xml:space="preserve" x="475.0" y="367.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Release and</text>
+<text xml:space="preserve" x="475.0" y="382.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">gate-out</text>
+<path d="M682,370 L532,370" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<rect x="330.0" y="432.0" width="110.0" height="44.0" rx="10" fill="#FFFFFF" stroke="#2A2926" stroke-width="1.4"/>
+<text xml:space="preserve" x="385.0" y="451.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">Deliver to</text>
+<text xml:space="preserve" x="385.0" y="466.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="middle">customer</text>
+<path d="M420,370 L386,370 L386,430" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<circle cx="480.0" cy="454.0" r="13" fill="#FFFFFF" stroke="#2A2926" stroke-width="3.5"/>
+<path d="M440.0,454.0 L465.0,454.0" fill="none" stroke="#2A2926" stroke-width="1.4" marker-end="url(#a2A2926)"/>
+<text xml:space="preserve" x="500.0" y="458.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">container delivered</text>
+<text xml:space="preserve" x="16.0" y="606.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Solid arrows: sequence within Harbourline. Dashed arrows: messages between organisations.</text>
+<text xml:space="preserve" x="16.0" y="626.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Double circle: waiting for a message. Diamonds with ✕: exactly one path is taken.</text>
+</g></svg>

@@ -12,7 +12,7 @@ Getting from "a model in a notebook" to "a model the business uses" is where man
 
 ## The concept
 
-**A full pipeline**
+### A full pipeline
 
 Until now, you've one-hot encoded with `pd.get_dummies` before training. That's fragile: a new application has one row, so `get_dummies` can't create the same columns. A scikit-learn **ColumnTransformer** does the preparation inside the model:
 
@@ -22,15 +22,15 @@ Until now, you've one-hot encoded with `pd.get_dummies` before training. That's 
 
 Fit the whole pipeline on the training data, and it takes **raw** rows, exactly like the CSV, from then on.
 
-**Scoring and reasons**
+### Scoring and reasons
 
 For each new application, return the probability, the decision at the agreed threshold, and the top reasons. Reasons matter as much as the score: they're what a credit officer can act on and explain.
 
-**Saving and loading**
+### Saving and loading
 
 `joblib.dump(pipeline, "default_model.joblib")` saves the fitted pipeline to a file; `joblib.load` brings it back, ready to score. Record the date, the data used and the scikit-learn version alongside it.
 
-**A model card**
+### A model card
 
 A one-page description of the model: purpose, intended users, data, features (and those deliberately excluded), performance, threshold and its business basis, known limitations, fairness checks, monitoring plan, owner and review date.
 

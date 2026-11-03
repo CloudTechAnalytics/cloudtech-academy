@@ -14,6 +14,8 @@ A peer-reviewed journal article, a government statistics report and a viral What
 | Peer-reviewed journal articles, academic books | Reputable newspapers; well-known organisations' reports | Anonymous blogs, social media posts |
 | Official statistics (NBS, CBN, WHO, World Bank) | Wikipedia (good for an overview and for its references) | Sites selling something, clickbait sites |
 
+![Sources grouped as usually strong, use with care and usually avoid, followed by the five checks: who, where, when, why and what evidence](/images/courses/research/source-strength.svg "How strong is this source? Five checks decide.")
+
 "Use with care" doesn't mean "don't use". A good newspaper report is fine for recent events, but for a statistic, cite the original source the newspaper used.
 
 ## Five checks for any source
@@ -35,6 +37,8 @@ Professional fact-checkers don't decide whether a website is trustworthy by read
 - Find the **original** source of a statistic, not a page repeating it.
 
 A handy habit is **SIFT**: **S**top; **I**nvestigate the source; **F**ind better coverage; **T**race claims to the original.
+
+![SIFT: stop, investigate the source, find better coverage, and trace the claim to the original](/images/courses/research/sift.svg "SIFT: Stop, Investigate, Find better coverage, Trace.")
 
 ## Trace a claim: a worked example
 

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" role="img" aria-label="A safe way to use an AI assistant on a document you must act on: paste or attach it, ask for a short summary, ask for a table of every deadline and amount with the clause it comes from, ask for risks and what to change, then check the key points against the original text yourself before you act. Do not upload confidential documents unless your organisation approves.">
+<title>Summarise, extract, question, and then check against the source.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker><marker id="a9B2C1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9B2C1F"/></marker></defs>
+<rect width="760" height="380" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Reading a long document with an assistant</text>
+<rect x="16.0" y="42.0" width="166.0" height="124.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="38.0" cy="66.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="58.0" y="71.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="start">Paste or attach</text>
+<text xml:space="preserve" x="28.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">The text, or the file</text>
+<path d="M184.0,104.0 L200.0,104.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="42.0" width="166.0" height="124.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<circle cx="224.0" cy="66.0" r="12" fill="#B38A3E"/>
+<text xml:space="preserve" x="224.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="244.0" y="71.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">Summarise</text>
+<text xml:space="preserve" x="214.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">5 bullets: what we must</text>
+<text xml:space="preserve" x="214.0" y="115.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">do, what they must do,</text>
+<text xml:space="preserve" x="214.0" y="130.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">what could cost us</text>
+<path d="M370.0,104.0 L386.0,104.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="42.0" width="166.0" height="124.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="410.0" cy="66.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="410.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="430.0" y="71.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">Extract</text>
+<text xml:space="preserve" x="400.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Table of every date and</text>
+<text xml:space="preserve" x="400.0" y="115.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">amount, with its clause</text>
+<path d="M556.0,104.0 L572.0,104.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="42.0" width="166.0" height="124.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="596.0" cy="66.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="596.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="616.0" y="71.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="start">Ask for risks</text>
+<text xml:space="preserve" x="586.0" y="100.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">What would you change</text>
+<text xml:space="preserve" x="586.0" y="115.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">before signing?</text>
+<path d="M690,170 L690,200" fill="none" stroke="#9B2C1F" stroke-width="2" marker-end="url(#a9B2C1F)"/>
+<rect x="16.0" y="204.0" width="728.0" height="84.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.8"/>
+<circle cx="40.0" cy="232.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="40.0" y="236.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="64.0" y="238.0" font-size="15" fill="#9B2C1F" font-weight="700" text-anchor="start">Check it against the original</text>
+<text xml:space="preserve" x="64.0" y="262.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Assistants can misread, round, or slip in what's "usual" rather than what's written.</text>
+<text xml:space="preserve" x="16.0" y="322.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Before you upload a document</text>
+<rect x="16.0" y="334.0" width="728.0" height="34.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.2"/>
+<text xml:space="preserve" x="30.0" y="356.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Is it confidential (customer data, payslips, a confidentiality clause)? Only if your organisation approves the tool.</text>
+</g></svg>

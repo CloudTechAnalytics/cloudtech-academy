@@ -12,6 +12,8 @@ There's a big difference between these two requests:
 - **"Write my essay on social media regulation."** The AI does the thinking. You learn nothing, the result sounds like everyone else's, and in most courses it isn't allowed.
 - **"Here's my paragraph. List what's unclear or weak. Don't rewrite it."** You do the thinking; the AI points at problems; you fix them and get better at writing.
 
+![Asking an AI to write your essay means it does the thinking; asking it to list the problems in your draft means you do the thinking; a four-step routine of plan, write, ask for problems and declare](/images/courses/ai-students/coach-not-ghostwriter.svg "A coach lists the problems; a ghostwriter does your thinking.")
+
 The second approach keeps the work yours and keeps you within most schools' rules. Always check your course's AI policy first: if it says no AI in assessed writing, that includes feedback on drafts.
 
 ## Plan your own argument

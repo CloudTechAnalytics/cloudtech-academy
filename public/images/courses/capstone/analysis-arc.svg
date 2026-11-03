@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 306" width="760" height="306" role="img" aria-label="Every analysis project follows the same seven-stage arc: brief and plan, profile the raw data, clean and prepare, model and measures, analyse, dashboard and story, then review, present and publish. Each stage produces a named output. Keep a project folder with raw, clean, analysis and report folders, and never edit the raw files.">
+<title>Seven stages, each with an output; raw files are never edited.</title>
+
+<rect width="760" height="306" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The arc of an analysis project</text>
+<rect x="16.0" y="42.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="38.0" cy="66.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="38.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="58.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Brief and plan</text>
+<text xml:space="preserve" x="28.0" y="98.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Questions, definitions,</text>
+<text xml:space="preserve" x="28.0" y="111.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">deliverables</text>
+<rect x="202.0" y="42.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<circle cx="224.0" cy="66.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="224.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="244.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Profile</text>
+<text xml:space="preserve" x="214.0" y="98.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">A list of every data</text>
+<text xml:space="preserve" x="214.0" y="111.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">problem</text>
+<rect x="388.0" y="42.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#2F6B3F" stroke-width="1.6"/>
+<circle cx="410.0" cy="66.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="410.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="430.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Clean and prepare</text>
+<text xml:space="preserve" x="400.0" y="98.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Clean tables and a</text>
+<text xml:space="preserve" x="400.0" y="111.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">cleaning log</text>
+<rect x="574.0" y="42.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#5C4F80" stroke-width="1.6"/>
+<circle cx="596.0" cy="66.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="596.0" y="70.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="616.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Model and measures</text>
+<text xml:space="preserve" x="586.0" y="98.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">A model and tested</text>
+<text xml:space="preserve" x="586.0" y="111.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">measures</text>
+<rect x="16.0" y="138.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#9B2C1F" stroke-width="1.6"/>
+<circle cx="38.0" cy="162.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="38.0" y="166.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="58.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Analyse</text>
+<text xml:space="preserve" x="28.0" y="194.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Answers, each with a</text>
+<text xml:space="preserve" x="28.0" y="207.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">number</text>
+<rect x="202.0" y="138.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#8A6A1F" stroke-width="1.6"/>
+<circle cx="224.0" cy="162.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="224.0" y="166.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+<text xml:space="preserve" x="244.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Dashboard and</text>
+<text xml:space="preserve" x="244.0" y="175.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">story</text>
+<text xml:space="preserve" x="214.0" y="194.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">A report and an executive</text>
+<text xml:space="preserve" x="214.0" y="207.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">summary</text>
+<rect x="388.0" y="138.0" width="172.0" height="86.0" rx="10" fill="#FFFFFF" stroke="#2F5D8A" stroke-width="1.6"/>
+<circle cx="410.0" cy="162.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="410.0" y="166.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
+<text xml:space="preserve" x="430.0" y="160.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Review and present</text>
+<text xml:space="preserve" x="400.0" y="194.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">Checked, presented,</text>
+<text xml:space="preserve" x="400.0" y="207.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="start">published</text>
+<rect x="574.0" y="138.0" width="172.0" height="86.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="586.0" y="160.0" font-size="12" fill="#8A6A1F" font-weight="700" text-anchor="start">Project folder</text>
+<rect x="586.0" y="170.0" width="36.6" height="22.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="592.0" y="185.0" font-size="11" fill="#9B2C1F" font-weight="700" text-anchor="start">raw/</text>
+<rect x="666.0" y="170.0" width="49.0" height="22.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="672.0" y="185.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="start">clean/</text>
+<rect x="586.0" y="196.0" width="67.4" height="22.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="592.0" y="211.0" font-size="11" fill="#2F5D8A" font-weight="700" text-anchor="start">analysis/</text>
+<rect x="666.0" y="196.0" width="55.1" height="22.0" rx="6" fill="#FFFFFF"/>
+<text xml:space="preserve" x="672.0" y="211.0" font-size="11" fill="#5C4F80" font-weight="700" text-anchor="start">report/</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Raw is never edited, so you can always start again.</text>
+<text xml:space="preserve" x="16.0" y="286.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">Use whichever tools you like: Excel, Power BI, SQL or Python. What's assessed is the quality of the answers.</text>
+</g></svg>

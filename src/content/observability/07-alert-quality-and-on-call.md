@@ -12,11 +12,11 @@ Alert fatigue is dangerous: people stop trusting alerts, acknowledge without loo
 
 ## The concept
 
-**What makes a good page**
+### What makes a good page
 
 Every page should be: **urgent** (needs action now), **actionable** (a person can do something), and **real** (rarely a false alarm). Anything else should be a ticket, a dashboard, or deleted.
 
-**Measure alerts**
+### Measure alerts
 
 | Measure | Question |
 | :-- | :-- |
@@ -25,11 +25,13 @@ Every page should be: **urgent** (needs action now), **actionable** (a person ca
 | Night pages | how often does it wake people? |
 | Time to acknowledge | is it being taken seriously? |
 
-**Symptoms, not causes**
+### Symptoms, not causes
 
 Page on what users experience (SLO burn rate, lesson 6). High CPU, a busy queue, one host briefly unreachable: these are causes or noise; they belong on dashboards unless they directly threaten users.
 
-**Sustainable on-call**
+![A decision flow: an alert that isn't urgent becomes a ticket, one that isn't actionable goes on a dashboard or is deleted, one that isn't real gets fixed; only urgent, actionable, real alerts page. Page on symptoms such as SLO burn, not causes such as high CPU](/images/courses/observability/good-page.svg "A page must be urgent, actionable and real.")
+
+### Sustainable on-call
 
 A small number of pages per shift, a rotation with enough people, handover notes, and time after a bad night to recover. Every page should be reviewed weekly: keep it, fix it, or delete it.
 

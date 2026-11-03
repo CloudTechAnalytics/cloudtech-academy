@@ -10,7 +10,7 @@ To review a Terraform change, you need to read the code it changes. And the best
 
 ## The concept
 
-**HCL**
+### HCL
 
 Terraform files (`.tf`) use HashiCorp Configuration Language. The main building block is a **resource**: a type, a name, and arguments.
 
@@ -42,7 +42,7 @@ resource "aws_lb_target_group_attachment" "api" {
 - `aws_instance.api` is the resource's **address**; with `count = 4`, its instances are `aws_instance.api[0]` to `[3]`.
 - `aws_instance.api[count.index].id` is a **reference**: Terraform works out the order (create the servers before attaching them).
 
-**The workflow**
+### The workflow
 
 | Command | Does |
 | :-- | :-- |
@@ -53,6 +53,8 @@ resource "aws_lb_target_group_attachment" "api" {
 | `terraform apply` | make the changes (after showing the plan again) |
 
 Nothing changes until `apply`. In a team, `plan` runs automatically on every pull request, and `apply` runs from the pipeline after review.
+
+![Four steps: terraform init, fmt and validate, terraform plan (which changes nothing), terraform apply (which changes real infrastructure), with an example plan command.](/images/courses/terraform/workflow.svg "The workflow: plan is safe any time; apply runs after review.")
 
 ## Example
 

@@ -10,19 +10,21 @@ A customer's past is the best clue to their next order. Customers who refused pa
 
 ## The concept
 
-**Point in time**
+### Point in time
 
 For each order, a history feature must use only events that happened **before** the order time. For failures, the event is when the delivery **failed** (`resolved_at`), not when the earlier order was placed.
 
-**The shortcut and why it's wrong**
+### The shortcut and why it's wrong
 
 The usual pandas idiom, a cumulative sum of earlier orders' outcomes, counts the outcome of every earlier order, including ones still out for delivery. It's a small leak, but it's systematic: it's always in the direction that makes the model look better.
 
-**`merge_asof`**
+![One patient's timeline showing that a point-in-time feature counts only outcomes known at booking, while the cumulative-sum shortcut leaks a later result](/images/courses/ds-capstone/point-in-time.svg "Count only what was known at the time, not what was booked earlier.")
+
+### `merge_asof`
 
 `pd.merge_asof` joins each order to the most recent row of another table **at or before** its time, per customer. With a running count of failures timed by `resolved_at`, it gives the number of failures known at checkout. `allow_exact_matches=False` makes it strictly before.
 
-**The features**
+### The features
 
 | Feature | Meaning |
 | :-- | :-- |

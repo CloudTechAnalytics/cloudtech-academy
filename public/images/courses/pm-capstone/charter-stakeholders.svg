@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="A project charter says what the project is for: the objective, success criteria with a date and a budget, what is in and out of scope, and the constraints. Stakeholders are placed on an influence and interest grid and each is engaged according to what they care about. The invented example is a school building a science lab.">
+<title>Charter and stakeholder grid (invented example: a school science lab).</title>
+
+<rect width="760" height="446" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A charter in five lines (invented example)</text>
+<rect x="16.0" y="40.0" width="728.0" height="38.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="64.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Objective</text>
+<text xml:space="preserve" x="190.0" y="64.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Open a working science lab for senior classes</text>
+<rect x="16.0" y="84.0" width="728.0" height="38.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="108.0" font-size="12.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Success criteria</text>
+<text xml:space="preserve" x="190.0" y="108.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Open on 4 September, within ₦18m, safety inspection passed</text>
+<rect x="16.0" y="128.0" width="728.0" height="38.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="152.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">In scope</text>
+<text xml:space="preserve" x="190.0" y="152.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Room, benches, gas and water, equipment, staff training</text>
+<rect x="16.0" y="172.0" width="728.0" height="38.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="196.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Out of scope</text>
+<text xml:space="preserve" x="190.0" y="196.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">A second lab, a greenhouse, new classrooms</text>
+<rect x="16.0" y="216.0" width="728.0" height="38.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.4"/>
+<text xml:space="preserve" x="30.0" y="240.0" font-size="12.5" fill="#5C4F80" font-weight="700" text-anchor="start">Constraints</text>
+<text xml:space="preserve" x="190.0" y="240.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">The date is fixed; the inspector sets her own timetable</text>
+<text xml:space="preserve" x="16.0" y="280.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Who can help, who can block</text>
+<rect x="40.0" y="294.0" width="230.0" height="110.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.4"/>
+<line x1="155.0" y1="294.0" x2="155.0" y2="404.0" stroke="#CFC4B2" stroke-width="1"/>
+<line x1="40.0" y1="349.0" x2="270.0" y2="349.0" stroke="#CFC4B2" stroke-width="1"/>
+<text xml:space="preserve" x="97.0" y="324.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">Keep satisfied</text>
+<text xml:space="preserve" x="212.0" y="324.0" font-size="11" fill="#2F6B3F" font-weight="700" text-anchor="middle">Manage closely</text>
+<text xml:space="preserve" x="97.0" y="380.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">Monitor</text>
+<text xml:space="preserve" x="212.0" y="380.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">Keep informed</text>
+<text xml:space="preserve" x="155.0" y="420.0" font-size="11" fill="#5E5A52" font-weight="400" text-anchor="middle">Interest →</text>
+<text xml:space="preserve" x="300.0" y="308.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Head teacher (sponsor)</text>
+<text xml:space="preserve" x="300.0" y="325.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">wants the date; show status and decisions weekly</text>
+<text xml:space="preserve" x="300.0" y="344.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Safety inspector</text>
+<text xml:space="preserve" x="300.0" y="361.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">wants complete paperwork; send it early and complete</text>
+<text xml:space="preserve" x="300.0" y="380.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Science teachers</text>
+<text xml:space="preserve" x="300.0" y="397.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">want the right equipment; involve them in specifications</text>
+<text xml:space="preserve" x="300.0" y="416.0" font-size="12.5" fill="#2A2926" font-weight="700" text-anchor="start">Parents</text>
+<text xml:space="preserve" x="300.0" y="433.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">want to know when; a short update each month</text>
+</g></svg>

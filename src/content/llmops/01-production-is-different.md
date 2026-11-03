@@ -12,7 +12,7 @@ Nothing in the original evaluation was wrong. The world around the assistant cha
 
 ## The concept
 
-**What changes after launch**
+### What changes after launch
 
 | Change | Example | Who controls it |
 | :-- | :-- | :-- |
@@ -21,16 +21,18 @@ Nothing in the original evaluation was wrong. The world around the assistant cha
 | **Your data** | help articles edited, the search index rebuilt | you, often another team |
 | **Your users** | new questions, new attacks, new languages | nobody |
 
-**Offline and online evaluation**
+### Offline and online evaluation
 
 - **Offline**: a fixed test suite, run before every release. It tells you whether a change is safe to ship.
 - **Online**: measurements of live traffic (refusals, hand-overs, latency, feedback, graded samples). It tells you whether something has gone wrong since.
 
 You need both. Offline tests can't see a provider's update; online metrics can't stop a bad release before customers see it.
 
-**The lifecycle**
+### The lifecycle
 
 Change → offline regression suite → release gate → gradual rollout → online monitoring → incident response → new test cases from what went wrong → back to the suite.
+
+![Six steps in a loop: change, regression suite and release gate (offline), then gradual rollout, monitoring and incident response (online), with every incident adding new test cases.](/images/courses/llmops/lifecycle.svg "Offline tests before release, online monitoring after, and incidents feeding back into the suite.")
 
 ## Example
 

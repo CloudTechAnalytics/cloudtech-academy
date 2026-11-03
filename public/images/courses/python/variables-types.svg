@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" role="img" aria-label="Variables are labelled boxes holding values, and every value has a type. A variable named course holds the text Economics, a str; credits holds 4, an int; gpa holds 3.6, a float; enrolled holds True, a bool; and nothing holds None. Converting between types: int of the text 120 gives the number 120; str of 12 gives the text 12; float of the text 2.5 gives 2.5; int of 2.6 drops the decimal part and gives 2. Booleans start with a capital letter.">
+<title>A variable is a labelled box; every value has a type, and you can convert between types.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="430" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="86.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">course</text>
+<rect x="16.0" y="38.0" width="136.0" height="66.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="84.0" y="78.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">"Economics"</text>
+<text xml:space="preserve" x="84.0" y="126.0" font-size="13" fill="#2F5D8A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">str</text>
+<text xml:space="preserve" x="84.0" y="144.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">text</text>
+<text xml:space="preserve" x="234.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">credits</text>
+<rect x="164.0" y="38.0" width="136.0" height="66.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="232.0" y="78.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">4</text>
+<text xml:space="preserve" x="232.0" y="126.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">int</text>
+<text xml:space="preserve" x="232.0" y="144.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">whole number</text>
+<text xml:space="preserve" x="382.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">gpa</text>
+<rect x="312.0" y="38.0" width="136.0" height="66.0" rx="8" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="380.0" y="78.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">3.6</text>
+<text xml:space="preserve" x="380.0" y="126.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">float</text>
+<text xml:space="preserve" x="380.0" y="144.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">decimal number</text>
+<text xml:space="preserve" x="530.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">enrolled</text>
+<rect x="460.0" y="38.0" width="136.0" height="66.0" rx="8" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<text xml:space="preserve" x="528.0" y="78.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">True</text>
+<text xml:space="preserve" x="528.0" y="126.0" font-size="13" fill="#5C4F80" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">bool</text>
+<text xml:space="preserve" x="528.0" y="144.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">True or False</text>
+<text xml:space="preserve" x="678.0" y="28.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">nothing</text>
+<rect x="608.0" y="38.0" width="136.0" height="66.0" rx="8" fill="#F2EFE8" stroke="#5E5A52" stroke-width="1.5"/>
+<text xml:space="preserve" x="676.0" y="78.0" font-size="16" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">None</text>
+<text xml:space="preserve" x="676.0" y="126.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', Consolas, monospace">NoneType</text>
+<text xml:space="preserve" x="676.0" y="144.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="middle">no value yet</text>
+<text xml:space="preserve" x="16.0" y="190.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Converting between types</text>
+<rect x="16.0" y="204.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="232.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">int("120")</text>
+<path d="M176.0,228.0 L212.0,228.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="222.0" y="232.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">120</text>
+<text xml:space="preserve" x="30.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">text → whole number</text>
+<rect x="388.0" y="204.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="232.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">str(12)</text>
+<path d="M548.0,228.0 L584.0,228.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="594.0" y="232.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"12"</text>
+<text xml:space="preserve" x="402.0" y="254.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">number → text</text>
+<rect x="16.0" y="278.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="306.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">float("2.5")</text>
+<path d="M176.0,302.0 L212.0,302.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="222.0" y="306.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2.5</text>
+<text xml:space="preserve" x="30.0" y="328.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">text → decimal</text>
+<rect x="388.0" y="278.0" width="356.0" height="62.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="402.0" y="306.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">int(2.6)</text>
+<path d="M548.0,302.0 L584.0,302.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<text xml:space="preserve" x="594.0" y="306.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2</text>
+<text xml:space="preserve" x="402.0" y="328.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">drops the decimal part</text>
+<text xml:space="preserve" x="16.0" y="372.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Names: lowercase with underscores (final_score), starting with a letter. Booleans are capitalised: True, False.</text>
+</g></svg>

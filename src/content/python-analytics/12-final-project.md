@@ -14,7 +14,7 @@ This lesson sets up the project and gets you started on it. The project itself i
 
 ## The concept
 
-**Customer health: recency, frequency, value**
+### Customer health: recency, frequency, value
 
 A simple, widely used way to judge customers is **RFM**:
 
@@ -24,15 +24,15 @@ A simple, widely used way to judge customers is **RFM**:
 
 Each is one `groupby` on the orders. Together they say who's healthy and who's slipping.
 
-**Change per customer**
+### Change per customer
 
 The same H1-against-H1 comparison you made for regions in lesson 9 works per customer: a pivot table of revenue by customer and year, plus a `change` column. Sorting by `change` lists the biggest fallers first. Merging in customer details shows **who** they are and where.
 
-**Explaining a total with its parts**
+### Explaining a total with its parts
 
 When a region falls, ask how much of the fall comes from its biggest movers. If two customers account for most of it, the fix is two phone calls, not a regional strategy.
 
-**A notebook someone else can follow**
+### A notebook someone else can follow
 
 Structure the project notebook the way a reader thinks:
 

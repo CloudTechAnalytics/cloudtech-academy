@@ -9,6 +9,7 @@ import { BUNDLED_COURSES } from "./content";
 import { PRACTICE_PROJECTS } from "./content/projects";
 import { TRACKS } from "./content/tracks";
 import { SITE } from "./lib/site";
+import { isPaid } from "./lib/commerce";
 
 const courses = BUNDLED_COURSES.filter((c) => c.published);
 
@@ -17,13 +18,15 @@ export const ROUTES = [
   "/",
   "/courses",
   ...courses.map((c) => `/courses/${c.slug}`),
-  ...courses.flatMap((c) => publishedLessons(c).map((l) => `/learn/${c.slug}/${l.slug}`)),
+  // Paid courses' lessons are never prerendered: their text isn't in the site files.
+  ...courses.filter((c) => !isPaid(c)).flatMap((c) => publishedLessons(c).map((l) => `/learn/${c.slug}/${l.slug}`)),
   "/students",
-  "/tracks",
-  ...TRACKS.map((t) => `/tracks/${t.slug}`),
+  "/programmes",
+  ...TRACKS.map((t) => `/programmes/${t.slug}`),
   "/projects",
   ...PRACTICE_PROJECTS.map((p) => `/projects/${p.id}`),
   "/certificates",
+  "/verify",
   "/about",
 ];
 

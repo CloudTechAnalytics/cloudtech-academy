@@ -19,6 +19,8 @@ That's what matters about ATS. You may have heard that "robots reject 75% of CVs
 
 Good news: the CV that works for the software is the same one that works for the person. Simple, clear and specific.
 
+![Your CV is read first by software that files it and makes it searchable, then by a person who skims it in under a minute; a one-column CV with plain headings works for both, while a sidebar template with photo, skill bars and icons can be misread](/images/courses/career/two-filters.svg "The same CV, built two ways: one the software can read, one it can't.")
+
 ## What an ATS-friendly CV looks like
 
 Here is a complete one-page CV for a recent graduate applying for a junior data analyst role. It's fictional, but everything in it is the kind of thing a real graduate can write.
@@ -86,6 +88,8 @@ A reliable formula: **action verb + what you did + a result, ideally with a numb
 | In charge of stock taking | Ran monthly stock counts for 400+ product lines and cut count errors by half |
 | Helped with reports | Built a weekly sales report in Excel that cut preparation time from 3 hours to 20 minutes |
 
+![A bullet is an action verb plus what you did plus a result with a number, with three before-and-after examples](/images/courses/career/bullet-formula.svg "Action verb + what you did + a result, ideally with a number.")
+
 Strong verbs to start with: *built, cut, grew, increased, reduced, resolved, organised, trained, led, launched, analysed, created, improved, managed, delivered*.
 
 **Where do the numbers come from?** Things you can count or estimate honestly: how many customers a day, how many people you trained, how big the list was, how much time something took before and after. "About 30 a day" is fine if it's true. A number you can't explain in an interview is worse than no number.
@@ -94,7 +98,7 @@ Strong verbs to start with: *built, cut, grew, increased, reduced, resolved, org
 
 AI assistants like ChatGPT, Claude or Gemini are good at **rewording** and **comparing**. They're dangerous at **making things up**, and a CV is the worst place for that. So give them the facts, and tell them the rules.
 
-**Prompt 1: rewrite bullets, honestly**
+### Prompt 1: rewrite bullets, honestly
 
 ```text
 I'm updating my CV. Rewrite these bullet points as achievements: start each
@@ -120,7 +124,7 @@ A good answer looks like this:
 
 Now **you** fill in the real numbers, or delete the gap if you don't know.
 
-**Prompt 2: tailor to a job advert**
+### Prompt 2: tailor to a job advert
 
 ```text
 Here is a job advert and my CV. List the 6 most important skills or

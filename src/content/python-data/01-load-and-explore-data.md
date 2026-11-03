@@ -23,6 +23,8 @@ orders = pd.read_csv(url)
 
 `orders` is now a **DataFrame**: a table with rows and named columns. `pd` is the usual short name for pandas.
 
+![A small DataFrame with named columns, a row index and one type per column, and the six first-look commands: head, shape, info, describe, value_counts and nunique](/images/courses/python-data/dataframe.svg "A DataFrame is a table: named columns, a row index, one type per column.")
+
 ## Take a first look
 
 Run each line in its own cell:

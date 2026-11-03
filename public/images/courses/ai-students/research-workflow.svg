@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="A research workflow with AI: step one, ask AI for an overview and search terms but no references; step two, take the terms to Google Scholar or your library and find real sources yourself; step three, ask AI to summarise a real article with exact quotes, then check each point against the source; step four, log every source you use. AI points to research; it does not replace it.">
+<title>AI points to the research; you find, read and check the sources.</title>
+
+<rect width="760" height="400" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Where AI fits, and where you take over</text>
+<rect x="16.0" y="42.0" width="728.0" height="66.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<circle cx="40.0" cy="75.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="79.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="64.0" y="70.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Overview and search terms</text>
+<text xml:space="preserve" x="64.0" y="92.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Ask AI. Say: don't give me references.</text>
+<rect x="660.0" y="62.0" width="70.0" height="26.0" rx="6" fill="#8A6A1F"/>
+<text xml:space="preserve" x="695.0" y="80.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">AI</text>
+<rect x="16.0" y="118.0" width="728.0" height="66.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<circle cx="40.0" cy="151.0" r="12" fill="#2F5D8A"/>
+<text xml:space="preserve" x="40.0" y="155.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="64.0" y="146.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Find real sources</text>
+<text xml:space="preserve" x="64.0" y="168.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Google Scholar, library portal, trusted organisations.</text>
+<rect x="660.0" y="138.0" width="70.0" height="26.0" rx="6" fill="#2F5D8A"/>
+<text xml:space="preserve" x="695.0" y="156.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">YOU</text>
+<rect x="16.0" y="194.0" width="728.0" height="66.0" rx="10" fill="#EEEAF5" stroke="#5C4F80" stroke-width="1.5"/>
+<circle cx="40.0" cy="227.0" r="12" fill="#5C4F80"/>
+<text xml:space="preserve" x="40.0" y="231.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="64.0" y="222.0" font-size="14" fill="#5C4F80" font-weight="700" text-anchor="start">Summarise, then check</text>
+<text xml:space="preserve" x="64.0" y="244.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">AI summarises with quotes; you compare with the source.</text>
+<rect x="660.0" y="214.0" width="70.0" height="26.0" rx="6" fill="#5C4F80"/>
+<text xml:space="preserve" x="695.0" y="232.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">BOTH</text>
+<rect x="16.0" y="270.0" width="728.0" height="66.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<circle cx="40.0" cy="303.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="307.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="64.0" y="298.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Keep a research log</text>
+<text xml:space="preserve" x="64.0" y="320.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">One line per source: who, what it says, where it's used.</text>
+<rect x="660.0" y="290.0" width="70.0" height="26.0" rx="6" fill="#2F6B3F"/>
+<text xml:space="preserve" x="695.0" y="308.0" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">YOU</text>
+<text xml:space="preserve" x="16.0" y="362.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Every fact and reference in your work comes from a source you found and read yourself.</text>
+<text xml:space="preserve" x="16.0" y="384.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="start">Open every link an AI search gives you: summaries can misstate what a page says.</text>
+</g></svg>

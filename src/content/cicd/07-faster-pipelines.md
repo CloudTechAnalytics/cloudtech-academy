@@ -10,16 +10,16 @@ In June, a change took about 20 minutes to get through Tallybook's new pipeline.
 
 ## The concept
 
-**Measure by step**
+### Measure by step
 
 Total pipeline time is the sum of its steps (plus time queued waiting for a machine). Speed up the biggest step first.
 
-**Caching**
+### Caching
 
 - **Dependency cache**: save the downloaded packages between runs, keyed on the lock file, so `npm ci` only downloads when dependencies change.
 - **Image layer cache**: reuse unchanged layers from previous builds (lesson 2), which only helps if the Dockerfile is ordered well (lesson 3).
 
-**Other levers**
+### Other levers
 
 Run independent steps in parallel, split slow test suites across machines, and avoid doing work twice (for example, building the image in one job and rebuilding it in another).
 

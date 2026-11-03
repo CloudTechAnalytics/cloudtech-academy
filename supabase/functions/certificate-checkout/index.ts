@@ -14,7 +14,9 @@ Deno.serve(async (req) => {
     const { orderId, returnUrl } = await req.json();
     if (typeof returnUrl !== "string" || !ALLOWED_RETURN.some((r) => r.test(returnUrl))) return json({ error: "Invalid return address." }, 400);
 
-    const { data: order } = await admin().from("certificate_orders").select("*").eq("id", orderId).eq("user_id", user.id).maybeSingle();
+    // A certificate order or a course order. The amount always comes from the order, never from the browser.
+    let { data: order } = await admin().from("certificate_orders").select("*").eq("id", orderId).eq("user_id", user.id).maybeSingle();
+    if (!order) ({ data: order } = await admin().from("course_orders").select("*").eq("id", orderId).eq("user_id", user.id).maybeSingle());
     if (!order) return json({ error: "Order not found." }, 404);
     if (order.status !== "pending") return json({ error: "This order is already settled." }, 409);
 

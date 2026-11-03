@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-label="A game day is a planned drill that breaks things in a controlled way. Each drill has a scenario, a success criterion and, where it matters, a target time such as a recovery time objective. A failed drill is a success for the game day because the problem was found early; each failure becomes an action with an owner and a date, then a re-test. The readiness decision is go, no-go or go with conditions, with the conditions and dates written down.">
+<title>Drill, record, fix and re-test; then go, no-go or go with conditions.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="440" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="26.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A game day drill (invented example)</text>
+<rect x="16.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="64.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Scenario</text>
+<text xml:space="preserve" x="28.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Kill the primary</text>
+<text xml:space="preserve" x="28.0" y="101.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">database</text>
+<rect x="202.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="64.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Success criterion</text>
+<text xml:space="preserve" x="214.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Checkout recovers</text>
+<rect x="388.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="64.0" font-size="12.5" fill="#2F5D8A" font-weight="700" text-anchor="start">Target time (RTO)</text>
+<text xml:space="preserve" x="400.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">within 15 minutes</text>
+<rect x="574.0" y="40.0" width="170.0" height="74.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="64.0" font-size="12.5" fill="#9B2C1F" font-weight="700" text-anchor="start">What happened</text>
+<text xml:space="preserve" x="586.0" y="86.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">Recovered in 41 minutes</text>
+<text xml:space="preserve" x="16.0" y="150.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">A failed drill is a success for the game day</text>
+<rect x="16.0" y="164.0" width="170.0" height="58.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="188.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">Fail</text>
+<text xml:space="preserve" x="28.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Found before the real event</text>
+<path d="M188.0,193.0 L200.0,193.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.0" y="164.0" width="170.0" height="58.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.0" y="188.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Action</text>
+<text xml:space="preserve" x="214.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">An owner and a date</text>
+<path d="M374.0,193.0 L386.0,193.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="388.0" y="164.0" width="170.0" height="58.0" rx="10" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="400.0" y="188.0" font-size="14" fill="#2F5D8A" font-weight="700" text-anchor="start">Re-test</text>
+<text xml:space="preserve" x="400.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Prove it's fixed</text>
+<path d="M560.0,193.0 L572.0,193.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="574.0" y="164.0" width="170.0" height="58.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="586.0" y="188.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Pass</text>
+<text xml:space="preserve" x="586.0" y="208.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Now it counts</text>
+<text xml:space="preserve" x="16.0" y="260.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">The decision</text>
+<rect x="16.0" y="274.0" width="232.0" height="84.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.6"/>
+<text xml:space="preserve" x="30.0" y="300.0" font-size="14" fill="#2F6B3F" font-weight="700" text-anchor="start">Go</text>
+<text xml:space="preserve" x="30.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">Everything done, nothing open</text>
+<rect x="264.0" y="274.0" width="232.0" height="84.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="278.0" y="300.0" font-size="14" fill="#8A6A1F" font-weight="700" text-anchor="start">Go with conditions</text>
+<text xml:space="preserve" x="278.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">"Go if the restore re-test passes</text>
+<text xml:space="preserve" x="278.0" y="336.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">by 20 Nov"</text>
+<rect x="512.0" y="274.0" width="232.0" height="84.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.6"/>
+<text xml:space="preserve" x="526.0" y="300.0" font-size="14" fill="#9B2C1F" font-weight="700" text-anchor="start">No-go</text>
+<text xml:space="preserve" x="526.0" y="322.0" font-size="11.5" fill="#2A2926" font-weight="400" text-anchor="start">A blocker with no fix in time</text>
+<text xml:space="preserve" x="16.0" y="394.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">A good decision lists what's done, what's open, and the conditions with dates.</text>
+<text xml:space="preserve" x="16.0" y="416.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">"Go if X by date" is more useful than "mostly ready".</text>
+</g></svg>

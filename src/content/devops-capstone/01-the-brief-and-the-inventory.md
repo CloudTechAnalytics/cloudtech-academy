@@ -14,19 +14,19 @@ The company is **Kasuwa**, the online shop from the Data Scientist Capstone. Its
 
 ## The concept
 
-**Start with an inventory**
+### Start with an inventory
 
 You can't secure, scale or cost what you don't know exists. List every resource, its environment, who owns it, how it's managed and what it costs.
 
-**Managed by Terraform, or by hand?**
+### Managed by Terraform, or by hand?
 
 Resources created by hand (in the console or during an incident) aren't reviewed, aren't reproducible and drift silently. Anything that matters in production should be in Terraform.
 
-**Ownership and safety**
+### Ownership and safety
 
 Every resource needs an owner, a team that's answerable for it. And anything public or unencrypted needs a reason.
 
-**The plan for the eight weeks**
+### The plan for the eight weeks
 
 | Area | Question | Lesson |
 | :-- | :-- | :-- |
@@ -38,6 +38,8 @@ Every resource needs an owner, a team that's answerable for it. And anything pub
 | Reliability | Will we know before customers do? | 6 |
 | Cost | What can we stop paying for? | 7 |
 | Game day | Are we ready? | 8 |
+
+![An invented resource inventory with owner, how it is managed and cost, flagging hand-made and ownerless resources, three questions to ask of each, and the plan for the weeks before the event](/images/courses/devops-capstone/inventory.svg "Inventory first: owner, how it's managed, cost, and risk flags.")
 
 ## Example
 

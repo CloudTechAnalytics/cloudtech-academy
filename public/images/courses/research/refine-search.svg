@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 414" width="760" height="414" role="img" aria-label="Refining a search in steps. Searching with a whole question returns forums and opinion. Keywords return more relevant pages. Adding the phrases experts use returns reports. Limiting to an official site returns the organisation's own data. The same keywords in Google Scholar return journal articles. Each search uses what the last one taught.">
+<title>Five focused searches, each using what the last one taught you.</title>
+
+<rect width="760" height="414" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<text xml:space="preserve" x="16.0" y="28.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Example: does fuel price affect food prices in Nigeria?</text>
+<rect x="16.0" y="42.0" width="728.0" height="62.0" rx="10" fill="#F6E3E0" stroke="#9B2C1F" stroke-width="1.4"/>
+<circle cx="40.0" cy="73.0" r="12" fill="#9B2C1F"/>
+<text xml:space="preserve" x="40.0" y="77.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<text xml:space="preserve" x="64.0" y="68.0" font-size="13.5" fill="#9B2C1F" font-weight="700" text-anchor="start">Whole question</text>
+<text xml:space="preserve" x="64.0" y="90.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">does a rise in fuel price make food more expensive in Nigeria</text>
+<text xml:space="preserve" x="728.0" y="80.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">Forums and opinion pieces</text>
+<rect x="16.0" y="112.0" width="728.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<circle cx="40.0" cy="143.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="147.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<text xml:space="preserve" x="64.0" y="138.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Keywords</text>
+<text xml:space="preserve" x="64.0" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">fuel price food prices Nigeria</text>
+<text xml:space="preserve" x="728.0" y="150.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">Mostly newspapers</text>
+<rect x="16.0" y="182.0" width="728.0" height="62.0" rx="10" fill="#F3EBD8" stroke="#8A6A1F" stroke-width="1.4"/>
+<circle cx="40.0" cy="213.0" r="12" fill="#8A6A1F"/>
+<text xml:space="preserve" x="40.0" y="217.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<text xml:space="preserve" x="64.0" y="208.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Experts' words</text>
+<text xml:space="preserve" x="64.0" y="230.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">"fuel subsidy" "food inflation" Nigeria</text>
+<text xml:space="preserve" x="728.0" y="220.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">Reports and analysis</text>
+<rect x="16.0" y="252.0" width="728.0" height="62.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<circle cx="40.0" cy="283.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="287.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<text xml:space="preserve" x="64.0" y="278.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Official site</text>
+<text xml:space="preserve" x="64.0" y="300.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">food inflation site:nigerianstat.gov.ng</text>
+<text xml:space="preserve" x="728.0" y="290.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">The statistics office's own data</text>
+<rect x="16.0" y="322.0" width="728.0" height="62.0" rx="10" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<circle cx="40.0" cy="353.0" r="12" fill="#2F6B3F"/>
+<text xml:space="preserve" x="40.0" y="357.5" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<text xml:space="preserve" x="64.0" y="348.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start">Google Scholar</text>
+<text xml:space="preserve" x="64.0" y="370.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">fuel prices food inflation Nigeria</text>
+<text xml:space="preserve" x="728.0" y="360.0" font-size="12.5" fill="#5E5A52" font-weight="400" text-anchor="end">Journal articles to read and cite</text>
+<text xml:space="preserve" x="16.0" y="406.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Better words give better sources.</text>
+</g></svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 446" width="760" height="446" role="img" aria-label="A CTE is a named step defined at the top of a query with WITH, then used like a table, so a multi-step query reads top to bottom like a recipe. In the example, step one, delivered, keeps delivered shipments; step two, per_customer, totals containers for each customer; the final SELECT picks the biggest. Each step can be run and checked on its own.">
+<title>WITH names each step, so a long query reads top to bottom.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="446" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="440.0" height="232.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="40.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">WITH delivered AS (</text>
+<text xml:space="preserve" x="28.0" y="61.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  SELECT * FROM shipments</text>
+<text xml:space="preserve" x="28.0" y="82.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  WHERE status = 'Delivered'</text>
+<text xml:space="preserve" x="28.0" y="103.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">),</text>
+<text xml:space="preserve" x="28.0" y="124.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">per_customer AS (</text>
+<text xml:space="preserve" x="28.0" y="145.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  SELECT customer_id, SUM(containers) AS total</text>
+<text xml:space="preserve" x="28.0" y="166.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  FROM delivered GROUP BY customer_id</text>
+<text xml:space="preserve" x="28.0" y="187.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">)</text>
+<text xml:space="preserve" x="28.0" y="208.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">SELECT * FROM per_customer</text>
+<text xml:space="preserve" x="28.0" y="229.0" font-size="11.5" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">ORDER BY total DESC LIMIT 1;</text>
+<rect x="480.0" y="20.0" width="264.0" height="68.0" rx="8" fill="#E6EEF6" stroke="#2F5D8A" stroke-width="1.5"/>
+<text xml:space="preserve" x="494.0" y="48.0" font-size="13.5" fill="#2F5D8A" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">1  delivered</text>
+<text xml:space="preserve" x="494.0" y="70.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">keep delivered shipments</text>
+<path d="M612.0,90.0 L612.0,108.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="480.0" y="110.0" width="264.0" height="68.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="494.0" y="138.0" font-size="13.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">2  per_customer</text>
+<text xml:space="preserve" x="494.0" y="160.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">total containers per customer</text>
+<path d="M612.0,180.0 L612.0,198.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="480.0" y="200.0" width="264.0" height="68.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.5"/>
+<text xml:space="preserve" x="494.0" y="228.0" font-size="13.5" fill="#2F6B3F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">3  final SELECT</text>
+<text xml:space="preserve" x="494.0" y="250.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">the biggest customer</text>
+<text xml:space="preserve" x="16.0" y="282.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Why use a CTE?</text>
+<rect x="16.0" y="296.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="322.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Read top to bottom</text>
+<text xml:space="preserve" x="30.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">like a recipe, not inside-out</text>
+<text xml:space="preserve" x="30.0" y="358.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">like nested subqueries</text>
+<rect x="264.0" y="296.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="278.0" y="322.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Check each step</text>
+<text xml:space="preserve" x="278.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">run the SELECT inside a step on</text>
+<text xml:space="preserve" x="278.0" y="358.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">its own</text>
+<rect x="512.0" y="296.0" width="232.0" height="80.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="526.0" y="322.0" font-size="13" fill="#2A2926" font-weight="700" text-anchor="start">Reuse a step</text>
+<text xml:space="preserve" x="526.0" y="342.0" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">refer to the same CTE more than</text>
+<text xml:space="preserve" x="526.0" y="358.7" font-size="11.5" fill="#5E5A52" font-weight="400" text-anchor="start">once</text>
+<text xml:space="preserve" x="16.0" y="406.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Build it step by step: write the first CTE, run it, add the next, run again.</text>
+<text xml:space="preserve" x="16.0" y="430.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">COALESCE(x, 0) replaces a missing value with a default, handy before adding steps together.</text>
+</g></svg>

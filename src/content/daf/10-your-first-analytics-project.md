@@ -24,7 +24,34 @@ A complete analysis, even a small one, has five parts. You'll produce them for t
 4. **The finding**, in one or two sentences.
 5. **The recommendation** and its limits: what the data can't tell you.
 
-**A note on small numbers.** Kolanut has 80 employees. When you split them by department, some groups have only 6 or 8 people. One resignation in a group of 8 moves the rate by 12.5 percentage points. Report the counts next to the rates, and be careful about strong conclusions from small groups.
+### What each part looks like
+
+| Part | Length | Good example |
+| :-- | :-- | :-- |
+| Question | One sentence | "Of everyone employed since 2018, what share resigned, and does it differ by department?" |
+| Data | A short paragraph or list | "`employees.csv`, 80 rows, one per employee. No cleaning needed; no rows excluded." |
+| Analysis | One table or chart, plus the method in a line | The department table below, built with a pivot table |
+| Finding | One or two sentences, with numbers | "Customer Service: 3 of 8 resigned (37.5%), about three times the company rate of 13.8%." |
+| Recommendation and limits | Two or three sentences | What to do next, and what the data can't show |
+
+### A note on small numbers
+
+Kolanut has 80 employees. When you split them by department, some groups have only 6 or 8 people. One resignation in a group of 8 moves the rate by 12.5 percentage points. Report the counts next to the rates ("3 of 8", not just "37.5%"), and be careful about strong conclusions from small groups.
+
+### Look for a hidden third factor
+
+Leavers earned less: a median of ₦355,000 a month, against ₦525,000 for staff who stayed. It's tempting to conclude "low pay makes people leave". But every leaver was Junior or Mid level, and junior staff earn less **because they're junior**. Job level could explain both the lower pay and the resignations.
+
+A factor that is linked to both things you're comparing is called a **confounder**. Before claiming that A causes B, ask: is there a C that drives both? Here, the fair comparison is pay within the **same** job level, and with only 11 leavers, the numbers are too small to settle it. Say so.
+
+### Checks before you share
+
+1. **Do the totals add up?** Department staff should sum to 80; resigned to 11.
+2. **Does one number match a second method?** A pivot count and a `COUNTIFS` should agree.
+3. **Are the counts shown next to the percentages?**
+4. **Is every number in the summary also in the analysis?** No figure should appear from nowhere.
+5. **Could someone else repeat it?** Your data and method notes should be enough.
+6. **Is the limit stated?** What the data can't tell you, in one sentence.
 
 ## Example
 

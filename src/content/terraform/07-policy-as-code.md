@@ -14,7 +14,7 @@ This is **policy as code**. Tools such as Open Policy Agent, Sentinel and Checko
 
 **A policy is a function**: plan in, list of violations out. Each violation names the resource and the rule broken.
 
-**Good first policies**
+### Good first policies
 
 | Policy | Catches |
 | :-- | :-- |
@@ -24,7 +24,7 @@ This is **policy as code**. Tools such as Open Policy Agent, Sentinel and Checko
 | Database major version changes need sign-off | PR 106 |
 | No more than N deletions in one plan | PR 101 |
 
-**Block or warn**
+### Block or warn
 
 Some violations should **block** the merge (destroying a database); others should **warn** and require a named senior reviewer (a major upgrade). Every block can still be overridden, with a recorded reason.
 

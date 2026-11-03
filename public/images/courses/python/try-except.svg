@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 436" width="760" height="436" role="img" aria-label="Handling errors with try and except. The code in the try block runs. If it works, the except block is skipped. If it raises an error that matches, here a ZeroDivisionError, Python jumps straight to the except block, runs it, and the program carries on instead of crashing. else runs only if there was no error; finally always runs. A traceback is read from the bottom: the last line names the error and the message, and the lines above show where it happened.">
+<title>try runs the risky code; except catches a named error; the program carries on.</title>
+<defs><marker id="a8A6A1F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker></defs>
+<rect width="760" height="436" fill="#FBF8F2"/>
+<g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="16.0" y="16.0" width="356.0" height="110.0" rx="8" fill="#FFFFFF" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="30.0" y="40.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">try:</text>
+<text xml:space="preserve" x="30.0" y="62.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    share = total / people</text>
+<text xml:space="preserve" x="30.0" y="84.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">except ZeroDivisionError:</text>
+<text xml:space="preserve" x="30.0" y="106.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    share = 0</text>
+<rect x="388.0" y="16.0" width="356.0" height="52.0" rx="8" fill="#E5F0E8" stroke="#2F6B3F" stroke-width="1.4"/>
+<text xml:space="preserve" x="402.0" y="38.0" font-size="13" fill="#2F6B3F" font-weight="700" text-anchor="start">people = 4: no error</text>
+<text xml:space="preserve" x="402.0" y="58.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">the except block is skipped</text>
+<rect x="388.0" y="74.0" width="356.0" height="52.0" rx="8" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.4"/>
+<text xml:space="preserve" x="402.0" y="96.0" font-size="13" fill="#8A6A1F" font-weight="700" text-anchor="start">people = 0: ZeroDivisionError</text>
+<text xml:space="preserve" x="402.0" y="116.0" font-size="12" fill="#2A2926" font-weight="400" text-anchor="start">jumps to except; the program carries on</text>
+<rect x="16.0" y="148.0" width="168.5" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="28.0" y="174.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">try</text>
+<text xml:space="preserve" x="28.0" y="198.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">run the risky code</text>
+<path d="M187.5,190.0 L199.5,190.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="202.5" y="148.0" width="168.5" height="84.0" rx="10" fill="#F3EBD8" stroke="#B38A3E" stroke-width="1.5"/>
+<text xml:space="preserve" x="214.5" y="174.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">except Name</text>
+<text xml:space="preserve" x="214.5" y="198.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">only if that error</text>
+<text xml:space="preserve" x="214.5" y="215.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">happens</text>
+<path d="M374.0,190.0 L386.0,190.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="389.0" y="148.0" width="168.5" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="401.0" y="174.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">else</text>
+<text xml:space="preserve" x="401.0" y="198.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">only if there was no</text>
+<text xml:space="preserve" x="401.0" y="215.4" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">error</text>
+<path d="M560.5,190.0 L572.5,190.0" fill="none" stroke="#8A6A1F" stroke-width="2" marker-end="url(#a8A6A1F)"/>
+<rect x="575.5" y="148.0" width="168.5" height="84.0" rx="10" fill="#FFFFFF" stroke="#CFC4B2" stroke-width="1.5"/>
+<text xml:space="preserve" x="587.5" y="174.0" font-size="13.5" fill="#2A2926" font-weight="700" text-anchor="start">finally</text>
+<text xml:space="preserve" x="587.5" y="198.0" font-size="12" fill="#5E5A52" font-weight="400" text-anchor="start">always runs, either way</text>
+<text xml:space="preserve" x="16.0" y="262.0" font-size="14" fill="#2A2926" font-weight="700" text-anchor="start">Reading a traceback: from the bottom</text>
+<rect x="16.0" y="274.0" width="728.0" height="102.0" rx="8" fill="#2A2926" stroke="#2A2926" stroke-width="1"/>
+<text xml:space="preserve" x="28.0" y="298.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">Traceback (most recent call last):</text>
+<text xml:space="preserve" x="28.0" y="318.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">  File "report.py", line 9, in &lt;module&gt;</text>
+<text xml:space="preserve" x="28.0" y="338.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">    print(stock["mango"])</text>
+<text xml:space="preserve" x="28.0" y="358.0" font-size="12" fill="#F3EBD8" font-weight="400" text-anchor="start" font-family="'JetBrains Mono', Consolas, monospace">KeyError: 'mango'</text>
+<text xml:space="preserve" x="16.0" y="386.0" font-size="12.5" fill="#2A2926" font-weight="400" text-anchor="start">Last line: the error type and message (here a missing key). The lines above show where.</text>
+<text xml:space="preserve" x="16.0" y="410.0" font-size="12.5" fill="#8A6A1F" font-weight="700" text-anchor="start">Catch specific errors, not everything: a bare except hides real bugs.</text>
+</g></svg>
