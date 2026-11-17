@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import { Award, BookOpen, CheckCircle2, Circle, Clock, Download, FolderKanban, GraduationCap, Lock, Trophy } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { useCourse, useLearner } from "@/lib/data";
+import { lessonPath, useCourse, useHeldProgrammeFor, useLearner } from "@/lib/data";
 import { categoryName } from "@/content";
 import { durationLabel } from "@/lib/format";
 import { badgeCount, courseMinutes, publishedLessons } from "@/lib/certificates";
@@ -24,6 +24,8 @@ export default function CourseDetail() {
   const { slug } = useParams();
   const { course, loading } = useCourse(slug);
   const learner = useLearner(course);
+  // A programme student takes this course inside their programme's classroom, never as a free course.
+  const programme = useHeldProgrammeFor(course?.id);
   const navigate = useNavigate();
   const [starting, setStarting] = useState(false);
   const [asking, setAsking] = useState(false);
@@ -51,8 +53,8 @@ export default function CourseDetail() {
   // Signed-in learners who aren't enrolled are asked first, so nobody enrols by accident. Visitors can just read.
   const start = async () => {
     if (!first) return;
-    if (learner.signedIn && !enrolled) return setAsking(true);
-    navigate(`/learn/${course.slug}/${(enrolled ? resume : first).slug}`);
+    if (learner.signedIn && !enrolled && !programme) return setAsking(true);
+    navigate(lessonPath(course.slug, (enrolled ? resume : first).slug, programme?.slug));
   };
   const confirmEnrol = async () => {
     if (!first) return;
@@ -82,13 +84,21 @@ export default function CourseDetail() {
         <div className="container-page grid gap-10 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-7">
             <nav aria-label="Breadcrumb" className="text-[0.8125rem] text-muted">
-              <Link to="/courses" className="hover:text-ink">
-                Courses
-              </Link>{" "}
-              / {categoryName(course.categoryId)}
+              {programme ? (
+                <Link to={`/classroom/${programme.slug}`} className="hover:text-ink">
+                  ← Your classroom: {programme.programmeName ?? programme.title}
+                </Link>
+              ) : (
+                <>
+                  <Link to="/courses" className="hover:text-ink">
+                    Courses
+                  </Link>{" "}
+                  / {categoryName(course.categoryId)}
+                </>
+              )}
             </nav>
             <div className="mt-5 flex flex-wrap items-center gap-2">
-              <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>
+              {programme ? <Badge>Professional Programme</Badge> : <Badge tone={available ? "free" : "soon"}>{available ? "Free" : "Coming soon"}</Badge>}
               {short && <Badge>Short course</Badge>}
               <Badge>{`Level ${course.level} · ${LEVELS[course.level].name}`}</Badge>
             </div>
@@ -107,6 +117,11 @@ export default function CourseDetail() {
             <div className="rounded-2xl border border-line-strong bg-paper p-6 shadow-[0_30px_60px_-45px_rgba(23,23,23,0.45)]">
               {available ? (
                 <>
+                  {programme && (
+                    <p className="mb-4 rounded-lg border border-brass/40 bg-brass-pale/40 px-3.5 py-2.5 text-[0.875rem]">
+                      Part of your programme, <strong className="font-semibold">{programme.programmeName ?? programme.title}</strong>. Your progress counts there.
+                    </p>
+                  )}
                   {enrolled && learner.eligibility && (
                     <div className="mb-5">
                       <ProgressBar value={learner.eligibility.percent} label="Course progress" />
@@ -123,11 +138,11 @@ export default function CourseDetail() {
                       <Button variant="secondary" onClick={() => void start()} loading={starting} className="mt-2 w-full">
                         Review the course
                       </Button>
-                      <RecommendedNext course={course} />
+                      {!programme && <RecommendedNext course={course} />}
                     </>
                   ) : (
                     <Button onClick={() => void start()} loading={starting} className="w-full">
-                      {enrolled ? "Continue learning" : "Start Learning Free"}
+                      {programme ? (learner.progress.completedLessons.length ? "Continue in your classroom" : "Start in your classroom") : enrolled ? "Continue learning" : "Start Learning Free"}
                     </Button>
                   )}
                   {course.downloadsEnabled && learner.signedIn && (
@@ -209,7 +224,7 @@ export default function CourseDetail() {
                     <div className="flex items-start gap-4 py-4 sm:px-2">
                       <span className="w-7 shrink-0 pt-0.5 font-serif text-[0.95rem] text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
                       <span className="min-w-0 flex-1">
-                        <Link to={`/learn/${course.slug}/${lesson.slug}`} className="block font-medium text-ink hover:text-brass-dark">
+                        <Link to={lessonPath(course.slug, lesson.slug, programme?.slug)} className="block font-medium text-ink hover:text-brass-dark">
                           {m.title}
                         </Link>
                         {lesson.summary && <span className="mt-0.5 block text-[0.875rem] text-muted">{lesson.summary}</span>}
@@ -281,8 +296,21 @@ export default function CourseDetail() {
               <p className="mt-3 text-[0.9375rem] text-ink/85">{course.projectTitle}</p>
             </section>
           )}
-          <RecommendedNext course={course} intro />
-          {course.certificate.enabled && (
+          {!programme && <RecommendedNext course={course} intro />}
+          {programme ? (
+            <section aria-labelledby="cred-title" className="rounded-xl border border-line bg-paper p-5">
+              <h2 id="cred-title" className="font-serif text-[1.3rem]">
+                Badges and certificate
+              </h2>
+              <p className="mt-2 text-[0.9rem] leading-relaxed text-muted">
+                {short ? "Earn a badge for each module you pass, and a" : "Earn a"} course completion badge with its own credential ID. Every course you complete
+                counts towards {programme.programmeName ?? programme.title}, and your Professional Certificate comes with the programme.
+              </p>
+              <Link to={`/classroom/${programme.slug}`} className="mt-3 inline-block text-[0.9rem] font-medium text-brass-dark hover:text-ink">
+                Back to your classroom
+              </Link>
+            </section>
+          ) : course.certificate.enabled && (
             <section aria-labelledby="cred-title" className="rounded-xl border border-line bg-paper p-5">
               <h2 id="cred-title" className="font-serif text-[1.3rem]">
                 Badges and certificate

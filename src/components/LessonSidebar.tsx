@@ -7,10 +7,13 @@ export function LessonSidebar({
   course,
   currentLessonId,
   completed,
+  lessonHref = (slug) => `/learn/${course.slug}/${slug}`,
 }: {
   course: Course;
   currentLessonId?: string;
   completed: string[];
+  /** Where each lesson links to; the classroom passes its own paths. */
+  lessonHref?: (lessonSlug: string) => string;
 }) {
   return (
     <nav aria-label={`${course.title} curriculum`}>
@@ -33,7 +36,7 @@ export function LessonSidebar({
                   return (
                     <Link
                       key={l.id}
-                      to={`/learn/${course.slug}/${l.slug}`}
+                      to={lessonHref(l.slug)}
                       aria-current={current ? "page" : undefined}
                       className={`flex items-start gap-2.5 rounded-md px-2.5 py-2 text-[0.875rem] leading-snug transition-colors ${
                         current ? "bg-brass-pale/50 font-semibold text-ink" : "text-ink/80 hover:bg-sand"

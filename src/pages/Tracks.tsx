@@ -296,7 +296,16 @@ export function TrackDetail() {
   };
 
   const box = (
-            <div className="rounded-2xl border border-line-strong bg-paper p-5">
+            <div className="rounded-2xl border border-line-strong bg-paper p-5 text-ink">
+              {paid && holds && (
+                <div className="mb-5 border-b border-line pb-5">
+                  <p className="text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-brass-dark">You're enrolled</p>
+                  <ButtonLink to={`/classroom/${track.slug}`} className="mt-3 w-full" arrow>
+                    Go to your classroom
+                  </ButtonLink>
+                  <p className="mt-2 text-[0.8125rem] text-muted">Your courses, live classes, assignments and announcements.</p>
+                </div>
+              )}
               <p className="flex items-center gap-2 font-semibold">
                 <Award aria-hidden className="h-5 w-5 text-brass-dark" /> {track.badge}
               </p>
@@ -349,7 +358,8 @@ export function TrackDetail() {
                       Claim your programme badge
                     </Button>
                   ) : (
-                    startHere && (
+                    startHere &&
+                    !(paid && holds) && (
                       <ButtonLink to={`/courses/${startHere.slug}`} className="mt-4" arrow>
                         {doneCount ? "Next" : "Start"}: {startHere.title}
                       </ButtonLink>

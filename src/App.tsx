@@ -14,6 +14,7 @@ const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CourseDownload = lazy(() => import("@/pages/CourseDownload"));
 const ProgrammePurchase = lazy(() => import("@/pages/ProgrammePurchase"));
 const Apply = lazy(() => import("@/pages/Apply"));
+const Classroom = lazy(() => import("@/pages/Classroom"));
 const CoursePurchase = lazy(() => import("@/pages/CoursePurchase"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
@@ -71,6 +72,7 @@ const AdminPayments = lazy(() => import("@/pages/admin/AdminPayments"));
 const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
 const AdminProgrammes = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammes })));
 const AdminApplications = lazy(() => import("@/pages/admin/AdminApplications"));
+const AdminClassroom = lazy(() => import("@/pages/admin/AdminClassroom"));
 const AdminProgrammeEditor = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammeEditor })));
 const AdminEmails = lazy(() => import("@/pages/admin/AdminEmails"));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
@@ -103,6 +105,8 @@ export function AppRoutes() {
           <Route path="courses/:slug/certificate" element={<CertificatePurchase />} />
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
+          <Route path="classroom/:slug" element={<Classroom />} />
+          <Route path="classroom/:programme/:course/:lesson" element={<Learn />} />
           <Route path="programmes" element={<TracksList />} />
           <Route path="programmes/:slug" element={<TrackDetail />} />
           <Route path="programmes/:slug/enroll" element={<ProgrammePurchase />} />
@@ -137,6 +141,7 @@ export function AppRoutes() {
             <Route path="emails" element={<AdminEmails />} />
             <Route path="enrollments" element={<AdminEnrollments />} />
             <Route path="applications" element={<AdminApplications />} />
+            <Route path="classroom" element={<AdminClassroom />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="analytics" element={<AdminAnalytics />} />
             <Route index element={<AdminOverview />} />

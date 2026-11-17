@@ -19,7 +19,7 @@ import { ShareMenu } from "@/components/ShareMenu";
 import { DashboardConnect, StartingSoonBanner } from "@/components/CommunityWidgets";
 import { useEvents, useMyRegistrations } from "@/lib/event-data";
 import { publishedLessons } from "@/lib/certificates";
-import { enrolmentState, isPaid } from "@/lib/commerce";
+import { enrolmentState, isPaid, programmeCourseIds } from "@/lib/commerce";
 import { useMyProgrammes, useProgrammes } from "@/lib/data";
 import { PaymentReminders } from "@/components/PaymentReminders";
 
@@ -111,6 +111,14 @@ function DashboardInner() {
     .filter((x) => x !== null);
   const inProgress = learning.filter((l) => !l.completion);
   const completed = learning.filter((l) => l.completion);
+  // Courses inside a programme the learner holds are taken in the programme's classroom, not listed as free courses.
+  const programmeCourses = new Set(myProgrammes.flatMap((t) => programmeCourseIds(t)));
+  const programmeProgress = (t: (typeof myProgrammes)[number]) => {
+    const ids = programmeCourseIds(t);
+    const rowsIn = learning.filter((l) => ids.includes(l.course.id));
+    return { percent: ids.length ? Math.round(rowsIn.reduce((n, l) => n + l.percent, 0) / ids.length) : 0, done: rowsIn.filter((l) => l.completion).length, total: ids.length };
+  };
+  const freeLearning = [...inProgress, ...completed].filter((l) => !programmeCourses.has(l.course.id));
   const enrolledIds = new Set(learning.map((a) => a.course.id));
   // Free courses first, with one open professional programme offered as a gentle next step once the learner has started something.
   const notStarted = courses.filter((c) => !enrolledIds.has(c.id));
@@ -150,9 +158,11 @@ function DashboardInner() {
         <h2 id="my-learning" className="font-serif text-[1.7rem]">
           My Learning
         </h2>
-        <p className="mt-1 text-[0.9375rem] text-muted">
-          A course you haven't worked on for {RESET_AFTER_DAYS} days starts over from the beginning. Badges you've earned always stay.
-        </p>
+        {(freeLearning.length > 0 || myProgrammes.length === 0) && (
+          <p className="mt-1 text-[0.9375rem] text-muted">
+            A free course you haven't worked on for {RESET_AFTER_DAYS} days starts over from the beginning. Badges you've earned always stay.
+          </p>
+        )}
         {resetIds.length > 0 && (
           <p role="status" className="mt-4 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9375rem]">
             {resetIds.map((id) => courses.find((c) => c.id === id)?.title ?? id).join(", ")} {resetIds.length === 1 ? "has" : "have"} started over after{" "}
@@ -161,21 +171,33 @@ function DashboardInner() {
         )}
         {myProgrammes.length > 0 && (
           <ul className="mt-5 grid gap-4 lg:grid-cols-2">
-            {myProgrammes.map((t) => (
-              <li key={t.id} className="flex items-center justify-between gap-4 rounded-2xl border border-brass/40 bg-brass-pale/40 p-5">
-                <div>
-                  <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Professional Programme</p>
-                  <p className="font-serif text-[1.3rem] leading-snug">{t.programmeName ?? t.title}</p>
-                </div>
-                <ButtonLink to={`/programmes/${t.slug}`} variant="secondary">
-                  Open programme
-                </ButtonLink>
-              </li>
-            ))}
+            {myProgrammes.map((t) => {
+              const p = programmeProgress(t);
+              return (
+                <li key={t.id} className="flex flex-col gap-4 rounded-2xl border border-brass/40 bg-brass-pale/40 p-5 sm:p-6">
+                  <div>
+                    <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-brass-dark">Professional Programme</p>
+                    <p className="font-serif text-[1.45rem] leading-snug">{t.programmeName ?? t.title}</p>
+                  </div>
+                  <div>
+                    <ProgressBar value={p.percent} label="Programme progress" />
+                    <p className="mt-1.5 text-[0.8125rem] text-muted">
+                      {p.done} of {p.total} courses complete · live classes, assignments and announcements in your classroom
+                    </p>
+                  </div>
+                  <div>
+                    <ButtonLink to={`/classroom/${t.slug}`} arrow>
+                      Go to your classroom
+                    </ButtonLink>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
+        {myProgrammes.length > 0 && freeLearning.length > 0 && <h3 className="mt-10 font-serif text-[1.3rem]">Free courses</h3>}
         {removeError && <p className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-4 py-3 text-[0.9375rem]">{removeError}</p>}
-        {learning.length === 0 ? (
+        {freeLearning.length === 0 && myProgrammes.length > 0 ? null : freeLearning.length === 0 ? (
           <div className="mt-5 rounded-2xl border border-dashed border-line-strong p-8 text-center">
             <p className="text-[1.0625rem]">You haven't started a course yet.</p>
             <p className="mt-1 text-muted">Pick a course and confirm to enrol. It's free.</p>
@@ -187,7 +209,7 @@ function DashboardInner() {
           </div>
         ) : (
           <ul className="mt-5 grid gap-4 lg:grid-cols-2">
-            {[...inProgress, ...completed].map(({ course, percent, completion, resume, resetsIn, source }) => (
+            {freeLearning.map(({ course, percent, completion, resume, resetsIn, source }) => (
               <li key={course.id} className="flex flex-col rounded-2xl border border-line bg-paper p-6">
                 <div className="flex items-start justify-between gap-3">
                   <Link to={`/courses/${course.slug}`} className="font-serif text-[1.35rem] leading-snug hover:text-brass-dark">

@@ -11,7 +11,7 @@ import { Alert } from "@/components/Form";
 import { AdminHeading } from "./AdminLayout";
 import { useAdminData } from "./useAdmin";
 
-const SOURCE: Record<AdminEnrollment["source"], string> = { free: "Free", purchase: "Paid", granted: "Granted by admin" };
+const SOURCE: Record<AdminEnrollment["source"], string> = { free: "Free", purchase: "Paid", granted: "Granted by admin", programme: "Programme" };
 const ORDER_STATUS: Record<AdminCourseOrder["status"], string> = { pending: "Awaiting payment", partial: "Part paid", paid: "Paid", granted: "Granted", failed: "Failed", cancelled: "Cancelled" };
 const selectCls = "rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.9375rem]";
 

@@ -41,6 +41,10 @@ import {
   type ApplicationStatus,
   type ProgrammeApplication,
   type ProgrammeBatch,
+  type Announcement,
+  type Assignment,
+  type AssignmentSubmission,
+  type ClassSession,
   type Credential,
   type PracticeResult,
   type PracticeSubmission,
@@ -125,6 +129,55 @@ const toBatch = (r: Row, seatsTaken = 0): ProgrammeBatch => ({
   seats: r.seats ?? null,
   seatsTaken,
   status: r.status,
+});
+
+const toSession = (r: Row): ClassSession => ({
+  id: r.id,
+  trackId: r.track_id,
+  batchId: r.batch_id ?? null,
+  title: r.title,
+  description: r.description ?? null,
+  startsAt: r.starts_at,
+  endsAt: r.ends_at ?? null,
+  joinUrl: r.join_url ?? null,
+  recordingUrl: r.recording_url ?? null,
+});
+
+const toAnnouncement = (r: Row): Announcement => ({
+  id: r.id,
+  trackId: r.track_id,
+  batchId: r.batch_id ?? null,
+  title: r.title,
+  body: r.body,
+  emailed: !!r.emailed,
+  createdAt: r.created_at,
+});
+
+const toAssignment = (r: Row): Assignment => ({
+  id: r.id,
+  trackId: r.track_id,
+  batchId: r.batch_id ?? null,
+  courseId: r.course_id ?? null,
+  title: r.title,
+  brief: r.brief ?? "",
+  dueAt: r.due_at ?? null,
+  maxScore: r.max_score,
+  passScore: r.pass_score ?? null,
+  required: !!r.required,
+  published: !!r.published,
+});
+
+const toAssignmentSubmission = (r: Row): AssignmentSubmission => ({
+  id: r.id,
+  assignmentId: r.assignment_id,
+  userId: r.user_id,
+  content: r.content ?? "",
+  url: r.url ?? null,
+  status: r.status,
+  score: r.score ?? null,
+  feedback: r.feedback ?? null,
+  submittedAt: r.submitted_at,
+  gradedAt: r.graded_at ?? null,
 });
 
 const toApplication = (r: Row): ProgrammeApplication => ({
@@ -934,7 +987,7 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       if (!data.session) return [];
       const res = await sb.from("programme_enrollments").select("*").eq("user_id", data.session.user.id);
       if (res.error) return [];
-      return (res.data as Row[]).map((r) => ({ trackId: r.track_id, enrolledAt: r.enrolled_at, source: r.source }));
+      return (res.data as Row[]).map((r) => ({ trackId: r.track_id, enrolledAt: r.enrolled_at, source: r.source, batchId: r.batch_id ?? null }));
     },
     async startProgrammePurchase(trackId) {
       return toCourseOrder(check(await sb.rpc("start_programme_purchase", { p_track_id: trackId })) as Row);
@@ -1034,7 +1087,120 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       ) as ApplicationReceipt;
     },
 
+    async getClassroom(trackId) {
+      const { data } = await sb.auth.getSession();
+      const uid = data.session?.user.id;
+      if (!uid) throw new BackendError("Please sign in first.");
+      const mine = check(await sb.from("programme_enrollments").select("batch_id").eq("user_id", uid).eq("track_id", trackId).maybeSingle()) as Row | null;
+      const batchRow = mine?.batch_id ? (check(await sb.from("programme_batches").select("*").eq("id", mine.batch_id).maybeSingle()) as Row | null) : null;
+      const [sessions, announcements, assignments] = await Promise.all([
+        sb.from("programme_sessions").select("*").eq("track_id", trackId).order("starts_at"),
+        sb.from("programme_announcements").select("*").eq("track_id", trackId).order("created_at", { ascending: false }),
+        sb.from("programme_assignments").select("*").eq("track_id", trackId).eq("published", true).order("due_at", { ascending: true, nullsFirst: false }),
+      ]);
+      const sessionRows = check(sessions) as Row[];
+      const assignmentRows = check(assignments) as Row[];
+      const [subs, marks] = await Promise.all([
+        assignmentRows.length ? sb.from("assignment_submissions").select("*").eq("user_id", uid).in("assignment_id", assignmentRows.map((a) => a.id)) : Promise.resolve({ data: [], error: null }),
+        sessionRows.length ? sb.from("session_attendance").select("session_id, status").eq("user_id", uid).in("session_id", sessionRows.map((x) => x.id)) : Promise.resolve({ data: [], error: null }),
+      ]);
+      const subRows = check(subs) as Row[];
+      return {
+        batch: batchRow ? toBatch(batchRow) : null,
+        sessions: sessionRows.map(toSession),
+        announcements: (check(announcements) as Row[]).map(toAnnouncement),
+        assignments: assignmentRows.map((a) => {
+          const sub = subRows.find((x) => x.assignment_id === a.id);
+          return { ...toAssignment(a), submission: sub ? toAssignmentSubmission(sub) : null };
+        }),
+        attendance: (check(marks) as Row[]).map((m) => ({ sessionId: m.session_id, status: m.status })),
+      };
+    },
+    async submitAssignment(assignmentId, input) {
+      return toAssignmentSubmission(check(await sb.rpc("submit_assignment", { p_assignment: assignmentId, p_content: input.content, p_url: input.url })) as Row);
+    },
     admin: {
+      async listRoster(trackId) {
+        return (check(await sb.rpc("admin_classroom_roster", { p_track: trackId })) as Row[]).map((r) => ({
+          userId: r.user_id,
+          fullName: r.full_name ?? "",
+          email: r.email ?? "",
+          batchId: r.batch_id ?? null,
+          enrolledAt: r.enrolled_at,
+          source: r.source,
+        }));
+      },
+      async setStudentBatch(trackId, userId, batchId) {
+        check(await sb.rpc("admin_set_student_batch", { p_user: userId, p_track: trackId, p_batch: batchId }));
+      },
+      async listSessions(trackId) {
+        return (check(await sb.from("programme_sessions").select("*").eq("track_id", trackId).order("starts_at", { ascending: false })) as Row[]).map(toSession);
+      },
+      async saveSession(x) {
+        const row = {
+          track_id: x.trackId,
+          batch_id: x.batchId,
+          title: x.title.trim(),
+          description: x.description?.trim() || null,
+          starts_at: x.startsAt,
+          ends_at: x.endsAt || null,
+          join_url: x.joinUrl?.trim() || null,
+          recording_url: x.recordingUrl?.trim() || null,
+        };
+        check(x.id ? await sb.from("programme_sessions").update(row).eq("id", x.id) : await sb.from("programme_sessions").insert(row));
+      },
+      async deleteSession(id) {
+        check(await sb.from("programme_sessions").delete().eq("id", id));
+      },
+      async listAttendance(sessionId) {
+        return (check(await sb.from("session_attendance").select("user_id, status").eq("session_id", sessionId)) as Row[]).map((r) => ({ userId: r.user_id, status: r.status }));
+      },
+      async setClassAttendance(sessionId, userId, status) {
+        if (status === null) check(await sb.from("session_attendance").delete().eq("session_id", sessionId).eq("user_id", userId));
+        else check(await sb.from("session_attendance").upsert({ session_id: sessionId, user_id: userId, status, marked_at: new Date().toISOString() }));
+      },
+      async listAnnouncements(trackId) {
+        return (check(await sb.from("programme_announcements").select("*").eq("track_id", trackId).order("created_at", { ascending: false })) as Row[]).map(toAnnouncement);
+      },
+      async postAnnouncement(a) {
+        return Number(check(await sb.rpc("admin_post_announcement", { p_track: a.trackId, p_batch: a.batchId, p_title: a.title, p_body: a.body, p_email: a.email })) ?? 0);
+      },
+      async deleteAnnouncement(id) {
+        check(await sb.from("programme_announcements").delete().eq("id", id));
+      },
+      async listAssignments(trackId) {
+        return (check(await sb.from("programme_assignments").select("*").eq("track_id", trackId).order("due_at", { ascending: true, nullsFirst: false })) as Row[]).map(toAssignment);
+      },
+      async saveAssignment(x) {
+        const row = {
+          track_id: x.trackId,
+          batch_id: x.batchId,
+          course_id: x.courseId,
+          title: x.title.trim(),
+          brief: x.brief,
+          due_at: x.dueAt || null,
+          max_score: x.maxScore,
+          pass_score: x.passScore,
+          required: x.required,
+          published: x.published,
+        };
+        check(x.id ? await sb.from("programme_assignments").update(row).eq("id", x.id) : await sb.from("programme_assignments").insert(row));
+      },
+      async deleteAssignment(id) {
+        check(await sb.from("programme_assignments").delete().eq("id", id));
+      },
+      async listAssignmentSubmissions(assignmentId) {
+        const rows = check(await sb.from("assignment_submissions").select("*").eq("assignment_id", assignmentId).order("submitted_at", { ascending: false })) as Row[];
+        const ids = [...new Set(rows.map((r) => r.user_id as string))];
+        const people = ids.length ? (check(await sb.from("profiles").select("id, full_name, email").in("id", ids)) as Row[]) : [];
+        return rows.map((r) => {
+          const p = people.find((x) => x.id === r.user_id);
+          return { ...toAssignmentSubmission(r), fullName: p?.full_name ?? "", email: p?.email ?? "" };
+        });
+      },
+      async gradeSubmission(id, status, score, feedback) {
+        check(await sb.rpc("admin_grade_submission", { p_submission: id, p_status: status, p_score: score, p_feedback: feedback }));
+      },
       async listAllBatches() {
         const rows = check(await sb.from("programme_batches").select("*").order("starts_on", { ascending: false, nullsFirst: true })) as Row[];
         const taken = check(await sb.from("programme_applications").select("batch_id").in("status", ["paid", "enrolled"]).not("batch_id", "is", null)) as Row[];

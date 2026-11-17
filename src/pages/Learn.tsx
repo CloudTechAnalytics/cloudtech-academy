@@ -1,20 +1,22 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Link, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, Award, CheckCircle2, Clock, ExternalLink, ListTree, Lock, X } from "lucide-react";
+import { Link, Navigate, useParams } from "react-router";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, ChevronRight, Clock, ExternalLink, ListTree, Lock, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { useCourse, useLearner } from "@/lib/data";
+import { lessonPath, useCourse, useCourses, useHeldProgrammeFor, useLearner, useMyProgrammes, useProgrammes } from "@/lib/data";
 import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
 import { RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
-import { PageLoading } from "@/lib/auth";
+import { PageLoading, useAuth } from "@/lib/auth";
 import { LessonContent, lessonSections } from "@/components/LessonContent";
 import { LessonVideoSection } from "@/components/CourseVideo";
 import { LessonSidebar } from "@/components/LessonSidebar";
 import { colabUrl, hasNotebook } from "@/lib/python/colab";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button, ButtonLink } from "@/components/Button";
-import { isPaid } from "@/lib/commerce";
+import { isPaid, programmeCourseIds } from "@/lib/commerce";
+import type { Course } from "@/content/types";
+import type { Track } from "@/content/tracks";
 import { EnrolDialog } from "@/components/EnrolDialog";
 import NotFound from "./NotFound";
 
@@ -49,10 +51,60 @@ function CurriculumDrawer({ open, onClose, children }: { open: boolean; onClose:
   );
 }
 
+
+/** The classroom's curriculum: every course in the programme, with the current course's lessons open. */
+function ProgrammeSidebar({ track, courses, current, lessonId, completed }: { track: Track; courses: Course[]; current: Course; lessonId: string; completed: string[] }) {
+  const inOrder = programmeCourseIds(track)
+    .map((id) => courses.find((c) => c.id === id))
+    .filter((c): c is Course => !!c);
+  return (
+    <nav aria-label={`${track.programmeName ?? track.title} curriculum`}>
+      <ol className="space-y-1">
+        {inOrder.map((c, i) => {
+          const first = publishedLessons(c)[0];
+          if (c.id !== current.id)
+            return (
+              <li key={c.id}>
+                <Link
+                  to={first ? lessonPath(c.slug, first.slug, track.slug) : `/classroom/${track.slug}`}
+                  className="flex items-start gap-2 rounded-md px-2.5 py-2 text-[0.875rem] leading-snug text-ink/80 hover:bg-sand"
+                >
+                  <ChevronRight aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-subtle" />
+                  <span>
+                    <span className="text-subtle">{i + 1}.</span> {c.title}
+                  </span>
+                </Link>
+              </li>
+            );
+          return (
+            <li key={c.id} className="rounded-lg border border-line bg-paper/60 py-1">
+              <p className="px-2.5 py-1.5 text-[0.875rem] font-semibold leading-snug">
+                <span className="text-subtle">{i + 1}.</span> {c.title}
+              </p>
+              <div className="pl-2">
+                <LessonSidebar course={c} currentLessonId={lessonId} completed={completed} lessonHref={(slug) => lessonPath(c.slug, slug, track.slug)} />
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
 export default function Learn() {
-  const { course: courseSlug, lesson: lessonSlug } = useParams();
+  const { course: courseSlug, lesson: lessonSlug, programme: programmeSlug } = useParams();
   const { course, loading } = useCourse(courseSlug);
   const learner = useLearner(course);
+  const auth = useAuth();
+  const allCourses = useCourses();
+  const programmes = useProgrammes();
+  const { held, loading: heldLoading } = useMyProgrammes();
+  // In the classroom (/classroom/<programme>/<course>/<lesson>) the lesson belongs to the programme: no "free" anywhere.
+  const track = programmeSlug ? (programmes.find((t) => t.slug === programmeSlug && isPaid(t)) ?? null) : null;
+  const inClassroom = !!track;
+  const programmeHere = useHeldProgrammeFor(inClassroom ? undefined : course?.id);
+  const url = (slug: string) => (course ? lessonPath(course.slug, slug, track?.slug) : "#");
   const [drawer, setDrawer] = useState(false);
   const [saving, setSaving] = useState(false);
   const [localDone, setLocalDone] = useState<string[]>([]);
@@ -98,6 +150,23 @@ export default function Learn() {
   const completedExercises = useMemo(() => [...new Set([...learner.progress.completedExercises, ...localExercises])], [learner.progress.completedExercises, localExercises]);
 
   if (!course || !lesson) return loading ? <PageLoading /> : <NotFound />;
+  if (programmeSlug && (!track || !programmeCourseIds(track).includes(course.id))) return <NotFound />;
+  // A programme student who opens the public lesson is taken to the same lesson in their classroom.
+  if (!inClassroom && programmeHere) return <Navigate to={lessonPath(course.slug, lesson.slug, programmeHere.slug)} replace />;
+  if (inClassroom && auth.status === "signed-out")
+    return <Navigate to={`/sign-in?next=${encodeURIComponent(url(lesson.slug))}`} replace />;
+  if (inClassroom && (auth.status === "loading" || heldLoading)) return <PageLoading />;
+  if (inClassroom && !held?.includes(track.id) && auth.user?.role !== "admin")
+    return (
+      <div className="container-page max-w-2xl py-16 sm:py-24">
+        <Lock aria-hidden className="h-8 w-8 text-brass-dark" />
+        <h1 className="mt-4 font-serif text-[2.2rem] leading-tight">This classroom is for students of {track.programmeName ?? track.title}</h1>
+        <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">Enroll in the programme to open its classroom, live classes and assignments.</p>
+        <ButtonLink to={`/programmes/${track.slug}`} className="mt-6">
+          About the programme
+        </ButtonLink>
+      </div>
+    );
 
   // A paid course's lessons only open for enrolled learners (and admins). The database enforces this too:
   // without access it sends no lesson text at all, so this screen is the friendly face of that rule.
@@ -123,7 +192,7 @@ export default function Learn() {
   const sections = lessonSections(lesson.body);
 
   // Signed in but not enrolled: they can read and try things, but nothing is saved until they choose to enrol.
-  const notEnrolled = learner.signedIn && !learner.loading && !learner.enrollment && !isPaid(course);
+  const notEnrolled = !inClassroom && learner.signedIn && !learner.loading && !learner.enrollment && !isPaid(course);
   const confirmEnrol = async () => {
     await (await getBackend()).enroll(course.id);
     await learner.reload();
@@ -162,9 +231,13 @@ export default function Learn() {
   const badgeEarned = !!badgeModule && learner.badgeModules.has(badgeModule.id);
   const checkUrl = badgeModule ? `/courses/${course.slug}/modules/${badgeModule.id}/check` : "";
   const tasksLeft = badgeModule ? moduleTaskIds(badgeModule).filter((id) => !completedExercises.includes(id)).length : 0;
-  const nextUrl = next ? `/learn/${course.slug}/${next.slug}` : `/courses/${course.slug}/assessment`;
+  const nextUrl = next ? url(next.slug) : `/courses/${course.slug}/assessment`;
 
-  const sidebar = <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />;
+  const sidebar = track ? (
+    <ProgrammeSidebar track={track} courses={allCourses} current={course} lessonId={lesson.id} completed={completedLessons} />
+  ) : (
+    <LessonSidebar course={course} currentLessonId={lesson.id} completed={completedLessons} />
+  );
 
   return (
     <>
@@ -181,9 +254,16 @@ export default function Learn() {
       {/* Curriculum */}
       <aside className="hidden lg:block">
         <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-1">
-          <Link to={`/courses/${course.slug}`} className="mb-3 block px-2.5 font-serif text-[1.1rem] leading-snug hover:text-brass-dark">
-            {course.title}
-          </Link>
+          {track ? (
+            <Link to={`/classroom/${track.slug}`} className="mb-3 block px-2.5 hover:text-brass-dark">
+              <span className="block text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-brass-dark">Your classroom</span>
+              <span className="mt-0.5 block font-serif text-[1.1rem] leading-snug">{track.programmeName ?? track.title}</span>
+            </Link>
+          ) : (
+            <Link to={`/courses/${course.slug}`} className="mb-3 block px-2.5 font-serif text-[1.1rem] leading-snug hover:text-brass-dark">
+              {course.title}
+            </Link>
+          )}
           {sidebar}
         </div>
       </aside>
@@ -202,6 +282,11 @@ export default function Learn() {
         </CurriculumDrawer>
 
         <header className="border-b border-line pb-8">
+          {track && (
+            <Link to={`/classroom/${track.slug}`} className="mb-3 inline-flex items-center gap-1.5 text-[0.8125rem] text-muted hover:text-ink">
+              <ArrowLeft aria-hidden className="h-3.5 w-3.5" /> {track.programmeName ?? track.title}
+            </Link>
+          )}
           <p className="kicker">
             Module {moduleNumber} · {course.title}
           </p>
@@ -230,7 +315,7 @@ export default function Learn() {
               <span>Every example as a notebook you can run, edit and save to your Google Drive.</span>
             </p>
           )}
-          {!learner.signedIn && !learner.loading && (
+          {!inClassroom && !learner.signedIn && !learner.loading && (
             <p className="mt-5 rounded-lg border border-brass/40 bg-brass-pale/35 px-4 py-3 text-[0.9rem]">
               You can read and practise without an account.{" "}
               <Link to={`/sign-up?next=${encodeURIComponent(`/learn/${course.slug}/${lesson.slug}`)}`} className="font-semibold text-brass-dark underline underline-offset-2">
@@ -239,7 +324,7 @@ export default function Learn() {
               to save your progress and earn your badges.
             </p>
           )}
-          {learner.wasReset && (
+          {!inClassroom && learner.wasReset && (
             <p className="mt-5 rounded-lg border border-line-strong bg-sand px-4 py-3 text-[0.9rem]">
               It's been more than {RESET_AFTER_DAYS} days since you last worked on this course, so it has started over. Any badges you earned are still yours.
             </p>
@@ -271,7 +356,7 @@ export default function Learn() {
                   Take the module check
                 </h2>
                 <p className="mt-2 text-[0.9375rem] text-muted">
-                  Questions on this module. Pass and you earn the <strong className="font-semibold text-ink">{badgeModule.badge}</strong> badge, free.
+                  Questions on this module. Pass and you earn the <strong className="font-semibold text-ink">{badgeModule.badge}</strong> badge{inClassroom ? "" : ", free"}.
                 </p>
                 {!learner.signedIn ? (
                   <ButtonLink to={`/sign-up?next=${encodeURIComponent(checkUrl)}`} className="mt-4">
@@ -303,7 +388,7 @@ export default function Learn() {
           </div>
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
             {prev ? (
-              <ButtonLink to={`/learn/${course.slug}/${prev.slug}`} variant="ghost">
+              <ButtonLink to={url(prev.slug)} variant="ghost">
                 <ArrowLeft aria-hidden className="h-4 w-4" /> Previous lesson
               </ButtonLink>
             ) : (
@@ -321,12 +406,12 @@ export default function Learn() {
                   )}
                 </Button>
               ) : (
-                <ButtonLink to={`/sign-in?next=${encodeURIComponent(`/learn/${course.slug}/${lesson.slug}`)}`} variant="secondary">
+                <ButtonLink to={`/sign-in?next=${encodeURIComponent(url(lesson.slug))}`} variant="secondary">
                   Sign in to track progress
                 </ButtonLink>
               )}
               {next ? (
-                <ButtonLink to={`/learn/${course.slug}/${next.slug}`} variant={done && !badgeModule ? "primary" : "secondary"}>
+                <ButtonLink to={url(next.slug)} variant={done && !badgeModule ? "primary" : "secondary"}>
                   {badgeModule ? "Next module" : "Next lesson"} <ArrowRight aria-hidden className="h-4 w-4" />
                 </ButtonLink>
               ) : (

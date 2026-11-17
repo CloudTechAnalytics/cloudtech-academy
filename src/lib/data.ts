@@ -5,7 +5,7 @@ import { getBackend, type AttemptResult, type Certificate, type Credential, type
 import { useAuth } from "./auth";
 import { eligibility } from "./certificates";
 import { TRACKS, type Track } from "@/content/tracks";
-import { withSales } from "./commerce";
+import { programmeCourseIds, withSales } from "./commerce";
 
 const publishedBundled = () => BUNDLED_COURSES.filter((c) => c.published);
 
@@ -62,6 +62,21 @@ export function useMyProgrammes() {
   }, [auth.status, reload]);
   return { held, loading: held === null, reload };
 }
+
+/**
+ * The Professional Programme the signed-in learner holds that includes this course, if any. Programme students take
+ * such courses in their classroom (/classroom/<programme>), never as free courses.
+ */
+export function useHeldProgrammeFor(courseId: string | undefined) {
+  const programmes = useProgrammes();
+  const { held } = useMyProgrammes();
+  if (!courseId || !held?.length) return null;
+  return programmes.find((t) => held.includes(t.id) && programmeCourseIds(t).includes(courseId)) ?? null;
+}
+
+/** Where a lesson opens: inside the programme classroom for programme students, otherwise the ordinary lesson page. */
+export const lessonPath = (courseSlug: string, lessonSlug: string, programmeSlug?: string | null) =>
+  programmeSlug ? `/classroom/${programmeSlug}/${courseSlug}/${lessonSlug}` : `/learn/${courseSlug}/${lessonSlug}`;
 
 export function useCourse(slug: string | undefined) {
   const initial = publishedBundled().find((c) => c.slug === slug) ?? null;

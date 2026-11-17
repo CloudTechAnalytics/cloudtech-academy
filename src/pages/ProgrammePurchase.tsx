@@ -65,7 +65,7 @@ function Inner() {
 
   const name = course.programmeName ?? course.title;
   const firstId = programmeCourseIds(course).find((id) => courses.some((c) => c.id === id && isPaid(c)));
-  const start = `/programmes/${course.slug}`;
+  const start = `/classroom/${course.slug}`;
   const included = [
     `${programmeCourseIds(course).length} courses in one structured programme`,
     ...(course.deliveryType ? [DELIVERY_LABEL[course.deliveryType]] : []),
@@ -92,16 +92,16 @@ function Inner() {
           <CheckCircle2 aria-hidden className="h-5 w-5" /> {paid ? "Payment confirmed" : "You are enrolled"}
         </p>
         <h1 className="mt-3 font-serif text-[2.3rem] leading-tight">Welcome to {name}</h1>
-        <p className="mt-3 text-[1.0625rem] text-muted">Your professional courses are unlocked. You'll find them in My Learning on your dashboard.</p>
+        <p className="mt-3 text-[1.0625rem] text-muted">Your whole programme is open in your classroom: every course, live classes, assignments and announcements.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <ButtonLink to={start}>Open the programme</ButtonLink>
+          <ButtonLink to={start}>Go to your classroom</ButtonLink>
           <ButtonLink to="/dashboard" variant="secondary">
             My Learning
           </ButtonLink>
         </div>
         {mode === "manual" && (
           <div className="mt-8 rounded-2xl border border-line-strong bg-paper p-6">
-            <ManualCheckout kind="programme" id={course.id} title={name} price={price ?? { amount: 0, listAmount: 0, discounted: false, currency: "NGN", percentOff: 0 }} instalments={null} openTo={start} openLabel="Open the programme" onlyExisting />
+            <ManualCheckout kind="programme" id={course.id} title={name} price={price ?? { amount: 0, listAmount: 0, discounted: false, currency: "NGN", percentOff: 0 }} instalments={null} openTo={start} openLabel="Go to your classroom" onlyExisting />
           </div>
         )}
       </div>
@@ -165,7 +165,7 @@ function Inner() {
               price={price}
               instalments={course.allowInstalments ? { firstPercent: course.firstPercent ?? 50, secondDueDays: course.secondDueDays ?? 30 } : null}
               openTo={start}
-              openLabel="Open the programme"
+              openLabel="Go to your classroom"
             />
           ) : manual ? (
             <>

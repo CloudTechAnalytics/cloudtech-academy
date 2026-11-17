@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import { CheckCircle2, Circle, PartyPopper } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { useCourse, useLearner } from "@/lib/data";
+import { useCourse, useHeldProgrammeFor, useLearner } from "@/lib/data";
 import { getBackend, type Credential } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { credentialBadge } from "@/lib/badges";
@@ -18,6 +18,7 @@ function Inner() {
   const { slug } = useParams();
   const { course, loading } = useCourse(slug);
   const learner = useLearner(course);
+  const programme = useHeldProgrammeFor(course?.id);
   const [credential, setCredential] = useState<Credential | null>(null);
   const [error, setError] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
@@ -42,13 +43,13 @@ function Inner() {
   if (!credential) {
     return (
       <div className="container-page max-w-2xl py-14 sm:py-20">
-        <Link to={`/courses/${course.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
-          ← {course.title}
+        <Link to={programme ? `/classroom/${programme.slug}` : `/courses/${course.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
+          ← {programme ? `Your classroom: ${programme.programmeName ?? programme.title}` : course.title}
         </Link>
         <h1 className="mt-4 font-serif text-[2.3rem] leading-tight sm:text-[2.8rem]">{eligible && !error ? "Issuing your badge…" : "Almost there"}</h1>
         {!eligible && (
           <>
-            <p className="mt-3 text-[1.0625rem] text-muted">Finish these to complete the course and earn your free completion badge.</p>
+            <p className="mt-3 text-[1.0625rem] text-muted">Finish these to complete the course and earn your {programme ? "" : "free "}completion badge.</p>
             <ul className="mt-8 space-y-3 rounded-2xl border border-line bg-paper p-6">
               {learner.eligibility!.requirements.map((r) => (
                 <li key={r.key} className="flex items-start gap-3">
@@ -96,7 +97,8 @@ function Inner() {
           <p className="mt-4 text-muted">You completed:</p>
           <h1 className="mt-1 font-serif text-[2.4rem] leading-[1.08] sm:text-[2.9rem]">{course.title}</h1>
           <p className="mt-4 text-[1.0625rem] leading-relaxed">
-            You've earned your CloudTech Academy course completion badge. <strong className="font-semibold">Your badge is free.</strong> Share it with your
+            You've earned your CloudTech Academy course completion badge.{programme ? "" : " "}
+            {!programme && <strong className="font-semibold">Your badge is free.</strong>} Share it with your
             network or add it to your portfolio.
           </p>
           <p className="mt-2 text-[0.875rem] text-muted">Credential ID {credential.credentialId}</p>

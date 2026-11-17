@@ -2,7 +2,7 @@ import { CourseVideoSection } from "@/components/CourseVideo";
 import { Link } from "react-router";
 import { Award, BookOpen, HelpCircle, CheckCircle2, Clock, FolderKanban, GraduationCap, Lock, MessageCircle, Target, Users, UserCheck } from "lucide-react";
 import type { Course } from "@/content/types";
-import { useCourses, useProgrammes, type useLearner } from "@/lib/data";
+import { lessonPath, useCourses, useHeldProgrammeFor, useProgrammes, type useLearner } from "@/lib/data";
 import { PathwayStrip } from "@/components/PathwayStrip";
 import { useAuth } from "@/lib/auth";
 import { levelText } from "@/components/CourseCard";
@@ -41,6 +41,7 @@ function Heading({ id, children }: { id: string; children: string }) {
 
 /** The premium sales page for a paid course. The lessons themselves stay locked until the learner has access. */
 export function ProfessionalCourseView({ course, learner }: { course: Course; learner: ReturnType<typeof useLearner> }) {
+  const programme = useHeldProgrammeFor(course.id);
   const lessons = publishedLessons(course);
   const programmes = useProgrammes();
   const allCourses = useCourses();
@@ -133,7 +134,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                     {lessons.length ? `This course has ${lessons.length} lessons.` : "This course has no lessons yet, so learners see Opens soon. Add lessons in the editor to open it."}
                   </p>
                   {resume && (
-                    <ButtonLink to={`/learn/${course.slug}/${resume.slug}`} className="mt-4 w-full">
+                    <ButtonLink to={lessonPath(course.slug, resume.slug, programme?.slug)} className="mt-4 w-full">
                       Open the first lesson
                     </ButtonLink>
                   )}
@@ -152,7 +153,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                     </div>
                   )}
                   {resume && (
-                    <ButtonLink to={`/learn/${course.slug}/${resume.slug}`} className="mt-5 w-full">
+                    <ButtonLink to={lessonPath(course.slug, resume.slug, programme?.slug)} className="mt-5 w-full">
                       Continue learning
                     </ButtonLink>
                   )}
@@ -237,7 +238,7 @@ export function ProfessionalCourseView({ course, learner }: { course: Course; le
                         {items.map((l) => (
                           <li key={l.id}>
                             {open ? (
-                              <Link to={`/learn/${course.slug}/${l.slug}`} className="hover:text-brass-dark">
+                              <Link to={lessonPath(course.slug, l.slug, programme?.slug)} className="hover:text-brass-dark">
                                 {l.title}
                               </Link>
                             ) : (

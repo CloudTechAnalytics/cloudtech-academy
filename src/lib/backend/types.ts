@@ -17,8 +17,8 @@ export type Enrollment = {
   lastLessonId: string | null;
   /** Last time the learner opened a lesson, completed something or took an assessment in this course. */
   lastActiveAt: string;
-  /** How they got in: free enrolment, a payment, or an admin granting access. Paid courses are only reachable by the last two. */
-  source: "free" | "purchase" | "granted";
+  /** How they got in: free enrolment, a payment, an admin granting access, or a Professional Programme that includes the course. */
+  source: "free" | "purchase" | "granted" | "programme";
 };
 
 /** A learner's order for a paid course or, when trackId is set, for a Professional Programme. */
@@ -186,6 +186,8 @@ export type ProgrammeEnrollment = {
   trackId: string;
   enrolledAt: string;
   source: "purchase" | "granted";
+  /** The batch the student is in, when they've been placed in one. */
+  batchId: string | null;
 };
 
 export type AdminProgrammeEnrollment = {
@@ -223,7 +225,7 @@ export type AdminEnrollment = {
   email: string;
   courseId: string;
   courseTitle: string;
-  source: "free" | "purchase" | "granted";
+  source: "free" | "purchase" | "granted" | "programme";
   enrolledAt: string;
   completedAt: string | null;
   amount: number | null;
@@ -594,6 +596,78 @@ export type CommunityStats = {
 /** A recent registration, with the event it was for. */
 export type RecentRegistration = EventRegistration & { eventTitle: string };
 
+/* ---------- the programme classroom ---------- */
+
+/** A live class for a programme, or for one of its batches. */
+export type ClassSession = {
+  id: string;
+  trackId: string;
+  batchId: string | null;
+  title: string;
+  description: string | null;
+  startsAt: string;
+  endsAt: string | null;
+  joinUrl: string | null;
+  recordingUrl: string | null;
+};
+export type SessionInput = Omit<ClassSession, "id"> & { id?: string };
+
+export type ClassAttendance = "present" | "late" | "absent" | "excused";
+
+export type Announcement = {
+  id: string;
+  trackId: string;
+  batchId: string | null;
+  title: string;
+  body: string;
+  emailed: boolean;
+  createdAt: string;
+};
+
+export type Assignment = {
+  id: string;
+  trackId: string;
+  batchId: string | null;
+  courseId: string | null;
+  title: string;
+  /** Markdown. */
+  brief: string;
+  dueAt: string | null;
+  maxScore: number;
+  passScore: number | null;
+  required: boolean;
+  published: boolean;
+};
+export type AssignmentInput = Omit<Assignment, "id"> & { id?: string };
+
+export type SubmissionState = "submitted" | "graded" | "returned";
+
+export type AssignmentSubmission = {
+  id: string;
+  assignmentId: string;
+  userId: string;
+  content: string;
+  url: string | null;
+  status: SubmissionState;
+  score: number | null;
+  feedback: string | null;
+  submittedAt: string;
+  gradedAt: string | null;
+};
+
+/** Everything a programme student sees in their classroom besides the courses. */
+export type ClassroomData = {
+  batch: ProgrammeBatch | null;
+  sessions: ClassSession[];
+  announcements: Announcement[];
+  assignments: (Assignment & { submission: AssignmentSubmission | null })[];
+  attendance: { sessionId: string; status: ClassAttendance }[];
+};
+
+export type RosterStudent = { userId: string; fullName: string; email: string; batchId: string | null; enrolledAt: string; source: "purchase" | "granted" };
+
+export type AdminAssignmentSubmission = AssignmentSubmission & { fullName: string; email: string };
+
 /* ---------- programme applications (the shareable enrolment form) ---------- */
 
 export type BatchMode = "online" | "physical" | "hybrid";
@@ -847,6 +921,12 @@ export interface Backend {
   /** Anyone can apply, signed in or not. Applying again for the same programme updates the open application. */
   submitProgrammeApplication(input: ApplicationInput): Promise<ApplicationReceipt>;
 
+  /* ---------- the programme classroom ---------- */
+  /** Live classes, announcements, assignments (with the student's submission) and their attendance, for a programme they hold. */
+  getClassroom(trackId: string): Promise<ClassroomData>;
+  /** Hands in (or hands in again) an assignment. */
+  submitAssignment(assignmentId: string, input: { content: string; url: string }): Promise<AssignmentSubmission>;
+
   /* ---------- admin ---------- */
   admin: {
     /** The community settings as saved, including while inactive. */
@@ -880,6 +960,26 @@ export interface Backend {
     /** Money received. Opens the programme when the applicant has an account; otherwise emails them a link to create one. Returns the new status. */
     recordApplicationPayment(id: string, input: ApplicationPaymentInput): Promise<ApplicationStatus>;
     deleteApplication(id: string): Promise<void>;
+    /** The programme's students and their batches. */
+    listRoster(trackId: string): Promise<RosterStudent[]>;
+    setStudentBatch(trackId: string, userId: string, batchId: string | null): Promise<void>;
+    listSessions(trackId: string): Promise<ClassSession[]>;
+    saveSession(input: SessionInput): Promise<void>;
+    deleteSession(id: string): Promise<void>;
+    /** Attendance marked for a class, by student. */
+    listAttendance(sessionId: string): Promise<{ userId: string; status: ClassAttendance }[]>;
+    /** Marks one student; null clears the mark. */
+    setClassAttendance(sessionId: string, userId: string, status: ClassAttendance | null): Promise<void>;
+    listAnnouncements(trackId: string): Promise<Announcement[]>;
+    /** Posts an announcement, and emails the students who can see it when asked. Returns how many were emailed. */
+    postAnnouncement(input: { trackId: string; batchId: string | null; title: string; body: string; email: boolean }): Promise<number>;
+    deleteAnnouncement(id: string): Promise<void>;
+    listAssignments(trackId: string): Promise<Assignment[]>;
+    saveAssignment(input: AssignmentInput): Promise<void>;
+    deleteAssignment(id: string): Promise<void>;
+    listAssignmentSubmissions(assignmentId: string): Promise<AdminAssignmentSubmission[]>;
+    /** "graded" is final; "returned" asks the student to improve it and resubmit. */
+    gradeSubmission(id: string, status: "graded" | "returned", score: number | null, feedback: string): Promise<void>;
     saveCourse(course: CourseInput): Promise<void>;
     /** The course's video in any status, or null when it has none. */
     getCourseVideo(courseId: string): Promise<CourseVideoAdmin | null>;

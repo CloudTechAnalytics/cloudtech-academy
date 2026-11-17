@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import { ArrowRight, CheckCircle2, Circle, RotateCcw, Trophy } from "lucide-react";
 import type { AssessmentPublic } from "@/content/types";
 import { useSeo } from "@/lib/seo";
-import { useCourse, useLearner } from "@/lib/data";
+import { useCourse, useHeldProgrammeFor, useLearner } from "@/lib/data";
 import { getBackend, type AttemptResult, type Credential } from "@/lib/backend";
 import { PageLoading, RequireAuth } from "@/lib/auth";
 import { credentialBadge } from "@/lib/badges";
@@ -20,6 +20,7 @@ function AssessmentInner() {
   const { slug, moduleId } = useParams();
   const { course, loading } = useCourse(slug);
   const learner = useLearner(course);
+  const programme = useHeldProgrammeFor(course?.id);
   const navigate = useNavigate();
   const [moduleCheck, setModuleCheck] = useState<{ assessment: AssessmentPublic | null; attempts: AttemptResult[] } | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -145,7 +146,7 @@ function AssessmentInner() {
             <h1 className="mt-3 flex items-start gap-3 font-serif text-[2.2rem] leading-tight">
               <Trophy aria-hidden className="mt-2 h-7 w-7 shrink-0 text-brass" /> Badge earned: {badge.badgeName}
             </h1>
-            <p className="mt-3 text-muted">It's yours, free, with its own credential ID ({badge.credentialId}) and a public page anyone can check.</p>
+            <p className="mt-3 text-muted">It's yours{programme ? "" : ", free"}, with its own credential ID ({badge.credentialId}) and a public page anyone can check.</p>
             <div className="mt-6">
               <ShareMenu credential={badge} art={art} />
             </div>

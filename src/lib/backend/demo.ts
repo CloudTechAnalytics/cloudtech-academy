@@ -34,6 +34,11 @@ import {
   type ApplicationReceipt,
   type ProgrammeApplication,
   type ProgrammeBatch,
+  type Announcement,
+  type Assignment,
+  type AssignmentSubmission,
+  type ClassAttendance,
+  type ClassSession,
   type EventStatus,
   type AdminCertificate,
   type AdminCourseOrder,
@@ -79,7 +84,12 @@ type Store = {
   orders: CertificateOrder[];
   courseOrders: (CourseOrder & { userId: string; provider: string | null; providerRef: string | null; note: string | null })[];
   /** Programmes learners hold, and what admins changed about each programme's sales settings. */
-  programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string }[];
+  programmes: { userId: string; trackId: string; source: "purchase" | "granted"; enrolledAt: string; batchId?: string | null }[];
+  sessions: ClassSession[];
+  attendance: { sessionId: string; userId: string; status: ClassAttendance }[];
+  announcements: Announcement[];
+  assignments: Assignment[];
+  assignmentSubmissions: AssignmentSubmission[];
   orderPayments: (OrderPayment & { userId: string; proofName?: string | null })[];
   emails: EmailLogEntry[];
   tracking: TrackingSettings | null;
@@ -150,6 +160,11 @@ const empty = (): Store => ({
   registrations: [],
   batches: [],
   applications: [],
+  sessions: [],
+  attendance: [],
+  announcements: [],
+  assignments: [],
+  assignmentSubmissions: [],
   prices: null,
   courses: null,
   assessments: null,
@@ -548,6 +563,7 @@ export function createDemoBackend(): Backend {
         const c = courses(s).find((x) => x.id === e.courseId);
         return !(closing.has(e.courseId) && c && isPaid(c) && e.source === "purchase" && !keep.has(e.courseId));
       });
+      for (const e of s.enrollments[o.userId]) if (e.source === "programme" && closing.has(e.courseId) && !keep.has(e.courseId)) e.source = "free";
     } else s.enrollments[o.userId] = (s.enrollments[o.userId] ?? []).filter((e) => !(e.courseId === o.courseId && e.source === "purchase"));
   };
   /** An order follows its confirmed payments: partial, then paid; access opens with the first money and closes when none is left. */
@@ -574,17 +590,19 @@ export function createDemoBackend(): Backend {
   /** Opens a programme for a learner: the programme itself and every paid course it contains. */
   const openProgramme = (s: Store, userId: string, trackId: string, source: "purchase" | "granted") => {
     if (!s.programmes.some((p) => p.userId === userId && p.trackId === trackId)) {
-      s.programmes.push({ userId, trackId, source, enrolledAt: now() });
+      const batchId = s.applications.find((a) => a.userId === userId && a.trackId === trackId && a.batchId)?.batchId ?? null;
+      s.programmes.push({ userId, trackId, source, enrolledAt: now(), batchId });
       const t = programmeOf(s, trackId)!;
-      queueEmail(s, userId, "enrolment", { course: `the Professional Programme in ${t.programmeTitle ?? t.title}`, link: `https://academy.cloudtechanalytics.com/programmes/${t.slug}` });
+      queueEmail(s, userId, "enrolment", { course: t.programmeName ?? t.title, link: `https://academy.cloudtechanalytics.com/classroom/${t.slug}` });
     }
     const list = (s.enrollments[userId] ??= []);
     for (const courseId of programmeCourseIds(programmeOf(s, trackId)!)) {
       const course = courses(s).find((c) => c.id === courseId);
-      if (!course || !isPaid(course)) continue;
+      if (!course) continue;
+      const as = isPaid(course) ? source : "programme";
       const have = list.find((e) => e.courseId === courseId);
-      if (have) have.source = have.source === "free" ? source : have.source;
-      else list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source });
+      if (have) have.source = have.source === "free" || have.source === "programme" ? as : have.source;
+      else list.push({ courseId, enrolledAt: now(), completedAt: null, lastLessonId: null, lastActiveAt: now(), source: as });
     }
   };
   const requireAccess = (s: Store, userId: string, courseId: string | undefined) => {
@@ -635,6 +653,12 @@ export function createDemoBackend(): Backend {
       reference: i.reference.trim() || reference(s), payerName: null, paidOn: i.paidOn || now().slice(0, 10), proofPath: null, note: i.note.trim() || null, rejectedReason: null, source: "admin", confirmedAt: now(), createdAt: now(),
     });
     recomputeOrder(s, order.id);
+  };
+  /** Whether a programme student sees an item: whole-programme items, and their batch's (everything while unplaced). */
+  const inClassroom = (s: Store, userId: string, trackId: string, batchId: string | null) => {
+    if (s.users.find((u) => u.id === userId)?.role === "admin") return true;
+    const h = s.programmes.find((p) => p.userId === userId && p.trackId === trackId);
+    return !!h && (batchId === null || !h.batchId || h.batchId === batchId);
   };
   const seatsTaken = (s: Store, batchId: string) => s.applications.filter((a) => a.batchId === batchId && (a.status === "paid" || a.status === "enrolled")).length;
   const batchLabel = (b: Omit<ProgrammeBatch, "seatsTaken">) =>
@@ -1222,7 +1246,7 @@ export function createDemoBackend(): Backend {
     },
     async listMyProgrammes() {
       const u = current();
-      return u ? load().programmes.filter((p) => p.userId === u.id).map(({ trackId, enrolledAt, source }) => ({ trackId, enrolledAt, source })) : [];
+      return u ? load().programmes.filter((p) => p.userId === u.id).map(({ trackId, enrolledAt, source, batchId }) => ({ trackId, enrolledAt, source, batchId: batchId ?? null })) : [];
     },
     async getTrackingSettings() {
       return load().tracking ?? { ga4Id: null, googleAdsId: null, metaPixelId: null };
@@ -1516,6 +1540,42 @@ export function createDemoBackend(): Backend {
       };
       return receipt;
     },
+    async getClassroom(trackId) {
+      const u = requireUser();
+      const s = load();
+      const h = s.programmes.find((p) => p.userId === u.id && p.trackId === trackId);
+      if (!h && u.role !== "admin") throw new BackendError("This classroom is for students in the programme.");
+      const see = (x: { trackId: string; batchId: string | null }) => x.trackId === trackId && inClassroom(s, u.id, trackId, x.batchId);
+      const batch = h?.batchId ? s.batches.find((b) => b.id === h.batchId) : undefined;
+      return {
+        batch: batch ? { ...batch, seatsTaken: seatsTaken(s, batch.id) } : null,
+        sessions: s.sessions.filter(see).sort((a, b) => a.startsAt.localeCompare(b.startsAt)),
+        announcements: s.announcements.filter(see).sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+        assignments: s.assignments
+          .filter((a) => a.published && see(a))
+          .map((a) => ({ ...a, submission: s.assignmentSubmissions.find((x) => x.assignmentId === a.id && x.userId === u.id) ?? null })),
+        attendance: s.attendance.filter((a) => a.userId === u.id).map(({ sessionId, status }) => ({ sessionId, status })),
+      };
+    },
+    async submitAssignment(assignmentId, input) {
+      const u = requireUser();
+      const s = load();
+      const a = s.assignments.find((x) => x.id === assignmentId && x.published);
+      if (!a) throw new BackendError("Assignment not found.");
+      if (!s.programmes.some((p) => p.userId === u.id && p.trackId === a.trackId) || !inClassroom(s, u.id, a.trackId, a.batchId)) throw new BackendError("This assignment is for students in the programme.");
+      const url = input.url.trim();
+      if (input.content.trim().length < 2 && !url) throw new BackendError("Write your answer or add a link to your work.");
+      if (url && !/^https?:\/\//i.test(url)) throw new BackendError("The link must start with http:// or https://.");
+      let sub = s.assignmentSubmissions.find((x) => x.assignmentId === assignmentId && x.userId === u.id);
+      if (sub?.status === "graded") throw new BackendError("This assignment has been graded. Ask your instructor if you need to resubmit.");
+      if (sub) Object.assign(sub, { content: input.content.trim(), url: url || null, status: "submitted", submittedAt: now() });
+      else {
+        sub = { id: uid(), assignmentId, userId: u.id, content: input.content.trim(), url: url || null, status: "submitted", score: null, feedback: null, submittedAt: now(), gradedAt: null };
+        s.assignmentSubmissions.push(sub);
+      }
+      save(s);
+      return sub;
+    },
     async cancelMyRegistration(eventId) {
       const u = requireUser();
       const s = load();
@@ -1633,6 +1693,128 @@ export function createDemoBackend(): Backend {
         const r = s.registrations.find((x) => x.id === registrationId);
         if (!r) throw new BackendError("Registration not found.");
         Object.assign(r, { attendanceStatus: status, attendedAt: status === "attended" ? now() : null });
+        save(s);
+      },
+      async listRoster(trackId) {
+        requireAdmin();
+        const s = load();
+        return s.programmes
+          .filter((p) => p.trackId === trackId)
+          .map((p) => {
+            const u = s.users.find((x) => x.id === p.userId);
+            return { userId: p.userId, fullName: u?.fullName ?? "", email: u?.email ?? "", batchId: p.batchId ?? null, enrolledAt: p.enrolledAt, source: p.source };
+          });
+      },
+      async setStudentBatch(trackId, userId, batchId) {
+        requireAdmin();
+        const s = load();
+        const h = s.programmes.find((p) => p.userId === userId && p.trackId === trackId);
+        if (!h) throw new BackendError("That student isn't in this programme.");
+        h.batchId = batchId;
+        save(s);
+      },
+      async listSessions(trackId) {
+        requireAdmin();
+        return load().sessions.filter((x) => x.trackId === trackId).sort((a, b) => b.startsAt.localeCompare(a.startsAt));
+      },
+      async saveSession(input) {
+        requireAdmin();
+        if (input.title.trim().length < 2) throw new BackendError("Give the class a title.");
+        for (const link of [input.joinUrl, input.recordingUrl]) if (link && !/^https?:\/\//i.test(link.trim())) throw new BackendError("Links must start with http:// or https://.");
+        const s = load();
+        const { id, ...rest } = input;
+        const row = { ...rest, title: rest.title.trim(), description: rest.description?.trim() || null, joinUrl: rest.joinUrl?.trim() || null, recordingUrl: rest.recordingUrl?.trim() || null, endsAt: rest.endsAt || null };
+        const have = id ? s.sessions.find((x) => x.id === id) : undefined;
+        if (have) Object.assign(have, row);
+        else s.sessions.push({ id: uid(), ...row });
+        save(s);
+      },
+      async deleteSession(id) {
+        requireAdmin();
+        const s = load();
+        s.sessions = s.sessions.filter((x) => x.id !== id);
+        s.attendance = s.attendance.filter((a) => a.sessionId !== id);
+        save(s);
+      },
+      async listAttendance(sessionId) {
+        requireAdmin();
+        return load().attendance.filter((a) => a.sessionId === sessionId).map(({ userId, status }) => ({ userId, status }));
+      },
+      async setClassAttendance(sessionId, userId, status) {
+        requireAdmin();
+        const s = load();
+        s.attendance = s.attendance.filter((a) => !(a.sessionId === sessionId && a.userId === userId));
+        if (status) s.attendance.push({ sessionId, userId, status });
+        save(s);
+      },
+      async listAnnouncements(trackId) {
+        requireAdmin();
+        return load().announcements.filter((x) => x.trackId === trackId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async postAnnouncement(a) {
+        requireAdmin();
+        if (a.title.trim().length < 2 || a.body.trim().length < 2) throw new BackendError("Write a title and a message.");
+        const s = load();
+        s.announcements.push({ id: uid(), trackId: a.trackId, batchId: a.batchId, title: a.title.trim(), body: a.body.trim(), emailed: a.email, createdAt: now() });
+        let n = 0;
+        if (a.email) {
+          const t = programmeOf(s, a.trackId);
+          for (const h of s.programmes.filter((p) => p.trackId === a.trackId && (a.batchId === null || !p.batchId || p.batchId === a.batchId))) {
+            const u = s.users.find((x) => x.id === h.userId);
+            if (!u) continue;
+            s.emails.push({ id: uid(), toEmail: u.email, toName: u.fullName, template: "message", subject: `${t?.programmeName ?? t?.title ?? ""}: ${a.title.trim()}`, body: a.body.trim(), status: "sent", error: null, createdAt: now(), sentAt: now() });
+            n++;
+          }
+        }
+        save(s);
+        return n;
+      },
+      async deleteAnnouncement(id) {
+        requireAdmin();
+        const s = load();
+        s.announcements = s.announcements.filter((x) => x.id !== id);
+        save(s);
+      },
+      async listAssignments(trackId) {
+        requireAdmin();
+        return load().assignments.filter((x) => x.trackId === trackId);
+      },
+      async saveAssignment(input) {
+        requireAdmin();
+        if (input.title.trim().length < 2) throw new BackendError("Give the assignment a title.");
+        const s = load();
+        const { id, ...rest } = input;
+        const row = { ...rest, title: rest.title.trim(), dueAt: rest.dueAt || null };
+        const have = id ? s.assignments.find((x) => x.id === id) : undefined;
+        if (have) Object.assign(have, row);
+        else s.assignments.push({ id: uid(), ...row });
+        save(s);
+      },
+      async deleteAssignment(id) {
+        requireAdmin();
+        const s = load();
+        s.assignments = s.assignments.filter((x) => x.id !== id);
+        s.assignmentSubmissions = s.assignmentSubmissions.filter((x) => x.assignmentId !== id);
+        save(s);
+      },
+      async listAssignmentSubmissions(assignmentId) {
+        requireAdmin();
+        const s = load();
+        return s.assignmentSubmissions
+          .filter((x) => x.assignmentId === assignmentId)
+          .map((x) => {
+            const u = s.users.find((y) => y.id === x.userId);
+            return { ...x, fullName: u?.fullName ?? "", email: u?.email ?? "" };
+          });
+      },
+      async gradeSubmission(id, status, score, feedback) {
+        requireAdmin();
+        const s = load();
+        const sub = s.assignmentSubmissions.find((x) => x.id === id);
+        if (!sub) throw new BackendError("Submission not found.");
+        const a = s.assignments.find((x) => x.id === sub.assignmentId)!;
+        if (status === "graded" && (score === null || score < 0 || score > a.maxScore)) throw new BackendError(`Enter a score from 0 to ${a.maxScore}.`);
+        Object.assign(sub, { status, score, feedback: feedback.trim() || null, gradedAt: now() });
         save(s);
       },
       async listAllBatches() {
