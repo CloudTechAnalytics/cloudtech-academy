@@ -79,6 +79,30 @@
       "destination": "/app"
     },
     {
+      "source": "/courses/:slug/enroll",
+      "destination": "/app"
+    },
+    {
+      "source": "/courses/:slug/download",
+      "destination": "/app"
+    },
+    {
+      "source": "/programmes/:slug/enroll",
+      "destination": "/app"
+    },
+    {
+      "source": "/programmes/:slug/certificate",
+      "destination": "/app"
+    },
+    {
+      "source": "/apply",
+      "destination": "/app"
+    },
+    {
+      "source": "/apply/:path*",
+      "destination": "/app"
+    },
+    {
       "source": "/credentials/:path*",
       "destination": "/app"
     },
@@ -88,6 +112,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/tracks",
+      "destination": "/programmes",
+      "permanent": true
+    },
+    {
+      "source": "/tracks/:slug",
+      "destination": "/programmes/:slug",
+      "permanent": true
+    },
     {
       "source": "/paths",
       "destination": "/programmes/data-analyst",
