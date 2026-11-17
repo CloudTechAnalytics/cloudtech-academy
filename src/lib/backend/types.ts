@@ -82,7 +82,7 @@ export type OrderPayment = {
 };
 
 /** The two emails the Academy sends by itself. Admins edit the wording; {{name}}, {{course}} and {{link}} are filled in. */
-export type EmailTemplate = { key: "welcome" | "enrolment"; label: string; subject: string; body: string; enabled: boolean };
+export type EmailTemplate = { key: "welcome" | "enrolment" | "application" | "application_paid"; label: string; subject: string; body: string; enabled: boolean };
 
 export type EmailLogEntry = {
   id: string;
@@ -594,6 +594,92 @@ export type CommunityStats = {
 /** A recent registration, with the event it was for. */
 export type RecentRegistration = EventRegistration & { eventTitle: string };
 
+/* ---------- programme applications (the shareable enrolment form) ---------- */
+
+export type BatchMode = "online" | "physical" | "hybrid";
+
+/** One intake of a Professional Programme: when it starts and how classes run. */
+export type ProgrammeBatch = {
+  id: string;
+  trackId: string;
+  name: string;
+  startsOn: string | null;
+  /** Class days and times, e.g. "Tue & Thu, 7–9pm WAT". */
+  schedule: string | null;
+  mode: BatchMode;
+  location: string | null;
+  /** Last day to apply. */
+  applyBy: string | null;
+  seats: number | null;
+  /** Applicants who have paid or enrolled. */
+  seatsTaken: number;
+  status: "open" | "closed";
+};
+
+export type BatchInput = Omit<ProgrammeBatch, "id" | "seatsTaken"> & { id?: string };
+
+export type Occupation = "student" | "professional" | "business_owner" | "job_seeker" | "other";
+export type Experience = "none" | "some" | "experienced";
+
+export type ApplicationInput = {
+  trackId: string;
+  batchId: string | null;
+  fullName: string;
+  email: string;
+  whatsapp: string;
+  occupation: Occupation;
+  experience: Experience;
+  plan: "full" | "two_part";
+  heardFrom: string;
+  message: string;
+};
+
+/** What an applicant sees after applying: their reference and how to pay. */
+export type ApplicationReceipt = {
+  reference: string;
+  trackId: string;
+  programme: string;
+  batch: string | null;
+  fullName: string;
+  email: string;
+  plan: "full" | "two_part";
+  currency: string;
+  amount: number;
+  listAmount: number;
+  firstAmount: number | null;
+  secondAmount: number | null;
+  secondDueDays: number;
+  accounts: Pick<PaymentAccount, "label" | "bankName" | "accountName" | "accountNumber" | "instructions" | "currency">[];
+  instructions: string | null;
+};
+
+export type ApplicationStatus = "new" | "contacted" | "paid" | "enrolled" | "declined";
+
+export type ProgrammeApplication = {
+  id: string;
+  reference: string;
+  trackId: string;
+  batchId: string | null;
+  batchLabel: string | null;
+  fullName: string;
+  email: string;
+  whatsapp: string;
+  occupation: Occupation;
+  experience: Experience;
+  plan: "full" | "two_part";
+  heardFrom: string | null;
+  message: string | null;
+  status: ApplicationStatus;
+  adminNote: string | null;
+  userId: string | null;
+  /** Total recorded against this application. */
+  amountPaid: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ApplicationPaymentInput = { amount: number; method: string; reference: string; paidOn: string; note: string };
+
 export type StudentSummary = {
   userId: string;
   fullName: string;
@@ -755,6 +841,12 @@ export interface Backend {
   listMyRegistrations(): Promise<EventRegistration[]>;
   cancelMyRegistration(eventId: string): Promise<void>;
 
+  /* ---------- programme applications ---------- */
+  /** A programme's batches that are taking applications, soonest first. */
+  listProgrammeBatches(trackId: string): Promise<ProgrammeBatch[]>;
+  /** Anyone can apply, signed in or not. Applying again for the same programme updates the open application. */
+  submitProgrammeApplication(input: ApplicationInput): Promise<ApplicationReceipt>;
+
   /* ---------- admin ---------- */
   admin: {
     /** The community settings as saved, including while inactive. */
@@ -776,6 +868,18 @@ export interface Backend {
     setAttendance(registrationId: string, status: AttendanceStatus): Promise<void>;
     /** Uploads a cover or speaker image (PNG, JPEG or WebP, up to 2 MB) and returns its public URL. */
     uploadEventImage(file: File): Promise<string>;
+    /** Every batch of every programme, open or closed. */
+    listAllBatches(): Promise<ProgrammeBatch[]>;
+    /** Creates the batch, or updates it when input.id is set. */
+    saveBatch(input: BatchInput): Promise<void>;
+    deleteBatch(id: string): Promise<void>;
+    /** Every application, newest first. */
+    listApplications(): Promise<ProgrammeApplication[]>;
+    /** Follow-up status (new, contacted or declined) and a private note. */
+    updateApplication(id: string, status: ApplicationStatus, note: string): Promise<void>;
+    /** Money received. Opens the programme when the applicant has an account; otherwise emails them a link to create one. Returns the new status. */
+    recordApplicationPayment(id: string, input: ApplicationPaymentInput): Promise<ApplicationStatus>;
+    deleteApplication(id: string): Promise<void>;
     saveCourse(course: CourseInput): Promise<void>;
     /** The course's video in any status, or null when it has none. */
     getCourseVideo(courseId: string): Promise<CourseVideoAdmin | null>;

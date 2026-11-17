@@ -13,6 +13,7 @@ const Project = lazy(() => import("@/pages/Project"));
 const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CourseDownload = lazy(() => import("@/pages/CourseDownload"));
 const ProgrammePurchase = lazy(() => import("@/pages/ProgrammePurchase"));
+const Apply = lazy(() => import("@/pages/Apply"));
 const CoursePurchase = lazy(() => import("@/pages/CoursePurchase"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
@@ -69,6 +70,7 @@ const AdminEnrollments = lazy(() => import("@/pages/admin/AdminProgrammes").then
 const AdminPayments = lazy(() => import("@/pages/admin/AdminPayments"));
 const AdminAnalytics = lazy(() => import("@/pages/admin/AdminProgrammes").then((m) => ({ default: m.AdminAnalytics })));
 const AdminProgrammes = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammes })));
+const AdminApplications = lazy(() => import("@/pages/admin/AdminApplications"));
 const AdminProgrammeEditor = lazy(() => import("@/pages/admin/AdminProgrammeEditor").then((m) => ({ default: m.AdminProgrammeEditor })));
 const AdminEmails = lazy(() => import("@/pages/admin/AdminEmails"));
 const AdminSubmissions = lazy(() => import("@/pages/admin/AdminSubmissions"));
@@ -104,6 +106,8 @@ export function AppRoutes() {
           <Route path="programmes" element={<TracksList />} />
           <Route path="programmes/:slug" element={<TrackDetail />} />
           <Route path="programmes/:slug/enroll" element={<ProgrammePurchase />} />
+          <Route path="apply" element={<Apply />} />
+          <Route path="apply/:slug" element={<Apply />} />
           <Route path="programmes/:slug/certificate" element={<ProgrammeCertificate />} />
           <Route path="tracks" element={<Navigate to="/programmes" replace />} />
           <Route path="tracks/:slug" element={<TrackRedirect />} />
@@ -132,6 +136,7 @@ export function AppRoutes() {
             <Route path="programmes/:slug" element={<AdminProgrammeEditor />} />
             <Route path="emails" element={<AdminEmails />} />
             <Route path="enrollments" element={<AdminEnrollments />} />
+            <Route path="applications" element={<AdminApplications />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="analytics" element={<AdminAnalytics />} />
             <Route index element={<AdminOverview />} />

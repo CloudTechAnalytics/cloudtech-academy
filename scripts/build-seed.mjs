@@ -196,7 +196,7 @@ for (const p of BUNDLED_PROJECTS) {
 
 TRACKS.forEach((t, i) => {
   out.push(`\n-- Track: ${t.title}`);
-  out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true", programme_title: t.programmeTitle ? str(t.programmeTitle) : "null", certificate_enabled: programmeCertificateAvailable(t) ? "true" : "false" }));
+  out.push(upsert("tracks", { id: str(t.id), slug: str(t.slug), title: str(t.title), summary: str(t.summary), badge_name: str(t.badge), badge_code: str(t.badgeCode), skills: arr(t.skills), position: num(i + 1), published: "true", programme_title: t.programmeTitle ? str(t.programmeTitle) : "null", programme_name: t.programmeName ? str(t.programmeName) : "null", certificate_enabled: programmeCertificateAvailable(t) ? "true" : "false" }));
   out.push(commerceUpdate("tracks", t.id, t, true));
   // The track's course list is replaced each time, so courses moved or removed in the file don't linger.
   out.push(`delete from public.track_courses where track_id = ${str(t.id)};\n`);

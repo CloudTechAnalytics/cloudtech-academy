@@ -388,16 +388,23 @@ export function TrackDetail() {
       )}
       <div className="mt-5">
         {price && state === "open" ? (
-          <ButtonLink to={enrollTo} className="w-full">
-            Enroll Now — {formatPrice(price.amount, price.currency)}
-          </ButtonLink>
+          <>
+            <ButtonLink to={`/apply/${track.slug}`} className="w-full">
+              Apply Now — {formatPrice(price.amount, price.currency)}
+            </ButtonLink>
+            <p className="mt-2 text-center text-[0.8125rem] text-muted">
+              Batch dates, payment plans and how to pay.{" "}
+              <Link to={enrollTo} className="font-semibold text-brass-dark">
+                Or pay online with an account
+              </Link>
+            </p>
+          </>
         ) : (
           <p className="rounded-lg border border-line-strong bg-sand px-4 py-3 text-center text-[0.9375rem] text-muted">
             {state !== "open" ? ENROLMENT_MESSAGE[state] : "Enrolment opens soon. Start with the free courses below in the meantime."}
           </p>
         )}
       </div>
-      {auth.status !== "signed-in" && price && state === "open" && <p className="mt-3 text-center text-[0.8125rem] text-muted">You'll create a free account first, then pay.</p>}
       {includedList.length > 0 && (
         <div className="mt-6 border-t border-line pt-5">
           <p className="text-[0.875rem] font-semibold">What's included</p>

@@ -37,6 +37,10 @@ import {
   type VideoStatus,
   type EventInput,
   type EventRegistration,
+  type ApplicationReceipt,
+  type ApplicationStatus,
+  type ProgrammeApplication,
+  type ProgrammeBatch,
   type Credential,
   type PracticeResult,
   type PracticeSubmission,
@@ -107,6 +111,42 @@ const toRegistration = (r: Row): EventRegistration => ({
   attendanceStatus: r.attendance_status,
   registeredAt: r.registered_at,
   attendedAt: r.attended_at ?? null,
+});
+
+const toBatch = (r: Row, seatsTaken = 0): ProgrammeBatch => ({
+  id: r.id,
+  trackId: r.track_id,
+  name: r.name,
+  startsOn: r.starts_on ?? null,
+  schedule: r.schedule ?? null,
+  mode: r.mode,
+  location: r.location ?? null,
+  applyBy: r.apply_by ?? null,
+  seats: r.seats ?? null,
+  seatsTaken,
+  status: r.status,
+});
+
+const toApplication = (r: Row): ProgrammeApplication => ({
+  id: r.id,
+  reference: r.reference,
+  trackId: r.track_id,
+  batchId: r.batch_id ?? null,
+  batchLabel: r.batch_label ?? null,
+  fullName: r.full_name,
+  email: r.email,
+  whatsapp: r.whatsapp,
+  occupation: r.occupation,
+  experience: r.experience,
+  plan: r.payment_plan,
+  heardFrom: r.heard_from ?? null,
+  message: r.message ?? null,
+  status: r.status,
+  adminNote: r.admin_note ?? null,
+  userId: r.user_id ?? null,
+  amountPaid: ((r.application_payments ?? []) as Row[]).reduce((n, p) => n + Number(p.amount), 0),
+  createdAt: r.created_at,
+  updatedAt: r.updated_at,
 });
 
 const toCommunity = (r: Row): CommunitySettings => ({
@@ -970,7 +1010,67 @@ export function createSupabaseBackend(url: string, anonKey: string): Backend {
       check(await sb.rpc("cancel_my_registration", { p_event_id: eventId }));
     },
 
+    async listProgrammeBatches(trackId) {
+      const rows = check(await sb.from("programme_batches").select("*").eq("track_id", trackId).eq("status", "open").order("starts_on", { ascending: true, nullsFirst: false })) as Row[];
+      const today = new Date().toISOString().slice(0, 10);
+      const open = rows.filter((r) => !r.apply_by || r.apply_by >= today);
+      const taken = await Promise.all(open.map(async (r) => Number(check(await sb.rpc("batch_seats_taken", { p_batch: r.id })) ?? 0)));
+      return open.map((r, i) => toBatch(r, taken[i]));
+    },
+    async submitProgrammeApplication(input) {
+      return check(
+        await sb.rpc("submit_programme_application", {
+          p_track_id: input.trackId,
+          p_batch_id: input.batchId,
+          p_full_name: input.fullName,
+          p_email: input.email,
+          p_whatsapp: input.whatsapp,
+          p_occupation: input.occupation,
+          p_experience: input.experience,
+          p_plan: input.plan,
+          p_heard_from: input.heardFrom,
+          p_message: input.message,
+        }),
+      ) as ApplicationReceipt;
+    },
+
     admin: {
+      async listAllBatches() {
+        const rows = check(await sb.from("programme_batches").select("*").order("starts_on", { ascending: false, nullsFirst: true })) as Row[];
+        const taken = check(await sb.from("programme_applications").select("batch_id").in("status", ["paid", "enrolled"]).not("batch_id", "is", null)) as Row[];
+        return rows.map((r) => toBatch(r, taken.filter((t) => t.batch_id === r.id).length));
+      },
+      async saveBatch(b) {
+        const row = {
+          track_id: b.trackId,
+          name: b.name.trim(),
+          starts_on: b.startsOn || null,
+          schedule: b.schedule?.trim() || null,
+          mode: b.mode,
+          location: b.location?.trim() || null,
+          apply_by: b.applyBy || null,
+          seats: b.seats ?? null,
+          status: b.status,
+        };
+        check(b.id ? await sb.from("programme_batches").update(row).eq("id", b.id) : await sb.from("programme_batches").insert(row));
+      },
+      async deleteBatch(id) {
+        check(await sb.from("programme_batches").delete().eq("id", id));
+      },
+      async listApplications() {
+        return (check(await sb.from("programme_applications").select("*, application_payments(amount)").order("created_at", { ascending: false }).limit(1000)) as Row[]).map(toApplication);
+      },
+      async updateApplication(id, status, note) {
+        check(await sb.rpc("admin_update_application", { p_app: id, p_status: status, p_note: note }));
+      },
+      async recordApplicationPayment(id, p) {
+        return check(
+          await sb.rpc("admin_record_application_payment", { p_app: id, p_amount: p.amount, p_method: p.method, p_reference: p.reference, p_paid_on: p.paidOn || null, p_note: p.note }),
+        ) as ApplicationStatus;
+      },
+      async deleteApplication(id) {
+        check(await sb.from("programme_applications").delete().eq("id", id));
+      },
       async getCommunitySettings() {
         return toCommunity(check(await sb.from("academy_community_settings").select("*").eq("id", 1).single()) as Row);
       },

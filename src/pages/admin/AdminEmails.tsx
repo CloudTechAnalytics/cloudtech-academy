@@ -9,8 +9,37 @@ import { useAdminData } from "./useAdmin";
 
 const field = "mt-1.5 block w-full rounded-lg border border-line-strong bg-paper px-3 py-2 text-[0.9375rem]";
 const STATUS: Record<EmailLogEntry["status"], string> = { queued: "Waiting to send", sent: "Sent", failed: "Failed", skipped: "Sending…" };
-const TEMPLATE_LABEL: Record<string, string> = { welcome: "Welcome", enrolment: "Enrolment", message: "Your message" };
-const SAMPLE = { name: "Ngozi", full_name: "Ngozi Eze", course: "Excel for Data Analysis", link: "https://academy.cloudtechanalytics.com/courses/excel-for-data-analysis", site: "https://academy.cloudtechanalytics.com" };
+const TEMPLATE_LABEL: Record<string, string> = {
+  welcome: "Welcome",
+  enrolment: "Enrolment",
+  message: "Your message",
+  application: "Application received",
+  application_paid: "Application paid",
+  application_notice: "New application (to you)",
+};
+const SAMPLE = {
+  name: "Ngozi",
+  full_name: "Ngozi Eze",
+  course: "Excel for Data Analysis",
+  link: "https://academy.cloudtechanalytics.com/courses/excel-for-data-analysis",
+  site: "https://academy.cloudtechanalytics.com",
+  reference: "APP-2611-7F3KQ",
+  programme: "Professional Data Analytics",
+  batch: "December 2026 batch · starts 7 Dec 2026 · Tue & Thu, 7–9pm WAT · Online",
+  fee: "NGN 250,000",
+  plan: "Payment plan: two parts. First payment NGN 125,000 now, then NGN 125,000 within 30 days.",
+  payment_details: "Bank transfer\nMoniepoint · CloudTech Analytics · 0123456789",
+  whatsapp: "https://wa.me/2349115591877",
+  amount: "NGN 125,000",
+  email: "ngozi@example.com",
+};
+/** The placeholders each template can use, besides {{name}}. */
+const PLACEHOLDERS: Record<string, string[]> = {
+  welcome: ["link"],
+  enrolment: ["course", "link"],
+  application: ["reference", "programme", "batch", "fee", "plan", "payment_details", "whatsapp"],
+  application_paid: ["programme", "batch", "amount", "email", "link"],
+};
 const fill = (t: string) => Object.entries(SAMPLE).reduce((v, [k, val]) => v.split(`{{${k}}}`).join(val), t);
 
 type Msg = { tone: "success" | "error"; text: string } | null;
@@ -54,12 +83,12 @@ function TemplateCard({ t, onSaved, note }: { t: EmailTemplate; onSaved: () => P
         <textarea rows={9} className={field} value={body} onChange={(e) => setBody(e.target.value)} />
       </label>
       <p className="mt-1.5 text-[0.8125rem] text-muted">
-        These fill in by themselves: <code>{"{{name}}"}</code> (first name), <code>{"{{link}}"}</code>
-        {t.key === "enrolment" && (
-          <>
-            , <code>{"{{course}}"}</code>
-          </>
-        )}
+        These fill in by themselves: <code>{"{{name}}"}</code> (first name)
+        {(PLACEHOLDERS[t.key] ?? []).map((p) => (
+          <span key={p}>
+            , <code>{`{{${p}}}`}</code>
+          </span>
+        ))}
         .
       </p>
       {preview && (

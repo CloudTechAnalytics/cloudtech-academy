@@ -29,6 +29,11 @@ import {
   type CommunitySource,
   type EventInput,
   type EventRegistration,
+  type ApplicationPaymentInput,
+  type RegisterPaymentInput,
+  type ApplicationReceipt,
+  type ProgrammeApplication,
+  type ProgrammeBatch,
   type EventStatus,
   type AdminCertificate,
   type AdminCourseOrder,
@@ -90,6 +95,8 @@ type Store = {
   communityClicks: { source: CommunitySource | "other"; userId: string | null; at: string }[];
   events: Omit<AcademyEvent, "registeredCount">[];
   registrations: EventRegistration[];
+  batches: Omit<ProgrammeBatch, "seatsTaken">[];
+  applications: (Omit<ProgrammeApplication, "amountPaid"> & { payments: (ApplicationPaymentInput & { applied: boolean })[] })[];
   prices: CertificatePrice[] | null; // admin edits (null = defaults)
   courses: Course[] | null; // admin edits (null = bundled content)
   assessments: AssessmentDef[] | null;
@@ -141,6 +148,8 @@ const empty = (): Store => ({
   communityClicks: [],
   events: [],
   registrations: [],
+  batches: [],
+  applications: [],
   prices: null,
   courses: null,
   assessments: null,
@@ -607,6 +616,56 @@ export function createDemoBackend(): Backend {
 
   if (typeof window !== "undefined") window.addEventListener("storage", (e) => e.key === KEY && notify());
 
+  /** Records money received toward a learner's course or programme order and opens access. The caller saves. */
+  const recordPayment = (s: Store, i: RegisterPaymentInput) => {
+    if (!s.users.some((u) => u.id === i.userId)) throw new BackendError("Student not found.");
+    if (!(i.amount > 0)) throw new BackendError("Enter the amount received.");
+    let order = s.courseOrders.find((o) => o.userId === i.userId && (o.status === "pending" || o.status === "partial") && (i.kind === "programme" ? o.trackId === i.targetId : o.courseId === i.targetId));
+    if (!order) {
+      const t = i.kind === "programme" ? programmeOf(s, i.targetId) : courses(s).find((c) => c.id === i.targetId);
+      if (!t) throw new BackendError(i.kind === "programme" ? "Programme not found." : "Course not found.");
+      const price = t.price ?? i.amount;
+      const charge = t.price == null ? i.amount : (coursePrice(t)?.amount ?? t.price);
+      order = { id: uid(), userId: i.userId, courseId: i.kind === "course" ? i.targetId : null, trackId: i.kind === "programme" ? i.targetId : null, currency: t.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: "manual", providerRef: null, note: null, createdAt: now(), paidAt: null };
+      s.courseOrders.push(order);
+    }
+    const n = s.orderPayments.filter((p) => p.orderId === order!.id).length;
+    s.orderPayments.push({
+      id: uid(), orderId: order.id, userId: i.userId, part: Math.min(n + 1, 2) as 1 | 2, amount: i.amount, currency: order.currency, dueAt: null, status: "confirmed", accountLabel: i.method.trim() || null,
+      reference: i.reference.trim() || reference(s), payerName: null, paidOn: i.paidOn || now().slice(0, 10), proofPath: null, note: i.note.trim() || null, rejectedReason: null, source: "admin", confirmedAt: now(), createdAt: now(),
+    });
+    recomputeOrder(s, order.id);
+  };
+  const seatsTaken = (s: Store, batchId: string) => s.applications.filter((a) => a.batchId === batchId && (a.status === "paid" || a.status === "enrolled")).length;
+  const batchLabel = (b: Omit<ProgrammeBatch, "seatsTaken">) =>
+    [
+      b.name,
+      b.startsOn ? `starts ${new Date(`${b.startsOn}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}` : null,
+      b.schedule?.trim() || null,
+      b.mode === "online" ? "Online" : `${b.mode === "physical" ? "In person" : "Hybrid"}${b.location?.trim() ? `, ${b.location.trim()}` : ""}`,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+  /** Copies an application's payments onto the learner's programme order, through the admin's normal payment recording. */
+  const syncApplication = (s: Store, appId: string) => {
+    const a = s.applications.find((x) => x.id === appId);
+    if (!a?.userId) return;
+    for (const p of a.payments) {
+      if (p.applied) continue;
+      recordPayment(s, {
+        userId: a.userId,
+        kind: "programme",
+        targetId: a.trackId,
+        amount: p.amount,
+        method: p.method,
+        reference: p.reference,
+        paidOn: p.paidOn,
+        note: `Application ${a.reference}${p.note ? ` · ${p.note}` : ""}`,
+      });
+      p.applied = true;
+    }
+    if (s.programmes.some((h) => h.userId === a.userId && h.trackId === a.trackId)) a.status = "enrolled";
+  };
   const backend: Backend = {
     mode: "demo",
 
@@ -628,6 +687,11 @@ export function createDemoBackend(): Backend {
       s.users.push(user);
       s.sessionUserId = user.id;
       queueEmail(s, user.id, "welcome", { link: "https://academy.cloudtechanalytics.com/courses" });
+      // A paid applicant's programme opens as soon as they create their account.
+      for (const a of s.applications.filter((x) => x.email === e && !x.userId)) {
+        a.userId = user.id;
+        syncApplication(s, a.id);
+      }
       save(s);
       notify();
       return { needsConfirmation: false };
@@ -1378,6 +1442,80 @@ export function createDemoBackend(): Backend {
       const u = current();
       return u ? load().registrations.filter((r) => r.userId === u.id && r.registrationStatus === "registered") : [];
     },
+    async listProgrammeBatches(trackId) {
+      const s = load();
+      const today = now().slice(0, 10);
+      return s.batches
+        .filter((b) => b.trackId === trackId && b.status === "open" && (!b.applyBy || b.applyBy >= today))
+        .sort((a, b) => (a.startsOn ?? "9999").localeCompare(b.startsOn ?? "9999"))
+        .map((b) => ({ ...b, seatsTaken: seatsTaken(s, b.id) }));
+    },
+    async submitProgrammeApplication(input) {
+      const s = load();
+      const track = programmeOf(s, input.trackId);
+      if (!track || !isPaid(track)) throw new BackendError("Programme not found.");
+      const price = coursePrice(track);
+      if (!price || enrolmentOf(track) !== "open") throw new BackendError("Applications for this programme are not open right now.");
+      const name = input.fullName.trim().replace(/\s+/g, " ");
+      const email = input.email.trim().toLowerCase();
+      const phone = input.whatsapp.replace(/[^0-9+]/g, "");
+      if (name.length < 3) throw new BackendError("Enter your full name.");
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new BackendError("Enter a valid email address.");
+      const digits = phone.replace(/[^0-9]/g, "").length;
+      if (digits < 7 || digits > 15) throw new BackendError("Enter your WhatsApp number, with the country code if you are outside Nigeria.");
+      if (input.plan === "two_part" && !track.allowInstalments) throw new BackendError("This programme is paid in one payment.");
+      const today = now().slice(0, 10);
+      const open = s.batches.filter((b) => b.trackId === input.trackId && b.status === "open" && (!b.applyBy || b.applyBy >= today));
+      const batch = input.batchId ? open.find((b) => b.id === input.batchId) : undefined;
+      if (input.batchId && !batch) throw new BackendError("That batch is no longer taking applications. Choose another.");
+      if (batch && batch.seats !== null && seatsTaken(s, batch.id) >= batch.seats) throw new BackendError("That batch is full. Choose another.");
+      if (!input.batchId && open.length) throw new BackendError("Choose the batch you want to join.");
+      const label = batch ? batchLabel(batch) : null;
+      const fields = {
+        batchId: batch?.id ?? null,
+        batchLabel: label,
+        fullName: name,
+        email,
+        whatsapp: phone,
+        occupation: input.occupation,
+        experience: input.experience,
+        plan: input.plan,
+        heardFrom: input.heardFrom.trim() || null,
+        message: input.message.trim() || null,
+        updatedAt: now(),
+      };
+      let app = s.applications.find((a) => a.email === email && a.trackId === input.trackId && (a.status === "new" || a.status === "contacted"));
+      if (app) Object.assign(app, fields);
+      else {
+        let ref: string;
+        do ref = `APP-${now().slice(2, 4)}${now().slice(5, 7)}-${uid().replace(/-/g, "").slice(0, 5).toUpperCase()}`;
+        while (s.applications.some((a) => a.reference === ref));
+        app = { id: uid(), reference: ref, trackId: input.trackId, status: "new", adminNote: null, userId: s.users.find((u) => u.email.toLowerCase() === email)?.id ?? null, createdAt: now(), payments: [], ...fields };
+        s.applications.push(app);
+      }
+      save(s);
+      const first = input.plan === "two_part" ? Math.round(price.amount * (track.firstPercent ?? 50)) / 100 : null;
+      const receipt: ApplicationReceipt = {
+        reference: app.reference,
+        trackId: track.id,
+        programme: track.programmeName ?? track.title,
+        batch: label,
+        fullName: name,
+        email,
+        plan: input.plan,
+        currency: price.currency,
+        amount: price.amount,
+        listAmount: price.listAmount,
+        firstAmount: first,
+        secondAmount: first === null ? null : price.amount - first,
+        secondDueDays: track.secondDueDays ?? 30,
+        accounts: accountsOf(s)
+          .filter((a) => a.active)
+          .map(({ label: l, bankName, accountName, accountNumber, instructions, currency }) => ({ label: l, bankName, accountName, accountNumber, instructions, currency })),
+        instructions: settingsOf(s).instructions,
+      };
+      return receipt;
+    },
     async cancelMyRegistration(eventId) {
       const u = requireUser();
       const s = load();
@@ -1495,6 +1633,68 @@ export function createDemoBackend(): Backend {
         const r = s.registrations.find((x) => x.id === registrationId);
         if (!r) throw new BackendError("Registration not found.");
         Object.assign(r, { attendanceStatus: status, attendedAt: status === "attended" ? now() : null });
+        save(s);
+      },
+      async listAllBatches() {
+        requireAdmin();
+        const s = load();
+        return s.batches.map((b) => ({ ...b, seatsTaken: seatsTaken(s, b.id) }));
+      },
+      async saveBatch(input) {
+        requireAdmin();
+        const s = load();
+        if (input.name.trim().length < 2) throw new BackendError("Give the batch a name.");
+        const { id, ...rest } = input;
+        const row = { ...rest, name: rest.name.trim(), schedule: rest.schedule?.trim() || null, location: rest.location?.trim() || null, startsOn: rest.startsOn || null, applyBy: rest.applyBy || null };
+        const existing = id ? s.batches.find((b) => b.id === id) : undefined;
+        if (existing) Object.assign(existing, row);
+        else s.batches.push({ id: uid(), ...row });
+        save(s);
+      },
+      async deleteBatch(id) {
+        requireAdmin();
+        const s = load();
+        s.batches = s.batches.filter((b) => b.id !== id);
+        s.applications.forEach((a) => {
+          if (a.batchId === id) a.batchId = null;
+        });
+        save(s);
+      },
+      async listApplications() {
+        requireAdmin();
+        return load()
+          .applications.map(({ payments, ...a }) => ({ ...a, amountPaid: payments.reduce((n, p) => n + p.amount, 0) }))
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      async updateApplication(id, status, note) {
+        requireAdmin();
+        const s = load();
+        const a = s.applications.find((x) => x.id === id);
+        if (!a) throw new BackendError("Application not found.");
+        if (status !== a.status && !["new", "contacted", "declined"].includes(status)) throw new BackendError("Paid and Enrolled are set by recording a payment.");
+        if (status !== a.status && (a.status === "paid" || a.status === "enrolled")) throw new BackendError("This applicant has paid. Remove the payment on the Payments page instead.");
+        Object.assign(a, { status, adminNote: note.trim() || null, updatedAt: now() });
+        save(s);
+      },
+      async recordApplicationPayment(id, p) {
+        requireAdmin();
+        if (!(p.amount > 0)) throw new BackendError("Enter the amount received.");
+        const s = load();
+        const a = s.applications.find((x) => x.id === id);
+        if (!a) throw new BackendError("Application not found.");
+        if (a.status === "declined") throw new BackendError("This application was declined. Set it back to New first.");
+        a.payments.push({ ...p, applied: false });
+        if (a.status !== "enrolled") a.status = "paid";
+        a.updatedAt = now();
+        a.userId = a.userId ?? s.users.find((u) => u.email.toLowerCase() === a.email)?.id ?? null;
+        syncApplication(s, a.id);
+        save(s);
+        return a.status;
+      },
+      async deleteApplication(id) {
+        requireAdmin();
+        const s = load();
+        s.applications = s.applications.filter((a) => a.id !== id);
         save(s);
       },
       async uploadEventImage(file) {
@@ -1849,23 +2049,7 @@ export function createDemoBackend(): Backend {
       async registerPayment(i) {
         requireAdmin();
         const s = load();
-        if (!s.users.some((u) => u.id === i.userId)) throw new BackendError("Student not found.");
-        if (!(i.amount > 0)) throw new BackendError("Enter the amount received.");
-        let order = s.courseOrders.find((o) => o.userId === i.userId && (o.status === "pending" || o.status === "partial") && (i.kind === "programme" ? o.trackId === i.targetId : o.courseId === i.targetId));
-        if (!order) {
-          const t = i.kind === "programme" ? programmeOf(s, i.targetId) : courses(s).find((c) => c.id === i.targetId);
-          if (!t) throw new BackendError(i.kind === "programme" ? "Programme not found." : "Course not found.");
-          const price = t.price ?? i.amount;
-          const charge = t.price == null ? i.amount : (coursePrice(t)?.amount ?? t.price);
-          order = { id: uid(), userId: i.userId, courseId: i.kind === "course" ? i.targetId : null, trackId: i.kind === "programme" ? i.targetId : null, currency: t.currency ?? "NGN", listAmount: price, amount: charge, status: "pending", provider: "manual", providerRef: null, note: null, createdAt: now(), paidAt: null };
-          s.courseOrders.push(order);
-        }
-        const n = s.orderPayments.filter((p) => p.orderId === order!.id).length;
-        s.orderPayments.push({
-          id: uid(), orderId: order.id, userId: i.userId, part: Math.min(n + 1, 2) as 1 | 2, amount: i.amount, currency: order.currency, dueAt: null, status: "confirmed", accountLabel: i.method.trim() || null,
-          reference: i.reference.trim() || reference(s), payerName: null, paidOn: i.paidOn || now().slice(0, 10), proofPath: null, note: i.note.trim() || null, rejectedReason: null, source: "admin", confirmedAt: now(), createdAt: now(),
-        });
-        recomputeOrder(s, order.id);
+        recordPayment(s, i);
         save(s);
       },
       async updatePayment(paymentId, patch) {

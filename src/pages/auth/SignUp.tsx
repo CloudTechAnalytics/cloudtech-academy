@@ -14,7 +14,8 @@ export default function SignUp() {
   const next = useNext();
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  // The "create your account" email for paid applicants links here with their email filled in.
+  const [email, setEmail] = useState(() => (typeof window === "undefined" ? "" : (new URLSearchParams(window.location.search).get("email") ?? "")));
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [error, setError] = useState<string | null>(null);
