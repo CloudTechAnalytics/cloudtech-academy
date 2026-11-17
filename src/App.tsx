@@ -93,6 +93,49 @@ export function AppRoutes() {
     <AuthProvider>
       <CommunityProvider>
       <Routes>
+        {/* The admin area is an app of its own too. */}
+        <Route
+          path="admin"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <AdminLayout />
+            </Suspense>
+          }
+        >
+          <Route path="programmes" element={<AdminProgrammes />} />
+          <Route path="programmes/:slug" element={<AdminProgrammeEditor />} />
+          <Route path="emails" element={<AdminEmails />} />
+          <Route path="enrollments" element={<AdminEnrollments />} />
+          <Route path="applications" element={<AdminApplications />} />
+          <Route path="classroom" element={<AdminClassroom />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
+          <Route index element={<AdminOverview />} />
+          <Route path="courses" element={<AdminCourses />} />
+          <Route path="courses/:slug" element={<AdminCourseEditor />} />
+          <Route path="courses/:slug/lessons/:lessonId" element={<AdminLessonEditor />} />
+          <Route path="courses/:slug/assessment" element={<AdminAssessment />} />
+          <Route path="courses/:slug/modules/:moduleId/assessment" element={<AdminAssessment />} />
+          <Route path="students" element={<AdminStudents />} />
+          <Route path="students/:userId" element={<AdminStudent />} />
+          <Route path="submissions" element={<AdminSubmissions />} />
+          <Route path="practice" element={<AdminPracticeProjects />} />
+          <Route path="credentials" element={<AdminCredentials />} />
+          <Route path="events" element={<AdminEvents />} />
+          <Route path="events/new" element={<AdminEventForm />} />
+          <Route path="events/:eventId" element={<AdminEventForm />} />
+          <Route path="events/:eventId/registrations" element={<AdminEventRegistrations />} />
+          <Route path="community" element={<AdminCommunity />} />
+          <Route path="settings" element={<Navigate to="/admin/settings/community" replace />} />
+          <Route path="settings/community" element={<AdminSettings />} />
+          <Route path="settings/tracking" element={<AdminTracking />} />
+          <Route path="certificates" element={<AdminCertificates />} />
+          <Route path="certificates/payments" element={<AdminCertificatePayments />} />
+          <Route path="certificates/new" element={<AdminCertificateIssue mode="new" />} />
+          <Route path="certificates/:certificateId" element={<AdminCertificateDetail />} />
+          <Route path="certificates/:certificateId/edit" element={<AdminCertificateEdit />} />
+          <Route path="certificates/:certificateId/reissue" element={<AdminCertificateIssue mode="reissue" />} />
+        </Route>
         {/* The programme LMS is an app of its own, with no marketing header or footer. */}
         <Route
           path="classroom"
@@ -169,41 +212,6 @@ export function AppRoutes() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="dashboard/certificates/:certificateId" element={<CertificateView />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="admin" element={<AdminLayout />}>
-            <Route path="programmes" element={<AdminProgrammes />} />
-            <Route path="programmes/:slug" element={<AdminProgrammeEditor />} />
-            <Route path="emails" element={<AdminEmails />} />
-            <Route path="enrollments" element={<AdminEnrollments />} />
-            <Route path="applications" element={<AdminApplications />} />
-            <Route path="classroom" element={<AdminClassroom />} />
-            <Route path="payments" element={<AdminPayments />} />
-            <Route path="analytics" element={<AdminAnalytics />} />
-            <Route index element={<AdminOverview />} />
-            <Route path="courses" element={<AdminCourses />} />
-            <Route path="courses/:slug" element={<AdminCourseEditor />} />
-            <Route path="courses/:slug/lessons/:lessonId" element={<AdminLessonEditor />} />
-            <Route path="courses/:slug/assessment" element={<AdminAssessment />} />
-            <Route path="courses/:slug/modules/:moduleId/assessment" element={<AdminAssessment />} />
-            <Route path="students" element={<AdminStudents />} />
-            <Route path="students/:userId" element={<AdminStudent />} />
-            <Route path="submissions" element={<AdminSubmissions />} />
-            <Route path="practice" element={<AdminPracticeProjects />} />
-            <Route path="credentials" element={<AdminCredentials />} />
-            <Route path="events" element={<AdminEvents />} />
-            <Route path="events/new" element={<AdminEventForm />} />
-            <Route path="events/:eventId" element={<AdminEventForm />} />
-            <Route path="events/:eventId/registrations" element={<AdminEventRegistrations />} />
-            <Route path="community" element={<AdminCommunity />} />
-            <Route path="settings" element={<Navigate to="/admin/settings/community" replace />} />
-            <Route path="settings/community" element={<AdminSettings />} />
-            <Route path="settings/tracking" element={<AdminTracking />} />
-            <Route path="certificates" element={<AdminCertificates />} />
-            <Route path="certificates/payments" element={<AdminCertificatePayments />} />
-            <Route path="certificates/new" element={<AdminCertificateIssue mode="new" />} />
-            <Route path="certificates/:certificateId" element={<AdminCertificateDetail />} />
-            <Route path="certificates/:certificateId/edit" element={<AdminCertificateEdit />} />
-            <Route path="certificates/:certificateId/reissue" element={<AdminCertificateIssue mode="reissue" />} />
-          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -412,7 +412,7 @@ export function ClassroomIndex() {
 
 function Page({ title, intro, children }: { title: string; intro?: ReactNode; children: ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
+    <div className="w-full px-4 py-8 sm:px-6 lg:px-10 lg:py-10 2xl:px-14">
       <div className="mb-8">
         <h1 className="font-serif text-[2rem] leading-tight sm:text-[2.4rem]">{title}</h1>
         {intro && <p className="mt-1.5 max-w-2xl text-[0.9375rem] text-muted">{intro}</p>}
@@ -584,10 +584,11 @@ export function LmsHome() {
           See all
         </Link>
       </div>
-      <ul className="mt-4 grid gap-3 md:grid-cols-2 2xl:grid-cols-3 [&>*]:min-w-0">
+      {/* Three on laptops, four where there's room. */}
+      <ul className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 [&>*]:min-w-0 [&>*:nth-child(4)]:hidden 2xl:[&>*:nth-child(4)]:flex">
         {list
           .filter((s) => !s.done)
-          .slice(0, 3)
+          .slice(0, 4)
           .map((s) => (
             <CourseCard key={s.course.id} s={s} track={track} />
           ))}
@@ -609,7 +610,7 @@ export function LmsCourses() {
               <span className="text-brass-dark">{si + 1}.</span> {stage.title}
             </h2>
             <p className="mt-1 text-[0.9375rem] text-muted">{stage.summary}</p>
-            <ul className="mt-4 grid gap-3 md:grid-cols-2 2xl:grid-cols-3 [&>*]:min-w-0">
+            <ul className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 [&>*]:min-w-0">
               {stage.items.map((item) => {
                 if (item.kind === "course") {
                   const s = courses[item.courseId];
@@ -1221,7 +1222,7 @@ export function LmsFreeCourses() {
   return (
     <Page title="Free courses" intro="Free courses you've started outside your programme. They open on the public site.">
       {mine.length ? (
-        <ul className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
+        <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {mine.map((c) => (
             <li key={c.id} className="flex flex-col rounded-2xl border border-line bg-paper p-5">
               <p className="font-serif text-[1.2rem] leading-snug">{c.title}</p>

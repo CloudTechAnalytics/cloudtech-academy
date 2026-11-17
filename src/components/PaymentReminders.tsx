@@ -18,14 +18,16 @@ export function PaymentReminders() {
       .then((o) => setOrders(o.filter((x) => x.order.status === "pending" || x.order.status === "partial")))
       .catch(() => {});
   }, []);
-  if (!orders.length) return null;
+  // Only orders with a part still to pay or to confirm; nothing at all when there are none.
+  const due = orders.filter(({ payments }) => payments.some((p) => p.status !== "confirmed"));
+  if (!due.length) return null;
   return (
     <section className="mt-10" aria-labelledby="my-payments">
       <h2 id="my-payments" className="font-serif text-[1.4rem]">
         Your payments
       </h2>
       <ul className="mt-3 space-y-3">
-        {orders.map(({ order, payments }) => {
+        {due.map(({ order, payments }) => {
           const programme = programmes.find((t) => t.id === order.trackId);
           const course = courses.find((c) => c.id === order.courseId);
           const title = programme ? (programme.programmeName ?? programme.title) : (course?.title ?? "Your order");

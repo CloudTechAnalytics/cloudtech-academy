@@ -132,7 +132,7 @@ export default function AdminCourses() {
         </form>
       )}
 
-      <div className="sticky top-[4.5rem] z-30 -mx-1 mb-4 bg-ivory/95 px-1 py-3 backdrop-blur">
+      <div className="sticky top-14 z-10 -mx-1 mb-4 bg-ivory/95 px-1 py-3 backdrop-blur">
         <form
           role="search"
           className="flex flex-wrap items-center gap-2"
