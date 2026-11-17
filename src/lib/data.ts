@@ -5,7 +5,7 @@ import { getBackend, type AttemptResult, type Certificate, type Credential, type
 import { useAuth } from "./auth";
 import { eligibility } from "./certificates";
 import { TRACKS, type Track } from "@/content/tracks";
-import { programmeCourseIds, withSales } from "./commerce";
+import { isPaid, programmeCourseIds, withSales } from "./commerce";
 
 const publishedBundled = () => BUNDLED_COURSES.filter((c) => c.published);
 
@@ -72,6 +72,18 @@ export function useHeldProgrammeFor(courseId: string | undefined) {
   const { held } = useMyProgrammes();
   if (!courseId || !held?.length) return null;
   return programmes.find((t) => held.includes(t.id) && programmeCourseIds(t).includes(courseId)) ?? null;
+}
+
+/**
+ * A signed-in learner's home: the LMS of the first Professional Programme they hold, otherwise the dashboard.
+ * null while that's still being worked out.
+ */
+export function useLearnerHome() {
+  const programmes = useProgrammes();
+  const { held, loading } = useMyProgrammes();
+  if (loading) return null;
+  const first = programmes.find((t) => held?.includes(t.id) && isPaid(t));
+  return first ? { to: `/classroom/${first.slug}`, label: "My classroom" } : { to: "/dashboard", label: "Dashboard" };
 }
 
 /** Where a lesson opens: inside the programme classroom for programme students, otherwise the ordinary lesson page. */

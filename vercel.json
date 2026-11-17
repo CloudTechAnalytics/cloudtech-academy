@@ -99,6 +99,10 @@
       "destination": "/app"
     },
     {
+      "source": "/classroom",
+      "destination": "/app"
+    },
+    {
       "source": "/classroom/:path*",
       "destination": "/app"
     },

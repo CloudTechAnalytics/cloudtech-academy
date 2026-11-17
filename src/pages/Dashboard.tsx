@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import { AlertTriangle, Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
@@ -88,7 +88,10 @@ function DashboardInner() {
   };
 
   useSeo({ title: "Dashboard | CloudTech Academy", description: "Your learning, badges, certificates and credentials.", noindex: true });
-  if (!rows || auth.status !== "signed-in") return <PageLoading />;
+  // Programme students work in their programme's LMS, which has their free courses, badges and payments too.
+  const lms = programmes.find((t) => heldProgrammes?.includes(t.id) && isPaid(t));
+  if (lms) return <Navigate to={`/classroom/${lms.slug}`} replace />;
+  if (!rows || auth.status !== "signed-in" || heldProgrammes === null) return <PageLoading />;
 
   const firstName = auth.user.fullName.split(" ")[0] || "there";
   const valid = credentials.filter((c) => c.status === "valid");

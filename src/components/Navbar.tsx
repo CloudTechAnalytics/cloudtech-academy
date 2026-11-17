@@ -8,8 +8,9 @@ import { navLinks } from "@/lib/site";
 import { useCommunity } from "@/lib/community";
 import { useAuth } from "@/lib/auth";
 import { getBackend } from "@/lib/backend";
+import { useLearnerHome } from "@/lib/data";
 
-function AccountMenu({ name, admin }: { name: string; admin: boolean }) {
+function AccountMenu({ name, admin, home }: { name: string; admin: boolean; home: { to: string; label: string } }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -54,8 +55,8 @@ function AccountMenu({ name, admin }: { name: string; admin: boolean }) {
       {open && (
         <div role="menu" className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-line bg-paper p-1.5 shadow-[0_24px_48px_-24px_rgba(23,23,23,0.35)]">
           <p className="truncate px-3 pb-2 pt-1.5 text-[0.8125rem] text-muted">{name}</p>
-          <Link role="menuitem" to="/dashboard" className={item}>
-            <LayoutDashboard aria-hidden className="h-4 w-4" /> Dashboard
+          <Link role="menuitem" to={home.to} className={item}>
+            <LayoutDashboard aria-hidden className="h-4 w-4" /> {home.label}
           </Link>
           <Link role="menuitem" to="/profile" className={item}>
             <Settings aria-hidden className="h-4 w-4" /> Profile
@@ -84,6 +85,8 @@ function AccountMenu({ name, admin }: { name: string; admin: boolean }) {
 
 export function Navbar() {
   const auth = useAuth();
+  // Programme students' home is their classroom; everyone else's is the dashboard.
+  const home = useLearnerHome() ?? { to: "/dashboard", label: "Dashboard" };
   const links = navLinks(!!useCommunity().community);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -135,10 +138,10 @@ export function Navbar() {
           <div className="hidden min-w-44 items-center justify-end gap-2 sm:flex">
             {auth.status === "signed-in" ? (
               <>
-                <ButtonLink to="/dashboard" variant="ghost">
-                  Dashboard
+                <ButtonLink to={home.to} variant="ghost">
+                  {home.label}
                 </ButtonLink>
-                <AccountMenu name={auth.user.fullName || auth.user.email} admin={auth.user.role === "admin"} />
+                <AccountMenu name={auth.user.fullName || auth.user.email} admin={auth.user.role === "admin"} home={home} />
               </>
             ) : auth.status === "signed-out" ? (
               <>
@@ -181,7 +184,7 @@ export function Navbar() {
           <div className="mt-auto grid gap-3 pt-10">
             {auth.status === "signed-in" ? (
               <>
-                <ButtonLink to="/dashboard">Dashboard</ButtonLink>
+                <ButtonLink to={home.to}>{home.label}</ButtonLink>
                 <ButtonLink to="/profile" variant="secondary">
                   Profile
                 </ButtonLink>

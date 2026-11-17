@@ -14,7 +14,16 @@ const CourseComplete = lazy(() => import("@/pages/CourseComplete"));
 const CourseDownload = lazy(() => import("@/pages/CourseDownload"));
 const ProgrammePurchase = lazy(() => import("@/pages/ProgrammePurchase"));
 const Apply = lazy(() => import("@/pages/Apply"));
-const Classroom = lazy(() => import("@/pages/Classroom"));
+const LmsLayout = lazy(() => import("@/pages/Classroom"));
+const ClassroomIndex = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.ClassroomIndex })));
+const LmsHome = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsHome })));
+const LmsCourses = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsCourses })));
+const LmsSchedule = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsSchedule })));
+const LmsAssignments = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsAssignments })));
+const LmsGrades = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsGrades })));
+const LmsAnnouncements = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsAnnouncements })));
+const LmsCertificate = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsCertificate })));
+const LmsFreeCourses = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.LmsFreeCourses })));
 const CoursePurchase = lazy(() => import("@/pages/CoursePurchase"));
 const CertificatePurchase = lazy(() => import("@/pages/CertificatePurchase"));
 const ProgrammeCertificate = lazy(() => import("@/pages/ProgrammeCertificate"));
@@ -84,6 +93,33 @@ export function AppRoutes() {
     <AuthProvider>
       <CommunityProvider>
       <Routes>
+        {/* The programme LMS is an app of its own, with no marketing header or footer. */}
+        <Route
+          path="classroom"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <ClassroomIndex />
+            </Suspense>
+          }
+        />
+        <Route
+          path="classroom/:slug"
+          element={
+            <Suspense fallback={<PageLoading />}>
+              <LmsLayout />
+            </Suspense>
+          }
+        >
+          <Route index element={<LmsHome />} />
+          <Route path="courses" element={<LmsCourses />} />
+          <Route path="schedule" element={<LmsSchedule />} />
+          <Route path="assignments" element={<LmsAssignments />} />
+          <Route path="grades" element={<LmsGrades />} />
+          <Route path="announcements" element={<LmsAnnouncements />} />
+          <Route path="certificate" element={<LmsCertificate />} />
+          <Route path="free-courses" element={<LmsFreeCourses />} />
+          <Route path=":course/:lesson" element={<Learn />} />
+        </Route>
         {/* The printable course has no site navigation, so it sits outside the Layout. */}
         <Route
           path="courses/:slug/download"
@@ -105,8 +141,6 @@ export function AppRoutes() {
           <Route path="courses/:slug/certificate" element={<CertificatePurchase />} />
           <Route path="credentials/:credentialId" element={<CredentialView />} />
           <Route path="learn/:course/:lesson" element={<Learn />} />
-          <Route path="classroom/:slug" element={<Classroom />} />
-          <Route path="classroom/:programme/:course/:lesson" element={<Learn />} />
           <Route path="programmes" element={<TracksList />} />
           <Route path="programmes/:slug" element={<TrackDetail />} />
           <Route path="programmes/:slug/enroll" element={<ProgrammePurchase />} />

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, Navigate, useParams } from "react-router";
-import { ArrowLeft, ArrowRight, Award, CheckCircle2, ChevronRight, Clock, ExternalLink, ListTree, Lock, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Award, CheckCircle2, ChevronRight, Clock, ExternalLink, ListTree, Lock, Maximize2, X } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { lessonPath, useCourse, useCourses, useHeldProgrammeFor, useLearner, useMyProgrammes, useProgrammes } from "@/lib/data";
 import { moduleTaskIds, publishedLessons } from "@/lib/certificates";
@@ -8,6 +8,7 @@ import { RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { breadcrumbs } from "@/lib/schema";
 import { getBackend } from "@/lib/backend";
 import { PageLoading, useAuth } from "@/lib/auth";
+import { useLmsShell } from "@/lib/lms";
 import { LessonContent, lessonSections } from "@/components/LessonContent";
 import { LessonVideoSection } from "@/components/CourseVideo";
 import { LessonSidebar } from "@/components/LessonSidebar";
@@ -93,10 +94,14 @@ function ProgrammeSidebar({ track, courses, current, lessonId, completed }: { tr
 }
 
 export default function Learn() {
-  const { course: courseSlug, lesson: lessonSlug, programme: programmeSlug } = useParams();
+  const params = useParams();
+  const { course: courseSlug, lesson: lessonSlug } = params;
+  // Inside the LMS the route is /classroom/:slug/:course/:lesson.
+  const programmeSlug = params.programme ?? params.slug;
   const { course, loading } = useCourse(courseSlug);
   const learner = useLearner(course);
   const auth = useAuth();
+  const shell = useLmsShell();
   const allCourses = useCourses();
   const programmes = useProgrammes();
   const { held, loading: heldLoading } = useMyProgrammes();
@@ -250,7 +255,7 @@ export default function Learn() {
           </div>
         </div>
       )}
-    <div className="container-page grid gap-8 py-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:py-10 xl:grid-cols-[16rem_minmax(0,1fr)_13rem]">
+    <div className={`container-page grid gap-8 py-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:py-10 ${shell?.focus ? "" : "xl:grid-cols-[16rem_minmax(0,1fr)_13rem]"}`}>
       {/* Curriculum */}
       <aside className="hidden lg:block">
         <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-1">
@@ -283,9 +288,16 @@ export default function Learn() {
 
         <header className="border-b border-line pb-8">
           {track && (
-            <Link to={`/classroom/${track.slug}`} className="mb-3 inline-flex items-center gap-1.5 text-[0.8125rem] text-muted hover:text-ink">
-              <ArrowLeft aria-hidden className="h-3.5 w-3.5" /> {track.programmeName ?? track.title}
-            </Link>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <Link to={`/classroom/${track.slug}/courses`} className="inline-flex items-center gap-1.5 text-[0.8125rem] text-muted hover:text-ink">
+                <ArrowLeft aria-hidden className="h-3.5 w-3.5" /> All courses
+              </Link>
+              {shell && !shell.focus && (
+                <button type="button" onClick={() => shell.setFocus(true)} className="hidden items-center gap-1.5 rounded-lg border border-line-strong px-2.5 py-1 text-[0.8125rem] font-medium hover:bg-sand lg:inline-flex">
+                  <Maximize2 aria-hidden className="h-3.5 w-3.5" /> Focus
+                </button>
+              )}
+            </div>
           )}
           <p className="kicker">
             Module {moduleNumber} · {course.title}
@@ -425,7 +437,7 @@ export default function Learn() {
       </article>
 
       {/* On this page + progress */}
-      <aside className="hidden xl:block">
+      <aside className={shell?.focus ? "hidden" : "hidden xl:block"}>
         <div className="sticky top-24 space-y-8">
           {learner.signedIn && <ProgressBar value={percent} label="Course progress" />}
           <nav aria-label="On this page">
