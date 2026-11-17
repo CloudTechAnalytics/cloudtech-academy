@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate, useParams } from "react-router";
 import {
-  ArrowLeft,
   Award,
   BarChart3,
   BookOpen,
@@ -19,10 +18,8 @@ import {
   LayoutGrid,
   Library,
   Lock,
-  LogOut,
   Megaphone,
   PlayCircle,
-  Settings,
   Video,
   X,
 } from "lucide-react";
@@ -39,6 +36,7 @@ import { programmeCertificateAvailable, requiredCourses, type Track } from "@/co
 import type { Course } from "@/content/types";
 import { Mark } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { UserMenu } from "@/components/UserMenu";
 import { Button, ButtonLink, buttonClass } from "@/components/Button";
 import { Alert, TextArea, TextField } from "@/components/Form";
 import { LessonContent } from "@/components/LessonContent";
@@ -120,11 +118,6 @@ const NAV = [
 const MOBILE = ["", "courses", "schedule", "assignments"] as const;
 
 function SideNav({ base, counts, onNavigate }: { base: string; counts: Record<string, number>; onNavigate?: () => void }) {
-  const navigate = useNavigate();
-  const signOut = async () => {
-    await (await getBackend()).signOut();
-    navigate("/", { replace: true });
-  };
   const item = ({ isActive }: { isActive: boolean }) =>
     `flex items-center gap-3 rounded-lg px-3 py-2.5 text-[0.9375rem] font-medium transition-colors ${isActive ? "bg-brass-pale/60 text-ink" : "text-ink/75 hover:bg-sand hover:text-ink"}`;
   return (
@@ -139,23 +132,6 @@ function SideNav({ base, counts, onNavigate }: { base: string; counts: Record<st
             </NavLink>
           </li>
         ))}
-      </ul>
-      <ul className="mt-auto space-y-0.5 border-t border-line pt-3">
-        <li>
-          <Link to="/profile" className={item({ isActive: false })} onClick={onNavigate}>
-            <Settings aria-hidden className="h-[1.1rem] w-[1.1rem] text-muted" /> Profile
-          </Link>
-        </li>
-        <li>
-          <Link to="/" className={item({ isActive: false })} onClick={onNavigate}>
-            <ArrowLeft aria-hidden className="h-[1.1rem] w-[1.1rem] text-muted" /> Back to website
-          </Link>
-        </li>
-        <li>
-          <button type="button" onClick={() => void signOut()} className={`${item({ isActive: false })} w-full`}>
-            <LogOut aria-hidden className="h-[1.1rem] w-[1.1rem] text-muted" /> Sign out
-          </button>
-        </li>
       </ul>
     </nav>
   );
@@ -284,19 +260,13 @@ function Shell() {
       }
     : {};
   const hideNav = focus && isLesson;
-  const initials = (auth.user?.fullName || auth.user?.email || "?")
-    .split(/\s+/)
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
 
   return (
     <LmsShellContext.Provider value={{ focus: hideNav, setFocus }}>
       <div className="min-h-screen bg-ivory">
         {!hideNav && (
           <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-line bg-paper px-3 py-4 lg:flex">
-            <Link to={base} className="mb-6 flex items-center gap-2.5 px-2">
+            <Link to="/" className="mb-6 flex items-center gap-2.5 px-2" title="Go to the website">
               <Mark className="h-8 w-8 shrink-0" />
               <span className="leading-tight">
                 <span className="block font-serif text-[1.1rem] font-bold">CloudTech</span>
@@ -310,7 +280,7 @@ function Shell() {
         <div className={hideNav ? "" : "lg:pl-64"}>
           <header className="sticky top-0 z-20 border-b border-line bg-paper/95 backdrop-blur">
             <div className="flex h-14 items-center gap-3 px-4 sm:px-6">
-              <Link to={base} className="lg:hidden" aria-label="Classroom home">
+              <Link to="/" className="lg:hidden" aria-label="Go to the website">
                 <Mark className="h-7 w-7" />
               </Link>
               <div className="min-w-0 flex-1">
@@ -323,9 +293,7 @@ function Shell() {
                 </button>
               )}
               <ThemeToggle />
-              <Link to="/profile" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brass-button text-[0.75rem] font-semibold text-on-brass" aria-label="Profile">
-                {initials}
-              </Link>
+              <UserMenu />
             </div>
           </header>
 

@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useState, type ReactNode } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
+import { Link, NavLink, Outlet, useLocation } from "react-router";
 import {
-  ArrowLeft,
   Award,
   BadgeCheck,
   BarChart3,
@@ -13,7 +12,6 @@ import {
   FolderKanban,
   Layers,
   LayoutGrid,
-  LogOut,
   Mail,
   Menu,
   MessageCircle,
@@ -24,10 +22,12 @@ import {
   X,
 } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import { PageLoading, RequireAuth, useAuth } from "@/lib/auth";
-import { getBackend, IS_LIVE } from "@/lib/backend";
+import { PageLoading, RequireAuth } from "@/lib/auth";
+import { IS_LIVE } from "@/lib/backend";
 import { Mark } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { UserMenu } from "@/components/UserMenu";
+import { useLearnerHome } from "@/lib/data";
 
 /**
  * The admin area is an app of its own, like the programme LMS: a side menu grouped by job, a top bar, and the whole
@@ -81,11 +81,6 @@ const GROUPS = [
 const ALL = GROUPS.flatMap((g) => g.links);
 
 function SideNav({ onNavigate }: { onNavigate?: () => void }) {
-  const navigate = useNavigate();
-  const signOut = async () => {
-    await (await getBackend()).signOut();
-    navigate("/", { replace: true });
-  };
   const item = ({ isActive }: { isActive: boolean }) =>
     `flex items-center gap-2.5 rounded-lg px-3 py-2 text-[0.9375rem] transition-colors ${isActive ? "bg-brass-pale/60 font-semibold text-ink" : "text-ink/75 hover:bg-sand hover:text-ink"}`;
   return (
@@ -106,41 +101,23 @@ function SideNav({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         ))}
       </div>
-      <ul className="mt-6 space-y-0.5 border-t border-line pt-3">
-        {!IS_LIVE && <li className="mb-2 rounded-lg border border-brass/30 bg-brass-pale/40 p-3 text-[0.8125rem]">Demo mode: changes are saved in this browser only.</li>}
-        <li>
-          <Link to="/" className={item({ isActive: false })} onClick={onNavigate}>
-            <ArrowLeft aria-hidden className="h-4 w-4 text-muted" /> Back to website
-          </Link>
-        </li>
-        <li>
-          <button type="button" onClick={() => void signOut()} className={`${item({ isActive: false })} w-full`}>
-            <LogOut aria-hidden className="h-4 w-4 text-muted" /> Sign out
-          </button>
-        </li>
-      </ul>
+      {!IS_LIVE && <p className="mt-6 rounded-lg border border-brass/30 bg-brass-pale/40 p-3 text-[0.8125rem]">Demo mode: changes are saved in this browser only.</p>}
     </nav>
   );
 }
 
 function Shell() {
-  const auth = useAuth();
   const location = useLocation();
   const [menu, setMenu] = useState(false);
   useEffect(() => setMenu(false), [location.pathname]);
   // The page's name for the top bar: the most specific menu item that matches the address.
   const current = [...ALL].sort((a, b) => b.to.length - a.to.length).find((l) => (l.end ? location.pathname === l.to : location.pathname.startsWith(l.to)));
-  const initials = (auth.user?.fullName || auth.user?.email || "?")
-    .split(/\s+/)
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+  const home = useLearnerHome();
 
   return (
     <div className="min-h-screen bg-ivory">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col overflow-y-auto border-r border-line bg-paper px-3 py-4 lg:flex">
-        <Link to="/admin" className="mb-6 flex items-center gap-2.5 px-2">
+        <Link to="/" className="mb-6 flex items-center gap-2.5 px-2" title="Go to the website">
           <Mark className="h-8 w-8 shrink-0" />
           <span className="leading-tight">
             <span className="block font-serif text-[1.1rem] font-bold">CloudTech</span>
@@ -156,7 +133,7 @@ function Shell() {
             <button type="button" onClick={() => setMenu(true)} className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-sand lg:hidden" aria-label="Open admin menu">
               <Menu aria-hidden className="h-5 w-5" />
             </button>
-            <Link to="/admin" className="lg:hidden" aria-label="Admin home">
+            <Link to="/" className="lg:hidden" aria-label="Go to the website">
               <Mark className="h-7 w-7" />
             </Link>
             <p className="min-w-0 flex-1 truncate text-[0.9375rem]">
@@ -164,9 +141,7 @@ function Shell() {
               {current && current.to !== "/admin" && <span className="font-semibold"> / {current.label}</span>}
             </p>
             <ThemeToggle />
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brass-button text-[0.75rem] font-semibold text-on-brass" title={auth.user?.email}>
-              {initials}
-            </span>
+            <UserMenu classroom={home?.label === "My classroom" ? home.to : null} />
           </div>
         </header>
         <main id="main" className="w-full px-4 py-8 sm:px-6 lg:px-10 lg:py-10 2xl:px-14">
