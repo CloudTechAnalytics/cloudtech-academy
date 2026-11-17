@@ -36,7 +36,7 @@ export function ProfessionalByArea({ tracks, courses, area = "" }: { tracks: Tra
             </p>
           </div>
           <p className="mt-2 text-muted">{division.blurb}</p>
-          <ul className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <ul className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {ts.map((t) => (
               <li key={t.id}>
                 <TrackCard track={t} courses={courses} />

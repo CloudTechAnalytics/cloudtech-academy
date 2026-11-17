@@ -325,7 +325,7 @@ function DashboardInner() {
             : "Work a practice project on real business data, submit it, and earn a project badge with your work linked."}
         </p>
         {practice.length > 0 ? (
-          <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {practice.map((p) => {
               const project = findProject(p.projectId);
               return (

@@ -225,7 +225,7 @@ export default function Students() {
   return (
     <>
       <section className="border-b border-line">
-        <div className="container-page max-w-5xl py-16 sm:py-20">
+        <div className="container-page py-16 sm:py-20">
           <p className="kicker">Student Starter</p>
           <h1 className="mt-4 max-w-3xl font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">
             Free practical skills for students who want to <span className="text-brass-accent">get ahead.</span>
@@ -270,7 +270,7 @@ export default function Students() {
         </div>
       </section>
 
-      <section id="skills" className="container-page max-w-5xl scroll-mt-24 py-14">
+      <section id="skills" className="container-page scroll-mt-24 py-14">
         <div className="space-y-14">
           {GROUPS.map((g) => (
             <Reveal key={g.title}>

@@ -86,7 +86,7 @@ export default function Events() {
                   </ul>
                 )}
                 {rest.length > 0 && (
-                  <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {rest.map((e) => (
                       <li key={e.id}>
                         <EventCard event={e} />
@@ -118,7 +118,7 @@ export default function Events() {
               <h2 id="past-title" className="font-serif text-[1.7rem]">
                 Past events
               </h2>
-              <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 {past.map((e) => (
                   <li key={e.id}>
                     <EventCard event={e} />

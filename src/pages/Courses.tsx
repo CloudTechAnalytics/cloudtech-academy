@@ -208,7 +208,7 @@ export default function Courses() {
                 <h2 id="courses-title" className="sr-only">
                   Courses
                 </h2>
-                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                   {ordered.map((c) => (
                     <CourseCard key={c.id} course={c} />
                   ))}

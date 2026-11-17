@@ -35,7 +35,7 @@ export function TracksList() {
   return (
     <>
       <section className="border-b border-line">
-        <div className="container-page max-w-5xl py-16 sm:py-20">
+        <div className="container-page py-16 sm:py-20">
           <p className="kicker">Professional programmes</p>
           <h1 className="mt-4 font-serif text-[2.6rem] leading-[1.05] tracking-[-0.015em] sm:text-[3.4rem]">Free courses help you start. Programmes help you become a professional.</h1>
           <p className="mt-5 max-w-2xl text-[1.125rem] leading-relaxed text-muted">
@@ -423,7 +423,7 @@ export function TrackDetail() {
   return (
     <>
       <section className={paid ? "border-b border-line bg-ink text-ivory" : "border-b border-line"}>
-        <div className="container-page max-w-5xl py-16 sm:py-20">
+        <div className="container-page py-16 sm:py-20">
           <Link to="/programmes" className={`text-[0.875rem] ${paid ? "text-ivory/70 hover:text-ivory" : "text-muted hover:text-ink"}`}>
             ← {paid ? "Professional programmes" : "Learning paths"}
           </Link>
@@ -445,7 +445,7 @@ export function TrackDetail() {
               ))}
             </ul>
           )}
-          <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_1fr]">
+          <div className="mt-8 grid gap-6 md:grid-cols-[1.4fr_1fr] xl:grid-cols-[1fr_26rem] xl:gap-12">
             <div className={paid ? "text-ivory" : ""}>
               <p className="text-[0.875rem] font-semibold">What you'll be able to do</p>
               <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
@@ -462,7 +462,7 @@ export function TrackDetail() {
       </section>
 
       {paid && (
-        <section className="container-page max-w-5xl pt-14">
+        <section className="container-page pt-14">
           <div className="grid gap-10 md:grid-cols-2">
             <div>
               <h2 className="font-serif text-[1.8rem] leading-tight">Programme overview</h2>
@@ -517,7 +517,7 @@ export function TrackDetail() {
         </section>
       )}
 
-      <section className="container-page max-w-5xl py-14">
+      <section className="container-page py-14">
         <h2 className="font-serif text-[1.8rem] leading-tight">{paid ? "Full curriculum, module by module" : "What you'll learn, module by module"}</h2>
         <p className="mt-1 text-muted">
           {paid
