@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { CalendarDays, CheckCircle2, Clock, Copy, MapPin, MessageCircle, ShieldCheck, Users, Wallet } from "lucide-react";
+import { Award, BookOpen, CalendarDays, CheckCircle2, Clock, Copy, MapPin, MessageCircle, ShieldCheck, Users, Wallet } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth } from "@/lib/auth";
 import { useProgrammes, useCourses } from "@/lib/data";
@@ -98,7 +98,7 @@ function Receipt({ r }: { r: ApplicationReceipt }) {
     "Here is my proof of payment:",
   ].join("\n");
   return (
-    <div className="container-page max-w-3xl py-12 sm:py-16">
+    <div className="container-page py-12 sm:py-16">
       <p className="flex items-center gap-2 font-semibold text-success">
         <CheckCircle2 aria-hidden className="h-5 w-5" /> Application received
       </p>
@@ -107,7 +107,8 @@ function Receipt({ r }: { r: ApplicationReceipt }) {
         Your place in {r.programme} is reserved once you pay. We've also sent these details to <strong className="text-ink">{r.email}</strong>.
       </p>
 
-      <div className="mt-8 rounded-2xl border border-line-strong bg-paper p-6">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
+      <div className="rounded-2xl border border-line-strong bg-paper p-6">
         <p className="kicker">Your reference</p>
         <p className="mt-1 font-mono text-[1.6rem] font-semibold tracking-wide">{r.reference}</p>
         <p className="mt-1 text-[0.875rem] text-muted">Use it as the narration when you transfer, and when you message us.</p>
@@ -139,7 +140,7 @@ function Receipt({ r }: { r: ApplicationReceipt }) {
         </dl>
       </div>
 
-      <div className="mt-6 rounded-2xl border border-line-strong bg-paper p-6">
+      <div className="rounded-2xl border border-line-strong bg-paper p-6">
         <h2 className="flex items-center gap-2 font-serif text-[1.5rem]">
           <Wallet aria-hidden className="h-5 w-5 text-brass-dark" /> How to pay
         </h2>
@@ -176,6 +177,7 @@ function Receipt({ r }: { r: ApplicationReceipt }) {
         <a href={whatsappLink(message)} target="_blank" rel="noopener noreferrer" className={`${buttonClass("primary")} mt-6 w-full sm:w-auto`}>
           <MessageCircle aria-hidden className="h-4 w-4" /> Send proof on WhatsApp
         </a>
+      </div>
       </div>
     </div>
   );
@@ -274,175 +276,283 @@ function ApplyForm({ track }: { track: Track }) {
     }
   };
 
-  return (
-    <div className="container-page max-w-5xl py-12 sm:py-16">
-      <Link to={`/programmes/${track.slug}`} className="text-[0.875rem] text-muted hover:text-ink">
-        ← About the programme
-      </Link>
-      <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-start">
-        <div className="lg:sticky lg:top-24">
-          <p className="kicker">Enrolment form</p>
-          <h1 className="mt-3 font-serif text-[2.3rem] leading-tight">{name}</h1>
-          <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted">{track.summary}</p>
+  const chosen = batches?.find((b) => b.id === batchId) ?? null;
+  const dueNow = price ? (plan === "two_part" && first !== null ? first : price.amount) : 0;
+  const chips = [
+    ...(track.durationLabel ? [{ icon: Clock, label: track.durationLabel }] : []),
+    ...(track.deliveryType ? [{ icon: MapPin, label: DELIVERY_LABEL[track.deliveryType] }] : []),
+    { icon: BookOpen, label: `${count} courses` },
+    ...(capstone ? [{ icon: Award, label: "Capstone project" }] : []),
+    ...(track.instructorSupport ? [{ icon: Users, label: "Instructor support" }] : []),
+  ];
+  const step = (n: number, title: string, note?: string) => (
+    <legend className="flex w-full items-center gap-3">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brass text-[0.875rem] font-semibold text-on-brass">{n}</span>
+      <span>
+        <span className="block font-serif text-[1.4rem] leading-tight">{title}</span>
+        {note && <span className="block text-[0.8125rem] text-muted">{note}</span>}
+      </span>
+    </legend>
+  );
 
+  return (
+    <>
+      {/* Programme banner */}
+      <section className="border-b border-line bg-night text-cream">
+        <div className="container-page grid gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end lg:py-16 xl:grid-cols-[minmax(0,1fr)_28rem]">
+          <div>
+            <Link to={`/programmes/${track.slug}`} className="text-[0.875rem] text-cream/70 hover:text-cream">
+              ← About the programme
+            </Link>
+            <p className="mt-6 text-[0.8125rem] font-semibold uppercase tracking-[0.16em] text-brass-light">Professional Programme · Enrolment</p>
+            <h1 className="mt-3 font-serif text-[2.6rem] leading-[1.05] sm:text-[3.4rem]">{name}</h1>
+            <p className="mt-4 max-w-3xl text-[1.0625rem] leading-relaxed text-cream/75">{track.summary}</p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {chips.map((c) => (
+                <li key={c.label} className="flex items-center gap-2 rounded-full border border-cream/20 bg-cream/5 px-3.5 py-1.5 text-[0.875rem]">
+                  <c.icon aria-hidden className="h-4 w-4 text-brass-light" /> {c.label}
+                </li>
+              ))}
+            </ul>
+          </div>
           {price && (
-            <div className="mt-6 rounded-2xl border border-line-strong bg-paper p-5">
-              <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-muted">Programme fee</p>
-              <p className="mt-1 flex flex-wrap items-baseline gap-3">
-                <span className="font-serif text-[2rem] leading-none">{formatPrice(price.amount, price.currency)}</span>
-                {price.discounted && <s className="text-subtle">{formatPrice(price.listAmount, price.currency)}</s>}
-                {price.label && <span className="rounded-full bg-brass-pale px-2.5 py-0.5 text-[0.75rem] font-semibold text-brass-deeper">{price.label}</span>}
+            <div className="rounded-2xl border border-cream/15 bg-cream/5 p-6">
+              <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-cream/60">Programme fee</p>
+              <p className="mt-2 flex flex-wrap items-baseline gap-3">
+                <span className="font-serif text-[2.6rem] leading-none">{formatPrice(price.amount, price.currency)}</span>
+                {price.discounted && <s className="text-cream/50">{formatPrice(price.listAmount, price.currency)}</s>}
+                {price.label && <span className="rounded-full bg-brass px-2.5 py-0.5 text-[0.75rem] font-semibold text-on-brass">{price.label}</span>}
               </p>
               {first !== null && (
-                <p className="mt-2 text-[0.9375rem] text-ink/85">
-                  Or pay in two parts: {formatPrice(first, price.currency)} to start, then {formatPrice(price.amount - first, price.currency)} within {track.secondDueDays ?? 30} days.
+                <p className="mt-3 text-[0.9375rem] text-cream/80">
+                  Or two parts: <strong className="text-cream">{formatPrice(first, price.currency)}</strong> to start, then {formatPrice(price.amount - first, price.currency)} within{" "}
+                  {track.secondDueDays ?? 30} days.
                 </p>
               )}
+              <p className="mt-4 flex items-center gap-2 border-t border-cream/15 pt-4 text-[0.875rem] text-cream/70">
+                <CheckCircle2 aria-hidden className="h-4 w-4 text-brass-light" /> Takes about 3 minutes. No account needed.
+              </p>
             </div>
           )}
-
-          <ul className="mt-6 space-y-2">
-            {facts.map((f) => (
-              <li key={f} className="flex items-start gap-2.5 text-[0.9375rem]">
-                <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" /> {f}
-              </li>
-            ))}
-          </ul>
         </div>
+      </section>
 
-        <div className="rounded-2xl border border-line-strong bg-paper p-6 shadow-[0_30px_60px_-45px_rgba(23,23,23,0.45)] sm:p-7">
-          {!open ? (
-            <>
-              <h2 className="font-serif text-[1.6rem]">Applications aren't open right now</h2>
-              <p className="mt-2 text-muted">{state !== "open" ? ENROLMENT_MESSAGE[state] : "Enrolment opens soon."} Message us on WhatsApp and we'll tell you when the next batch opens.</p>
-              <a href={whatsappLink(`Hello CloudTech Academy, I'm interested in ${name}. When does the next batch start?`)} target="_blank" rel="noopener noreferrer" className={`${buttonClass("primary")} mt-5`}>
-                <MessageCircle aria-hidden className="h-4 w-4" /> Message us on WhatsApp
-              </a>
-            </>
-          ) : (
-            <form
-              noValidate
-              className="space-y-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-                void submit();
-              }}
-            >
-              <fieldset>
-                <legend className="font-serif text-[1.4rem]">1. Choose your batch</legend>
-                {batches === null ? (
-                  <p className="mt-3 text-muted">Loading batches…</p>
-                ) : batches.length ? (
-                  <div className="mt-3 space-y-2">
-                    {batches.map((b) => (
-                      <BatchCard key={b.id} b={b} single={batches.length === 1} selected={batchId === b.id} onSelect={() => setBatchId(b.id)} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="mt-3 rounded-xl border border-line bg-sand/60 p-4 text-[0.9375rem] text-ink/85">
-                    Next batch: dates announced soon. Apply now to reserve your place, and we'll confirm the start date and class times with you on WhatsApp.
-                  </p>
-                )}
-              </fieldset>
+      <div className="container-page py-10 lg:py-14">
+        {/* How it works */}
+        <ol className="grid gap-3 sm:grid-cols-3">
+          {[
+            ["Apply", "Choose your batch and payment plan, and tell us a little about you."],
+            ["Pay", "Transfer the fee (or the first part) with your reference, and send us the proof."],
+            ["Start learning", "We confirm your place and open your classroom: courses, live classes and assignments."],
+          ].map(([t, d], i) => (
+            <li key={t} className="flex gap-4 rounded-2xl border border-line bg-paper p-5">
+              <span className="font-serif text-[1.8rem] leading-none text-brass-dark">{i + 1}</span>
+              <span>
+                <span className="block font-semibold">{t}</span>
+                <span className="mt-0.5 block text-[0.875rem] text-muted">{d}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
 
-              <fieldset className="space-y-4">
-                <legend className="font-serif text-[1.4rem]">2. Your details</legend>
-                <TextField label="Full name" autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                <TextField label="Email address" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} hint="We'll send your payment details here." />
-                <TextField
-                  label="WhatsApp number"
-                  type="tel"
-                  autoComplete="tel"
-                  inputMode="tel"
-                  placeholder="0803 000 0000"
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
-                  hint="Add your country code if you're outside Nigeria, e.g. +44."
-                />
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="occupation" className="text-[0.875rem] font-medium">
-                      What do you do now?
-                    </label>
-                    <select id="occupation" className={selectCls} value={occupation} onChange={(e) => setOccupation(e.target.value as Occupation)}>
-                      <option value="">Choose one</option>
-                      {OCCUPATIONS.map(([v, l]) => (
-                        <option key={v} value={v}>
-                          {l}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="experience" className="text-[0.875rem] font-medium">
-                      Your experience with this field
-                    </label>
-                    <select id="experience" className={selectCls} value={experience} onChange={(e) => setExperience(e.target.value as Experience)}>
-                      <option value="">Choose one</option>
-                      {EXPERIENCE.map(([v, l]) => (
-                        <option key={v} value={v}>
-                          {l}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </fieldset>
-
-              {price && (
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start xl:grid-cols-[minmax(0,1fr)_26rem]">
+          <div className="rounded-2xl border border-line-strong bg-paper p-6 shadow-[0_30px_60px_-45px_rgba(23,23,23,0.45)] sm:p-8">
+            {!open ? (
+              <>
+                <h2 className="font-serif text-[1.6rem]">Applications aren't open right now</h2>
+                <p className="mt-2 text-muted">{state !== "open" ? ENROLMENT_MESSAGE[state] : "Enrolment opens soon."} Message us on WhatsApp and we'll tell you when the next batch opens.</p>
+                <a href={whatsappLink(`Hello CloudTech Academy, I'm interested in ${name}. When does the next batch start?`)} target="_blank" rel="noopener noreferrer" className={`${buttonClass("primary")} mt-5`}>
+                  <MessageCircle aria-hidden className="h-4 w-4" /> Message us on WhatsApp
+                </a>
+              </>
+            ) : (
+              <form
+                noValidate
+                className="space-y-10"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void submit();
+                }}
+              >
                 <fieldset>
-                  <legend className="font-serif text-[1.4rem]">3. How you'll pay</legend>
-                  <div className="mt-3 space-y-2">
-                    <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 ${plan === "full" ? "border-brass bg-brass-pale/30" : "border-line-strong"}`}>
-                      <input type="radio" name="plan" checked={plan === "full"} onChange={() => setPlan("full")} className="mt-1 h-4 w-4 accent-(--color-brass-dark)" />
-                      <span>
-                        <span className="block font-semibold">Pay in full</span>
-                        <span className="text-[0.9375rem] text-muted">{formatPrice(price.amount, price.currency)} once.</span>
-                      </span>
-                    </label>
-                    {first !== null && (
-                      <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 ${plan === "two_part" ? "border-brass bg-brass-pale/30" : "border-line-strong"}`}>
-                        <input type="radio" name="plan" checked={plan === "two_part"} onChange={() => setPlan("two_part")} className="mt-1 h-4 w-4 accent-(--color-brass-dark)" />
-                        <span>
-                          <span className="block font-semibold">Pay in two parts</span>
-                          <span className="text-[0.9375rem] text-muted">
-                            {formatPrice(first, price.currency)} to start, then {formatPrice(price.amount - first, price.currency)} within {track.secondDueDays ?? 30} days.
-                          </span>
-                        </span>
+                  {step(1, "Choose your batch", "When you'll start and how classes run.")}
+                  {batches === null ? (
+                    <p className="mt-4 text-muted">Loading batches…</p>
+                  ) : batches.length ? (
+                    <div className={`mt-4 grid gap-3 ${batches.length > 1 ? "md:grid-cols-2" : ""}`}>
+                      {batches.map((b) => (
+                        <BatchCard key={b.id} b={b} single={batches.length === 1} selected={batchId === b.id} onSelect={() => setBatchId(b.id)} />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mt-4 rounded-xl border border-line bg-sand/60 p-4 text-[0.9375rem] text-ink/85">
+                      Next batch: dates announced soon. Apply now to reserve your place, and we'll confirm the start date and class times with you on WhatsApp.
+                    </p>
+                  )}
+                </fieldset>
+
+                <fieldset>
+                  {step(2, "Your details", "We'll send your reference and payment details to your email.")}
+                  <div className="mt-4 grid gap-4 md:grid-cols-2">
+                    <TextField label="Full name" autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                    <TextField label="Email address" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <TextField
+                      label="WhatsApp number"
+                      type="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      placeholder="0803 000 0000"
+                      value={whatsapp}
+                      onChange={(e) => setWhatsapp(e.target.value)}
+                      hint="Add your country code if you're outside Nigeria, e.g. +44."
+                    />
+                    <div>
+                      <label htmlFor="occupation" className="text-[0.875rem] font-medium">
+                        What do you do now?
                       </label>
-                    )}
+                      <select id="occupation" className={selectCls} value={occupation} onChange={(e) => setOccupation(e.target.value as Occupation)}>
+                        <option value="">Choose one</option>
+                        {OCCUPATIONS.map(([v, l]) => (
+                          <option key={v} value={v}>
+                            {l}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="experience" className="text-[0.875rem] font-medium">
+                        Your experience with this field
+                      </label>
+                      <select id="experience" className={selectCls} value={experience} onChange={(e) => setExperience(e.target.value as Experience)}>
+                        <option value="">Choose one</option>
+                        {EXPERIENCE.map(([v, l]) => (
+                          <option key={v} value={v}>
+                            {l}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="heard" className="text-[0.875rem] font-medium">
+                        How did you hear about us? <span className="font-normal text-muted">(optional)</span>
+                      </label>
+                      <select id="heard" className={selectCls} value={heardFrom} onChange={(e) => setHeardFrom(e.target.value)}>
+                        <option value="">Choose one</option>
+                        {HEARD.map((h) => (
+                          <option key={h} value={h}>
+                            {h}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </fieldset>
-              )}
 
-              <fieldset className="space-y-4">
-                <legend className="font-serif text-[1.4rem]">4. A little more</legend>
-                <div>
-                  <label htmlFor="heard" className="text-[0.875rem] font-medium">
-                    How did you hear about us? <span className="font-normal text-muted">(optional)</span>
-                  </label>
-                  <select id="heard" className={selectCls} value={heardFrom} onChange={(e) => setHeardFrom(e.target.value)}>
-                    <option value="">Choose one</option>
-                    {HEARD.map((h) => (
-                      <option key={h} value={h}>
-                        {h}
-                      </option>
-                    ))}
-                  </select>
+                {price && (
+                  <fieldset>
+                    {step(3, "How you'll pay")}
+                    <div className={`mt-4 grid gap-3 ${first !== null ? "md:grid-cols-2" : ""}`}>
+                      <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-5 ${plan === "full" ? "border-brass bg-brass-pale/30" : "border-line-strong hover:border-ink/40"}`}>
+                        <input type="radio" name="plan" checked={plan === "full"} onChange={() => setPlan("full")} className="mt-1 h-4 w-4 accent-(--color-brass-dark)" />
+                        <span>
+                          <span className="block font-semibold">Pay in full</span>
+                          <span className="mt-1 block font-serif text-[1.5rem] leading-none">{formatPrice(price.amount, price.currency)}</span>
+                          <span className="mt-1 block text-[0.875rem] text-muted">One payment.</span>
+                        </span>
+                      </label>
+                      {first !== null && (
+                        <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-5 ${plan === "two_part" ? "border-brass bg-brass-pale/30" : "border-line-strong hover:border-ink/40"}`}>
+                          <input type="radio" name="plan" checked={plan === "two_part"} onChange={() => setPlan("two_part")} className="mt-1 h-4 w-4 accent-(--color-brass-dark)" />
+                          <span>
+                            <span className="block font-semibold">Pay in two parts</span>
+                            <span className="mt-1 block font-serif text-[1.5rem] leading-none">{formatPrice(first, price.currency)} now</span>
+                            <span className="mt-1 block text-[0.875rem] text-muted">
+                              Then {formatPrice(price.amount - first, price.currency)} within {track.secondDueDays ?? 30} days.
+                            </span>
+                          </span>
+                        </label>
+                      )}
+                    </div>
+                  </fieldset>
+                )}
+
+                <fieldset>
+                  {step(price ? 4 : 3, "Anything else?", "Optional.")}
+                  <div className="mt-4">
+                    <TextArea label="Your goals, questions, or the best time to reach you" rows={3} value={message} onChange={(e) => setMessage(e.target.value)} />
+                  </div>
+                </fieldset>
+
+                <div className="space-y-3 border-t border-line pt-6">
+                  <div aria-live="polite">{error && <Alert tone="error">{error}</Alert>}</div>
+                  <Button type="submit" loading={busy} className="w-full sm:w-auto sm:px-10">
+                    Submit application
+                  </Button>
+                  <p className="text-[0.8125rem] text-muted">Next, you'll see your reference and exactly how to pay.</p>
                 </div>
-                <TextArea label="Anything you'd like us to know? (optional)" rows={3} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Your goals, questions, or the best time to reach you." />
-              </fieldset>
+              </form>
+            )}
+          </div>
 
-              <div aria-live="polite">{error && <Alert tone="error">{error}</Alert>}</div>
-              <Button type="submit" loading={busy} className="w-full">
-                Submit application
-              </Button>
-              <p className="text-center text-[0.8125rem] text-muted">No account needed. Next, you'll see how to pay and your reference.</p>
-            </form>
-          )}
+          {/* Summary */}
+          <aside className="space-y-4 lg:sticky lg:top-24">
+            <section className="rounded-2xl border border-line-strong bg-paper p-6">
+              <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-muted">Your enrolment</p>
+              <p className="mt-2 font-serif text-[1.3rem] leading-snug">{name}</p>
+              <dl className="mt-4 space-y-3 border-t border-line pt-4 text-[0.9375rem]">
+                <div>
+                  <dt className="text-[0.8125rem] text-muted">Batch</dt>
+                  <dd className="font-medium">
+                    {chosen ? (
+                      <>
+                        {chosen.name}
+                        {chosen.startsOn && <span className="block text-[0.875rem] font-normal text-muted">Starts {date(chosen.startsOn)}</span>}
+                      </>
+                    ) : (
+                      "Next batch (dates to be confirmed)"
+                    )}
+                  </dd>
+                </div>
+                {price && (
+                  <>
+                    <div>
+                      <dt className="text-[0.8125rem] text-muted">Payment plan</dt>
+                      <dd className="font-medium">{plan === "two_part" ? "Two parts" : "In full"}</dd>
+                    </div>
+                    <div className="flex items-end justify-between gap-3 border-t border-line pt-3">
+                      <dt className="text-[0.875rem] text-muted">Pay now</dt>
+                      <dd className="font-serif text-[1.8rem] leading-none">{formatPrice(dueNow, price.currency)}</dd>
+                    </div>
+                    {plan === "two_part" && first !== null && (
+                      <p className="text-[0.8125rem] text-muted">
+                        Then {formatPrice(price.amount - first, price.currency)} within {track.secondDueDays ?? 30} days.
+                      </p>
+                    )}
+                  </>
+                )}
+              </dl>
+            </section>
+            <section className="rounded-2xl border border-line bg-paper p-6">
+              <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-muted">What's included</p>
+              <ul className="mt-3 space-y-2">
+                {facts.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-[0.9375rem]">
+                    <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-brass-dark" /> {f}
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <section className="rounded-2xl border border-line bg-paper p-6">
+              <p className="font-semibold">Questions before you apply?</p>
+              <p className="mt-1 text-[0.875rem] text-muted">We reply on WhatsApp, usually within a few hours.</p>
+              <a href={whatsappLink(`Hello CloudTech Academy, I have a question about ${name}.`)} target="_blank" rel="noopener noreferrer" className={`${buttonClass("secondary")} mt-4 w-full`}>
+                <MessageCircle aria-hidden className="h-4 w-4" /> Chat on WhatsApp
+              </a>
+            </section>
+          </aside>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -460,11 +570,11 @@ export default function Apply() {
   if (slug) return track ? <ApplyForm track={track} /> : <NotFound />;
 
   return (
-    <div className="container-page max-w-4xl py-12 sm:py-16">
+    <div className="container-page py-12 sm:py-16">
       <p className="kicker">Professional Programmes</p>
       <h1 className="mt-3 font-serif text-[2.4rem] leading-tight">Apply for a programme</h1>
       <p className="mt-3 text-[1.0625rem] text-muted">Choose your programme to see the next batch, the fee and the payment plans.</p>
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {paid.map((t) => {
           const price = coursePrice(t);
           const open = !!price && enrolmentState(t) === "open";
