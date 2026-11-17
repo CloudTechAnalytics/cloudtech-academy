@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router";
-import { AlertTriangle, Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy, X } from "lucide-react";
+import { AlertTriangle, Award, BookOpen, CheckCircle2, ExternalLink, GraduationCap, ShieldCheck, Trophy } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useAuth, PageLoading, RequireAuth } from "@/lib/auth";
 import { useCourses } from "@/lib/data";
@@ -10,7 +10,8 @@ import { ProjectCover } from "@/components/ProjectCover";
 import { certificateName, eligibility } from "@/lib/certificates";
 import { credentialBadge, credentialKindLabel } from "@/lib/badges";
 import { formatDate } from "@/lib/format";
-import { Button, ButtonLink } from "@/components/Button";
+import { ButtonLink } from "@/components/Button";
+import { DeleteCourse } from "@/components/DeleteCourse";
 import { daysUntilReset, RESET_AFTER_DAYS } from "@/lib/inactivity";
 import { CourseCard } from "@/components/CourseCard";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -36,9 +37,6 @@ function DashboardInner() {
   const [practice, setPractice] = useState<PracticeSubmission[]>([]);
   const [open, setOpen] = useState<string | null>(null);
   const [resetIds, setResetIds] = useState<string[]>([]);
-  const [confirming, setConfirming] = useState<string | null>(null);
-  const [removing, setRemoving] = useState(false);
-  const [removeError, setRemoveError] = useState<string | null>(null);
   const art = useRef<SVGSVGElement>(null);
   const { events } = useEvents();
   const { registrations } = useMyRegistrations();
@@ -73,19 +71,6 @@ function DashboardInner() {
     void load().catch(() => setRows([]));
   }, [load]);
 
-  const remove = async (courseId: string) => {
-    setRemoving(true);
-    setRemoveError(null);
-    try {
-      await (await getBackend()).removeCourse(courseId);
-      setConfirming(null);
-      await load();
-    } catch (e) {
-      setRemoveError(e instanceof Error ? e.message : "Couldn't remove the course. Try again.");
-    } finally {
-      setRemoving(false);
-    }
-  };
 
   useSeo({ title: "Dashboard | CloudTech Academy", description: "Your learning, badges, certificates and credentials.", noindex: true });
   // Programme students work in their programme's LMS, which has their free courses, badges and payments too.
@@ -163,7 +148,7 @@ function DashboardInner() {
         </h2>
         {(freeLearning.length > 0 || myProgrammes.length === 0) && (
           <p className="mt-1 text-[0.9375rem] text-muted">
-            A free course you haven't worked on for {RESET_AFTER_DAYS} days starts over from the beginning. Badges you've earned always stay.
+            A free course you haven't worked on for {RESET_AFTER_DAYS} days starts over from the beginning, but keeps your badges. Deleting a course removes its badges too.
           </p>
         )}
         {resetIds.length > 0 && (
@@ -199,7 +184,6 @@ function DashboardInner() {
           </ul>
         )}
         {myProgrammes.length > 0 && freeLearning.length > 0 && <h3 className="mt-10 font-serif text-[1.3rem]">Free courses</h3>}
-        {removeError && <p className="mt-4 rounded-lg border border-danger/40 bg-danger/10 px-4 py-3 text-[0.9375rem]">{removeError}</p>}
         {freeLearning.length === 0 && myProgrammes.length > 0 ? null : freeLearning.length === 0 ? (
           <div className="mt-5 rounded-2xl border border-dashed border-line-strong p-8 text-center">
             <p className="text-[1.0625rem]">You haven't started a course yet.</p>
@@ -227,37 +211,9 @@ function DashboardInner() {
                         <CheckCircle2 aria-hidden className="h-3.5 w-3.5" /> Completed
                       </span>
                     )}
-                    {source === "free" && (
-                      <button
-                        type="button"
-                        onClick={() => setConfirming(course.id)}
-                        aria-label={`Remove ${course.title} from My Learning`}
-                        title="Remove from My Learning"
-                        className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-sand hover:text-ink"
-                      >
-                        <X aria-hidden className="h-4 w-4" />
-                      </button>
-                    )}
+                    {source === "free" && <DeleteCourse courseId={course.id} title={course.title} badges={valid} onDeleted={load} />}
                   </div>
                 </div>
-                {confirming === course.id && (
-                  <div role="alertdialog" aria-label={`Remove ${course.title}?`} className="mt-4 rounded-xl border border-line-strong bg-sand p-4 text-[0.9375rem]">
-                    <p className="font-semibold">Remove {course.title} from My Learning?</p>
-                    <p className="mt-1 text-muted">
-                      {completion
-                        ? "Your completion badge and any certificate stay valid. You can open the course again any time."
-                        : "Your progress in this course will be cleared, so starting it again begins from the first lesson. Badges you've earned stay."}
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Button onClick={() => void remove(course.id)} loading={removing}>
-                        Remove
-                      </Button>
-                      <Button variant="secondary" onClick={() => setConfirming(null)} disabled={removing}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
                 <div className="mt-5">
                   <ProgressBar value={percent} label={`${course.title} progress`} />
                 </div>

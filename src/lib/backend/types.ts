@@ -813,7 +813,7 @@ export interface Backend {
   listEnrollments(): Promise<Enrollment[]>;
   enroll(courseId: string): Promise<void>;
   setLastLesson(courseId: string, lessonId: string): Promise<void>;
-  /** Removes a course from My Learning. Its progress is cleared unless the course is complete; badges stay. */
+  /** Deletes a free course from My Learning, with everything done in it: progress, attempts, the project submission and its badges. Refused for paid and programme courses, and when an official certificate was issued for it. */
   removeCourse(courseId: string): Promise<void>;
   /** Starts over unfinished courses untouched for 14 days. Returns the ids of courses whose progress was cleared. */
   applyInactivityResets(): Promise<string[]>;

@@ -42,6 +42,7 @@ import { Alert, TextArea, TextField } from "@/components/Form";
 import { LessonContent } from "@/components/LessonContent";
 import { ProgressBar } from "@/components/ProgressBar";
 import { PaymentReminders } from "@/components/PaymentReminders";
+import { DeleteCourse } from "@/components/DeleteCourse";
 import NotFound from "./NotFound";
 
 /**
@@ -1180,7 +1181,7 @@ export function LmsCertificate() {
 /* ================================================================ Free courses */
 
 export function LmsFreeCourses() {
-  const { track, held, enrollments } = useLms();
+  const { track, held, enrollments, credentials, reload } = useLms();
   const courses = useCourses();
   const inProgrammes = new Set([...held.flatMap((t) => programmeCourseIds(t)), ...programmeCourseIds(track)]);
   const mine = enrollments
@@ -1188,12 +1189,15 @@ export function LmsFreeCourses() {
     .map((e) => courses.find((c) => c.id === e.courseId))
     .filter((c): c is Course => !!c);
   return (
-    <Page title="Free courses" intro="Free courses you've started outside your programme. They open on the public site.">
+    <Page title="Free courses" intro="Free courses you've started outside your programme. They open on the public site. You can delete one you no longer want, along with its badges.">
       {mine.length ? (
         <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {mine.map((c) => (
             <li key={c.id} className="flex flex-col rounded-2xl border border-line bg-paper p-5">
-              <p className="font-serif text-[1.2rem] leading-snug">{c.title}</p>
+              <div className="flex items-start justify-between gap-3">
+                <p className="font-serif text-[1.2rem] leading-snug">{c.title}</p>
+                <DeleteCourse courseId={c.id} title={c.title} badges={credentials} onDeleted={reload} />
+              </div>
               <p className="mt-1 line-clamp-2 text-[0.875rem] text-muted">{c.summary}</p>
               <div className="mt-auto pt-4">
                 <ButtonLink to={`/courses/${c.slug}`} variant="secondary">

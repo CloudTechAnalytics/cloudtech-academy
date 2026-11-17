@@ -883,8 +883,17 @@ export function createDemoBackend(): Backend {
       const u = requireUser();
       const s = load();
       if ((s.enrollments[u.id] ?? []).some((e) => e.courseId === courseId && (e.source ?? "free") !== "free"))
-        throw new BackendError("A course you enrolled in with payment stays in My Learning. Contact support if you need it removed.");
-      if (!courseCompleted(s, u.id, courseId)) clearCourseProgress(s, u.id, courseId);
+        throw new BackendError("A course that's part of a payment or programme stays in your account. Contact support if you need it removed.");
+      // Deleting a free course deletes its badges too, unless an official certificate was issued from one.
+      const badges = s.credentials.filter((c) => c.userId === u.id && c.courseId === courseId && (c.kind === "module_badge" || c.kind === "course_completion"));
+      const ids = new Set(badges.map((c) => c.credentialId));
+      if (s.certificates.some((c) => !!c.credentialId && ids.has(c.credentialId)) || s.orders.some((o) => !!o.credentialId && ids.has(o.credentialId) && (o.status === "paid" || o.status === "granted")))
+        throw new BackendError("You hold an official certificate for this course. It must stay verifiable, so the course can't be deleted. Contact support if you need help.");
+      s.credentials = s.credentials.filter((c) => !ids.has(c.credentialId));
+      s.orders = s.orders.filter((o) => !o.credentialId || !ids.has(o.credentialId));
+      clearCourseProgress(s, u.id, courseId);
+      const project = BUNDLED_PROJECTS.find((p) => p.courseId === courseId);
+      if (project) s.submissions = s.submissions.filter((x) => !(x.userId === u.id && x.projectId === project.id));
       s.enrollments[u.id] = (s.enrollments[u.id] ?? []).filter((e) => e.courseId !== courseId);
       save(s);
     },
